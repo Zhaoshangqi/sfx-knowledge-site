@@ -1,0 +1,617 @@
+{
+  "changed": 54,
+  "generated": 584,
+  "total": 61,
+  "report": [
+    {
+      "videoId": "ChlEY5CCv-A",
+      "title": "金属撞击音效制作流程",
+      "steps": 10,
+      "shots": 9,
+      "plugins": 6,
+      "settings": 25,
+      "chainFocus": 10,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "1uFMVg7TrGU",
+      "title": "《Arcane》近战撞击音效重制完整流程",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 10,
+      "settings": 23,
+      "chainFocus": 6,
+      "parameterLogic": 7
+    },
+    {
+      "videoId": "-vxdSIdNAw4",
+      "title": "游戏暴力音效设计：Overkill 音效库制作与应用",
+      "steps": 13,
+      "shots": 13,
+      "plugins": 13,
+      "settings": 33,
+      "chainFocus": 6,
+      "parameterLogic": 7
+    },
+    {
+      "videoId": "zxfbE0exXKk",
+      "title": "《Destiny 2》音效设计深度剖析：声码器应用",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 9,
+      "settings": 30,
+      "chainFocus": 6,
+      "parameterLogic": 5
+    },
+    {
+      "videoId": "Ns8e5612fUw",
+      "title": "《Valorant》Veto 拦截器装备音效制作全流程",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 5,
+      "settings": 10,
+      "chainFocus": 6,
+      "parameterLogic": 6
+    },
+    {
+      "videoId": "jVifbszcv2c",
+      "title": "《Valorant》Tejo 火箭装备音效拆解",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 8,
+      "settings": 14,
+      "chainFocus": 6,
+      "parameterLogic": 7
+    },
+    {
+      "videoId": "tj5Sn_rZhnk",
+      "title": "Noah Sitrin：Boom 素材长插件链重设计",
+      "steps": 23,
+      "shots": 23,
+      "plugins": 17,
+      "settings": 64,
+      "chainFocus": 6,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "6xUsp9K61Nc",
+      "title": "BeckyS 音频：噪音十一月第 23 天：野生动物环境声",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 4,
+      "settings": 22,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "-pmOXv31j6s",
+      "title": "BeckyS 音频：噪音十一月第 22 天：丝滑掠过音效",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 2,
+      "settings": 14,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "ZjRnoIezCnA",
+      "title": "BeckyS 音频：噪音十一月第 21 天：溶解气泡音效",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 3,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "ruFsZPu3qO0",
+      "title": "BeckyS 音频：噪音十一月第 18 天：毛茸怪物低吼",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 3,
+      "settings": 13,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "vU0EZlUoW7g",
+      "title": "BeckyS 音频：噪音十一月第 17 天：故障断续扫动",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 1,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "6MMXjU4mH3w",
+      "title": "BeckyS 音频：噪音十一月第 16 天：恐怖低鸣氛围",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 8,
+      "settings": 35,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "HsFlJ_UJyxs",
+      "title": "BeckyS 音频：噪音十一月第 15 天：反向延迟与宽阔低鸣",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 4,
+      "settings": 17,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "qB23qR9KMGY",
+      "title": "BeckyS 音频：噪音十一月第 14 天：静心闪光氛围",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 5,
+      "settings": 21,
+      "chainFocus": 9,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "8-DGPoItgcE",
+      "title": "BeckyS 音频：噪音十一月第 13 天：科幻武器冲击",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 8,
+      "settings": 30,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "TNnLxeWVjM0",
+      "title": "BeckyS 音频：噪音十一月第 12 天：粒化闪光尾音",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 4,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "nRPOnY3a8YU",
+      "title": "BeckyS 音频：噪音十一月第 9 天：微型机器人声",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 3,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "upBjw_iHT7E",
+      "title": "BeckyS 音频：噪音十一月第 8 天：内脏心跳声",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 6,
+      "settings": 23,
+      "chainFocus": 10,
+      "parameterLogic": 9
+    },
+    {
+      "videoId": "dxWLnuPUGTE",
+      "title": "BeckyS 音频：噪音十一月第 7 天：黑暗传送门发光",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 6,
+      "settings": 21,
+      "chainFocus": 10,
+      "parameterLogic": 9
+    },
+    {
+      "videoId": "z_-lgxCj_Do",
+      "title": "BeckyS 音频：噪音十一月第 6 天：恐怖压力冲击",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 7,
+      "settings": 24,
+      "chainFocus": 11,
+      "parameterLogic": 9
+    },
+    {
+      "videoId": "Vlhaimjv1Jw",
+      "title": "BeckyS 音频：噪音十一月第 5 天：共振外星纹理",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 6,
+      "settings": 17,
+      "chainFocus": 10,
+      "parameterLogic": 9
+    },
+    {
+      "videoId": "FlZ8V453BfA",
+      "title": "BeckyS 音频：噪音十一月第 4 天：可演奏冲击乐器",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 6,
+      "settings": 24,
+      "chainFocus": 10,
+      "parameterLogic": 9
+    },
+    {
+      "videoId": "M0cOtthAje0",
+      "title": "BeckyS 音频：噪音十一月第 3 天：小刀变巨剑",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 4,
+      "settings": 13,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "26TcO5_3pxo",
+      "title": "BeckyS 音频：噪音十一月第 2 天：气泡水下音效",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 8,
+      "settings": 34,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "0orLvTF1vj8",
+      "title": "BeckyS 音频：声音设计实验第 4 集：魔法施放",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 13,
+      "settings": 54,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "WOl66EfI9EQ",
+      "title": "BeckyS 音频：声音设计实验第 3 集：《Embers of Mirrim》重设计",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 12,
+      "settings": 59,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "3yrKFdjORy0",
+      "title": "BeckyS 音频：声音设计实验第 2 集：《Mages of Mystralia》法术重设计",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 13,
+      "settings": 61,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "g0lt1bjOMWw",
+      "title": "BeckyS 音频：Wwise 与 Unity 脚步声实现流程",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 5,
+      "settings": 17,
+      "chainFocus": 9,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "D0qibJgxYHY",
+      "title": "BeckyS 音频：《无人深空》短片音效重设计",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 1,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "Pvkfc32V8Mo",
+      "title": "BeckyS 音频：声音设计实验第 1 集：水声录制与变形",
+      "steps": 10,
+      "shots": 10,
+      "plugins": 3,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "dZsVzf2NWw0",
+      "title": "企鹅手雷：侵略性能量音效演示",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 1,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "2L6qe8uRf0Y",
+      "title": "企鹅手雷：重型机械音效演示",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 1,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "WdZ9DFDHaqI",
+      "title": "企鹅手雷：大型怪物声库演示 2",
+      "steps": 14,
+      "shots": 7,
+      "plugins": 1,
+      "settings": 12,
+      "chainFocus": 8,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "gLldwkc-0Vs",
+      "title": "企鹅手雷：怪物声音设计（Presley Hynes）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 8,
+      "settings": 32,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "Ub5ozlVecII",
+      "title": "企鹅手雷：用 S-Layer 采样器制作随机魔法音效",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 6,
+      "settings": 26,
+      "chainFocus": 10,
+      "parameterLogic": 9
+    },
+    {
+      "videoId": "Iz4rtBgqLlg",
+      "title": "企鹅手雷：Armory Creatures 竞赛冠军制作解析",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 13,
+      "settings": 53,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "kFxuNtkv4CU",
+      "title": "企鹅手雷：电影感魔法线性重设计",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 16,
+      "settings": 69,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "ii9vXwAxFSI",
+      "title": "企鹅手雷：火焰魔法音效设计（Ryan Felberbaum）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 15,
+      "settings": 54,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "cLhevQYlvlI",
+      "title": "企鹅手雷：飞船音效设计（Orrin Keep）",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 15,
+      "settings": 61,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "Ze9enZLKA2I",
+      "title": "企鹅手雷：魔法法术音效设计（Jesse Rope）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 11,
+      "settings": 35,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "BPuxpbey-Ks",
+      "title": "企鹅手雷：魔法法术音效完整过程（Mark Kilborn）",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 15,
+      "settings": 54,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "ahbdvI6nLgA",
+      "title": "企鹅手雷：魔法法术分层解析（Mark Kilborn）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 12,
+      "settings": 44,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "xWtyeqmjPKk",
+      "title": "企鹅手雷：现代魔法能量音效设计（Brandon Mueller）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 18,
+      "settings": 67,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "wA5afo1P6tE",
+      "title": "企鹅手雷：魔法音效制作技巧（Juan Pablo Uribe）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 12,
+      "settings": 53,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "uP135z2QBTM",
+      "title": "企鹅手雷：暗黑魔法法术音效设计（Noah Sitrin）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 7,
+      "settings": 27,
+      "chainFocus": 11,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "fpazzwJnMdM",
+      "title": "企鹅手雷：《艾尔登法环》魔法法术重设计（Chris Burgess）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 14,
+      "settings": 50,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "TOdyCTjzHLE",
+      "title": "企鹅手雷：冰系魔法音效设计（Jay Sabins）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 8,
+      "settings": 24,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "RdVQYDBTB48",
+      "title": "企鹅手雷：电系能力施法音效（Presley Hines）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 14,
+      "settings": 45,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "Ipbfcr-DFTI",
+      "title": "企鹅手雷：正向魔法法术音效设计（CJ Ridings）",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 8,
+      "settings": 20,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "hfZnCFgt3TI",
+      "title": "企鹅手雷：Raw Magic 音效库完整导览",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 6,
+      "settings": 15,
+      "chainFocus": 10,
+      "parameterLogic": 8
+    },
+    {
+      "videoId": "M1KBLV0Zz6I",
+      "title": "Nathan_SFX：Valorant Gekko Dizzy 飞行音效设计",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 17,
+      "settings": 45,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "iyAwO9g_rAQ",
+      "title": "Nathan_SFX：Valorant Clove 烟雾 Alive / Dead 音效设计",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 11,
+      "settings": 22,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "aKkZZ-XeSqs",
+      "title": "Orrin Keep：用 Machina 设计机器兽音效",
+      "steps": 13,
+      "shots": 13,
+      "plugins": 13,
+      "settings": 49,
+      "chainFocus": 6,
+      "parameterLogic": 7
+    },
+    {
+      "videoId": "uh9yIziU8Pk",
+      "title": "Orrin Keep：用 Seismic Core 设计电影感 Glitch 音效",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 18,
+      "settings": 65,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "YVto08ZB9Lk",
+      "title": "Orrin Keep：Destiny 2 UI 音效重设计工程拆解",
+      "steps": 14,
+      "shots": 10,
+      "plugins": 11,
+      "settings": 20,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "cHWeJHlXb54",
+      "title": "Orrin Keep：游戏爆炸音效制作访谈",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 15,
+      "settings": 56,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "6oJUotZGz0k",
+      "title": "Noah Sitrin：通用高科技 UI 音效调色板",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 18,
+      "settings": 71,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "h1uYic59pf0",
+      "title": "Noah Sitrin：SkannerXT Megasmudge 变形设计",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 18,
+      "settings": 59,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "EQw3BCxIRPk",
+      "title": "Dietrich Dice：用电击器做科幻狙击枪",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 18,
+      "settings": 57,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    },
+    {
+      "videoId": "2VQTuApNrPA",
+      "title": "Brin Sound：Warframe 重设计闪电流程",
+      "steps": 14,
+      "shots": 14,
+      "plugins": 12,
+      "settings": 33,
+      "chainFocus": 12,
+      "parameterLogic": 10
+    }
+  ]
+}
