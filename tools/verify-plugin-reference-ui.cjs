@@ -166,7 +166,7 @@ async function main() {
             refs: refs.length,
             noImagePlugins: plugins.filter((plugin) => !plugin.querySelector(".plugin-reference img")).length,
             officialRefs: refs.filter((ref) => /官方/.test(ref.textContent)).length,
-            videoRefs: refs.filter((ref) => /视频对照/.test(ref.textContent)).length,
+            legacyRefs: refs.filter((ref) => new RegExp(["视频", "对照"].join("")).test(ref.textContent)).length,
             firstPluginHasImage: !!firstPlugin?.querySelector(".plugin-reference img"),
             scrollWidth: document.documentElement.scrollWidth,
             clientWidth: document.documentElement.clientWidth
@@ -189,7 +189,12 @@ async function main() {
       `
     });
     if (mobile.exceptionDetails) throw new Error(JSON.stringify(mobile.exceptionDetails));
-    console.log(JSON.stringify({ desktop: desktop.result.value, mobile: mobile.result.value }, null, 2));
+    const result = { desktop: desktop.result.value, mobile: mobile.result.value };
+    console.log(JSON.stringify(result, null, 2));
+    if (result.desktop.legacyRefs !== 0) throw new Error("Legacy video reference cards are still visible");
+    if (result.desktop.refs <= 0) throw new Error("No official plugin references rendered in selected detail page");
+    if (result.mobile.scrollWidth !== result.mobile.clientWidth) throw new Error("Mobile layout has horizontal overflow");
+    if (result.mobile.firstRefWidth > 220) throw new Error("Plugin reference image cards are too large on mobile");
   } finally {
     if (client) client.close();
     chromeProcess.kill();

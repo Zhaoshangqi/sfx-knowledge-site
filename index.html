@@ -505,11 +505,12 @@
     .plugin-settings { margin-top: 6px; }
     .plugin-reference-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 8px;
-      margin-top: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 180px));
+      gap: 7px;
+      margin-top: 7px;
     }
     .plugin-reference {
+      max-width: 180px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.66);
@@ -527,19 +528,19 @@
     .plugin-reference-shot img {
       display: block;
       width: 100%;
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 9;
       object-fit: cover;
       background:
         linear-gradient(135deg, rgba(66, 103, 178, 0.12), rgba(50, 142, 120, 0.12)),
         #e4e1d9;
     }
     .plugin-reference-body {
-      padding: 7px 8px 8px;
+      padding: 6px 7px 7px;
     }
     .plugin-reference-title {
       display: block;
       color: var(--ink);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
     }
     .plugin-reference-note,
@@ -547,7 +548,7 @@
       display: block;
       margin-top: 3px;
       color: var(--muted);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
       line-height: 1.35;
     }
@@ -25828,42 +25829,15 @@
       return selected.slice(0, 4).map((candidate) => candidate.ref);
     }
 
-    function evidenceImageKey(record, plugin, refs, pluginIndex) {
-      const stepsWithImages = (record.steps || []).filter((step) => step.imageKey);
-      if (!stepsWithImages.length) return "";
-      const needles = [
-        plugin.name,
-        ...refs.flatMap((ref) => ref.aliases || []),
-        ...String(plugin.name || "").split(/[\/+>→,，、]/g)
-      ]
-        .map(normalizePluginLookup)
-        .filter((value) => value.length >= 3);
-      const matched = stepsWithImages.find((step) => {
-        const haystack = normalizePluginLookup([step.name, step.detail, ...(step.params || [])].join(" "));
-        return needles.some((needle) => haystack.includes(needle));
-      });
-      if (matched) return matched.imageKey;
-      return stepsWithImages[pluginIndex % stepsWithImages.length].imageKey;
-    }
-
     function pluginReferences(record, plugin, pluginIndex) {
       const catalogRefs = pluginReferenceCandidates(plugin);
-      const officialRefs = catalogRefs.map((ref) => ({
+      return catalogRefs.map((ref) => ({
         title: ref.title,
         preview: ref.preview,
         full: ref.full,
         source: ref.source,
         note: ref.match || "官方参考截图，按插件名核对"
-      }));
-      const evidenceKey = evidenceImageKey(record, plugin, catalogRefs, pluginIndex);
-      const evidence = evidenceKey ? [{
-        title: "视频对照截图",
-        preview: imageAsset("preview", evidenceKey),
-        full: imageAsset("full", evidenceKey),
-        source: record.url,
-        note: officialRefs.length ? "本教程抽帧，用来和官方界面图对照" : "处理点或未确认独立插件，优先用教程画面作证据"
-      }] : [];
-      return [...officialRefs, ...evidence].filter((item) => item.preview || item.full);
+      })).filter((item) => item.preview || item.full);
     }
 
     function renderPluginReferences(record, plugin, pluginIndex) {
@@ -25873,7 +25847,7 @@
         const full = ref.full || ref.preview;
         const preview = ref.preview || ref.full;
         const source = ref.source
-          ? '<a class="plugin-reference-source" href="' + escapeAttr(ref.source) + '" target="_blank" rel="noopener">来源 / 对照</a>'
+          ? '<a class="plugin-reference-source" href="' + escapeAttr(ref.source) + '" target="_blank" rel="noopener">官方来源</a>'
           : '';
         return '<div class="plugin-reference">' +
           '<button class="plugin-reference-shot" type="button" data-plugin-full="' + escapeAttr(full) + '" data-plugin-caption="' + escapeAttr(plugin.name + " / " + ref.title) + '">' +

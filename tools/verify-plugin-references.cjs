@@ -2,7 +2,6 @@ const fs = require("fs");
 
 const html = fs.readFileSync("index.html", "utf8");
 const records = JSON.parse(html.match(/const records = ([\s\S]*?);\n\s*const imageManifest/)[1]);
-const manifest = JSON.parse(html.match(/const imageManifest = ([\s\S]*?);\n\n\s*const pluginReferenceCatalog/)[1]);
 const catalog = JSON.parse(html.match(/const pluginReferenceCatalog = ([\s\S]*?);\n\n\s*const categoryById/)[1]);
 
 function normalize(value) {
@@ -39,20 +38,17 @@ function referencesFor(plugin) {
 
 let total = 0;
 let withOfficial = 0;
-let fallbackOnly = 0;
-let missingFallback = 0;
+let withoutOfficial = 0;
 let missingAssets = 0;
 const examples = [];
 
 for (const record of records) {
-  const imageSteps = (record.steps || []).filter((step) => step.imageKey && manifest[step.imageKey]);
   for (const plugin of record.plugins || []) {
     total += 1;
     const official = referencesFor(plugin);
     if (official.length) withOfficial += 1;
-    else fallbackOnly += 1;
-    if (!imageSteps.length) {
-      missingFallback += 1;
+    else {
+      withoutOfficial += 1;
       examples.push(`${record.videoId}: ${plugin.name}`);
     }
     for (const ref of official) {
@@ -66,11 +62,10 @@ const result = {
   totalPluginCards: total,
   catalog: catalog.length,
   withOfficial,
-  fallbackOnly,
-  missingFallback,
+  withoutOfficial,
   missingAssets,
   examples: examples.slice(0, 10)
 };
 
 console.log(JSON.stringify(result, null, 2));
-if (missingFallback || missingAssets) process.exit(1);
+if (missingAssets) process.exit(1);
