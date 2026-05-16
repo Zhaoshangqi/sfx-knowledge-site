@@ -1,0 +1,991 @@
+{
+  "generatedAt": "2026-05-16T09:18:58.809Z",
+  "entries": [
+    {
+      "slug": "soundtoys-decapitator",
+      "title": "Soundtoys Decapitator",
+      "source": "https://www.soundtoys.com/product/decapitator/",
+      "aliases": [
+        "Soundtoys Decapitator",
+        "Decapitator"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-decapitator.webp",
+      "full": "assets/plugin-shots/full/soundtoys-decapitator.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-filterfreak",
+      "title": "Soundtoys FilterFreak",
+      "source": "https://www.soundtoys.com/product/filterfreak/",
+      "aliases": [
+        "Soundtoys FilterFreak",
+        "FilterFreak"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-filterfreak.webp",
+      "full": "assets/plugin-shots/full/soundtoys-filterfreak.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-echoboy",
+      "title": "Soundtoys EchoBoy",
+      "source": "https://www.soundtoys.com/product/echoboy/",
+      "aliases": [
+        "Soundtoys EchoBoy",
+        "EchoBoy"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-echoboy.webp",
+      "full": "assets/plugin-shots/full/soundtoys-echoboy.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-crystallizer",
+      "title": "Soundtoys Crystallizer",
+      "source": "https://www.soundtoys.com/product/crystallizer/",
+      "aliases": [
+        "Soundtoys Crystallizer",
+        "Crystallizer"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-crystallizer.webp",
+      "full": "assets/plugin-shots/full/soundtoys-crystallizer.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-little-alterboy",
+      "title": "Soundtoys Little AlterBoy",
+      "source": "https://www.soundtoys.com/product/little-alterboy/",
+      "aliases": [
+        "Soundtoys Little AlterBoy",
+        "Little AlterBoy"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-little-alterboy.webp",
+      "full": "assets/plugin-shots/full/soundtoys-little-alterboy.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-effect-rack",
+      "title": "Soundtoys Effect Rack",
+      "source": "https://www.soundtoys.com/product/effect-rack/",
+      "aliases": [
+        "Soundtoys Effect Rack"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-effect-rack.webp",
+      "full": "assets/plugin-shots/full/soundtoys-effect-rack.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-phasemistress",
+      "title": "Soundtoys PhaseMistress",
+      "source": "https://www.soundtoys.com/product/phasemistress/",
+      "aliases": [
+        "Soundtoys PhaseMistress",
+        "Phase Mistress",
+        "PhaseMistress"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-phasemistress.webp",
+      "full": "assets/plugin-shots/full/soundtoys-phasemistress.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-devil-loc",
+      "title": "Soundtoys Devil-Loc",
+      "source": "https://www.soundtoys.com/product/devil-loc-deluxe/",
+      "aliases": [
+        "Soundtoys Devil-Loc",
+        "Devil-Loc"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-devil-loc.webp",
+      "full": "assets/plugin-shots/full/soundtoys-devil-loc.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-tremolator",
+      "title": "Soundtoys Tremolator",
+      "source": "https://www.soundtoys.com/product/tremolator/",
+      "aliases": [
+        "Tremolator",
+        "Soundtoys Tremolator"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-tremolator.webp",
+      "full": "assets/plugin-shots/full/soundtoys-tremolator.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-little-radiator",
+      "title": "Soundtoys Little Radiator",
+      "source": "https://www.soundtoys.com/product/little-radiator/",
+      "aliases": [
+        "Little Radiator",
+        "Soundtoys Little Radiator"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-little-radiator.webp",
+      "full": "assets/plugin-shots/full/soundtoys-little-radiator.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtoys-superplate",
+      "title": "Soundtoys SuperPlate",
+      "source": "https://www.soundtoys.com/product/superplate/",
+      "aliases": [
+        "Soundtoys Superplate",
+        "Superplate"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtoys-superplate.webp",
+      "full": "assets/plugin-shots/full/soundtoys-superplate.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "fabfilter-pro-q",
+      "title": "FabFilter Pro-Q",
+      "source": "https://www.fabfilter.com/products/pro-q-4-equalizer-plug-in",
+      "aliases": [
+        "FabFilter Pro-Q 3",
+        "Pro-Q 3",
+        "FabFilter Pro-Q"
+      ],
+      "preview": "assets/plugin-shots/preview/fabfilter-pro-q.webp",
+      "full": "assets/plugin-shots/full/fabfilter-pro-q.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "fabfilter-pro-r",
+      "title": "FabFilter Pro-R",
+      "source": "https://www.fabfilter.com/products/pro-r-2-reverb-plug-in",
+      "aliases": [
+        "FabFilter Pro-R",
+        "Pro-R"
+      ],
+      "preview": "assets/plugin-shots/preview/fabfilter-pro-r.webp",
+      "full": "assets/plugin-shots/full/fabfilter-pro-r.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "fabfilter-pro-l-2",
+      "title": "FabFilter Pro-L 2",
+      "source": "https://www.fabfilter.com/products/pro-l-2-limiter-plug-in",
+      "aliases": [
+        "FabFilter Pro-L 2",
+        "FabFilter Pro-L",
+        "Pro-L 2"
+      ],
+      "preview": "assets/plugin-shots/preview/fabfilter-pro-l-2.webp",
+      "full": "assets/plugin-shots/full/fabfilter-pro-l-2.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "fabfilter-pro-mb",
+      "title": "FabFilter Pro-MB",
+      "source": "https://www.fabfilter.com/products/pro-mb-multiband-compressor-plug-in",
+      "aliases": [
+        "FabFilter Pro-MB",
+        "Pro-MB"
+      ],
+      "preview": "assets/plugin-shots/preview/fabfilter-pro-mb.webp",
+      "full": "assets/plugin-shots/full/fabfilter-pro-mb.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "fabfilter-saturn-2",
+      "title": "FabFilter Saturn 2",
+      "source": "https://www.fabfilter.com/products/saturn-2-multiband-distortion-saturation-plug-in",
+      "aliases": [
+        "FabFilter Saturn 2",
+        "FabFilter Saturn",
+        "Saturn 2"
+      ],
+      "preview": "assets/plugin-shots/preview/fabfilter-saturn-2.webp",
+      "full": "assets/plugin-shots/full/fabfilter-saturn-2.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "fabfilter-volcano-3",
+      "title": "FabFilter Volcano 3",
+      "source": "https://www.fabfilter.com/products/volcano-3-filter-plug-in",
+      "aliases": [
+        "FabFilter Volcano 3",
+        "Volcano 3"
+      ],
+      "preview": "assets/plugin-shots/preview/fabfilter-volcano-3.webp",
+      "full": "assets/plugin-shots/full/fabfilter-volcano-3.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-phase-plant",
+      "title": "Kilohearts Phase Plant",
+      "source": "https://kilohearts.com/products/phase_plant",
+      "aliases": [
+        "Kilohearts Phase Plant",
+        "Phase Plant",
+        "Phaseplant",
+        "Faceplant"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-phase-plant.webp",
+      "full": "assets/plugin-shots/full/kilohearts-phase-plant.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-multipass",
+      "title": "Kilohearts Multipass",
+      "source": "https://kilohearts.com/products/multipass",
+      "aliases": [
+        "Kilohearts Multipass",
+        "Multipass"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-multipass.webp",
+      "full": "assets/plugin-shots/full/kilohearts-multipass.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-snap-heap",
+      "title": "Kilohearts Snap Heap",
+      "source": "https://kilohearts.com/products/snap_heap",
+      "aliases": [
+        "Kilohearts Snap Heap",
+        "Snap Heap",
+        "Snapheap"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-snap-heap.webp",
+      "full": "assets/plugin-shots/full/kilohearts-snap-heap.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-disperser",
+      "title": "Kilohearts Disperser",
+      "source": "https://kilohearts.com/products/disperser",
+      "aliases": [
+        "Disperser"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-disperser.webp",
+      "full": "assets/plugin-shots/full/kilohearts-disperser.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-transient-shaper",
+      "title": "Kilohearts Transient Shaper",
+      "source": "https://kilohearts.com/products/transient_shaper",
+      "aliases": [
+        "kHs Transient Shaper",
+        "Kilohearts Transient Shaper"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-transient-shaper.webp",
+      "full": "assets/plugin-shots/full/kilohearts-transient-shaper.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-flanger",
+      "title": "Kilohearts Flanger",
+      "source": "https://kilohearts.com/products/flanger",
+      "aliases": [
+        "Kilohearts Flanger"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-flanger.webp",
+      "full": "assets/plugin-shots/full/kilohearts-flanger.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-distortion",
+      "title": "Kilohearts Distortion",
+      "source": "https://kilohearts.com/products/distortion",
+      "aliases": [
+        "Kilohearts Distortion"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-distortion.webp",
+      "full": "assets/plugin-shots/full/kilohearts-distortion.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-reverb",
+      "title": "Kilohearts Reverb",
+      "source": "https://kilohearts.com/products/reverb",
+      "aliases": [
+        "KHS Reverb",
+        "Kilohearts Reverb"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-reverb.webp",
+      "full": "assets/plugin-shots/full/kilohearts-reverb.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-convolver",
+      "title": "Kilohearts Convolver",
+      "source": "https://kilohearts.com/products/convolver",
+      "aliases": [
+        "Kilohearts Convolver",
+        "Snap Heap convolver"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-convolver.webp",
+      "full": "assets/plugin-shots/full/kilohearts-convolver.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-ensemble",
+      "title": "Kilohearts Ensemble",
+      "source": "https://kilohearts.com/products/ensemble",
+      "aliases": [
+        "Kilohearts Ensemble"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-ensemble.webp",
+      "full": "assets/plugin-shots/full/kilohearts-ensemble.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-pitch-shifter",
+      "title": "Kilohearts Pitch Shifter",
+      "source": "https://kilohearts.com/products/pitch_shifter",
+      "aliases": [
+        "Kilohearts pitch shifter"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-pitch-shifter.webp",
+      "full": "assets/plugin-shots/full/kilohearts-pitch-shifter.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "kilohearts-triad",
+      "title": "Kilohearts Triad",
+      "source": "https://kilohearts.com/products/triad",
+      "aliases": [
+        "Kilohearts Triad"
+      ],
+      "preview": "assets/plugin-shots/preview/kilohearts-triad.webp",
+      "full": "assets/plugin-shots/full/kilohearts-triad.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "xfer-serum-2",
+      "title": "Xfer Serum 2",
+      "source": "https://xferrecords.com/products/serum-2",
+      "aliases": [
+        "Serum 2",
+        "Xfer Serum 2",
+        "Serum",
+        "Serum合成器"
+      ],
+      "preview": "assets/plugin-shots/preview/xfer-serum-2.webp",
+      "full": "assets/plugin-shots/full/xfer-serum-2.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "xfer-ott",
+      "title": "Xfer OTT",
+      "source": "https://xferrecords.com/freeware",
+      "aliases": [
+        "OTT",
+        "OTT-style compression",
+        "OTT多频段压缩器"
+      ],
+      "preview": "assets/plugin-shots/preview/xfer-ott.webp",
+      "full": "assets/plugin-shots/full/xfer-ott.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "izotope-stutter-edit-2",
+      "title": "iZotope Stutter Edit 2",
+      "source": "https://www.izotope.com/en/shop/stutter-edit-2-stutter-edit-2",
+      "aliases": [
+        "iZotope Stutter Edit 2",
+        "Stutter Edit 2"
+      ],
+      "preview": "assets/plugin-shots/preview/izotope-stutter-edit-2.webp",
+      "full": "assets/plugin-shots/full/izotope-stutter-edit-2.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "izotope-rx",
+      "title": "iZotope RX",
+      "source": "https://www.izotope.com/en/products/rx.html",
+      "aliases": [
+        "iZotope RX De-click",
+        "RX De-click",
+        "De-click",
+        "de-crackle"
+      ],
+      "preview": "assets/plugin-shots/preview/izotope-rx.webp",
+      "full": "assets/plugin-shots/full/izotope-rx.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "izotope-ozone",
+      "title": "iZotope Ozone",
+      "source": "https://www.izotope.com/en/products/ozone.html",
+      "aliases": [
+        "iZotope Ozone",
+        "Ozone EQ",
+        "Ozone Maximizer"
+      ],
+      "preview": "assets/plugin-shots/preview/izotope-ozone.webp",
+      "full": "assets/plugin-shots/full/izotope-ozone.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "izotope-trash",
+      "title": "iZotope Trash",
+      "source": "https://www.izotope.com/en/products/trash.html",
+      "aliases": [
+        "iZotope Trash 2",
+        "Trash"
+      ],
+      "preview": "assets/plugin-shots/preview/izotope-trash.webp",
+      "full": "assets/plugin-shots/full/izotope-trash.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "izotope-vocalsynth",
+      "title": "iZotope VocalSynth",
+      "source": "https://www.izotope.com/en/products/vocalsynth.html",
+      "aliases": [
+        "iZotope Vocoder",
+        "VocalSynth"
+      ],
+      "preview": "assets/plugin-shots/preview/izotope-vocalsynth.webp",
+      "full": "assets/plugin-shots/full/izotope-vocalsynth.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "eventide-blackhole",
+      "title": "Eventide Blackhole",
+      "source": "https://www.eventideaudio.com/plug-ins/blackhole/",
+      "aliases": [
+        "Blackhole",
+        "Eventide Blackhole"
+      ],
+      "preview": "assets/plugin-shots/preview/eventide-blackhole.webp",
+      "full": "assets/plugin-shots/full/eventide-blackhole.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "eventide-crystals",
+      "title": "Eventide Crystals",
+      "source": "https://www.eventideaudio.com/plug-ins/crystals/",
+      "aliases": [
+        "Eventide Crystals"
+      ],
+      "preview": "assets/plugin-shots/preview/eventide-crystals.webp",
+      "full": "assets/plugin-shots/full/eventide-crystals.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "eventide-sp2016",
+      "title": "Eventide SP2016 Reverb",
+      "source": "https://www.eventideaudio.com/plug-ins/sp2016-reverb/",
+      "aliases": [
+        "Eventide SP2016 Reverb",
+        "SP2016"
+      ],
+      "preview": "assets/plugin-shots/preview/eventide-sp2016.webp",
+      "full": "assets/plugin-shots/full/eventide-sp2016.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "valhalla-supermassive",
+      "title": "Valhalla Supermassive",
+      "source": "https://valhalladsp.com/shop/reverb/valhalla-supermassive/",
+      "aliases": [
+        "Valhalla Supermassive",
+        "Shimmer"
+      ],
+      "preview": "assets/plugin-shots/preview/valhalla-supermassive.webp",
+      "full": "assets/plugin-shots/full/valhalla-supermassive.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "valhalla-freqecho",
+      "title": "Valhalla FreqEcho",
+      "source": "https://valhalladsp.com/shop/delay/valhalla-freq-echo/",
+      "aliases": [
+        "Valhalla FreqEcho"
+      ],
+      "preview": "assets/plugin-shots/preview/valhalla-freqecho.webp",
+      "full": "assets/plugin-shots/full/valhalla-freqecho.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "valhalla-space-modulator",
+      "title": "Valhalla Space Modulator",
+      "source": "https://valhalladsp.com/shop/modulation/valhalla-space-modulator/",
+      "aliases": [
+        "Valhalla Modulation",
+        "Space Modulator"
+      ],
+      "preview": "assets/plugin-shots/preview/valhalla-space-modulator.webp",
+      "full": "assets/plugin-shots/full/valhalla-space-modulator.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "polyverse-manipulator",
+      "title": "Polyverse Manipulator",
+      "source": "https://polyversemusic.com/products/manipulator/",
+      "aliases": [
+        "Polyverse Manipulator",
+        "Manipulator"
+      ],
+      "preview": "assets/plugin-shots/preview/polyverse-manipulator.webp",
+      "full": "assets/plugin-shots/full/polyverse-manipulator.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "polyverse-wider",
+      "title": "Polyverse Wider",
+      "source": "https://polyversemusic.com/products/wider/",
+      "aliases": [
+        "Polyverse Wider"
+      ],
+      "preview": "assets/plugin-shots/preview/polyverse-wider.webp",
+      "full": "assets/plugin-shots/full/polyverse-wider.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "zynaptiq-unfilter",
+      "title": "Zynaptiq Unfilter",
+      "source": "https://www.zynaptiq.com/unfilter/",
+      "aliases": [
+        "Zynaptiq Unfilter",
+        "Unfilter"
+      ],
+      "preview": "assets/plugin-shots/preview/zynaptiq-unfilter.webp",
+      "full": "assets/plugin-shots/full/zynaptiq-unfilter.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "zynaptiq-unveil",
+      "title": "Zynaptiq Unveil",
+      "source": "https://www.zynaptiq.com/unveil/",
+      "aliases": [
+        "Zynaptiq Unveil",
+        "Unveil"
+      ],
+      "preview": "assets/plugin-shots/preview/zynaptiq-unveil.webp",
+      "full": "assets/plugin-shots/full/zynaptiq-unveil.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "uvi-shade",
+      "title": "UVI Shade",
+      "source": "https://www.uvi.net/shade",
+      "aliases": [
+        "UVI Shade",
+        "Shade"
+      ],
+      "preview": "assets/plugin-shots/preview/uvi-shade.webp",
+      "full": "assets/plugin-shots/full/uvi-shade.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "oeksound-soothe2",
+      "title": "Oeksound Soothe2",
+      "source": "https://oeksound.com/plugins/soothe2/",
+      "aliases": [
+        "Oeksound Soothe2",
+        "Soothe2",
+        "Soothe"
+      ],
+      "preview": "assets/plugin-shots/preview/oeksound-soothe2.webp",
+      "full": "assets/plugin-shots/full/oeksound-soothe2.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundtheory-gullfoss",
+      "title": "Soundtheory Gullfoss",
+      "source": "https://www.soundtheory.com/home",
+      "aliases": [
+        "Soundtheory Gullfoss",
+        "Gullfoss"
+      ],
+      "preview": "assets/plugin-shots/preview/soundtheory-gullfoss.webp",
+      "full": "assets/plugin-shots/full/soundtheory-gullfoss.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "waves-enigma",
+      "title": "Waves Enigma",
+      "source": "https://www.waves.com/plugins/enigma",
+      "aliases": [
+        "Waves Enigma",
+        "Enigma"
+      ],
+      "preview": "assets/plugin-shots/preview/waves-enigma.webp",
+      "full": "assets/plugin-shots/full/waves-enigma.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "waves-l3-multimaximizer",
+      "title": "Waves L3 Multimaximizer",
+      "source": "https://www.waves.com/plugins/l3-multimaximizer",
+      "aliases": [
+        "Waves L3 Multimaximizer",
+        "L3 Multimaximizer"
+      ],
+      "preview": "assets/plugin-shots/preview/waves-l3-multimaximizer.webp",
+      "full": "assets/plugin-shots/full/waves-l3-multimaximizer.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "waves-l3-ll",
+      "title": "Waves L3-LL MultiMaximizer",
+      "source": "https://www.waves.com/plugins/l3-ll-multimaximizer",
+      "aliases": [
+        "Waves L3-LL MultiMaximizer",
+        "L3-LL"
+      ],
+      "preview": "assets/plugin-shots/preview/waves-l3-ll.webp",
+      "full": "assets/plugin-shots/full/waves-l3-ll.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "waves-s1",
+      "title": "Waves S1 Stereo Imager",
+      "source": "https://www.waves.com/plugins/s1-stereo-imager",
+      "aliases": [
+        "Waves S1 Imager Stereo",
+        "Waves S1 Stereo Imager",
+        "S1 Imager"
+      ],
+      "preview": "assets/plugin-shots/preview/waves-s1.webp",
+      "full": "assets/plugin-shots/full/waves-s1.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "waves-z-noise",
+      "title": "Waves Z-Noise",
+      "source": "https://www.waves.com/plugins/z-noise",
+      "aliases": [
+        "Waves Z-Noise",
+        "Z-Noise"
+      ],
+      "preview": "assets/plugin-shots/preview/waves-z-noise.webp",
+      "full": "assets/plugin-shots/full/waves-z-noise.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "melda-mautopitch",
+      "title": "Melda MAutoPitch",
+      "source": "https://www.meldaproduction.com/MAutoPitch",
+      "aliases": [
+        "Melda MAutoPitch",
+        "MAutoPitch"
+      ],
+      "preview": "assets/plugin-shots/preview/melda-mautopitch.webp",
+      "full": "assets/plugin-shots/full/melda-mautopitch.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "melda-mvocoder",
+      "title": "Melda MVocoder",
+      "source": "https://www.meldaproduction.com/MVocoder",
+      "aliases": [
+        "Melda MVocoder",
+        "MVocoder"
+      ],
+      "preview": "assets/plugin-shots/preview/melda-mvocoder.webp",
+      "full": "assets/plugin-shots/full/melda-mvocoder.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "melda-mratio",
+      "title": "Melda MRatio",
+      "source": "https://www.meldaproduction.com/MRatio",
+      "aliases": [
+        "MRatio"
+      ],
+      "preview": "assets/plugin-shots/preview/melda-mratio.webp",
+      "full": "assets/plugin-shots/full/melda-mratio.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "melda-mlimitermb",
+      "title": "Melda MLimiterMB",
+      "source": "https://www.meldaproduction.com/MLimiterMB",
+      "aliases": [
+        "MLimiterMB"
+      ],
+      "preview": "assets/plugin-shots/preview/melda-mlimitermb.webp",
+      "full": "assets/plugin-shots/full/melda-mlimitermb.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "native-reaktor-6",
+      "title": "Native Instruments Reaktor 6",
+      "source": "https://www.native-instruments.com/en/products/komplete/synths/reaktor-6/",
+      "aliases": [
+        "Reaktor 6"
+      ],
+      "preview": "assets/plugin-shots/preview/native-reaktor-6.webp",
+      "full": "assets/plugin-shots/full/native-reaktor-6.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "native-skanner-xt",
+      "title": "Native Instruments Skanner XT",
+      "source": "https://www.native-instruments.com/en/products/komplete/synths/skanner-xt/",
+      "aliases": [
+        "Skanner XT",
+        "SkannerXT",
+        "Skanner"
+      ],
+      "preview": "assets/plugin-shots/preview/native-skanner-xt.webp",
+      "full": "assets/plugin-shots/full/native-skanner-xt.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "native-supercharger-gt",
+      "title": "Native Instruments Supercharger GT",
+      "source": "https://www.native-instruments.com/en/products/komplete/effects/supercharger-gt/",
+      "aliases": [
+        "Supercharger GT"
+      ],
+      "preview": "assets/plugin-shots/preview/native-supercharger-gt.webp",
+      "full": "assets/plugin-shots/full/native-supercharger-gt.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "native-transient-master",
+      "title": "Native Instruments Transient Master",
+      "source": "https://www.native-instruments.com/en/products/komplete/effects/transient-master/",
+      "aliases": [
+        "NI Transient Master"
+      ],
+      "preview": "assets/plugin-shots/preview/native-transient-master.webp",
+      "full": "assets/plugin-shots/full/native-transient-master.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "sound-particles",
+      "title": "Sound Particles",
+      "source": "https://soundparticles.com/products/sound-particles",
+      "aliases": [
+        "Sound Particles"
+      ],
+      "preview": "assets/plugin-shots/preview/sound-particles.webp",
+      "full": "assets/plugin-shots/full/sound-particles.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "boom-whoosh-machine",
+      "title": "BOOM Library Whoosh Machine",
+      "source": "https://www.boomlibrary.com/sound-effects/whoosh-machine/",
+      "aliases": [
+        "Whoosh Machine"
+      ],
+      "preview": "assets/plugin-shots/preview/boom-whoosh-machine.webp",
+      "full": "assets/plugin-shots/full/boom-whoosh-machine.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "glitchmachines-cataract",
+      "title": "Glitchmachines Cataract",
+      "source": "https://glitchmachines.com/products/cataract/",
+      "aliases": [
+        "Glitchmachines Cataract",
+        "Cataract"
+      ],
+      "preview": "assets/plugin-shots/preview/glitchmachines-cataract.webp",
+      "full": "assets/plugin-shots/full/glitchmachines-cataract.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "unfiltered-indent-2",
+      "title": "Unfiltered Audio Indent 2",
+      "source": "https://www.plugin-alliance.com/en/products/unfiltered_audio_indent_2.html",
+      "aliases": [
+        "Unfiltered Audio Indent 2",
+        "Indent 2"
+      ],
+      "preview": "assets/plugin-shots/preview/unfiltered-indent-2.webp",
+      "full": "assets/plugin-shots/full/unfiltered-indent-2.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "minimal-rift",
+      "title": "Minimal Audio Rift",
+      "source": "https://www.minimal.audio/products/rift",
+      "aliases": [
+        "Rift"
+      ],
+      "preview": "assets/plugin-shots/preview/minimal-rift.webp",
+      "full": "assets/plugin-shots/full/minimal-rift.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "minimal-rift-feedback-lite",
+      "title": "Minimal Audio Rift Feedback Lite",
+      "source": "https://www.minimal.audio/products/rift-feedback-lite",
+      "aliases": [
+        "Rift Feedback Lite"
+      ],
+      "preview": "assets/plugin-shots/preview/minimal-rift-feedback-lite.webp",
+      "full": "assets/plugin-shots/full/minimal-rift-feedback-lite.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "minimal-morph-eq",
+      "title": "Minimal Audio Morph EQ",
+      "source": "https://www.minimal.audio/products/morph-eq",
+      "aliases": [
+        "Morph EQ"
+      ],
+      "preview": "assets/plugin-shots/preview/minimal-morph-eq.webp",
+      "full": "assets/plugin-shots/full/minimal-morph-eq.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "vital",
+      "title": "Vital",
+      "source": "https://vital.audio/",
+      "aliases": [
+        "Vital"
+      ],
+      "preview": "assets/plugin-shots/preview/vital.webp",
+      "full": "assets/plugin-shots/full/vital.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "ableton-vocoder",
+      "title": "Ableton Vocoder",
+      "source": "https://www.ableton.com/en/live-manual/live-audio-effect-reference/#vocoder",
+      "aliases": [
+        "Ableton Vocoder"
+      ],
+      "preview": "assets/plugin-shots/preview/ableton-vocoder.webp",
+      "full": "assets/plugin-shots/full/ableton-vocoder.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "cockos-reaplugs",
+      "title": "Cockos ReaPlugs",
+      "source": "https://www.reaper.fm/reaplugs/",
+      "aliases": [
+        "Cockos ReaPitch",
+        "ReaPitch",
+        "ReaEQ"
+      ],
+      "preview": "assets/plugin-shots/preview/cockos-reaplugs.webp",
+      "full": "assets/plugin-shots/full/cockos-reaplugs.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "wwise",
+      "title": "Audiokinetic Wwise",
+      "source": "https://www.audiokinetic.com/en/wwise/overview/",
+      "aliases": [
+        "Wwise"
+      ],
+      "preview": "assets/plugin-shots/preview/wwise.webp",
+      "full": "assets/plugin-shots/full/wwise.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "serato-pitchntime",
+      "title": "Serato Pitch 'n Time Pro",
+      "source": "https://serato.com/pitchntime-pro",
+      "aliases": [
+        "Serato Pitch 'n Time Pro"
+      ],
+      "preview": "assets/plugin-shots/preview/serato-pitchntime.webp",
+      "full": "assets/plugin-shots/full/serato-pitchntime.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "blue-cat-chorus",
+      "title": "Blue Cat Chorus",
+      "source": "https://www.bluecataudio.com/Products/Product_Chorus/",
+      "aliases": [
+        "Blue Cat Chorus"
+      ],
+      "preview": "assets/plugin-shots/preview/blue-cat-chorus.webp",
+      "full": "assets/plugin-shots/full/blue-cat-chorus.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "brainworx-bx-subsynth",
+      "title": "Brainworx bx_subsynth",
+      "source": "https://www.plugin-alliance.com/en/products/bx_subsynth.html",
+      "aliases": [
+        "Brainworx Bx_Subsynth",
+        "bx_subsynth"
+      ],
+      "preview": "assets/plugin-shots/preview/brainworx-bx-subsynth.webp",
+      "full": "assets/plugin-shots/full/brainworx-bx-subsynth.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "sixth-sample-deelay",
+      "title": "Sixth Sample Deelay",
+      "source": "https://sixthsample.com/deelay/",
+      "aliases": [
+        "Deelay"
+      ],
+      "preview": "assets/plugin-shots/preview/sixth-sample-deelay.webp",
+      "full": "assets/plugin-shots/full/sixth-sample-deelay.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "paulxstretch",
+      "title": "PaulXStretch",
+      "source": "https://sonosaurus.com/paulxstretch/",
+      "aliases": [
+        "PaulXStretch",
+        "PaulStretch"
+      ],
+      "preview": "assets/plugin-shots/preview/paulxstretch.webp",
+      "full": "assets/plugin-shots/full/paulxstretch.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "soundhack-pitch-delay",
+      "title": "SoundHack Pitch Delay",
+      "source": "https://www.soundhack.com/freeware/",
+      "aliases": [
+        "SoundHack Pitch Delay"
+      ],
+      "preview": "assets/plugin-shots/preview/soundhack-pitch-delay.webp",
+      "full": "assets/plugin-shots/full/soundhack-pitch-delay.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "sonic-academy-kick-3",
+      "title": "Sonic Academy Kick 3",
+      "source": "https://www.sonicacademy.com/products/kick-3",
+      "aliases": [
+        "Kick 3"
+      ],
+      "preview": "assets/plugin-shots/preview/sonic-academy-kick-3.webp",
+      "full": "assets/plugin-shots/full/sonic-academy-kick-3.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "slate-infinity-bass",
+      "title": "Slate Digital Infinity Bass",
+      "source": "https://slatedigital.com/infinity-bass/",
+      "aliases": [
+        "Slate Infinity Bass"
+      ],
+      "preview": "assets/plugin-shots/preview/slate-infinity-bass.webp",
+      "full": "assets/plugin-shots/full/slate-infinity-bass.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    },
+    {
+      "slug": "twisted-tools-s-layer",
+      "title": "Twisted Tools S-Layer",
+      "source": "https://twistedtools.com/shop/reaktor/s-layer/",
+      "aliases": [
+        "S-Layer",
+        "Reaktor 6 S-Layer"
+      ],
+      "preview": "assets/plugin-shots/preview/twisted-tools-s-layer.webp",
+      "full": "assets/plugin-shots/full/twisted-tools-s-layer.webp",
+      "match": "官方参考截图，已按插件名与厂商页面核对"
+    }
+  ],
+  "failures": [
+    {
+      "slug": "tonsturm-traveler",
+      "title": "Tonsturm Traveler",
+      "source": "https://tonsturm.com/product/traveler",
+      "error": "Tonsturm Traveler: Chrome screenshot failed (null) [56356:52520:0516/171826.259:ERROR:components\\device_event_log\\device_event_log_impl.cc:198] [17:18:26.259] USB: usb_service_win.cc:105 SetupDiGetDeviceProperty({{A45C254E-DF1C-4EFD-8020-67D146A850E0}, 6}) failed: 找不到元素。 (0x490)\r\nCreated TensorFlow Lite XNNPACK delegate for CPU.\r\n[56356:59012:0516/171826.572:ERROR:google_apis\\gcm\\engine\\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT\r\n[56356:59012:0516/171853.575:ERROR:google_apis\\gcm\\engine\\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT\r\n"
+    },
+    {
+      "slug": "reveal-spire",
+      "title": "Reveal Sound Spire",
+      "source": "https://reveal-sound.com/plug-ins/spire",
+      "error": "Reveal Sound Spire: Chrome screenshot failed (0) 10448 bytes written to file D:\\AI\\音频学习\\sfx-knowledge-site\\assets\\plugin-shots\\raw\\reveal-spire.png\r\n"
+    }
+  ]
+}
