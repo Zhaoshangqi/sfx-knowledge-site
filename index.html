@@ -507,7 +507,7 @@
       </div>
     </div>
     <div class="header-stats">
-      <span class="stat-pill">57 个视频模块</span>
+      <span class="stat-pill">61 个视频模块</span>
       <span class="stat-pill">6 个音效分类</span>
       <span class="stat-pill">截图按需加载</span>
     </div>
@@ -591,14 +591,15 @@
   }
 ];
     const categoryCounts = {
-  "all": 57,
-  "magic": 19,
-  "creature": 7,
-  "impact": 10,
-  "scifi": 10,
-  "environment": 7,
-  "workflow": 4
+  "all": 61,
+  "magic": 35,
+  "creature": 16,
+  "impact": 29,
+  "scifi": 27,
+  "environment": 16,
+  "workflow": 28
 };
+
     const records = [
   {
     "id": "543e84ff",
@@ -8665,47 +8666,1132 @@
       "artillery",
       "game audio"
     ]
+  },
+  {
+    "id": "yt-6oJUotZGz0k",
+    "title": "Noah Sitrin：通用高科技 UI 音效调色板",
+    "videoId": "6oJUotZGz0k",
+    "url": "https://www.youtube.com/watch?v=6oJUotZGz0k",
+    "source": "Noah Sitrin",
+    "category": "scifi",
+    "secondaryCategories": [
+      "workflow"
+    ],
+    "addedAt": "2026-05-16",
+    "updatedAt": "2026-05-16",
+    "updateNote": "新增 1080p 插件与工程截图，按 UI 素材类型拆成可复用设计模块。",
+    "summary": "这条视频不是逐个 UI 动作做成品，而是先生产一套可随机组合的高科技 UI 素材调色板：impulses、trills、telemetry、bleepies、clicks、squidges、swooshes。核心流程是先用 Kick 3、Phase Plant、Vital、Mace 和素材库制造大量短素材，再在 REAPER 中筛选、批量导出、导入 S-Layer 随机组合，最后用 grain、pitch、Soothe、limiter 等后处理生成可用于 HUD、装备、按钮和科幻反馈的完整 palette。",
+    "coreIdeas": [
+      "UI 音效可以先做“素材调色板”，再由采样器随机组合；这比每个按钮从零开始更快，也更容易保持同一套界面的声音语言。",
+      "每类素材承担不同功能：impulse 给点击瞬态，trill 给上扬/扫描，telemetry 给机器人式数据反馈，bleepie 给短促确认，squidge 给有机科技触感，swoosh 给位移和展开。",
+      "Phase Plant 的多个振荡器互相调制、随机 pitch 和 harmonics，可以快速做出 droid / telemetry 变化；Disperser 用来把硬 click 变成圆润、可堆叠的峰值。",
+      "Mace 这类 AI/生成式 synth 做出的粗糙金属 click 可以通过 Soothe、RX De-click 的 output-clicks-only、RX De-crackle 的 output-crackle-only 反向提取可用颗粒。",
+      "Squidge 类 UI 不要有明确音乐音高；用 pitch/shift gesture 暗示方向，但避免和配乐发生调性冲突。",
+      "批量导出时先把 selects 规整为 one-shot，再 normalize 到适度峰值；高频刺耳素材不要压得太满，后面还要留给 Soothe 和采样器再塑形。",
+      "S-Layer 的价值不是一次塞满所有层，而是随机选 127 个样本、关闭一部分层、再用 grain 和 pitch 产生大量变化。复杂度来自可控随机，而不是堆满所有声音。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "Kick 3 做 impulse 瞬态素材",
+        "detail": "先用 Kick 3 做短促、硬朗、带一点 zap 感的 impulse。它负责 UI 的即时点击反馈，可以像小型电子 kick 一样有明确攻击，但不需要低频拖尾。录制 buffer 时持续微调，让同一类素材产生多种 transient 形状。",
+        "params": [
+          "Kick 3 default-like patch",
+          "短 attack / 短 decay",
+          "少量 zap edge",
+          "用于 UI click / input transient"
+        ],
+        "imageKey": "ns-ui-kick3-impulse"
+      },
+      {
+        "order": 2,
+        "name": "Phase Plant 做 trills 和扫描音",
+        "detail": "Trill 来自 Phase Plant 的多振荡器互调 patch。通过 Shift、Harmonic、Remod/Frequency Shift 之类参数和滚动 LFO 改变频谱，让声音产生上扬、闪烁和扫描感。长素材可以把 sustain 拉满；短 UI 动作则降低 sustain，用 decay 做出短促跳动。",
+        "params": [
+          "Shift / Harmonic 互调",
+          "滚动 LFO 调 rate",
+          "长声：Sustain 100%",
+          "短声：降低 sustain，改 decay"
+        ],
+        "imageKey": "ns-ui-phaseplant-trill"
+      },
+      {
+        "order": 3,
+        "name": "Telemetry 用 FM、随机 pitch 和 Disperser 圆滑化",
+        "detail": "Telemetry patch 由三个振荡器互相调制，宏旋钮控制 FM depth，快速 random LFO 推 master pitch / harmonics，形成经典 droid 数据反馈。后面接 Disperser，把过硬的点击折成更圆的峰值，再用 chorus 加宽单声道质感。",
+        "params": [
+          "3 oscillators cross-FM",
+          "Macro：FM Depth",
+          "Random pitch / harmonics",
+          "Disperser：round click peaks",
+          "Chorus：stereo width"
+        ],
+        "imageKey": "ns-ui-telemetry-fm-chain"
+      },
+      {
+        "order": 4,
+        "name": "Bleepies 用随机 wavetable 和 LFO 生成短确认音",
+        "detail": "Bleepie 负责按钮、确认和小型 HUD 反馈。随机化 wavetable、LFO rate 与 oscillator shift，让每个短音都略有差异；后级 limiter、Disperser、高通与 Soothe 控制刺耳高频。",
+        "params": [
+          "随机 wavetable",
+          "LFO rate 随机",
+          "LFO mod Shift",
+          "High-pass 清低频",
+          "Soothe later for harshness"
+        ],
+        "imageKey": "ns-ui-bleepies-random-lfo"
+      },
+      {
+        "order": 5,
+        "name": "Mace + RX 反向提取 tactile clicks",
+        "detail": "Mace 生成的金属/foley click 先提音量，再用 Soothe 稳定刺耳峰值。RX De-click 可以开 output clicks only，只拿被识别出来的 click；RX De-crackle 也可 output crackle only，把噪声里的细小颗粒抽成 UI 触感层。最后用很快的 transient shaper 降低过锐 attack。",
+        "params": [
+          "Soothe：tame harshness",
+          "RX De-click：Output clicks only",
+          "RX De-crackle：Output crackle only",
+          "Transient shaper：fast speed / attack down"
+        ],
+        "imageKey": "ns-ui-mace-click-rx"
+      },
+      {
+        "order": 6,
+        "name": "Vital + GRM Shift 做 squidge 科技触感",
+        "detail": "Squidge 用 Vital 的双振荡器和 smear 形成有机、黏性的数字层，oscillator 1 给 oscillator 2 做 FM，再高通只保留 crispy top。轻微 flanging 和 GRM Shift 会把 clickiness、noise 与 comb resonance 变得更顺滑。",
+        "params": [
+          "Vital osc2：two voices + smear",
+          "Osc1 FM osc2",
+          "High-pass：只留 crispy top",
+          "Flanging 少量",
+          "GRM Shift：smooth click/noise"
+        ],
+        "imageKey": "ns-ui-vital-squidge-grm"
+      },
+      {
+        "order": 7,
+        "name": "REAPER 批量导出 selects 给采样器",
+        "detail": "把可用 one-shot 切出来后，用 REAPER Batch Item Converter 按 selected media items 批量导出到子目录。视频中导出 stereo 并 normalize 到约 -7 dB，避免过刺素材在进入 S-Layer 前已经被压死。",
+        "params": [
+          "Batch Item Converter",
+          "Selected media items",
+          "Stereo output",
+          "Normalize 约 -7 dB",
+          "289 items 示例"
+        ],
+        "imageKey": "ns-ui-batch-converter"
+      },
+      {
+        "order": 8,
+        "name": "S-Layer 随机组合并用 grain 制造变化",
+        "detail": "S-Layer 一次最多装 127 个样本；导入后不要让所有层都响，先 mute 一部分层，保留清楚的 attack 和 sustain，再随机 pitch、randomize、启用 grain/stretch 生成 smear 版本。Soothe 和 limiter 放在后面控制高频与峰值。",
+        "params": [
+          "S-Layer：127 samples",
+          "Mute 部分 layers",
+          "Pitch down / octave range",
+          "Randomize variations",
+          "Grain/stretch smear",
+          "Soothe + limiter"
+        ],
+        "imageKey": "ns-ui-slayer-grain-random"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Kick 3",
+        "purpose": "生成 UI impulse / click 的基础瞬态。",
+        "settings": [
+          "短 attack",
+          "短 decay",
+          "轻微 zap",
+          "不追求完整 kick 低频"
+        ]
+      },
+      {
+        "name": "Phase Plant",
+        "purpose": "通过多振荡器互调、随机 pitch 和 harmonic motion 生成 trills、telemetry、bleepies。",
+        "settings": [
+          "FM Depth macro",
+          "Shift / Harmonic modulation",
+          "Random LFO",
+          "Sustain / decay 按动作长度调整"
+        ]
+      },
+      {
+        "name": "Disperser",
+        "purpose": "把硬 click 和 telemetry 的尖峰变得更圆滑，便于堆叠。",
+        "settings": [
+          "放在 clicky synth 后",
+          "用于 round peaks / smooth transient"
+        ]
+      },
+      {
+        "name": "Chorus / Frequency Shifter",
+        "purpose": "给单声道合成 UI 层增加宽度、漂移和数字感。",
+        "settings": [
+          "Chorus 加 stereo width",
+          "Frequency shift 做细微运动"
+        ]
+      },
+      {
+        "name": "Mace",
+        "purpose": "生成粗糙金属、foley 和 AI 风格 click，作为 tactile UI source。",
+        "settings": [
+          "先提电平",
+          "后级用 Soothe / RX 清理"
+        ]
+      },
+      {
+        "name": "Soothe",
+        "purpose": "控制 bleepie/click 中刺耳的高频峰值。",
+        "settings": [
+          "放在生成式 click 后",
+          "也可放在 S-Layer 后级"
+        ]
+      },
+      {
+        "name": "iZotope RX De-click / De-crackle",
+        "purpose": "反向提取 click-only 或 crackle-only 颗粒，做 UI 细节层。",
+        "settings": [
+          "Output clicks only",
+          "Output crackle only"
+        ]
+      },
+      {
+        "name": "Vital",
+        "purpose": "制作 squidge 类有机科技层。",
+        "settings": [
+          "Osc2 two voices + smear",
+          "Osc1 FM",
+          "High-pass crispy top"
+        ]
+      },
+      {
+        "name": "GRM Shift",
+        "purpose": "平滑 squidge 的 click/noise/comb resonance，让触感不刺。",
+        "settings": [
+          "放在 Vital / flanging 后"
+        ]
+      },
+      {
+        "name": "S-Layer",
+        "purpose": "把大量 one-shot 随机组合成可快速出变体的 UI 采样器。",
+        "settings": [
+          "127 samples",
+          "mute 部分层",
+          "grain/stretch",
+          "random pitch"
+        ]
+      }
+    ],
+    "materials": [
+      "Kick-like impulse",
+      "Phase Plant Galactic Assistant-style trill",
+      "Phase Plant telemetry FM patch",
+      "Mace generated metal/foley clicks",
+      "Vital squidge patch",
+      "Magic Element sparkler / whoosh / ignite / crackle",
+      "REAPER selected one-shots",
+      "S-Layer random sample pool"
+    ],
+    "keywords": [
+      "UI palette",
+      "HUD",
+      "impulse",
+      "trill",
+      "telemetry",
+      "bleepie",
+      "click",
+      "squidge",
+      "swoosh",
+      "Phase Plant",
+      "Kick 3",
+      "Mace",
+      "Vital",
+      "GRM Shift",
+      "S-Layer",
+      "REAPER Batch Item Converter"
+    ],
+    "tips": [
+      "做 UI 库时先按功能命名素材类型，而不是按插件命名；后期找声音会快很多。",
+      "短 UI 声要避免明确调性，尤其是 squidge 和 pitch gesture，否则很容易和音乐冲突。",
+      "S-Layer 随机时如果太满，先关层，不要继续加插件；UI 的可读性比复杂度重要。",
+      "生成式 click 经常刺耳，先抽取可用颗粒，再用 transient 和 Soothe 控峰。"
+    ]
+  },
+  {
+    "id": "yt-h1uYic59pf0",
+    "title": "Noah Sitrin：SkannerXT Megasmudge 变形设计",
+    "videoId": "h1uYic59pf0",
+    "url": "https://www.youtube.com/watch?v=h1uYic59pf0",
+    "source": "Noah Sitrin",
+    "category": "scifi",
+    "secondaryCategories": [
+      "workflow",
+      "magic"
+    ],
+    "addedAt": "2026-05-16",
+    "updatedAt": "2026-05-16",
+    "updateNote": "新增 1080p 插件截图，整理 SkannerXT、Saturn、Triad、Traveler、Manipulator 与 Shade 的可复用链路。",
+    "summary": "这条视频把 SkannerXT 的 SFX preset 通过 Preset Morpher 变成可表演的长素材，再用 Unveil/Unfilter 清掉内置空间和滤波，经过 Saturn 2 的 Mega Smudge、多实例叠加、Triad 多段 granulator、OTT、Traveler、Manipulator、Shade 自动化和 0.75 倍拉伸，做出巨大、粘稠、科幻且可切片的能量/机械变形素材。",
+    "coreIdeas": [
+      "SkannerXT 的价值不在默认音色，而在 SFX preset 之间的 morph；把 morpher speed 降下来，就能录出连续变化的过渡材料。",
+      "很多 preset 自带 reverb、delay、filter，后续要重新设计空间时先用 Unveil 和 Unfilter 把 baked-in ambience / coloration 拉平。",
+      "Saturn 2 的 Mega Smudge 不是普通失真，而是多频段的短延迟、滤波、随机调制和 smear；叠两次会因为随机 modulation 不同而更复杂。",
+      "Triad 每个频段放 granulator，并用 chaos generator 同时推 grain size、speed、rate，可以把单一 synth motion 打碎成跨频段颗粒运动。",
+      "重处理链会损失能量，OTT 和 Pro-L 可以把动态和电平重新拉回，但需要听是否把噪声也拉得太靠前。",
+      "Traveler 适合把长素材压成 impact 或 whoosh 的形状；Manipulator 则适合再制造音高/共振/人声化异常。",
+      "最后的 Shade 低通自动化和整体 0.75 倍拉伸，是把“效果演示”变成“可放进设计里的运动”的关键。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "用 SkannerXT SFX preset 做可表演 morph",
+        "detail": "选择 laser / glider 一类 SFX preset，打开 Preset Morpher。Speed 100 会瞬间跳变；把 speed 降低后，在 preset 位置之间手动移动，录下慢速变形。也可以把 global LFO 映射到 morpher position，让 preset 自动游走。",
+        "params": [
+          "SkannerXT Preset Morpher",
+          "Speed 100 = instant",
+          "降低 speed 做 transition",
+          "位置 1/2/6 等可手动表演",
+          "Global LFO 可映射 morpher"
+        ],
+        "imageKey": "ns-smudge-skanner-morpher"
+      },
+      {
+        "order": 2,
+        "name": "Unveil + Unfilter 清理 preset 自带空间",
+        "detail": "SkannerXT preset 往往带了 reverb、delay 和滤波。先用 Unveil 减少过多 ambience，再用 Unfilter 拉平不自然的频响，这样后续 Saturn、Triad 和 reverb 才能重新塑造声音，而不是叠在旧空间上。",
+        "params": [
+          "Zynaptiq Unveil",
+          "Zynaptiq Unfilter",
+          "去掉 baked reverb/delay/filter",
+          "录长 buffer 再切片"
+        ],
+        "imageKey": "ns-smudge-unveil-unfilter"
+      },
+      {
+        "order": 3,
+        "name": "Saturn 2 Mega Smudge 做多段粘稠运动",
+        "detail": "FabFilter Saturn 2 的多段 patch 每个 band 都在做不同的 smudge、filtery、短点击延迟和 modulation。它让干净的 Skanner motion 变成粘稠、破碎、带频段差异的能量材料。",
+        "params": [
+          "FabFilter Saturn 2",
+          "Multiband smudge",
+          "Filtery / short delay-like movement",
+          "每段不同 modulation"
+        ],
+        "imageKey": "ns-smudge-saturn-mega"
+      },
+      {
+        "order": 4,
+        "name": "叠两次 smudge，并用 Triad granular 打散",
+        "detail": "同一个 Saturn patch 连续叠两次会因为随机调制不一致而产生更复杂的 motion。之后进入 Kilohearts Triad，每个频段放 granulator；grain size、speed、rate 被 chaos generator 推动，形成跨频段颗粒化。",
+        "params": [
+          "Double Saturn smudge",
+          "Kilohearts Triad",
+          "3 bands / 3 granulators",
+          "Chaos mod grain size/speed/rate",
+          "OTT restore movement"
+        ],
+        "imageKey": "ns-smudge-triad-granulators"
+      },
+      {
+        "order": 5,
+        "name": "Traveler / Manipulator 继续塑形成冲击或掠过",
+        "detail": "Tonsturm Traveler 可以把长素材转成 impact、whoosh 或 swell 的 envelope；Manipulator 则进一步改变 pitch/formant/resonance，让素材更像异形机械或能量体。处理后可再用 OTT 和 limiter 把电平拉回。",
+        "params": [
+          "Tonsturm Traveler：impact / whoosh shaping",
+          "Polyverse Manipulator：pitch/formant variation",
+          "Pro-L 可提升约 20 dB",
+          "OTT 恢复动态存在感"
+        ],
+        "imageKey": "ns-smudge-traveler-manipulator"
+      },
+      {
+        "order": 6,
+        "name": "Shade 低通自动化做 sweepy 控制",
+        "detail": "Shade 负责最终 sweep：低通频率先下压再打开，mix 约 85%，让高频仍有一点漏出。100% wet 会太极端，85% 能保留原始高频细节又获得明显扫动。",
+        "params": [
+          "Shade low-pass",
+          "LPF frequency down then up",
+          "Mix 约 85%",
+          "保留少量 high-end leak"
+        ],
+        "imageKey": "ns-smudge-shade-automation"
+      },
+      {
+        "order": 7,
+        "name": "整体拉到 0.75 倍并补回高频",
+        "detail": "把最终设计整体拉慢到 0.75 倍，给每个事件更多空间。由于 48 kHz 拉伸可能削高频，拉慢后再用 Unfilter 补亮，让慢速版本仍然有清晰 edge。",
+        "params": [
+          "Stretch 0.75x",
+          "元素间距更宽",
+          "48 kHz stretch 会削高频",
+          "Unfilter after stretch"
+        ],
+        "imageKey": "ns-smudge-slowdown-unfilter"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "SkannerXT",
+        "purpose": "用 SFX preset 和 Preset Morpher 生成可表演的长变形素材。",
+        "settings": [
+          "降低 Morpher Speed",
+          "手动或 LFO 移动 preset position"
+        ]
+      },
+      {
+        "name": "Zynaptiq Unveil",
+        "purpose": "减少 preset 中已有的 reverb/ambience，让后续空间重新可控。",
+        "settings": [
+          "放在 SkannerXT 后",
+          "先清旧空间再设计新空间"
+        ]
+      },
+      {
+        "name": "Zynaptiq Unfilter",
+        "purpose": "拉平 preset 或拉伸后的滤波色差，恢复高频清晰度。",
+        "settings": [
+          "Unveil 后",
+          "0.75x stretch 后也可再用"
+        ]
+      },
+      {
+        "name": "FabFilter Saturn 2",
+        "purpose": "Mega Smudge 多段处理，制造粘稠失真、滤波和短延迟式运动。",
+        "settings": [
+          "Multiband",
+          "可叠两次",
+          "随机 modulation 产生差异"
+        ]
+      },
+      {
+        "name": "Kilohearts Triad",
+        "purpose": "三频段 granular 处理，让每个频段以不同速度破碎。",
+        "settings": [
+          "Granulator per band",
+          "Chaos controls size/speed/rate"
+        ]
+      },
+      {
+        "name": "OTT",
+        "purpose": "重处理后恢复动态密度和可听运动。",
+        "settings": [
+          "放在 Triad 或 Manipulator 后",
+          "注意不要把噪声拉太前"
+        ]
+      },
+      {
+        "name": "Tonsturm Traveler",
+        "purpose": "把长材质塑形成 impact / whoosh / swell。",
+        "settings": [
+          "按目标动作改 envelope"
+        ]
+      },
+      {
+        "name": "FabFilter Pro-L",
+        "purpose": "重链路后大幅恢复电平。",
+        "settings": [
+          "视频中提到约 +20 dB"
+        ]
+      },
+      {
+        "name": "Polyverse Manipulator",
+        "purpose": "继续改变 pitch/formant/resonance，增加异常生物或机械感。",
+        "settings": [
+          "用于 variation pass"
+        ]
+      },
+      {
+        "name": "UVI Shade",
+        "purpose": "自动化低通扫动，控制最终 sweep。",
+        "settings": [
+          "LPF down then up",
+          "Mix 约 85%"
+        ]
+      }
+    ],
+    "materials": [
+      "SkannerXT laser/glider SFX presets",
+      "长时间 morph buffer",
+      "Saturn smudge output",
+      "Triad granular output",
+      "Traveler shaped impact/woosh",
+      "Shade sweep version",
+      "0.75x slowed final"
+    ],
+    "keywords": [
+      "SkannerXT",
+      "Preset Morpher",
+      "Megasmudge",
+      "Saturn 2",
+      "Triad",
+      "granular",
+      "Chaos",
+      "Unveil",
+      "Unfilter",
+      "Traveler",
+      "Manipulator",
+      "Shade",
+      "OTT",
+      "Pro-L",
+      "sci-fi smear"
+    ],
+    "tips": [
+      "录 morph 时不要只录一个好瞬间，录长 buffer；后面切片才有足够转折。",
+      "叠同一个随机调制 patch 时，第二遍不是简单加厚，而是增加相位和调制差异。",
+      "重处理链后一定要用响度匹配 A/B，不然 Pro-L 提升会让你误以为所有处理都更好。",
+      "低通 sweep 的 mix 留一点干声高频，能让巨大的 smear 仍然读得清。"
+    ]
+  },
+  {
+    "id": "yt-EQw3BCxIRPk",
+    "title": "Dietrich Dice：用电击器做科幻狙击枪",
+    "videoId": "EQw3BCxIRPk",
+    "url": "https://www.youtube.com/watch?v=EQw3BCxIRPk",
+    "source": "Dietrich Dice Sound",
+    "category": "impact",
+    "secondaryCategories": [
+      "scifi",
+      "workflow"
+    ],
+    "addedAt": "2026-05-16",
+    "updatedAt": "2026-05-16",
+    "updateNote": "新增 1080p 工程与插件链截图，补充 reload、power-up、tonal shot、tail 的拆分方法。",
+    "summary": "这条视频用电击器、Nerf/airsoft、棘轮、相机、裁纸刀、订书机、皮革、橡胶、浴帘等日常录音，重设计 Apex 风格科幻狙击枪。重点不是找“枪声库”，而是把 reload foley、cable/charging、barrel spin、tonal lead-up、normal impact、tonal reverb 和 tail 拆成不同事件层，再用 Phase Plant、OTT、Manipulator、Frequency Shifter、Saturn、Rift、Fresh Air、Convolution、Disperser、Clipper 等链路把普通物件塑造成武器。",
+    "coreIdeas": [
+      "科幻武器可以从日常物件开始：电击器提供能量边缘，Nerf/airsoft 给塑料机械动作，棘轮/裁纸刀/订书机给 reload，皮革/橡胶给 cable 张力，浴帘可变成夸张 tail。",
+      "Reload 的可信度来自小 foley 层的时序，而不是单个大机械库素材；box cutter、stapler、camera、air pistol 分别负责滑动、锁扣、机械 snap 和金属 sheen。",
+      "Power-up 可以用 sample length 自动化模拟机械加速：把 metal taps 放进 Phase Plant，随着 ramp 缩短 sample length，让重复 tap 越来越密，像枪管旋转或充能。",
+      "Tonal gunshot 的 lead-up 与 body 要分开：lead-up 用 flanger、Manipulator、filter、frequency shift、Saturn、tremolo、phaser、convolution 和宽度处理做能量线，impact 再负责瞬态。",
+      "Gunshot reverb / tail 可以由 duplicate bus 或单独 source 做，不必把主枪声直接加很湿的 reverb；这样瞬态保持干净，尾巴可以极端处理。",
+      "Disperser 多实例可以给枪声 impact 增加科幻相位峰值和 laser-like punch，但要配合 EQ/clipper 控制刺耳。",
+      "线性视频里可以放两个 impact 来增强枪声，互动游戏里则要按事件拆成 pre-fire、shot、mech、tail，方便中间件随机和延迟控制。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "录制非枪械来源，先建立材料清单",
+        "detail": "视频先录电击器、Nerf、airsoft pistol、ratchet tightener、digital camera、pocket knife、box cutter、stapler、金属物、皮革、橡胶和浴帘等。创作逻辑是把每个物件当成某个枪械子事件，而不是追求原始录音像枪。",
+        "params": [
+          "Taser：electric edge",
+          "Nerf / airsoft：toy mech snap",
+          "Ratchet / box cutter / stapler：reload",
+          "Leather + rubber：cable stress",
+          "Shower curtain：tail source"
+        ],
+        "imageKey": "dd-sniper-recording-kit"
+      },
+      {
+        "order": 2,
+        "name": "先堆出 general tonal source",
+        "detail": "把多条录音和初步处理堆成一个长 tonal source，用来后续切成 sci-fi lead-up、impact sweetener 或 tail。这个阶段重点是得到可切片的频谱运动，不急着对齐成最终枪声。",
+        "params": [
+          "Stack recordings",
+          "Long tonal bed",
+          "先做可切片 source",
+          "后续再按事件裁剪"
+        ],
+        "imageKey": "dd-sniper-tonal-source-chain"
+      },
+      {
+        "order": 3,
+        "name": "Reload Foley 用小物件分层",
+        "detail": "Reload 部分主要由 box cutter、stapler、digital camera、Nerf gun、air pistol 组成。airsoft pistol 可用 OTT、saturation、EQ 做得更硬；末尾加一层金属 tap 当 sheen，让机械动作读得更清楚。",
+        "params": [
+          "Box cutter：slide",
+          "Stapler / camera：click-lock",
+          "Airsoft pistol：OTT + saturation",
+          "Metal tap：end sheen"
+        ],
+        "imageKey": "dd-sniper-reload-foley"
+      },
+      {
+        "order": 4,
+        "name": "Cable / charging 用皮革橡胶加合成甜味",
+        "detail": "Cable 声不是只用电流噪声，而是先用 leather jacket 和 rubber sandal 做拉扯压力，再加 Phase Plant Arc Machine 一类合成层，补能量弧线与科幻识别。",
+        "params": [
+          "Leather jacket：stress body",
+          "Rubber sandal：rubber pull",
+          "Phase Plant Arc Machine：electric sweetener",
+          "物理张力 + 合成能量"
+        ],
+        "imageKey": "dd-sniper-cable-phaseplant"
+      },
+      {
+        "order": 5,
+        "name": "Power-up 用 Sample Length 自动化做枪管加速",
+        "detail": "把 metal taps 作为 Phase Plant source，自动化 sample length 往下缩短；同样的 tap 会越来越密，听起来像枪管、马达或充能机构逐渐加速。",
+        "params": [
+          "Phase Plant sample source：metal taps",
+          "Automate sample length downward",
+          "重复 tap 变密",
+          "模拟 barrel spin / charge-up"
+        ],
+        "imageKey": "dd-sniper-powerup-sample-length"
+      },
+      {
+        "order": 6,
+        "name": "Tonal Gunshot Lead-up 做能量线",
+        "detail": "Tonal shot 的前导层使用 sci-fi whoosh/impact source，再接 flanger、Manipulator、filter、frequency shifter、Saturn、tremolo、Ripple Phaser、convolution reverb 和宽度处理，让枪声在开火前就有电磁蓄力线。",
+        "params": [
+          "Flanger",
+          "Manipulator",
+          "Filter",
+          "Frequency Shifter",
+          "Saturn",
+          "Tremolo",
+          "Ripple Phaser",
+          "Convolution reverb",
+          "Width / Haas-like widening"
+        ],
+        "imageKey": "dd-sniper-tonal-gunshot-chain"
+      },
+      {
+        "order": 7,
+        "name": "Tonal Reverb / Tail 走独立处理链",
+        "detail": "尾音不是主枪声直接加湿，而是复制 tonal/explosion 层到 tail chain。视频中可见 Rift、Saturn 2、filter、MRatio、Fresh Air、convolution reverb、再滤波和 room/reverb 类处理，用来做大而长的能量残响。",
+        "params": [
+          "Duplicate tonal/explosion layer",
+          "Rift",
+          "Saturn 2",
+          "Filter",
+          "MRatio",
+          "Fresh Air",
+          "Convolution reverb / BOOM IR",
+          "Room/reverb layer"
+        ],
+        "imageKey": "dd-sniper-tonal-reverb-chain"
+      },
+      {
+        "order": 8,
+        "name": "Normal Shot Tail 可由浴帘等非枪声材料重塑",
+        "detail": "普通枪声尾巴没有真实枪声库也能做：浴帘击打经过 Saturn 2、FabFilter Pro-Q 3、Bloom、Convolver、Transient Shaper、Clipper 等处理后，变成夸张、有空气压力的枪声尾音。",
+        "params": [
+          "Shower curtain source",
+          "Saturn 2",
+          "FabFilter Pro-Q 3",
+          "Bloom",
+          "Convolver",
+          "Transient Shaper",
+          "Clipper"
+        ],
+        "imageKey": "dd-sniper-gunshot-tail-chain"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Phase Plant",
+        "purpose": "用于 Arc Machine 甜味层和 metal taps sample-length power-up。",
+        "settings": [
+          "Sample length automation",
+          "metal tap source",
+          "electric sweetener patch"
+        ]
+      },
+      {
+        "name": "OTT",
+        "purpose": "把 airsoft / reload 层压得更硬、更靠前。",
+        "settings": [
+          "用于 small mech snap",
+          "注意后续 EQ 控制高频"
+        ]
+      },
+      {
+        "name": "Saturation / Clipper",
+        "purpose": "给机械和枪声 impact 增加谐波密度与攻击性。",
+        "settings": [
+          "用于 airsoft、tail、impact",
+          "不要完全压扁 transient"
+        ]
+      },
+      {
+        "name": "Flanger / Ripple Phaser / Tremolo",
+        "purpose": "给 tonal lead-up 增加电磁运动。",
+        "settings": [
+          "放在 whoosh / tonal source 后",
+          "配合 pitch/filter motion"
+        ]
+      },
+      {
+        "name": "Polyverse Manipulator",
+        "purpose": "改变 tonal lead 的 pitch/formant/resonance，让能量线更异质。",
+        "settings": [
+          "用于 pre-shot tonal motion"
+        ]
+      },
+      {
+        "name": "Frequency Shifter",
+        "purpose": "把 tonal source 整体位移，制造非音乐化金属/电磁感。",
+        "settings": [
+          "放在 filter 与 saturation 链中"
+        ]
+      },
+      {
+        "name": "FabFilter Saturn / Saturn 2",
+        "purpose": "给 tonal shot、tail 和浴帘 source 增加多段失真与动态色彩。",
+        "settings": [
+          "用于 lead-up",
+          "用于 tail bus",
+          "用于 non-gun source transformation"
+        ]
+      },
+      {
+        "name": "Rift",
+        "purpose": "为 tonal reverb source 增加极端失真/反馈质地。",
+        "settings": [
+          "tail chain early stage"
+        ]
+      },
+      {
+        "name": "MRatio / Fresh Air",
+        "purpose": "MRatio 减少不需要的调性或重排频谱，Fresh Air 补高频空气感。",
+        "settings": [
+          "tail chain",
+          "用于 reverb 前后调色"
+        ]
+      },
+      {
+        "name": "Convolution Reverb",
+        "purpose": "用 BOOM impulse 等 IR 给科幻枪声尾巴真实空间或金属空间印记。",
+        "settings": [
+          "独立 tail chain",
+          "避免直接淹没主 transient"
+        ]
+      },
+      {
+        "name": "Disperser",
+        "purpose": "多实例用于枪声 impact，增加 laser-like peak 和相位冲击。",
+        "settings": [
+          "可叠 3 个实例",
+          "后级需要 EQ / clipper 控制"
+        ]
+      },
+      {
+        "name": "FabFilter Pro-Q 3 / Bloom / Transient Shaper",
+        "purpose": "整理尾音频谱、增加厚度并重塑攻击/衰减。",
+        "settings": [
+          "用于 shower curtain tail chain"
+        ]
+      }
+    ],
+    "materials": [
+      "Taser",
+      "Nerf gun",
+      "Airsoft pistol",
+      "Ratchet tightener",
+      "Digital camera",
+      "Box cutter",
+      "Stapler",
+      "Metal taps",
+      "Leather jacket",
+      "Rubber sandal",
+      "Shower curtain",
+      "Sci-fi whoosh",
+      "Sci-fi impacts",
+      "BOOM impulse responses"
+    ],
+    "keywords": [
+      "sci-fi sniper",
+      "taser",
+      "reload foley",
+      "power-up",
+      "barrel spin",
+      "Phase Plant",
+      "sample length automation",
+      "tonal gunshot",
+      "gunshot tail",
+      "Rift",
+      "Saturn 2",
+      "Disperser",
+      "convolution reverb",
+      "Apex style"
+    ],
+    "tips": [
+      "武器设计先拆事件：pre-fire、shot、mech、reload、tail；每个事件再找日常物件对应身体感。",
+      "电击器很适合做 lead-up 和能量边缘，但不要让它覆盖机械 foley，否则枪会缺重量。",
+      "尾音独立处理能让枪声既干净又巨大；主 impact 不必背负所有空间感。",
+      "Sample length 自动化是做旋转/加速的好办法，比手动画一堆 tap 更自然。"
+    ]
+  },
+  {
+    "id": "yt-2VQTuApNrPA",
+    "title": "Brin Sound：Warframe 重设计闪电流程",
+    "videoId": "2VQTuApNrPA",
+    "url": "https://www.youtube.com/watch?v=2VQTuApNrPA",
+    "source": "Brin Sound",
+    "category": "workflow",
+    "secondaryCategories": [
+      "scifi",
+      "impact",
+      "magic"
+    ],
+    "addedAt": "2026-05-16",
+    "updatedAt": "2026-05-16",
+    "updateNote": "新增 1080p 工程截图，整理 spotting、palette blitz、editorial blitz 与 VCA 准备流程。",
+    "summary": "这条视频是一个专业重设计 mini-doc：先把 Warframe 片段当真实项目做 spotting，拆成三幕和明确声音目标；然后用约 40 分钟做 color palette，把 REAPER 实时调参输出录成长文件；再用约两小时 editorial blitz 按事件快速剪 ground/fire、whiz-by、missile incoming、forcefield、explosion、ramp-up、sub bass 和 metallic ring；最后把 session 分到多个 VCA，便于和音乐/对白混合。",
+    "coreIdeas": [
+      "大型片段不要一开始就剪细节，先做 spotting：定义风格、三幕结构、重点事件和情绪曲线。",
+      "Color palette 是速度的核心。先用 40 分钟集中做 whoosh、impact、forcefield、explosion、ground fire、magic transient 等材料，后面 editorial 才不会每个事件都重新发明。",
+      "实时调参时直接录 REAPER output 成长文件，比导出几十个命名版本更快；长文件后续可以像素材库一样切片。",
+      "Palette 不是单一音色：Wonderbeats / umbrella recordings 可做 impact 和 magic，glass/metal 可做 forcefield pad，musket volleys 可做战场背景，Magic Arcane Forces 负责现代化 transient。",
+      "Editorial blitz 要按画面事件快速套 palette：ground/fire、whiz-by、missile incoming、forcefield、explosion variations、Slipstream reverse ramp、Serum sub bass、bullet shell casing reverse。",
+      "最后准备 session 时按 VCA 分组，不只是为了整洁，而是为了之后音乐、对白和 SFX 的真实混音协作。",
+      "快速第一版的目标是方向成立；后续再补角色近身的 grounding、接触感和转场细节。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "先做 spotting 和三幕结构",
+        "detail": "把重设计当真实项目：假设客户要完整、现代、沉浸式科幻声音。先划分 intro/flashback、ground-fire action、resolution 等段落，确认哪些声音是叙事重点，哪些只是背景支撑。",
+        "params": [
+          "明确 brief",
+          "分三幕",
+          "标出重点事件",
+          "先定声音目标再剪辑"
+        ],
+        "imageKey": "brin-warframe-palette-whoosh"
+      },
+      {
+        "order": 2,
+        "name": "40 分钟做 color palette，并录成长文件",
+        "detail": "用 whoosh machine、Wonderbeats、umbrella recordings、glass/metal、musket volleys、Magic Arcane Forces 等快速生成 15 个左右长 palette 文件。创作时直接录输出，把实时 tweak 打印进音频，避免慢慢命名每个小版本。",
+        "params": [
+          "约 40 min palette blitz",
+          "约 15 long palette files",
+          "Record REAPER output",
+          "实时 tweak 直接打印"
+        ],
+        "imageKey": "brin-warframe-color-palette-layers"
+      },
+      {
+        "order": 3,
+        "name": "Whoosh / impact / forcefield 各自先有颜色",
+        "detail": "whoosh machine 快速产生不同大小和形状；Wonderbeats / umbrella recordings 做 impact 和 magic palette；glass/metal 结合处理做 forcefield pad；musket volleys 加工成 grounding background。",
+        "params": [
+          "Whoosh machine：size/shape variations",
+          "Wonderbeats + umbrella：impact/magic",
+          "Glass/metal：forcefield pad",
+          "Musket volleys：grounding background"
+        ],
+        "imageKey": "brin-warframe-editorial-session"
+      },
+      {
+        "order": 4,
+        "name": "Editorial blitz 先铺 ground/fire 和 whiz-by",
+        "detail": "进入两小时剪辑阶段后，先把 ground/fire palette 和 whiz-by palette 放到对应画面，建立战场尺度和运动线。这里追求快速可听的第一版，而不是每个细节都精修。",
+        "params": [
+          "约 2 hours editorial blitz",
+          "Ground/fire palette",
+          "Whiz-by palette",
+          "先铺大事件，再补细节"
+        ],
+        "imageKey": "brin-warframe-groundfire-edit"
+      },
+      {
+        "order": 5,
+        "name": "Forcefield 和爆炸用 palette 变化支撑画面",
+        "detail": "Forcefield 事件由 pad layer 和瞬态共同支撑；爆炸则使用 staggered variations，避免每次爆点都像复制粘贴。Magic Arcane Forces 的 transient 可以快速提供现代科幻冲击感。",
+        "params": [
+          "Forcefield pad layers",
+          "Magic transient sweeteners",
+          "Explosion stagger variations",
+          "避免重复同一爆炸"
+        ],
+        "imageKey": "brin-warframe-forcefield-palette"
+      },
+      {
+        "order": 6,
+        "name": "Reverse 素材做 ramp-up 和金属戒指感",
+        "detail": "Slipstream library material 反向后用于 ramp-up；bullet shell casing 反向后会强调 metallic ring 和 drop 前 transient，同时把原本的下落感拿掉，变成更设计化的金属吸入。",
+        "params": [
+          "Reverse Slipstream for ramp-up",
+          "Reverse bullet shell casing",
+          "强调 metallic ring",
+          "去掉原始 drop transient"
+        ],
+        "imageKey": "brin-warframe-reverse-shells"
+      },
+      {
+        "order": 7,
+        "name": "局部处理让 smear 更亮、更宽",
+        "detail": "某些金属 smear 或魔法纹理需要再处理以提亮、加宽或增加颗粒。Disperser、Chorus、Multiband Distortion 一类处理可以在不重做素材的情况下，让 palette 更贴近画面能量。",
+        "params": [
+          "Disperser",
+          "Chorus",
+          "Multiband Distortion",
+          "Brighten smear",
+          "Widen metallic texture"
+        ],
+        "imageKey": "brin-warframe-brighten-metallic"
+      },
+      {
+        "order": 8,
+        "name": "Prepped Session 用 VCA 分组交付混音",
+        "detail": "完成第一版后，把声音设计拆到 VCA：backgrounds、sweeteners、whiz-bys、ground fire、missile incoming、bullets、explosions、forcefield 等。这样之后和 music/dialogue 一起混时可以快速调整大类。",
+        "params": [
+          "Separate VCAs",
+          "BGS / Sweeteners / Whiz-bys",
+          "Groundfire / Missile incoming",
+          "Bullets / Explosions / Forcefield",
+          "准备与音乐对白混音"
+        ],
+        "imageKey": "brin-warframe-prepped-vcas"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "REAPER",
+        "purpose": "作为 palette 录制、快速 editorial 和 VCA session 准备的核心 DAW。",
+        "settings": [
+          "Record output into long files",
+          "快速切片",
+          "VCA grouping"
+        ]
+      },
+      {
+        "name": "Whoosh Machine",
+        "purpose": "快速生成不同大小、形状和长度的 whoosh palette。",
+        "settings": [
+          "用于 whiz-by / transition / missile motion"
+        ]
+      },
+      {
+        "name": "Sound Particles",
+        "purpose": "用于把 glass/metal 等材料组合成 forcefield pad 或空间层。",
+        "settings": [
+          "forcefield pad",
+          "layered spatial texture"
+        ]
+      },
+      {
+        "name": "Disperser",
+        "purpose": "给枪能量、magic 或 metallic smear 增加 subtle sci-fi texture。",
+        "settings": [
+          "用于细微相位/峰值调色"
+        ]
+      },
+      {
+        "name": "Chorus",
+        "purpose": "加宽科幻枪能量或 forcefield 纹理。",
+        "settings": [
+          "用于 upper texture / pad"
+        ]
+      },
+      {
+        "name": "Multiband Distortion",
+        "purpose": "把背景、火力和魔法 palette 做得更现代、更有颗粒。",
+        "settings": [
+          "按频段加 distortion",
+          "避免整段糊掉"
+        ]
+      },
+      {
+        "name": "Serum",
+        "purpose": "快速生成 slow-mo bass / side synth 这类可控合成低频。",
+        "settings": [
+          "用于 slow-motion bass idea"
+        ]
+      }
+    ],
+    "materials": [
+      "Warframe cinematic",
+      "Whoosh machine outputs",
+      "Wonderbeats",
+      "Umbrella recordings",
+      "Glass / metal recordings",
+      "Musket volleys",
+      "Magic Arcane Forces",
+      "Slipstream reverse material",
+      "Bullet shell casing reverse",
+      "Serum sub bass",
+      "Quick foley pickups"
+    ],
+    "keywords": [
+      "Warframe",
+      "redesign blitz",
+      "spotting",
+      "color palette",
+      "editorial blitz",
+      "REAPER output recording",
+      "VCA",
+      "forcefield",
+      "whiz-by",
+      "ground fire",
+      "missile incoming",
+      "Magic Arcane Forces",
+      "Sound Particles",
+      "Serum"
+    ],
+    "tips": [
+      "时间少时先做可复用 palette，不要在第一个画面上无限精修。",
+      "长 palette 文件是自己的临时素材库；实时调参时录下来，后面再切。",
+      "快速第一版也要按 VCA 准备，否则后续和音乐对白混时会很难调整。",
+      "重设计要不断回到画面叙事：哪里需要近身 grounding，哪里只需要背景能量。"
+    ]
   }
 ];
 
     const imageManifest = {
-      "ak-machina-vox-chain": {
-        "preview": "assets/shots/preview/ak-machina-vox-chain.jpg",
-        "full": "assets/shots/full/ak-machina-vox-chain.png"
-      },
-      "ak-machina-little-alterboy": {
-        "preview": "assets/shots/preview/ak-machina-little-alterboy.jpg",
-        "full": "assets/shots/full/ak-machina-little-alterboy.png"
-      },
-      "ak-machina-autopitch": {
-        "preview": "assets/shots/preview/ak-machina-autopitch.jpg",
-        "full": "assets/shots/full/ak-machina-autopitch.png"
-      },
-      "ak-machina-convolver": {
-        "preview": "assets/shots/preview/ak-machina-convolver.jpg",
-        "full": "assets/shots/full/ak-machina-convolver.png"
-      },
-      "ak-machina-filterfreak": {
-        "preview": "assets/shots/preview/ak-machina-filterfreak.jpg",
-        "full": "assets/shots/full/ak-machina-filterfreak.png"
-      },
-      "ak-machina-serum-granular": {
-        "preview": "assets/shots/preview/ak-machina-serum-granular.jpg",
-        "full": "assets/shots/full/ak-machina-serum-granular.png"
-      },
-      "ak-machina-frequency-shifter": {
-        "preview": "assets/shots/preview/ak-machina-frequency-shifter.jpg",
-        "full": "assets/shots/full/ak-machina-frequency-shifter.png"
-      },
-      "ak-machina-snapheap-tremolo": {
-        "preview": "assets/shots/preview/ak-machina-snapheap-tremolo.jpg",
-        "full": "assets/shots/full/ak-machina-snapheap-tremolo.png"
-      },
-      "ak-machina-phaseplant-shapertable": {
-        "preview": "assets/shots/preview/ak-machina-phaseplant-shapertable.jpg",
-        "full": "assets/shots/full/ak-machina-phaseplant-shapertable.png"
-      }
-    };
+  "ak-machina-vox-chain": {
+    "preview": "assets/shots/preview/ak-machina-vox-chain.jpg",
+    "full": "assets/shots/full/ak-machina-vox-chain.png"
+  },
+  "ak-machina-little-alterboy": {
+    "preview": "assets/shots/preview/ak-machina-little-alterboy.jpg",
+    "full": "assets/shots/full/ak-machina-little-alterboy.png"
+  },
+  "ak-machina-autopitch": {
+    "preview": "assets/shots/preview/ak-machina-autopitch.jpg",
+    "full": "assets/shots/full/ak-machina-autopitch.png"
+  },
+  "ak-machina-convolver": {
+    "preview": "assets/shots/preview/ak-machina-convolver.jpg",
+    "full": "assets/shots/full/ak-machina-convolver.png"
+  },
+  "ak-machina-filterfreak": {
+    "preview": "assets/shots/preview/ak-machina-filterfreak.jpg",
+    "full": "assets/shots/full/ak-machina-filterfreak.png"
+  },
+  "ak-machina-serum-granular": {
+    "preview": "assets/shots/preview/ak-machina-serum-granular.jpg",
+    "full": "assets/shots/full/ak-machina-serum-granular.png"
+  },
+  "ak-machina-frequency-shifter": {
+    "preview": "assets/shots/preview/ak-machina-frequency-shifter.jpg",
+    "full": "assets/shots/full/ak-machina-frequency-shifter.png"
+  },
+  "ak-machina-snapheap-tremolo": {
+    "preview": "assets/shots/preview/ak-machina-snapheap-tremolo.jpg",
+    "full": "assets/shots/full/ak-machina-snapheap-tremolo.png"
+  },
+  "ak-machina-phaseplant-shapertable": {
+    "preview": "assets/shots/preview/ak-machina-phaseplant-shapertable.jpg",
+    "full": "assets/shots/full/ak-machina-phaseplant-shapertable.png"
+  },
+  "ns-ui-kick3-impulse": {
+    "preview": "assets/shots/preview/ns-ui-kick3-impulse.jpg",
+    "full": "assets/shots/full/ns-ui-kick3-impulse.jpg"
+  },
+  "ns-ui-phaseplant-trill": {
+    "preview": "assets/shots/preview/ns-ui-phaseplant-trill.jpg",
+    "full": "assets/shots/full/ns-ui-phaseplant-trill.jpg"
+  },
+  "ns-ui-telemetry-fm-chain": {
+    "preview": "assets/shots/preview/ns-ui-telemetry-fm-chain.jpg",
+    "full": "assets/shots/full/ns-ui-telemetry-fm-chain.jpg"
+  },
+  "ns-ui-bleepies-random-lfo": {
+    "preview": "assets/shots/preview/ns-ui-bleepies-random-lfo.jpg",
+    "full": "assets/shots/full/ns-ui-bleepies-random-lfo.jpg"
+  },
+  "ns-ui-mace-click-rx": {
+    "preview": "assets/shots/preview/ns-ui-mace-click-rx.jpg",
+    "full": "assets/shots/full/ns-ui-mace-click-rx.jpg"
+  },
+  "ns-ui-vital-squidge-grm": {
+    "preview": "assets/shots/preview/ns-ui-vital-squidge-grm.jpg",
+    "full": "assets/shots/full/ns-ui-vital-squidge-grm.jpg"
+  },
+  "ns-ui-batch-converter": {
+    "preview": "assets/shots/preview/ns-ui-batch-converter.jpg",
+    "full": "assets/shots/full/ns-ui-batch-converter.jpg"
+  },
+  "ns-ui-slayer-grain-random": {
+    "preview": "assets/shots/preview/ns-ui-slayer-grain-random.jpg",
+    "full": "assets/shots/full/ns-ui-slayer-grain-random.jpg"
+  },
+  "ns-smudge-skanner-morpher": {
+    "preview": "assets/shots/preview/ns-smudge-skanner-morpher.jpg",
+    "full": "assets/shots/full/ns-smudge-skanner-morpher.jpg"
+  },
+  "ns-smudge-unveil-unfilter": {
+    "preview": "assets/shots/preview/ns-smudge-unveil-unfilter.jpg",
+    "full": "assets/shots/full/ns-smudge-unveil-unfilter.jpg"
+  },
+  "ns-smudge-saturn-mega": {
+    "preview": "assets/shots/preview/ns-smudge-saturn-mega.jpg",
+    "full": "assets/shots/full/ns-smudge-saturn-mega.jpg"
+  },
+  "ns-smudge-triad-granulators": {
+    "preview": "assets/shots/preview/ns-smudge-triad-granulators.jpg",
+    "full": "assets/shots/full/ns-smudge-triad-granulators.jpg"
+  },
+  "ns-smudge-traveler-manipulator": {
+    "preview": "assets/shots/preview/ns-smudge-traveler-manipulator.jpg",
+    "full": "assets/shots/full/ns-smudge-traveler-manipulator.jpg"
+  },
+  "ns-smudge-shade-automation": {
+    "preview": "assets/shots/preview/ns-smudge-shade-automation.jpg",
+    "full": "assets/shots/full/ns-smudge-shade-automation.jpg"
+  },
+  "ns-smudge-slowdown-unfilter": {
+    "preview": "assets/shots/preview/ns-smudge-slowdown-unfilter.jpg",
+    "full": "assets/shots/full/ns-smudge-slowdown-unfilter.jpg"
+  },
+  "dd-sniper-recording-kit": {
+    "preview": "assets/shots/preview/dd-sniper-recording-kit.jpg",
+    "full": "assets/shots/full/dd-sniper-recording-kit.jpg"
+  },
+  "dd-sniper-tonal-source-chain": {
+    "preview": "assets/shots/preview/dd-sniper-tonal-source-chain.jpg",
+    "full": "assets/shots/full/dd-sniper-tonal-source-chain.jpg"
+  },
+  "dd-sniper-reload-foley": {
+    "preview": "assets/shots/preview/dd-sniper-reload-foley.jpg",
+    "full": "assets/shots/full/dd-sniper-reload-foley.jpg"
+  },
+  "dd-sniper-cable-phaseplant": {
+    "preview": "assets/shots/preview/dd-sniper-cable-phaseplant.jpg",
+    "full": "assets/shots/full/dd-sniper-cable-phaseplant.jpg"
+  },
+  "dd-sniper-powerup-sample-length": {
+    "preview": "assets/shots/preview/dd-sniper-powerup-sample-length.jpg",
+    "full": "assets/shots/full/dd-sniper-powerup-sample-length.jpg"
+  },
+  "dd-sniper-tonal-gunshot-chain": {
+    "preview": "assets/shots/preview/dd-sniper-tonal-gunshot-chain.jpg",
+    "full": "assets/shots/full/dd-sniper-tonal-gunshot-chain.jpg"
+  },
+  "dd-sniper-tonal-reverb-chain": {
+    "preview": "assets/shots/preview/dd-sniper-tonal-reverb-chain.jpg",
+    "full": "assets/shots/full/dd-sniper-tonal-reverb-chain.jpg"
+  },
+  "dd-sniper-gunshot-tail-chain": {
+    "preview": "assets/shots/preview/dd-sniper-gunshot-tail-chain.jpg",
+    "full": "assets/shots/full/dd-sniper-gunshot-tail-chain.jpg"
+  },
+  "brin-warframe-palette-whoosh": {
+    "preview": "assets/shots/preview/brin-warframe-palette-whoosh.jpg",
+    "full": "assets/shots/full/brin-warframe-palette-whoosh.jpg"
+  },
+  "brin-warframe-color-palette-layers": {
+    "preview": "assets/shots/preview/brin-warframe-color-palette-layers.jpg",
+    "full": "assets/shots/full/brin-warframe-color-palette-layers.jpg"
+  },
+  "brin-warframe-editorial-session": {
+    "preview": "assets/shots/preview/brin-warframe-editorial-session.jpg",
+    "full": "assets/shots/full/brin-warframe-editorial-session.jpg"
+  },
+  "brin-warframe-groundfire-edit": {
+    "preview": "assets/shots/preview/brin-warframe-groundfire-edit.jpg",
+    "full": "assets/shots/full/brin-warframe-groundfire-edit.jpg"
+  },
+  "brin-warframe-forcefield-palette": {
+    "preview": "assets/shots/preview/brin-warframe-forcefield-palette.jpg",
+    "full": "assets/shots/full/brin-warframe-forcefield-palette.jpg"
+  },
+  "brin-warframe-reverse-shells": {
+    "preview": "assets/shots/preview/brin-warframe-reverse-shells.jpg",
+    "full": "assets/shots/full/brin-warframe-reverse-shells.jpg"
+  },
+  "brin-warframe-brighten-metallic": {
+    "preview": "assets/shots/preview/brin-warframe-brighten-metallic.jpg",
+    "full": "assets/shots/full/brin-warframe-brighten-metallic.jpg"
+  },
+  "brin-warframe-prepped-vcas": {
+    "preview": "assets/shots/preview/brin-warframe-prepped-vcas.jpg",
+    "full": "assets/shots/full/brin-warframe-prepped-vcas.jpg"
+  }
+};
 
     const categoryById = Object.fromEntries(categories.map((category) => [category.id, category]));
     const sources = Array.from(new Set(records.map((record) => record.source))).sort((a, b) => a.localeCompare(b, "zh-CN"));
