@@ -180,11 +180,53 @@
       margin-left: 5px;
     }
 
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
-      align-items: start;
-      gap: 18px;
+    .library-view[hidden], .reader-view[hidden] {
+      display: none !important;
+    }
+    .library-view {
+      display: block;
+    }
+    .reader-view {
+      min-height: 100dvh;
+      background: var(--paper);
+    }
+    .reader-bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px clamp(14px, 4vw, 40px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(246, 243, 236, 0.94);
+      backdrop-filter: blur(16px);
+    }
+    .reader-back {
+      min-height: 44px;
+      padding: 9px 13px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      color: #fff;
+      background: var(--ink);
+      cursor: pointer;
+      font-weight: 900;
+    }
+    .reader-hint {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    body.reader-open .site-header,
+    body.reader-open .hero {
+      display: none;
+    }
+    body.reader-open main {
+      max-width: none;
+      padding: 0;
     }
     .results-bar {
       display: flex;
@@ -274,14 +316,65 @@
     }
 
     .detail {
-      position: sticky;
-      top: 84px;
-      max-height: calc(100vh - 104px);
-      overflow-y: auto;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
       box-shadow: var(--shadow);
+    }
+    .reader-detail {
+      max-width: 1180px;
+      margin: 0 auto;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .reader-detail .detail-body {
+      padding: clamp(18px, 4vw, 48px);
+    }
+    .reader-detail .detail-title {
+      max-width: 1040px;
+      color: var(--ink);
+      font-size: clamp(30px, 5vw, 56px);
+      line-height: 1.05;
+    }
+    .reader-detail .detail-summary {
+      max-width: 980px;
+      font-size: 16px;
+      line-height: 1.85;
+    }
+    .reader-detail .section {
+      margin-top: 34px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+    .reader-detail .section h3 {
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .reader-detail .step {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1fr);
+      gap: 18px;
+      padding: 20px 0;
+      align-items: start;
+    }
+    .reader-detail .step-shot {
+      margin: 0;
+    }
+    .reader-detail .step strong {
+      font-size: 18px;
+    }
+    .reader-detail .step p {
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    .reader-detail .idea,
+    .reader-detail .tip,
+    .reader-detail .plugin,
+    .reader-detail .learning-point {
+      padding: 10px 0;
+      font-size: 15px;
+      line-height: 1.75;
     }
     .detail-cover {
       aspect-ratio: 16 / 9;
@@ -433,8 +526,8 @@
 
     @media (max-width: 980px) {
       .toolbar { grid-template-columns: 1fr; }
-      .layout { grid-template-columns: 1fr; }
-      .detail { position: relative; top: auto; max-height: none; }
+      .reader-detail .step { grid-template-columns: 1fr; }
+      .reader-detail .detail-body { padding-inline: 16px; }
     }
     @media (max-width: 640px) {
       .site-header { align-items: flex-start; flex-direction: column; }
@@ -532,18 +625,23 @@
     </div>
   </section>
 
-  <main>
-    <nav class="tabs" id="tabs" aria-label="音效分类页签"></nav>
-    <div class="layout">
-      <section>
-        <div class="results-bar">
-          <span id="resultCount"></span>
-          <span class="category-note" id="categoryNote"></span>
-        </div>
-        <div class="grid" id="grid"></div>
-      </section>
-      <aside class="detail" id="detail"></aside>
-    </div>
+  <main id="appMain">
+    <section class="library-view" id="libraryView">
+      <nav class="tabs" id="tabs" aria-label="音效分类页签"></nav>
+      <div class="results-bar">
+        <span id="resultCount"></span>
+        <span class="category-note" id="categoryNote"></span>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="reader-view" id="readerView" hidden>
+      <div class="reader-bar">
+        <button class="reader-back" id="backToLibrary" type="button">返回列表</button>
+        <div class="reader-hint">沉浸式学习模式</div>
+      </div>
+      <article class="detail reader-detail" id="detail"></article>
+    </section>
   </main>
 
   <div class="lightbox" id="lightbox" aria-hidden="true">
@@ -778,6 +876,27 @@
       "Metal Impact Sounds",
       "DAW Workflow",
       "Automation Envelope"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：音源录制 -> 音频导入与轨道编排 -> 瞬态塑形处理 -> 频率均衡与EQ调整 -> 立体声处理与宽度调整 -> 混音与音量调整。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Transient Shaper / EQ（均衡器） / StereoLab / Enforcer / Spire合成器。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：视频展示了使用多款DAW软件（Reaper、FL Studio、Ableton Live等）制作重金属撞击音效的完整工作流程。创作者演示了录音、多轨编辑、效果处理和混音的核心方法，强调了音效设计中的瞬态处理和频率塑造技巧。",
+      "金属音效的核心在于瞬态处理——通过Transient Shaper强化初始冲击感和快速衰减",
+      "频率塑造决定音效的音色特征——使用EQ和频谱分析工具精细调整中低频、中频和高频的比例"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Punch（冲击）参数；Speed（速度）参数；Sustain（延音）参数；Clip控制；频率范围调整；增益控制（参考：-3.6dB）；Q值设置；立体声宽度参数；频率均衡；相位调整。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一颗处理点的判断：Transient Shaper 负责 调整音频的瞬态特性，强化或削弱攻击部分和衰减部分。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「金属撞击音效制作流程」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 音源录制 / 音频导入与轨道编排 / 瞬态塑形处理 / 频率均衡与EQ调整 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Transient Shaper 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -1063,6 +1182,30 @@
       "Decapitator",
       "Valhalla",
       "plugin_chain_architecture"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：素材录制与采集 -> 瞬态参数调整 -> 构建效果链路由 -> 滤波器参数调整 -> 混响处理 -> 失真与动态处理。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：FilterFreak / Valhalla Supermassive / Decapitator / Deelay / Doppler Dome / Transient Shaper。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：完整的游戏音效设计教程，展示如何为《Arcane》创建沉重的近战金属撞击音效。使用 Reaper、Ableton Live 以及 Valhalla、FilterFreak、Decapitator 等专业插件进行音效合成、效果链设计和参数自动...",
+      "从真实物理素材（snow foley、styrofoam等）出发录制基础音源，而非完全合成，能获得更自然和有机的撞击质感",
+      "建立串联效果链而非并联处理，让每个插件在前一个效果基础上逐步塑形音色，形成层次递进的声学变化"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：截止频率调整；共鸣参数；混响参数调整；空间深度；失真量；音色塑形；延迟时间；反馈参数；混合比例；频率移动参数。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：原始录音，未处理状态。这通常决定整条链后面的尺度、速度或素材质量。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「《Arcane》近战撞击音效重制完整流程」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 素材录制与采集 / 瞬态参数调整 / 构建效果链路由 / 滤波器参数调整 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 FilterFreak 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -1357,6 +1500,30 @@
       "sample_manipulation",
       "audio_layering",
       "dynamic_range_management"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：选择音效库素材 -> 在DAW中导入并分层处理 -> 时间拉伸与速率调整 -> 增益与音量调整 -> 应用合成器进行音色塑造 -> 应用效果器链。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Serum合成器 / Native Instruments Skanner XT / Soundtoys Superplate / Soundtoys Crystallizer / Soundtoys Devil-Loc / iZotope Ozone 11 EQ。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：视频展示如何使用Rock The Speakerbox Professional Sound FX中的Overkill音效库创建逼真的恐怖/暴力游戏音效。讲师演示了多个专业DAW和插件（Serum、Audition、After Effect...",
+      "分层堆砌是创建复杂游戏音效的核心：多个简单素材通过准确的时间和音量调整可以创建逼真的复合音效",
+      "时间拉伸和速率调整是音效个性化的关键：同一素材通过不同的播放速率（0.025~1.762倍速）可以产生完全不同的质感"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：LFO2 Free mode, Normal curve, 15ms time；Envelope/LFO control modules；Speed 50, Position 61, Source 31, Filter 50；Pre-delay adjustment；Modulation control；Filter sweep；Pitch: 1300cents or 700cents；Delay: 31.3msec to 700msec；Crush parameter；Crunch level。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：RTSB Overkill library。这通常决定整条链后面的尺度、速度或素材质量。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「游戏暴力音效设计：Overkill 音效库制作与应用」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 选择音效库素材 / 在DAW中导入并分层处理 / 时间拉伸与速率调整 / 增益与音量调整 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Serum合成器 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -1651,6 +1818,28 @@
       "Game audio design",
       "Convolution",
       "Audio restoration"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：分析源音材料质量 -> 使用Serum生成基础音色 -> 应用SampHold采样保持滤波器 -> 配置双Vocoder实例并联处理 -> 调整Vocoder核心参数 -> 应用OTT多频段动态处理。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Serum合成器 / iZotope Vocoder / OTT多频段压缩器 / iZotope Trash 2 / Ozone Distortion / Soundtoys Little Radiator 1566A / NI Transient Master。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、iZotope Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。",
+      "Vocoder双实例并联处理：8频段(粗糙感)与40频段(平滑感)的左右组合，两者均使用Enhance载波模式+18kHz带宽，创建更丰富的谐波层次",
+      "OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；实例1: 8频段, 7.9dB, Enhance；实例2: 40频段, 14dB, Enhance；带宽: 18kHz；攻击: 1ms；Formant: -15.8/-8.40dB；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一颗处理点的判断：Serum合成器 负责 生成基础合成音色，Sub+Noise+OSC A/B四层音源，SampHold滤波器产生颗粒感。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「《Destiny 2》音效设计深度剖析：声码器应用」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 分析源音材料质量 / 使用Serum生成基础音色 / 应用SampHold采样保持滤波器 / 配置双Vocoder实例并联处理 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Serum合成器 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -1874,6 +2063,29 @@
       "Width automation",
       "Valorant",
       "Riot Games"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：音效结构规划（A/B双段） -> A段第一层：点击能量层 -> A段第二层：低频颤动层 -> A段中间：运动音效层 -> A段末尾：粗粒质感层（EQ切除） -> B段：自录瓷砖素材。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Doppler插件 / Phase Mistress（Soundtoys） / Stereo Imager / EQ均衡器 / Reverb混响。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Riot Games音效设计师Nathan讲解Valorant Veto特工Interceptor（拦截器）装备激活音效的完整制作过程。通过Reaper DAW展示了双段式结构（A段激活+B段就绪）的设计思路，使用Doppler、Phase...",
+      "装备音效的两段式结构（A段激活+B段就绪）是Riot的标准模式，清晰标记用户交互关键时刻",
+      "Doppler插件模拟声音远离+手绘音高/音量曲线，是将静态素材转换为有动感特征音的核心技术"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：音高渐降模拟远离效果；配合手绘音高曲线（蓝色线）；配合手绘音量曲线（红色线）；watery预设作为基础；微调参数而非直接使用预设；绘制宽度自动化曲线：宽→逐渐收窄；减法为主；切除低中频浑浊频段；少量湿量；用于空间补充而非主要效果。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：A段：激活起始；B段：装备就绪。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Doppler插件 负责 模拟声音远离听众的多普勒效应，产生音高下降和距离感，为装备激活添加动态空间感。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「《Valorant》Veto 拦截器装备音效制作全流程」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 音效结构规划（A/B双段） / A段第一层：点击能量层 / A段第二层：低频颤动层 / A段中间：运动音效层 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Doppler插件 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -2100,336 +2312,587 @@
       "wwise_loop",
       "stereo_width",
       "power_amp_hum"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：按功能拆分装备音效层 -> 制作即时反馈 bleep -> 叠加护臂与手部 foley -> 设计屏幕弹出与 CRT 质感 -> 加入细微能量点缀 -> 净化并推远点缀层。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：FabFilter Pro-Q 3 / ReaEQ / Waves Z-Noise / KHS Reverb / Waves S1 Stereo Imager / ReaPitch / Soundtoys Crystallizer。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Valorant Tejo rockets equip gameplay capture。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Valorant 音效设计师 Nathan 在 REAPER 中拆解 Tejo 火箭装备音效。他把 equip 拆成即时反馈 bleep、手套/护臂 foley、屏幕弹出、细微能量点缀、持续 loop 和选择提示音，再通过 EQ、降噪、混响...",
+      "装备音效要按玩家交互事件拆层，每一层服务一个清晰反馈。",
+      "foley 不一定越大越好，频段和声像收窄能让动作更靠前、更轻、更像屏幕内物体。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：large frequency cuts for loop source；visible high-cut point: 4812.3 Hz / Q 0.895 / 12 dB/oct；high noise cleanup around 12-13kHz mentioned in narration；Tasty Treat Width about 0.72；Loop Width about 0.32；Atari Sounds；Pitch -1200 cent；Splice 0.1 msec；Delay 0.1 msec；use presets as starting points。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "中间件层要把声音拆成输入反馈、状态 loop、确认、释放和随机变化；参数变化比单个 wav 更重要。",
+      "第一步参数优先级：DAW: REAPER；分组: Bleep/Foley/Screen/Tasty Treat/Loop/Select Location。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：FabFilter Pro-Q 3 / ReaEQ 负责 切除刺耳高频、低频和插件链产生的高频噪声。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「《Valorant》Tejo 火箭装备音效拆解」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 按功能拆分装备音效层 / 制作即时反馈 bleep / 叠加护臂与手部 foley / 设计屏幕弹出与 CRT 质感 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 FabFilter Pro-Q 3 / ReaEQ 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
     "id": "upy3d1em",
-    "title": "爆炸素材重设计：长插件链变体法",
+    "title": "Noah Sitrin：Boom 素材长插件链重设计",
     "videoId": "tj5Sn_rZhnk",
     "url": "https://www.youtube.com/watch?v=tj5Sn_rZhnk",
     "addedAt": "2026-05-09",
-    "source": "综合教程",
+    "updatedAt": "2026-05-16",
+    "updateNote": "2026-05-16 复查补充：重做 23 个高清步骤截图，细化效果器链顺序、参数逻辑、渲染变体和最终母线处理。",
+    "source": "Noah Sitrin",
     "category": "impact",
     "secondaryCategories": [
       "workflow",
-      "creature"
+      "scifi"
     ],
-    "summary": "视频展示如何把一个现成的 CTDS2 HIT EXPLOSION Hard Rock boom 素材拖进 REAPER，通过很长的串联插件链把它改造成新的爆炸/冲击素材。核心不是单个神奇插件，而是先用清理、微量调制和滤波制造运动，再用失真、削波、动态和响度处理制造密度，然后用 Manipulator 与 Shade 批量渲染不同变体，最后在真实设计里用光谱整理和母线处理把层次收紧。",
+    "summary": "这条视频把一个现成的 CTDS2 HIT EXPLOSION Hard Rock boom 当作原料，而不是成品。核心方法是用很长的串联效果链做 serial sculpting：先清理和降速，再用多只低混合量 flanger/filter/phaser/enigma 叠运动，用 Decapitator、Indent 2、Pro-L 2、L3 把质感和密度推起来，再用 Manipulator 与 Shade 渲染变体。后半段把这些变体当作多层素材，在真实设计里重新排列，最后用 Gullfoss、Soothe2、Pro-MB、Saturn、MLimiterMB 修亮度、去刺、改低频行为和收口。",
     "steps": [
       {
         "order": 1,
-        "name": "从现成 boom 素材开始重设计",
-        "detail": "主素材是 CTDS2 HIT EXPLOSION Hard Rock，一段普通但可用的 boom。它先被放慢到约 0.893 rate，并进入一条很长的 Track 22 FX chain。第一步用 Z-Noise 清理噪声和细节，同时保留或引入一点 modulated/warbly 的动感。",
+        "name": "把 boom 当作可加工原料",
+        "detail": "起点是 CTDS2 HIT EXPLOSION Hard Rock.wav。素材被放慢到约 0.893 rate，并进入 Track 22 的长插件链。这里的思路不是找一个完美爆炸，而是把普通 boom 当作 transient、body、tail 的原料，通过连续小幅处理生成新的爆炸身份。",
         "params": [
           "Source: CTDS2 HIT EXPLOSION Hard Rock.wav",
-          "Item rate visible: about 0.893",
-          "First processor: Waves Z-Noise"
+          "Item rate: about 0.893",
+          "Track 22: long serial FX chain",
+          "目标：重设计素材，不是直接完成最终爆炸"
         ],
-        "imageKey": "img_f7a36b3b25f24cec"
+        "imageKey": "noah-boom-source-rate-chain-overview"
       },
       {
         "order": 2,
-        "name": "用多只细微 flanger 堆运动",
-        "detail": "Uhbik-F 的 Solid Flange 与 Washi Flange 不是为了让听众明显听到一只 flanger，而是每只只混一点点，让爆炸尾音出现更干净、更液态的运动。这种做法适合把静态 one-shot 变成有生命感的科幻冲击。",
+        "name": "Z-Noise 放在链路最前面",
+        "detail": "Waves Z-Noise 先清理源素材里的噪声和细碎尾部，让后面的调制不会把脏噪也一起放大。作者提到它同时会留下或带出一点 warbly/modulated 的质感，这种轻微不稳定感后面会被 flanger 与 filter 放大成运动。",
         "params": [
-          "Plugin: u-he Uhbik-F",
-          "Preset/label: Solid Flange",
-          "Use: subtle, not full-blast"
+          "Plugin: Waves Z-Noise",
+          "位置：第一颗处理器",
+          "Visible: Reduction about 27.5",
+          "Visible: Release about 39.97",
+          "逻辑：先清理，再调制"
         ],
-        "imageKey": "img_63e607ab7c9e1cce"
+        "imageKey": "noah-boom-znoise-first-cleanup"
       },
       {
         "order": 3,
-        "name": "FilterFreak 做高频扫动和咬合",
-        "detail": "Soundtoys FilterFreak 处在 Fat 模式，主要制造高频端 squelchy/sweepy 的扫动。它让爆炸尾部不是简单衰减，而是有一个像机械滤波器打开或掠过的表情。",
+        "name": "Uhbik-F Solid Flange 做第一层细微运动",
+        "detail": "第一只 Uhbik-F 用 Solid Flange 方向。它不承担夸张的 flanger 效果，而是在 boom 的尾巴里加入轻微相位摆动，让静态爆炸开始有液态、机械、科幻的内部运动。",
         "params": [
-          "Plugin: Soundtoys FilterFreak",
-          "Mode mentioned: Fat",
-          "Role: resonant sweep / high-end motion"
+          "Plugin: u-he Uhbik-F",
+          "Preset/label: Solid Flange",
+          "Mix: low/subtle",
+          "原则：让运动被感觉到，不要让插件名被听出来"
         ],
-        "imageKey": "img_1e20d085bb12fcb0"
+        "imageKey": "noah-boom-uhbik-solid-flange"
       },
       {
         "order": 4,
-        "name": "再叠 Kilohearts Flanger",
-        "detail": "kHs Flanger 继续添加运动，但依旧是低混合量。作者强调 flanger 全开会很明显，多个 flanger 以 tastefully mixed 的方式叠加，反而会形成干净、细微的调制纹理。",
+        "name": "第二只 Uhbik-F 继续堆细微调制",
+        "detail": "第二只 Uhbik-F 继续做轻微 flanging。作者强调 flanger 全开会很明显，但多只低剂量 flanger 叠起来会更高级，因为每一只只改变一点点相位、深度和时间感，整体听感更复杂但不滑稽。",
         "params": [
-          "Plugin: kHs Flanger",
-          "Role: extra motion",
-          "Principle: many subtle modulators can be smoother than one obvious modulator"
+          "Plugin: u-he Uhbik-F",
+          "Visible label: Flanger / 24.00",
+          "用途：第二层相位运动",
+          "关键：多颗小剂量比一颗大剂量更可控"
         ],
-        "imageKey": "img_ff9e8937957a8c23"
+        "imageKey": "noah-boom-uhbik-washi-flange"
       },
       {
         "order": 5,
-        "name": "Decapitator 只给一点 crunch",
-        "detail": "Decapitator 用来增加 grit，但 Mix 只有约 32%。100% wet 的声音也很 tasty，不过会过分主导素材；这里保留少量 crunch，让 boom 更有颗粒和电路感。",
+        "name": "FilterFreak Fat 模式做扫频咬合",
+        "detail": "Soundtoys FilterFreak 接在调制之后，Fat 模式提供更厚、更 squelchy 的滤波扫动。它主要改变高频和中高频的表情，让爆炸尾部像机械滤波器被打开，而不是只做简单衰减。",
         "params": [
-          "Plugin: Soundtoys Decapitator",
-          "Mix mentioned: 32%",
-          "Role: controlled crunch / grit"
+          "Plugin: Soundtoys FilterFreak",
+          "Mode mentioned: Fat",
+          "Visible Attack: 37.9 ms",
+          "Visible Release: 131.9 ms",
+          "Role: resonant sweep / high-end motion"
         ],
-        "imageKey": "img_1bb4a09e97d7930d"
+        "imageKey": "noah-boom-filterfreak-fat-sweep"
       },
       {
         "order": 6,
-        "name": "Enigma 做 delay-based movement",
-        "detail": "Waves Enigma 提供很难替代的 delay-based 运动感，听感接近 flanger/phase 类效果。它不是负责响度或重低频，而是给素材内部增加移动的频谱凹凸和空间纹理。",
+        "name": "kHs Flanger 再补一层可控运动",
+        "detail": "kHs Flanger 用简洁参数继续补运动。这里不是为了扩大 stereo，而是让 delay、depth、rate、feedback、mix 共同制造微小波纹。它和前面的 Uhbik-F、FilterFreak 形成调制堆栈。",
         "params": [
-          "Plugin: Waves Enigma",
-          "Visible rate area: about 0.09 / 5.4 BPM",
-          "Role: delay-based spectral movement"
+          "Plugin: kHs Flanger",
+          "Controls: Delay / Depth / Rate",
+          "Controls: Spread / Feedback / Mix",
+          "Use: mixed subtly",
+          "逻辑：调制层互补，不让单层过度主导"
         ],
-        "imageKey": "img_71fd28c1cf0f94ff"
+        "imageKey": "noah-boom-khs-flanger-low-mix"
       },
       {
         "order": 7,
-        "name": "PhaseMistress 只混一点 bubbliness",
-        "detail": "PhaseMistress 使用 dirt mode 一类设置。如果 100% 会很滑稽、很明显，但少量混入可以给尾部增加 bubbly 的相位运动，让爆炸听起来不那么像原始素材。",
+        "name": "Decapitator 只给 32% crunch",
+        "detail": "Decapitator 负责 grit 和 crunch，但作者没有 100% wet 使用。视频里提到 100% 也好听，可是会吞掉原 boom 的重量和瞬态，所以保留约 32% mix，让失真只作为颗粒和电路质感。",
         "params": [
-          "Plugin: Soundtoys PhaseMistress",
-          "Mode mentioned: dirt mode",
-          "Use: subtle bubble, not obvious comedy phasing"
+          "Plugin: Soundtoys Decapitator",
+          "Mix mentioned: 32%",
+          "Purpose: controlled grit/crunch",
+          "避免：失真完全盖过原始冲击"
         ],
-        "imageKey": "img_3b90639c556f7c79"
+        "imageKey": "noah-boom-decapitator-32mix"
       },
       {
         "order": 8,
-        "name": "Indent 2 用双级 clipping 换 headroom",
-        "detail": "Indent 2 在输入和输出阶段都做削波：输入为 Tube，输出为 Soft Clip。作者把增益缩回一点，目的不是单纯变响，而是把峰值压住、制造可继续 slam 进后级的 headroom。",
+        "name": "Enigma 加 delay-based movement",
+        "detail": "Waves Enigma 提供一种类似 flanger 但基于 delay 的频谱运动。作者说它很难替代，原因是它会在声音内部做复杂的延迟反馈和频段摆动，给爆炸尾巴增加凹凸、流动和空间错觉。",
         "params": [
-          "Plugin: Unfiltered Audio Indent 2",
-          "Input: Tube, about 0.5x",
-          "Output: Soft Clip, about 0.5x",
-          "Mix: 100%"
+          "Plugin: Waves Enigma",
+          "Visible Rate: 0.09 / 5.4 BPM",
+          "Visible Factor area: about 0.10",
+          "Role: delay-based spectral movement"
         ],
-        "imageKey": "img_a4c1c7b74db5ec48"
+        "imageKey": "noah-boom-enigma-delay-motion"
       },
       {
         "order": 9,
-        "name": "Pro-MB 动态挖中频和低频",
-        "detail": "FabFilter Pro-MB 的 clean preset 会根据 bass content 把约 370 Hz 的中频压下去，给低频和冲击腾出空间，并减少 boxiness。后面的 aggressive/expansion 预设继续用压缩或扩展改变频段随时间的行为，这和静态 EQ 不一样。",
+        "name": "PhaseMistress 少量加入 bubbly 相位",
+        "detail": "PhaseMistress 使用 dirt mode 一类设置。全 wet 会变得滑稽和明显，但少量混入可以把 tail 变得 bubbly、脏一点、有生命感。它是“身份改变层”，不是主要响度或低频来源。",
         "params": [
-          "Plugin: FabFilter Pro-MB",
-          "Target mentioned: around 370 Hz midrange",
-          "Role: dynamic carve / boxiness control / bass behavior"
+          "Plugin: Soundtoys PhaseMistress",
+          "Style/mode: Dirt",
+          "Use: subtle bubble",
+          "避免：100% 明显 phasing 变成喜剧感"
         ],
-        "imageKey": "img_8bc3a4975606be53"
+        "imageKey": "noah-boom-phasemistress-bubble"
       },
       {
         "order": 10,
-        "name": "Pro-L 2 大幅推入透明限幅",
-        "detail": "FabFilter Pro-L 2 这一级被作者重新发现是关键 ingredient：旁白说加了约 30 dB gain，画面显示 Transparent style，Gain 约 +28.58 dB。它把前面已经被调制和削波的素材推到更可用的冲击密度。",
+        "name": "Indent 2 用双级削波换 headroom",
+        "detail": "Indent 2 的价值不是单纯变脏，而是把峰值剪平，给后面的大幅限制和增益创造 headroom。输入端用 Tube，输出端用 Soft Clip，Mix 100%，相当于用两处软削波把爆炸压成更可被继续加工的形状。",
         "params": [
-          "Plugin: FabFilter Pro-L 2",
-          "Style: Transparent",
-          "Visible gain: about +28.58 dB",
-          "Narration: about +30 dB gain"
+          "Plugin: Unfiltered Audio Indent 2",
+          "In: Tube 0.5x",
+          "Cutoff: off",
+          "Rez: 0.0%",
+          "Mix: 100%",
+          "Out: Soft Clip 0.5x / Trim 100%"
         ],
-        "imageKey": "img_1dcbae5e7040d2e3"
+        "imageKey": "noah-boom-indent2-tube-softclip"
       },
       {
         "order": 11,
-        "name": "Manipulator 改 pitch/formant 但保留部分干声",
-        "detail": "Manipulator 把 Pitch 往上推、Formant 往下拉，并使用中间的隐藏控制增加类似 smooth grains 的质感。Dry/Wet 约 63%；100% 会锁到刺耳的高频共振音，所以要保留干声和可控比例。",
+        "name": "Pro-MB Cleaner 动态挖 370Hz 左右中频",
+        "detail": "FabFilter Pro-MB 的 cleaner preset 不是静态 EQ，而是根据 bass content 动态压掉中低频盒感。视频里讲到约 370 Hz 一带会被处理，这能让低频冲击更清楚，同时不让 body 变空。",
+        "params": [
+          "Plugin: FabFilter Pro-MB",
+          "Preset: NS - Cleaner2",
+          "Target mentioned: around 370 Hz",
+          "Visible band range: about -4.50 dB",
+          "逻辑：动态处理频段行为，而不是固定削 EQ"
+        ],
+        "imageKey": "noah-boom-promb-cleaner-370hz"
+      },
+      {
+        "order": 12,
+        "name": "L3 MultiMaximizer 再次 slam",
+        "detail": "L3 MultiMaximizer 把前面已经调制、削波和动态雕刻过的素材再次推入多段限制。它会把细节拉起来，让 boom 更密、更靠前，但风险是把频谱压白，所以后面还要再做去刺和低频行为修整。",
+        "params": [
+          "Plugin: Waves L3-LL MultiMaximizer",
+          "Role: multiband slam",
+          "Visible: multiple band priorities/releases",
+          "逻辑：提升密度后，后面要处理刺耳和频谱重心"
+        ],
+        "imageKey": "noah-boom-l3-multimaximizer-slam"
+      },
+      {
+        "order": 13,
+        "name": "Pro-L 2 Transparent 是关键增益层",
+        "detail": "作者说重新发现 Pro-L 2 这一层是关键 ingredient。画面可见 Transparent style，Gain 约 +28.58 dB。它把前面被削波、调制后的细节猛烈推起来，但由于前面已有 headroom 与动态控制，不会只是粗暴爆音。",
+        "params": [
+          "Plugin: FabFilter Pro-L 2",
+          "Style: Transparent",
+          "Visible Gain: +28.58 dB",
+          "Narration: about +30 dB",
+          "Output: 0.00 dBTP"
+        ],
+        "imageKey": "noah-boom-prol2-plus28-transparent"
+      },
+      {
+        "order": 14,
+        "name": "Manipulator 改 pitch/formant 但保留干声",
+        "detail": "Manipulator 把 Pitch 往上推、Formant 往下拉，制造非自然的大型怪异感。Dry/Wet 约 63%，这是重点：100% wet 会锁到刺耳高频共振，保留干声能让冲击仍然像真实爆炸，而不是只剩插件音色。",
         "params": [
           "Plugin: Polyverse Manipulator",
           "Visible Pitch: 1.44",
           "Visible Formant: -4.41",
-          "Dry/Wet: 63%"
+          "Dry/Wet: 63%",
+          "Avoid: 100% wet resonant high tone"
         ],
-        "imageKey": "img_a1c980e290b0069b"
-      },
-      {
-        "order": 12,
-        "name": "Shade 用自定义 tremolo 和 envelope follower 造变体",
-        "detail": "UVI Shade 的 preset 是 NS - Tremolo Premier。它用 multi-segment editor 画自定义 tremolo，再用 follower 跟随输入音量：输入高时加速并降低深度，尾部释放时形状展开。作者会反复开关 Shade、Manipulator，并改 pitch/playback rate 来渲染一批可挑选变体。",
-        "params": [
-          "Plugin: UVI Shade",
-          "Preset: NS - Tremolo Premier",
-          "Visible speed: 1.92x",
-          "Visible depth: 54.9%",
-          "Follower attack/release visible: 5.00 ms / 152 ms"
-        ],
-        "imageKey": "img_9afcc7898adf2f63"
-      },
-      {
-        "order": 13,
-        "name": "把变体批量渲染后再做光谱整理",
-        "detail": "渲染出一组变体后，不把 Unveil、Unfilter、Gullfoss 等重插件一直挂在主链上，而是事后批处理：修低频、控制 sustain、强调 transient、让声音更近、更亮。这是 CPU 友好，也利于把随机实验变成素材库。",
-        "params": [
-          "Batch processors mentioned: Unveil / Unfilter / Gullfoss",
-          "Goals: spectral rebalance, low-end trim, sustain control, transient emphasis"
-        ],
-        "imageKey": "img_e1e6018de83a4717"
-      },
-      {
-        "order": 14,
-        "name": "在真实设计中分层使用这些渲染素材",
-        "detail": "后半段示范把渲染出的素材作为多个 layer 放进实际设计。不同片段通过 pitch/rate、淡入淡出和层次错位形成主 transient、长尾、纹理与低频支撑，而不是把一个处理后的 boom 直接当最终资产。",
-        "params": [
-          "DAW: REAPER",
-          "Workflow: render variants, audition layers, arrange with fades",
-          "Use: transient/body/tail/texture/bass roles"
-        ],
-        "imageKey": "img_b9b27b7e5c611539"
+        "imageKey": "noah-boom-manipulator-pitch-formant"
       },
       {
         "order": 15,
-        "name": "最终母线用去刺、低频驱动和多段限制收口",
-        "detail": "最终链路里 Gullfoss 稍微压低过亮的部分，Soothe2 驯服 main transient layer 的 ouchy/crunchy 频率，Pro-MB 用 bass expansion 创造空间，Saturn 再把 bass 整体带回来并加 drive。最后 MLimiterMB/多段 limiter 通过不同频段的限制让频谱更白、更密、更适合这个冲击声。",
+        "name": "Pro-MB Expansion 改低频随时间的行为",
+        "detail": "后面的 Pro-MB expansion 处理低频不是为了简单 boost bass，而是改变 bass 随时间出现、收缩、释放的方式。这个思路后面和 Saturn 的低频强调并不矛盾：Pro-MB 管行为，Saturn 管整体重量和 drive。",
         "params": [
-          "Plugins: Gullfoss / Soothe2 / Pro-MB / Saturn / MLimiterMB",
-          "Soothe2 visible depth: 3.0",
-          "MLimiterMB visible drive: +6.60 dB",
-          "MLimiterMB ceiling: -0.59 dB"
+          "Plugin: FabFilter Pro-MB",
+          "Preset/label: NS - LF Expansion",
+          "Mode: expansion behavior",
+          "Role: bass timing / space",
+          "区别：不是静态低频提升"
         ],
-        "imageKey": "img_af640adc183b18a3"
+        "imageKey": "noah-boom-promb-expansion-bass"
+      },
+      {
+        "order": 16,
+        "name": "Shade 用 tremolo + follower 做可渲染变体",
+        "detail": "UVI Shade 的 NS - Tremolo Premier preset 是这条链的变体引擎。MSEG 画出 tremolo 形状，Follower 根据输入音量改变深度和速度：攻击时更收，尾部释放时运动展开，所以同一个 boom 可以被渲染出多个节奏和尾巴不同的版本。",
+        "params": [
+          "Plugin: UVI Shade",
+          "Preset: NS - Tremolo Premier",
+          "Speed: 1.92x",
+          "Depth: 54.9%",
+          "Follower Threshold: -28.6 dB / Range: 30.0 dB",
+          "Attack/Release: 5.00 ms / 152 ms"
+        ],
+        "imageKey": "noah-boom-shade-follower-tremolo"
+      },
+      {
+        "order": 17,
+        "name": "用开关和 rate/pitch 批量渲染变体",
+        "detail": "作者会改变 pitch、playback rate，并反复开关 Shade 与 Manipulator，把同一条链打印成一堆不同素材。这个阶段像做 sound palette：先多产出，再挑选，而不是边设计边保留复杂实时链。",
+        "params": [
+          "Actions: change pitch / playback rate",
+          "Toggle: Shade on/off",
+          "Toggle: Manipulator on/off",
+          "Output: multiple rendered variants",
+          "原则：先生成素材池，再挑选分层"
+        ],
+        "imageKey": "noah-boom-rendered-variants"
+      },
+      {
+        "order": 18,
+        "name": "渲染后再批处理 Unveil / Unfilter / Gullfoss",
+        "detail": "Unveil、Unfilter、Gullfoss 这类重处理不一定常驻主链，而是在变体渲染后批量做光谱修整：降低多余低端，修 baked filtering，控制 sustain，强调 transient，让素材更近、更亮或更干。",
+        "params": [
+          "Batch chain: Unveil / Unfilter / Gullfoss",
+          "Use after rendering",
+          "Goals: spectral rebalance / sustain control",
+          "CPU logic: heavy processors become offline processing"
+        ],
+        "imageKey": "noah-boom-batch-unfilter"
+      },
+      {
+        "order": 19,
+        "name": "在真实设计里把变体拆成多层",
+        "detail": "后半段不是把处理后的 boom 单独当最终音效，而是把渲染出来的素材拆成多条 layer：有的做短瞬态，有的做长尾，有的做低频支撑，有的只提供运动纹理。每层用 fade、rate、错位和音量重新组织。",
+        "params": [
+          "DAW: REAPER",
+          "Layer roles: transient / body / tail / texture / bass",
+          "Editing: fades, offsets, rate changes",
+          "原则：渲染素材只是积木，不是终点"
+        ],
+        "imageKey": "noah-boom-layered-design-session"
+      },
+      {
+        "order": 20,
+        "name": "Gullfoss 先修最终设计的亮度",
+        "detail": "最终母线里 Gullfoss 反而把 brightness 压低，因为经过前面处理后声音太亮。Recover 和 Tame 负责找回细节、压住过突出的频段；Brighten 为负值说明这里的目标是控亮，而不是盲目提高清晰度。",
+        "params": [
+          "Plugin: Gullfoss",
+          "Recover: 24%",
+          "Tame: 33%",
+          "Bias: 0%",
+          "Brighten: -24%",
+          "Boost: 0.0 dB"
+        ],
+        "imageKey": "noah-boom-gullfoss-brightness"
+      },
+      {
+        "order": 21,
+        "name": "Soothe2 驯服 main transient 的刺耳 crunch",
+        "detail": "Soothe2 处理 main transient layer 上过于 ouchy/crunchy 的频率。它不是把高频全部削掉，而是动态按下瞬态里最扎耳的部分，让后面的限制器可以继续推响而不刺。",
+        "params": [
+          "Plugin: Soothe2",
+          "Depth: 3.0",
+          "Sharpness: 6.2",
+          "Selectivity: 3.6",
+          "Mix: 100%",
+          "Mode: left/right"
+        ],
+        "imageKey": "noah-boom-soothe-transient-harshness"
+      },
+      {
+        "order": 22,
+        "name": "Saturn 把低频整体带回来并加 drive",
+        "detail": "Saturn 的角色和前面的 Pro-MB 不同：Pro-MB 改变 bass 随时间的行为，Saturn 则把 bass 整体强调回来，并给低频/中低频一点 tube drive。这个组合让声音既有空间变化，又保持重量。",
+        "params": [
+          "Plugin: FabFilter Saturn 2",
+          "Style: Clean Tube",
+          "Role: bass emphasis + drive",
+          "Linear phase visible",
+          "逻辑：动态行为由 Pro-MB 管，整体重量由 Saturn 管"
+        ],
+        "imageKey": "noah-boom-saturn-bass-drive"
+      },
+      {
+        "order": 23,
+        "name": "MLimiterMB 多段收口并“压白”频谱",
+        "detail": "最后 MLimiterMB 像 multiband ultra maximizer：不同频段各自被限制，突出的频率被压住，整体频谱会更白、更密。它适合作为最终 loudness/shape 收口，但前提是前面已经处理好低频、刺耳和层次。",
+        "params": [
+          "Plugin: Melda MLimiterMB",
+          "Character: Punchy",
+          "Drive: +6.60 dB",
+          "Ceiling: -0.59 dB",
+          "Attack/Release: 0 ms / 10.0 ms",
+          "Anti-distortion: 29.6% / Look-ahead: 0.77 ms / Knee: 100%"
+        ],
+        "imageKey": "noah-boom-mlimitermb-spectrum"
       }
     ],
+    "chainFocus": [
+      "这条链的顺序是：源素材降速和清理 -> 多层低剂量调制 -> 滤波扫动 -> 受控失真和削波 -> 动态多段雕刻 -> 大幅透明限制 -> pitch/formant/tremolo 变体 -> 渲染后分层 -> 最终母线修正。",
+      "调制不是靠一颗大 flanger，而是 Uhbik-F、kHs Flanger、FilterFreak、Enigma、PhaseMistress 连续小幅改变相位、延迟和滤波表情，让 boom 获得科幻运动但不暴露插件感。",
+      "Indent 2、Decapitator、Pro-L 2、L3 的共同目标是密度和 headroom。失真/削波不是只为了脏，而是把峰值整形后继续推进后级。",
+      "Pro-MB 的重点是频段随时间的行为：370 Hz 盒感、低频释放和 bass expansion 都是动态问题，不能只用静态 EQ 思考。",
+      "Manipulator 和 Shade 属于“身份变体层”。它们不一定直接留在最终链里，而是用来打印一批可挑选的爆炸尾巴、纹理和运动素材。",
+      "最终母线不是只变大声：Gullfoss 控亮度，Soothe2 去刺，Pro-MB 改低频空间，Saturn 补重量和 drive，MLimiterMB 才做多段响度收口。"
+    ],
+    "parameterLogic": [
+      "如果调制一听就像 flanger，先降 Mix/Depth，而不是换插件。多颗低剂量调制叠加，通常比一颗高剂量更像高级科幻材质。",
+      "FilterFreak 这类扫频插件先确定模式和扫动方向，再调 Attack/Release。这里 Attack 37.9 ms、Release 131.9 ms 给了短促但能听见的滤波表情。",
+      "Decapitator 的 32% Mix 是判断失真剂量的好参考：先把 wet 拉到夸张听到它做了什么，再降回只留下 crunch 的位置。",
+      "Indent 2 的 Tube In 0.5x + Soft Clip Out 0.5x + 100% Mix 说明它是削峰/换 headroom 工具；调参时先听峰值是否更稳，再听音色是否过脏。",
+      "Pro-L 2 的 +28.58 dB 只有在前面已经削波和动态控制后才合理。单独对干素材这么推，通常只会变成糊和刺。",
+      "Manipulator 的 Dry/Wet 约 63% 是保护原始冲击的关键；Pitch/Formant 做身份变化，Dry/Wet 决定还能不能听出 boom 的真实重量。",
+      "Shade 的 follower 用阈值、范围、Attack/Release 控制 tremolo 如何跟随包络。攻击期收一点，尾巴展开，爆炸才会像有呼吸而不是机械门限。",
+      "母线上的 Pro-MB 与 Saturn 不冲突：Pro-MB 调低频时间行为，Saturn 调低频整体存在感和谐波 drive。先分清“行为”和“音色重量”再下手。"
+    ],
     "coreIdeas": [
-      "Kit-bashing 预设计素材时，不要只换一个插件；用一串小剂量处理连续改变运动、谐波、动态和频谱。",
-      "多个低混合量的 flanger/phaser/filter 比单个夸张调制更容易得到高级、可用的科幻运动感。",
-      "失真和 clipping 的一部分价值是制造 headroom 与密度，让声音能继续进入后级处理，而不只是变脏。",
-      "动态 EQ/多段压缩可以改变频段随时间的行为；这比静态 EQ 更适合爆炸、冲击和长尾素材。",
-      "随机实验要渲染成一批变体，再挑选和分层；不要把 CPU 重、随机性高的链路永远留在主工程里。",
-      "最终响度链不是只为了变大声，还要去刺、修 brightness、重塑 bass behavior，并用多段限制控制频谱重心。"
+      "把现成爆炸当作原料进行 kit-bashing，不要把素材库 one-shot 当作最终答案。",
+      "长链不是乱堆插件，而是每一颗只做一个小角色：清理、运动、扫频、颗粒、削峰、动态、响度、变体、母线修正。",
+      "多层低剂量 modulation 能让静态 one-shot 获得复杂运动，又不让听众意识到具体插件。",
+      "削波和限制的高级用法是创造可继续处理的 headroom 与密度，而不只是让声音更响。",
+      "动态多段处理适合处理爆炸低频和盒感的时间行为，比只用静态 EQ 更贴近冲击音效。",
+      "变体渲染是声音设计的重要步骤：先打印很多版本，再把可用片段当素材库重新分层。",
+      "最终母线要同时考虑亮度、刺耳、低频行为、drive 和多段收口，每个处理点都要有角色。"
     ],
     "plugins": [
       {
         "name": "Waves Z-Noise",
-        "purpose": "清理源 boom 的噪声和细节，同时可留下轻微 warbly/modulated 质感作为后续设计原料。",
+        "purpose": "放在链路最前面做清理，避免后续调制和限制把噪声一起放大，同时保留一点 warbly 质感作为运动原料。",
         "settings": [
-          "Placed first in Track 22 chain",
-          "Used before modulation stack"
+          "First processor",
+          "Reduction about 27.5 visible",
+          "Release about 39.97 visible",
+          "Clean before modulation"
         ]
       },
       {
-        "name": "u-he Uhbik-F / kHs Flanger / Soundtoys PhaseMistress / Waves Enigma",
-        "purpose": "连续叠加细微调制，给静态 boom 尾音增加移动的滤波、相位和 delay-based 纹理。",
+        "name": "u-he Uhbik-F",
+        "purpose": "两只 Uhbik-F 连续做低剂量 flanging，给 boom 尾部添加相位和时间运动。",
         "settings": [
-          "Uhbik-F Solid Flange",
-          "Second Uhbik-F Washi Flange mentioned",
-          "PhaseMistress dirt mode",
-          "Use low mix; avoid obvious full-blast modulation"
+          "Solid Flange",
+          "Second flanger pass",
+          "Mix low/subtle",
+          "Avoid full-blast flanger"
         ]
       },
       {
         "name": "Soundtoys FilterFreak",
-        "purpose": "用 Fat mode 和 resonant sweep 制造高频 squelch 与扫动表情。",
+        "purpose": "Fat mode 与 resonant sweep 负责高频咬合、squelch 和机械扫动表情。",
         "settings": [
           "Fat mode mentioned",
-          "Attack visible around 37.9 ms in one frame",
-          "Release visible around 131.9 ms in one frame"
+          "Attack 37.9 ms visible",
+          "Release 131.9 ms visible",
+          "Used again later for extra sweep"
+        ]
+      },
+      {
+        "name": "Kilohearts Flanger",
+        "purpose": "用简洁 flanger 参数继续补充细微运动，作为调制堆栈的一层。",
+        "settings": [
+          "Delay / Depth / Rate",
+          "Spread / Feedback / Mix",
+          "Subtle mix"
         ]
       },
       {
         "name": "Soundtoys Decapitator",
-        "purpose": "给 boom 增加 grit/crunch，但只混入一部分，避免失真完全覆盖原始冲击。",
+        "purpose": "提供 grit/crunch，不覆盖原始 boom 瞬态和重量。",
         "settings": [
-          "Mix mentioned: 32%"
+          "Mix about 32%",
+          "Full wet auditioned but reduced",
+          "Controlled crunch"
+        ]
+      },
+      {
+        "name": "Waves Enigma",
+        "purpose": "制造 delay-based spectral movement，让爆炸尾巴出现类似 flanger 的移动凹凸。",
+        "settings": [
+          "Rate about 0.09",
+          "Sync about 5.4 BPM visible",
+          "Delay-based movement"
+        ]
+      },
+      {
+        "name": "Soundtoys PhaseMistress",
+        "purpose": "少量 dirt/bubble 相位，让素材不再像原始爆炸 one-shot。",
+        "settings": [
+          "Dirt style",
+          "Subtle mix",
+          "Avoid obvious comedy phasing"
         ]
       },
       {
         "name": "Unfiltered Audio Indent 2",
-        "purpose": "输入 Tube clipping 和输出 Soft Clip 同时削峰，把 gain 缩回以获得继续处理的 headroom。",
+        "purpose": "输入 Tube 和输出 Soft Clip 双级削波，削峰并换取后级处理 headroom。",
         "settings": [
-          "Input Tube about 0.5x",
-          "Output Soft Clip about 0.5x",
+          "In Tube 0.5x",
+          "Out Soft Clip 0.5x",
           "Mix 100%",
           "Trim 100%"
         ]
       },
       {
         "name": "FabFilter Pro-MB",
-        "purpose": "用动态处理挖中频、收低频、扩低频行为，控制 boxiness 并创造 punch 与空间。",
+        "purpose": "动态处理 370 Hz 盒感、低频扩展和 bass 随时间的释放行为。",
         "settings": [
-          "Cleaner preset tucks around 370 Hz based on bass content",
-          "Aggressive preset affects high/low via compression",
-          "LF Expansion preset used later"
+          "Cleaner around 370 Hz",
+          "Range about -4.50 dB visible",
+          "NS - LF Expansion",
+          "Dynamic behavior rather than static EQ"
         ]
       },
       {
         "name": "FabFilter Pro-L 2",
-        "purpose": "Transparent style 大幅加增益并限幅，把已被塑形的素材推进更密、更接近成品的响度状态。",
+        "purpose": "Transparent style 大幅推增益，是前半段 chain 的关键密度来源。",
         "settings": [
           "Transparent style",
-          "Visible gain about +28.58 dB",
-          "Narration says about +30 dB gain"
+          "Gain +28.58 dB visible",
+          "Narrated around +30 dB",
+          "Output 0.00 dBTP"
+        ]
+      },
+      {
+        "name": "Waves L3-LL MultiMaximizer",
+        "purpose": "再次 slam 多段响度，把细节拉近并提高感知密度。",
+        "settings": [
+          "Multiband limiter",
+          "Master release aggressive visible",
+          "Used after Pro-MB/Pro-L stage"
         ]
       },
       {
         "name": "Polyverse Manipulator",
-        "purpose": "通过 pitch up / formant down / grain-like smear 让 boom 变成更怪、更非原素材的冲击变体。",
+        "purpose": "Pitch/Formant 变形并保留干声，制造新身份但不丢失 boom 重量。",
         "settings": [
           "Pitch 1.44",
           "Formant -4.41",
           "Dry/Wet 63%",
-          "Avoid 100% when it latches onto a harsh resonant high tone"
+          "Avoid 100% harsh resonance"
         ]
       },
       {
         "name": "UVI Shade",
-        "purpose": "用自定义 tremolo 与 envelope follower 让每次渲染拥有不同的节奏切割和尾部释放。",
+        "purpose": "MSEG tremolo 加 envelope follower，作为渲染变体的运动引擎。",
         "settings": [
-          "Preset: NS - Tremolo Premier",
+          "NS - Tremolo Premier",
           "Speed 1.92x",
           "Depth 54.9%",
           "Follower threshold -28.6 dB",
-          "Attack 5.00 ms",
-          "Release 152 ms"
+          "Attack 5 ms / Release 152 ms"
         ]
       },
       {
-        "name": "Unveil / Unfilter / Gullfoss",
-        "purpose": "渲染之后批处理光谱、低频、sustain、transient 和距离感，避免重插件常驻设计链。",
+        "name": "Zynaptiq Unveil / Unfilter",
+        "purpose": "渲染后批处理，修 baked ambience/filtering，控制 sustain 与频谱倾向。",
         "settings": [
-          "Used after rendering variations",
-          "Goals: trim low end, control sustain, brighten/bring closer, emphasize transients"
+          "Offline/batch after rendering",
+          "Unfilter visible",
+          "Not kept live for CPU-heavy work"
         ]
       },
       {
-        "name": "Soothe2 / Saturn / MLimiterMB",
-        "purpose": "最终设计阶段去除刺耳频率、补回低频驱动，并用多段限制让频谱更均匀、更有成品密度。",
+        "name": "Soundtheory Gullfoss",
+        "purpose": "最终母线控制过亮频段，做智能频谱重平衡。",
         "settings": [
-          "Soothe2 depth 3.0",
-          "Soothe2 sharpness 6.2",
-          "Saturn brings back bass and drive",
-          "MLimiterMB drive +6.60 dB",
-          "MLimiterMB ceiling -0.59 dB"
+          "Recover 24%",
+          "Tame 33%",
+          "Brighten -24%",
+          "Boost 0.0 dB"
+        ]
+      },
+      {
+        "name": "Oeksound Soothe2",
+        "purpose": "动态驯服 main transient layer 的 ouchy/crunchy 频率。",
+        "settings": [
+          "Depth 3.0",
+          "Sharpness 6.2",
+          "Selectivity 3.6",
+          "Mix 100%"
+        ]
+      },
+      {
+        "name": "FabFilter Saturn 2 / Melda MLimiterMB",
+        "purpose": "Saturn 补低频重量和 drive；MLimiterMB 多段收口并让频谱更密。",
+        "settings": [
+          "Saturn Clean Tube",
+          "MLimiterMB Drive +6.60 dB",
+          "Ceiling -0.59 dB",
+          "Attack 0 ms / Release 10 ms",
+          "Anti-distortion 29.6% / Look-ahead 0.77 ms"
         ]
       }
     ],
     "materials": [
-      "CTDS2 HIT EXPLOSION Hard Rock boom source",
-      "Rendered boom variations",
-      "Pitch/rate shifted impact layers",
-      "Transient/body/tail/texture/bass layer arrangement"
+      "CTDS2 HIT EXPLOSION Hard Rock.wav",
+      "rendered boom variants",
+      "transient layer",
+      "body layer",
+      "tail layer",
+      "bass support layer",
+      "spectral cleanup pass",
+      "final impact bus"
+    ],
+    "practiceChecklist": [
+      "练习 1：找一个普通 boom，先只做 rate 改写和 Z-Noise 清理，确认干声仍然有重量。",
+      "练习 2：用 3 到 5 颗低 Mix 的 flanger/filter/phaser 叠运动，每次只让一颗插件增加 5%-15% 的可听变化。",
+      "练习 3：用 Decapitator 或任意饱和器先拉到 100% 听角色，再降到只剩 crunch 的比例；记录这个比例。",
+      "练习 4：用 clipper/limiter 之前先做削峰和动态挖中频，再尝试大幅推 limiter，比较是否比直接 limiter 更稳。",
+      "练习 5：打开 pitch/formant/tremolo 类插件，渲染 8 个变体，只挑其中 3 个重新分成 transient、body、tail。",
+      "练习 6：最后做一条母线，按顺序检查亮度、刺耳、低频行为、drive、最终多段限制，不要一上来只追响度。"
     ],
     "tips": [
-      "把预设计素材当作 raw material，而不是成品；每个插件只承担一个微小角色。",
-      "调制类插件最好先小剂量叠加，听整体运动是否变丰富，再决定是否需要明显效果。",
-      "如果 Manipulator 或类似 pitch/formant 工具锁到刺耳共振，先降低 Dry/Wet，而不是继续 EQ 补救。",
-      "CPU 很重或随机性很强的处理链适合先渲染成变体库，再在正式设计里挑层使用。",
-      "最终母线先处理刺耳、亮度和低频时间行为，再追求响度；多段 limiter 会改变频谱重心，要按声音目标决定是否使用。"
+      "长插件链的学习重点是顺序和角色，不是复制每一颗插件。",
+      "遇到“很酷但太明显”的插件效果，先把 Mix 降到只剩性格，再用下一颗插件补另一种变化。",
+      "大幅 limiter 之前必须先整理峰值和频段，否则只会变扁、变刺、变糊。",
+      "把实验链渲染成素材池，能避免 CPU 压力，也更容易挑出真正好用的片段。",
+      "最终 bus 上每颗插件都应该能回答：它修的是亮度、刺耳、低频行为、重量、还是响度？"
     ],
     "keywords": [
-      "boom_redesign",
-      "kit_bashing",
+      "Noah Sitrin",
+      "boom redesign",
       "explosion",
-      "long_fx_chain",
-      "flanger_stack",
-      "filterfreak",
-      "decapitator",
-      "indent_2",
-      "pro_mb",
-      "pro_l_2",
-      "manipulator",
-      "shade",
-      "gullfoss",
-      "soothe2",
-      "saturn",
-      "multiband_limiter"
+      "long fx chain",
+      "Z-Noise",
+      "Uhbik-F",
+      "FilterFreak",
+      "kHs Flanger",
+      "Decapitator",
+      "Enigma",
+      "PhaseMistress",
+      "Indent 2",
+      "Pro-MB",
+      "Pro-L 2",
+      "Manipulator",
+      "Shade",
+      "Gullfoss",
+      "Soothe2",
+      "Saturn",
+      "MLimiterMB",
+      "render variants",
+      "serial sculpting"
     ]
   },
   {
@@ -2528,6 +2991,27 @@
       "ambience",
       "playback_rate",
       "exotic_ecology"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：普通野外录音当生态底料 -> 播放率拉慢改变物种尺度 -> EQ 先清掉现实录音瑕疵 -> 少量 exotic birds 补生态层次。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Playback rate / item rate / EQ。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：wildlife ambience recordings。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条短实验把普通 wildlife/bird recordings 重新缩放成异域生态。重点不是做一个单只鸟叫，而是让一组普通野外录音在音高、频谱和层次上变成外星森林或游戏地图远景。",
+      "做异星生态时，先用 playback rate 改变动物体型，再用 EQ 清理现实录音痕迹。",
+      "环境声的可信度来自多个生物层和距离层，不来自单个夸张插件。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Rate about 0.3-0.4；Pitch drops naturally with rate；Subtractive cuts first；Keep useful organic texture；Source: wildlife recordings；Role: ambience bed and bird detail；Playback rate: about 0.3-0.4；Purpose: exotic scale and alien identity；EQ: rain/noise/resonance cuts；Avoid: over-processing before cleanup。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一步参数优先级：Source: wildlife recordings；Role: ambience bed and bird detail。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Playback rate / item rate 负责 主要身份变化工具，把真实鸟叫拉到陌生生物尺度。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 23 天：野生动物环境声」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 普通野外录音当生态底料 / 播放率拉慢改变物种尺度 / EQ 先清掉现实录音瑕疵 / 少量 exotic birds 补生态层次 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Playback rate / item rate 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 环境/水/材质 时直接调用。"
     ]
   },
   {
@@ -2618,6 +3102,26 @@
       "pass_by",
       "silky",
       "vehicle"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：从 whoosh 预设建立运动骨架 -> 替换模块音频而不是只调预设 -> XY/radius 做丝滑体积和速度变化 -> 把输出录成 whoosh 素材池。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Wave Warper 2。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：whoosh preset sources。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频用 Wave Warper 2 把素材变成 silky whoosh/pass-by。它的价值在于把 whoosh 插件当成可演奏的动态处理器，通过替换模块音频和 XY 控制得到飞船、能量体或柔滑转场。",
+      "预设可以当运动模板，声音身份要靠替换源素材来重新定义。",
+      "whoosh 的高级感来自速度曲线和滤波/音量连动，而不是单纯拉长白噪声。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Whoosh preset；Replace module sources；XY/radius controls volume/rate/motion；Plugin: Wave Warper 2；Start point: whoosh presets；Swap audio files in modules；Keep preset gesture, change material identity；XY/radius controls: volume/rate/motion；Use: smooth vehicle pass-by；Record variations。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：Plugin: Wave Warper 2；Start point: whoosh presets。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Wave Warper 2 负责 核心动态处理器，用预设运动和自定义源素材生成丝滑 whoosh。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 22 天：丝滑掠过音效」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 从 whoosh 预设建立运动骨架 / 替换模块音频而不是只调预设 / XY/radius 做丝滑体积和速度变化 / 把输出录成 whoosh 素材池 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Wave Warper 2 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -2725,6 +3229,28 @@
       "manipulator",
       "crystallizer",
       "transmutator"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：气泡录音提供液体起点 -> Manipulator 强化谐波和低端 -> Crystallizer 加结晶尾巴 -> Transmutator 输出正反两种溶解。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Manipulator / Crystallizer / Transmutator。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：bubble recording。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条把 bubble recording 处理成 dissolve/alchemy texture。它的核心是让气泡同时拥有液体低频、结晶尾巴和可反向的溶解运动。",
+      "液体魔法声可以由真实气泡承担主体，再用粒化/结晶类效果负责超现实尾巴。",
+      "同一条处理链的正向与反向输出可以分别服务生成和消散两个视觉事件。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Enhance harmonics；Add low-end detail；Crystal Builder style preset；Use as magical tail；Use inverse/opposite output；Record both directions；Source: bubble recording；Role: liquid body and transient pops；Plugin: Manipulator；Purpose: harmonics and low-end detail。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Source: bubble recording；Role: liquid body and transient pops。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Manipulator 负责 放大气泡的谐波、低频和怪异身份。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 21 天：溶解气泡音效」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 气泡录音提供液体起点 / Manipulator 强化谐波和低端 / Crystallizer 加结晶尾巴 / Transmutator 输出正反两种溶解 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Manipulator 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 环境/水/材质 时直接调用。"
     ]
   },
   {
@@ -2808,6 +3334,27 @@
       "manipulator",
       "monster",
       "breathing"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：狗低吼提供真实喉咙纹理 -> Manipulator 调整谐波和粗糙度 -> 再 pitch down 放大体型。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Manipulator / Pitch shifting / item pitch。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：dog growls。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条把 dog growls/breathing 变成大型怪物。重点是保留真实喉咙摩擦，再用 pitch/formant/harmonic 调整放大体型。",
+      "怪物声的可信度来自真实动物 source，不是只靠低音合成器。",
+      "先处理 formant/谐波再 pitch down，通常比单纯降调更像大型生物。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Lower/reshape harmonic content；Emphasize throat texture；Pitch down after texture shaping；Source: dog growls；Source: dog breathing；Plugin: Manipulator；Processing: lower harmonics/formant emphasis；Pitch down；Goal: big monster rather than dog。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Source: dog growls；Source: dog breathing。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Manipulator 负责 把狗的 formant 和 harmonics 推向更大、更怪的生物身份。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 18 天：毛茸怪物低吼」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 狗低吼提供真实喉咙纹理 / Manipulator 调整谐波和粗糙度 / 再 pitch down 放大体型 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Manipulator 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 怪物/生物 时直接调用。"
     ]
   },
   {
@@ -2888,6 +3435,26 @@
       "sci_fi",
       "alien_sweep",
       "record_output"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：用 drone 或普通音频喂插件 -> Stutter Edit 2 现场触发预设 -> 录下输出作为 glitch 素材。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：iZotope Stutter Edit 2。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：drone inputs。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条用 Stutter Edit 2 把 drones/audio files 表演成 glitchy sci-fi sweeps。它更像现场采样：弹预设、录输出、再剪可用片段。",
+      "复杂 glitch 插件适合当素材生成器，先录一堆输出再挑，而不是边剪边调。",
+      "Stutter 的价值在节奏切片和参数联动，适合 UI 故障、传送、外星扫描。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Preset banks；Live triggering；Record results；Source: drones/audio files；Role: raw input；Plugin: iZotope Stutter Edit 2；Workflow: play presets live；Record output；Use: glitchy sci-fi sweeps。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：Source: drones/audio files；Role: raw input。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：iZotope Stutter Edit 2 负责 通过预设表演生成 glitch/sweep 变体。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 17 天：故障断续扫动」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 用 drone 或普通音频喂插件 / Stutter Edit 2 现场触发预设 / 录下输出作为 glitch 素材 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 iZotope Stutter Edit 2 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -2987,6 +3554,28 @@
       "granular",
       "horror_drone",
       "creature"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：空气感呼吸做上层 -> 低层 growl 下移并扩宽 -> 长尾 creature growl 进第三粒子层 -> 导出高低不同版本。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Kilohearts Phase Plant / Faceplant / Ensemble / Reverser / Reverb。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：airy breaths。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条用 Phase Plant/Faceplant 的多个 granular 模块做 terrifying cave drone。设计不是单一 drone，而是空气、低吼和长尾生物声在同一个 patch 里互相覆盖。",
+      "恐怖 drone 不要只用一个 pad，空气、低吼、尾巴三层会更有空间和生物感。",
+      "granular patch 的源素材选择比效果链更关键：呼吸、growl、tail 各有职责。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Granular breath；Granular low growl；Granular long-tail creature；Use on upper breath layer；Create reversed/blurred motion；Source: airy breaths；Module: granular；Effects: EQ, ensemble, reverser, reverb；Source: lower growl；Processing: shift down, wider pan。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Source: airy breaths；Module: granular；Effects: EQ, ensemble, reverser, reverb。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Kilohearts Phase Plant / Faceplant 负责 承载多层 granular source 并统一空间处理。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 16 天：恐怖低鸣氛围」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 空气感呼吸做上层 / 低层 growl 下移并扩宽 / 长尾 creature growl 进第三粒子层 / 导出高低不同版本 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Kilohearts Phase Plant / Faceplant 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 环境/水/材质 时直接调用。"
     ]
   },
   {
@@ -3083,6 +3672,26 @@
       "delay",
       "opposite",
       "stereo_drone"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：Love 产生 ping-pong 运动 -> Snap Heap bounce/dual delay 扩展回声 -> 清理点击和 crackle。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Love / Snap Heap / De-click / de-crackle。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：generic source textures。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条研究 delay/bounce 产生 opposite/reverse-like motion。Love 和 Snap Heap 被用来做低调、立体声、带反向错觉的 sci-fi drone。",
+      "delay 不只是尾巴，也可以是主体的方向运动和反向错觉。",
+      "降低 delay tone 能把明显效果变成背景 drone，不会抢画面。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Ping-pong delay；Use for stereo motion；Bounce switch；Dual delay；Tone down；Remove clicks；Reduce crackle；Plugin: Love；Mode: ping-pong delay；Plugin: Snap Heap。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：Plugin: Love；Mode: ping-pong delay。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Love 负责 提供 ping-pong delay 和颗粒化空间运动。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 15 天：反向延迟与宽阔低鸣」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 Love 产生 ping-pong 运动 / Snap Heap bounce/dual delay 扩展回声 / 清理点击和 crackle 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Love 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 环境/水/材质 时直接调用。"
     ]
   },
   {
@@ -3179,6 +3788,28 @@
       "faceplant",
       "wine_glass",
       "routing"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：复用 shimmer patch 作为基础乐器 -> 酒杯尾音跳过 transient -> Lane 3 直通绕开部分处理 -> 瞬态塑形只用来驯服突兀。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Faceplant granular shimmer patch / Transient shaper。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：wine glass impact tail。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条复用 Day 12 的 shimmer granular patch 做 Inner Peace。学习点是 patch 不要一次性用完，替换源素材和路由就能得到同系列但不同情绪的声音。",
+      "一个好 patch 可以成为系列化设计工具，换源和路由比重写 patch 更快。",
+      "安静/冥想类 shimmer 要避开硬 transient，多用尾音和粒化持续层。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Replace source audio；Use grain envelope；Smooth impact edge；Base: Day 12 shimmer Faceplant patch；Workflow: reuse and adapt；Source: wine glass impact tail；Skip transient；Routing: direct to Lane 3；Purpose: bypass filter/Lane 2；Transient shaper: smooth impacts。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Base: Day 12 shimmer Faceplant patch；Workflow: reuse and adapt。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Faceplant granular shimmer patch 负责 复用 Day 12 的粒化 shimmer 结构生成平静魔法氛围。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 14 天：静心闪光氛围」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 复用 shimmer patch 作为基础乐器 / 酒杯尾音跳过 transient / Lane 3 直通绕开部分处理 / 瞬态塑形只用来驯服突兀 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Faceplant granular shimmer patch 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -3302,6 +3933,29 @@
       "beat_slammer",
       "cryogen",
       "mech"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：同一 rifle source 拆多层 -> 低冲击用尾巴增强和 slam -> 闷击层用 Deja Vu/Memory/Sub Filter -> 高瞬态和 sci-fi flutter 分开做 -> 机甲前后动作和母线收口。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Beat Slammer / Deja Vu / Cymatics Memory / Sub Filter / Cryogen / SoundSpot Glitch / Manipulator / Ozone EQ / Inflator / limiter。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：rifle recording。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条把 rifle source 和 mech layers 设计成 Ouch/weapon impact。它展示了一段枪声如何通过尾巴增强、失真、子低频、glitch 和机甲动作拆成完整 sci-fi hit。",
+      "一段枪声可以通过分层复用变成完整 sci-fi weapon impact，不必每层都找新素材。",
+      "impact 的瞬态、身体、尾巴、glitch 纹理和机械因果要分开处理。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Bring up tail；Add slam；Muffled impact；Sub support；Glitch flutter；Pitch/formant transformation；Final impact bus shaping；Source: rifle recording；Layer roles: low impact, muffled hit, transient, tail；Plugin: Beat Slammer。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Source: rifle recording；Layer roles: low impact, muffled hit, transient, tail。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Beat Slammer 负责 增强低冲击尾巴和重量。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 13 天：科幻武器冲击」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 同一 rifle source 拆多层 / 低冲击用尾巴增强和 slam / 闷击层用 Deja Vu/Memory/Sub Filter / 高瞬态和 sci-fi flutter 分开做 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Beat Slammer 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -3402,6 +4056,30 @@
       "granular",
       "randomizer",
       "ensemble"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：两个 granular 模块形成 shimmer 主体 -> Randomizer 控制 grain position -> 第二 randomizer 控制动态层级 -> 滤波、Ensemble、reverb 和高频聚焦。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Faceplant granular modules / Randomizer / Ensemble / Reverb / Filter。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：factory/source sounds inside Faceplant。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条建立可替换源音频的 Faceplant shimmer patch。它不是单个声音，而是一个后续可复用的 granular shimmer 生成器。",
+      "shimmer patch 要能替换源音频，这样可以为不同魔法/能量保留同一运动语言。",
+      "随机不是乱，Randomizer 要指向 grain position 和 level 这类能产生生命感的参数。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Two granular modules；Replace source for new timbre；Randomizer 1: grain position；Randomizer 2: second grain level；Filter bad frequency；Wide Ensemble；High-focused final filter；Plugin: Faceplant；Modules: two granular sources；Modulation: Randomizer 1 -> grain position。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "中间件层要把声音拆成输入反馈、状态 loop、确认、释放和随机变化；参数变化比单个 wav 更重要。",
+      "第一步参数优先级：Plugin: Faceplant；Modules: two granular sources。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Faceplant granular modules 负责 承载可替换的 shimmer 源音频。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 12 天：粒化闪光尾音」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 两个 granular 模块形成 shimmer 主体 / Randomizer 控制 grain position / 第二 randomizer 控制动态层级 / 滤波、Ensemble、reverb 和高频聚焦 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Faceplant granular modules 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -3499,6 +4177,27 @@
       "resonator",
       "formant",
       "flanger"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：noise 当声带原料 -> fast randomizer 做碎语动态 -> resonator/formant 赋予口腔感 -> flanger 和 pitch shifter 做电子晃动。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Faceplant / Randomizer / LFO。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：noise source。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条从 noise 在 Faceplant 中做 tiny robot/mouse voice。重点是 randomizer 同时驱动多个声音器官：音量、滤波、resonator、formant 和 flanger。",
+      "tiny voice 可以从 noise 合成，只要加入 resonator/formant 形成微型声道。",
+      "随机调制适合碎语，手绘 LFO 适合有节奏的角色对话。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Noise source；Lane routing；Fast randomizer for robotic chatter；Rhythmic LFO for designed speech pattern；Source: noise；Role: tiny voice excitation；Modulation: fast randomizer -> gain/cutoff；Modules: resonator, formant filter；Purpose: vocal-like tone；Flanger: wobble with rising ramp LFO。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "中间件层要把声音拆成输入反馈、状态 loop、确认、释放和随机变化；参数变化比单个 wav 更重要。",
+      "第一步参数优先级：Source: noise；Role: tiny voice excitation。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Faceplant 负责 承载 noise、filter、resonator、formant、flanger 和 pitch shifter 的小声音 patch。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 9 天：微型机器人声」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 noise 当声带原料 / fast randomizer 做碎语动态 / resonator/formant 赋予口腔感 / flanger 和 pitch shifter 做电子晃动 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Faceplant 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -3604,6 +4303,29 @@
       "envelope",
       "resonator",
       "internal"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：快速 envelope 塑心跳包络 -> Lane 1 做低频身体 -> Lane 2 用 LFO 推 pitch shifter -> resonator、reverb、phaser 和 spread 做体内空间。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Faceplant envelope/noise / Pitch shifter + LFO / Resonator / Reverb / Phaser。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：noise source。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条用 Faceplant 从 noise 做 heartbeat/internal body sound。它不是真实心跳采样，而是通过 envelope、pitch、resonator 和 spread 合成体内跳动。",
+      "心跳可以从噪声和 envelope 合成，关键是包络和低频共鸣。",
+      "体内声音的空间不是普通房间混响，spread/phaser 可以更像主观内部感。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Noise source；Quick envelope；LFO modulates pitch shifter；Resonator body；Reverb/phaser；Spread around 50%；Source: noise；Envelope: quick heartbeat shape；Lane 1: pitch down；Filter: low-pass/high-cut。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Source: noise；Envelope: quick heartbeat shape。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Faceplant envelope/noise 负责 生成基础心跳脉冲。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 8 天：内脏心跳声」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 快速 envelope 塑心跳包络 / Lane 1 做低频身体 / Lane 2 用 LFO 推 pitch shifter / resonator、reverb、phaser 和 spread 做体内空间 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Faceplant envelope/noise 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 怪物/生物 时直接调用。"
     ]
   },
   {
@@ -3707,6 +4429,29 @@
       "chorus",
       "pitch_down",
       "dark_magic"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：复用 rocky texture 做传送门碎片 -> 免费 glitch 素材拉慢到 0.5 -> glow 层 pitch down 后加 Chorus -> -24 半音层制造恐怖重量。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：EQ / Blue Cat Chorus / Pitch shifting。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：rocky shard texture。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条为 dark portal/glow 做四层声音：碎裂、glitch、合唱厚度和低八度恐怖光感。它说明 glow 不一定是明亮高频，也可以做成危险低光。",
+      "发光声可以有碎片、数字纹理、宽厚能量和低频恐怖四种职责。",
+      "glow 不一定高亮，pitch down 两个八度能把光效变成威胁。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Cut resonant low frequencies；Use on glow layer；-24 semitone layer；Layer: rocky texture from Day 4；Role: shard/crack detail；Source: free glitch library；Playback rate: 0.5；EQ: cut resonant low；Plugin: Blue Cat Chorus；Processing: pitch down。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Layer: rocky texture from Day 4；Role: shard/crack detail。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：EQ 负责 清理拉慢 glitch 后的低频共振。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 7 天：黑暗传送门发光」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 复用 rocky texture 做传送门碎片 / 免费 glitch 素材拉慢到 0.5 / glow 层 pitch down 后加 Chorus / -24 半音层制造恐怖重量 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 EQ 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -3825,6 +4570,29 @@
       "grain_delay",
       "crystallizer",
       "horror"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：kick/metal impact 做主 hit -> Spacer 和 grain delay 做节奏压力 -> 低金属层和 sub impact 补体积 -> Reaper containers 并行 Crystallizer -> reverse buildup 到压力破裂。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Spectral Plugins Spacer / Grain delay / Crystallizer / de-crackle。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：kick。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条做 horror pressure/stinger。它把 kick、metal impacts、sub、Crystallizer 并行链、reverse buildup 和 wood 高频组合成压力爆裂。",
+      "pressure stinger 要有前置吸气/蓄压，不能只有最终 hit。",
+      "并行容器适合把同一 hit 送进不同破碎/结晶链，再混回主体。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Used on main hit；Rhythmic delay texture；Multiple presets in containers；De-crackle after crystallized layer；Sources: kick, metal impacts；Role: main hit；Plugin: Spectral Plugins Spacer；Effect: grain delay；Duplicate: grain delay off；Layers: low metallic, sub impact。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Sources: kick, metal impacts；Role: main hit。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Spectral Plugins Spacer 负责 处理主 hit 的空间/频谱压力。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 6 天：恐怖压力冲击」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 kick/metal impact 做主 hit / Spacer 和 grain delay 做节奏压力 / 低金属层和 sub impact 补体积 / Reaper containers 并行 Crystallizer 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Spectral Plugins Spacer 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -3948,6 +4716,28 @@
       "love",
       "rift_feedback",
       "transmutator"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：纸板刮擦提供干燥摩擦 -> Morph EQ Twin Peaks 做共振运动 -> Love swarm granular 加群体颗粒 -> 低频版本加 Rift Feedback 并拉慢 -> Transmutator 和 stereo spread 做变体池。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Morph EQ / Love / Rift Feedback Lite / Transmutator。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：cardboard scrapes。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条把 cardboard scrapes 变成 resonant alien textures。它的关键是 Morph EQ 的共振峰运动、granular swarm、feedback 和拉慢复制。",
+      "纸板、塑料这类普通摩擦声通过移动共振峰可以变成生物/外星声道。",
+      "先录 Morph EQ 输出，再进 granular/feedback，能让处理链更可控。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Twin Peaks；Parameter modulation on morph；Swarm granular processor；Use on lower-end layer；Preset variations；Record texture pool；Source: cardboard scrapes；Plugin: Morph EQ；Preset/shape: Twin Peaks；Modulation: morph parameter。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一步参数优先级：Source: cardboard scrapes。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Morph EQ 负责 用 Twin Peaks 和 morph modulation 制造移动共振。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 5 天：共振外星纹理」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 纸板刮擦提供干燥摩擦 / Morph EQ Twin Peaks 做共振运动 / Love swarm granular 加群体颗粒 / 低频版本加 Rift Feedback 并拉慢 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Morph EQ 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 环境/水/材质 时直接调用。"
     ]
   },
   {
@@ -4060,6 +4850,30 @@
       "sampler",
       "randomizer",
       "sfx_instrument"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：从 Sound Effects Pro 9000 取原始输出 -> 所有 gain 绑定 envelope -> Randomizer 控制 pitch 和 sample offset -> Lane 1 做 chorus/compression/flanger 运动 -> 其他层用 transient shaper 统一 punch。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Faceplant sampler / Randomizer / Chorus / Compression / Flanger / Transient Shaper。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Sound Effects Pro 9000 outputs。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条把 Faceplant 做成可演奏的 instrumental SFX patch。素材来自 Sound Effects Pro 9000 add-on 输出，再回灌到 sampler patch 里被 envelope/randomi...",
+      "SFX patch 可以像乐器一样设计：每次触发有 envelope、随机源位置和统一动态。",
+      "把生成器输出再回灌 sampler，是快速建立专属素材库的好方法。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Sampler layers；Envelope-linked gains；Pitch shifting；Sample offset for longer files；Lane 1 movement chain；Transient shaping on impact layers；Source: Sound Effects Pro 9000 outputs；Workflow: drag outputs back into sampler；Envelope controls all gains；Randomizer: pitch shifting。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "中间件层要把声音拆成输入反馈、状态 loop、确认、释放和随机变化；参数变化比单个 wav 更重要。",
+      "第一步参数优先级：Source: Sound Effects Pro 9000 outputs；Workflow: drag outputs back into sampler。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Faceplant sampler 负责 承载回灌素材并作为可演奏 SFX instrument。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 4 天：可演奏冲击乐器」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 从 Sound Effects Pro 9000 取原始输出 / 所有 gain 绑定 envelope / Randomizer 控制 pitch 和 sample offset / Lane 1 做 chorus/compression/flanger 运动 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Faceplant sampler 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -4165,6 +4979,28 @@
       "manipulator",
       "parallel_containers",
       "melee"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：小刀素材先切片分轨 -> Reaper parallel containers 放三组 Manipulator -> 整体 pitch down 建立巨剑尺度 -> 金属 hit 和刀砍木头补 impact -> 同类 stereo/space 处理把层黏住。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Manipulator / Stereo/space processor。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：small knife sounds。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条把小刀声做成 giant sword。核心是拉慢/降调扩大尺度，并用并行 Manipulator、金属 whoosh、木头 impact 和统一空间把小素材黏成大武器。",
+      "小物体变大物体，要同时改变 pitch、包络长度、formant 和冲击材料。",
+      "并行处理适合保留同一源素材的统一性，同时得到多个纹理角色。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Parallel containers；Multiple presets；Then pitch down；Use similar stereo treatment across layers；Source: small knife sounds；Edit: stretch down and chop across tracks；Reaper parallel containers；Plugin: Manipulator x3；Processing: pitch down；Goal: giant sword scale。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Source: small knife sounds；Edit: stretch down and chop across tracks。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Manipulator 负责 三组并行预设把小刀声拉成巨剑纹理。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 3 天：小刀变巨剑」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 小刀素材先切片分轨 / Reaper parallel containers 放三组 Manipulator / 整体 pitch down 建立巨剑尺度 / 金属 hit 和刀砍木头补 impact 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Manipulator 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -4267,6 +5103,27 @@
       "blackhole",
       "ott",
       "reverse_bubbles"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：长水声拉伸成 ambience -> EQ 和 Blackhole 统一水下空间 -> 小泡泡剪成 UI select -> 反向泡泡做取消/吸回。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Blackhole / Phase / OTT / Transient Shaper。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：water ambience recordings。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条做 bubbly water ambience 和 bubble UI。它把长水声做空间底，把小泡泡瞬态剪成 UI 反馈，再用反向和提速做选择动作。",
+      "水声设计要分 ambience 和 UI：长水声铺环境，小气泡瞬态做交互反馈。",
+      "bubble UI 的 attack 需要 transient shaping，否则只像环境水泡。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Used on ambience bed；Phase color；OTT brightness/density；Transient punch；Sources: long water, hydrophone, consistent bubbles；Use: ambience bed；EQ: unwanted low cuts；Plugin: Blackhole reverb；Materials: bubble snippets；Plugins: phase, OTT, transient shaper。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "第一步参数优先级：Sources: long water, hydrophone, consistent bubbles；Use: ambience bed。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Blackhole 负责 把水层放进统一、宽阔的空间。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：噪音十一月第 2 天：气泡水下音效」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 长水声拉伸成 ambience / EQ 和 Blackhole 统一水下空间 / 小泡泡剪成 UI select / 反向泡泡做取消/吸回 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Blackhole 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 环境/水/材质 时直接调用。"
     ]
   },
   {
@@ -4410,6 +5267,29 @@
       "filterfreak",
       "snap_heap",
       "source_palette"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：日常布料当魔法源 -> 噪声/音调分离塑 tonal whoosh -> FilterFreak 和 Wave Warper 做动作 -> Snap Heap follower 让尾巴自动变化 -> 高频 whiz 和 rumble 分层渲染 -> 用 palette 重设 Arcane 画面。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Noise/Tonal separation processor / FilterFreak / Wave Warper / Snap Heap / Ravage / Ratio MB / MicroShift / OTT。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：raincoat/nylon cloth。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条长教程是 Magic Casting source-palette workflow。Becky 先用雨衣/尼龙等普通材料做魔法 whoosh/impact texture，再用这些渲染素材重设 Arcane 片段。",
+      "复杂魔法声先做素材 palette，再进正式画面对齐，效率和原创性都更高。",
+      "日常布料、雨衣、尼龙可以承担魔法空气和 whoosh 主体，再用滤波/粒化变超现实。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Separate noise vs tonal；Reduce noise for cleaner magic body；Motion-following filter；Y axis controls filtering/rate；Granular position moved by LFO；Follower -> transient shaper/phase distortion/comb/flanger；Render separated texture roles；Sources: raincoat/nylon；Sources: Boom/Soundly materials；Process: isolate/reduce noise vs tonal components。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Sources: raincoat/nylon；Sources: Boom/Soundly materials。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Noise/Tonal separation processor 负责 减少噪声、保留 tonal 成分，得到魔法 whoosh 的音调身体。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：声音设计实验第 4 集：魔法施放」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 日常布料当魔法源 / 噪声/音调分离塑 tonal whoosh / FilterFreak 和 Wave Warper 做动作 / Snap Heap follower 让尾巴自动变化 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Noise/Tonal separation processor 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -4538,6 +5418,29 @@
       "little_plate",
       "filterfreak",
       "ring_mod"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：drone 和 glass ringing 铺魔法频谱 -> Crystallizer/Little Plate 做 wet-only shimmer -> 瓶子/水 plop 做生物身体 -> Ring Modulator + FilterFreak 做喷出 whoosh -> static variations 和小机械细节补火花 -> 绿色/紫色 orb 用不同 pitch 区分。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Crystallizer / Little Plate / Phaser / Ring Modulator / FilterFreak。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Soundsnap drone。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条是 Embers of Mirrim redesign。它展示了如何用 drone、glass ringing、Crystallizer、bottle/plop、ring modulation 和 FilterFreak 设计生物魔法和...",
+      "魔法 redesign 可以复用同一层级结构，通过 pitch 和高频组合区分颜色/阵营。",
+      "wet-only shimmer 层适合补魔法，不会破坏主体动作。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Wet-only layers；Use on glass ringing；Variation on body layers；Ring-mod motion；FilterFreak threshold/rise；Sources: Soundsnap drone, glass ringing；Processing: pitch-shift up / duplicate higher；Plugins: Crystallizer, Little Plate；Use: wet-only shimmer layers；Sources: bottles, water plop, impacts。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Sources: Soundsnap drone, glass ringing；Processing: pitch-shift up / duplicate higher。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Crystallizer / Little Plate 负责 生成玻璃化魔法 shimmer 和空间尾巴。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：声音设计实验第 3 集：《Embers of Mirrim》重设计」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 drone 和 glass ringing 铺魔法频谱 / Crystallizer/Little Plate 做 wet-only shimmer / 瓶子/水 plop 做生物身体 / Ring Modulator + FilterFreak 做喷出 whoosh 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Crystallizer / Little Plate 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 怪物/生物 时直接调用。"
     ]
   },
   {
@@ -4673,6 +5576,30 @@
       "door_creak",
       "goose",
       "decapitator"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：先做 atmosphere 和脚步 -> casting 层用门吱声和 delay/frequency shifter -> release 用反向 light switch -> shower door 和 goose hiss 填频谱 -> explosion 用 Devil-Loc/Decapitator 和纸火 -> pickup 用 goose/lid pop 反向升调。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Delay / Frequency Shifter / Decapitator / Devil-Loc / Chorus / Sidechain gain。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：grass。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条是 Mages of Mystralia spell redesign。它先做自然 atmosphere，再把法术拆成 casting、release、explosion、pickup，用门、开关、浴室门、鹅、纸张等日常素材构建魔法。",
+      "spell redesign 要先让环境成立，再让法术进入这个空间。",
+      "法术不是一声爆炸，要拆 cast、release、explosion、pickup 和 aftermath。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Door creak + delay/frequency shifter；Reversed light switch + delay；Distortion/compression for explosion；Stretch goose hiss；Sidechain gain to whoosh effect；Sources: grass, birds, waterfall, footsteps；Automation: pan to picture；Source: door creak；Plugins: delay, frequency shifter；Source: light switch reversed。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Sources: grass, birds, waterfall, footsteps；Automation: pan to picture。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Delay / Frequency Shifter 负责 把门和开关转成施法/释放运动。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：声音设计实验第 2 集：《Mages of Mystralia》法术重设计」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 先做 atmosphere 和脚步 / casting 层用门吱声和 delay/frequency shifter / release 用反向 light switch / shower door 和 goose hiss 填频谱 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Delay / Frequency Shifter 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -4801,6 +5728,27 @@
       "random_container",
       "switch",
       "avoid_repeat"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：Unity 脚步调用改成 Wwise -> Wwise 按材质建 random containers -> generic、sweetener、accessory 分层 -> pitch/volume/avoid-repeat 随机化 -> 附件层 initial delay 随机 -> Unity collider 绑定材质 switch。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Wwise Random Containers / Wwise randomization / Unity + Audiokinetic integration。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：generic footsteps。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条是 Wwise + Unity footstep implementation。它不是单纯做脚步声音，而是把脚步按材质、随机容器、附件层和 Unity collider/switch 组织成可运行系统。",
+      "脚步系统的设计重点在随机和材质切换，不只是挑好听的一步。",
+      "generic 层给一致性，sweetener 和 accessory 层给材质和角色身份。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Grass/dirt/wood/stone switches；Generic/sweetener/accessory layers；Pitch/volume randomization；Avoid-repeat last N；Random initial delay；FPS controller calls Wwise；Assign switch containers to game objects；Tool: Unity；Integration: Audiokinetic engine call；Tool: Wwise。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "中间件层要把声音拆成输入反馈、状态 loop、确认、释放和随机变化；参数变化比单个 wav 更重要。",
+      "第一步参数优先级：Tool: Unity；Integration: Audiokinetic engine call。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Wwise Random Containers 负责 按材质和层级随机播放脚步素材。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：Wwise 与 Unity 脚步声实现流程」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 Unity 脚步调用改成 Wwise / Wwise 按材质建 random containers / generic、sweetener、accessory 分层 / pitch/volume/avoid-repeat 随机化 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Wwise Random Containers 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 工作流/工具/中间件 时直接调用。"
     ]
   },
   {
@@ -4874,6 +5822,26 @@
       "visual_only",
       "redesign",
       "scene_sync"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：作为成片听整体声场 -> 环境与动作共存 -> 短片级同步优先。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：No confirmed plugin chain。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：finished No Man's Sky redesign reference。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条 No Man's Sky redesign 没有字幕，是 31 秒成片参考。不能强行编插件链，只能学习完整场景听感：环境、飞船、UI、动作和过渡要在同一声场里。",
+      "没有字幕或可见工程时，只学习可确认的成片结构，不伪造插件链。",
+      "完整 redesign 要让环境、动作、UI 和过渡共处一个声场。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Visual/finished-audio reference only；No subtitles；Use: finished redesign reference；Layer groups: ambience, vehicle/mech, UI, transitions；Focus: sync and scene continuity。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：No subtitles；Use: finished redesign reference。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：No confirmed plugin chain 负责 该视频没有字幕和工程讲解，因此不记录具体插件，避免误学。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：《无人深空》短片音效重设计」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 作为成片听整体声场 / 环境与动作共存 / 短片级同步优先 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 No confirmed plugin chain 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -4972,6 +5940,26 @@
       "soundtoys",
       "recording",
       "creature_texture"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：先按游戏需求录全水素材 -> movement 声音最适合再设计 -> Soundtoys 和 Cataract 做生物化纹理 -> 录音素材一鱼两吃。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Glitchmachines Cataract / Soundtoys processors。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：water impacts。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条是 Water Sounds 录音与实验。Becky 用 RODE NT1-A 和 Zoom F8 录水冲击、水滴、泼溅和 movement，然后用 Soundtoys/Glitchmachines Cataract 等插件把水 mov...",
+      "采样时先覆盖游戏实际交互，再挑连续素材做实验变体。",
+      "水 movement 是优秀的 texture source，因为它有自然随机和持续包络。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Use on recorded water movement；Decapitator；Crystallizer；MicroShift；Recording: RODE NT1-A + Zoom F8；Sources: water impacts, droplets, splashes, movement；Choose: water movement sounds；Reason: longer continuous material；Plugins: Soundtoys, Glitchmachines Cataract；Seen: Decapitator, Crystallizer, MicroShift。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：Recording: RODE NT1-A + Zoom F8；Sources: water impacts, droplets, splashes, movement。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Glitchmachines Cataract 负责 把水 movement 切片、重组或变形为 creature-like texture。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「BeckyS 音频：声音设计实验第 1 集：水声录制与变形」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 先按游戏需求录全水素材 / movement 声音最适合再设计 / Soundtoys 和 Cataract 做生物化纹理 / 录音素材一鱼两吃 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Glitchmachines Cataract 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 环境/水/材质 时直接调用。"
     ]
   },
   {
@@ -5045,6 +6033,26 @@
       "aggressive",
       "demo",
       "reference"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：读取画面能量节奏 -> 建立攻击性感知 -> 用作后续设计标尺。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：未确认插件链。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：aggressive energy final demo。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：短片展示了高攻击性的能量类成品听感：画面重点是电弧、闪光、爆发和快速衰减。因为没有可用讲解字幕和插件画面，这条只作为成品参考，不反推不可见插件链。",
+      "短能量 demo 适合作为听感标尺，不适合编造看不见的插件链。",
+      "高攻击性能量要有瞬态、闪烁层、持续噪声层和尾巴层的时间分工。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：不推断不可见参数；visual/audio reference；no confirmed tutorial chain；transient-first；controlled low end；reference-only module。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：visual/audio reference；no confirmed tutorial chain。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：未确认插件链 负责 本视频没有可确认的制作画面或字幕讲解，仅记录成品特征。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：侵略性能量音效演示」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 读取画面能量节奏 / 建立攻击性感知 / 用作后续设计标尺 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 未确认插件链 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -5122,6 +6130,26 @@
       "metal",
       "industrial",
       "demo"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：质量层 -> 机构层 -> 终止层。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：未确认插件链。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：heavy mechanism demo。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：短片展示重型机械库的成品方向：大质量启动、金属冲击、齿轮/伺服细节和机械尾音。无讲解字幕，因此只学习可观察到的成品结构。",
+      "重机械音效的可信度来自动作链：启动、运动、撞击、停止。",
+      "低频给质量，高频给部件识别，金属尾音给材质。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：reference-only；centered low mass；gear；servo；hydraulic；metal scrape；brake tail；release；ring-off。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：centered low mass。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：未确认插件链 负责 该条是成品演示，未出现可确认的处理链。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：重型机械音效演示」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 质量层 / 机构层 / 终止层 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 未确认插件链 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -5197,6 +6225,26 @@
       "vox",
       "roar",
       "demo"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：喉咙和身体 -> 嘴部细节 -> 威胁高频。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：未确认插件链。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：large creature vox demo。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：短片展示大型怪物声库的成品范围。没有教程字幕，因此只提炼可复用的怪物声分层判断：喉咙、气息、嘴部、尖叫、低频体积和攻击瞬态。",
+      "怪物声要有身体、嘴、气息、威胁四类层。",
+      "高频危险层只负责咬人，不能覆盖喉咙主体。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：reference-only；throat；chest；growl body；mouth snap；saliva；breath；screech；short high danger。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：throat；chest；growl body。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：未确认插件链 负责 该条是声音库成品展示，未出现可确认插件链。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：大型怪物声库演示 2」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 喉咙和身体 / 嘴部细节 / 威胁高频 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 未确认插件链 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 怪物/生物 时直接调用。"
     ]
   },
   {
@@ -5314,6 +6362,27 @@
       "OTT",
       "Basement",
       "RoboVoice"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：先理解源素材 -> 无处理排节奏 -> 构建吼叫主体 -> 高频危险层 -> 低频和怪异纹理。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Snap Heap / OTT-style compression / Basement / RoboVoice。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：birds。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Presley Hynes 讲解 creature 声音设计：先理解源素材的情绪和频段角色，再按画面节奏组织高/中/低层，最后用有限处理强化电感、恐怖感和怪物体积。",
+      "怪物声先按源素材角色分层，再决定处理。",
+      "无处理编辑能暴露节奏和叙事问题，处理只负责放大已有意图。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：结合 LFO/tremolo 自动化；用于吼叫主体，不让尾巴过度糊住；用于 bass/drone 层；source-first；high/mid/low roles；edit before processing；Snap Heap；OTT-style density；tremolo automation；squeak layer。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "第一步参数优先级：source-first；high/mid/low roles。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Snap Heap 负责 对 creature 层做电感、颤动和运动调制。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：怪物声音设计（Presley Hynes）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 先理解源素材 / 无处理排节奏 / 构建吼叫主体 / 高频危险层 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Snap Heap 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 怪物/生物 时直接调用。"
     ]
   },
   {
@@ -5426,6 +6495,29 @@
       "randomization",
       "magic",
       "sampler"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：加载 S-Layer -> 设置随机范围 -> 录制随机演奏 -> 后处理魔法尾巴 -> 加入冲击层。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Reaktor 6 S-Layer / Reverb / Soft Clipper / Compressor。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Penguin Grenade library samples。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：SeungJun Park 演示用 Reaktor 6 的 S-Layer 把 Penguin Grenade 素材变成可演奏、可随机的魔法声音生成器。重点是设定随机范围，录制大量输出，再挑选可用片段。",
+      "随机化要设边界，边界决定输出是否可用。",
+      "先录一大段随机素材，再从中挑选，而不是每个声音手工摆满。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：pitch ±12；pan 70/30；volume 40-100；Full D reverb；soft clipper；blue compressor；Reaktor 6；S-Layer；sample/start/pitch/pan/volume；pitch ±12 semitones。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Reaktor 6；S-Layer；sample/start/pitch/pan/volume。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Reaktor 6 S-Layer 负责 样本随机化和演奏式变体生成。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：用 S-Layer 采样器制作随机魔法音效」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 加载 S-Layer / 设置随机范围 / 录制随机演奏 / 后处理魔法尾巴 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Reaktor 6 S-Layer 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 工作流/工具/中间件 时直接调用。"
     ]
   },
   {
@@ -5546,6 +6638,27 @@
       "Transgressor",
       "MOCoder",
       "FilterFreak"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：在家录怪物源 -> 先破坏再整理 -> 从素材池重建角色 -> 处理特殊纹理 -> 30 秒内讲故事。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Shade / Transgressor / Soothe / Sonic Maximizer / Enforcer / MRatioMB / MOCoder / Pro-Q 3 / FilterFreak。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：plastic pipe。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：最佳 walkthrough 展示了如何用家里材料制作怪物声：先录管子、门把手、叉子刮锅、嘴部声音、塑料/橡胶/气球/黏液等，再重度变调、渲染成素材池，最后按怪物动作重组。",
+      "怪物源可以来自日用品，关键是录到摩擦、湿度、弹性和失败的质感。",
+      "先把源处理成素材池，再从池里设计，速度和变化都会更好。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：用于源素材渲染阶段；用于怪物主体和冲击层；配合音量/滤波自动化；home recording；ordinary materials；pitch down；render processed source pool；saliva；gut；breathing。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一步参数优先级：home recording；ordinary materials。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Shade / Transgressor / Soothe / Sonic Maximizer 负责 对家录素材做音色破坏、瞬态控制和刺耳频段整理。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：Armory Creatures 竞赛冠军制作解析」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 在家录怪物源 / 先破坏再整理 / 从素材池重建角色 / 处理特殊纹理 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Shade / Transgressor / Soothe / Sonic Maximizer 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 怪物/生物 时直接调用。"
     ]
   },
   {
@@ -5702,6 +6815,29 @@
       "Pro-Q3",
       "Pro-MB",
       "whoosh"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：按画面角色建组 -> 素材库和现场源结合 -> 箭矢系统化处理 -> 角色声分层 -> whoosh 预处理 -> Phase Plant 粒化再采样。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Phase Plant / Faceplant granular / Snap Heap / Soundtoys Effect Rack / Tremolator / FilterFreak / FabFilter Pro-Q 3 / Pro-MB / Pro-L 2。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Raw Magic。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Thibault Receveur 展示大型线性魔法重设计。画面和接触图显示大量 Pro Tools 分组、Soundminer/素材库检索、箭矢/角色/魔法事件分区，以及 Phase Plant、Snap Heap、Tremolator、...",
+      "大型线性 redesign 的第一技巧是组织，不是插件。",
+      "把 whoosh/bed 先处理成可选素材池，再二次粒化和二次冲击化。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：random LFO to pitch/grain/playhead macro；gain percent mode；LFO/random LFO；envelope to pitch/drive/gain；Tremolator propeller；FilterFreak input threshold to filter frequency；Pro-Q3 natural phase；Pro-L2 1:1 during print；Pro-MB mastering preset；Pro Tools groups。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Pro Tools groups；character/effect lanes。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Phase Plant / Faceplant granular 负责 把长处理文件粒化，random LFO 控制 pitch、grain length 和 playhead。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：电影感魔法线性重设计」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 按画面角色建组 / 素材库和现场源结合 / 箭矢系统化处理 / 角色声分层 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Phase Plant / Faceplant granular 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -5829,6 +6965,28 @@
       "Volcano",
       "Traveler",
       "Snap Heap"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：拆出火法事件 -> 选择火源素材 -> 饱和和包络滤波 -> 运动和空间 -> 瞬态和总线。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Decapitator / FabFilter Volcano 3 / Snap Heap transient shaper / Tonsturm Traveler / Tremolator / Ensemble。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：hot pan steam burst reversed。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Ryan Felberbaum 演示火焰魔法设计：把热锅蒸汽、flash paper、纸张、沙粒、指甲刮吉他、布料抽击等素材拆成施法、火墙打开、噪声尾巴和低频支撑，再用饱和、滤波、瞬态和 whoosh 工具塑形。",
+      "火焰魔法不是只有 crackle，还要有启动、扩张、热空气、火星和尾巴。",
+      "火焰滤波可以跟随音频包络，但 attack 不宜太快，否则会变成硬开关。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：多层使用，按层控制强度；slower attack；attack/sustain follower；用于运动层；cast；wall opening；crackle；tail；hot pan steam reversed；flash paper。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一步参数优先级：cast；wall opening；crackle；tail。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Decapitator 负责 给火焰和纸/沙素材增加热感、粗糙度和密度。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：火焰魔法音效设计（Ryan Felberbaum）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 拆出火法事件 / 选择火源素材 / 饱和和包络滤波 / 运动和空间 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Decapitator 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -5957,6 +7115,30 @@
       "impact rack",
       "engine",
       "tonal delay"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：先做源素材 -> Phase Doppler rack -> Impact rack -> Scanner/engine rack -> Tonal rack。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Kilohearts pitch shifter / filter / gain / Supercharger GT / Diablo Lite / Kilohearts Transient Shaper / Ensemble / Space Modulator / Short feedback delays。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：fabric ripping。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Orrin Keep 展示飞船设计，接触图能看到 DAW 中分色轨道和插件窗口。核心不是直接找飞船素材，而是把布料、纸板、扑克牌、猫呼噜、泡沫滚筒、锣、打火机等处理成引擎、撞击、Doppler 和 tonal rack。",
+      "飞船声可以由日常摩擦和持续震动源合成，不必从飞船库开始。",
+      "Doppler 感可以用音量跟随的 pitch/filter/gain rack 伪造。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：incoming volume follower；flatten source；hard clipping/dirty distortion；transient attack；movement widening；perform delay time live；source creation first；Kilohearts pitch shifter；gain；filter cutoff modulated by incoming volume。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：source creation first。这通常决定整条链后面的尺度、速度或素材质量。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：飞船音效设计（Orrin Keep）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 先做源素材 / Phase Doppler rack / Impact rack / Scanner/engine rack 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Kilohearts pitch shifter / filter / gain 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -6074,6 +7256,29 @@
       "source drawer",
       "Media Explorer",
       "processing bus"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：Reaper 预听处理架 -> source drawer -> 瞬态 cast -> movement bus -> 先工作流后精修。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Reaper routing / Media Explorer / EQ / Distortion / Compressor / Flanger / Transient Shaper / Limiter。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：roll whistle。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Jesse Rope 展示 Reaper 中的魔法设计工作流：Media Explorer 预听通过处理轨和多个 bus，候选素材先进入 source drawer，再按瞬态、movement、body 和 tail 剪成法术。",
+      "Reaper 可以用路由和预听 bus 搭出快速素材处理系统。",
+      "source drawer 让设计过程不丢灵感，也避免时间线过早混乱。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：parallel processing buses；用于纸、气球、芯片、摩擦等纹理；minimal processing on transient；Media Explorer routed to buses；parallel processing；source drawer；copy FX chains to items；EQ；transient shaper；limiter。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Media Explorer routed to buses；parallel processing。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Reaper routing / Media Explorer 负责 把预听素材送进处理链，快速听 processed source。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：魔法法术音效设计（Jesse Rope）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 Reaper 预听处理架 / source drawer / 瞬态 cast / movement bus 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Reaper routing / Media Explorer 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -6217,6 +7422,28 @@
       "PaulXStretch",
       "evil spell",
       "iteration"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：从感觉找源 -> 快速试错和重采样 -> 烟雾身体层 -> 瞬态和 punch -> 微运动链 -> 第一遍成片收口。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Multipass / PaulXStretch / Tremolo / Vibrato / Ensemble / All-pass / Convolver / delay / saturation / EQ。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Raw Magic library。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Mark Kilborn 用 Raw Magic 素材做 80 分钟左右的原始过程：随机听素材、丢进时间线、处理、重采样、放弃不工作的层，再不断迭代出第一人称邪恶法术。",
+      "真实 SFX 工作常是试错和筛选，不是按完美计划执行。",
+      "烟雾、诡异和魔法感可以由拉长的摩擦源和微调制得到。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：used for high-pitch extraction and later subtle processing；frozen stretch；texture recording；movement should be felt more than heard；nuclear reactor hall impulse；high-pass lows；randomized Raw Magic search；listen for feel；Multipass；phase distortion。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "第一步参数优先级：randomized Raw Magic search；listen for feel。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Multipass 负责 快速试 preset、微调 macro、做运动和动态。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：魔法法术音效完整过程（Mark Kilborn）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 从感觉找源 / 快速试错和重采样 / 烟雾身体层 / 瞬态和 punch 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Multipass 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -6344,6 +7571,28 @@
       "PaulStretch",
       "Convolver",
       "game iteration"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：buildup 层 -> punch/cast 层 -> sparkle 和 whistle -> body 和 breath -> 游戏 first pass 思路。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Transient Shaper / Polyverse Wider / Convolver / Ensemble / PaulStretch / Saturation / compression / EQ。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：trash can lid bowed。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条是 Mark Kilborn 对同一法术的一小时 first pass 分解版。重点是最终层次回顾：buildup、transient cast、firework sparkle、whistle/body、convolver body、...",
+      "法术 first pass 要能进入游戏测试，而不是追求离线完美。",
+      "subtle movement 让静态层活起来，但宽度和延迟必须让位给瞬态。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Wider used tiny amount；beverage impulse；high-pass after；long frozen texture；do not overdrive bus；filter opening；pitch shifter automation；subtle movement chain；transient shaper；Polyverse Wider subtle。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一步参数优先级：filter opening；pitch shifter automation；subtle movement chain。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Transient Shaper / Polyverse Wider 负责 punch 层塑形与轻微加宽。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：魔法法术分层解析（Mark Kilborn）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 buildup 层 / punch/cast 层 / sparkle 和 whistle / body 和 breath 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Transient Shaper / Polyverse Wider 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -6443,6 +7692,27 @@
       "multiband",
       "rack",
       "pulse"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：能量脉冲池 -> 多段/宏控制 -> 瞬态与尾巴分离 -> 重复打印。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Multiband/rack processing / EQ / filter automation / Render/print workflow。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：energy pulses。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Brandon Mueller 的现代魔法能量设计以橙色工程轨道、效果 rack、多段处理和参数调制为主。接触图显示大量插件窗口、包络/滤波曲线、重复脉冲切片和多轨能量层。",
+      "现代魔法能量常靠脉冲、滤波包络和多频段运动建立科技感。",
+      "把 attack 和 tail 分离，才能同时获得反馈和漂亮空间。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：macro/filter envelope workflow；visible envelope/filter curves；commit useful variations；pulse slicing；variation pool；rack macros；multiband movement；filter envelopes；transient tracks；tail tracks。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一步参数优先级：pulse slicing；variation pool。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Multiband/rack processing 负责 从画面可见的多段效果 rack 和曲线推断其用于能量频段运动；具体插件参数未逐项确认。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：现代魔法能量音效设计（Brandon Mueller）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 能量脉冲池 / 多段/宏控制 / 瞬态与尾巴分离 / 重复打印 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Multiband/rack processing 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -6572,6 +7842,30 @@
       "OTT",
       "slime",
       "Pitch Delay"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：金属 goblet 魔法化 -> Serum sampler 演奏源 -> firework 做爆裂 -> 口技变 creature -> slime 气泡动漫化。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Valhalla FreqEcho / Crystallizer / Shimmer / Serum sampler / SoundHack Pitch Delay / OTT / Devil-Loc / Frequency Shifter。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：metal goblet。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Juan Pablo Uribe 展示多个魔法小技巧：金属 goblet 通过频移/粒化/OTT/shimmer 变亮，Serum sampler 用 LFO 做 pitch/filter/comb 运动，firework 和口技可变成爆裂...",
+      "小技巧的价值在于把普通源变成可重复生成的素材方法。",
+      "Serum 这类 synth/sampler 不只用于音乐，也可当 SFX 运动引擎。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：goblet hits/scrapes；LFO to pitch and cutoff；with limiter；automate cutoff；record many variations；Valhalla FreqEcho；Crystallizer；OTT；Shimmer；Serum sampler。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Valhalla FreqEcho；Crystallizer；OTT；Shimmer。这通常决定整条链后面的尺度、速度或素材质量。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：魔法音效制作技巧（Juan Pablo Uribe）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 金属 goblet 魔法化 / Serum sampler 演奏源 / firework 做爆裂 / 口技变 creature 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Valhalla FreqEcho / Crystallizer / Shimmer 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -6693,6 +7987,27 @@
       "Doppler",
       "high-pass",
       "Raw Magic"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：避开黑魔法套路 -> 建立源池 -> 命名处理链 -> 渲染并标记收藏 -> 随机 mixdown 再设计。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Named processing chains / Doppler / high-pass / modulation / Render/bounce workflow。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：cloth。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Noah Sitrin 的黑暗魔法设计强调不要只套 whisper/noise/dissonant tone。先从 Raw Magic 里做 impact、sustain 和 whoosh 源池，经过多个命名处理链渲染，再从随机 mixdo...",
+      "黑魔法可以从物理材质出发，而不是从恐怖套路出发。",
+      "源素材阶段可以粗暴，最终阶段要严格清理低端和冲突频段。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：impact grain modulator；spin Trace sweep；gut puncher；line up gaps carefully；mark favorites；subvert tropes；impact pool；sustain pool；whoosh pool；grumbler。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：subvert tropes。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Named processing chains 负责 用命名链快速创造 impact、sweep、gut、balloon 和 grumble 方向。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：暗黑魔法法术音效设计（Noah Sitrin）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 避开黑魔法套路 / 建立源池 / 命名处理链 / 渲染并标记收藏 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Named processing chains 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -6793,6 +8108,29 @@
       "minimal processing",
       "parallel compression",
       "variation"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：限制素材范围 -> 三种同画面方案 -> 选让耳朵有反应的源 -> 干净 tonal 版本。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Pitch/time stretching / Parallel compression / Reverb / width。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Raw Magic library。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Chris Burgess 用 Raw Magic 库为 Elden Ring 法术做多个设计版本。限制是只用这个库，主要靠选源、剪画面、pitch/time stretch、少量插件和不同设计思路来完成。",
+      "限制素材库能训练源选择和剪辑，而不是依赖无限素材。",
+      "同画面多方案能逼出设计语言差异。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：mostly DAW-level processing；blend to taste；contextual space；Raw Magic only；three approaches；get it out of your system；source selection by response；minimal processing；parallel compression；reverb。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Raw Magic only。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Pitch/time stretching 负责 改变 Raw Magic 素材规模和动作速度。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：《艾尔登法环》魔法法术重设计（Chris Burgess）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 限制素材范围 / 三种同画面方案 / 选让耳朵有反应的源 / 干净 tonal 版本 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Pitch/time stretching 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -6919,6 +8257,28 @@
       "Melda",
       "variation",
       "free plugins"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：只用库和免费工具 -> 冰法瞬态 -> movement bus -> 冰质感材料 -> submix 收口并复制变体。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Reaper EQ/Distortion/Compressor / Kilohearts Distortion / Transient Shaper / Compressor / Limiter。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：beatbox roll whistle。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Jay Sabins 用 Raw Magic 库和可访问插件做冰魔法。方法是先做一个完整层组，再复制并微调层生成多个 variation，适合游戏实现。",
+      "冰魔法可由纸、尼龙、气球、鞋底、刷毛和低频滚动组成。",
+      "先做一个完整可用层组，再复制修改，是做游戏 variation 的高效方法。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：accessible stock effects；drive a little；minor attack/sustain；game-audio submix；Reaper effects；Kilohearts free；Melda free；beatbox snippets；feather duster sand；pool hose。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一步参数优先级：Reaper effects；Kilohearts free；Melda free。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Reaper EQ/Distortion/Compressor 负责 movement bus 的基础音色塑形。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：冰系魔法音效设计（Jay Sabins）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 只用库和免费工具 / 冰法瞬态 / movement bus / 冰质感材料 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Reaper EQ/Distortion/Compressor 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -7052,6 +8412,29 @@
       "Multipass",
       "Traveler",
       "Snap Heap"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：电源不只用电 -> 通用电链 -> audio follower 触发电感 -> 频段和低频 whoosh -> 最终空间。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Melda/Snap patch audio follower / Multipass / Transient Shaper / Ambassador / Exciter / Tonsturm Traveler / Snap Heap convolver/reverb。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：paper。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Presley Hines 演示电能力施法：纸、橡胶、气球、喷罐、布料、rice paper、packing tape 等被处理成 zippy/zappy 的电弧、whoosh、低频和空间尾巴。",
+      "电声的源可以是弹性、撕裂、纸张和喷气，而不只是电流录音。",
+      "audio follower 让滤波/波形整形跟攻击动，是电弧感的关键。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：audio follower to filter/shaper；two filter types；per-layer tweaks；low-end whooshes；space glue；paper；rubber；balloon；cloth；tape。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "第一步参数优先级：paper；rubber；balloon；cloth。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Melda/Snap patch audio follower 负责 控制 filter table/shaper table 产生 zippy attack。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：电系能力施法音效（Presley Hines）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 电源不只用电 / 通用电链 / audio follower 触发电感 / 频段和低频 whoosh 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Melda/Snap patch audio follower 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -7168,6 +8551,26 @@
       "Crystals",
       "Infinity Bass",
       "Ozone"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：反转金属 lead-in -> 旋转亮层 -> 冲击和低频 -> 空间和空气 -> 响度收口。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Kilohearts Multipass / Slate Infinity Bass / Eventide Crystals / Ozone Maximizer。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：measuring spoons。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：CJ Ridings 展示积极/明亮魔法：测量勺、金属片、羽毛掸子打沙、球轴承在 pitcher 里旋转、垃圾桶盖 bowed 等素材被做成轻盈、上升和明亮的施法。",
+      "积极魔法更依赖轻金属、旋转、空气和清晰上升感。",
+      "低频仍需要，但应该是柔软支撑，不是黑暗压迫。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：split lows/mids/highs；sub support；movement/reverb；level finish；measuring spoons reversed；Kilohearts Multipass；metal sheet wobble；Slate Infinity Bass；Eventide Crystals；pitch up。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "第一步参数优先级：measuring spoons reversed。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Kilohearts Multipass 负责 对 ball bearing 旋转声做低/中/高分频运动。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：正向魔法法术音效设计（CJ Ridings）」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 反转金属 lead-in / 旋转亮层 / 冲击和低频 / 空间和空气 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Kilohearts Multipass 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 魔法/能量 时直接调用。"
     ]
   },
   {
@@ -7290,6 +8693,29 @@
       "UberMod",
       "PitchMonster",
       "audition"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：理解库定位 -> 用 DSP rack 测试 -> 材料范围 -> 挑能变形的源 -> 后续设计原则。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：FilterFreak / UberMod / PitchMonster / Transient/punch processors。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：dog sounds。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：Barney Oram 讲解 Raw Magic 库：它来自 Essential Magic 的原始录音，定位是 cleaned source，不是已经设计好的成品层。重点是素材要能 pitch、process、layer，而不是开箱即成片...",
+      "Raw library 的价值是可处理性，不是立即成品。",
+      "素材筛选要测试 pitch、transient、modulation 和 tail 表现。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：DSP audition rack；double granular doubler；punch check；source library；cleaned raw recordings；FilterFreak；UberMod；PitchMonster；transient/punch；organic。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：source library；cleaned raw recordings。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：FilterFreak / UberMod 负责 快速测试滤波、节奏和空间调制潜力。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「企鹅手雷：Raw Magic 音效库完整导览」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 理解库定位 / 用 DSP rack 测试 / 材料范围 / 挑能变形的源 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 FilterFreak / UberMod 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 工作流/工具/中间件 时直接调用。"
     ]
   },
   {
@@ -7511,6 +8937,30 @@
       "sci-fi UI",
       "loop start stop",
       "enemy danger tone"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：先确认游戏里的信息职责 -> 把游戏声音还原成 Pro Tools 结构 -> 用 varispeed 做起停 ramp -> Active Loop 分层：飞行、Drone、晶体、脉冲 -> 先用 EQ 解决 masking -> PhaseMistress 给层加运动和激光感。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Serato Pitch 'n Time Pro / Soundtoys FilterFreak 2 / FabFilter Pro-Q 3 / Soundtoys PhaseMistress / Spring Reverb / Little Spring 类混响 / Soundtoys Decapitator。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：NEON_ZIPS / CA 类飞行素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频拆解 Valorant 角色 Gekko 的 Dizzy 在空中飞行时的声音。作者先对比友方版和敌方版，再进入 Pro Tools 展示 start/stop、Active Loop、敌我差异、脉冲可定位性和失真处理。核心不是单个插...",
+      "游戏音效先服务玩家决策，再服务“好不好听”：友方技能和敌方技能应该给出不同的行动暗示。",
+      "移动物体的循环音效要有可感知的脉冲或周期变化，玩家才更容易在空间里追踪它。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：友方：可跟进；敌方：需要躲避；先听游戏语境；音色服务玩家动作；Start / Active Loop / Stop；循环段独立处理；Aux 汇总；Bounce 留版本；Serato Pitch 'n Time Pro；Range 2x。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：友方：可跟进；敌方：需要躲避；先听游戏语境；音色服务玩家动作。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Serato Pitch 'n Time Pro 负责 用于 AudioSuite 式的起停变速/变调处理。画面中可见 Range 2x、Algorithm Harmonic、Pitch 区域选择 Varispeed，用来把合成后的 s。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Nathan_SFX：Valorant Gekko Dizzy 飞行音效设计」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 先确认游戏里的信息职责 / 把游戏声音还原成 Pro Tools 结构 / 用 varispeed 做起停 ramp / Active Loop 分层：飞行、Drone、晶体、脉冲 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Serato Pitch 'n Time Pro 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -7736,6 +9186,29 @@
       "Riot Chimes",
       "state variant",
       "magic smoke"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：先听 Alive 与 Dead 的游戏语境 -> 把技能拆成完整事件序列 -> Spawn 与 Loop 分开负责出现和持续 -> Incoming Alive 用多层铺出 Clove 身份 -> Dead Incoming 复用素材，再走父轨处理 -> Dead 父轨链：颗粒、降调、空间、EQ、立体声。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Soundtoys Crystallizer / Cockos ReaPitch / Eventide SP2016 Reverb / FabFilter Pro-Q 3 / Waves S1 Imager Stereo / REAPER Parent / Folder Routing。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Bamboo flute 式 whoosh / 角色身份层。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频拆解 Valorant 角色 Clove 的烟雾音效，重点是 Alive 版和 Dead 版的差异。作者先在游戏里对比两种状态，再在 REAPER 中按 Equip、Equip Idle、Select Location、Cast、I...",
+      "技能音效要按玩家可感知事件拆分：equip、idle、select、cast、incoming、spawn、loop、end 各自承担不同反馈。",
+      "状态变体不一定要重做素材；复用同源材料，再通过父轨链统一染色，可以同时保留识别度和差异。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Valorant Clove；Alive smoke；Dead smoke；状态差异先于插件选择；Equip；Equip Idle；Select Location；Cast；Incoming；Spawn。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Valorant Clove；Alive smoke；Dead smoke；状态差异先于插件选择。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Soundtoys Crystallizer 负责 Dead 版本的核心颗粒/暗色处理。画面中可见 Granular Echo Synthesizer，预设名类似 Metallicah，Pitch 约 -50 cents、Splic。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Nathan_SFX：Valorant Clove 烟雾 Alive / Dead 音效设计」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 先听 Alive 与 Dead 的游戏语境 / 把技能拆成完整事件序列 / Spawn 与 Loop 分开负责出现和持续 / Incoming Alive 用多层铺出 Clove 身份 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Soundtoys Crystallizer 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -8128,6 +9601,30 @@
       "动态火焰的关键不是更大声，而是滤波、pitch、相位和失真裂纹都在动。",
       "电击尾巴要让调制密度、ring mod 频率、filter/shaper 运动随 envelope 衰减，而不是只做音量 fade。",
       "角色体型决定瞬态长度和频率重心：Clawstrider 更重更宽，Leaplasher 更短、更尖、更 clicky。"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：先把机器兽拆成身体动作层 -> Clawstrider Vox 分成低吼和高频伺服尖叫 -> EchoBoy 3ms + Little AlterBoy 做机器人齿边 -> MAutoPitch 强制统一机器声带音高 -> Convolver 给声带加扬声器和金属腔体 -> 火焰先重失真再 bounce 成可切片素材。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Soundtoys EchoBoy / Soundtoys Little AlterBoy / Melda MAutoPitch / Convolver / Kilohearts Multipass / Spin Tracer。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Machina robot library。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频用 Rock the Speakerbox 的 Machina 库重做 Horizon 风格机器兽，不是简单堆机器人素材，而是按 Clawstrider / Leaplasher 的身体动作、脚步、声带、火焰和电击攻击拆成独立行为层...",
+      "先按角色行为分层，而不是按插件分层：foot mechanism、foot hit、body rattle、vox low、vox high、fire burst、electric crackle、tail 各自承担一个画面动作。",
+      "机器兽 Vox 的生命感来自低层 growl 和高层 servo scream 的互补：低层提供喉腔重量，高层提供机械齿边，再用 pitch/formant automation 让它跟画面叫声一起变化。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Delay 约 3 ms；放在 high scream 层前段；后级要用 EQ/动态控制 harshness；Pitch 11.0；Formant 12.0；Mode：Quantize；可叠第二实例约 60% mix 填高频；Depth 100%；Speed 100%；Dry/Wet 100% wet。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：层级：伸缩/气动/脚底撞击/金属松动；stand extend + drill 模拟腿部气动；jack bump + large metal rattle 做脚底；car seat / power tool / module lock 做身体细节。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Soundtoys EchoBoy 负责 给 Clawstrider Vox 加极短 comb/digital edge，不是用来做可听见的回声。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Orrin Keep：用 Machina 设计机器兽音效」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 先把机器兽拆成身体动作层 / Clawstrider Vox 分成低吼和高频伺服尖叫 / EchoBoy 3ms + Little AlterBoy 做机器人齿边 / MAutoPitch 强制统一机器声带音高 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Soundtoys EchoBoy 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 怪物/生物 时直接调用。"
     ]
   },
   {
@@ -8311,6 +9808,29 @@
       "Little AlterBoy",
       "sidechain",
       "cinematic transition"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：高频用 Serum 粒子做随机 glitch impact -> Tonal 层用 Phase Plant 反向 impact + resonator -> 用 Radiator / limiter 把 tonal scream 做脏 -> 低频组先挑 punch，再用尾部做 riser -> Snap Heap ring mod + MRatio 整理低频尾巴 -> Mids 用 Skanner / Trash 做脏破裂质感。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Serum 2 / Phase Plant / Little Radiator / Snap Heap / MRatio / FilterFreak / Decapitator。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Seismic Core。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频用 Rock the Speakerbox 的 Seismic Core 库做电影感 glitch / seismic transition。作者按频段和功能拆成 highs、tonal、lows、mids、atmospheres ...",
+      "Glitch/Seismic 大段落可以按频段建组：highs 负责数字碎片，tonal 负责情绪尖叫，lows 负责重量，mids 负责脏物理质地，atmospheres 负责空间。",
+      "先用库素材提供真实低频和破裂形状，再用 synth/granular/resynthesis 做不稳定运动；只用合成器会薄，只用库素材会缺少 glitch 个性。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Serum 2 granular；短 volume envelope；随机 scan / grain length；compressor + delay；Phase Plant sampler reverse；Resonator；Bitcrusher；Reverb / Ensemble / High-pass；Distortion；Limiter slam。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：Serum 2 granular；短 volume envelope；随机 scan / grain length；compressor + delay。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Serum 2 负责 高频 granular impact、持续 texture 和随机 scan 变化。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Orrin Keep：用 Seismic Core 设计电影感 Glitch 音效」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 高频用 Serum 粒子做随机 glitch impact / Tonal 层用 Phase Plant 反向 impact + resonator / 用 Radiator / limiter 把 tonal scream 做脏 / 低频组先挑 punch，再用尾部做 riser 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Serum 2 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 工作流/工具/中间件 时直接调用。"
     ]
   },
   {
@@ -8502,6 +10022,29 @@
       "Engram",
       "loop",
       "error message"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：Ambience 用慢速弦乐和纹理做界面空间 -> Hover 用枪械/金属 foley 给轻触反馈 -> Node Tick 用 Serum + De-click 做 click + whoosh -> Node Redeem 升级为 kick + explosion tail + sidechain -> 用 Vocoder / Skanner 做神秘数字声源 -> Change Window 用破裂/再合成材料表现窗口切换。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Serum / Ableton Vocoder / Skanner / Disperser / Phaser / OTT / Sidechain / Pitch automation。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Rasa strings。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条 Destiny 2 UI 重设计没有字幕，所以重点来自章节、工程画面和屏幕注释。作者按交互事件拆成 Ambience、Hover、Node Tick/Untick/Redeem、Change Window、Engram Loop/Re...",
+      "UI 音效要按玩家交互等级拆：hover < tick/untick < redeem < loop state < reset/error。不同等级对应不同瞬态、低频和尾巴长度。",
+      "Destiny 风格不是只靠 sci-fi beep，而是合成器、枪械 foley、金属、弦乐、鸟声、Skanner/vocoder 再合成共同形成神秘科技感。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Rasa / MNTRA strings；bounce + slow down；crossfade loop；低存在感背景层；gun foley；metal foley；Disperser + Phaser + OTT；Kriss Vector plastic foley；Serum low digital wave；volume ramp。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Rasa / MNTRA strings；bounce + slow down；crossfade loop；低存在感背景层。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Serum 负责 低 digital wave + volume ramp + delay 做 click/woosh；也做 sub drop 和独特 white noise。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Orrin Keep：Destiny 2 UI 音效重设计工程拆解」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 Ambience 用慢速弦乐和纹理做界面空间 / Hover 用枪械/金属 foley 给轻触反馈 / Node Tick 用 Serum + De-click 做 click + whoosh / Node Redeem 升级为 kick + explosion tail + sidechain 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Serum 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -8665,6 +10208,28 @@
       "The Recordist",
       "artillery",
       "game audio"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：素材库按爆炸组件找，不只搜 explosion -> 先决定真实还是风格化，再分组规划 -> Sweetener 只给叙事重点加，不给每个爆炸都加 -> 距离感靠素材距离和瞬态比例 -> 混音先靠少层和频段选择，不靠总线硬压 -> 情绪来自瞬态形状、失真和低频进入时机。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Transient Shaper / Saturation / Distortion / EQ / Filtering / Sidechain / Ducking / Small speaker check。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Boom Urban Explosions。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这是一条 55 分钟的爆炸音效访谈，嘉宾围绕素材库选择、结构规划、sweetener、距离感、混音和情绪表达展开。它不是某个工程的逐轨 walkthrough，而是把爆炸设计的判断逻辑讲清楚：不要只搜 explosion，要按 transi...",
+      "爆炸的结构通常是 transient、body/mid、tail、debris、sweetener。先分职责，再听是否真的需要每一层。",
+      "不要只找 explosion 库。fire、destruction、debris、cannon、artillery、rocket、car crash、magic/electric 都可能提供更准确的组件。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：transient；body；tail；debris；fire/destruction/artillery；realistic vs stylized；SFX dump；transient/body/tail/debris；少层但职责清楚；只用于 cool moment / narrative beat。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "第一步参数优先级：transient；body；tail；debris。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Transient Shaper 负责 控制近/远、攻击性和冲击清晰度。远距离可减少 attack，近距离可强调 punch。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Orrin Keep：游戏爆炸音效制作访谈」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 素材库按爆炸组件找，不只搜 explosion / 先决定真实还是风格化，再分组规划 / Sweetener 只给叙事重点加，不给每个爆炸都加 / 距离感靠素材距离和瞬态比例 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Transient Shaper 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -8915,6 +10480,30 @@
       "短 UI 声要避免明确调性，尤其是 squidge 和 pitch gesture，否则很容易和音乐冲突。",
       "S-Layer 随机时如果太满，先关层，不要继续加插件；UI 的可读性比复杂度重要。",
       "生成式 click 经常刺耳，先抽取可用颗粒，再用 transient 和 Soothe 控峰。"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：Kick 3 做 impulse 瞬态素材 -> Phase Plant 做 trills 和扫描音 -> Telemetry 用 FM、随机 pitch 和 Disperser 圆滑化 -> Bleepies 用随机 wavetable 和 LFO 生成短确认音 -> Mace + RX 反向提取 tactile clicks -> Vital + GRM Shift 做 squidge 科技触感。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Kick 3 / Phase Plant / Disperser / Chorus / Frequency Shifter / Mace / Soothe。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Kick-like impulse。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频不是逐个 UI 动作做成品，而是先生产一套可随机组合的高科技 UI 素材调色板：impulses、trills、telemetry、bleepies、clicks、squidges、swooshes。核心流程是先用 Kick 3、P...",
+      "UI 音效可以先做“素材调色板”，再由采样器随机组合；这比每个按钮从零开始更快，也更容易保持同一套界面的声音语言。",
+      "每类素材承担不同功能：impulse 给点击瞬态，trill 给上扬/扫描，telemetry 给机器人式数据反馈，bleepie 给短促确认，squidge 给有机科技触感，swoosh 给位移和展开。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：短 attack；短 decay；轻微 zap；不追求完整 kick 低频；FM Depth macro；Shift / Harmonic modulation；Random LFO；Sustain / decay 按动作长度调整；放在 clicky synth 后；用于 round peaks / smooth transient。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Kick 3 default-like patch；短 attack / 短 decay；少量 zap edge；用于 UI click / input transient。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：Kick 3 负责 生成 UI impulse / click 的基础瞬态。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Noah Sitrin：通用高科技 UI 音效调色板」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 Kick 3 做 impulse 瞬态素材 / Phase Plant 做 trills 和扫描音 / Telemetry 用 FM、随机 pitch 和 Disperser 圆滑化 / Bleepies 用随机 wavetable 和 LFO 生成短确认音 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Kick 3 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -9140,6 +10729,29 @@
       "叠同一个随机调制 patch 时，第二遍不是简单加厚，而是增加相位和调制差异。",
       "重处理链后一定要用响度匹配 A/B，不然 Pro-L 提升会让你误以为所有处理都更好。",
       "低通 sweep 的 mix 留一点干声高频，能让巨大的 smear 仍然读得清。"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：用 SkannerXT SFX preset 做可表演 morph -> Unveil + Unfilter 清理 preset 自带空间 -> Saturn 2 Mega Smudge 做多段粘稠运动 -> 叠两次 smudge，并用 Triad granular 打散 -> Traveler / Manipulator 继续塑形成冲击或掠过 -> Shade 低通自动化做 sweepy 控制。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：SkannerXT / Zynaptiq Unveil / Zynaptiq Unfilter / FabFilter Saturn 2 / Kilohearts Triad / OTT。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：SkannerXT laser/glider SFX presets。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频把 SkannerXT 的 SFX preset 通过 Preset Morpher 变成可表演的长素材，再用 Unveil/Unfilter 清掉内置空间和滤波，经过 Saturn 2 的 Mega Smudge、多实例叠加、Tr...",
+      "SkannerXT 的价值不在默认音色，而在 SFX preset 之间的 morph；把 morpher speed 降下来，就能录出连续变化的过渡材料。",
+      "很多 preset 自带 reverb、delay、filter，后续要重新设计空间时先用 Unveil 和 Unfilter 把 baked-in ambience / coloration 拉平。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：降低 Morpher Speed；手动或 LFO 移动 preset position；放在 SkannerXT 后；先清旧空间再设计新空间；Unveil 后；0.75x stretch 后也可再用；Multiband；可叠两次；随机 modulation 产生差异；Granulator per band。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "第一步参数优先级：SkannerXT Preset Morpher；Speed 100 = instant；降低 speed 做 transition；位置 1/2/6 等可手动表演。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：SkannerXT 负责 用 SFX preset 和 Preset Morpher 生成可表演的长变形素材。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Noah Sitrin：SkannerXT Megasmudge 变形设计」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 用 SkannerXT SFX preset 做可表演 morph / Unveil + Unfilter 清理 preset 自带空间 / Saturn 2 Mega Smudge 做多段粘稠运动 / 叠两次 smudge，并用 Triad granular 打散 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 SkannerXT 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 科幻/UI/机械 时直接调用。"
     ]
   },
   {
@@ -9410,6 +11022,30 @@
       "电击器很适合做 lead-up 和能量边缘，但不要让它覆盖机械 foley，否则枪会缺重量。",
       "尾音独立处理能让枪声既干净又巨大；主 impact 不必背负所有空间感。",
       "Sample length 自动化是做旋转/加速的好办法，比手动画一堆 tap 更自然。"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：录制非枪械来源，先建立材料清单 -> 先堆出 general tonal source -> Reload Foley 用小物件分层 -> Cable / charging 用皮革橡胶加合成甜味 -> Power-up 用 Sample Length 自动化做枪管加速 -> Tonal Gunshot Lead-up 做能量线。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：Phase Plant / OTT / Saturation / Clipper / Flanger / Ripple Phaser / Tremolo / Polyverse Manipulator / Frequency Shifter。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Taser。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频用电击器、Nerf/airsoft、棘轮、相机、裁纸刀、订书机、皮革、橡胶、浴帘等日常录音，重设计 Apex 风格科幻狙击枪。重点不是找“枪声库”，而是把 reload foley、cable/charging、barrel spi...",
+      "科幻武器可以从日常物件开始：电击器提供能量边缘，Nerf/airsoft 给塑料机械动作，棘轮/裁纸刀/订书机给 reload，皮革/橡胶给 cable 张力，浴帘可变成夸张 tail。",
+      "Reload 的可信度来自小 foley 层的时序，而不是单个大机械库素材；box cutter、stapler、camera、air pistol 分别负责滑动、锁扣、机械 snap 和金属 sheen。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Sample length automation；metal tap source；electric sweetener patch；用于 small mech snap；注意后续 EQ 控制高频；用于 airsoft、tail、impact；不要完全压扁 transient；放在 whoosh / tonal source 后；配合 pitch/filter motion；用于 pre-shot tonal motion。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "滤波/光谱类处理先确定要保留的角色频段，再处理泥、刺、亮度和距离感；避免为了清晰把 body 一起削空。",
+      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：Taser：electric edge；Nerf / airsoft：toy mech snap；Ratchet / box cutter / stapler：reload；Leather + rubber：cable stress。这通常决定整条链后面的尺度、速度或素材质量。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Dietrich Dice：用电击器做科幻狙击枪」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 录制非枪械来源，先建立材料清单 / 先堆出 general tonal source / Reload Foley 用小物件分层 / Cable / charging 用皮革橡胶加合成甜味 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 Phase Plant 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 冲击/武器/爆炸 时直接调用。"
     ]
   },
   {
@@ -9626,6 +11262,29 @@
       "长 palette 文件是自己的临时素材库；实时调参时录下来，后面再切。",
       "快速第一版也要按 VCA 准备，否则后续和音乐对白混时会很难调整。",
       "重设计要不断回到画面叙事：哪里需要近身 grounding，哪里只需要背景能量。"
+    ],
+    "chainFocus": [
+      "效果链阅读顺序：先做 spotting 和三幕结构 -> 40 分钟做 color palette，并录成长文件 -> Whoosh / impact / forcefield 各自先有颜色 -> Editorial blitz 先铺 ground/fire 和 whiz-by -> Forcefield 和爆炸用 palette 变化支撑画面 -> Reverse 素材做 ramp-up 和金属戒指感。复习这条时先看每一步负责的声音角色，再看插件名称。",
+      "主要处理点：REAPER / Whoosh Machine / Sound Particles / Disperser / Chorus / Multiband Distortion。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "源素材角色：Warframe cinematic。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
+      "本条核心问题：这条视频是一个专业重设计 mini-doc：先把 Warframe 片段当真实项目做 spotting，拆成三幕和明确声音目标；然后用约 40 分钟做 color palette，把 REAPER 实时调参输出录成长文件；再用约两小时 ed...",
+      "大型片段不要一开始就剪细节，先做 spotting：定义风格、三幕结构、重点事件和情绪曲线。",
+      "Color palette 是速度的核心。先用 40 分钟集中做 whoosh、impact、forcefield、explosion、ground fire、magic transient 等材料，后面 editorial 才不会每个事件都重新发明。"
+    ],
+    "parameterLogic": [
+      "记录到的参数线索：Record output into long files；快速切片；VCA grouping；用于 whiz-by / transition / missile motion；forcefield pad；layered spatial texture；用于细微相位/峰值调色；用于 upper texture / pad；按频段加 distortion；避免整段糊掉。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
+      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
+      "调制类处理通常从低 Mix/Depth 开始，叠多层小变化；如果一听就像插件效果，说明剂量过大。",
+      "第一步参数优先级：明确 brief；分三幕；标出重点事件；先定声音目标再剪辑。这通常决定整条链后面的尺度、速度或素材质量。",
+      "第一颗处理点的判断：REAPER 负责 作为 palette 录制、快速 editorial 和 VCA session 准备的核心 DAW。。先验证它是否真的改善了源素材，再继续下一级。"
+    ],
+    "practiceChecklist": [
+      "复刻练习：用自己的素材重做「Brin Sound：Warframe 重设计闪电流程」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
+      "拆链练习：按 先做 spotting 和三幕结构 / 40 分钟做 color palette，并录成长文件 / Whoosh / impact / forcefield 各自先有颜色 / Editorial blitz 先铺 ground/fire 和 whiz-by 的顺序逐个 bypass，写下每一步到底增加了什么。",
+      "参数练习：从 REAPER 开始，只动一个核心参数，渲染 3 个强度版本，再选最不夸张但有效的一版。",
+      "分层练习：把结果至少拆成 transient、body、texture、tail 四类中的两类，避免所有声音挤在同一层。",
+      "归档练习：把本条可复用的插件顺序、关键参数和失败点写成一个小 preset note，后续做 工作流/工具/中间件 时直接调用。"
     ]
   }
 ];
@@ -9790,16 +11449,111 @@
   "brin-warframe-prepped-vcas": {
     "preview": "assets/shots/preview/brin-warframe-prepped-vcas.jpg",
     "full": "assets/shots/full/brin-warframe-prepped-vcas.jpg"
+  },
+  "noah-boom-source-rate-chain-overview": {
+    "preview": "assets/shots/preview/noah-boom-source-rate-chain-overview.jpg",
+    "full": "assets/shots/full/noah-boom-source-rate-chain-overview.jpg"
+  },
+  "noah-boom-znoise-first-cleanup": {
+    "preview": "assets/shots/preview/noah-boom-znoise-first-cleanup.jpg",
+    "full": "assets/shots/full/noah-boom-znoise-first-cleanup.jpg"
+  },
+  "noah-boom-uhbik-solid-flange": {
+    "preview": "assets/shots/preview/noah-boom-uhbik-solid-flange.jpg",
+    "full": "assets/shots/full/noah-boom-uhbik-solid-flange.jpg"
+  },
+  "noah-boom-uhbik-washi-flange": {
+    "preview": "assets/shots/preview/noah-boom-uhbik-washi-flange.jpg",
+    "full": "assets/shots/full/noah-boom-uhbik-washi-flange.jpg"
+  },
+  "noah-boom-filterfreak-fat-sweep": {
+    "preview": "assets/shots/preview/noah-boom-filterfreak-fat-sweep.jpg",
+    "full": "assets/shots/full/noah-boom-filterfreak-fat-sweep.jpg"
+  },
+  "noah-boom-khs-flanger-low-mix": {
+    "preview": "assets/shots/preview/noah-boom-khs-flanger-low-mix.jpg",
+    "full": "assets/shots/full/noah-boom-khs-flanger-low-mix.jpg"
+  },
+  "noah-boom-decapitator-32mix": {
+    "preview": "assets/shots/preview/noah-boom-decapitator-32mix.jpg",
+    "full": "assets/shots/full/noah-boom-decapitator-32mix.jpg"
+  },
+  "noah-boom-enigma-delay-motion": {
+    "preview": "assets/shots/preview/noah-boom-enigma-delay-motion.jpg",
+    "full": "assets/shots/full/noah-boom-enigma-delay-motion.jpg"
+  },
+  "noah-boom-phasemistress-bubble": {
+    "preview": "assets/shots/preview/noah-boom-phasemistress-bubble.jpg",
+    "full": "assets/shots/full/noah-boom-phasemistress-bubble.jpg"
+  },
+  "noah-boom-indent2-tube-softclip": {
+    "preview": "assets/shots/preview/noah-boom-indent2-tube-softclip.jpg",
+    "full": "assets/shots/full/noah-boom-indent2-tube-softclip.jpg"
+  },
+  "noah-boom-promb-cleaner-370hz": {
+    "preview": "assets/shots/preview/noah-boom-promb-cleaner-370hz.jpg",
+    "full": "assets/shots/full/noah-boom-promb-cleaner-370hz.jpg"
+  },
+  "noah-boom-l3-multimaximizer-slam": {
+    "preview": "assets/shots/preview/noah-boom-l3-multimaximizer-slam.jpg",
+    "full": "assets/shots/full/noah-boom-l3-multimaximizer-slam.jpg"
+  },
+  "noah-boom-prol2-plus28-transparent": {
+    "preview": "assets/shots/preview/noah-boom-prol2-plus28-transparent.jpg",
+    "full": "assets/shots/full/noah-boom-prol2-plus28-transparent.jpg"
+  },
+  "noah-boom-manipulator-pitch-formant": {
+    "preview": "assets/shots/preview/noah-boom-manipulator-pitch-formant.jpg",
+    "full": "assets/shots/full/noah-boom-manipulator-pitch-formant.jpg"
+  },
+  "noah-boom-promb-expansion-bass": {
+    "preview": "assets/shots/preview/noah-boom-promb-expansion-bass.jpg",
+    "full": "assets/shots/full/noah-boom-promb-expansion-bass.jpg"
+  },
+  "noah-boom-shade-follower-tremolo": {
+    "preview": "assets/shots/preview/noah-boom-shade-follower-tremolo.jpg",
+    "full": "assets/shots/full/noah-boom-shade-follower-tremolo.jpg"
+  },
+  "noah-boom-rendered-variants": {
+    "preview": "assets/shots/preview/noah-boom-rendered-variants.jpg",
+    "full": "assets/shots/full/noah-boom-rendered-variants.jpg"
+  },
+  "noah-boom-batch-unfilter": {
+    "preview": "assets/shots/preview/noah-boom-batch-unfilter.jpg",
+    "full": "assets/shots/full/noah-boom-batch-unfilter.jpg"
+  },
+  "noah-boom-layered-design-session": {
+    "preview": "assets/shots/preview/noah-boom-layered-design-session.jpg",
+    "full": "assets/shots/full/noah-boom-layered-design-session.jpg"
+  },
+  "noah-boom-gullfoss-brightness": {
+    "preview": "assets/shots/preview/noah-boom-gullfoss-brightness.jpg",
+    "full": "assets/shots/full/noah-boom-gullfoss-brightness.jpg"
+  },
+  "noah-boom-soothe-transient-harshness": {
+    "preview": "assets/shots/preview/noah-boom-soothe-transient-harshness.jpg",
+    "full": "assets/shots/full/noah-boom-soothe-transient-harshness.jpg"
+  },
+  "noah-boom-saturn-bass-drive": {
+    "preview": "assets/shots/preview/noah-boom-saturn-bass-drive.jpg",
+    "full": "assets/shots/full/noah-boom-saturn-bass-drive.jpg"
+  },
+  "noah-boom-mlimitermb-spectrum": {
+    "preview": "assets/shots/preview/noah-boom-mlimitermb-spectrum.jpg",
+    "full": "assets/shots/full/noah-boom-mlimitermb-spectrum.jpg"
   }
 };
 
     const categoryById = Object.fromEntries(categories.map((category) => [category.id, category]));
     const sources = Array.from(new Set(records.map((record) => record.source))).sort((a, b) => a.localeCompare(b, "zh-CN"));
-    const state = { category: "all", query: "", source: "all", sort: "updatedDesc", activeId: "" };
+    const state = { category: "all", query: "", source: "all", sort: "updatedDesc", activeId: "", view: "library" };
 
     const tabsEl = document.getElementById("tabs");
     const gridEl = document.getElementById("grid");
     const detailEl = document.getElementById("detail");
+    const libraryViewEl = document.getElementById("libraryView");
+    const readerViewEl = document.getElementById("readerView");
+    const backToLibraryEl = document.getElementById("backToLibrary");
     const countEl = document.getElementById("resultCount");
     const noteEl = document.getElementById("categoryNote");
     const searchEl = document.getElementById("search");
@@ -9845,6 +11599,9 @@
         record.coreIdeas.join(" "),
         record.plugins.map((plugin) => [plugin.name, plugin.purpose, ...(plugin.settings || [])].join(" ")).join(" "),
         record.steps.map((step) => [step.name, step.detail, ...(step.params || [])].join(" ")).join(" "),
+        (record.chainFocus || []).join(" "),
+        (record.parameterLogic || []).join(" "),
+        (record.practiceChecklist || []).join(" ")
       ].join(" ").toLowerCase();
     }
 
@@ -9916,6 +11673,22 @@
       }).join("");
     }
 
+    function showLibrary() {
+      state.view = "library";
+      document.body.classList.remove("reader-open");
+      libraryViewEl.hidden = false;
+      readerViewEl.hidden = true;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showReader() {
+      state.view = "reader";
+      document.body.classList.add("reader-open");
+      libraryViewEl.hidden = true;
+      readerViewEl.hidden = false;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     function imageAsset(kind, key) {
       if (!key) return "";
       if (imageManifest[key] && imageManifest[key][kind]) return imageManifest[key][kind];
@@ -9942,6 +11715,13 @@
 
     window.loadDetailPreviews = loadDetailPreviews;
 
+    function listSection(title, items, className = "learning-point") {
+      if (!Array.isArray(items) || !items.length) return "";
+      return '<div class="section"><h3>' + escapeHtml(title) + '</h3>' +
+        items.map((item) => '<div class="' + className + '">' + escapeHtml(item) + '</div>').join("") +
+        '</div>';
+    }
+
     function renderDetail() {
       const record = records.find((item) => item.id === state.activeId);
       if (!record) return;
@@ -9957,6 +11737,9 @@
           (step.params.length ? '<div class="chips">' + step.params.slice(0, 8).map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
           '</div>';
       }).join("");
+      const chainFocusHtml = listSection("效果链学习重点", record.chainFocus, "learning-point");
+      const parameterLogicHtml = listSection("参数调试逻辑", record.parameterLogic, "learning-point");
+      const practiceHtml = listSection("练习复盘", record.practiceChecklist, "tip");
       const ideasHtml = record.coreIdeas.map((idea) => '<div class="idea">' + escapeHtml(idea) + '</div>').join("");
       const pluginHtml = record.plugins.map((plugin) => {
         const settings = Array.isArray(plugin.settings) && plugin.settings.length
@@ -9976,9 +11759,12 @@
           (record.updateNote ? '<div class="update-note">' + escapeHtml(record.updateNote) + '</div>' : '') +
           '<p class="detail-summary">' + escapeHtml(record.summary) + '</p>' +
           '<a class="open-video" href="' + escapeAttr(record.url) + '" target="_blank" rel="noopener">打开原视频</a>' +
+          chainFocusHtml +
+          parameterLogicHtml +
           '<div class="section"><h3>制作步骤</h3>' + stepHtml + '</div>' +
           '<div class="section"><h3>核心观点</h3>' + ideasHtml + '</div>' +
           '<div class="section"><h3>插件 / 处理点</h3>' + pluginHtml + '</div>' +
+          practiceHtml +
           '<div class="section"><h3>材料</h3><div class="chips">' + materialHtml + '</div></div>' +
           '<div class="section"><h3>关键词</h3><div class="chips">' + keywordHtml + '</div></div>' +
           '<div class="section"><h3>实用技巧</h3>' + tipHtml + '</div>' +
@@ -10023,7 +11809,12 @@
       state.activeId = card.dataset.id;
       renderGrid();
       renderDetail();
-      if (window.innerWidth < 980) detailEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      showReader();
+    });
+
+    backToLibraryEl.addEventListener("click", () => {
+      showLibrary();
+      renderGrid();
     });
 
     detailEl.addEventListener("click", (event) => {
@@ -10055,7 +11846,11 @@
     lightboxCloseEl.addEventListener("click", closeLightbox);
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && lightboxEl.classList.contains("open")) closeLightbox();
+      if (event.key === "Escape" && lightboxEl.classList.contains("open")) {
+        closeLightbox();
+        return;
+      }
+      if (event.key === "Escape" && state.view === "reader") showLibrary();
     });
 
     searchEl.addEventListener("input", (event) => {
