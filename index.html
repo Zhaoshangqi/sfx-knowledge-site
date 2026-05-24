@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -752,6 +752,384 @@
 };
 
     const records = [
+  {
+    "id": "yt-T-Txp62Xp7E",
+    "title": "AirCon24：游戏动态混音的整体方法与 Wwise 技术",
+    "videoId": "T-Txp62Xp7E",
+    "url": "https://www.youtube.com/watch?v=T-Txp62Xp7E",
+    "source": "Airwiggles / AirCon24",
+    "category": "workflow",
+    "secondaryCategories": [
+      "scifi",
+      "impact",
+      "environment"
+    ],
+    "addedAt": "2026-05-24",
+    "updatedAt": "2026-05-24",
+    "updateNote": "新增 1080p 高清步骤截图；完整拆解 Alex Previty 关于游戏动态混音的目标设定、Wwise 总线结构、Sidechain EQ、Threat System、Wwise HDR、响度与空间混音逻辑。",
+    "summary": "这条 AirCon24 讲座不是单个音效的制作课，而是把“游戏混音”当成一个从项目第一天就要搭建的系统：先定义玩家和游戏目标，再建立 Wwise 总线、测量、RTPC、HDR、Threat priority、空间路由和响度 QA。核心方法是用系统化的减法混音让 SFX、对白、音乐和环境在不同瞬间轮流让路，而不是靠单纯变大声解决清晰度。",
+    "coreIdeas": [
+      "游戏混音不是最后的 mastering 阶段，而是从项目第一天开始的技术、路由、目标和团队沟通系统。",
+      "所有声音设计和混音决策都要回到游戏目标：叙事动作游戏可能优先对白和情绪，多人竞技可能优先战斗信息与可读性。",
+      "SFX、Music、Dialog 共享同一条 headroom 道路；某个元素变重要时，其他元素要按系统规则缩小、让频段或退到空间后面。",
+      "Sidechain EQ 比单纯音量 ducking 更透明：把源声音拆成 low / mid / high meter，再只压目标声音中真正冲突的频段。",
+      "动态混音本身也要动态：安静场景不应该一直 duck；只有当 RMS 或游戏状态真正触发时，才把目标频段推开。",
+      "Threat System 说明“重要性”不能只由距离决定；远处弓箭手可能比近处 idle 敌人更该被听见。",
+      "Wwise HDR 的重点是声音之间的关系和优先级，不是把一切变响。voice volume、envelope、ratio、threshold 和 active range 要在项目早期规划。",
+      "响度、监听音量和玩家播放设备会改变混音判断；要在专业房间、耳机、电视、小音箱和目标平台上反复验证。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "先定义游戏混音目标",
+        "detail": "讲者把没有目标的混音比作开车却不知道目的地。AAA 叙事动作、多人竞技、解谜和开放世界对“什么该被听见”的答案都不同；后续每个 EQ、ducking、路由和 loudness 决策，都要先通过游戏愿景这层过滤。",
+        "params": [
+          "先和 game director / audio director / narrative / gameplay stakeholders 对齐",
+          "写成全音频团队都能回看的混音原则",
+          "每个微观处理都回答：这是否服务玩家当前需要"
+        ],
+        "imageKey": "aircon-game-mixing-goals"
+      },
+      {
+        "order": 2,
+        "name": "从第一天搭建混音道路",
+        "detail": "电影混音可以在后期集中做，但游戏是互动系统；素材、总线、参数、平台限制和团队习惯都会逐步固化。要提前规划混音功能清单、资源、监听、asset mastering 标准和 Wwise 结构，避免最后几个月才发现系统不能动。",
+        "params": [
+          "从高优先级到低优先级列 mix feature roadmap",
+          "指定一个混音系统 point person",
+          "早定监控音量、命名、总线、资产电平和可测量指标"
+        ],
+        "imageKey": "aircon-game-mixing-title"
+      },
+      {
+        "order": 3,
+        "name": "用 Wwise 总线与分类承载自动化",
+        "detail": "示例里 Wwise 查询和总线结构按 Performance Intensity、Presentation Type、Mix Reference 和 VO/SFX 分类组织。总线不是越多越专业，只有当它承担处理、混音反馈、3D 配置、状态切换或调试意义时才值得存在。",
+        "params": [
+          "分类维度：Performance Intensity / Presentation Type / Mix category / VO category",
+          "总线存在理由：处理、路由、3D、反馈、调试或自动化",
+          "保持结构简单到每个人都能解释它为什么存在"
+        ],
+        "imageKey": "aircon-game-mixing-bus-structure"
+      },
+      {
+        "order": 4,
+        "name": "把 SFX / Music / Dialog 看成共享 headroom",
+        "detail": "对白、音乐、环境、Foley、爆炸和 UI 都在同一个动态范围里抢空间。某一秒对白最重要，下一秒武器反馈最重要，再下一秒音乐情绪最重要；系统必须能让主角元素出来，其他元素退让，而不是全部满电平互相遮挡。",
+        "params": [
+          "主元素可以按任务、秒级甚至毫秒级变化",
+          "优先选择缩小、雕频段、移位置，而不是只推大声",
+          "混音目标是玩家可读性，不是每个素材都展示完整频谱"
+        ],
+        "imageKey": "aircon-game-mixing-share-road"
+      },
+      {
+        "order": 5,
+        "name": "设置响度和峰值边界",
+        "detail": "Q&A 中提到一个游戏响度参考：选 30 到 60 分钟代表性 gameplay，Integrated Loudness 约 -24 LUFS，允许 +/-2 dB，True Peak 不超过 -1 dB。这个目标不是艺术枷锁，而是避免所有部门都用“再大声一点”解决问题。",
+        "params": [
+          "代表性 gameplay：30-60 分钟",
+          "Integrated loudness：约 -24 LUFS +/-2 dB",
+          "True Peak：不超过 -1 dB",
+          "先知道边界，再做减法混音和频段让路"
+        ],
+        "imageKey": "aircon-game-mixing-share-road"
+      },
+      {
+        "order": 6,
+        "name": "Sidechain EQ：先拆频段再测量",
+        "detail": "Wwise 示例把源信号送到 METER_VO_LO / MID / HI / SUM 或 METER_SFX_COMBAT_LO / MID / SUM 等 meter bus。每个 meter bus 先 band-pass 到对应频段，再测量 RMS，把结果变成可用于 RTPC 的控制信号。",
+        "params": [
+          "源 bus 或 actor-mixer -> user-defined auxiliary sends",
+          "低/中/高/总量分别进独立 meter bus",
+          "处理顺序：Band-pass -> Meter -> RTPC 控制值"
+        ],
+        "imageKey": "aircon-game-mixing-sidechain-buses"
+      },
+      {
+        "order": 7,
+        "name": "Sidechain EQ：只让冲突频段退让",
+        "detail": "传统音量 ducking 在安静、沉浸式游戏里容易被听成 pumping。这里用 meter band 的 RTPC 去控制目标声音的 EQ：如果对白低频厚，就只让 SFX 或音乐低频让出空间；如果对白偏高，就不要无意义地切掉目标低频。",
+        "params": [
+          "总体 SFX RMS 可控制 send amount，安静时不触发 ducking",
+          "低频对白 -> 目标低频动态下压",
+          "高频对白 -> 目标中高频让路，保留低频重量",
+          "目标是透明清晰，而不是听见系统在吸气"
+        ],
+        "imageKey": "aircon-game-mixing-sidechain-rtpc"
+      },
+      {
+        "order": 8,
+        "name": "用 God of War 示例校验透明 ducking",
+        "detail": "God of War 示例里，画面同时显示游戏场景、Wwise meter 和 ducking 状态。安静区域和瀑布/战斗等响场景都能让对白保持可懂，但玩家不应明显听到整条环境或 SFX 被压扁。",
+        "params": [
+          "对比 quiet area / loud area",
+          "看 ambience RMS、dialog event 和 ducking 是否只在需要时动作",
+          "A/B 检查：对白清楚但环境不突然塌陷"
+        ],
+        "imageKey": "aircon-game-mixing-gow-ducking"
+      },
+      {
+        "order": 9,
+        "name": "Threat System：用游戏语义替代单纯距离",
+        "detail": "距离衰减无法回答“谁最危险”。近处敌人可能只是 idle，远处弓箭手或法术预警却会影响玩家生死。因此混音系统要从 gameplay programmer / combat designer 那里拿威胁状态，而不是只看 3D 坐标。",
+        "params": [
+          "不要只用 distance attenuation 决定音量",
+          "输入可以包含攻击状态、目标、敌人类型、是否瞄准玩家、技能危险度",
+          "和战斗设计反复迭代 threat bucket"
+        ],
+        "imageKey": "aircon-game-mixing-threat-bullets"
+      },
+      {
+        "order": 10,
+        "name": "把敌人重要性映射成可听层级",
+        "detail": "God of War 示例用红色、黄色等 threat 标签标出敌人关系。高威胁声音应该更靠前、更清晰、遮挡更少；低威胁声音仍然存在于世界里，但可以更暗、更远、更窄或更少触发动态优先级。",
+        "params": [
+          "High threat：更高优先级、更多 presence、更少被 duck",
+          "Medium / low threat：保留存在感但降低信息抢占",
+          "混音权重随 combat state 和玩家注意力变化"
+        ],
+        "imageKey": "aircon-game-mixing-threat-example"
+      },
+      {
+        "order": 11,
+        "name": "Wwise HDR：用 envelope 管理声音关系",
+        "detail": "Wwise HDR 不是普通压缩器。每个参与 HDR 的声音可以用 envelope 描述它在时间上的“可竞争能量”，系统再用 Active Range、Sensitivity、Ratio 和 Threshold 决定谁把谁推开。图里能看到 Sensitivity 8、Active Range 8 的示例。",
+        "params": [
+          "Visible：Sensitivity 8",
+          "Visible：Active Range 8",
+          "Active Range 越大，envelope 参与范围越宽，ducking 可能越明显",
+          "只取 envelope 顶部可更透明，完整 envelope 可做更强烈层级"
+        ],
+        "imageKey": "aircon-game-mixing-hdr-envelope"
+      },
+      {
+        "order": 12,
+        "name": "先建立 voice volume / 重要性表",
+        "detail": "讲者展示了用表格管理 HDR 类别、active range 和 voice volume 的方法。关键是把 loudness 和 importance 分开：很响的环境不一定重要，较小的玩家危险提示可能必须在层级里高于它。",
+        "params": [
+          "按类别维护 voice volume / HDR tag / active range",
+          "全队共享表格，避免每个设计师独立猜优先级",
+          "用 category range 管理全局关系，而不是单条素材修补"
+        ],
+        "imageKey": "aircon-game-mixing-hdr-hierarchy"
+      },
+      {
+        "order": 13,
+        "name": "理解 HDR ratio、threshold 与 gain staging",
+        "detail": "讲者举例：HDR bus ratio 为 2:1、threshold 为 0 时，一个 voice volume 10 的声音和一个 0 的声音相遇，最终关系大约变成 5 dB 的差距，并让低优先级声音被推开 5 dB。所有 bus volume 到 voice volume 的增益都会累计，因此 HDR 必须早规划。",
+        "params": [
+          "示例：HDR ratio 2:1",
+          "示例：threshold 0",
+          "Voice volume 10 vs 0 -> 关系约缩成 5 dB",
+          "bus gain、voice volume、attenuation 都会影响实际 HDR 关系"
+        ],
+        "imageKey": "aircon-game-mixing-hdr-example"
+      },
+      {
+        "order": 14,
+        "name": "小心 attenuation 与 aux send 的 HDR 副作用",
+        "detail": "HDR 使用 voice volume，因此它会影响距离衰减和辅助发送的行为。讲者提醒：如果 dry path 被 HDR 影响，reverb/aux send 没有同样 HDR 设置，可能出现湿声比干声更突出的错觉；需要让 send path 共享 HDR 逻辑或手动补偿。",
+        "params": [
+          "距离衰减和 HDR 都会作用在 voice volume 关系上",
+          "dry 被 duck 而 aux 未 duck 时，空间尾巴可能反而凸出来",
+          "在 send bus 启用匹配 HDR 设置，或用曲线/电平补偿"
+        ],
+        "imageKey": "aircon-game-mixing-hdr-envelope"
+      },
+      {
+        "order": 15,
+        "name": "用粉噪和最坏场景调 envelope",
+        "detail": "不要只在理想场景听 HDR。讲者建议用粉噪、瀑布等最坏持续声测试 envelope，观察角色动作或重要提示进入时，系统是否能让路但不让玩家听见明显 pumping。",
+        "params": [
+          "用 waterfall / pink noise 这类持续宽频素材做压力测试",
+          "先听是否有 pumping，再看 meter 是否符合预期",
+          "按场景强度调整 active range、envelope 和类别关系"
+        ],
+        "imageKey": "aircon-game-mixing-hdr-example"
+      },
+      {
+        "order": 16,
+        "name": "空间混音也要服务玩家注意力",
+        "detail": "其他技术包括 azimuth / listener cone、distance attenuation、air absorption 和 3D audio spatial assignment。Ambisonics、passthrough、audio objects 各有代价；选择哪条路不是炫技，而是让玩家在正确方向、距离和设备上获得可读信息。",
+        "params": [
+          "Listener cone：玩家面向之外的声音可更暗或更退后",
+          "Distance / air absorption：真实感可以让位给 gameplay clarity",
+          "Ambisonics：包围感强但可能模糊",
+          "Audio objects：定位准但资源有限",
+          "Passthrough：适合不需要世界定位的 UI / music"
+        ],
+        "imageKey": "aircon-game-mixing-spatial-tools"
+      },
+      {
+        "order": 17,
+        "name": "用玩家设备和沟通闭环收尾",
+        "detail": "讲者最后强调 ABC：Always Be Communicating。专业监听房里完美的混音，不一定等于玩家在耳机、电视、小音箱、Switch 或手机上听得清。监听音量和动态范围要服务玩家，而不是服务混音师自尊。",
+        "params": [
+          "讲者个人小/中房间监听偏好约 74-76 dB",
+          "先做最高目标格式，再向下测试普通设备",
+          "用 playtest / QA / stakeholder feedback 修正优先级"
+        ],
+        "imageKey": "aircon-game-mixing-audience"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Wwise Bus Routing",
+        "purpose": "承载总线、分类、查询和自动化，让后续 Sidechain、HDR、Threat priority 和空间配置有可控入口。",
+        "settings": [
+          "Performance Intensity / Presentation Type / Mix category 分类",
+          "只创建有处理、路由、3D、反馈或调试理由的 bus",
+          "保持结构清晰，方便团队按同一规则落地"
+        ]
+      },
+      {
+        "name": "Wwise Meter",
+        "purpose": "把 VO、SFX、combat bus 等源信号变成可用于混音的 RMS / band loudness 控制值。",
+        "settings": [
+          "LO / MID / HI / SUM 分频测量",
+          "Band-pass 先于 meter",
+          "安静场景的 RMS 不应触发不必要 ducking"
+        ]
+      },
+      {
+        "name": "Wwise RTPC",
+        "purpose": "用 meter 输出或 gameplay threat 值驱动 send volume、EQ ducking、priority 和其他动态混音曲线。",
+        "settings": [
+          "METER_SFX_BUS_RMS 可控制 user-defined aux send volume",
+          "曲线要有阈值区，避免微小噪声也触发",
+          "按低/中/高频分别映射，而不是一条全频音量 duck"
+        ]
+      },
+      {
+        "name": "Wwise Sidechain EQ",
+        "purpose": "在目标声音上做频段让路，让对白或关键提示清晰，同时保留目标声音不冲突的频段重量。",
+        "settings": [
+          "Source -> meter bus -> RTPC -> target EQ band gain",
+          "低频对白只压目标低频，高频对白只压目标中高频",
+          "优先透明度，避免可听的 pumping"
+        ]
+      },
+      {
+        "name": "Wwise HDR",
+        "purpose": "按声音 importance 和 envelope 动态管理 SFX 之间的关系，适合大量同时触发的战斗、环境和角色声音。",
+        "settings": [
+          "Visible Sensitivity 8",
+          "Visible Active Range 8",
+          "示例 ratio 2:1",
+          "示例 threshold 0",
+          "先定义 category / voice volume / active range 表，再大量制作素材"
+        ]
+      },
+      {
+        "name": "Wwise Voice Volume / Gain Staging",
+        "purpose": "把 loudness 与 importance 分开管理；voice volume 是 HDR、attenuation 和实际优先级关系的关键输入。",
+        "settings": [
+          "bus volume 到 voice volume 的增益会累计",
+          "高 importance 不等于素材本身更响",
+          "用表格统一团队的优先级范围"
+        ]
+      },
+      {
+        "name": "Wwise Attenuation / Aux Sends",
+        "purpose": "处理距离、空气吸收和空间发送，同时避免 HDR 让 dry path 与 send path 的关系失衡。",
+        "settings": [
+          "重要远程威胁可以比真实距离更靠前",
+          "低威胁远景可以更暗、更窄、更快衰减",
+          "send bus 需要匹配 HDR 逻辑或做补偿"
+        ]
+      },
+      {
+        "name": "Threat Priority System",
+        "purpose": "把战斗系统里的危险度转换成混音优先级，而不是仅用距离决定谁被听见。",
+        "settings": [
+          "输入：敌人攻击状态、是否瞄准玩家、敌人类型、技能危险度、战斗阶段",
+          "输出：volume / priority / EQ presence / ducking resistance",
+          "需要 gameplay programmer、combat designer 和 audio 持续迭代"
+        ]
+      },
+      {
+        "name": "Loudness Metering",
+        "purpose": "给整局混音设置边界，避免用无限加响解决元素冲突。",
+        "settings": [
+          "代表性 gameplay 30-60 分钟",
+          "Integrated loudness 约 -24 LUFS +/-2 dB",
+          "True Peak 不超过 -1 dB",
+          "作为 QA 目标，不替代创意判断"
+        ]
+      },
+      {
+        "name": "Listener Cone / Spatial Routing",
+        "purpose": "按玩家朝向、距离和 3D audio 通道决定信息显著度，让空间混音服务注意力。",
+        "settings": [
+          "Azimuth / listener cone 控制背后和侧后方可读性",
+          "Distance attenuation / air absorption 可为玩法夸张或压缩",
+          "Ambisonics / passthrough / audio objects 依据资源和定位需求选择"
+        ]
+      }
+    ],
+    "materials": [
+      "God of War dynamic mix examples",
+      "Dialogue / VO bus",
+      "SFX combat bus",
+      "Music bus",
+      "Ambience RMS",
+      "Meter buses LO / MID / HI / SUM",
+      "Threat color labels",
+      "Wwise HDR envelopes",
+      "Pink noise / waterfall stress tests",
+      "Consumer playback devices"
+    ],
+    "keywords": [
+      "AirCon24",
+      "Alex Previty",
+      "Airwiggles",
+      "Game Mixing",
+      "Wwise",
+      "Sidechain EQ",
+      "Wwise HDR",
+      "Threat System",
+      "God of War",
+      "RTPC",
+      "Meter Bus",
+      "动态混音",
+      "游戏混音",
+      "响度",
+      "空间音频",
+      "3D Audio"
+    ],
+    "tips": [
+      "设计单个 SFX 时，也要想它进入游戏后会如何被 bus、HDR、threat priority 和 sidechain 系统重新塑形。",
+      "对白清晰度不要只靠压低所有 SFX；先判断对白占用的频段，再只让冲突频段退让。",
+      "大型战斗混音要把“危险”和“距离”拆开；远处高威胁提示可以比近处低威胁动作更靠前。",
+      "Wwise HDR 一定要早期建立表格和测试场景，否则后期再套会牵动所有资产电平、attenuation 和 aux send。",
+      "每次调动态混音都要 A/B：听玩家信息是否更清楚，同时听世界是否突然变空、变小或在 pumping。"
+    ],
+    "chainFocus": [
+      "整体链路可以读成：游戏目标 -> Wwise 总线/分类 -> meter bus 分频测量 -> RTPC 曲线 -> Sidechain EQ 频段让路 -> Threat priority 玩法优先级 -> Wwise HDR 层级系统 -> listener cone / distance / 3D routing -> loudness 和设备 QA。",
+      "Sidechain EQ 的关键不是“谁触发谁变小”，而是“源声音哪个频段在冲突，目标声音哪个频段需要让路”。这会比全频音量 duck 更透明。",
+      "Threat System 把战斗语义变成混音输入。它适合敌人、武器、危险预警、法术和 boss 机制，也适合任何需要玩家马上反应的信息音。",
+      "Wwise HDR 管理的是相对重要性。先用 voice volume / category 表决定谁应该压谁，再用 envelope 和 active range 控制压制的时间形状。",
+      "空间混音属于信息设计：listener cone、air absorption、ambisonics 和 object routing 不是为了真实而真实，而是为了玩家在正确时间理解正确方向。"
+    ],
+    "parameterLogic": [
+      "Sidechain EQ：先给源 bus 做 LO / MID / HI / SUM user-defined aux sends，每个 meter bus 先 band-pass，再 meter。meter 输出作为 RTPC 控制目标 EQ band gain 或 send amount。",
+      "RTPC 曲线：给低电平留出不动作区域；当 METER_SFX_BUS_RMS 足够高时才抬高 send 或 ducking 强度，避免安静场景也在频繁让路。",
+      "Wwise HDR：画面可见 Sensitivity 8、Active Range 8；讲解中提到 ratio 2:1、threshold 0。Active Range 越大，更多 envelope 参与竞争；只取顶端则更透明。",
+      "Voice volume：不要把它当单纯音量旋钮。它参与 HDR 关系、attenuation 结果和最终优先级，所以要从 bus 到 voice 的 gain staging 一起检查。",
+      "Attenuation / aux send：如果 HDR 改变 dry path 但 send path 没同步，reverb 可能比干声更凸。检查 send bus 是否需要相同 HDR 设置或单独补偿曲线。",
+      "Loudness：参考 -24 LUFS +/-2 dB integrated、True Peak <= -1 dB；用 30-60 分钟代表 gameplay 测，而不是只测一段最响战斗。"
+    ],
+    "practiceChecklist": [
+      "练习 1：在 Wwise 或 REAPER 中建 VO/SFX/Music 三组 bus，再列出每组在你的项目里什么时候必须让路。",
+      "练习 2：建立 LO/MID/HI/SUM 四个 meter bus，用 band-pass + meter 测一条对白或 UI 提示的频段能量。",
+      "练习 3：用这些 meter 值控制目标声音 EQ band gain，对比全频 volume duck 和 band duck 的透明度。",
+      "练习 4：设计一个 threat score：距离、敌人状态、是否攻击玩家、技能危险度各占一部分，再把它映射到 volume/priority/EQ presence。",
+      "练习 5：给 10 类 SFX 写一张 voice volume / HDR category 表，明确哪些声音能压哪些声音。",
+      "练习 6：用粉噪或瀑布 ambience 做压力测试，调 envelope / active range 到玩家听不出 pumping 但关键提示能出来。",
+      "练习 7：把同一场景分别在监听音箱、耳机、电视小声播放和手机外放上检查，记录丢失的提示频段。"
+    ]
+  },
   {
     "id": "543e84ff",
     "title": "金属撞击音效制作流程",
@@ -24722,6 +25100,66 @@
   "img_94ef772a85bb9404": {
     "preview": "assets/shots/preview/img_94ef772a85bb9404.webp",
     "full": "assets/shots/full/img_94ef772a85bb9404.webp"
+  },
+  "aircon-game-mixing-title": {
+    "preview": "assets/shots/preview/aircon-game-mixing-title.webp",
+    "full": "assets/shots/full/aircon-game-mixing-title.webp"
+  },
+  "aircon-game-mixing-goals": {
+    "preview": "assets/shots/preview/aircon-game-mixing-goals.webp",
+    "full": "assets/shots/full/aircon-game-mixing-goals.webp"
+  },
+  "aircon-game-mixing-bus-structure": {
+    "preview": "assets/shots/preview/aircon-game-mixing-bus-structure.webp",
+    "full": "assets/shots/full/aircon-game-mixing-bus-structure.webp"
+  },
+  "aircon-game-mixing-share-road": {
+    "preview": "assets/shots/preview/aircon-game-mixing-share-road.webp",
+    "full": "assets/shots/full/aircon-game-mixing-share-road.webp"
+  },
+  "aircon-game-mixing-sidechain-buses": {
+    "preview": "assets/shots/preview/aircon-game-mixing-sidechain-buses.webp",
+    "full": "assets/shots/full/aircon-game-mixing-sidechain-buses.webp"
+  },
+  "aircon-game-mixing-sidechain-rtpc": {
+    "preview": "assets/shots/preview/aircon-game-mixing-sidechain-rtpc.webp",
+    "full": "assets/shots/full/aircon-game-mixing-sidechain-rtpc.webp"
+  },
+  "aircon-game-mixing-gow-ducking": {
+    "preview": "assets/shots/preview/aircon-game-mixing-gow-ducking.webp",
+    "full": "assets/shots/full/aircon-game-mixing-gow-ducking.webp"
+  },
+  "aircon-game-mixing-threat-bullets": {
+    "preview": "assets/shots/preview/aircon-game-mixing-threat-bullets.webp",
+    "full": "assets/shots/full/aircon-game-mixing-threat-bullets.webp"
+  },
+  "aircon-game-mixing-threat-example": {
+    "preview": "assets/shots/preview/aircon-game-mixing-threat-example.webp",
+    "full": "assets/shots/full/aircon-game-mixing-threat-example.webp"
+  },
+  "aircon-game-mixing-hdr-envelope": {
+    "preview": "assets/shots/preview/aircon-game-mixing-hdr-envelope.webp",
+    "full": "assets/shots/full/aircon-game-mixing-hdr-envelope.webp"
+  },
+  "aircon-game-mixing-hdr-hierarchy": {
+    "preview": "assets/shots/preview/aircon-game-mixing-hdr-hierarchy.webp",
+    "full": "assets/shots/full/aircon-game-mixing-hdr-hierarchy.webp"
+  },
+  "aircon-game-mixing-hdr-example": {
+    "preview": "assets/shots/preview/aircon-game-mixing-hdr-example.webp",
+    "full": "assets/shots/full/aircon-game-mixing-hdr-example.webp"
+  },
+  "aircon-game-mixing-spatial-tools": {
+    "preview": "assets/shots/preview/aircon-game-mixing-spatial-tools.webp",
+    "full": "assets/shots/full/aircon-game-mixing-spatial-tools.webp"
+  },
+  "aircon-game-mixing-audience": {
+    "preview": "assets/shots/preview/aircon-game-mixing-audience.webp",
+    "full": "assets/shots/full/aircon-game-mixing-audience.webp"
+  },
+  "aircon-game-mixing-final": {
+    "preview": "assets/shots/preview/aircon-game-mixing-final.webp",
+    "full": "assets/shots/full/aircon-game-mixing-final.webp"
   }
 };
 
