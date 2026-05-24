@@ -475,6 +475,40 @@
     .step-shot.is-loaded span {
       color: var(--green);
     }
+    .step-shot.has-motion {
+      position: relative;
+      cursor: pointer;
+    }
+    .step-shot.has-motion::after {
+      content: "▶";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(15, 139, 141, 0.88);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.3);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      font-size: 21px;
+      line-height: 1;
+    }
+    .step-motion-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      color: #fff !important;
+      background: rgba(22, 24, 25, 0.72) !important;
+      font-size: 10px !important;
+      line-height: 1.2 !important;
+      pointer-events: none;
+    }
     .chips {
       display: flex;
       flex-wrap: wrap;
@@ -604,13 +638,26 @@
     .lightbox.zoomed {
       place-items: start center;
     }
-    .lightbox img {
+    .lightbox img,
+    .lightbox video {
       max-width: 96vw;
       max-height: 86vh;
       display: block;
       border-radius: 8px;
       box-shadow: 0 22px 80px rgba(0, 0, 0, 0.45);
+      background: #050607;
+    }
+    .lightbox img {
       cursor: zoom-in;
+    }
+    .lightbox video {
+      width: min(96vw, 1920px);
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+    }
+    .lightbox.media-video img,
+    .lightbox.media-image video {
+      display: none;
     }
     .lightbox.zoomed img {
       width: auto;
@@ -653,7 +700,7 @@
       </div>
     </div>
     <div class="header-stats">
-      <span class="stat-pill">61 个视频模块</span>
+      <span class="stat-pill">62 个视频模块</span>
       <span class="stat-pill">6 个音效分类</span>
       <span class="stat-pill">截图按需加载</span>
     </div>
@@ -700,6 +747,7 @@
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <button class="lightbox-close" id="lightboxClose" type="button">关闭</button>
     <img id="lightboxImage" alt="">
+    <video id="lightboxVideo" muted loop playsinline controls preload="metadata"></video>
     <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
 
@@ -742,13 +790,13 @@
   }
 ];
     const categoryCounts = {
-  "all": 61,
+  "all": 62,
   "magic": 35,
-  "creature": 16,
-  "impact": 29,
-  "scifi": 27,
-  "environment": 16,
-  "workflow": 28
+  "creature": 15,
+  "impact": 30,
+  "scifi": 29,
+  "environment": 17,
+  "workflow": 29
 };
 
     const records = [
@@ -766,7 +814,7 @@
     ],
     "addedAt": "2026-05-24",
     "updatedAt": "2026-05-24",
-    "updateNote": "新增 1080p 高清步骤截图；完整拆解 Alex Previty 关于游戏动态混音的目标设定、Wwise 总线结构、Sidechain EQ、Threat System、Wwise HDR、响度与空间混音逻辑。",
+    "updateNote": "2026-05-24 二次优化：在关键步骤增加 1080p 高清循环动图，点击步骤图可播放 Sidechain、RTPC、Threat System、Wwise HDR 和空间混音流程。",
     "summary": "这条 AirCon24 讲座不是单个音效的制作课，而是把“游戏混音”当成一个从项目第一天就要搭建的系统：先定义玩家和游戏目标，再建立 Wwise 总线、测量、RTPC、HDR、Threat priority、空间路由和响度 QA。核心方法是用系统化的减法混音让 SFX、对白、音乐和环境在不同瞬间轮流让路，而不是靠单纯变大声解决清晰度。",
     "coreIdeas": [
       "游戏混音不是最后的 mastering 阶段，而是从项目第一天开始的技术、路由、目标和团队沟通系统。",
@@ -844,7 +892,11 @@
           "低/中/高/总量分别进独立 meter bus",
           "处理顺序：Band-pass -> Meter -> RTPC 控制值"
         ],
-        "imageKey": "aircon-game-mixing-sidechain-buses"
+        "imageKey": "aircon-game-mixing-sidechain-buses",
+        "motion": {
+          "src": "assets/motions/aircon-game-mixing-sidechain-buses.mp4",
+          "poster": "assets/shots/preview/aircon-game-mixing-sidechain-buses.webp"
+        }
       },
       {
         "order": 7,
@@ -856,7 +908,11 @@
           "高频对白 -> 目标中高频让路，保留低频重量",
           "目标是透明清晰，而不是听见系统在吸气"
         ],
-        "imageKey": "aircon-game-mixing-sidechain-rtpc"
+        "imageKey": "aircon-game-mixing-sidechain-rtpc",
+        "motion": {
+          "src": "assets/motions/aircon-game-mixing-sidechain-rtpc.mp4",
+          "poster": "assets/shots/preview/aircon-game-mixing-sidechain-rtpc.webp"
+        }
       },
       {
         "order": 8,
@@ -867,7 +923,11 @@
           "看 ambience RMS、dialog event 和 ducking 是否只在需要时动作",
           "A/B 检查：对白清楚但环境不突然塌陷"
         ],
-        "imageKey": "aircon-game-mixing-gow-ducking"
+        "imageKey": "aircon-game-mixing-gow-ducking",
+        "motion": {
+          "src": "assets/motions/aircon-game-mixing-gow-ducking.mp4",
+          "poster": "assets/shots/preview/aircon-game-mixing-gow-ducking.webp"
+        }
       },
       {
         "order": 9,
@@ -889,7 +949,11 @@
           "Medium / low threat：保留存在感但降低信息抢占",
           "混音权重随 combat state 和玩家注意力变化"
         ],
-        "imageKey": "aircon-game-mixing-threat-example"
+        "imageKey": "aircon-game-mixing-threat-example",
+        "motion": {
+          "src": "assets/motions/aircon-game-mixing-threat-example.mp4",
+          "poster": "assets/shots/preview/aircon-game-mixing-threat-example.webp"
+        }
       },
       {
         "order": 11,
@@ -901,7 +965,11 @@
           "Active Range 越大，envelope 参与范围越宽，ducking 可能越明显",
           "只取 envelope 顶部可更透明，完整 envelope 可做更强烈层级"
         ],
-        "imageKey": "aircon-game-mixing-hdr-envelope"
+        "imageKey": "aircon-game-mixing-hdr-envelope",
+        "motion": {
+          "src": "assets/motions/aircon-game-mixing-hdr-envelope.mp4",
+          "poster": "assets/shots/preview/aircon-game-mixing-hdr-envelope.webp"
+        }
       },
       {
         "order": 12,
@@ -912,7 +980,11 @@
           "全队共享表格，避免每个设计师独立猜优先级",
           "用 category range 管理全局关系，而不是单条素材修补"
         ],
-        "imageKey": "aircon-game-mixing-hdr-hierarchy"
+        "imageKey": "aircon-game-mixing-hdr-hierarchy",
+        "motion": {
+          "src": "assets/motions/aircon-game-mixing-hdr-hierarchy.mp4",
+          "poster": "assets/shots/preview/aircon-game-mixing-hdr-hierarchy.webp"
+        }
       },
       {
         "order": 13,
@@ -935,7 +1007,11 @@
           "dry 被 duck 而 aux 未 duck 时，空间尾巴可能反而凸出来",
           "在 send bus 启用匹配 HDR 设置，或用曲线/电平补偿"
         ],
-        "imageKey": "aircon-game-mixing-hdr-envelope"
+        "imageKey": "aircon-game-mixing-hdr-envelope",
+        "motion": {
+          "src": "assets/motions/aircon-game-mixing-hdr-envelope.mp4",
+          "poster": "assets/shots/preview/aircon-game-mixing-hdr-envelope.webp"
+        }
       },
       {
         "order": 15,
@@ -959,7 +1035,11 @@
           "Audio objects：定位准但资源有限",
           "Passthrough：适合不需要世界定位的 UI / music"
         ],
-        "imageKey": "aircon-game-mixing-spatial-tools"
+        "imageKey": "aircon-game-mixing-spatial-tools",
+        "motion": {
+          "src": "assets/motions/aircon-game-mixing-spatial-tools.mp4",
+          "poster": "assets/shots/preview/aircon-game-mixing-spatial-tools.webp"
+        }
       },
       {
         "order": 17,
@@ -26073,6 +26153,7 @@
     const sortEl = document.getElementById("sortOrder");
     const lightboxEl = document.getElementById("lightbox");
     const lightboxImageEl = document.getElementById("lightboxImage");
+    const lightboxVideoEl = document.getElementById("lightboxVideo");
     const lightboxCaptionEl = document.getElementById("lightboxCaption");
     const lightboxCloseEl = document.getElementById("lightboxClose");
 
@@ -26220,7 +26301,7 @@
         if (button) {
           button.classList.add("is-loaded");
           const label = button.querySelector("span");
-          if (label) label.textContent = "点击放大查看高清步骤截图";
+          if (label) label.textContent = button.dataset.motionSrc ? "点击播放高清流程动图" : "点击放大查看高清步骤截图";
         }
       });
     }
@@ -26305,10 +26386,14 @@
       if (!record) return;
       const category = categoryById[record.category];
       const stepHtml = record.steps.map((step, index) => {
+        const motion = step.motion && step.motion.src ? step.motion : null;
         const shotHtml = step.imageKey
-          ? '<button class="step-shot" type="button" data-step-index="' + index + '" data-image-key="' + escapeAttr(step.imageKey) + '" aria-label="' + escapeAttr("放大步骤截图：" + step.name) + '">' +
+          ? '<button class="step-shot' + (motion ? ' has-motion' : '') + '" type="button" data-step-index="' + index + '" data-image-key="' + escapeAttr(step.imageKey) + '"' +
+              (motion ? ' data-motion-src="' + escapeAttr(motion.src) + '" data-motion-poster="' + escapeAttr(motion.poster || imageAsset("preview", step.imageKey)) + '"' : '') +
+              ' aria-label="' + escapeAttr((motion ? "播放流程动图：" : "放大步骤截图：") + step.name) + '">' +
               '<img data-shot-preview="' + escapeAttr(step.imageKey) + '" alt="' + escapeAttr(record.title + " - " + step.name) + '" loading="lazy" decoding="async">' +
-              '<span>截图准备中，稍后可放大查看</span>' +
+              '<span>' + (motion ? '动图准备中，稍后可播放' : '截图准备中，稍后可放大查看') + '</span>' +
+              (motion ? '<span class="step-motion-badge">1080p 动图</span>' : '') +
             '</button>'
           : '';
         return '<div class="step">' + shotHtml + '<strong>' + step.order + '. ' + escapeHtml(step.name) + '</strong><p>' + escapeHtml(step.detail) + '</p>' +
@@ -26351,6 +26436,11 @@
     }
 
     function openLightbox(src, caption) {
+      lightboxVideoEl.pause();
+      lightboxVideoEl.removeAttribute("src");
+      lightboxVideoEl.removeAttribute("poster");
+      lightboxEl.classList.remove("media-video");
+      lightboxEl.classList.add("media-image");
       lightboxImageEl.src = src;
       lightboxImageEl.alt = caption;
       lightboxCaptionEl.textContent = caption + "。点击图片切换原始尺寸查看细节。";
@@ -26360,11 +26450,34 @@
       document.body.style.overflow = "hidden";
     }
 
+    function openMotionLightbox(src, poster, caption) {
+      lightboxImageEl.removeAttribute("src");
+      lightboxImageEl.alt = "";
+      lightboxEl.classList.remove("zoomed");
+      lightboxEl.classList.remove("media-image");
+      lightboxEl.classList.add("media-video");
+      lightboxVideoEl.src = src;
+      if (poster) lightboxVideoEl.poster = poster;
+      else lightboxVideoEl.removeAttribute("poster");
+      lightboxCaptionEl.textContent = caption + "。1080p 静音循环播放，可用视频控制条暂停或拖动细看。";
+      lightboxEl.classList.add("open");
+      lightboxEl.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      lightboxVideoEl.load();
+      lightboxVideoEl.play().catch(() => {});
+    }
+
     function closeLightbox() {
       lightboxEl.classList.remove("open");
       lightboxEl.classList.remove("zoomed");
+      lightboxEl.classList.remove("media-video");
+      lightboxEl.classList.remove("media-image");
       lightboxEl.setAttribute("aria-hidden", "true");
       lightboxImageEl.removeAttribute("src");
+      lightboxVideoEl.pause();
+      lightboxVideoEl.removeAttribute("src");
+      lightboxVideoEl.removeAttribute("poster");
+      lightboxVideoEl.load();
       document.body.style.overflow = "";
     }
 
@@ -26409,6 +26522,10 @@
       if (!record) return;
       const step = record.steps[Number(shot.dataset.stepIndex)];
       if (!step || !step.imageKey) return;
+      if (shot.dataset.motionSrc) {
+        openMotionLightbox(shot.dataset.motionSrc, shot.dataset.motionPoster, record.title + " / " + step.order + ". " + step.name);
+        return;
+      }
       const src = imageAsset("full", step.imageKey) || imageAsset("preview", step.imageKey);
       if (!src) {
         const label = shot.querySelector("span");
@@ -26421,6 +26538,10 @@
     lightboxImageEl.addEventListener("click", (event) => {
       event.stopPropagation();
       lightboxEl.classList.toggle("zoomed");
+    });
+
+    lightboxVideoEl.addEventListener("click", (event) => {
+      event.stopPropagation();
     });
 
     lightboxEl.addEventListener("click", (event) => {
