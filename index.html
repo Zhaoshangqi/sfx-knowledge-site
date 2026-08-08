@@ -790,13 +790,13 @@
   }
 ];
     const categoryCounts = {
-  "all": 72,
-  "magic": 38,
-  "creature": 15,
-  "impact": 35,
-  "scifi": 38,
-  "environment": 18,
-  "workflow": 39
+  "all": 77,
+  "magic": 39,
+  "creature": 17,
+  "impact": 37,
+  "scifi": 40,
+  "environment": 20,
+  "workflow": 43
 };
 
     const records = [
@@ -24459,6 +24459,1200 @@
       "练习：以相近响度判断 blend 是否增加所需 tonal motion；不要把更响误判为更好。",
       "练习：交付前恢复安全 headroom，检查 true peak、DC / sub、单声道兼容、尾部点击，并记录所有截图参数的帧绑定范围。"
     ]
+  },
+  {
+    "id": "yt-ir8d3PUj5JU",
+    "title": "狗玩具变异形龙吼：怪物声音设计",
+    "videoId": "ir8d3PUj5JU",
+    "url": "https://www.youtube.com/watch?v=ir8d3PUj5JU",
+    "source": "Dietrich Dice Sound / 插件技巧",
+    "category": "creature",
+    "secondaryCategories": [
+      "scifi",
+      "workflow"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 11 条：依据完整 1388.27 秒音视频、英文字幕、九张指定原帧与一段带原声 motion 整理。证据覆盖自录素材池、视觉参考、idle 器官层、breath lead、主声链与独立宽度实例、body/impact、DogPoopMetalScreech 主声、post-roar MTremolo rate 自动化和主空间；未补写 formant、granular、render、middleware 或游戏内实现。",
+    "summary": "作者把自录物件先按 throat/core、body、breath、mouth/skin、threat、motion 与 space 的职责组织，再用 item rate、reverse、stretch、饱和、频段让位和选择性空间建立异形巨兽。标题概括为 dog toys，但素材池还包含家居物件、人声与空气、布料/皮革、金属和水；第二段主声由 DogPoopMetalScreech 媒体项锁定，不能简化成普通吱叫玩具。真正可迁移的不是增加层数，而是让主声、低频身体、撞击起音、口腔纹理和空间在时间与频谱上各有位置。post-roar 的加速由带声音 motion 证明，静态帧只记录 MTremolo 的一个瞬时状态。",
+    "coreIdeas": [
+      "作者先寻找一条手势清楚的 monster voice，再判断缺少 body、edge、mouth 还是 impact；主声身份优先于插件数量和层数。",
+      "标题中的 Dog Toys 只是概括。frame_000056 与录音 montage 还显示家居物件、人声/空气、布料/皮革、金属、碗和水等来源，不能把全部素材改写成狗玩具。",
+      "idle 以较少处理的 breath、mouth、rubber、leather 与小型共鸣建立同一生物的器官连续性；强吼叫成立不代表低强度状态已经可信。",
+      "第二段主声的媒体项明确为 DogPoopMetalScreech-glued-03.wav。它提供可辨识的尖叫/号角式尾端手势，不能写成普通 squeaky toy，也不能补品牌、材质结构或录制方法。",
+      "item rate、reverse 与 stretch markers 是画面可证的主要变形手段；视频没有独立 formant 或 granular 处理证据。",
+      "body 由极端降速 WindSpinner 的持续低频运动与 washer/door impacts 的起音共同组成；低频身体、撞击瞬态和 throat voice 是不同职责。",
+      "post-roar 通过 MTremolo rate automation 与动作同步。frame_001130 只显示瞬时 19.99 Hz 状态，6.4 秒带声 motion 才能证明速度随时间收紧。",
+      "主混响在攻击和 roar 处让位，额外 reverb/delay 只选择性接 main roar。空间负责尺度与尾部，不能把所有 breath、mouth 和 impact 一起冲入长尾。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "核对完整自录素材池",
+        "detail": "作者说明比赛限制为只用自己录制的素材。画面事实：frame_000056 同屏展示弦乐器、碗、衣物、橡胶件、球/玩具、管件与 REAPER 工程；这能证明来源多样，不能证明每件物体都进入最终 cue。",
+        "params": [
+          "标题中的 dog toys 不能覆盖 household objects、human performance、cloth/leather、metal、air 与 water 等来源。",
+          "Rubber Treat、Rubber Cover 等可见标签可按原名记录，但不补品牌、型号、材料配方或发声结构。",
+          "作者提醒 scream 表演可能伤嗓；练习优先使用非发声物、低压力口腔动作或受控表演，不把危险发声当建议。"
+        ],
+        "imageKey": "ir8d3PUj5JU-recorded-source-palette"
+      },
+      {
+        "order": 2,
+        "name": "用视觉参考限定体型与方向",
+        "detail": "作者把 Monster Hunter: World 中最喜欢的 final boss 作为体型与外观参考。画面事实：frame_000231 只显示一张蓝白带翼异星龙参考图和工程上下文；记录到作品与 final-boss 层级即可。",
+        "params": [
+          "不得从单帧补写角色名、种族、技能、官方设定或声音来源。",
+          "视觉参考用于定义异星、巨大、带翼的方向，不证明最终声音已在游戏画面中实现。",
+          "作者对 idle 倾向少处理；这只适用于低强度状态的可信度，不代表整条设计都少处理。"
+        ],
+        "imageKey": "ir8d3PUj5JU-alien-dragon-reference"
+      },
+      {
+        "order": 3,
+        "name": "先用 idle 建立器官连续性",
+        "detail": "画面事实：frame_000281 同屏可见 Human Air、Leather Bag、Rubber Treat 等层和多组 rate/pitch item。作者随后还讲解 rubber cover、zombie、spoon、mouth、duck call、deadcat 与 water bowl，用少量处理保留呼吸、口腔和表皮动作。",
+        "params": [
+          "throat/body/breath/mouth/skin 是分析标签，不冒充作者轨道名。",
+          "画面中的 0.465、0.441、0.369、0.138 等 rate 只属于各自 item，不构成 creature preset。",
+          "分析建议：先验证小声状态是否仍像同一生物，再决定强吼叫还缺哪一种职责。"
+        ],
+        "imageKey": "ir8d3PUj5JU-idle-organ-layers"
+      },
+      {
+        "order": 4,
+        "name": "用 breath lead 写出蓄力方向",
+        "detail": "作者用反向人吹气、pitch/rate 变化、rubber cover 与 reversed harp string 引向 roar。画面事实：frame_000598 显示 Human Air Blow reversed、Rate 0.831 (-3.21)、另一空气项 Rate 0.771 (-4.50)，以及 1.00x -> 0.75x -> 1.18x -> 1.00x 的 stretch markers。",
+        "params": [
+          "这些数值只绑定 frame_000598 的两个 item，不是固定 breath-riser 配方。",
+          "stretch markers 证明局部速度手势，不证明独立 formant automation 或 granular processing。",
+          "分析归纳：空气层负责吸气、蓄力与方向，长混响不应提前把它糊成持续噪声。"
+        ],
+        "imageKey": "ir8d3PUj5JU-breath-lead-stretch"
+      },
+      {
+        "order": 5,
+        "name": "收紧 dog-container 核心主声",
+        "detail": "作者逐级展示第二主声的 saturation、distortion、OTT、Squash、filter 与 imager。画面事实：frame_000866 后方链位为 Decapitator -> Saturn 2 -> OTT -> Squash -> Pro-Q 3 -> Ozone Imager 2，当前主声 Imager Width 为 -98%、Stereoize 6.0 ms、Mode II。",
+        "params": [
+          "Width -98% 只属于 dog main-track Imager 当前状态，不推广到所有 creature 层。",
+          "OTT Depth 20%、Squash Tone -57% / Depth 67% 与 Pro-Q 3 low-pass 4448.9 Hz 等值也只属于各自展开帧。",
+          "FX 列表证明链位，不证明所有实例始终 active 或每一级贡献相等。"
+        ],
+        "imageKey": "ir8d3PUj5JU-main-voice-width-control"
+      },
+      {
+        "order": 6,
+        "name": "分开建立持续 body 与 impact 起音",
+        "detail": "画面事实：frame_000931 同屏显示 WindSpinner、Washer Impact 与 Door Impact。WindSpinner 以 Rate 0.031 (-60.22) 和 Saturn 2、Decapitator、RBass、clipper、MTremolo 建立移动低频；washer/door 以不同 transient 处理建立重量与起音。",
+        "params": [
+          "0.031 (-60.22) 是 WindSpinner 当前 item 的极端状态，不是巨兽低频通用值。",
+          "两个 transient shaper 只说明本例用不同 attack 分工，不能推广为每个 impact 的固定串联。",
+          "分析归纳：持续低频负责体积与移动，撞击负责起音，主声负责身份；重叠时先减层和腾频段。"
+        ],
+        "imageKey": "ir8d3PUj5JU-body-impact-stack"
+      },
+      {
+        "order": 7,
+        "name": "锁定 DogPoopMetalScreech 主声手势",
+        "detail": "画面事实：frame_001018 的媒体项名为 Dice_Foley_Creature_DogPoopMetalScreech-glued-03.wav，并显示主链和 1.00x -> 1.17x -> 1.00x 的局部 pitch/rate gesture。作者把它作为第二吼的 backup/main vocal，并评价其尾端具有 kaiju/Godzilla-like trumpet gesture。",
+        "params": [
+          "按可见文件名写 dog-poop-container metal screech；不简化为普通 squeaky toy。",
+          "glued 只说明该 item 已编辑/胶合成新文件，不是 granular、convolution 或其他算法证据。",
+          "作者的听感评价需保留归属；画面只证明媒体项、手势和链位，不证明严格等响优劣。"
+        ],
+        "imageKey": "ir8d3PUj5JU-dog-container-main-voice"
+      },
+      {
+        "order": 8,
+        "name": "让 post-roar 的 MTremolo 随动作加速",
+        "detail": "作者说明 post-roar 的 MTremolo 与动作同步，并让 rate 向上自动化。静态 frame_001130 只显示当前 Depth 67.6%、Rate 19.99 Hz、Width 0 deg [0%]；附带的 18:21.8-18:28.2 带声 motion 同时呈现播放位置、rate automation 与实际脉冲收紧，才是加速证据。",
+        "params": [
+          "早先 frame_000921/925 的 4.517 Hz 与本帧 19.99 Hz 都是瞬时状态，不能选任一值写成固定 preset。",
+          "静态图只证明曲线和一个参数状态；所有 acceleration、随时间收紧和听觉运动描述都绑定带声 motion。",
+          "motion 只用于这一 post-roar MTremolo rate automation 步骤，不外推到 WindSpinner 或其它层。"
+        ],
+        "imageKey": "ir8d3PUj5JU-post-roar-tremolo-acceleration",
+        "motion": {
+          "src": "assets/motions/ir8d3PUj5JU-post-roar-tremolo-acceleration.mp4",
+          "poster": "assets/motions/ir8d3PUj5JU-post-roar-tremolo-acceleration-poster.webp"
+        }
+      },
+      {
+        "order": 9,
+        "name": "用选择性空间保留主声起音",
+        "detail": "作者展示主空间的 bypass/active A/B，并说明 roar 处会自动减少 wet。画面事实：frame_001255 是 EW Spaces II active 状态，当前 IR 名为 WLA Parking Garage TS RR 3.7s；下方 wet automation 和 verb-here 链可见。",
+        "params": [
+          "IR 名只绑定当前实例；视频没有给出可复用 wet、pre-delay、input 或交付空间规范。",
+          "verb-here bus 的 Ozone Imager 当前 Width -7% 与 dog 主声的 -98% 是两个独立实例，禁止混用。",
+          "作者明确说链中某些 Saturn、master width 与 clipper 未实际使用；插件出现于列表不等于 active processing。"
+        ],
+        "imageKey": "ir8d3PUj5JU-master-space-active"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "REAPER item rate / stretch markers / reverse",
+        "purpose": "作者用 item rate 改变体型与时长，用 reverse 和局部 stretch-rate gesture 建立 breath lead、主声上行动作和不同强度变体。",
+        "settings": [
+          "frame_000598 与 frame_001018 提供可读手势；所有 rate、semitone 与 marker 值都绑定各自 item。",
+          "视频未显示独立 formant mode、formant processor 或 granular engine。"
+        ]
+      },
+      {
+        "name": "Soundtoys Decapitator / FabFilter Saturn 2 / Xfer OTT / Squash",
+        "purpose": "在第一吼、dog-container 主声和 body 分支中按层增加密度、谐波、频带能量与压缩颜色，而不是用一条统一链覆盖所有器官。",
+        "settings": [
+          "dog 主声可见顺序为 Decapitator -> Saturn 2 -> OTT -> Squash；OTT 20% 与 Squash 当前状态只属于对应帧。",
+          "第一吼 threat high 的 OTT 47% 与 Kaiju master 的 OTT 6% 属于不同层和时刻，不能合并成推荐范围。"
+        ]
+      },
+      {
+        "name": "FabFilter Pro-Q 3 / Waves RBass",
+        "purpose": "Pro-Q 3 为 alert、threat high 与主声腾出冲突频段；RBass 用于 spoon、WindSpinner、door 等需要低频身体的分支。",
+        "settings": [
+          "322.51 Hz / -10.12 dB、4448.9 Hz low-pass、RBass 256 Hz 等都只绑定对应截图。",
+          "频段让位的目标是角色可读性，不是复制固定频点或把所有层都做得更厚。"
+        ]
+      },
+      {
+        "name": "iZotope Ozone Imager 2",
+        "purpose": "dog main-track 实例收紧核心主声，verb-here bus 实例处理空间总线；两个实例服务不同层。",
+        "settings": [
+          "dog 主声 frame_000866 当前 Width -98%；verb bus frame_001215 当前 Width -7%。",
+          "两组数值不能互换，也不构成所有 creature 或 reverb bus 的宽度模板。"
+        ]
+      },
+      {
+        "name": "MeldaProduction MTremolo",
+        "purpose": "WindSpinner 中形成低频脉冲，在 post-roar flavor 中通过 rate automation 把调制速度与动作回落同步。",
+        "settings": [
+          "frame_000921/925 显示 4.517 Hz 的 bypass/active 状态；frame_001130 显示自动化位置 19.99 Hz。",
+          "只有附带带声 motion 能证明 post-roar 的速度随时间收紧，静态参数不独立承担动态结论。"
+        ]
+      },
+      {
+        "name": "Kilohearts Transient Shaper / Kilohearts Chorus / Soundtoys Radiator",
+        "purpose": "washer 与 door impact 通过不同起音处理、谐波和少量空间建立重量；作者只说明不同 attack 分工，没有公开完整可迁移旋钮。",
+        "settings": [
+          "frame_000931 证明各插件在对应 impact 链中可见。",
+          "链位可记录，但列表存在不等于每个实例在所有回放中 active。"
+        ]
+      },
+      {
+        "name": "EastWest Spaces II / Native Instruments Raum / Kilohearts Delay",
+        "purpose": "Spaces II 作为主空间并在 roar 处自动让出 wet；main roar 再选择性送入 Raum 与 delay，避免所有层一起变糊。",
+        "settings": [
+          "frame_001255 当前 Spaces II IR 为 WLA Parking Garage TS RR 3.7s；未给出可复用 wet 或 pre-delay。",
+          "kHs Delay 当前 6/16 只属于其展示帧，不能推广为 creature delay 标准。"
+        ]
+      },
+      {
+        "name": "oeksound soothe2 / FabFilter Pro-MB",
+        "purpose": "作者在 Kaiju master 上用于控制复杂叠层产生的 harshness；末端目标是约束，而不是继续把所有层压成一块。",
+        "settings": [
+          "Kaiju master 的 OTT 当前 Depth 6%；Pro-MB 画面可见 Harshness Control，但详细阈值、range 和时间参数不可可靠读取。",
+          "作者明确说计划过的 master width 与 clipper 没有使用，不能按 FX list 补成实际声音链。"
+        ]
+      }
+    ],
+    "materials": [
+      "自录 household objects：洗衣机、门、碗、旋转物件与其它可撞击/刮擦来源",
+      "Human Air、human breathing 与受控 mouth/zombie 动作：breath、lead 与回落句法",
+      "Leather Bag、denim/cloth、deadcat rubbing：皮肤、布料与摩擦纹理",
+      "Rubber Treat、Rubber Cover/NippleCover、Rubber Spoon、inner tire：弹性表皮、口腔与 body 颜色",
+      "Sponge dragged on glass：第一吼 core voice",
+      "DogPoopMetalScreech-glued-03.wav：第二吼 backup/main vocal；不是普通 squeaky toy 的代称",
+      "WindSpinner：极端降速后的移动低频 body",
+      "Washer Impact 与 Door Impact：不同起音的重量层",
+      "Duck Call、water bottle/bowl 等：近场共鸣、口腔和湿润纹理"
+    ],
+    "keywords": [
+      "插件技巧",
+      "creature sound design",
+      "alien dragon roar",
+      "dog toys",
+      "DogPoopMetalScreech",
+      "self-recorded sources",
+      "organ layering",
+      "throat core voice",
+      "body mass",
+      "breath lead",
+      "mouth skin texture",
+      "REAPER item rate",
+      "stretch markers",
+      "MTremolo",
+      "rate automation",
+      "motion evidence",
+      "Ozone Imager 2",
+      "Spaces II",
+      "selective reverb send",
+      "spectral spacing",
+      "time spacing",
+      "creature",
+      "scifi",
+      "workflow"
+    ],
+    "tips": [
+      "先用一条 core voice 证明发声手势，再问缺少 body、threat、mouth 还是 impact；不要把层数当尺度。",
+      "来源命名按画面和媒体项：DogPoopMetalScreech 不改写成普通吱叫玩具，Rubber Treat/Rubber Cover 不补品牌或结构。",
+      "0.031、-98/-7 width、OTT 47/20/6、MTremolo 4.517/19.99 都是帧状态，不是推荐范围。",
+      "静态 frame_001130 只记录 MTremolo 当前值；加速结论必须依赖该步骤附带的带声 motion。",
+      "任何 scream 练习以安全为前提；作者已提醒伤嗓风险，不推荐用力尖叫复刻。",
+      "YouTube 发布混音的 LUFS、true peak 与低频比例不构成游戏资产或总线目标。"
+    ],
+    "chainFocus": [
+      "作者事实：限定自录素材 -> 按动作挑选撞击、摩擦、空气、口腔、橡胶、皮革、容器与旋转物件。",
+      "分析归纳：先按 throat/core、body、breath、mouth/skin、threat、motion、space 分工，再决定每条素材的处理。",
+      "画面事实：item rate / reverse / stretch markers 生成体型与动作；未显示独立 formant 或 granular 阶段。",
+      "作者事实与画面事实：少处理 idle -> alert 中频让位 -> breath lead -> 一条可读 core voice -> threat high / body / impact 补缺。",
+      "画面事实：dog-container main -> Decapitator -> Saturn 2 -> OTT -> Squash -> Pro-Q 3 -> 独立主声 Imager。",
+      "作者事实与 motion 证据：post-roar MTremolo rate automation 随动作收紧，再复用 breath/mouth/rubber 材料回到同一生物。",
+      "作者事实：Spaces II 主空间在 roar 处让出 wet，main roar 才选择性进入额外 Raum / delay。",
+      "作者事实：Kaiju master 轻量 OTT 与 harshness control 收口；视频停在 REAPER contest session 和最终回放。"
+    ],
+    "parameterLogic": [
+      "item rate 先按每条源的手势与职责寻找体型；0.031、0.683、0.831 等只用于解释当前 item，不拼成 preset。",
+      "core voice 先保持手势可读，再用 saturation、OTT、Squash 与 EQ 增加密度；每一级做相近响度旁路，避免把更响误判为更好。",
+      "threat high 先去多余低频，再增加中高频边缘；同时检查 3-8 kHz 刺耳度，不与 body 重复。",
+      "dog main-track Width -98% 只服务核心聚焦；verb-bus Width -7% 属于空间上下文，两个 Imager 独立管理。",
+      "MTremolo 的 rate 是时间函数。4.517 Hz 与 19.99 Hz 只代表两个画面状态，动态轨迹由带声 motion 验收。",
+      "主 reverb wet 在起音与 roar 处让位，尾端再展开；额外 delay/reverb 只接需要尺度的 main roar。",
+      "插件是否 active 以明确 active/bypassed 标题和作者口述为准，不由 FX list 名称推断。",
+      "发布音轨含旁白、solo、总线和未匹配 A/B；-24.3 LUFS、-1.2 dBTP 或 final 低频比例不用于资产交付。"
+    ],
+    "practiceChecklist": [
+      "练习：写出 idle、alert、lead、roar、post-roar 五个状态，并为每个状态标记体型、方向和主要器官职责。",
+      "练习：围绕撞、刮、挤、吹、膜片、口腔和旋转动作录制安全素材；保留原速、起音、持续和尾端失控手势。",
+      "练习：建立 throat/core、body、breath、mouth/skin、threat、motion、space 七组，每条轨只承担一个主要职责。",
+      "练习：先完成少处理 idle，再 solo 一条 roar core；只有明确听到缺口时才增加 body、edge、mouth 或 impact。",
+      "练习：用 item rate / reverse / stretch markers 派生弱、中、强三档体型，不补不存在的 formant 或 granular 阶段。",
+      "练习：分别打印 core-only、body-only、impact-only、mouth-only，做相近响度 mute/solo；删除没有独立贡献的层。",
+      "练习：为 MTremolo rate 写静止、缓升、快速三版，并用带声短片或工程内自动化回放验证动作同步。",
+      "练习：将 main-track Imager 与 reverb-bus Imager 分开命名和记录，禁止复制错实例数值。",
+      "练习：让主 reverb 在攻击处降低 wet，额外 delay 只接主吼；检查单声道、尾部、harshness 与安全 headroom。",
+      "练习：把 render、variation set、middleware 和 in-game test 另列为后续落地任务；不要写成视频已完成事实。"
+    ]
+  },
+  {
+    "id": "yt-E_wGGNkVcrw",
+    "title": "用系统自带插件把任意声音变成液体",
+    "videoId": "E_wGGNkVcrw",
+    "url": "https://www.youtube.com/watch?v=E_wGGNkVcrw",
+    "source": "Trash Sound Design / 插件技巧",
+    "category": "environment",
+    "secondaryCategories": [
+      "creature",
+      "magic"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 12 条：依据完整 316.72 秒音视频、英文字幕与八张指定 1080p 原帧整理。证据覆盖 3x Osc 噪声源、双共振 EQ、Multiband Delay bank、Morph/Scale/Feedback 调制、瞬态控制、第二级 delay 与频移、wet-only spring send 纠错和切片采集；没有生成 motion，也未补写循环、middleware、导出完成或游戏内实现。",
+    "summary": "作者在 FL Studio 中以 3x Osc 噪声为起点，用两个速度不同的正向共振高通扫频塑造可移动的窄频带，再让 Multiband Delay 的不同 bank 在 Morph、Scale 与 Feedback 调制下形成频带错时。Transient Processor 用于重新约束事件边缘，第二个 Multiband Delay 与慢速负向 Frequency Shifter 增加变化，独立 spring send 则按画面纠错只保留 wet。标题说任意声音，但视频只另外展示了 Cardboard Break；最终可见的是长结果的切片与用途探索，不是 21 个已验收交付物，也没有证明无缝循环、导出或游戏实现。",
+    "coreIdeas": [
+      "宿主是 FL Studio，源合成器是 3x Osc。自动字幕中的 Apple Studio 与 Fruity X Oscillator 都不作为事实。",
+      "两级 Fruity Parametric EQ 2 都在高通边缘建立正向共振峰：第一层慢扫并配合低通，第二层以更快的窄带运动制造短促频谱事件；它们不是 notch cut。",
+      "主 Multiband Delay 通过 8 个 bank 的不同频带延迟形状建立时间地图，再以 Morph、Scale 与 Feedback 调制让地图变化。精确 bank 延迟和 Smoothing 数值不可从画面补写。",
+      "Linear Phase 已被选择；perfect phase alignment 是作者对功能的解释，本视频没有相位响应、群延迟或 null test 来独立验证。",
+      "作者只把平滑不足的问题统称为 artifacts。click、zipper 或 phase jump 只能作为复现时的可能机制，不能写成视频中已观察到的伪影。",
+      "Transient Processor 把连续液体纹理重新组织成更可切片的事件；第二 delay 与频移只承担 variation，不能用更多湿度覆盖核心脉冲。",
+      "frame_000185 的画面纠错优先级高于旁白：Fruity Convolver 位于 send，dry 关闭，只保留 wet；Pitch Shifter 只做轻微尾部变化。",
+      "作者以 noise 与 Cardboard Break 展示同链输入，并把长结果切成鼓样、背景与 impact 候选。样例不足以证明所有声音通用，切片存在也不等于质量验收、循环或交付完成。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "用 3x Osc 建立可包络的噪声源",
+        "detail": "画面事实：frame_000027 显示 FL Studio 的 3x Osc，第一振荡器选中 noise 图标。作者从 noise wave 与音量包络开始，后段还会改变包络形状，因此 source envelope 是可调控制量，不是唯一固定 preset。",
+        "params": [
+          "插件名按画面写 3x Osc；自动字幕中的 Fruity X Oscillator 是误写。",
+          "另外两个振荡器仍可见，但视频没有清楚证明它们是否完全关闭或参与输出。",
+          "旋钮与包络没有可读精确数值，不补 attack、hold、decay、sustain、release 或 pitch 参数。"
+        ],
+        "imageKey": "E_wGGNkVcrw-noise-source-3x-osc"
+      },
+      {
+        "order": 2,
+        "name": "用双层正向共振带塑造事件",
+        "detail": "画面事实：frame_000088 同时显示两个 Fruity Parametric EQ 2 实例，它们的高通边缘位于不同频率并形成尖锐的正向共振峰。作者说明第一层约 300 Hz 到 8 kHz 慢扫并配合低通，第二层约 200 Hz 到 2 kHz、更快地形成短促放大段。",
+        "params": [
+          "第一层是正向 resonant peak / band，不是字幕所写的 notch cut。",
+          "频率范围来自作者口述，只用于解释本例方向；静帧不证明扫速、固定 Q、gain 或 filter order。",
+          "单帧只证明两条曲线当前处于不同位置，不独立证明液体听感或严格等响 A/B。"
+        ],
+        "imageKey": "E_wGGNkVcrw-dual-resonant-eq-bands"
+      },
+      {
+        "order": 3,
+        "name": "把 delay bank 画成频带时间地图",
+        "detail": "画面事实：frame_000104 显示 Multiband Delay 的 16 个频带、bank 3 与一条先上升再下降的 DELAY 图形。作者建立 8 个不同 bank，并在各 bank 中交替使用上升、下降和局部折线，供后续 Morph。",
+        "params": [
+          "Linear Phase 在教程中被选中；perfect phase alignment 只作为作者/产品解释记录，未被本视频独立验证。",
+          "画面不提供每个 band 的精确毫秒值，禁止从坐标反推出 delay preset。",
+          "可迁移的是不同频段获得不同延迟、bank 之间保持可辨差异，而不是照抄一条形状。"
+        ],
+        "imageKey": "E_wGGNkVcrw-multiband-bank-ramps"
+      },
+      {
+        "order": 4,
+        "name": "分开控制 Morph、Scale 与 Feedback",
+        "detail": "画面事实：frame_000126 同屏显示主 Multiband Delay，以及 Morph、Delay Scale、Delay Feedback 三条 automation lane。作者先用 LFO 在 bank 间 Morph，再让 Scale 与 Feedback 随时间变化。",
+        "params": [
+          "作者说出现 artifacts 时可提高 Smoothing Time，但没有给可复用数值；画面也不支持补写 Smoothing 参数。",
+          "作者口述 Scale 在本例中从 -100% 到 +100% 变化；视频没有展示负值的内部算法，不能补写时间反向公式。",
+          "复现建议：依次验证 morph-only、+scale、+feedback；click/zipper 仅列为可能机制，需实际监听确认。"
+        ],
+        "imageKey": "E_wGGNkVcrw-core-modulation-lanes"
+      },
+      {
+        "order": 5,
+        "name": "用瞬态处理重塑可切片边缘",
+        "detail": "画面事实：frame_000145 显示 Transient Processor 的 Attack、Release、Split Balance 与 shape 控件。作者称前级结果偏 chaotic，因此加入该处理来 tame 结果，并口述约 40% Attack/Release、100% Split Balance 与最 sharp shape。",
+        "params": [
+          "这些百分比是作者对本例的口述起点，不是静帧精密读数，也不是所有液体素材的目标。",
+          "静帧不能单独判断它主要增强起音还是压低持续段；复现时应逐级旁路并做相近响度比较。",
+          "本视频没有严格固定 LFO 相位、固定起点或响度匹配 A/B，不能声称处理后客观更好听。"
+        ],
+        "imageKey": "E_wGGNkVcrw-transient-control"
+      },
+      {
+        "order": 6,
+        "name": "用第二 delay 与慢速频移增加变化",
+        "detail": "画面事实：frame_000150 同屏显示第二个 Multiband Delay、独立 Morph automation、Frequency Shifter 和多条调制轨；Frequency Shifter 当前读数为 -52.7 Hz。作者把第二实例约 40% Mix 用于高频 bank 变化，并让频移在 20 kHz range 内慢速移动。",
+        "params": [
+          "-52.7 Hz 只绑定 frame_000150 当前状态；作者所述约 -200 Hz 到 -40 Hz 也只是本例调制范围，不是固定 preset。",
+          "约 40% Mix 是作者口述的起点，画面不支持补写 bank delay、内部 LFO 或其它旋钮精确值。",
+          "第二实例负责 variation；若脉冲被抹平，应先减少其 Mix/Feedback，而不是继续叠加处理。"
+        ],
+        "imageKey": "E_wGGNkVcrw-variation-delay-frequency-shift"
+      },
+      {
+        "order": 7,
+        "name": "按画面纠错建立 wet-only spring send",
+        "detail": "画面事实：frame_000185 同时显示 Fruity Convolver、spring IR 与 Pitch Shifter，并以大字明确纠正 JUST THE WET SIGNAL, NOT DRY, MY BAD。主轨保留原信号，send 中关闭 dry、只让 spring wet 尾部返回。",
+        "params": [
+          "画面纠错优先于此前旁白和字幕；禁止写成 dry-only send。",
+          "IMP Spring 03 与 Stretch 控件可见，但作者只建议尝试 Stretch，没有给可复用 wet、stretch 或 pitch 数值。",
+          "Pitch Shifter 只被作者描述为轻微 pitch automation；当前画面状态不构成推荐范围。"
+        ],
+        "imageKey": "E_wGGNkVcrw-spring-send-wet-correction"
+      },
+      {
+        "order": 8,
+        "name": "从长结果中筛选并切出用途变体",
+        "detail": "画面事实：frame_000285 左侧可见 liquid samples 到 liquid samples_21 的条目，时间线上排列多段短 clip。作者先记录/扫描结果，再挑选片段、normalize 与 fade out，并把候选用于液体鼓样、背景纹理或短 impact。",
+        "params": [
+          "21 个可见命名条目只证明切片存在，不代表 21 个都已通过质量、响度或版权验收。",
+          "Normalize 是作者流程事实；实践中应先筛选与淡入淡出，再按用途统一 loudness/true peak，不能沿用发布音轨 +0.15 dBTP。",
+          "视频没有展示无缝 loop、最终 render/export、middleware、variation set 或 in-game implementation。"
+        ],
+        "imageKey": "E_wGGNkVcrw-liquid-sample-harvest"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "FL Studio 3x Osc / Fruity Parametric EQ 2",
+        "purpose": "3x Osc 提供可重复触发的 noise source；两个 EQ 以不同速度移动正向共振带，为后续频带错时准备可辨识的频谱事件。",
+        "settings": [
+          "3x Osc 第一振荡器的 noise 图标由 frame_000027 确认；不补其它振荡器、包络或音高数值。",
+          "作者口述两个扫频约为 300 Hz -> 8 kHz 与 200 Hz -> 2 kHz；Q、gain、滤波阶数和精确速度不可读。"
+        ]
+      },
+      {
+        "name": "FL Studio Multiband Delay #1",
+        "purpose": "把不同频带放到不同时间位置，并通过 8 个 bank 的 Morph 建立持续变化的 liquid time map。",
+        "settings": [
+          "16 bands、8 banks、Linear Phase 与 DELAY 页面可见；每带毫秒值不可读。",
+          "Morph、Scale、Feedback 有独立 automation；Smoothing 只在作者提到 artifacts 时作为调节方向，没有固定值。"
+        ]
+      },
+      {
+        "name": "FL Studio Transient Processor",
+        "purpose": "放在核心 Multiband Delay 后重新约束起音与持续段，使连续纹理更容易分割成短事件。",
+        "settings": [
+          "作者口述约 40% Attack/Release、100% Split Balance 与 sharp shape，仅作为本例起点。",
+          "视频没有严格等响旁路，不能从发布混音断言具体听感改善或因果贡献。"
+        ]
+      },
+      {
+        "name": "FL Studio Multiband Delay #2 / Frequency Shifter",
+        "purpose": "第二 delay 在较高频带增加较慢的 bank variation；Frequency Shifter 以小范围负向慢速调制让纹理继续移动。",
+        "settings": [
+          "作者口述第二实例 Mix 约 40%，不是固定 wet 目标；不得复制主实例的 bank 或 LFO 设置。",
+          "frame_000150 的 -52.7 Hz 是瞬时读数；约 -200 Hz -> -40 Hz 与 20 kHz range 来自作者对本例的说明。"
+        ]
+      },
+      {
+        "name": "FL Studio Fruity Convolver / Pitch Shifter",
+        "purpose": "独立 send 只返回 spring wet 尾部，Pitch Shifter 再对尾部做轻微变化，避免主轨重复一份 dry。",
+        "settings": [
+          "frame_000185 的 JUST THE WET SIGNAL, NOT DRY 是最高优先级纠错证据。",
+          "IMP Spring 03 可见；Stretch、wet level 与 pitch automation 没有可复用精确值。"
+        ]
+      },
+      {
+        "name": "FL Studio Edison / Fruity Delay 3",
+        "purpose": "Edison 用于记录和扫描长结果；后续分支通过切片、fade、delay 与自动 EQ 形成鼓样、背景或 impact 候选。",
+        "settings": [
+          "frame_000285 证明切片列表和短 clip 存在，不证明全部通过验收或最终导出。",
+          "背景分支未展示无缝循环、距离层、middleware 或游戏内压力测试。"
+        ]
+      }
+    ],
+    "materials": [
+      "3x Osc noise pattern：可包络的合成输入；不是独立成品",
+      "Cardboard Break：视频展示的唯一替代物理输入；不足以证明任意素材通用",
+      "双共振 EQ 与 Multiband Delay 长结果：用于扫描、切片和建立 variation",
+      "Spring IR IMP Spring 03：本工程可见的 wet-only 尾部来源，不是必须绑定的 IR",
+      "liquid samples 到 liquid samples_21：可见命名与短 clip，不等于 21 个已批准交付物",
+      "fade-shaped water clips：鼓样、背景、短 impact、黏液 creature 与 water-magic 的候选材料"
+    ],
+    "keywords": [
+      "插件技巧",
+      "FL Studio",
+      "stock plugins",
+      "liquid sound design",
+      "3x Osc",
+      "noise synthesis",
+      "Fruity Parametric EQ 2",
+      "resonant peak",
+      "Multiband Delay",
+      "Linear Phase",
+      "delay banks",
+      "Morph",
+      "Delay Scale",
+      "Delay Feedback",
+      "Transient Processor",
+      "Frequency Shifter",
+      "Fruity Convolver",
+      "wet-only send",
+      "spring reverb",
+      "Pitch Shifter",
+      "Edison",
+      "sample harvest",
+      "environment",
+      "creature",
+      "magic"
+    ],
+    "tips": [
+      "先让双共振扫频产生可辨事件，再加入频带 delay；不要用更高 Feedback 掩盖 source 和包络问题。",
+      "第一 EQ 的尖峰是正向 resonant peak，不写 notch；Linear Phase 的 perfect alignment 只保留作者归属。",
+      "Morph、Scale、Feedback 每次只开一条做打印比较；作者未命名的 artifacts 需监听后再判断是否为 click 或 zipper。",
+      "frame_000150 的 -52.7 Hz 和作者口述的范围都绑定本例，不构成 Frequency Shifter preset。",
+      "spring send 必须遵循 frame_000185 的 wet-only 纠错，主轨保留 dry，send 只承担尾部。",
+      "YouTube 发布混音 -16.83 LUFS / +0.15 dBTP 只描述成片，不作为游戏资产、总线或交付目标。"
+    ],
+    "chainFocus": [
+      "画面事实：FL Studio 3x Osc noise + 可调音量包络。",
+      "作者事实与画面事实：EQ #1 慢速正向共振高通扫频并配合低通 -> EQ #2 更快的窄共振扫动。",
+      "画面事实：Multiband Delay #1 选择 Linear Phase -> 8 个 bank 写不同频带 delay 图形。",
+      "作者事实与画面事实：Morph LFO -> Delay Scale LFO -> Delay Feedback LFO；Smoothing 只在未命名 artifacts 出现时调整。",
+      "作者事实：Transient Processor 约束事件 -> Multiband Delay #2 在高频增加 variation -> Frequency Shifter 慢速负向变化。",
+      "画面纠错：Fruity Convolver spring send 关闭 dry、只保留 wet -> Pitch Shifter 轻微自动尾部。",
+      "作者事实与画面事实：记录长结果 -> 扫描候选 -> 切片、fade 与命名 -> 分别进入鼓样、背景和短 impact 探索。",
+      "证据边界：视频止于 FL Studio 内的示范和候选切片，没有完成 loop、final export、middleware 或 in-game test。"
+    ],
+    "parameterLogic": [
+      "先用 source envelope 决定短滴或长流，再把两个共振扫频错开速度与范围；Q、gain 与精确时间都按素材重做。",
+      "bank 之间先保持可辨但不过度跳变，再从 Morph-only 开始；Scale 与 Feedback 分别加入，避免三条 LFO 同时掩盖因果。",
+      "Linear Phase 是本例模式，不是无条件最佳。短事件应另查 latency、pre-ringing、瞬态软化和相位兼容。",
+      "Transient Processor 的目标是恢复可切片边缘；作者口述百分比只作起点，最终以相近响度旁路与动作需求判断。",
+      "第二 delay 与 Frequency Shifter 只补 variation；-52.7 Hz 是瞬时状态，范围需随 source 缩小并检查 DC、低频和 mono。",
+      "spring send 的 dry 固定为 0/关闭，只返回 wet；Stretch、pitch 与返回电平以尾部职责和主轨清晰度为准。",
+      "长 render 先筛选手势，再 fade、命名和统一电平；21 个可见条目不构成批准数量。",
+      "发布视频含旁白、总线和非匹配阶段播放；所有主观液体感与产品效果评价需保留作者归属或另行监听验证。"
+    ],
+    "practiceChecklist": [
+      "练习：保存 dry noise 与 dry physical source，并建立短滴、长流两种 source envelope。",
+      "练习：分别打印 EQ #1、EQ #1+#2，确认两个正向共振扫频的速度和范围没有完全重叠。",
+      "练习：为 8 个 delay bank 至少建立上升、下降、峰、谷四类频带时间图，不反推不可读毫秒值。",
+      "练习：依次打印 morph-only、+scale、+feedback；出现 artifacts 时先减慢变化并调 Smoothing，监听后再命名问题。",
+      "练习：对 Transient Processor 做相近响度旁路，分开检查前 100 ms、主体和尾部。",
+      "练习：第二 delay 与 Frequency Shifter 每次只增加一项；检查峰值、DC、低频漂移、mono 与相位。",
+      "练习：建立独立 spring send，确认 dry 关闭、wet 返回正常，Pitch Shifter 只作用于尾部职责。",
+      "练习：录制长结果后先标记可用手势，再切片、fade 与命名；按鼓样、背景、impact、creature、magic 分组验收。",
+      "练习：为背景分支另做无缝循环和两分钟压力测试；这属于后续任务，不冒充视频已完成内容。",
+      "练习：以 48 kHz WAV 和安全 headroom 交付，单独记录 render、variation、middleware 与 in-game test 状态。"
+    ]
+  },
+  {
+    "id": "yt-wWms0-ad6fw",
+    "title": "Phase Plant 白噪声合成暴雨、水滴与开窗声",
+    "videoId": "wWms0-ad6fw",
+    "url": "https://www.youtube.com/watch?v=wWms0-ad6fw",
+    "source": "SadowickProduction / 插件技巧",
+    "category": "environment",
+    "secondaryCategories": [
+      "workflow",
+      "scifi"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 13 条：依据完整约 1200.65 秒本地音频、英语自动字幕、Phase Plant 画面与八张指定 1080p 原帧整理。证据覆盖白噪声斜率、墙后暗雨、共享源双路路由、开窗透入层、独立水滴组、短调制曲线、高频 EQ 与三路终局结构；没有生成 motion，也未补写实地录音、机械开窗拟音、最终导出、middleware 或游戏内实现。",
+    "summary": "作者第一次在 Phase Plant Beta 1.5.8 中探索只用白噪声搭建雨景：同一组持续 Noise 分两路，Lane 1 形成墙体后的暗色连续雨幕，Lane 2 以更亮、更宽的频谱和 Stereo/Haas/Reverb 表达雨声经开启窗口透入；另一 Noise Group 由短自定义 LFO 控制 Level，形成随机屋顶或天窗水滴。这里的 open window 是声学门户状态，不是窗扇机械动作。最终画面中的 Random 8.45 Hz、LFO 1.63 Hz、Unison 8 与 Polyphony 20 都只是该帧状态，Random 的具体目标仍不可读；可迁移的是按角色并行分层并独立控制频谱、空间、包络与有限随机量。",
+    "coreIdeas": [
+      "白噪声只是母材。frame_000149 的 Slope 3.8 dB/oct 证明当前频谱倾斜状态，不是暴雨通用参数，也不能替代后续带限、空间和密度设计。",
+      "两个持续雨层共享同一个 Noise 源并由两个 Output 分送 Lane 1/2；差异由各自 EQ、Filter、Stereo/Haas 和 Reverb 建立，不应误写为两段独立雨声录音。",
+      "Lane 1 承担墙体后的暗色连续雨幕；Lane 2 承担从开启窗洞透入的较亮、较宽雨层。open window 指场景状态，不是窗把手、滑轨、窗扇或玻璃动作拟音。",
+      "第三条水滴层来自独立 Noise Group。基础 Level 为 0%，自定义 LFO 以画面可见的 100% 深度控制 Noise Level，再以 Filter/EQ/Reverb塑造短事件。",
+      "Random 被作者拖到 LFO 区域，但目标标签不可读。只能写成扰动某个 LFO 输入/参数，不能命名为 Phase、Rate、Retrigger 或其它具体目标。",
+      "Random 8.45 Hz、LFO 1.63 Hz、Unison 8、Polyphony 20 只描述 frame_001152 的终局画面状态；它们不是每秒滴数、固定 preset 或游戏运行时建议。",
+      "作者把铁皮屋顶或天窗作为场景设定，但画面没有独立的金属/玻璃模态建模证据；材质判断不得写成客观物理模拟结论。",
+      "作者只在结尾建议未来把这种合成方法与实地录音结合。本 patch 没有真实雨声层，也没有展示无缝循环、最终 render/export、middleware 或 in-game test。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "以倾斜白噪声建立连续雨幕母材",
+        "detail": "画面事实：frame_000149 显示 Phase Plant 的 Noise 源与 Slope 3.8 dB/oct。作者从持续 MIDI 音和白噪声开始，向低频倾斜并增加 Stereo，随后把当前方向描述为更像强雨。",
+        "params": [
+          "3.8 dB/oct 只绑定 frame_000149；作者之后继续调整，不能写成最终或通用暴雨 preset。",
+          "作者的 rainy、typhoon 与 monsoon 是听感评价，需保留归属；静帧只证明发生器与参数状态。",
+          "分析建议：先保留足够 headroom，再分别验证连续性、亮度、宽度和慢速起伏，不把更响误判为更密。"
+        ],
+        "imageKey": "wWms0-ad6fw-white-noise-slope-source"
+      },
+      {
+        "order": 2,
+        "name": "用带限与凹口定义墙后暗雨",
+        "detail": "画面事实：frame_000399 显示 Lane 1 的 Slice EQ 轮廓，两端衰减并带有多个中频起伏。作者用墙体削弱高频和室内反射相互作用解释该层，并继续配合 Filter 与 Reverb 调整。",
+        "params": [
+          "这是一种艺术化遮挡近似，不是墙体传输函数、材质厚度或建筑声学测量。",
+          "曲线节点、Q、Filter 斜率和 Reverb 数值不可可靠读取；不从图形反推出固定参数。",
+          "分析建议：墙后层保持暗、连续和方向细节较少，让它作为开窗层出现前后的稳定基准。"
+        ],
+        "imageKey": "wWms0-ad6fw-indoor-rain-eq-contour"
+      },
+      {
+        "order": 3,
+        "name": "从同一 Noise 分出两条连续角色",
+        "detail": "画面事实：frame_000452 清楚显示同一个 Group 1 Noise 通过两个 Output 分别送入 Lane 1 与 Lane 2。它证明两条连续雨层共享母源，再由各自处理形成墙后与开窗透入的差异。",
+        "params": [
+          "不得写成两条独立录音、两个独立 Noise 发生器或已去相关的原始素材。",
+          "共享源拓扑应与第三条水滴层分开：水滴来自后建的 Group 2 Noise，不与连续床混为同一路由。",
+          "分析建议：先比较 Lane 1、Lane 2 和 1+2，再决定频谱与空间差是否足以表达声学门户。"
+        ],
+        "imageKey": "wWms0-ad6fw-dual-lane-noise-routing"
+      },
+      {
+        "order": 4,
+        "name": "把开窗写成较亮、较宽的透入状态",
+        "detail": "画面事实：frame_000640 显示 Lane 2 的顺序为 Slice EQ -> Carve EQ -> Stereo -> Haas -> Reverb。作者说明开着的窗会保留更多外部高频，并需要不同的空间化、声像与反射。",
+        "params": [
+          "open window 指雨声经开启窗洞进入的状态，不是机械 window-opening foley；视频没有窗把手、滑轨、窗扇或玻璃动作。",
+          "Haas 方向与模块存在可见，但延迟毫秒、Stereo 宽度、声像和 Reverb 参数不可读，不补造数值。",
+          "分析建议：亮度、宽度和方向性必须相对墙后层建立，并做 mono fold-down，避免 Haas 抵消。"
+        ],
+        "imageKey": "wWms0-ad6fw-open-window-spatial-chain"
+      },
+      {
+        "order": 5,
+        "name": "用独立 Noise Group 建立水滴门控",
+        "detail": "画面事实：frame_000836 显示第二组 Noise 的 Level 接收自定义 LFO，tooltip 明确为 LFO | 100%。作者把基础 Level 降为 0，再用调制制造随机短事件。",
+        "params": [
+          "100% 只证明 Custom LFO -> Noise Level 的可见调制深度，不证明单滴响度、事件率或最终峰值。",
+          "Random 同时存在，但目标标签不可读；禁止把它写成 Phase、Rate、Retrigger 或任何特定映射。",
+          "该 Noise Group 与 Lane 3 是独立水滴支路，不能误写为共享源双路中的第三个 Output。"
+        ],
+        "imageKey": "wWms0-ad6fw-droplet-lfo-level-modulation"
+      },
+      {
+        "order": 6,
+        "name": "用短曲线定义单滴微观包络",
+        "detail": "画面事实：frame_000910 显示自定义调制曲线从高位快速跌落，余段保持低位。作者在此阶段要求事件更短；该曲线负责单滴的起音与衰减轮廓。",
+        "params": [
+          "画面没有可读毫秒刻度，不能补写 attack、decay、hold、release 或事件总长。",
+          "曲线只定义微观包络；Random 如何扰动 LFO 仍不明确，不能把两者的 Hz 值相加成每秒滴数。",
+          "分析建议：保留最短非零边缘并检查 click、峰值和重复周期，再逐步增加随机量。"
+        ],
+        "imageKey": "wWms0-ad6fw-droplet-short-modulation-curve"
+      },
+      {
+        "order": 7,
+        "name": "以高频凹口约束水滴频谱",
+        "detail": "画面事实：frame_001000 显示 Lane 3 的 Carve EQ 与高频深凹口，当前选中点为 8.98 kHz。作者继续要求过滤水滴层，随后还加入 Slice EQ 和 Reverb 共同整理带宽与空间。",
+        "params": [
+          "8.98 kHz 和画面右侧读数只绑定当前节点/帧，不是最终固定 EQ preset。",
+          "作者设定 tin roof 或 skylight，但该 EQ 不足以证明严格的金属板或玻璃模态建模。",
+          "分析建议：先让 click、body、tail 职责可分，再用真实参考检查材质联想，不把深凹口本身当作物理准确性。"
+        ],
+        "imageKey": "wWms0-ad6fw-droplet-high-notch-eq"
+      },
+      {
+        "order": 8,
+        "name": "复核三路终局结构与证据边界",
+        "detail": "画面事实：frame_001152 同屏显示 Group 1 的 Noise 分送 Lane 1/2、Group 2 Noise 送 Lane 3，以及三条 Lane 的最终模块顺序。终局还可见 Random 8.45 Hz、LFO 1.63 Hz、Unison 8 和 Polyphony 20。",
+        "params": [
+          "这些数值只记录该帧状态，不是通用 event rate、voice budget、preset 或运行时参数。",
+          "画面是 Phase Plant Beta 1.5.8/Test version，作者明确把它作为第一次探索；当前版本界面与默认值可能不同。",
+          "作者只建议未来结合真实录音；视频没有实地雨声层、无缝 loop、最终 render/export、middleware 或 in-game implementation。"
+        ],
+        "imageKey": "wWms0-ad6fw-three-lane-final-patch"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Kilohearts Phase Plant",
+        "purpose": "承载两个 Noise Group、三条 Lane 与全部调制/路由。核心价值是把连续雨床、开窗透入和离散水滴按角色拆开，而不是依赖单一雨声采样。",
+        "settings": [
+          "画面版本为 Phase Plant Beta 1.5.8/Test version，属于首次探索性 patch，不保证与当前版本默认值一致。",
+          "Group 1 Noise 共享给 Lane 1/2；Group 2 Noise 独立送 Lane 3。最终 Unison 8、Polyphony 20 仅绑定 frame_001152。"
+        ]
+      },
+      {
+        "name": "Phase Plant Noise / Slope / Output",
+        "purpose": "持续 Noise 提供宽带雨幕母材；Slope 控制整体亮暗，多个 Output 把同一源分派到不同场景角色。",
+        "settings": [
+          "frame_000149 的 Slope 3.8 dB/oct 是运行中状态，不推广。",
+          "同源双 Output 由 frame_000452 证明；第三水滴组是另一 Noise Group。"
+        ]
+      },
+      {
+        "name": "Phase Plant Slice EQ / Filter / Reverb",
+        "purpose": "Lane 1 通过宽缓带限、中频起伏和空间尾建立墙后暗雨；Lane 3 也用 Filter/Reverb/Slice EQ约束短滴的带宽与距离。",
+        "settings": [
+          "所有节点、斜率、Cutoff、Decay、Mix 与宽度精确值都不可作为固定配方。",
+          "墙体与屋顶/天窗材质都是艺术化近似，不是测量得到的物理模型。"
+        ]
+      },
+      {
+        "name": "Phase Plant Carve EQ / Stereo / Haas",
+        "purpose": "Lane 2 以 Carve EQ、Stereo 和 Haas 提高与墙后层的频谱/横向差异；Lane 3 的 Carve EQ则控制水滴高频形状。",
+        "settings": [
+          "Lane 2 的完整顺序由 frame_000640 确认；Haas 毫秒和 Stereo 精确值不可读。",
+          "Lane 3 在 frame_001000 的 8.98 kHz 只属于当前选中点；Haas 需另做 mono 检查。"
+        ]
+      },
+      {
+        "name": "Phase Plant Random / Custom LFO",
+        "purpose": "Custom LFO 负责单滴电平包络，Random 用于打破机械重复；两者应保留不同职责和可诊断的调制范围。",
+        "settings": [
+          "Custom LFO -> Noise Level 100% 由 frame_000836 明确证明。",
+          "Random 的具体目标不可读；终局 8.45 Hz 与 LFO 1.63 Hz 都是画面状态，不能换算成真实每秒滴数。"
+        ]
+      }
+    ],
+    "materials": [
+      "Group 1 continuous Noise：共享给墙后暗雨与开窗透入两条持续角色",
+      "Lane 1 filtered indoor rain：暗色、连续、方向细节较少的室内基准",
+      "Lane 2 open-portal rain：较亮、较宽、带侧向信息的开窗后雨声状态",
+      "Group 2 gated Noise：独立的随机短滴母材，不是第三条共享源 Output",
+      "Lane 3 roof/skylight droplets：由短包络、Filter/EQ 与 Reverb形成的概念性撞击层",
+      "真实室内/室外雨声：仅是作者结尾提出的未来参考或扩展材料，未进入本 patch"
+    ],
+    "keywords": [
+      "插件技巧",
+      "SadowickProduction",
+      "Kilohearts Phase Plant",
+      "Phase Plant Beta 1.5.8",
+      "white noise",
+      "heavy rain",
+      "indoor rain",
+      "open window",
+      "acoustic portal",
+      "water drops",
+      "Noise Group",
+      "Slice EQ",
+      "Carve EQ",
+      "Filter",
+      "Stereo",
+      "Haas",
+      "Reverb",
+      "Random",
+      "Custom LFO",
+      "level modulation",
+      "parallel lanes",
+      "procedural ambience",
+      "environment",
+      "workflow",
+      "scifi"
+    ],
+    "tips": [
+      "先按墙后连续床、开窗透入层、随机短滴三种职责建路由，再调参数；不要把三条都做成相同亮度和空间。",
+      "两个持续层共享 Noise 母源。先用 EQ/空间制造可辨差值，再考虑去相关；第三水滴层必须保持独立 Noise Group。",
+      "open window 是开窗后的雨声状态，不是窗体机械开启动作；真正的开合事件需另做 foley 与状态过渡。",
+      "Random 的目标不可读，记录实际映射后再复现；不要把 8.45 Hz、1.63 Hz 或 100% 拼成事件率公式。",
+      "Haas、深 EQ 与短门控都可能引入 mono 抵消、鸣叫或 click；逐项旁路、匹配响度并保留 headroom。",
+      "作者的实地录音建议属于后续扩展。若加入真实雨声，应明确采样层与合成层分别承担纹理、状态和随机细节。"
+    ],
+    "chainFocus": [
+      "画面事实：Group 1 Noise -> Slope / Stereo，建立持续宽带母材；frame_000149 的 3.8 dB/oct 只绑定当帧。",
+      "作者事实与画面事实：Lane 1 Slice EQ -> Slice EQ -> Filter -> Reverb，形成墙体后的暗色连续雨层。",
+      "画面事实：同一 Group 1 Noise 的第二个 Output -> Lane 2，不是第二段录音或第二个发生器。",
+      "作者事实与画面事实：Lane 2 Slice EQ -> Carve EQ -> Stereo -> Haas -> Reverb，表达开窗后较亮、较宽的透入状态。",
+      "画面事实：Group 2 Noise base Level 0 -> Custom LFO 以 100% 深度控制 Level，建立离散水滴支路。",
+      "作者事实与画面事实：短自定义曲线定义单滴包络；Random 扰动 LFO 某输入/参数，但具体目标不可读。",
+      "画面事实：Lane 3 Filter -> Carve EQ -> Reverb -> Slice EQ，控制短滴的带宽、局部频谱和空间。",
+      "证据边界：终局参数是探索稿帧状态；没有真实录音、机械开窗、loop、final render、middleware 或 in-game test。"
+    ],
+    "parameterLogic": [
+      "Slope 只负责母材的整体频谱倾向；3.8 dB/oct 不能脱离 frame_000149 复制，最终亮度应由墙后/开窗角色差判断。",
+      "Lane 1 先做大尺度遮挡，再用局部起伏和 Reverb 补室内印象；避免一个极陡低通把雨床变成单纯蒙住的 hiss。",
+      "Lane 2 的 EQ、Stereo、Haas 与 Reverb共同建立相对差值；每次只增加一项并检查 mono，避免宽度掩盖频谱问题。",
+      "Custom LFO 定义单滴微观包络，Random 只负责有限扰动；在目标未确认前不复制调制连接。",
+      "Random Hz、LFO Hz 和事件密度不是同一量。终局 8.45/1.63 Hz 不能相加、相乘或直接称为每秒滴数。",
+      "Lane 3 的 Filter/Carve/Slice 先决定 click/body 带宽，再由 Reverb决定空间；8.98 kHz 只作帧绑定参考。",
+      "Unison 8 与 Polyphony 20 可能增加密度、峰值和 CPU，但视频没有 voice-stealing 或性能测试；运行时先从更低并发验证。",
+      "本地发布音轨测量只用于比较连续床与离散脉冲，不是纯 patch 输出或交付响度目标；所有主观雨感需另行监听。"
+    ],
+    "practiceChecklist": [
+      "练习：写清听者在室内、外部暴雨、一扇窗已开启、雨滴击打屋顶/天窗的场景约束。",
+      "练习：建立一个持续 Noise，并从同源分 Lane 1/2；分别命名 wall-bed 与 open-portal。",
+      "练习：只用大尺度 EQ 先做暗/亮差，再添加局部凹口；不要反推截图中不可读节点。",
+      "练习：为 Lane 2 逐项加入 Stereo、Haas、Reverb，每一步做相近响度和 mono A/B。",
+      "练习：新建独立 Noise Group，把基础 Level 设为 0，以短 Custom LFO 控制 Level。",
+      "练习：记录 Random 实际映射目标，再制作低/中/高三档扰动；不照抄终局 Hz。",
+      "练习：Solo 连续床、开窗层和水滴层，再测试 1、1+2、1+2+3 的角色增量。",
+      "练习：保留至少 6 dB 后续余量，连续运行 60 秒检查峰值、重复周期、过密簇、click 与 CPU/voice 使用。",
+      "练习：如需真实开/关窗，另做窗体 foley，并用一个状态宏联动开窗层电平、高频、方向和空间。",
+      "练习：把真实录音、loop、variation、final render、middleware 与 in-game test列为后续验收项，不冒充视频已完成。"
+    ]
+  },
+  {
+    "id": "yt-xCorcGCP218",
+    "title": "TRANSFORCE 瞬态塑形器：后期制作应用",
+    "videoId": "xCorcGCP218",
+    "url": "https://www.youtube.com/watch?v=xCorcGCP218",
+    "source": "BOOM Library // Sound Effects / 插件技巧",
+    "category": "workflow",
+    "secondaryCategories": [
+      "impact"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 14 条：依据完整约 471.78 秒本地视频/音频、英中字幕、472 张逐秒帧与八张指定 1080p 原帧整理。证据覆盖单轨金属冲击、瞬态检测与频率聚焦、Attack/Sustain Tone 和 EQ 分路、汇总后级、生物 rasp 与 Gun Shot Distant 预设；没有生成 motion，也未把厂商功能陈述扩写成独立性能验证、完整后期链、等响 A/B、距离模型、middleware 或游戏内结果。",
+    "summary": "这是 BOOM Library 厂商频道上的 TRANSFORCE 单插件演示。可复用重点不是宣传性比较或某组百分比，而是处理顺序：先监听并校准 detector，让处理器正确识别瞬态；再核对 Attack 与 Sustain 两路，分别用 Tone/Spectral 或三段 EQ、Saturation/Distortion 塑形；最后才使用汇总后的 Stylize、Clipper 与 Limiter，并通过匹配响度的旁路、delta/分路监听和伪影检查验证。视频中的冲击 A/B 没有证明等响，oversampling 降低 aliasing 是讲者功能陈述，Gun Shot Distant 只是预设/风格标签。画面一次只展示 Pro Tools 单轨上的一个插件实例，不是完整制作链或交付结果。",
+    "coreIdeas": [
+      "证据分层是本条的前提：界面可见项属于画面事实，Paul 的说明属于讲者陈述，同素材处理前后属于产品演示，比较性卖点属于营销主张；四者不能互相替代。",
+      "detector 决定后续模块看到什么。先用耳机监听检测结果，再调 Sensitivity、Hold、Decay，必要时以 BP/LP/HP 聚焦检测频段；检测错误时继续加 EQ 或失真只会放大分路问题。",
+      "中央检测区把素材拆成 Attack 与 Sustain 两路。先做 Attack-only、Sustain-only 和合并检查，再让前沿承担硬度/边缘，让身体与尾部承担共振、纹理和延续。",
+      "Tone Mode 用 Spectral 在 tonal resonance 与 broadband 方向间重配，并允许两路分别加 Saturation/Distortion；EQ Mode 则给两路各自三段 EQ。它们是两种塑形路径，不应把不可读曲线反推成固定数值。",
+      "Stylize、Clipper 与 Limiter 位于 Attack/Sustain 汇总后。它们会同时改变两路的时间关系、波形和峰值，应在分路成立后逐项加入，而不是用后级掩盖错误检测。",
+      "金属冲击和生物声的 before/after 属于厂商产品演示，且冲击 A/B 未显示响度或峰值匹配。匹配响度的盲 A/B 是后续分析建议，不是视频已执行的方法。",
+      "Gun Shot Distant 是 EQ 预设/距离化风格标签。画面没有真实远距录音、传播延迟、早期反射、空气吸收或卷积参照，不能把它写成物理准确的距离模型。",
+      "视频只展示单个 TRANSFORCE 实例在一条 Pro Tools 轨上的功能与三类素材示例；没有完整多轨后期链、渲染/导出、响度规范、中间件接入或 in-game validation。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "先锁定单轨素材与参考边界",
+        "detail": "画面事实：frame_000075 显示 Pro Tools 的单轨 Impact、完整波形、可读 BOOM ONE 素材名，以及该轨上的一个 TRANSFORCE insert。它建立本段测试对象，也限定这不是多轨生产链。",
+        "params": [
+          "画面只证明一条素材轨和一个插件实例；不补写编辑、分层、总线、母带、渲染或交付步骤。",
+          "素材来自厂商自有 BOOM ONE General Library；本条只复述画面身份，不把厂商素材表现当作插件普遍能力。",
+          "分析建议：保留同起点 dry 副本并记录初始 peak/短时响度，后续才能进行可判断的旁路比较。"
+        ],
+        "imageKey": "xCorcGCP218-metal-impact-source-track"
+      },
+      {
+        "order": 2,
+        "name": "监听 detector 并校准检测窗口",
+        "detail": "画面事实：frame_000109 显示 detector 耳机监听开启、Sensitivity 41%、Hold 39.49 ms、filter Off。讲者先听处理器识别出的瞬态，再调整检测包络，说明检测先于音色塑形。",
+        "params": [
+          "41% 与 39.49 ms 只绑定该金属冲击和当前帧；Decay 读数被遮挡，不补写。",
+          "耳机按钮证明可以单听检测结果，但静帧不证明分路已经最佳或没有漏检尾部。",
+          "分析建议：依次比较 detector-only、Attack-only、Sustain-only，再记录每次调节解决的具体误分问题。"
+        ],
+        "imageKey": "xCorcGCP218-transient-detection-hold"
+      },
+      {
+        "order": 3,
+        "name": "只在检测路径需要时聚焦频段",
+        "detail": "画面事实：frame_000124 显示 LP 被选中、频率 4.0 kHz、Sensitivity 41% 与瞬态检测曲线。讲者说明 BP/LP/HP 用来聚焦 detector 所见频段；本例后续又回到 filter Off。",
+        "params": [
+          "4.0 kHz 是连续演示中的当前 LP 状态，不是最终保存值或冲击检测 preset。",
+          "检测滤波只作用于 detector 的说法来自讲者陈述；静帧不能独立证明内部路由或算法。",
+          "分析建议：比较 Off 与过滤状态，只有分路更准确时才保留；不要把检测滤波误写为听得见的主信号 EQ。"
+        ],
+        "imageKey": "xCorcGCP218-detection-lowpass-focus"
+      },
+      {
+        "order": 4,
+        "name": "分开塑造 Attack、Sustain 与 delta",
+        "detail": "画面事实：frame_000234 的 Tone Mode 显示 Attack Spectral 51%、Sustain Spectral 100%、Sustain Distortion 70% 与黄色 delta。讲者把黄色曲线解释为处理前后差值，并分别操作两路。",
+        "params": [
+          "51%、100% 与 70% 只绑定当前金属冲击帧；前后还有极值扫描和继续调整，不构成推荐配方。",
+          "delta 是讲者定义的差异显示，不是经校准的频响、谐波或响度测量，不能从曲线反推精确结果。",
+          "分析建议：先 solo 两路确认职责，再分别旁通 Spectral、Saturation 与 Distortion，避免把多变量变化归因于单一控件。"
+        ],
+        "imageKey": "xCorcGCP218-tone-split-delta"
+      },
+      {
+        "order": 5,
+        "name": "用独立三段 EQ 做可诊断塑形",
+        "detail": "画面事实：frame_000264 显示 EQ Mode、Attack/Sustain 各三段 EQ，以及 Frequency、Gain、Q-Factor、Drive 控件；边缘段菜单可见 SHELF、PEAK、PASS 1、PASS 2。",
+        "params": [
+          "曲线节点的频率、增益与 Q 不可可靠读取，不从位置或旋钮角度补数值。",
+          "PASS 1/2 分别对应 12/24 dB/oct 是讲者陈述，菜单本身没有显示斜率数字。",
+          "分析建议：Attack 与 Sustain 每次只改一段并做相近响度旁路，确认是前沿、身体还是尾部真正受益。"
+        ],
+        "imageKey": "xCorcGCP218-eq-filter-shape-menu"
+      },
+      {
+        "order": 6,
+        "name": "最后检查汇总后级与输出安全",
+        "detail": "画面事实：frame_000344 显示 Stylize Hard、Clipper Drive 37%、Sym/Mix、Limiter、Lookahead 0.10 ms、Oversample Off，以及 Input/Output +0.0 dB。后级位于 Attack/Sustain 汇总之后。",
+        "params": [
+          "37%、0.10 ms、Off 与 +0.0 dB 都只绑定当前帧；Sym、Mix 与 Limiter 的精确值不可读。",
+          "讲者称 2x/4x oversampling 可在重失真/削波时降低 aliasing，但视频没有隔离测量；该帧实际显示 Off，4x 只在邻近步骤短暂选中。",
+          "分析建议：逐项旁通 Stylize、Clipper、Limiter，并检查峰均比、真峰、DC、mono、CPU 与延迟；不把更响或更密直接等同于更好。"
+        ],
+        "imageKey": "xCorcGCP218-post-stage-hard-clip-limiter"
+      },
+      {
+        "order": 7,
+        "name": "把生物 rasp 视为素材限定案例",
+        "detail": "画面事实：frame_000398 显示 Creature 示例的 Attack -73%、Sustain 78%、Sensitivity 30%、filter Off；两路非线性处理可见启用。讲者目标是突出 breathy rasp。",
+        "params": [
+          "-73%、78% 与 30% 只属于当前 Creature 帧；Saturation/Distortion 数值不可读。",
+          "更突出 rasp 是讲者目标和产品演示结果，不证明此设置适合所有生物声，也不证明处理没有齿感、噪声或遮蔽副作用。",
+          "分析建议：先保留可懂的喉音与主体，再在匹配响度下比较气息、粗糙边缘和持续纹理是否服务角色。"
+        ],
+        "imageKey": "xCorcGCP218-creature-rasp-tone-state"
+      },
+      {
+        "order": 8,
+        "name": "把 Distant 预设当作待验证风格",
+        "detail": "画面事实：frame_000446 显示 Gun Shot Distant、EQ Mode、Attack Gain -INF dB、Sustain Gain +0.0 dB、filter Off、Lookahead 0.10 ms、Oversample Off、I/O +0.0 dB 与启用的 Limiter。",
+        "params": [
+          "Sustain EQ 曲线可见，但 Frequency、Gain、Q 与 Drive 不可读；不从曲线补写参数。",
+          "Gun Shot Distant 只是预设名称和距离化风格参考，不是经过真实传播、空间反射或空气吸收验证的距离模型。",
+          "分析建议：另加真实远距参考、early reflection/reverb、pre-delay、空气吸收与直达声电平关系，再判断场景距离是否成立。"
+        ],
+        "imageKey": "xCorcGCP218-gunshot-distant-eq-preset"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "BOOM Library TRANSFORCE",
+        "purpose": "在单个插件中先检测瞬态并拆分 Attack/Sustain，再为两路选择 Tone/Spectral 或三段 EQ、分别加入 Saturation/Distortion，最后由 Stylize、Clipper、Limiter 与 I/O 汇总。",
+        "settings": [
+          "可靠结构是 detector -> Attack/Sustain split -> Tone/EQ/nonlinear -> summed post。视频没有公开 detector、Spectral、Stylize 或非线性模块的 DSP 算法。",
+          "frame_000109 的 41%/39.49 ms、frame_000124 的 LP 4.0 kHz、frame_000234 的 51%/100%/70%、frame_000344 的 Drive 37% 等只属于各自帧。",
+          "oversampling 降低 aliasing、Limiter 防止超过 0 dBFS 等属于讲者功能陈述；没有隔离频谱、真峰或 null measurement。",
+          "整段是厂商自制的 Pro Tools 单轨单实例演示，不能外推为竞品对照、完整后期链、无伪影保证或混音适配验证。"
+        ]
+      }
+    ],
+    "materials": [
+      "BOOM ONE projectile/metal impact：带清晰前沿、低频主体与长金属共振的厂商示例素材",
+      "Creature grunt/groan：带喉音、气息与持续 rasp 的单轨生物素材",
+      "Close gun shot：短爆发与可见衰减尾部，用于 Gun Tail Boost 和 Distant 预设示例",
+      "Detector monitor：只监听处理器识别出的瞬态区域，用于校准分路而非作为交付音频",
+      "Dry/processed comparison：同一播放位置的插件旁通与启用版本；视频未证明响度或峰值匹配",
+      "真实远距参考与空间链：只作为后续验证材料，未出现在本视频的单插件示例中"
+    ],
+    "keywords": [
+      "插件技巧",
+      "BOOM Library",
+      "TRANSFORCE",
+      "manufacturer demo",
+      "Pro Tools",
+      "transient detection",
+      "detector monitor",
+      "Sensitivity",
+      "Hold",
+      "Decay",
+      "sidechain filter",
+      "Attack",
+      "Sustain",
+      "Spectral",
+      "delta audition",
+      "three-band EQ",
+      "Saturation",
+      "Distortion",
+      "Stylize",
+      "Clipper",
+      "Limiter",
+      "Lookahead",
+      "oversampling",
+      "aliasing",
+      "creature rasp",
+      "Gun Shot Distant",
+      "matched loudness",
+      "workflow",
+      "impact"
+    ],
+    "tips": [
+      "先听 detector 再调音色。Sensitivity、Hold、Decay 或检测频段分错时，后面的 EQ、Spectral 与失真不会自动修正素材职责。",
+      "Attack-only、Sustain-only、合并三种状态都要检查；delta/差异显示只帮助定位变化，不能替代耳听、响度表或频谱测量。",
+      "Tone 与 EQ 是两条可选塑形路径；先明确前沿和尾部目标，再选择工具，不从厂商截图复制不可读曲线。",
+      "汇总后级一次影响两路。Stylize、Clipper、Limiter 应逐项旁通并检查峰值、DC、mono、CPU 与延迟。",
+      "厂商 before/after 只能证明本素材发生了变化；真正比较需匹配响度和峰值、固定区间并尽量盲听，本视频没有展示这套校准。",
+      "Gun Shot Distant 先按风格预设管理；真实距离还要用场景参考验证直达声、反射、空气吸收、时间和电平关系。"
+    ],
+    "chainFocus": [
+      "画面事实：Pro Tools 单轨 Impact -> 单个 TRANSFORCE insert；没有完整多轨后期链。",
+      "作者事实与画面事实：detector monitor -> Sensitivity/Hold/Decay；先校准处理器识别的瞬态。",
+      "作者事实与画面事实：可选 BP/LP/HP 或 external SC 聚焦检测；本例最终又回到 filter Off。",
+      "产品演示与画面事实：Attack-only / Sustain-only -> 合并，验证两路职责后再处理。",
+      "作者事实与画面事实：Tone/Spectral -> 每路 Saturation/Distortion；黄色 delta 显示被讲者定义为处理前后差异。",
+      "画面事实：EQ Mode -> Attack/Sustain 各三段 EQ；不可读节点不反推数值。",
+      "作者事实与画面事实：summed Stylize -> Clipper -> Limiter -> I/O；oversampling 的 aliasing 作用仅保留作者归属。",
+      "证据边界：冲击、生物和枪声是厂商单插件演示，没有等响盲测、完整链、渲染、middleware 或 in-game result。"
+    ],
+    "parameterLogic": [
+      "Sensitivity、Hold、Decay 先共同定义 detector 窗口；每次只改一项并监听分路结果，不把 41%/39.49 ms 当作通用冲击参数。",
+      "BP/LP/HP 只在检测改善时保留。frame_000124 的 LP 4.0 kHz 是瞬时状态，且视频后续回到 Off。",
+      "Attack 与 Sustain 的 Gain、Spectral、Saturation、Distortion 都要按角色分开判断；极值扫描用于识别方向，不默认用于交付。",
+      "黄色 delta 只定位处理前后差异；不能从静态曲线得到精确频响、谐波量或听感优劣。",
+      "EQ Mode 每次只改一段并做相近响度旁路；SHELF/PEAK/PASS 1/PASS 2 可见，但节点数值和斜率证据需区分画面与作者陈述。",
+      "Stylize、Clipper、Limiter 在汇总后逐项加入；后级让结果更响、更密时必须复核峰均比和瞬态对比。",
+      "Off/2x/4x oversampling 需在实际素材上比较 aliasing、CPU 和 latency；视频没有证明 4x 恒优，也没有在最终冲击 A/B 保持 4x。",
+      "Distant 预设只提供初始频谱/包络方向；物理距离感还需真实参考与空间链，不能靠 Attack -INF 和一条 EQ 曲线独立完成。"
+    ],
+    "practiceChecklist": [
+      "练习：准备一条金属冲击、一条生物 rasp 与一条近距枪声，保存同起点 dry 副本。",
+      "练习：记录原始 peak 与短时响度，写清每个素材要改变的是前沿、主体、尾部还是纹理。",
+      "练习：开启 detector monitor，依次调 Sensitivity、Hold、Decay，并记录误检/漏检如何变化。",
+      "练习：比较 filter Off、BP、LP、HP；只在 Attack/Sustain 分路更准确时保留频率聚焦。",
+      "练习：分别播放 Attack-only、Sustain-only 和合并版本，确认关键主体没有被送错。",
+      "练习：在 Tone Mode 中从 0 向两端扫描，再分别测试 Saturation 与 Distortion；不照抄视频百分比。",
+      "练习：切到 EQ Mode，每次只改一段完成一个目标，并保存相近响度旁路结果。",
+      "练习：逐项启用 Stylize、Clipper、Limiter，检查峰均比、真峰、DC、mono 与高频毛刺。",
+      "练习：重非线性时比较 Off/2x/4x，记录 aliasing、CPU 和 latency；不把厂商陈述当作测量结果。",
+      "练习：对 dry/processed 做匹配响度和峰值的盲 A/B；另以真实远距参考验证 Distant 风格，并把 render、middleware、in-game test 列为未完成项。"
+    ]
+  },
+  {
+    "id": "yt-v1IGAnVJylY",
+    "title": "设计有冲击力的瞬态与碎屑层",
+    "videoId": "v1IGAnVJylY",
+    "url": "https://www.youtube.com/watch?v=v1IGAnVJylY",
+    "source": "Alex Barnhart / 插件技巧",
+    "category": "impact",
+    "secondaryCategories": [
+      "workflow"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 15 条：依据完整约 1154.03 秒本地音视频、英中字幕、逐秒帧与八张指定 1080p 原帧整理。证据覆盖 Rocks/Debris/Explosions 分组、碎屑高低层与淡变、宽层低架、Radium 六槽随机源、noise/tonal 分离、C1 comp-gate、多段瞬态和主击约两帧让位；没有生成 motion，也未补写随机范围、独立混响尾、总线/响度/导出、middleware 或游戏内完成状态。",
+    "summary": "作者把岩石冲击工程组织为 Rocks、Debris、Explosions 三个 folder，再用 Soundminer Radium 生成多颗随机碎屑、离线打印职责明确的支撑层，最后在 REAPER 的第一主击处切出约两帧空隙：Rocks 与 Debris 同时退开，让爆炸瞬态短暂独占；第二击再带回 body 与 debris。transient、body、debris、tail 是分析角色，不是作者轨名。尾部主要来自较长 Rocks/Debris item 的交错淡出，画面没有独立 reverb return。核心不是继续加低频或加层，而是时间让位、角色分离、瞬态/主体对比和碎屑尾部管理。",
+    "coreIdeas": [
+      "画面中的作者分组是 Rocks、Debris、Explosions；transient、body、debris、tail 只是用于迁移方法的感知角色，不能冒充工程轨道名。",
+      "主击的冲击力来自时间雕刻：Rocks 与 Debris 在第一爆炸击点共同切出约两帧空隙，第二击再强调重新出现的主体和碎屑，而不是让所有层持续叠满。",
+      "Debris 由高低层、错开起点、不同 item 长度与淡变形成。高频保留颗粒和掉落细节，低频/低中频更早离开，为后续音乐或事件腾位。",
+      "Radium 的六个采样槽启用 Random Start、Random Semi、Random Delay；视频没有显示精确随机范围。Random Delay 控制颗粒触发时间，不是空间回声。",
+      "偏 stereo 的瞬态支撑层先削低频，只负责把击打向外推；frame_000278 的 183.14 Hz、-8.78 dB、Q 1.000 只属于当前 Pro-Q 3 状态。",
+      "低沉 debris sweetener 通过滤波和 MRatioMB 的 noise/tonal 分离减少高频噪声，使其能在主体下补重量后快速淡出，而不是独立承担识别。",
+      "作者把展示的 Processing Rack 称为 roughly what I used。可迁移的是清理、动态取舍、包络重量、瞬态塑形、运动与抓峰的功能顺序，不是宣称每个 stem 都逐项使用同一链。",
+      "复杂源先离线打印，再在 REAPER 做结构剪辑和淡变。视频没有给出总线目标、响度目标、精确渲染参数、中间件接入或游戏内验收。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "先按作者工程分成三组",
+        "detail": "画面事实：frame_000027 的 REAPER 工程明确显示 Rocks、Debris、Explosions 三个 folder，并分别容纳岩石主体、碎屑与两次爆炸击点。transient/body/debris/tail 是后续分析职责，不是画面中的作者命名。",
+        "params": [
+          "Rocks 负责 crack、crumble、hollow 与中低频主体；Debris 负责高低颗粒和掉落；Explosions 负责第一、第二主击。",
+          "分析建议：先给每层写唯一职责，再做频段和时间取舍；不要因三组可见就推断所有层同起同落。",
+          "画面没有展示 Mix Bus 的完整插件链、最终响度或导出设置。"
+        ],
+        "imageKey": "v1IGAnVJylY-impact-role-folders"
+      },
+      {
+        "order": 2,
+        "name": "用碎屑长短与淡变写尾部",
+        "detail": "画面事实：frame_000252 显示 Debris 高低层具有错开起点、不同 item 长度和手工 fade；作者希望低频/低中频比参考更快退出。尾部由这些较长 Rocks/Debris item 的交错淡出承担，不能写成已证实的混响尾。",
+        "params": [
+          "各 item 的精确 fade 时长、播放率和增益没有逐项显示，不从波形长度补数值。",
+          "高频碎屑可以延续尺度和运动，低频支撑完成重量后应较早退场。",
+          "视频没有显示独立 reverb return、算法或 wet 参数；空间处理不是本帧可证事实。"
+        ],
+        "imageKey": "v1IGAnVJylY-debris-high-low-fades"
+      },
+      {
+        "order": 3,
+        "name": "给 stereo 支撑层削低频",
+        "detail": "画面事实：frame_000278 的 FabFilter Pro-Q 3 显示 Low Shelf 183.14 Hz、-8.78 dB、Q 1.000；作者把这一层用于稍微向外推开瞬态，而不是增加中心低频重量。",
+        "params": [
+          "183.14 Hz、-8.78 dB 与 Q 1.000 只绑定当前帧和当前支撑层，不是冲击声通用预设。",
+          "画面没有可核读的 pan、stereo width、mid/side 或相关度数值，不能声称具体扩宽百分比或完全 mono 的低频。",
+          "分析建议：中心主击保持明确，宽层先减低频；若只变响而未增加外缘角色，应做等响旁路后重判。"
+        ],
+        "imageKey": "v1IGAnVJylY-stereo-layer-low-shelf"
+      },
+      {
+        "order": 4,
+        "name": "用六槽随机源生成碎屑密度",
+        "detail": "画面事实：frame_000323 显示 Soundminer Radium 六个采样槽、每槽包络，以及同时启用的 Random Start、Random Semi、Random Delay。作者一次演奏多个 MIDI 音符以快速生成密集碎屑表演。",
+        "params": [
+          "六槽和随机化开关可见；Random Start、Random Semi、Random Delay 的精确范围、每槽 ADSHR 与 velocity 分布没有显示。",
+          "界面可见的 pitch-bend +12/-12 与 Voices 48 不等于实际 Random Semi 范围，不能混写。",
+          "Random Delay 是触发到达时间变化，不是 spatial delay；缩小范围会让碎屑更早、更紧地响应。"
+        ],
+        "imageKey": "v1IGAnVJylY-radium-six-randomized-slots"
+      },
+      {
+        "order": 5,
+        "name": "把低沉碎屑做成低噪 sweetener",
+        "detail": "画面事实：frame_000654 的 MRatioMB Noise/Tonal 页显示 Noise Ratio 72.8%、Noise Gain -6.72 dB、Tonal Ratio 50.0%、Tonal Gain 0.00 dB。作者先用 FilterFreak 限制高频，再压低 noisy 分量，让该层只在主体下补重量。",
+        "params": [
+          "72.8%、-6.72 dB、50.0% 与 0.00 dB 只属于当前帧；素材轻微降调的半音数和 FilterFreak 频率/共振未显示。",
+          "作者说明该层独奏并不自然；它的价值是低噪、低频聚焦并能在不抽走上层细节时淡出。",
+          "分析建议：对 sweetener 单独旁通 noise/tonal 处理，并在整体中判断它是否补重量而不延长低频尾。"
+        ],
+        "imageKey": "v1IGAnVJylY-debris-noise-tonal-separation"
+      },
+      {
+        "order": 6,
+        "name": "先保留瞬态再清理击点间细节",
+        "detail": "画面事实：frame_000829 同屏显示 Pro-Q 3、Waves C1 comp-gate 与 Processing Rack 顺序。C1 当前 Compressor 为 Threshold -23.4 dB、Ratio 3.99:1、Attack 35.0 ms、Release 50 ms、Makeup 2.0 dB；Gate 为 Floor -Inf、Open/Close -10.0 dB、Attack 2.00 ms、Release 300 ms、Hold 0.01 s。",
+        "params": [
+          "作者说明较慢 compressor attack 让突出瞬态穿过，gate 压低击点之间的细碎内容；这是该示例的处理意图。",
+          "所有数值都是 frame_000829 的运行状态，不是每个 rock、explosion 或 stem 的固定设置。",
+          "作者称展示链是 roughly what I used；链位和功能顺序可信，但不能宣称每个插件在每个最终 stem 上都同样启用。"
+        ],
+        "imageKey": "v1IGAnVJylY-rock-c1-comp-gate"
+      },
+      {
+        "order": 7,
+        "name": "分频抬 attack 并收 sustain",
+        "detail": "画面事实：frame_000875 的 MTransientMB 显示预设 3 Band With Sustain，Bass/Middle/High Transient 为 +6.34/+13.63/+9.79 dB，Sustain -20.6%，交叉点 200/2000 Hz、Slope 24 dB/oct、Analog mode。作者用它让冲击更短、更清楚。",
+        "params": [
+          "这些参数只绑定当前源与当前帧；不推广为通用 impact preset。",
+          "右侧 rack 还能看到 MBassador、Oxford TransMod、Neutron 3 Transient Shaper、第二个 C1、FilterFreak 与 L3-LL 的链位，但静帧不证明它们全部 active 或贡献相同。",
+          "分析建议：每段先匹配响度测试 attack 与 sustain；如果只更响或尾部更满，就没有建立所需瞬态/主体对比。"
+        ],
+        "imageKey": "v1IGAnVJylY-multiband-transient-sustain"
+      },
+      {
+        "order": 8,
+        "name": "在主击切出约两帧空隙",
+        "detail": "画面事实：frame_001033 的 REAPER 时间尺显示主击约位于 0:00:02:00，Rocks 与 Debris item 在 2:00-2:02 共同切空；第一爆炸瞬态短暂独占，第二击后主体与碎屑重新出现。作者以 less is more 解释这一取舍。",
+        "params": [
+          "在 30 fps 工程中两帧约 66.7 ms；迁移到其他帧率、动画速度或交互节奏时必须重新测试，不能机械复制。",
+          "这里是 item 级时间雕刻，不是总线 ducking，也不是继续加 bass 或加更多层。",
+          "视频没有展示最终总线、响度、render/export、middleware 或 in-game validation；两帧结构只证明当前 REAPER 设计。"
+        ],
+        "imageKey": "v1IGAnVJylY-two-frame-impact-gap"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Soundminer Radium",
+        "purpose": "以六个采样槽和随机起点、半音、触发延迟生成可表演、可打印的多颗碎屑纹理。",
+        "settings": [
+          "frame_000323 证明六槽与 Random Start / Random Semi / Random Delay 同屏；精确随机范围和 ADSHR 数值未显示。",
+          "一次演奏多个 MIDI 音符是作者工作流；Random Delay 只改变触发时间，不是回声或空间效果。"
+        ]
+      },
+      {
+        "name": "FabFilter Pro-Q 3",
+        "purpose": "为偏 stereo 的瞬态支撑层削低频，并在 rock/explosion 处理链前端清理超低与低中频。",
+        "settings": [
+          "frame_000278 的 Low Shelf 为 183.14 Hz、-8.78 dB、Q 1.000，只绑定当前支撑层。",
+          "另一链前端高通与低中频凹陷属于邻近画面上下文；不把未选证据帧的数值写成站点复刻目标。"
+        ]
+      },
+      {
+        "name": "MeldaProduction MRatioMB",
+        "purpose": "分离 noise/tonal 成分并压低低沉 debris sweetener 的噪声，使重量层不遮挡上方颗粒。",
+        "settings": [
+          "frame_000654：Noise Ratio 72.8%、Noise Gain -6.72 dB、Tonal Ratio 50.0%、Tonal Gain 0.00 dB。",
+          "这些是当前帧状态；没有严格等响 A/B、频谱导出或普适性验证。"
+        ]
+      },
+      {
+        "name": "Waves C1 comp-gate Stereo",
+        "purpose": "以较慢压缩 attack 保留突出的前沿，同时用 gate 减少击点之间的零碎内容。",
+        "settings": [
+          "frame_000829 的 compressor/gate 数值仅用于证明当前动态思路，不是通用 rock preset。",
+          "gate 的目标不是把所有间隙清零；过度门控会切断材质细节和自然衰减。"
+        ]
+      },
+      {
+        "name": "MeldaProduction MTransientMB",
+        "purpose": "分三段抬高 transient、降低 sustain，让 rock/explosion 支撑变得攻强尾短。",
+        "settings": [
+          "frame_000875：+6.34/+13.63/+9.79 dB transient、Sustain -20.6%、200/2000 Hz、24 dB/oct、Analog。",
+          "参数只绑定当前帧；生产中应逐段等响旁通，避免叠加多个瞬态器后把动态压平。"
+        ]
+      },
+      {
+        "name": "Waves L3-LL MultiMaximizer",
+        "purpose": "位于示例 Processing Rack 末端抓峰值，避免离线打印发生 clipping。",
+        "settings": [
+          "作者没有展示 threshold、ceiling、衰减量、LUFS 或 true-peak 目标。",
+          "末端 limiter 只作峰值保护；不能由链位反推出母带响度或交付规格。"
+        ]
+      }
+    ],
+    "materials": [
+      "Rocks：rock crack、crumble、hollow、small impact 等主体材料，负责材质、body 与中低频块感",
+      "Debris high：trickle、gravel、brick、shale 与 rocks/dirt slide 等颗粒，负责脆裂、细节和较长掉落",
+      "Debris low / tonal sweetener：经降调、滤波和 noise/tonal 分离的低沉支撑，只负责重量并较快淡出",
+      "Explosions：第一 kick/punch 在主击独占，第二击强调 Rocks 与 Debris 重新出现",
+      "Radium 六槽表演：多个异质碎屑采样通过 start、semitone 与触发 delay 随机化生成 burst 或长 roll",
+      "Tail：没有独立作者命名轨；由较长 Rocks/Debris item 与手工 fade 形成，不假定为 reverb"
+    ],
+    "keywords": [
+      "插件技巧",
+      "Alex Barnhart",
+      "REAPER",
+      "Soundminer",
+      "Radium",
+      "Rocks",
+      "Debris",
+      "Explosions",
+      "transient",
+      "body",
+      "tail",
+      "two-frame gap",
+      "time carve",
+      "Random Start",
+      "Random Semi",
+      "Random Delay",
+      "FabFilter Pro-Q 3",
+      "MRatioMB",
+      "Waves C1 comp-gate",
+      "MTransientMB",
+      "L3-LL",
+      "offline print",
+      "matched loudness",
+      "impact",
+      "workflow"
+    ],
+    "tips": [
+      "先在主击处减少内容，再决定是否加层；如果 Rocks、Debris、Explosions 全程同起同落，厚度可能增加但瞬态会变钝。",
+      "第二击要承担重新打开 body/debris 的功能，不要复制第一击的全部堆叠。",
+      "尾部先用现有长 debris item 与 fade 管理；没有独立混响证据时，不要把可见素材尾改写成 reverb tail。",
+      "随机化先打印多次并挑选；记录实际 start/semitone/delay 范围，不从六槽界面或 pitch-bend 标签补猜。",
+      "宽层削低频、中心层保留主击；Random Delay 管 timing，不管 stereo space。",
+      "插件链按职责旁通并匹配响度。作者展示的是近似链，不能假设每个 stem 都使用完全相同实例和数值。"
+    ],
+    "chainFocus": [
+      "画面事实：REAPER 分组为 Rocks / Debris / Explosions；感知映射 transient / body / debris / tail 仅用于分析和迁移。",
+      "作者工作流与画面事实：Radium 六槽随机源 -> 多音 MIDI 表演 -> 打印 burst/roll；精确随机范围未显示。",
+      "画面事实与作者说明：偏 stereo 瞬态支撑 -> Pro-Q 3 low shelf 去低频；作用是外缘，不是中心重量。",
+      "作者工作流与画面事实：FilterFreak 限制高频 -> MRatioMB 压低 noisy 分量 -> 低沉 debris sweetener 打印。",
+      "近似 Processing Rack：Pro-Q 3 -> C1 comp-gate -> MBassador -> Oxford TransMod -> MTransientMB -> Neutron 3 Transient Shaper -> 可选第二 C1 / FilterFreak -> L3-LL。",
+      "证据边界：链顺序按功能可信，但作者说 roughly what I used；不宣称每个插件在每个 stem 上都同样启用。",
+      "最终结构：短预备积累 -> Rocks/Debris 两帧让位 -> 第一爆炸瞬态独占 -> 第二击带回 body/debris -> 高频碎屑延续、低频早退。",
+      "未完成项：Mix Bus 参数、响度/真峰目标、精确 render/export、middleware、in-game validation 均未展示。"
+    ],
+    "parameterLogic": [
+      "先调时间：比较 1、2、3 帧让位，选择最短但能让主击清楚独占的版本；不同帧率和交互节奏必须重测。",
+      "再调角色：Rocks 管主体，Debris 管颗粒与尾，Explosions 管两次击点；去掉一层应缺角色，加入后不应遮挡其他职责。",
+      "再调频段：偏 stereo 层先削低频，低沉 sweetener 减少 noisy 分量；浑浊时先减少重叠，不继续盲目 boost。",
+      "再调随机：start、semitone、trigger delay 分开设弱/中/强三档；精确范围由多次打印的一致性决定，不从视频补数。",
+      "再调动态：较慢 comp attack 放行前沿，gate 只降低间隙，multiband transient 同时抬 attack 与收 sustain。",
+      "再管尾部：高频碎屑可长，低频/低中频较快结束；Random Delay 不是空间 delay，长 item fade 也不自动等于 reverb。",
+      "最后抓峰：limiter 只防 clipping；检查 peak、true peak、DC、mono 和尾部 click，但不引用视频未给出的总线/响度目标。",
+      "每个插件都做 matched-loudness bypass；视频没有展示严格等响 A/B，因此主观改善不能冒充测量结论。"
+    ],
+    "practiceChecklist": [
+      "练习：建立 Rocks、Debris、Explosions 三组，并给每层另标 transient、body、debris 或 tail 职责。",
+      "练习：准备至少 5-6 个不同尺寸/材质的碎屑源，生成一组短 burst 与一组长 roll，并打印为音频。",
+      "练习：分别记录 Random Start、Random Semi、Random Delay 的实际范围；确认触发延迟没有被误当成回声或立体声工具。",
+      "练习：为偏 stereo 支撑层去低频，并在 mono 与等响旁路下确认它只增加外缘角色。",
+      "练习：制作一条低噪、低频聚焦、短尾的 debris sweetener，检查它在整体中补重量而不遮挡高频颗粒。",
+      "练习：逐项旁通 Pro-Q、comp/gate、低频包络、瞬态器和 limiter，写下每级解决的问题；无明确职责则删除。",
+      "练习：在主击处测试 1、2、3 帧 Rocks/Debris 空隙，第二击只强化重新出现的 body/debris。",
+      "练习：用不同 item 长度和 fade 管理尾部，优先让低频/低中频早退；没有证据时不补独立 reverb。",
+      "练习：做 matched-loudness A/B，检查 peak、true peak、DC、mono、尾部 click 与潜在相位问题。",
+      "练习：把总线、响度、render/export、middleware 与 in-game test 明确列为后续验收，不冒充视频已完成。"
+    ]
   }
 ];
 
@@ -27642,6 +28836,170 @@
   "C_5qPsn1GWY-declip-sweetener-layered-after": {
     "preview": "assets/shots/preview/C_5qPsn1GWY-declip-sweetener-layered-after.webp",
     "full": "assets/shots/full/C_5qPsn1GWY-declip-sweetener-layered-after.png"
+  },
+  "ir8d3PUj5JU-recorded-source-palette": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-recorded-source-palette.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-recorded-source-palette.png"
+  },
+  "ir8d3PUj5JU-alien-dragon-reference": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-alien-dragon-reference.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-alien-dragon-reference.png"
+  },
+  "ir8d3PUj5JU-idle-organ-layers": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-idle-organ-layers.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-idle-organ-layers.png"
+  },
+  "ir8d3PUj5JU-breath-lead-stretch": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-breath-lead-stretch.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-breath-lead-stretch.png"
+  },
+  "ir8d3PUj5JU-main-voice-width-control": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-main-voice-width-control.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-main-voice-width-control.png"
+  },
+  "ir8d3PUj5JU-body-impact-stack": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-body-impact-stack.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-body-impact-stack.png"
+  },
+  "ir8d3PUj5JU-dog-container-main-voice": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-dog-container-main-voice.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-dog-container-main-voice.png"
+  },
+  "ir8d3PUj5JU-post-roar-tremolo-acceleration": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-post-roar-tremolo-acceleration.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-post-roar-tremolo-acceleration.png"
+  },
+  "ir8d3PUj5JU-master-space-active": {
+    "preview": "assets/shots/preview/ir8d3PUj5JU-master-space-active.webp",
+    "full": "assets/shots/full/ir8d3PUj5JU-master-space-active.png"
+  },
+  "E_wGGNkVcrw-noise-source-3x-osc": {
+    "preview": "assets/shots/preview/E_wGGNkVcrw-noise-source-3x-osc.webp",
+    "full": "assets/shots/full/E_wGGNkVcrw-noise-source-3x-osc.png"
+  },
+  "E_wGGNkVcrw-dual-resonant-eq-bands": {
+    "preview": "assets/shots/preview/E_wGGNkVcrw-dual-resonant-eq-bands.webp",
+    "full": "assets/shots/full/E_wGGNkVcrw-dual-resonant-eq-bands.png"
+  },
+  "E_wGGNkVcrw-multiband-bank-ramps": {
+    "preview": "assets/shots/preview/E_wGGNkVcrw-multiband-bank-ramps.webp",
+    "full": "assets/shots/full/E_wGGNkVcrw-multiband-bank-ramps.png"
+  },
+  "E_wGGNkVcrw-core-modulation-lanes": {
+    "preview": "assets/shots/preview/E_wGGNkVcrw-core-modulation-lanes.webp",
+    "full": "assets/shots/full/E_wGGNkVcrw-core-modulation-lanes.png"
+  },
+  "E_wGGNkVcrw-transient-control": {
+    "preview": "assets/shots/preview/E_wGGNkVcrw-transient-control.webp",
+    "full": "assets/shots/full/E_wGGNkVcrw-transient-control.png"
+  },
+  "E_wGGNkVcrw-variation-delay-frequency-shift": {
+    "preview": "assets/shots/preview/E_wGGNkVcrw-variation-delay-frequency-shift.webp",
+    "full": "assets/shots/full/E_wGGNkVcrw-variation-delay-frequency-shift.png"
+  },
+  "E_wGGNkVcrw-spring-send-wet-correction": {
+    "preview": "assets/shots/preview/E_wGGNkVcrw-spring-send-wet-correction.webp",
+    "full": "assets/shots/full/E_wGGNkVcrw-spring-send-wet-correction.png"
+  },
+  "E_wGGNkVcrw-liquid-sample-harvest": {
+    "preview": "assets/shots/preview/E_wGGNkVcrw-liquid-sample-harvest.webp",
+    "full": "assets/shots/full/E_wGGNkVcrw-liquid-sample-harvest.png"
+  },
+  "wWms0-ad6fw-white-noise-slope-source": {
+    "preview": "assets/shots/preview/wWms0-ad6fw-white-noise-slope-source.webp",
+    "full": "assets/shots/full/wWms0-ad6fw-white-noise-slope-source.png"
+  },
+  "wWms0-ad6fw-indoor-rain-eq-contour": {
+    "preview": "assets/shots/preview/wWms0-ad6fw-indoor-rain-eq-contour.webp",
+    "full": "assets/shots/full/wWms0-ad6fw-indoor-rain-eq-contour.png"
+  },
+  "wWms0-ad6fw-dual-lane-noise-routing": {
+    "preview": "assets/shots/preview/wWms0-ad6fw-dual-lane-noise-routing.webp",
+    "full": "assets/shots/full/wWms0-ad6fw-dual-lane-noise-routing.png"
+  },
+  "wWms0-ad6fw-open-window-spatial-chain": {
+    "preview": "assets/shots/preview/wWms0-ad6fw-open-window-spatial-chain.webp",
+    "full": "assets/shots/full/wWms0-ad6fw-open-window-spatial-chain.png"
+  },
+  "wWms0-ad6fw-droplet-lfo-level-modulation": {
+    "preview": "assets/shots/preview/wWms0-ad6fw-droplet-lfo-level-modulation.webp",
+    "full": "assets/shots/full/wWms0-ad6fw-droplet-lfo-level-modulation.png"
+  },
+  "wWms0-ad6fw-droplet-short-modulation-curve": {
+    "preview": "assets/shots/preview/wWms0-ad6fw-droplet-short-modulation-curve.webp",
+    "full": "assets/shots/full/wWms0-ad6fw-droplet-short-modulation-curve.png"
+  },
+  "wWms0-ad6fw-droplet-high-notch-eq": {
+    "preview": "assets/shots/preview/wWms0-ad6fw-droplet-high-notch-eq.webp",
+    "full": "assets/shots/full/wWms0-ad6fw-droplet-high-notch-eq.png"
+  },
+  "wWms0-ad6fw-three-lane-final-patch": {
+    "preview": "assets/shots/preview/wWms0-ad6fw-three-lane-final-patch.webp",
+    "full": "assets/shots/full/wWms0-ad6fw-three-lane-final-patch.png"
+  },
+  "xCorcGCP218-metal-impact-source-track": {
+    "preview": "assets/shots/preview/xCorcGCP218-metal-impact-source-track.webp",
+    "full": "assets/shots/full/xCorcGCP218-metal-impact-source-track.png"
+  },
+  "xCorcGCP218-transient-detection-hold": {
+    "preview": "assets/shots/preview/xCorcGCP218-transient-detection-hold.webp",
+    "full": "assets/shots/full/xCorcGCP218-transient-detection-hold.png"
+  },
+  "xCorcGCP218-detection-lowpass-focus": {
+    "preview": "assets/shots/preview/xCorcGCP218-detection-lowpass-focus.webp",
+    "full": "assets/shots/full/xCorcGCP218-detection-lowpass-focus.png"
+  },
+  "xCorcGCP218-tone-split-delta": {
+    "preview": "assets/shots/preview/xCorcGCP218-tone-split-delta.webp",
+    "full": "assets/shots/full/xCorcGCP218-tone-split-delta.png"
+  },
+  "xCorcGCP218-eq-filter-shape-menu": {
+    "preview": "assets/shots/preview/xCorcGCP218-eq-filter-shape-menu.webp",
+    "full": "assets/shots/full/xCorcGCP218-eq-filter-shape-menu.png"
+  },
+  "xCorcGCP218-post-stage-hard-clip-limiter": {
+    "preview": "assets/shots/preview/xCorcGCP218-post-stage-hard-clip-limiter.webp",
+    "full": "assets/shots/full/xCorcGCP218-post-stage-hard-clip-limiter.png"
+  },
+  "xCorcGCP218-creature-rasp-tone-state": {
+    "preview": "assets/shots/preview/xCorcGCP218-creature-rasp-tone-state.webp",
+    "full": "assets/shots/full/xCorcGCP218-creature-rasp-tone-state.png"
+  },
+  "xCorcGCP218-gunshot-distant-eq-preset": {
+    "preview": "assets/shots/preview/xCorcGCP218-gunshot-distant-eq-preset.webp",
+    "full": "assets/shots/full/xCorcGCP218-gunshot-distant-eq-preset.png"
+  },
+  "v1IGAnVJylY-impact-role-folders": {
+    "preview": "assets/shots/preview/v1IGAnVJylY-impact-role-folders.webp",
+    "full": "assets/shots/full/v1IGAnVJylY-impact-role-folders.png"
+  },
+  "v1IGAnVJylY-debris-high-low-fades": {
+    "preview": "assets/shots/preview/v1IGAnVJylY-debris-high-low-fades.webp",
+    "full": "assets/shots/full/v1IGAnVJylY-debris-high-low-fades.png"
+  },
+  "v1IGAnVJylY-stereo-layer-low-shelf": {
+    "preview": "assets/shots/preview/v1IGAnVJylY-stereo-layer-low-shelf.webp",
+    "full": "assets/shots/full/v1IGAnVJylY-stereo-layer-low-shelf.png"
+  },
+  "v1IGAnVJylY-radium-six-randomized-slots": {
+    "preview": "assets/shots/preview/v1IGAnVJylY-radium-six-randomized-slots.webp",
+    "full": "assets/shots/full/v1IGAnVJylY-radium-six-randomized-slots.png"
+  },
+  "v1IGAnVJylY-debris-noise-tonal-separation": {
+    "preview": "assets/shots/preview/v1IGAnVJylY-debris-noise-tonal-separation.webp",
+    "full": "assets/shots/full/v1IGAnVJylY-debris-noise-tonal-separation.png"
+  },
+  "v1IGAnVJylY-rock-c1-comp-gate": {
+    "preview": "assets/shots/preview/v1IGAnVJylY-rock-c1-comp-gate.webp",
+    "full": "assets/shots/full/v1IGAnVJylY-rock-c1-comp-gate.png"
+  },
+  "v1IGAnVJylY-multiband-transient-sustain": {
+    "preview": "assets/shots/preview/v1IGAnVJylY-multiband-transient-sustain.webp",
+    "full": "assets/shots/full/v1IGAnVJylY-multiband-transient-sustain.png"
+  },
+  "v1IGAnVJylY-two-frame-impact-gap": {
+    "preview": "assets/shots/preview/v1IGAnVJylY-two-frame-impact-gap.webp",
+    "full": "assets/shots/full/v1IGAnVJylY-two-frame-impact-gap.png"
   }
 };
 

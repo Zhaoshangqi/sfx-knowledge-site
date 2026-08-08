@@ -985,3 +985,161 @@ These entries were generated from the standalone HTML knowledge base so every an
   - generic hit 保留物理撞击瞬态和重量，RX scream 只补 electricity / dark-magic tonal motion；sweetener 不应独自承担 impact body。
   - 按 hit-only -> sweetener-only -> blend 做相近响度 A/B。若 blend 只显得更响，说明 tonal contribution 尚未建立。
 - Use when: iZotope RX De-clip; creative resynthesis; intentional clipping; extreme distortion; volume safety; Event Horizon Clipper; JS Distortion; MSaturator; Pro-L 2; Pro-Q 3; UrsaDSP Boost; RX De-click; Multi-band De-click; Z-Noise; soothe2; item rate; pitch envelope; synth scream; tonal sweetener; electricity; dark magic; cinematic hit; workflow; impact; scifi; 插件技巧; 需要把极端失真重建成科幻或暗黑魔法补充层; 需要严格区分创意用法、可选清理与安全响度边界
+
+## 2026-08-08 - 狗玩具变异形龙吼：怪物声音设计
+- Source: `https://www.youtube.com/watch?v=ir8d3PUj5JU`
+- Domain: creature, scifi, workflow, 插件技巧, alien dragon roar, self-recorded sources, organ layering, DogPoopMetalScreech, REAPER item rate, MTremolo rate automation, selective reverb
+- Reusable pattern: 先把自录素材按 throat/core、body、breath、mouth/skin、threat、motion 与 space 分工，再用 item rate、reverse、stretch、饱和、频段让位和选择性空间建立同一生物从 idle 到 roar 再回落的连续性。标题概括为 dog toys，但 frame_000056 还显示家居物件、人声/空气、布料/皮革、金属和碗/水等来源；第二段主声必须按媒体项写成 DogPoopMetalScreech，不能改写为普通吱叫玩具。核心方法是先保住一条可读主声，再让低频身体、撞击起音、口腔纹理和空间在时间与频谱上让位。post-roar 的 MTremolo 加速只由 18:21.8-18:28.2 带声 motion 完整证明，frame_001130 只记录一个瞬时参数状态。
+- Step / event map:
+  - 核对素材池: frame_000056 同屏展示弦乐器、碗、衣物、橡胶件、球/玩具和管件；作者说明比赛限制为自录素材，但画面不能证明每件物体都进入最终 cue，也不能把全部来源归为狗玩具。
+  - 限定视觉参考: frame_000231 只支持 `Monster Hunter: World final-boss reference` 与蓝白带翼异星龙的体型/外观方向；不补角色名、种族、技能或游戏内实现。
+  - 建立 idle 器官层: frame_000281 可见 Human Air、Leather Bag、Rubber Treat 和多组 rate/pitch。作者还讲解 rubber cover、zombie、spoon、mouth、duck call、deadcat 与 water bowl；分析标签不冒充作者轨名。
+  - 写出 breath lead: frame_000598 显示 Human Air Blow reversed、Rate 0.831 (-3.21)、另一空气项 0.771 (-4.50)，以及 `1.00x -> 0.75x -> 1.18x -> 1.00x` stretch markers；这证明速度手势，不证明 formant 或 granular stage。
+  - 收紧核心主声: frame_000866 显示 dog main-track Ozone Imager 2 当前 Width -98%、Stereoize 6.0 ms、Mode II，并可见 Decapitator -> Saturn 2 -> OTT -> Squash -> Pro-Q 3 -> Imager 链；链位不等于每一级始终 active。
+  - 分开 body 与 impact: frame_000931 同屏显示 WindSpinner、Washer Impact、Door Impact。WindSpinner 当前 Rate 0.031 (-60.22) 只属于本 item；持续低频、撞击起音和 throat voice 是不同职责。
+  - 锁定第二吼来源: frame_001018 的媒体项名为 `Dice_Foley_Creature_DogPoopMetalScreech-glued-03.wav`，并显示 `1.00x -> 1.17x -> 1.00x` 手势。`glued` 不等于颗粒处理，文件名也不支持补品牌、材料或录法。
+  - 验证 post-roar 加速: frame_001130 只显示 MTremolo 当前 Depth 67.6%、Rate 19.99 Hz、Width 0 deg [0%]；附带 6.4 秒带声 motion 同时显示播放、rate automation 和脉冲收紧，动态结论只绑定这段 motion。
+  - 管理选择性空间: frame_001255 是 EW Spaces II active，当前 IR 名为 `WLA Parking Garage TS RR 3.7s`，下方 wet automation 可见。作者说明 roar 处让出 wet，main roar 才选择性进入额外 reverb/delay。
+- Plugin and processing notes:
+  - REAPER item rate / stretch / reverse: 负责体型、时长与局部手势。所有 rate、semitone 和 marker 都只绑定对应 item；视频没有独立 formant mode 或 granular engine 证据。
+  - Decapitator / Saturn 2 / OTT / Squash: 按不同层增加密度、谐波和频带颜色。threat high 的 OTT 47%、dog main 的 20% 与 Kaiju master 的 6% 是三个独立帧状态，不是建议范围。
+  - Pro-Q 3 / RBass: 用于腾出冲突频段和补 body。322.51 Hz、4448.9 Hz、RBass 256 Hz 等当前值不能推广为 creature preset。
+  - Ozone Imager 2: dog main-track 当前 Width -98%，verb-here bus 当前 Width -7%；两个实例上下文不同，禁止互换。
+  - MeldaProduction MTremolo: WindSpinner 和 post-roar flavor 都可见。4.517 Hz 与 19.99 Hz 只是两个时刻，post-roar 的动态轨迹由带声 motion 验收。
+  - kHs Transient Shaper / Chorus / Radiator: washer 与 door impact 以不同起音、谐波和空间建立重量；作者没有公开完整可迁移旋钮，FX 列表存在也不证明所有实例 active。
+  - Spaces II / Raum / kHs Delay: 主空间在 roar 处降低 wet，main roar 再选择性送入额外空间。Parking Garage IR 与 delay 6/16 只属于各自展示帧。
+  - soothe2 / Pro-MB: 作者用于 Kaiju master 的 harshness control；作者明确说部分 master width、clipper 与链中 Saturn 没有实际使用，不能按列表补成 audible stage。
+- Design principles learned:
+  - 主声身份先于层数。先 solo 一条 core voice，只有明确听到缺口时才增加 body、threat、mouth 或 impact。
+  - 标题、字幕和画面需分级。dog toys 是标题概括，DogPoopMetalScreech 是媒体项事实，Monster Hunter: World final boss 是作者口述边界。
+  - 同一生物必须跨状态连续。idle 的 breath/mouth/skin、lead 的空气手势、roar 的 core/body 和 post-roar 的材料回收应共享角色语言但保持职责清楚。
+  - 体型来自角色分工与频谱让位，不是单纯降速或加层。持续低频、撞击起音、主声与高频威胁应能分别 mute 出其属性。
+  - 动态命题需要动态证据。静态曲线和 19.99 Hz 不能独立证明 acceleration；只有该步骤的带声 motion 支持随时间收紧。
+  - 空间应避开主攻击。主 reverb wet 在 roar 附近让位，额外 delay/reverb 只接 main roar，避免 breath、mouth 和 impact 全部进入长尾。
+  - 插件存在不等于启用。优先采用明确 active/bypassed 标题和作者口述，不从 FX list 推断听感贡献。
+  - 发布音轨的 -24.3 LUFS、-1.2 dBTP 与 final 低频比例只描述教程混音，不能当作游戏资产、总线或交付目标；视频也没有展示 render、middleware 或 in-game test。
+- Use when: creature sound design; alien dragon roar; dog toys; DogPoopMetalScreech; self-recorded sources; organ layering; throat core voice; body mass; breath lead; mouth skin texture; REAPER item rate; stretch markers; MTremolo; rate automation; motion evidence; Ozone Imager 2; Spaces II; selective reverb; time spacing; spectral spacing; creature; scifi; workflow; 插件技巧; 需要用自录物件建立从 idle 到 roar 的同一生物; 需要严格区分静态参数与动态加速证据
+
+## 2026-08-08 - 用系统自带插件把任意声音变成液体
+- Source: `https://www.youtube.com/watch?v=E_wGGNkVcrw`
+- Domain: environment, creature, magic, 插件技巧, FL Studio, stock plugins, liquid sound design, 3x Osc, resonant peak, Multiband Delay, delay banks, Morph, Scale, Feedback, Transient Processor, Frequency Shifter, wet-only spring send, sample harvest
+- Reusable pattern: 在 FL Studio 中先用 3x Osc noise 与可调包络生成事件，再用两个速度不同的正向共振高通扫频建立可辨频谱脉冲。主 Multiband Delay 把频带写成 8 个不同的时间 bank，并通过 Morph、Scale、Feedback 分阶段变化；Transient Processor 重新约束起音/持续，第二 delay 与慢速负向 frequency shift 只补 variation。Fruity Convolver 必须按 frame_000185 的画面纠错放在 wet-only send，最后从长结果中筛选、fade、命名和分用途验收。标题里的 any sound 只由 noise 与 Cardboard Break 两类输入示范；Linear Phase 的 perfect alignment 是作者解释，不是独立测量结论。
+- Step / event map:
+  - 锚定 noise source: frame_000027 显示 FL Studio 的 `3x Osc`，第一振荡器选中 noise 图标。自动字幕中的 Apple Studio 与 Fruity X Oscillator 都是错误；包络旋钮没有可读精确值。
+  - 建立双共振预处理: frame_000088 同时显示两个 Fruity Parametric EQ 2 的高通边缘正向共振峰。作者口述第一层约 300 Hz -> 8 kHz 慢扫并配合低通，第二层约 200 Hz -> 2 kHz、更快；它们不是 notch cut，Q/gain/filter order 不可读。
+  - 写 delay-bank 时间图: frame_000104 显示 16 bands、bank 3 与先升后降的 DELAY 图形。作者建立 8 个 bank；每带毫秒值不能从坐标反推，Linear Phase 的 perfect phase alignment 保留作者归属。
+  - 分开三条核心调制: frame_000126 同屏显示 Morph、Delay Scale、Delay Feedback automation 与主 Multiband Delay。作者只把问题称为 artifacts；click/zipper 只能作为复现时的可能机制，Smoothing 没有可复用数值。
+  - 重新约束瞬态: frame_000145 显示 Transient Processor 控件。作者口述约 40% Attack/Release、100% Split Balance 与 sharp shape 来 tame 当前结果；这是本例起点，不是静帧精读或客观更好听的证明。
+  - 增加 variation: frame_000150 显示第二 Multiband Delay、独立 Morph lane 与 Frequency Shifter，当前频移为 -52.7 Hz。该值只属于此帧；作者所述约 -200 Hz -> -40 Hz、20 kHz range 与约 40% Mix 也只绑定本例。
+  - 遵循 send 纠错: frame_000185 明确写 `JUST THE WET SIGNAL, NOT DRY, MY BAD`，并显示 Fruity Convolver、spring IR 与 Pitch Shifter。send 中关闭 dry，只返回 wet；Stretch、wet level 与 pitch 没有可复用精确值。
+  - 筛选切片: frame_000285 可见 `liquid samples` 到 `liquid samples_21` 与一排短 clip。它证明候选切片和命名存在，不代表 21 个均已通过质量、响度、版权或交付验收。
+- Plugin and processing notes:
+  - 3x Osc / Fruity Parametric EQ 2: noise source 先经包络形成短/长事件，两级正向共振扫频再把能量组织成速度不同的窄带运动。第一 EQ 不是 notch，精确包络、Q、gain 与速度需按源重做。
+  - Multiband Delay #1: 16 bands、8 banks 与 Linear Phase 可见；不同 bank 的频带延迟形状负责时间色散。Morph、Scale、Feedback 应逐条旁路，避免同时调制后失去因果判断。
+  - Transient Processor: 位于核心 delay 后，用于把连续纹理重新组织成可切片事件。视频没有固定 LFO 相位或响度匹配 A/B，参数和听感都不能推广。
+  - Multiband Delay #2 / Frequency Shifter: 第二实例在较高频段增加较慢变化，负向频移继续移动纹理。frame_000150 的 -52.7 Hz 只是运行中的瞬时状态。
+  - Fruity Convolver / Pitch Shifter: spring send 按画面纠错为 wet-only；Pitch Shifter 只做作者所说的轻微 pitch automation。IMP Spring 03 是本工程 IR，不是必须绑定的配方。
+  - Edison / Fruity Delay 3: Edison 用于记录和扫描长结果，后续以切片、fade、delay 和自动 EQ探索鼓样、背景与 impact。视频未完成无缝 loop、final export、middleware 或 in-game test。
+- Design principles learned:
+  - 液体身份来自受控的频带时间错位与持续运动，不来自单纯加 reverb。先保证 source envelope 和双共振事件可读，再增加 delay-bank 复杂度。
+  - 两级移动 EQ 要分工：一个较慢、带限地移动主体，一个更快地产生短频谱 burst；两者都是正向 resonant peak，不把字幕错误写成 notch。
+  - bank 设计先于 LFO 数量。先让每个 bank 单独成立，再测试 Morph-only、+Scale、+Feedback，出现未命名 artifacts 时才调 Smoothing 和 bank 差异。
+  - 瞬态与尾部是不同职责。Transient Processor 管事件边缘，second delay/frequency shift 管 variation，spring send 只管 wet 尾部；任何一级都不应掩盖主脉冲。
+  - 参数必须绑定证据。-52.7 Hz、约 40% Mix、作者口述频率范围与 transient 百分比都属于本例状态，不是 stock-liquid preset。
+  - 标题/产品主张与验证结论分开。any sound 仅展示 noise 与 Cardboard Break；perfect phase alignment 未经相位测量、null 或群延迟测试。
+  - 长 render 只是素材池起点。21 个命名切片不等于已批准交付物，还需手势筛选、fade、统一电平、mono、loop、variation 和游戏上下文验收。
+  - 发布音轨的 -16.83 LUFS / +0.15 dBTP 只描述 YouTube 成片，不能当作游戏资产或总线目标；背景和 impact 分支也没有证明最终 render 或实现完成。
+- Use when: liquid sound design; water texture; bubbly material; FL Studio; stock plugins; 3x Osc; noise envelope; Fruity Parametric EQ 2; positive resonant peak; Multiband Delay; Linear Phase; delay banks; Morph; Delay Scale; Delay Feedback; Transient Processor; Frequency Shifter; Fruity Convolver; wet-only send; spring reverb; Pitch Shifter; Edison; sample harvest; environment; creature; magic; 插件技巧; 需要把噪声或单个物理输入转成可切片液体纹理; 需要严格区分作者主张、画面纠错、瞬时参数与后续交付任务
+
+## 2026-08-08 - Phase Plant 白噪声合成暴雨、水滴与开窗声
+- Source: `https://www.youtube.com/watch?v=wWms0-ad6fw`
+- Domain: environment, workflow, scifi, 插件技巧, SadowickProduction, Kilohearts Phase Plant, Phase Plant Beta 1.5.8, white noise, heavy rain, indoor rain, open-window acoustic portal, water drops, parallel lanes, Random, Custom LFO
+- Reusable pattern: 在 Phase Plant 中把白噪声按场景职责拆成三条并行层。Group 1 的同一 Noise 通过两个 Output 分送 Lane 1/2：Lane 1 用较暗的带限与空间形成墙体后的连续雨床，Lane 2 用更开放的频谱、Stereo、Haas 与不同 Reverb形成开窗后的透入状态。Group 2 的独立 Noise 把基础 Level 设为 0，由短 Custom LFO 以可见 100% 深度控制 Level，并由 Random 扰动某个不可读的 LFO 输入/参数，形成离散屋顶/天窗水滴。核心是角色化共享源、独立频谱/空间/包络控制与受约束随机化；不是机械开窗拟音，也不是完成的物理模型、循环或游戏实现。
+- Step / event map:
+  - 建立倾斜噪声母材: frame_000149 显示 Noise 与 Slope 3.8 dB/oct。这是画面状态；作者称加 Stereo 后更 rainy/typhoon，属于作者听感评价，不是静帧可证明的客观结论。
+  - 写墙后暗雨: frame_000399 显示 Lane 1 的 Slice EQ 两端衰减并带中频起伏。作者以墙体吸收高频和室内反射解释方向；它是艺术化遮挡近似，不是墙体传输函数测量。
+  - 锁定共享源拓扑: frame_000452 明确显示同一 Group 1 Noise 通过两个 Output 分送 Lane 1/2。不得改写为两段独立雨声录音或两个 Noise 发生器。
+  - 建立开窗透入层: frame_000640 显示 Lane 2 的 Slice EQ -> Carve EQ -> Stereo -> Haas -> Reverb。这里的 open window 是开启窗洞后的雨声状态，不是窗把手、滑轨、窗扇或玻璃动作。
+  - 建立独立水滴组: frame_000836 显示 Group 2 Noise Level 接收 LFO | 100%。这只证明 Custom LFO -> Noise Level；Random 的目标标签不可读，不能命名为 Phase、Rate 或 Retrigger。
+  - 缩短单滴包络: frame_000910 显示开头快速下落、之后保持低位的自定义曲线。作者要求事件更短，但画面没有可读毫秒值，不补 attack/decay/hold/release。
+  - 约束水滴高频: frame_001000 显示 Lane 3 Carve EQ 的高频深凹口与当前选中点 8.98 kHz。数值只绑定当帧；tin roof/skylight 是作者场景设定，不证明严格金属或玻璃模态建模。
+  - 复核终局结构: frame_001152 同屏显示两个 Noise Group、三条 Lane、Random 8.45 Hz、LFO 1.63 Hz、Unison 8、Polyphony 20。这些都是探索稿帧状态，不是事件率公式、固定 preset 或运行时预算。
+- Plugin and processing notes:
+  - Kilohearts Phase Plant: 画面为 Beta 1.5.8 / Test version，作者明确是第一次探索这类 patch。可靠部分是路由与角色分工，不是所有默认值或精确参数。
+  - Noise / Slope / Output: Group 1 的持续 Noise 共享给 Lane 1/2；Slope 只控制母材总体频谱倾向。Group 2 Noise 独立承担随机短滴。
+  - Slice EQ / Filter / Reverb: Lane 1 用于墙后暗雨，Lane 3 用于水滴带宽与空间。节点、斜率、Cutoff、Decay、Mix 和宽度不可从指定帧补写。
+  - Carve EQ / Stereo / Haas: Lane 2 用于相对更亮、更宽的开窗透入层；Lane 3 用 Carve EQ控制水滴局部频谱。Haas 毫秒不可读，必须另做 mono 检查。
+  - Random / Custom LFO: Custom LFO 控制 Noise Level 的 100% 映射可见；Random 只可记录为扰动某个 LFO 输入/参数。8.45 Hz 与 1.63 Hz 不能直接换算成每秒滴数。
+- Design principles learned:
+  - 场景身份来自三个角色的相对差，而不是单个噪声层“像雨”。墙后床提供暗色连续基准，开窗层提供亮度和方向差，水滴层提供可数瞬态。
+  - 两个持续层共享母源可保持统一质地，但需要独立 EQ、空间与适量去相关。第三水滴层必须是独立 Noise Group，便于单独控制密度与材质。
+  - “开窗”是声学门户状态。真正的开/关窗事件还需机械 foley，并用状态宏联动开窗层电平、高频、方向和空间；视频没有完成这一步。
+  - 微观包络与宏观随机是不同职责。Custom LFO 定义单滴形状，Random 打破重复；目标未确认前不能凭动画猜映射。
+  - 参数必须绑定证据。Slope 3.8 dB/oct、Carve EQ 8.98 kHz、Random 8.45 Hz、LFO 1.63 Hz、Unison 8 与 Polyphony 20 都只属于对应帧。
+  - 本地音频事实只支持结构对比：连续床段的 50 ms event95-med 约 0.89 dB，早期随机滴段约 35.06 dB，说明连续纹理与稀疏脉冲角色不同；它不证明金属/玻璃材质或主观真实度。
+  - 作者在结尾提出未来结合实地录音；本 patch 内没有真实雨声采样。若后续加入，应明确采样层与合成层各自承担的纹理、状态和随机细节。
+  - 视频没有严格响度匹配 A/B、mono 检查、真实参考并排、无缝 loop、final render/export、middleware 或 in-game test，不能把教程探索写成已交付工作流。
+- Use when: procedural rain; indoor rain ambience; open-window acoustic portal; white-noise environment design; Kilohearts Phase Plant; Noise Group; parallel lanes; Slice EQ; Carve EQ; Stereo; Haas; Reverb; Random; Custom LFO; level modulation; water-drop envelope; role-based layering; constrained randomization; environment; workflow; scifi; 插件技巧; 需要用共享噪声母源建立墙后与开窗状态差; 需要把连续雨床和离散水滴拆成可独立控制的程序化层; 需要严格区分静态参数、作者评价、音频测量与后续实现建议
+
+## 2026-08-08 - TRANSFORCE 瞬态塑形器：后期制作应用
+- Source: `https://www.youtube.com/watch?v=xCorcGCP218`
+- Domain: workflow, impact, 插件技巧, BOOM Library, TRANSFORCE, manufacturer demo, Pro Tools, transient detection, Attack/Sustain split, Spectral, delta audition, three-band EQ, Saturation, Distortion, Stylize, Clipper, Limiter, oversampling, matched-loudness A/B, creature rasp, Gun Shot Distant
+- Reusable pattern: 先校准 detector 再塑形。用耳机监听处理器识别出的瞬态，依次调整 Sensitivity、Hold、Decay，必要时以 BP/LP/HP 或 external SC 聚焦检测；确认 Attack-only、Sustain-only 与合并状态后，才为两路分别选择 Tone/Spectral 或三段 EQ，并分配 Saturation/Distortion。最后使用作用于汇总信号的 Stylize、Clipper、Limiter 和 I/O，并在真实项目中补做匹配响度/峰值旁路、伪影、CPU 与延迟检查。视频来自厂商频道，只展示一条 Pro Tools 轨上的一个 TRANSFORCE 实例；冲击 A/B 未证明等响，oversampling 降低 aliasing 是讲者陈述，Gun Shot Distant 只是预设/风格标签，不是完整距离模型。
+- Step / event map:
+  - 限定单轨示例: frame_000075 显示 Pro Tools 单轨 Impact、完整波形、BOOM ONE 素材名和一个 TRANSFORCE insert。它不是多轨生产链，也没有素材分层、总线、渲染、交付或游戏实现证据。
+  - 校准检测窗口: frame_000109 显示 detector 耳机监听、Sensitivity 41%、Hold 39.49 ms、filter Off。数值只绑定该金属冲击帧；Decay 被遮挡，不能补写。
+  - 聚焦 detector 频段: frame_000124 显示 LP 4.0 kHz、Sensitivity 41% 与检测曲线。检测滤波只作用于 detector 的说法来自讲者；本例后续回到 Off，4.0 kHz 不是最终 preset。
+  - 分开 Tone 与非线性职责: frame_000234 显示 Attack Spectral 51%、Sustain 100%、Sustain Distortion 70% 与黄色 delta。所有数值只属当前状态；delta 是讲者定义的处理前后差异显示，不是精确频响或品质测量。
+  - 切换独立三段 EQ: frame_000264 显示 Attack/Sustain 各三段 EQ、Frequency/Gain/Q-Factor/Drive，以及 SHELF、PEAK、PASS 1、PASS 2 菜单。节点数值不可读；12/24 dB/oct 只保留讲者归属。
+  - 管理汇总后级: frame_000344 显示 Stylize Hard、Clipper Drive 37%、Sym/Mix、Limiter、Lookahead 0.10 ms、Oversample Off、I/O +0.0 dB。后级同时影响两路；Sym/Mix/Limiter 精确值不可读。
+  - 限定生物 rasp 案例: frame_000398 显示 Creature 的 Attack -73%、Sustain 78%、Sensitivity 30%、filter Off 与可见非线性模块。突出 breathy rasp 是讲者目标和厂商演示，不保证适用于所有生物素材或没有副作用。
+  - 限定 Distant 预设: frame_000446 显示 Gun Shot Distant、EQ Mode、Attack -INF dB、Sustain +0.0 dB、filter Off、Lookahead 0.10 ms、Oversample Off 与 Limiter。预设名称不证明传播延迟、反射、空气吸收或物理距离准确性。
+- Plugin and processing notes:
+  - TRANSFORCE detector / split: 中央检测区驱动 Attack 与 Sustain 两路；Sensitivity、Hold、Decay、检测监听、BP/LP/HP 与 SC 都在演示中出现。可靠迁移是先修检测，不是复制 41% 或 39.49 ms。
+  - Tone / Spectral / nonlinear: 两路各自用 Spectral 在 tonal resonance 与 broadband 方向间重配，并有独立 Saturation/Distortion。frame_000234 的 51%/100%/70% 是运行状态，不是厂商 preset 或建议范围。
+  - EQ Mode: Attack 与 Sustain 各有三段 EQ；边缘形状菜单可见，但 Frequency/Gain/Q/Drive 不能从静态曲线反推。每次只改一段并做相近响度旁路。
+  - Stylize / Clipper / Limiter: 位于两路汇总之后。讲者把 Stylize 描述为改变目标频率周围成分的时间关系，把 Drive/Sym 用于削波形状，把 Limiter 用于峰值控制；视频没有公开算法、相位、真峰或无伪影测量。
+  - Lookahead / Oversample: Off、2x、4x 可选；讲者称 oversampling 可减少重失真/削波时 aliasing。片中没有隔离频谱测试，4x 仅短暂选中，最终冲击 A/B 前已回到 Off。
+  - Pro Tools context: 三类示例都在单轨、单实例里完成。没有完整多轨 FX 链、对白/音乐/环境上下文、mix-fit 测试、AudioSuite/automation 验证、最终 render 或 middleware 接入。
+- Design principles learned:
+  - detector 决定处理器看到的事件边界。检测错时，后续 Tone、EQ 和非线性只会放大错误职责；先听 detector，再听 Attack-only、Sustain-only。
+  - Attack 与 Sustain 应作为两种可独立诊断的素材角色。前沿管硬度和边缘，主体/尾部管共振与纹理；合并前先确认没有漏掉关键物理信息。
+  - delta/分路试听用于回答“改变了什么”，不是“是否更好”。黄色曲线、产品演示与厂商口述都不能代替响度、峰值、频谱和盲听验证。
+  - Tone/Spectral 和 EQ 是不同的塑形策略。先明确 tonal/broadband 或手术式频谱目标，再选择模块；不可读数值不补造。
+  - 后级是收尾，不是救错。Stylize、Clipper、Limiter 会同时改变 Attack/Sustain 的时间、波形和峰值，应逐项旁通并检查峰均比、DC、mono、真峰和高频毛刺。
+  - 冲击 before/after 没有已证明的等响校准，不能因处理版更响、更密就宣称客观更好、无伪影或更能坐进混音。匹配响度/峰值的盲 A/B 是后续建议。
+  - oversampling/aliasing 只保留作者功能陈述，生产中需自己比较 Off/2x/4x 的高频、CPU 和 latency；4x 不是视频最终状态或恒优结论。
+  - Gun Shot Distant 是快速风格起点。真实距离还需远距参考、直达声电平、传播时间、early reflections、reverb/pre-delay 与空气吸收；单一 EQ preset 不能独立完成。
+- Use when: transient shaping; detector calibration; Attack/Sustain separation; metal impact; creature rasp; gun-tail design; TRANSFORCE; BOOM Library; Pro Tools; Spectral; delta audition; three-band EQ; Saturation; Distortion; Stylize; Clipper; Limiter; Lookahead; oversampling; aliasing verification; matched-loudness A/B; distance-style preset; workflow; impact; 插件技巧; 需要先修瞬态检测再分路塑形; 需要严格区分厂商陈述、产品演示、画面参数与独立分析; 需要避免把 Gun Shot Distant 或 oversampling 宣传语言写成物理或测量结论
+
+## 2026-08-08 - 设计有冲击力的瞬态与碎屑层
+- Source: `https://www.youtube.com/watch?v=v1IGAnVJylY`
+- Domain: impact, workflow, 插件技巧, Alex Barnhart, REAPER, Soundminer, Radium, Rocks, Debris, Explosions, transient, body, tail, time carve, two-frame gap, Random Start, Random Semi, Random Delay, Pro-Q 3, MRatioMB, C1 comp-gate, MTransientMB, offline print, matched-loudness A/B
+- Reusable pattern: 把作者工程保留为 Rocks、Debris、Explosions 三组，再用 transient、body、debris、tail 作为分析职责。先由 Radium 六槽和 start/semitone/trigger-delay 随机化生成可打印碎屑，离线把宽层、低沉 sweetener 与 rock/explosion 支撑塑造成单一角色；回到 REAPER 后在第一主击处把 Rocks 与 Debris 共同切出约两帧空隙，让爆炸瞬态独占，第二击再带回主体和碎屑。尾部来自较长 item 与 fade，而非已证实的 reverb。核心是时间让位、角色分离和瞬态/主体对比，不是继续加 bass 或加层。
+- Step / event map:
+  - 保留作者三组: frame_000027 显示 Rocks、Debris、Explosions 三个 folder。transient/body/debris/tail 是迁移分析标签，不是作者轨名，也不证明三组应该全程同起同落。
+  - 管理碎屑与尾部: frame_000252 显示 Debris 高低层的错开起点、不同 item 长度和 fade。低频/低中频应较早结束；画面没有独立 reverb return，不能把素材尾改写为混响尾。
+  - 给外缘层去低频: frame_000278 显示 Pro-Q 3 Low Shelf 183.14 Hz、-8.78 dB、Q 1.000。它只属于当前偏 stereo 支撑层，不能推广为通用 impact preset 或具体宽度结论。
+  - 生成随机碎屑: frame_000323 显示 Radium 六槽与 Random Start、Random Semi、Random Delay。精确随机范围、ADSHR 和 velocity 未显示；pitch-bend +12/-12 也不等于 Random Semi 范围。
+  - 分离 noise/tonal: frame_000654 显示 MRatioMB Noise Ratio 72.8%、Noise Gain -6.72 dB、Tonal Ratio 50.0%、Tonal Gain 0.00 dB。低沉 sweetener 用来托重量后快速淡出，不单独承担识别。
+  - 保留瞬态并清理间隙: frame_000829 显示 C1 compressor/gate 与主 rack。较慢 comp attack 让前沿穿过，gate 减少击点间细节；当前数值只绑定该帧，不是所有 rock/explosion stem 的配方。
+  - 分频塑造攻强尾短: frame_000875 显示 MTransientMB 三段 transient +6.34/+13.63/+9.79 dB、Sustain -20.6%、200/2000 Hz、24 dB/oct、Analog。参数只属当前帧，需等响旁通验证。
+  - 切出主击窗口: frame_001033 显示 Rocks 与 Debris 在 2:00-2:02 共同空出约两帧；第一爆炸瞬态独占，第二击后 body/debris 重开。30 fps 下约 66.7 ms，迁移到新画面必须重测。
+- Plugin and processing notes:
+  - Soundminer Radium: 六槽随机多采样器用于演奏和打印碎屑 burst/roll。Random Start、Random Semi、Random Delay 的精确范围不可见；Random Delay 只改变颗粒到达时间，不是 spatial delay。
+  - FabFilter Pro-Q 3: 一处为偏 stereo 支撑层 low shelf 去低频，另一处在 rock/explosion 链前端清理超低和低中频。只有选定帧的 183.14 Hz、-8.78 dB、Q 1.000 可直接引用。
+  - FilterFreak / MRatioMB: 先限制高频，再压低 noisy 分量，形成低噪、低频聚焦、能快速淡出的 debris sweetener。轻微降调半音数与 FilterFreak 频率/共振不可见。
+  - C1 comp-gate: frame_000829 的 Compressor 为 -23.4 dB、3.99:1、35.0 ms、50 ms、Makeup 2.0 dB；Gate 为 Floor -Inf、Open/Close -10.0 dB、2.00 ms、300 ms、Hold 0.01 s。只证明本例动态方向。
+  - 近似 Processing Rack: Pro-Q 3 -> C1 comp-gate -> MBassador -> Oxford TransMod -> MTransientMB -> Neutron 3 Transient Shaper -> 可选第二 C1 / FilterFreak -> L3-LL。作者说 roughly what I used，不能宣称每个最终 stem 都逐项同设。
+  - MTransientMB / L3-LL: 多段 transient 同时抬 attack 与收 sustain；末端 L3-LL 只作抓峰。视频没有 threshold、ceiling、衰减、LUFS、true-peak 或母带交付目标。
+  - Offline print / REAPER: 复杂源先在 Processing Rack 打印，减少实时 CPU 并保留可复用音频；最终冲击来自 item 级时间剪辑，不是 Mix Bus ducking。总线、render、middleware 和 in-game validation 均未展示。
+- Design principles learned:
+  - 冲击力首先来自“短时间内谁不响”。第一主击让 Rocks/Debris 退出，谱面和声像空间留给 Explosions；这比不加区分地继续叠低频更可控。
+  - 第一击与第二击必须有不同职责。第一击确认事件并独占，第二击释放 body/debris；复制同一堆叠只会增加噪声而不建立结构。
+  - 角色标签要和作者轨名分开。Rocks/Debris/Explosions 是可见事实，transient/body/debris/tail 是分析工具；后者帮助检查时间、频段和尾长，不应改写原工程。
+  - Debris 的自然感来自不同素材、起点、触发偏移和尾长。随机触发范围需在自己的素材上记录；随机越多不等于越好，核心瞬态仍应保持确定性。
+  - Tail 可以由素材本身和 item fade 形成。没有独立 reverb 证据时，先管理高频颗粒延续和低频早退，避免把空间算法当作必需条件。
+  - 插件链是功能顺序而不是品牌处方：频段清理 -> 动态取舍 -> 包络重量 -> 瞬态/谐波 -> 运动 -> 峰值保护。作者的近似链不能外推到每个 stem。
+  - 所有画面数值都是帧绑定状态。复刻时先做 matched-loudness bypass，检查 peak、true peak、DC、mono、尾部 click 与相位风险；视频没有严格等响 A/B。
+  - 本片止于素材设计与可复用打印。Mix Bus、响度、精确 export/render、middleware 和 in-game test 都是后续验收项，不能写成教程已经完成。
+- Use when: impactful transient design; rock impact; destruction debris; double-hit structure; time carve; two-frame gap; Rocks; Debris; Explosions; Soundminer Radium; random multisampling; Random Start; Random Semi; trigger delay; stereo support EQ; noise/tonal separation; comp-gate; multiband transient; sustain reduction; offline print; REAPER item editing; tail management; matched-loudness A/B; workflow; impact; 插件技巧; 需要先通过时间让位而非继续叠低频增强冲击; 需要区分作者轨名与 transient/body/debris/tail 分析标签; 需要避免把触发延迟写成空间 delay 或把长碎屑 fade 写成 reverb tail
