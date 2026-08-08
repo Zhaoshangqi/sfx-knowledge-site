@@ -1,6 +1,16 @@
 node_modules/
+.venv/
+.work/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
 .DS_Store
 Thumbs.db
 *.log
+*.part
+cookies*.txt
+*.cookies.txt
 .chrome-*
 assets/plugin-shots/raw/
