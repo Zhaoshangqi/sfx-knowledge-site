@@ -62,10 +62,12 @@ def write_json(path: Path, value: object) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def yt_dlp_command(cookies_from_browser: str | None) -> list[str]:
+def yt_dlp_command(cookies_from_browser: str | None, ffmpeg_location: str | Path | None = None) -> list[str]:
     command = [sys.executable, "-m", "yt_dlp"]
     if shutil.which("node"):
         command.extend(["--js-runtimes", "node"])
+    if ffmpeg_location:
+        command.extend(["--ffmpeg-location", str(Path(ffmpeg_location).resolve())])
     if cookies_from_browser:
         command.extend(["--cookies-from-browser", cookies_from_browser])
     return command
@@ -73,6 +75,58 @@ def yt_dlp_command(cookies_from_browser: str | None) -> list[str]:
 
 def video_format_selector(max_height: int) -> str:
     return f"bv*[height<={max_height}]+140/bv*[height<={max_height}]+ba/b[height<={max_height}]"
+
+
+def resolved_executable(name: str) -> Path | None:
+    location = shutil.which(name)
+    return Path(location).resolve() if location else None
+
+
+def probe_video_stream(video_file: Path, ffprobe: Path) -> bool:
+    result = run(
+        [
+            ffprobe,
+            "-v",
+            "error",
+            "-select_streams",
+            "v:0",
+            "-show_entries",
+            "stream=index,codec_type",
+            "-of",
+            "json",
+            str(video_file),
+        ],
+        cwd=video_file.parent,
+        capture=True,
+        check=False,
+    )
+    if result.returncode:
+        return False
+    try:
+        streams = json.loads(result.stdout or "{}").get("streams", [])
+    except (AttributeError, json.JSONDecodeError):
+        return False
+    return any(stream.get("codec_type") == "video" for stream in streams)
+
+
+def select_video_file(data_dir: Path, ffprobe: Path) -> Path:
+    visual_suffixes = {".mp4", ".mkv", ".mov", ".webm"}
+    candidates = sorted(
+        path
+        for path in data_dir.glob("video.*")
+        if path.is_file() and path.stem == "video" and path.suffix.lower() in visual_suffixes
+    )
+    if not candidates:
+        raise RuntimeError("Video download did not produce a merged visual file. Subtitle-only analysis is not allowed.")
+    if len(candidates) > 1:
+        names = ", ".join(path.name for path in candidates)
+        raise RuntimeError(f"Multiple merged visual candidates found: {names}. Remove stale candidates before retrying.")
+    candidate = candidates[0]
+    if candidate.stat().st_size == 0:
+        raise RuntimeError(f"Merged visual candidate is empty: {candidate.name}")
+    if not probe_video_stream(candidate, ffprobe):
+        raise RuntimeError(f"Merged visual candidate does not contain a readable video stream: {candidate.name}")
+    return candidate
 
 
 def main() -> int:
@@ -90,9 +144,12 @@ def main() -> int:
     if args.frame_interval <= 0 or args.sheet_interval <= 0:
         parser.error("frame and sheet intervals must be positive")
 
-    ffmpeg = shutil.which("ffmpeg")
+    ffmpeg = resolved_executable("ffmpeg")
     if not ffmpeg:
         parser.error("ffmpeg was not found on PATH")
+    ffprobe = resolved_executable("ffprobe")
+    if not ffprobe:
+        parser.error("ffprobe was not found on PATH")
 
     video_id = video_id_from_url(args.url)
     canonical_url = f"https://www.youtube.com/watch?v={video_id}"
@@ -103,7 +160,7 @@ def main() -> int:
     for directory in (data_dir, frames_dir, sheets_dir):
         directory.mkdir(parents=True, exist_ok=True)
 
-    ytdlp = yt_dlp_command(args.cookies_from_browser)
+    ytdlp = yt_dlp_command(args.cookies_from_browser, ffmpeg)
     metadata_result = run(
         [*ytdlp, "--dump-single-json", "--skip-download", canonical_url],
         cwd=run_dir,
@@ -148,10 +205,7 @@ def main() -> int:
         cwd=run_dir,
     )
 
-    video_files = sorted(path for path in data_dir.glob("video.*") if path.suffix != ".part")
-    if not video_files:
-        raise RuntimeError("Video download did not produce a visual file. Subtitle-only analysis is not allowed.")
-    video_file = video_files[0]
+    video_file = select_video_file(data_dir, ffprobe)
 
     audio_file = data_dir / "audio.wav"
     run([ffmpeg, "-y", "-i", str(video_file), "-vn", "-ar", "48000", "-ac", "2", str(audio_file)], cwd=run_dir)
