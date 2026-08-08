@@ -99,6 +99,10 @@ function isNonemptyString(value) {
   return typeof value === "string" && value.trim().length > 0;
 }
 
+function arrayOrEmpty(value) {
+  return Array.isArray(value) ? value : [];
+}
+
 function playlistItemId(item) {
   if (!item || typeof item !== "object" || Array.isArray(item)) return undefined;
   return item.id;
@@ -142,6 +146,53 @@ function assetPathFailure(relativePath, allowedDirectory) {
 function validateAssetPath(relativePath, allowedDirectory, label) {
   const reason = assetPathFailure(relativePath, allowedDirectory);
   if (reason) fail(`${label} ${reason}: ${relativePath}`);
+}
+
+function parseMarkdownBlocks(markdown) {
+  const blocks = [];
+  let current = null;
+  let inFence = false;
+
+  for (const line of markdown.split(/\r?\n/)) {
+    if (/^```/.test(line)) {
+      inFence = !inFence;
+      if (current) current.lines.push(line);
+      continue;
+    }
+    if (!inFence && line.startsWith("## ") && !line.startsWith("### ")) {
+      current = { heading: line, lines: [line] };
+      blocks.push(current);
+    } else if (current) {
+      current.lines.push(line);
+    }
+  }
+  return blocks;
+}
+
+function sectionLines(block, heading, label) {
+  const indexes = [];
+  block.lines.forEach((line, index) => {
+    if (line === heading) indexes.push(index);
+  });
+  if (indexes.length !== 1) {
+    fail(`${label} must contain exactly one ${heading} section; found ${indexes.length}`);
+    return [];
+  }
+  const start = indexes[0] + 1;
+  let end = block.lines.length;
+  for (let index = start; index < block.lines.length; index += 1) {
+    if (block.lines[index].startsWith("### ")) {
+      end = index;
+      break;
+    }
+  }
+  return block.lines.slice(start, end);
+}
+
+function requireLines(lines, expectedLines, label) {
+  expectedLines.forEach((expectedLine) => {
+    if (!lines.includes(expectedLine)) fail(`${label} is missing exact line: ${expectedLine}`);
+  });
 }
 
 function validateManifest() {
@@ -222,7 +273,142 @@ function validateCategories() {
   });
 }
 
-function validateRequiredRecord(record, item, learnings) {
+function validateLearningBlock(record, learningBlocks) {
+  const label = record.videoId;
+  const sourceLine = `- Source: \`https://www.youtube.com/watch?v=${label}\``;
+  const matches = learningBlocks.filter((block) => block.lines.includes(sourceLine));
+  if (matches.length !== 1) {
+    fail(
+      `video-learnings.md must contain exactly one entry block with source ${sourceLine}; ` +
+        `found ${matches.length}`
+    );
+    return;
+  }
+
+  const block = matches[0];
+  if (!isNonemptyString(block.heading.slice(3))) {
+    fail(`video-learnings.md entry for ${label} must have a nonempty heading`);
+  }
+
+  for (const field of ["Domain", "Reusable pattern", "Use when"]) {
+    const prefix = `- ${field}:`;
+    const fieldLines = block.lines.filter((line) => line.startsWith(prefix));
+    if (fieldLines.length !== 1 || !isNonemptyString(fieldLines[0].slice(prefix.length))) {
+      fail(`video-learnings.md entry for ${label} must have one nonempty ${field} field`);
+    }
+  }
+
+  for (const field of [
+    "Step / event map",
+    "Plugin and processing notes",
+    "Design principles learned"
+  ]) {
+    const heading = `- ${field}:`;
+    const indexes = [];
+    block.lines.forEach((line, index) => {
+      if (line === heading) indexes.push(index);
+    });
+    if (indexes.length !== 1) {
+      fail(`video-learnings.md entry for ${label} must have exactly one ${field} section`);
+      continue;
+    }
+    const start = indexes[0] + 1;
+    let end = block.lines.length;
+    for (let index = start; index < block.lines.length; index += 1) {
+      if (/^- [A-Z]/.test(block.lines[index])) {
+        end = index;
+        break;
+      }
+    }
+    const items = block.lines.slice(start, end).filter((line) => /^  -\s+\S/.test(line));
+    if (items.length === 0) {
+      fail(`video-learnings.md entry for ${label} ${field} must contain list items`);
+    }
+  }
+}
+
+function validateSiteMemoryRecord(record, memoryBlocks) {
+  const label = record.videoId;
+  const headingPrefix = `## ${label} - `;
+  const matches = memoryBlocks.filter((block) => block.heading.startsWith(headingPrefix));
+  if (matches.length !== 1) {
+    fail(`site-video-memory.md must contain exactly one block for ${label}; found ${matches.length}`);
+    return;
+  }
+
+  const block = matches[0];
+  const expectedHeading = `${headingPrefix}${record.title}`;
+  if (block.heading !== expectedHeading) {
+    fail(`site-video-memory.md heading for ${label} must be exactly: ${expectedHeading}`);
+  }
+  requireLines(
+    block.lines,
+    [
+      `- Source: \`${record.url}\``,
+      `- Creator: ${record.source || "Unknown"}`,
+      `- Summary: ${record.summary || ""}`
+    ],
+    `site-video-memory.md block for ${label}`
+  );
+
+  const coreIdeaLines = sectionLines(block, "### Core Ideas", `site-video-memory.md block for ${label}`);
+  requireLines(
+    coreIdeaLines,
+    arrayOrEmpty(record.coreIdeas).map((idea) => `- ${String(idea).trim()}`),
+    `site-video-memory.md Core Ideas for ${label}`
+  );
+
+  const stepLines = sectionLines(block, "### Step / Event Map", `site-video-memory.md block for ${label}`);
+  const expectedSteps = [];
+  arrayOrEmpty(record.steps).forEach((step, index) => {
+    if (!isNonemptyString(step && step.name) || !isNonemptyString(step && step.detail)) {
+      fail(`Record ${label} step ${index + 1} must have a nonempty name and detail`);
+      return;
+    }
+    expectedSteps.push(`${step.order}. **${step.name}**: ${step.detail}`);
+  });
+  requireLines(stepLines, expectedSteps, `site-video-memory.md Step / Event Map for ${label}`);
+
+  const pluginLines = sectionLines(
+    block,
+    "### Plugin and Processing Notes",
+    `site-video-memory.md block for ${label}`
+  );
+  const expectedPlugins = [];
+  arrayOrEmpty(record.plugins).forEach((plugin, index) => {
+    if (!isNonemptyString(plugin && plugin.name) || !isNonemptyString(plugin && plugin.purpose)) {
+      fail(`Record ${label} plugin ${index + 1} must have a nonempty name and purpose`);
+      return;
+    }
+    expectedPlugins.push(`- **${plugin.name}**: ${plugin.purpose}`);
+  });
+  requireLines(pluginLines, expectedPlugins, `site-video-memory.md plugins for ${label}`);
+
+  const listSections = [
+    ["### Materials / Layer Sources", arrayOrEmpty(record.materials)],
+    ["### Effect-Chain Reasoning", arrayOrEmpty(record.chainFocus)],
+    ["### Parameter Logic", arrayOrEmpty(record.parameterLogic)],
+    ["### Practice Checklist", arrayOrEmpty(record.practiceChecklist)]
+  ];
+  let practiceLines = [];
+  for (const [heading, items] of listSections) {
+    const lines = sectionLines(block, heading, `site-video-memory.md block for ${label}`);
+    if (heading === "### Practice Checklist") practiceLines = lines;
+    requireLines(
+      lines,
+      items.map((item) => `- ${String(item).trim()}`),
+      `site-video-memory.md ${heading.slice(4)} for ${label}`
+    );
+  }
+
+  requireLines(
+    practiceLines,
+    [`- Use when: ${arrayOrEmpty(record.keywords).join("; ")}`],
+    `site-video-memory.md Use when for ${label}`
+  );
+}
+
+function validateRequiredRecord(record, item, learningBlocks, memoryBlocks) {
   const label = playlistItemId(item);
   if (!isNonemptyString(label)) return;
   if (!record) {
@@ -296,10 +482,8 @@ function validateRequiredRecord(record, item, learnings) {
     );
   });
 
-  const sourceLine = `- Source: \`${canonicalUrl}\``;
-  if (!learnings.split(/\r?\n/).includes(sourceLine)) {
-    fail(`video-learnings.md is missing exact source line: ${sourceLine}`);
-  }
+  validateLearningBlock(record, learningBlocks);
+  validateSiteMemoryRecord(record, memoryBlocks);
 }
 
 function validateSiteMemory(memory) {
@@ -313,11 +497,11 @@ function validateSiteMemory(memory) {
     );
   }
 
-  const headingLines = memory.split(/\r?\n/).filter((line) => line.startsWith("## "));
-  const headingIds = headingLines.map((line) => {
-    const match = line.match(/^## ([A-Za-z0-9_-]+) - /);
+  const memoryBlocks = parseMarkdownBlocks(memory);
+  const headingIds = memoryBlocks.map((block) => {
+    const match = block.heading.match(/^## ([A-Za-z0-9_-]+) - /);
     if (!match) {
-      fail(`site-video-memory.md has malformed record heading: ${line}`);
+      fail(`site-video-memory.md has malformed record heading: ${block.heading}`);
       return undefined;
     }
     return match[1];
@@ -336,6 +520,7 @@ function validateSiteMemory(memory) {
         `expected ${recordIds[mismatchIndex]}, found ${headingIds[mismatchIndex] || "<missing>"}`
     );
   }
+  return memoryBlocks;
 }
 
 const manifestText = readText(manifestPath, "playlist manifest");
@@ -376,7 +561,7 @@ if (uniqueVideoIds.size !== videoIds.length) {
 
 validateCategories();
 const memory = readText(memoryPath, "site-video-memory.md");
-validateSiteMemory(memory);
+const memoryBlocks = validateSiteMemory(memory);
 
 if (completed !== null) {
   const expectedRecordCount = baselineCount + completed;
@@ -402,10 +587,11 @@ if (completed !== null) {
   });
 
   const learnings = required.length > 0 ? readText(learningsPath, "video-learnings.md") : "";
+  const learningBlocks = parseMarkdownBlocks(learnings);
   required.forEach((item) => {
     const itemId = playlistItemId(item);
     const record = records.find((candidate) => candidate && candidate.videoId === itemId);
-    validateRequiredRecord(record, item, learnings);
+    validateRequiredRecord(record, item, learningBlocks, memoryBlocks);
   });
 }
 
