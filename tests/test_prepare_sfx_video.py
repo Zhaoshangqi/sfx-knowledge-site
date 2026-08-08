@@ -23,7 +23,7 @@ def load_prepare_module():
 
 
 class VideoFormatSelectorTest(unittest.TestCase):
-    def test_prefers_aac_140_before_generic_audio_fallback(self):
+    def test_prefers_avc_and_aac_before_generic_fallbacks(self):
         module = load_prepare_module()
         selector = getattr(module, "video_format_selector", None)
 
@@ -33,7 +33,9 @@ class VideoFormatSelectorTest(unittest.TestCase):
         )
         self.assertEqual(
             selector(1080),
-            "bv*[height<=1080]+140/bv*[height<=1080]+ba/b[height<=1080]",
+            "bv*[vcodec^=avc1][height<=1080]+ba[acodec^=mp4a]/"
+            "bv*[height<=1080]+ba[acodec^=mp4a]/"
+            "bv*[height<=1080]+ba/b[height<=1080]",
         )
 
 

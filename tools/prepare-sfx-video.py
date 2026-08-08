@@ -74,7 +74,11 @@ def yt_dlp_command(cookies_from_browser: str | None, ffmpeg_location: str | Path
 
 
 def video_format_selector(max_height: int) -> str:
-    return f"bv*[height<={max_height}]+140/bv*[height<={max_height}]+ba/b[height<={max_height}]"
+    return (
+        f"bv*[vcodec^=avc1][height<={max_height}]+ba[acodec^=mp4a]/"
+        f"bv*[height<={max_height}]+ba[acodec^=mp4a]/"
+        f"bv*[height<={max_height}]+ba/b[height<={max_height}]"
+    )
 
 
 def resolved_executable(name: str) -> Path | None:
