@@ -695,3 +695,144 @@ These entries were generated from the standalone HTML knowledge base so every an
 - Use when: Valorant; Clove; smoke; alive dead variants; REAPER; event sequence; equip; incoming; spawn; loop; Soundtoys Crystallizer; ReaPitch; SP2016 Reverb; Pro-Q 3; S1 Imager; detuned chimes; parent routing; Riot Chimes; state variant; magic smoke; 为技能做音效时，先写出完整事件清单，再决定每个事件需要瞬态、身份、空间还是持续层。; 状态变体优先尝试复用原素材；只要轮廓还在，玩家就能识别同一个技能。; Dead、corrupted、ghost 这类状态可以从降调、detune、颗粒回声和不协和开始设计。
 
 <!-- END HTML_KB_BACKFILL_2026_05_10 -->
+
+## 2026-08-08 - Serum 金属断奏：用 Stepwise Morph 制作科幻纹理
+- Source: `https://www.youtube.com/watch?v=Xl5u91oQv-k`
+- Domain: scifi, workflow, impact, 插件技巧, Serum, GRM Reson, Transient Shaper, Stepwise Morph, spectral morphing, resonator stacking
+- Reusable pattern: 先用 Serum 的单振荡器 wavetable、PWM 与 Reverb 滤波器建立短促谐波源，再串联多个设置不同的 GRM Reson 形成金属峰群；首个共振器后用 Transient Shaper 整理起音，第二种版本再在共振链后加入 Stepwise Morph 多点曲线。画面确认后段顺序为 Gain -> soothe2 -> Pro-L 2；作者说明衰减与 limiter 的需要，但 soothe2 的具体用途只能作为分析推断。复用时应把画面确认值、作者口述方向和听感分析推断分开记录。
+- Step / event map:
+  - 对齐两个目标声音: 先比较 00:00-00:20 的 Sound #1 与 00:20-00:40 的 Sound #2。前者是短促、彼此分隔的金属谐波块；后者段内更宽、更连续。频谱差异属于本地分析推断，不写成作者的算法结论。
+  - Serum 建立谐波源: 画面确认预设 Metallic_transformers_transient、OSC A wavetable 4088、OSC B 未参与、PWM 调制与 Reverb 滤波器；调谐约 -5.51 只记录为该画面的当前值。作者还展示 Serum 多段压缩用于增加密度与延音，但没有可可靠抄录的完整参数。
+  - 四个 GRM Reson 建立峰群: 画面确认 Serum 后连续使用四个 GRM Reson Stereo。frame_000145 当前实例可读 Gain -3、Mix 29%、56 filters、distribution 69%、random 0.935、S&H 0.075、resonance 0.40、mono/stereo 46%、1037-15000 Hz；这些值不能推广给另外三个实例。
+  - 首个共振器后整理瞬态: 画面确认 Kilohearts Transient Shaper 位于第一个 GRM Reson 后，Attack、Pump、Sustain、Speed 与 Clip 控件可见，但旋钮数值不可可靠读取；只记录其收紧起音与延音关系的功能角色。
+  - Morph 生成第二种频谱形态: 画面确认 Sound #2 在四个 GRM Reson 后加入 Stepwise Morph，多点起伏曲线的 FFT Size 为 8192。作者口述从近似直线增加控制点并改变曲线峰谷，以获得更明显的科幻质感。
+  - 管理共振后的输出: 画面确认 Sound #2 后段为 Morph -> kHs Gain -> soothe2 -> FabFilter Pro-L 2。作者明确说共振链会让输出很响，并提到衰减与 limiter。分析推断：基于插件位置与旁路听感，soothe2 可能用于整理突出的共振峰；作者没有口述它的用途。
+  - 打印与归档变体: 分别改变 GRM Reson 的 Resonance、S&H Rate、频段边界以及 Morph 的曲线控制点，保存无 Morph、直线 Morph、多点 Morph 和最终动态整理版，归档时标明每项证据等级。
+- Plugin and processing notes:
+  - Xfer Serum: 单振荡器 wavetable 4088 配合 PWM 与 Reverb 滤波器生成谐波丰富的短促金属源；画面可见调谐约 -5.51，Serum 内多段压缩用于增加密度与延音。
+  - Ina-GRM GRM Reson Stereo: 四个不同设置的串联实例构成主要金属峰群；作者建议通过 Resonance 与 Sample-and-Hold Rate 快速制作变体。
+  - Kilohearts Transient Shaper: 放在第一个共振器之后整理起音，画面不足以确认具体旋钮数值，因此只按更紧/更松、更短/更长的方向调节。
+  - Stepwise Morph: 放在 Sound #2 的共振链之后，通过多点频谱曲线改变纹理形态；当前唯一画面确认的 FFT Size 是 8192。
+  - Kilohearts Gain: 在高能量共振与 Morph 后先回收电平，为后级动态处理留出余量。
+  - oeksound soothe2: 画面只确认它位于 Gain 与 Pro-L 2 之间。分析推断：它可能用于整理过度突出的共振峰、避免科幻金属纹理变得刺耳；作者未说明其用途，视频也未显示可可靠抄录的具体数值。
+  - FabFilter Pro-L 2: 链末限制峰值并稳定输出，响度匹配后检查是否损失短音冲击。
+- Design principles learned:
+  - 谐波源与材质塑形分工：Serum 提供可控源，多个共振器决定金属身份，比让一个复杂预设承担全部角色更容易调试。
+  - 多实例共振的价值来自差异化峰群；复制四个相同设置只会堆积能量，应该改变频段、共振、随机量与 S&H 速度。
+  - 瞬态处理插在共振链中段，可以先整理已经出现的攻击轮廓，再把结果送入后续共振器继续塑形。
+  - Morph 曲线应从近似直线基准开始逐点编辑；小幅节点变化也可能显著改变频谱，因此必须保存可回退版本并做响度匹配。
+  - 画面确认共振与频谱变形后的链位是 Gain -> soothe2 -> Pro-L 2，作者确认衰减与限制需求。soothe2 是否承担动态共振抑制属于分析推断，应通过旁路试听验证，不能写成作者结论。
+  - 教程复刻必须保留证据等级：可读画面数值可以引用，作者口述可总结，频谱和听感推断必须明确标为分析推断。
+- Use when: 金属 UI 断奏; 科幻武器瞬态; 机器人动作; 机械警告; 能量碰撞; Serum PWM 声源; GRM Reson 共振器堆叠; Stepwise Morph 频谱变形; 需要从同一声源快速制作短促版与宽密变体; 需要建立可审计的插件参数笔记
+
+## 2026-08-08 - Serum 动漫音效：从振荡器到高速能量变化
+- Source: `https://www.youtube.com/watch?v=kv0yNg1CPAk`
+- Domain: scifi, magic, workflow, 插件技巧, Serum, anime SFX, door hinge recording, Noise Phase, Pitch modulation, Frequency Shifter, resampling, item FX, track FX
+- Reusable pattern: 教程标题沿用“Serum 动漫音效”的说法，但画面确认的实际声源不是 OSC A/B 振荡器：作者关闭两组振荡器，把一段门轴录音放入 Noise 模块，用多个快慢不同的 LFO 大幅推动 Noise Phase 与 Pitch，连续录下实验后筛选 one-shot。单个片段在 item 级用 Pro-Q 3、Delay 或 ValhallaFreqEcho 建立局部音色和尾巴，整组结果再经过轨道级 Frequency Shifter 自动化与 Pro-R 统一运动；Oxford Inflator 只为可选响度，不是核心方法。
+- Step / event map:
+  - 选择可被调制的门轴素材: 作者使用很久以前在 Microsoft 录下的门声，截取门轴开始转动的部分。合适录音应有弱音高感但不过度音乐化，同时保留摩擦噪声，才能兼顾可追踪谐波和老式动漫的粗糙质地。
+  - Serum 只启用 Noise: frame_000130 画面确认 OSC A/B 均关闭，Noise 名称以 CREAKS_micr... 开头，Filter 为 Cmb+。标题中的“振荡器”不能被理解成 wavetable OSC；本案例实际只有 Noise 采样源参与发声。
+  - 多个 LFO 同时推动 Phase 与 Pitch: 画面与作者口述共同确认多个 LFO 控制 Noise Phase 和 Pitch。frame_000170 的 L2 是指数下降曲线、当前速率 9.3 Hz；作者持续改变 Rate、曲线和调制深度，因此该数值只属于这一截图时刻。
+  - 长录实验再筛选 one-shot: 作者不是寻找一条固定预设，而是在实时改调制时录下长段输出，再按起音、运动方向和尾音挑出有用片段。分析推断：这一步把不可预测的实时调制转化成可编辑、可归档的游戏资产。
+  - 轨道级 Frequency Shifter 统一运动: frame_000470 画面确认 Frequency Shifter 当前为 1.64 kHz，自动化曲线在不同片段间重画。可见轨道链为 Frequency Shifter -> FabFilter Pro-R -> Oxford Inflator Native -> Waves S1 Imager Stereo -> Waves L1 Limiter Stereo。
+  - Item Pro-Q 3 聚焦 bubbly 质感: frame_000560 显示中频峰形提升与高频窄带衰减。作者说明中频提升可加强 bubbly 感，但截图没有可靠显示中心频率或增益，因此只记录曲线方向，不写伪精确 Hz/dB。
+  - Item Delay 与 FreqEcho 建立尾音: frame_000570 的 Kilohearts Delay 当前为 244 ms。frame_000595 的 ValhallaFreqEcho 为 Mix 50.0%、Delay 56.48 ms、Shift 0.56 Hz、Feedback 53.60%、Low Cut 200 Hz、High Cut 15000 Hz、Stereo；这些值只绑定各自截图，不能推广为固定预设。
+- Plugin and processing notes:
+  - Xfer Serum: 本案例关闭 OSC A/B，只用 Noise 模块载入 CREAKS_micr... 门轴录音；Cmb+ 可见。多个 LFO 大幅调制 Noise Phase/Pitch，Serum FX 还可见 Tube Distortion 与 Compressor，但具体阈值、比率不可可靠读取。
+  - Kilohearts Frequency Shifter: 轨道级核心运动插件。frame_000470 当前读数 1.64 kHz；复用重点是为每个片段重画上扬、下坠或反转轨迹，不是固定该频移量。
+  - FabFilter Pro-R: 位于轨道 Frequency Shifter 后，为整组变体增加统一空间；视频没有显示可可靠抄录的完整参数。
+  - FabFilter Pro-Q 3: 在 item 级强化有用中频并削减刺耳高频峰。曲线可见但精确频率/增益不可读，必须按当前素材扫频确认。
+  - Kilohearts Delay: frame_000570 当前为 244 ms，用来为个别 item 增加可被后续轨道频移一起推动的尾巴。
+  - ValhallaFreqEcho: frame_000595 的 Mix 50.0%、Delay 56.48 ms、Shift 0.56 Hz、Feedback 53.60%、200-15000 Hz、Stereo 只描述该画面当前状态。
+  - Oxford Inflator Native: 作者明确说明只用来增加响度，并非方法必须项；画面还出现过授权连接提示，复刻时可直接关闭。
+  - Waves S1 Imager Stereo / L1 Limiter Stereo: 位于轨道末端，分别负责宽度与峰值收束；画面只确认链位，没有可靠参数。
+- Design principles learned:
+  - 有弱音高的有机摩擦录音比完全无音高噪声更适合 Phase/Pitch 激进调制，因为它既保留粗糙纹理，又能提供可跟踪的谐波骨架。
+  - 快慢 LFO 应承担不同角色：快调制负责细碎能量，慢调制负责整体运动；截图速率是实验状态，不应被当成唯一答案。
+  - 长录再筛选是设计流程，不是善后步骤。先允许调制产生意外，再把最有方向感的结果剪成 one-shot，往往比过度预设化更高效。
+  - Item FX 与 Track FX 要明确分工：item 负责每个变体的局部 EQ/尾音，track 负责整组统一频移、空间和输出控制。
+  - Inflator、S1、L1 等末端插件不能掩盖核心方法。先关闭它们做响度匹配 A/B，确认 Noise 调制和频移运动本身已经成立。
+  - 所有证据都要分级：画面可见值只限定到对应帧，作者口述可以总结，流程关系产生的听感结论必须标为分析推断。
+- Use when: 动漫能量变化; 科幻冲刺; 魔法弹道; 气泡式 UI; 门轴录音; Serum Noise; OSC A/B off; Noise Phase; Pitch LFO; Frequency Shifter automation; Pro-Q 3 bubbly EQ; Kilohearts Delay; ValhallaFreqEcho; resampling; one-shot curation; item FX vs track FX; 需要从一段有机录音生成大量同族变体; 需要把随机调制转化为可编辑游戏资产
+
+## 2026-08-08 - 单声道变电影感：初学者的空间与层次处理
+- Source: `https://www.youtube.com/watch?v=St6GD7CbdcM`
+- Domain: workflow, environment, scifi, 插件技巧, mono to cinematic, event duplication, timing offset, panning, ramp layer, UBERLOUD, bx_limiter True Peak
+- Reusable pattern: 从一条干净 mono 事件开始，把同一素材复制到独立轨道，保留中心时间锚点，再按作者口述让左右伴随副本轻微向相反方向错开，并用声像与相对电平建立宽度和存在感。需要时在主撞击下加入更轻的 ramp take 补起始运动。画面确认 Stereo Out 顺序为 BOOM Library UBERLOUD -> Brainworx bx_limiter True Peak，-6.00 dB 仅为本视频作者目标。响度匹配旁路和单声道兼容检查属于分析建议，不是作者口述。
+- Step / event map:
+  - 挑选并复制单声道撞击: 作者先选一条干净金属撞击，保守裁切、加小淡入，再复制到独立干净轨道。frame_000138 只确认堆叠结构，不支持抄录精确位移。
+  - 用轻微错位、左右展开和相对电平建立宽度: 作者口述外侧副本向相反时间方向轻微移动并分别展开到左右；frame_000153 显示独立 mixer 通道、panner 和 fader，但具体毫秒、声像及推子数值不可读。
+  - 加入较轻 ramp 层: 作者把另一条带 ramp 的 take 滑到主撞击下方并降低电平。frame_000225 确认短事件位于主堆叠下方，职责是丰富起始运动而不是成为第二次撞击。
+  - 输出链先塑形再限制: frame_000300 画面确认 Stereo Out 为 UBERLOUD -> bx_limiter True Peak。UBERLOUD 可见 3-Band 与 Nice character；limiter 的 -6.00 dB 是本视频作者为后续工作留空间的目标，不推广为行业标准。
+  - 迁移到喷火器长素材: 作者把复制、左右轻微错位和既有声像布局用于喷火器录音，并旁路比较 UBERLOUD。frame_000340 确认长事件平行排列，说明可复用的是轨道结构与调节顺序，而不是金属撞击的数值。
+  - 分析复核: 宽度布局完成后折叠到单声道检查瞬态，输出处理旁路时做响度匹配。两项均为分析建议，不能写成作者结论。
+- Plugin and processing notes:
+  - Cubase event editing and mixer: 复制 mono 事件并分别控制时序、左右展开和电平。画面确认控件与布局，但不支持精确毫秒、声像或推子读数。
+  - BOOM Library UBERLOUD: 在 Stereo Out 增加冲击、低频推动、中频存在感、高频细节与清晰度；frame_000300 可见 3-Band、Nice character 与它在 limiter 之前的位置，精确 Push 数值不可读。
+  - Brainworx bx_limiter True Peak: 位于 UBERLOUD 后管理峰值。frame_000300 显示 -6.00 dB，本条只把它记录为作者当前目标，其余设置不猜测。
+  - Optional reverb, chorus, distortion: 作者仅口述这些效果可利用干净通道增加角色，没有逐一展示为启用 insert，不能反推具体插件链。
+- Design principles learned:
+  - 单声道电影感的第一步是建立可独立编辑的副本结构，而不是立即用单一宽化插件覆盖源素材。
+  - 时间、声像和电平应分开调节；一次只改变一个维度，才能知道宽度、前后感和瞬态变化来自哪里。
+  - ramp 是补充层，不是默认必需层。只有主撞击缺少起始运动时才加入，并保持在主瞬态之下。
+  - 输出塑形放在空间布局成立之后。UBERLOUD 与 limiter 可以增加存在感和控制峰值，但不能替代清楚的层间关系。
+  - 截图数值必须绑定证据帧：本条唯一确定输出值是 -6.00 dB，且只属于作者在本视频的目标。
+  - 响度匹配和单声道复核能避免把增益或相位损失误判为设计改进，但这是本地分析建议，不是教程原话。
+- Use when: 单声道撞击; mono to cinematic; 金属 impact; 环境录音宽化; 科幻喷射; Cubase event duplication; timing offset; panning; layer balance; ramp layer; BOOM Library UBERLOUD; bx_limiter True Peak; 插件技巧; 需要把一条 mono 素材扩展为可控的电影感层次; 需要迁移同一轨道布局到不同长度素材
+
+## 2026-08-08 - Valorant Tejo 火箭爆炸音效拆解
+- Source: `https://www.youtube.com/watch?v=eKCYZz98-N4`
+- Domain: impact, scifi, workflow, 插件技巧, Valorant, Tejo, close distant events, combat readability, distance crossfade, flam, Wwise occlusion
+- Reusable pattern: 把一次游戏爆炸实现为同时触发的 close 与 distant 两个事件。close 先按 Transient、Energy、Tail 分工，并通过短尾与强 EQ 保持高密度战斗可读性；distant 使用相关素材或同库变体，经过子层频谱滚降，再送入 Reverb -> Pro-Q 3 -> S1 Imager parent。Wwise 用距离增益曲线交叉两组事件，并在遮挡时叠加额外 EQ。画面中的距离和 Pro-Q 3 数值只属于对应证据帧，不能泛化。
+- Step / event map:
+  - 组织 close 的 Transient/Energy/Tail: frame_000130 确认三类角色与短事件结构。作者用 transient 提供 thump 和 scratchy 起音，Energy 提供音调身份，Tail 补余韵，并刻意压短主要事件以给脚步和连续技能让位。
+  - 强 EQ 雕刻 close 层: frame_000300 显示陡峭低切、高切和中频凹口。唯一可读选中节点约为 2558.9 Hz、-11.1 dB、Q 4.23，只绑定当前画面，其余节点不猜测。
+  - 建立 Distant parent: 作者让相关素材或同库变体先做低高频滚降。frame_000490 只确认 bypass A/B 画面中的链成员和顺序为 kHs Reverb -> Pro-Q 3 -> S1 Imager Stereo，不证明该瞬间链已启用，也不支持抄参数。
+  - 距离交叉 close 与 distant: 两个事件同时触发。frame_000650 显示 close 约 4500 开始下降、约 5200 静音，distant 约 4000 后上升；这些值只属于本游戏画面，3250 脚步距离也仅是上下文。
+  - 用轻微 flam 增加 ult 重量: frame_000820 确认前三个 transient 的细小起点错位。作者说明轻微 flam 增加角色，过大间隔则形成分离起音并加重连续爆炸的掩蔽；画面不支持毫秒值。
+  - 简化 distant ult 并延长尾音: 作者说明 distant ult 层数更简单、位置更远、播放更安静，因此较长尾音不易遮挡近处信息。frame_001000 只证明层数与时长的视觉差异，不证明频谱、宽度或 mono 处理。
+- Plugin and processing notes:
+  - FabFilter Pro-Q 3: close 层使用积极频谱雕刻；frame_000300 唯一可读选中节点约为 2558.9 Hz、-11.1 dB、Q 4.23，其他 close/distant EQ 数值均不建立预设。
+  - kHs Reverb -> FabFilter Pro-Q 3 -> Waves S1 Imager Stereo: frame_000490 确认 Distant parent 的成员与顺序，作者口述 S1 把远距结果向 mono 收窄；截图处于 bypass A/B 状态，完整参数未展示。
+  - REAPER close/distant groups: 近距和远距各自保留可编辑的 transient、energy、tail 角色；同库来源不等于每层都是同一文件的复制。
+  - Wwise distance, occlusion and EQ: 两事件同步触发后按距离交叉增益，遮挡时追加 EQ。视频未展示遮挡频率、增益、曲线或项目配置。
+- Design principles learned:
+  - 游戏爆炸的冲击力和可读性必须一起设计。close 尾部越占空间，连续爆炸时越容易遮住脚步、语音或技能反馈。
+  - 远近变化不仅是整体音量衰减：相关素材、频谱滚降、混响和宽度收窄共同形成 distant 版本的身份。
+  - close/distant 同时触发再交叉增益，可以让距离过渡连续；交叉区必须在实际地图尺度中检查音量洞、峰值叠加和音色跳变。
+  - flam 是微小时序关系，不是固定毫秒预设。应从对齐开始逐步拉开，并在连续事件而非 solo 中判断掩蔽。
+  - distant ult 的作者事实只包括层数更简单、位置更远、播放更安静，以及因此长尾较少遮挡近处信息；不能把普通火箭 Distant parent 的频谱与宽度处理套到 ult。
+  - 截图数值和状态必须绑定证据：frame_000490 只证明 bypass A/B 时可见的链顺序；frame_000650 的距离值和 frame_000300 的 EQ 节点都不是通用规范。
+  - 分析建议：对 distance crossover、频谱、宽度、mono 兼容、等响旁路和高密度战斗可读性做项目内复核；这些检查不属于作者对 distant ult 的处理说明。
+- Use when: Valorant; Tejo; 火箭爆炸; impact; scifi; 插件技巧; Transient Energy Tail; close distant events; combat readability; FabFilter Pro-Q 3; kHs Reverb; Waves S1 Imager; Wwise distance crossfade; occlusion EQ; flam; distant long tail; 需要为同一爆炸制作近距和远距资产; 需要在连续技能中控制掩蔽
+
+## 2026-08-08 - 日常物件制作现代爆炸：录音、分层与处理
+- Source: `https://www.youtube.com/watch?v=f9OrpDtedSI`
+- Domain: impact, workflow, 插件技巧, household objects, Nerf transient, leather granular tail, shaker debris, plastic tube tonal launcher, staggered explosion, convolution reverb
+- Reusable pattern: 先把 Nerf 玩具枪、皮夹克、shaker 与塑料管按行为分配为 transient、tail、debris 和 tonal launcher，再分别清理并串联角色化处理。Nerf pop 经瞬态增强、中频清理、峰值控制与调制成为主起音；皮革经重新选取麦克风位置、两级去噪和 MGranularMB 延展成长尾；shaker 经 Portal、ReaEQ、MRatioMB 隐藏字面身份；塑料管经饱和、失真、降八度、增厚与调制成为轻声发射体。最终分开 launch/main explosion，轻微错开相关瞬态并添加卷积尺度层。frame_000408 的 MGranularMB 数值与 frame_001004 的 Altiverb 7 IR、87.70% wet 只可作为各自截图当前状态引用，其他设置均保持作者口述或画面成员边界。
+- Step / event map:
+  - 清理并塑造 Nerf 瞬态: 作者口述公寓底噪需要 RX Spectral De-noise，Nerf 还使用 De-reverb；transient shaping 收紧 pop，Enforcer 增加合成瞬态，EQ 处理约 1-2 kHz 不悦堆积，limiter 控制 clipping，FilterFreak 增加幅度调制。frame_000170 只确认 Enforcer 所在链和编辑后的瞬态变体，不提供完整预设。
+  - 延展皮夹克尾音: 作者因第一次录音低频过多而改变麦克风位置重录，以获得更多高频细节。两级 RX 去噪后，Inflator、Sonic Maximizer、Pro-MB、Air Flanger 与 SerumFX 分别承担密度、亮度、低频控制、音调与宽度；MGranularMB 把短动作切分、延迟和错开为长 decay。
+  - 约束 MGranularMB 数值证据: frame_000408 当前可读总 Dry/Wet 50%、Output 约 -4 dB、Grain Size 60 ms、Random 1000 ms、Pitch -12、Copies 10。它们只属于该截图状态，不是通用皮革尾音预设。
+  - 强化尾音内部攻击: 作者用 Transgressor 检测并强调多个尾部瞬态，用 Fresh Air 增加中频和上中频 crackle，后续再加饱和、低音高强化与卷积混响。frame_000505 只确认 Transgressor 2，不支持 detector、EQ、hold、release 或 gain 数值。
+  - 把 shaker 与塑料管隐藏成新角色: frame_000612 确认 shaker 的 Portal -> ReaEQ -> MRatioMB 可见链；作者说明 ping-pong delay 只能近似部分 Portal 运动。frame_000700 确认塑料管轨可见 Pro-L 2、Decapitator、Saturn 2、H3000 Factory、Inflator、FilterFreak；只有 H3000 下移一个八度来自作者口述，其他隐藏值不抄录。
+  - 组装两拍爆炸: 作者把 launch 和 main explosion 分开，反向皮革配手绘 volume envelope 形成 flyby，并把多个 Nerf 派生瞬态轻微错开。frame_001035 只确认短 impact 与错开的长尾布局；frame_001004 清楚显示 Altiverb 7 位于 Track 22，IR 为 `Great Pyramid / Chamber, Giza Kings Chamber`，当前 Dry/Wet Mix 为 87.70% wet。字幕确认高 wet 卷积混响生成爆炸尾音与环境上下文；IR 和 wet 值只绑定该帧当前状态，pre-delay 与 decay 未确认。
+- Plugin and processing notes:
+  - iZotope RX 8 Spectral De-noise / RX De-reverb: 清理公寓底噪和 Nerf 房间反射。作者确认皮革使用两级去噪，但没有公开可迁移的 threshold 或 reduction。
+  - Newfangled Audio Enforcer / Neutron 3 / Kilohearts Transient Shaper: 增强并收紧 Nerf 主起音。frame_000170 只确认 Enforcer 所在链；其他完整参数不可读。
+  - ReaEQ / FabFilter Pro-L 2 / Soundtoys FilterFreak: 作者分别说明约 1-2 kHz 清理、增强后 clipping 控制和幅度调制职责；画面不支持固定频点、阈值或调制速率。
+  - Oxford Inflator / BBE Sonic Maximizer / FabFilter Pro-MB / AIR Flanger / SerumFX: 为皮革增加密度、亮度、低频控制、音调与 chorus-like 宽度。frame_000390 证明可见成员，不证明完整 preset。
+  - MeldaProduction MGranularMB: 把短皮革动作变成长而带闪电感的 decay；唯一可引用数值严格绑定 frame_000408 当前状态。
+  - Boz Digital Labs Transgressor 2 / Slate Digital Fresh Air: 前者强调尾音内部攻击，后者增加 crackle/detail；frame_000505 只支持前者的可见处理角色。
+  - Output Portal / ReaEQ / MRatioMB: 打散 shaker、去除无用低频并减弱重复摇动身份。无 Portal 时 ping-pong delay 只是作者建议的部分近似。
+  - Decapitator / FabFilter Saturn 2 / H3000 Factory / Oxford Inflator / FilterFreak: 把塑料管做成轻声 tonal launcher；作者确认 H3000 下移一个八度，其余精确设置不公开。
+  - Audio Ease Altiverb 7: frame_001004 确认插件位于 Track 22，IR 为 `Great Pyramid / Chamber, Giza Kings Chamber`，当前 Dry/Wet Mix 为 87.70% wet；字幕确认高 wet 卷积混响用于生成爆炸尾音与环境上下文。IR 与 87.70% wet 只属于该帧当前状态，不是通用预设，pre-delay 与 decay 仍未确认。
+- Design principles learned:
+  - 选择小物件时先听可迁移行为：短机械 pop、可延展摩擦、颗粒动作和空心音调，比物件名称更能决定最终层职责。
+  - 清理必须先于激进处理，但去噪和去混响只解决真实录音问题；过度清理会牺牲后续需要的瞬态和高频纹理。
+  - 每个源先承担一个主角色，再决定插件。这样 transient、tail、debris 和 tonal body 可以独立删减，不必靠整组总线掩盖冲突。
+  - 颗粒延展不仅是把声音做长，还要管理每次出现的间隔；尾音彼此挤压时，颗粒细节会变成无法辨认的 wash。
+  - 作者的 less is more 落在时序上：多个相关瞬态可以轻微错开，但不应被拉成分离的多次击打，也不应全部压在同一采样点。
+  - 三级背景 tonal launcher 必须轻于主瞬态；它负责支撑 launch 身份，不承担主爆炸重量。
+  - 分析建议：卷积混响加入后做等响旁路、尾部遮蔽、低频焦点与 mono 兼容复核；这些是迁移验收，不是教程里的固定参数。
+- Use when: 现代爆炸; 日常物件录音; Nerf transient; 皮夹克尾音; MGranularMB; shaker debris; Output Portal; plastic tube tonal launcher; Transgressor 2; Altiverb 7; convolution reverb; staggered transients; launch and main explosion; impact; workflow; 插件技巧; 需要用小型家用物件搭建大型爆炸; 需要严格区分作者口述、画面事实和分析建议
