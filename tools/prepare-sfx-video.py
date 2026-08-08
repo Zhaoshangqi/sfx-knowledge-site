@@ -7,6 +7,19 @@ import sys
 from pathlib import Path
 
 
+def configure_utf8_stdio(streams=None) -> None:
+    if streams is None:
+        streams = (sys.stdout, sys.stderr)
+    for stream in streams:
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
+
+configure_utf8_stdio()
+
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_WORK_ROOT = REPO_ROOT / ".work" / "runs"
 
