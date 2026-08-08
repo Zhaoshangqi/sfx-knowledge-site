@@ -1,8 +1,8 @@
 const fs = require("fs");
 
 const html = fs.readFileSync("index.html", "utf8");
-const records = JSON.parse(html.match(/const records = ([\s\S]*?);\n\s*const imageManifest/)[1]);
-const catalog = JSON.parse(html.match(/const pluginReferenceCatalog = ([\s\S]*?);\n\n\s*const categoryById/)[1]);
+const records = JSON.parse(html.match(/const records = ([\s\S]*?);\r?\n\s*const imageManifest/)[1]);
+const catalog = JSON.parse(html.match(/const pluginReferenceCatalog = ([\s\S]*?);\r?\n\r?\n\s*const categoryById/)[1]);
 
 function normalize(value) {
   return String(value || "")

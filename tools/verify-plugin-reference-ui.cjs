@@ -51,12 +51,22 @@ async function fetchJson(url) {
   return response.json();
 }
 
+function selectDebugTarget(list) {
+  const localOrigin = `http://127.0.0.1:${port}/`;
+  return list.find((target) => target.type === "page" && target.url.startsWith(localOrigin));
+}
+
+function selectReferenceCard(cards) {
+  return cards.find((card) => card.dataset?.id === "upy3d1em") || cards[0];
+}
+
 async function waitForDebugUrl() {
   const deadline = Date.now() + 30000;
   while (Date.now() < deadline) {
     try {
       const list = await fetchJson(`http://127.0.0.1:${debugPort}/json`);
-      if (list[0]?.webSocketDebuggerUrl) return list[0].webSocketDebuggerUrl;
+      const target = selectDebugTarget(list);
+      if (target?.webSocketDebuggerUrl) return target.webSocketDebuggerUrl;
     } catch {}
     await delay(300);
   }
@@ -142,7 +152,7 @@ async function main() {
       expression: `
         (() => {
           const cards = [...document.querySelectorAll(".card")];
-          const target = cards.find((card) => /Boom|Noah|素材/.test(card.textContent)) || cards[0];
+          const target = (${selectReferenceCard.toString()})(cards);
           if (!target) return { error: "no cards", body: document.body.textContent.slice(0, 120) };
           target.click();
           return { opened: target.textContent.slice(0, 80), cards: cards.length };
@@ -202,7 +212,11 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}
+
+module.exports = { selectDebugTarget, selectReferenceCard };
