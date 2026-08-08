@@ -99,8 +99,49 @@ function isNonemptyString(value) {
   return typeof value === "string" && value.trim().length > 0;
 }
 
-function fileExists(relativePath) {
-  return isNonemptyString(relativePath) && fs.existsSync(path.resolve(repoRoot, relativePath));
+function playlistItemId(item) {
+  if (!item || typeof item !== "object" || Array.isArray(item)) return undefined;
+  return item.id;
+}
+
+function pathEscapes(root, candidate) {
+  const relative = path.relative(root, candidate);
+  return relative === ".." || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative);
+}
+
+function assetPathFailure(relativePath, allowedDirectory) {
+  if (!isNonemptyString(relativePath)) return "must be a nonempty path";
+  if (
+    path.isAbsolute(relativePath) ||
+    path.win32.isAbsolute(relativePath) ||
+    path.posix.isAbsolute(relativePath)
+  ) {
+    return "must be relative";
+  }
+  if (relativePath.split(/[\\/]+/).includes("..")) {
+    return "must not contain .. traversal";
+  }
+
+  const allowedRoot = path.resolve(repoRoot, allowedDirectory);
+  const resolvedPath = path.resolve(repoRoot, relativePath);
+  if (pathEscapes(allowedRoot, resolvedPath)) {
+    return `must be under ${allowedDirectory}`;
+  }
+
+  try {
+    if (!fs.statSync(resolvedPath).isFile()) return "must resolve to a file";
+    if (pathEscapes(fs.realpathSync(allowedRoot), fs.realpathSync(resolvedPath))) {
+      return `must resolve under ${allowedDirectory}`;
+    }
+  } catch (error) {
+    return `does not resolve to a readable file (${error.code || error.message})`;
+  }
+  return null;
+}
+
+function validateAssetPath(relativePath, allowedDirectory, label) {
+  const reason = assetPathFailure(relativePath, allowedDirectory);
+  if (reason) fail(`${label} ${reason}: ${relativePath}`);
 }
 
 function validateManifest() {
@@ -181,8 +222,9 @@ function validateCategories() {
   });
 }
 
-function validateRequiredRecord(record, item, learnings, memory) {
-  const label = item.id;
+function validateRequiredRecord(record, item, learnings) {
+  const label = playlistItemId(item);
+  if (!isNonemptyString(label)) return;
   if (!record) {
     fail(`Missing required playlist record: ${label}`);
     return;
@@ -228,29 +270,71 @@ function validateRequiredRecord(record, item, learnings, memory) {
       fail(`Record ${label} imageKey is missing from imageManifest: ${imageKey}`);
       return;
     }
-    if (!fileExists(image.preview)) {
-      fail(`Record ${label} image preview does not exist for ${imageKey}: ${image.preview}`);
-    }
-    if (!fileExists(image.full)) {
-      fail(`Record ${label} image full path does not exist for ${imageKey}: ${image.full}`);
-    }
+    validateAssetPath(
+      image.preview,
+      "assets/shots/preview",
+      `Record ${label} image preview for ${imageKey}`
+    );
+    validateAssetPath(
+      image.full,
+      "assets/shots/full",
+      `Record ${label} image full path for ${imageKey}`
+    );
   });
 
   steps.forEach((step, stepIndex) => {
     if (!step || !step.motion) return;
-    if (!fileExists(step.motion.src)) {
-      fail(`Record ${label} step ${stepIndex + 1} motion src does not exist: ${step.motion.src}`);
-    }
-    if (!fileExists(step.motion.poster)) {
-      fail(`Record ${label} step ${stepIndex + 1} motion poster does not exist: ${step.motion.poster}`);
-    }
+    validateAssetPath(
+      step.motion.src,
+      "assets/motions",
+      `Record ${label} step ${stepIndex + 1} motion src`
+    );
+    validateAssetPath(
+      step.motion.poster,
+      "assets/motions",
+      `Record ${label} step ${stepIndex + 1} motion poster`
+    );
   });
 
-  if (!learnings.includes(label)) {
-    fail(`video-learnings.md is missing ID ${label}`);
+  const sourceLine = `- Source: \`${canonicalUrl}\``;
+  if (!learnings.split(/\r?\n/).includes(sourceLine)) {
+    fail(`video-learnings.md is missing exact source line: ${sourceLine}`);
   }
-  if (!memory.includes(`## ${label} - `)) {
-    fail(`site-video-memory.md is missing heading prefix "## ${label} - "`);
+}
+
+function validateSiteMemory(memory) {
+  const countMatches = [...memory.matchAll(/^Records:[ \t]*(\d+)[ \t]*$/gm)];
+  if (countMatches.length !== 1) {
+    fail(`site-video-memory.md must contain exactly one Records line; found ${countMatches.length}`);
+  } else if (Number(countMatches[0][1]) !== records.length) {
+    fail(
+      `site-video-memory.md Records must equal records.length; ` +
+        `found ${countMatches[0][1]} and ${records.length}`
+    );
+  }
+
+  const headingLines = memory.split(/\r?\n/).filter((line) => line.startsWith("## "));
+  const headingIds = headingLines.map((line) => {
+    const match = line.match(/^## ([A-Za-z0-9_-]+) - /);
+    if (!match) {
+      fail(`site-video-memory.md has malformed record heading: ${line}`);
+      return undefined;
+    }
+    return match[1];
+  });
+  const recordIds = records.map((record) => record && record.videoId);
+  if (headingIds.length !== recordIds.length) {
+    fail(
+      `site-video-memory.md heading count must equal records.length; ` +
+        `found ${headingIds.length} and ${recordIds.length}`
+    );
+  }
+  const mismatchIndex = recordIds.findIndex((videoId, index) => headingIds[index] !== videoId);
+  if (mismatchIndex !== -1) {
+    fail(
+      `site-video-memory.md heading IDs/order mismatch at position ${mismatchIndex + 1}; ` +
+        `expected ${recordIds[mismatchIndex]}, found ${headingIds[mismatchIndex] || "<missing>"}`
+    );
   }
 }
 
@@ -291,6 +375,8 @@ if (uniqueVideoIds.size !== videoIds.length) {
 }
 
 validateCategories();
+const memory = readText(memoryPath, "site-video-memory.md");
+validateSiteMemory(memory);
 
 if (completed !== null) {
   const expectedRecordCount = baselineCount + completed;
@@ -299,7 +385,7 @@ if (completed !== null) {
   }
 
   const required = playlist.slice(0, completed);
-  const expectedIds = required.map((item) => item.id);
+  const expectedIds = required.map(playlistItemId);
   const appendedIds = records.slice(baselineCount).map((record) => record && record.videoId);
   if (JSON.stringify(appendedIds) !== JSON.stringify(expectedIds)) {
     fail(
@@ -309,16 +395,17 @@ if (completed !== null) {
   }
 
   playlist.slice(completed).forEach((item) => {
-    if (videoIds.includes(item.id)) {
-      fail(`Not-yet-expected playlist item is already present: ${item.id}`);
+    const itemId = playlistItemId(item);
+    if (isNonemptyString(itemId) && videoIds.includes(itemId)) {
+      fail(`Not-yet-expected playlist item is already present: ${itemId}`);
     }
   });
 
   const learnings = required.length > 0 ? readText(learningsPath, "video-learnings.md") : "";
-  const memory = required.length > 0 ? readText(memoryPath, "site-video-memory.md") : "";
   required.forEach((item) => {
-    const record = records.find((candidate) => candidate && candidate.videoId === item.id);
-    validateRequiredRecord(record, item, learnings, memory);
+    const itemId = playlistItemId(item);
+    const record = records.find((candidate) => candidate && candidate.videoId === itemId);
+    validateRequiredRecord(record, item, learnings);
   });
 }
 
