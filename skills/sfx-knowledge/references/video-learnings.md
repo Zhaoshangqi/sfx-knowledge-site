@@ -836,3 +836,152 @@ These entries were generated from the standalone HTML knowledge base so every an
   - 三级背景 tonal launcher 必须轻于主瞬态；它负责支撑 launch 身份，不承担主爆炸重量。
   - 分析建议：卷积混响加入后做等响旁路、尾部遮蔽、低频焦点与 mono 兼容复核；这些是迁移验收，不是教程里的固定参数。
 - Use when: 现代爆炸; 日常物件录音; Nerf transient; 皮夹克尾音; MGranularMB; shaker debris; Output Portal; plastic tube tonal launcher; Transgressor 2; Altiverb 7; convolution reverb; staggered transients; launch and main explosion; impact; workflow; 插件技巧; 需要用小型家用物件搭建大型爆炸; 需要严格区分作者口述、画面事实和分析建议
+
+## 2026-08-08 - 日常物件制作超写实武器爆炸音效
+- Source: `https://www.youtube.com/watch?v=2cTDQ_MetsE`
+- Domain: impact, workflow, scifi, 插件技巧, daily objects, weapon explosion, role folders, geophone can, chip bag, TONSTURM TRAVELER, Xfer OTT, SpaceBlender, Tremolator, ValhallaShimmer, Foley
+- Reusable pattern: 分析归纳：作者把日常录音按 Kick、Mech、Explosion、Ambience、Zoom、Foley 六类场景职责归档。地震检波器录下的罐体瞬态经处理得到 kick-like 结果并与短 click 分层，钥匙串提供机械细节，薯片袋同时保留简单降调层与多个增强变体，水瓶、呼吸和罐体承担环境素材，短 squeeze/rattle/布料/脚步事件逐动作排列。可迁移建议是先明确角色，再决定简单或重处理；这不是作者给出的固定爆炸链。
+- Step / event map:
+  - 建立六个角色文件夹: frame_000090 确认 Submix 下方的 Kick、Mech、Explosion、Ambience、Zoom、Foley。Master 可见 Insight 2、RCInflator 2、Pro-L 2，但作者没有解释设置或贡献，因此只作会话上下文。
+  - 处理罐体并与短 click 分层: 作者口述先降调、EQ 去高频、Transient Shaper 加 punch、MSaturator 增密、Pro-L 2 防 clipping；TRAVELER 意外产生可用 kick-like 结果，作者再把处理结果与较短 click 分层。frame_000153 确认可见顺序和 `BASIC LEFT TO RIGHT` 当前状态；证据边界是不建立 movement 预设，也不推断每次试听的启用状态。
+  - 用不同薯片变体建立 Explosion: 画面事实是 frame_000255 显示多个长度与 item rate 不同的 chip 事件。作者口述确认一层只降调、不加插件，其他示例加入 pitch/reverb；其中一条增强示例使用瞬态塑形、OTT、Waves RBass 与饱和来增加攻击、密度、低频支持和饱满度。七张发布帧没有展示这组完整增强处理，因此不声明精确顺序、参数或启用状态。
+  - 制作 crunchy high debris: 作者在字幕 05:46-05:56 对一个 chip 示例说明 OTT gain 为 `+14`，随后使用 distortion 和 EQ 控制 noisy highs。frame_000352 只确认 OTT、kHs Distortion、Pro-Q 4 成员及当前陡峭高频衰减；画面本身不显示 +14，该数值也不是推荐起点。
+  - 把罐体转为移动 ambience: 作者使用 plate、SpaceBlender default preset 和 Tremolator，并称 Tremolator 是运动关键。frame_000455 显示 Pro-Q 4 -> SuperPlate -> SpaceBlender -> Tremolator，以及 SpaceBlender 当前 `Time: 4500 msec`；4500 ms 只属于此帧与此素材。
+  - 拆分三条 Ambience 素材: 作者对大幅降速的水瓶砸击只削弱明显瞬态，以保留细微 crackle；另一条环境素材使用 ValhallaShimmer、Pro-C 2、Pro-Q 4 增加空间、控制峰值和亮度；呼吸素材只采用相近的 shimmer 与亮度控制。frame_000525 确认的是另一条环境素材的可见成员，不能把该链归给水瓶，也不能据此认定呼吸素材使用完全相同的插件链。
+  - 用 Zoom 与 Foley 解释动作: Zoom 把 bottle squeeze、keychain scope-in 与 cocking 拆成短事件；Foley 使用布料、iPhone 室外脚步、机械 rattles 和 reload 小事件。frame_000700 确认多排短事件逐动作对齐，罐体 Kick 低频只在该场景补靴子重量。
+- Plugin and processing notes:
+  - FabFilter Pro-Q 4 / Kilohearts Transient Shaper / MSaturator / Pro-L 2: 罐体 Kick 的音色、punch、密度与峰值控制链。frame_000153 确认成员和顺序，完整参数未公开。
+  - TONSTURM TRAVELER: 作者保留它意外产生的 kick-like 结果并与短 click 分层；当前界面值不能泛化。
+  - Kilohearts Transient Shaper / Xfer OTT / Waves RBass / MSaturator: 作者口述直接支持这些处理和各自角色，只属于一条增强 chip body 示例；七张发布帧没有展示完整处理，不声明精确顺序、参数或启用状态。教程同时保留简单无插件层。
+  - Xfer OTT / Kilohearts Distortion / Pro-Q 4: crunchy chip 分支。`+14` 来自作者对一个示例的口述，frame_000352 只支持链成员与高频控制方向。
+  - Soundtoys SuperPlate / SpaceBlender / Tremolator: 罐体 ambience 的长度与运动链。frame_000455 的 Default/4500 ms 仅为当前状态；Tremolator 数值未公开。
+  - ValhallaShimmer / FabFilter Pro-C 2 / Pro-Q 4: 对另一条选定环境素材增加空间、降低瞬态峰值并控制亮度。frame_000525 不提供通用 mix、shift、threshold 或 EQ 值；该链不属于水瓶 crackle 层，呼吸素材只确认相近方向。
+  - Insight 2 / RCInflator 2 / Pro-L 2: 仅在 Master 列表中可见，作者未讲解，不能转写为必需母带方案。
+- Design principles learned:
+  - 分析建议：先判断素材承担 kick、mechanism、body、crunch、ambience 还是 action detail，再决定处理，避免多层重复占用同一频段和时序。
+  - 分析建议：保留只降调的 chip 基准，用来判断增强处理是否真的增加角色，而不只是增加响度。
+  - 分析归纳：同一录音可以跨文件夹复用；迁移时应改变时长、pitch、包络和上下文，使它从源身份转为新功能。
+  - 分析建议：分别验收水瓶 crackle、另一条 shimmer 环境素材与呼吸纹理，避免把削弱瞬态、完整插件链和相近音色方向误记成同一处理流程。
+  - 证据边界：OTT `+14` 只属于作者在 05:46-05:56 的单条 chip 示例，SpaceBlender `4500 ms` 只属于 frame_000455 当前状态。
+  - 证据边界：可见 FX 列表不自动证明启用、自动化或隐藏设置。主总线列表和未讲解恢复插件只能记录为画面上下文。
+  - 分析建议：逐文件夹静音、等响旁路、小音箱低频和 mono 兼容检查可以验证角色贡献，但这些不是作者原话。
+- Use when: 超写实武器爆炸; Battlefield 风格重设计; 日常物件录音; geophone can; chip bag explosion; keychain mechanism; bottle ambience; breath texture; Kick Mech Explosion Ambience Zoom Foley; TONSTURM TRAVELER; Xfer OTT; SpaceBlender; Tremolator; ValhallaShimmer; impact; workflow; scifi; 插件技巧; 需要让有限家用素材覆盖完整武器场景; 需要区分画面事实、作者口述和分析建议
+
+## 2026-08-08 - 将 DAW 音频路由到 Whoosh 的完整方法
+- Source: `https://www.youtube.com/watch?v=ceC_RDgx71s`
+- Domain: workflow, scifi, 插件技巧, REAPER, TONSTURM Whoosh, Reaktor 6, VST effect, Source+Mix, plugin pin connector, multichannel sends, stereo return, track template
+- Reusable pattern: 作者在 REAPER 中以 Reaktor 6 VST effect 载入 Whoosh，在 Source+Mix 和 WHOOSH 顶层各建立 Port 1-8，把四条立体声源轨的自身 1/2 依次发送到目标 1/2、3/4、5/6、7/8，再让处理后结果只从 1/2 返回。四源播放验证后，完整层级被放入外层 Parent 并保存为 Track Template。分析建议是先逐对测试、排除干声旁路和循环发送，再在需要时建立不回送的 print track；视频本身没有演示打印或反馈故障。
+- Step / event map:
+  - 选择 Reaktor VST effect: frame_000060 同时显示 `VST: Reaktor 6 ... (16ch)` 与 VSTi 条目。作者明确选择 effect 版本处理外部音频；视频未展示声卡或系统音频设备设置。
+  - 在 Source+Mix 建立四对输入: 作者创建八个 Terminal Input，Port 设为 1-8，并按 1/2、3/4、5/6、7/8 连接到 Source 1-4 L/R。frame_000135 显示八个编号端口和最终配对；它们是四个立体声对，不是八个立体声源。
+  - 在 WHOOSH 顶层暴露同样端口: frame_000180 显示顶层 1-8 与 Source+Mix 八个 In 的连线。作者随后退出 Edit 并保存修改后的 ensemble；项目版本后缀只是分析建议，不是作者规范。
+  - 配置八入与立体声返回: frame_000235 显示 REAPER pin matrix 将 Track Channels 1-8 对角映射到 Reaktor 1L-4R，输出侧只把 Reaktor 1L/1R 返回 Track Channels 1/2。
+  - 路由四条源轨: 作者把 Track 1-4 的自身 1/2 依次发送到目标 1/2、3/4、5/6、7/8。frame_000260 证明 Track 2 当前为 1/2 -> 3/4，并显示 Post-Fader (Post-Pan)；作者未比较其他 send mode，不能写成唯一要求。
+  - 验证四源播放: frame_000285 显示四条源轨、Whoosh 四个 Source 区域和处理后返回同时活动。该段证明实时播放，不证明录音、打印文件或反馈恢复。
+  - 保存完整层级: 作者把 Whoosh 路由放入外层 Parent，让后续 FX 不破坏内部设置，再保存 Track Template。frame_000345 显示层级和模板对话框；nvk_SEARCH 只是可选召回工具。
+- Plugin and processing notes:
+  - Native Instruments Reaktor 6 VST (16ch): 作为多通道效果器接收 DAW 音频并承载 Whoosh；本流程不使用 VSTi 入口。16ch 是本次画面标签，不代表所有 DAW 菜单相同。
+  - TONSTURM Whoosh v1.5 / Source+Mix: Source+Mix 和 WHOOSH 顶层都要暴露 Port 1-8；修改后通过 Reaktor Host save 保存 ensemble。
+  - REAPER plug-in pin connector: 输入侧为 Track Channels 1-8 到 Reaktor 1L-4R，输出侧只从 Reaktor 1L/1R 回到 Track Channels 1/2。
+  - REAPER multichannel sends: 四条源轨映射到 1/2、3/4、5/6、7/8。Post-Fader (Post-Pan) 只属于 frame_000260 当前状态；干声 parent/master 路径需按工程检查。
+  - REAPER Track Template / nvk_SEARCH: Track Template 保存整个 Parent 层级；nvk_SEARCH 是作者展示的便利工具，不是路由依赖。
+- Design principles learned:
+  - 多通道路由应先画成单向拓扑：四个源对进入 Whoosh，处理后的单一立体声返回离开 Whoosh；不要把返回再次送进任何输入对。
+  - 内部 Source+Mix 端口、WHOOSH 顶层端口、DAW pin matrix 和轨道 send 是四个独立检查层，任何一层配对错误都会造成错源、丢声道或串路。
+  - 分析建议：先单源逐对测试，只允许对应 Source 1-4 meter 响应，再执行四源齐播；这比只看最终总线更容易定位问题。
+  - 可见 send mode 不等于通用要求。是否关闭 parent/master send、如何管理干声路径，应由实际 REAPER 文件夹与监听结构决定。
+  - 外层 Parent 把后续 FX 与关键路由隔离；模板召回后仍应在空工程重复逐对测试，不能把“能保存”当成“路由一定正确”。
+  - 分析建议：打印时只把处理后 1/2 返回送到文件夹外的专用立体声轨，并禁止回送；低电平启动、持续 meter 检查和打印复核均不属于视频已演示内容。
+- Use when: DAW 路由 Whoosh; TONSTURM Whoosh; Reaktor 6 VST effect; Source+Mix Port 1-8; REAPER plugin pin connector; multichannel sends; 1/2 3/4 5/6 7/8; stereo return; four source test; track template; nvk_SEARCH; feedback prevention; print track; workflow; scifi; 插件技巧; 需要从四条 DAW 轨把任意声音送入 Whoosh; 需要排查多通道错对、干声旁路或循环发送
+
+## 2026-08-08 - Wave Shifter 制作科幻与动漫音效
+- Source: `https://www.youtube.com/watch?v=fYqe17OJRNM`
+- Domain: scifi, magic, workflow, 插件技巧, Minimal Audio Wave Shifter, Freq Shift, Feedback, Feedback Time, modulation, anime sound design, source generation
+- Reusable pattern: 作者在 Ableton Live 中把独立版 Wave Shifter 设为 Freq Shift / Stereo，并在素材生成阶段从 100% Wet 开始。处理顺序是先按素材扫描 Frequency，再加入 Feedback、单独调整 Feedback Time；短素材只轻用内置 modulation。短 Cardboard Falls hit 被分别测试为小幅正、负频移，找到角色后再按需串联两只 Fuse Compressor、INTENSITY、TransX Multi、第二只 Wave Shifter 与 Pro-L 2。anime 分支把 Pro-R 2 放在第二只 Wave Shifter 前，让空间尾部进入后级 Frequency / FM。截图中的所有数值都只属于对应帧和 source，不是通用 preset。
+- Step / event map:
+  - 选择 Freq Shift / Stereo: frame_000053 展开 Style 菜单，列出 `Freq Shift`、`Ring Mod`、`Amp Mod`；圆点确认当前选中 Freq Shift，浅色 Ring Mod 只是鼠标悬停。作者本片主要示范 frequency shifting，没有比较其他模式优劣。
+  - 从全湿素材生成开始: 作者先把 Wet 设为 100%，再扫描 Frequency。frame_000061 同时确认 Freq Shift、Stereo、Wet 100% 与较长 Cardboard Rips 素材；100% Wet 只属于本次 source-generation 起点，不推广到成品总线。
+  - 单独调整 Feedback Time: 作者强调 Feedback Time 容易被忽略，却会显著改变反馈纹理，过度会 washed out。frame_000195 的 `0.48 ms` 只绑定当前状态；视频没有给出内部 comb、delay 或 time-stretch 公式。
+  - 按长度控制 modulation: frame_000225 显示波形、Mod Depth、Sync、Snap、Rate、Shape、Randomize、Offset。作者对短 asset 只轻用内置 modulation，通常更偏向外部自动化；本视频没有展示一条可读包络。
+  - 对照正负频移短 hit: frame_000309 的 `+26.7 Hz` 与 frame_000317 的 `-7.32 Hz` 属于同一 Cardboard Falls 素材。作者称本例正向更 bubbly、负向更低沉且更有 punch，但明确强调甜点位依赖 source。
+  - 串联后处理: frame_000365 确认 Wave Shifter -> Fuse Compressor x2 -> INTENSITY -> TransX Multi -> 第二只 Wave Shifter -> Pro-L 2。作者口述后续可用 multiband compression、saturation 与 transient shaping；不能据此把 INTENSITY 定义为固定 saturation 算法。
+  - 建立 anime 分支: frame_000410 确认 Pro-R 2 位于第二只 Wave Shifter 前，第二实例当前为 `5.65 Hz`。作者让 reverb tail 进入后级 Frequency / FM，以生成 anime-style source；Pro-R 2 参数和固定 FM 预设均未公开。
+- Plugin and processing notes:
+  - Minimal Audio Wave Shifter: 本片使用 Freq Shift / Stereo；素材生成阶段从 100% Wet 开始，再依次探索 Frequency、Feedback、Feedback Time、modulation 与 FM。所有瞬时数值都必须绑定证据帧。
+  - Minimal Audio Fuse Compressor x2: frame_000365 确认两个连续实例，作者将其归入 multiband compression 阶段；八张发布帧没有给出可迁移的 band、ratio、time、mix 或 preset。
+  - Zynaptiq INTENSITY: 位于 Fuse Compressor x2 与 TransX Multi 之间。作者只概括可继续加入 saturation，画面不足以确认 INTENSITY 的固定算法、preset 或强度。
+  - Waves TransX Multi Stereo: 作者口述用于 transient shaping，frame_000365 确认链位；插件界面和参数没有展开。
+  - FabFilter Pro-R 2: anime 分支放在第二只 Wave Shifter 前，让 reverb tail 进入后级频移 / FM。frame_000410 只证明顺序，不支持补写空间参数。
+  - FabFilter Pro-L 2: 作者说明末端另加 limiter 管理激进 Feedback 和后处理峰值；画面不提供可靠 threshold、style、lookahead 或 output 数值。
+- Design principles learned:
+  - Wave Shifter 的可迁移方法是按顺序寻找甜点位，而不是抄旋钮：Frequency -> Feedback -> Feedback Time，每次只改变一个变量。
+  - 全湿适合生成新 source，但不等于所有插入位置都应 100% Wet。保留 dry 副本，才能恢复动作、瞬态或并行角色。
+  - 正移与负移的听感方向依赖 source。`+26.7 Hz`、`-7.32 Hz` 只能说明本例的两个候选，不是 bubbly / punch 的普遍定律。
+  - modulation 剂量应与素材长度和用途匹配。短 hit 需要可重复、可控的变化，长素材才适合放宽运动后再筛选片段。
+  - 后处理链在 core character 成立后才有意义。两只 Fuse、INTENSITY、TransX、第二只 Wave Shifter 都应逐级等响旁路，避免只增加响度或抹平素材差异。
+  - reverb 放在频移 / FM 前，会让尾部本身进入后级调制；若主攻击因此变软，可把 anime tail 与 core hit 分成独立资产。
+  - 分析建议：分阶段打印 dry / core Wave Shifter / post chain / anime tail，再按游戏功能命名和验收；视频没有展示 render、freeze 或 export 流程。
+- Use when: Minimal Audio Wave Shifter; Freq Shift; frequency shifting; Feedback Time; modulation; positive shift; negative shift; anime sound design; sci-fi UI; energy projectile; magic activation; Fuse Compressor; INTENSITY; TransX Multi; Pro-R 2 before Wave Shifter; Pro-L 2; source generation; scifi; magic; workflow; 插件技巧; 需要从有机录音生成同族科幻变体; 需要严格区分截图值与通用预设
+
+## 2026-08-08 - 正弦波制作动漫气泡旋律弹跳音
+- Source: `https://www.youtube.com/watch?v=j4POSc1YeAo`
+- Domain: magic, scifi, workflow, 插件技巧, sine wave, random pitch, Phase Plant, Default Wavetable, Wave Shifter, laser, spectral whoosh, metallic goop, bubble fire, Flex Chorus, MHarmonizerMB, TRAVELER, print and resample
+- Reusable pattern: 先用短包络调性源和高速随机音高建立可读的 bubbly 身份，再按角色复制调制关系，而不是复制整条插件链。laser 改用更接近 pluck 的包络和 wavetable / filter motion；spectral 分支用快速 LFO、Frequency Shifter、Delay 与前后瞬态塑形；metallic 分支从 sine+white noise 出发再进入反馈、随机频谱、颗粒与 robotification；rapid-fire 分支用双层发生器、filter / phaser / delay、chorus 与 harmonizer 扩展宽度和旋律。打印后再按 bass、laser、spectral、magic、metallic、ping、bubble 与 charge 组织最终动作。关键边界是 frame_000977 的 UI 明确显示 Wavetable / Default Wavetable，而作者口述称其为 sine-wave synth；不能把界面改写为 Analog oscillator。
+- Step / event map:
+  - 建立核心随机音高源: 作者口述起点是 simple sine wave 加 really fast random frequency modulation。frame_000187 显示 Phase Plant Analog 正弦、1.00 ms Attack、100 ms Decay、100% Sustain、5.00 ms Release 和 30.50 Hz Random 到 pitch；Random +120.00 及约 -60 / +60 semitones 只属于该帧。
+  - 增加 Wave Shifter 旁带: 作者在既有 bubbly source 上尝试 Frequency 与 Feedback。frame_000332 是 Freq Shift / Stereo 启用态，当前 34.3 Hz、右侧 1.06 kHz、Width 100%；分析稿核对了旁路 / 启用 A/B，但发布回放没有严格响度匹配。
+  - 派生 laser: frame_000506 显示 Harmonic Wanderer、Frame 171、1.00 ms Attack、122 ms Decay、0.2% Sustain、5.00 ms Release、12.98 Hz Pyramid LFO、54.3 ms Delay 和 Randflange Filter Table。作者目标是 classic sci-fi laser sound，这组数值不推广到核心 magic patch。
+  - 派生 spectral whoosh: 作者说明 Crystal wavetable、快速 LFO 到 pitch / frequency shifter，并加入 compressor、transient shaper、delay、transient shaper。frame_000566 确认 Crystal、64.1 ms Decay、32.16 Hz LFO、35.2 ms Delay、Frequency Shifter 与前后两处 Transient Shaper；隐藏深度和 mix 不补写。
+  - 建立 metallic source: 作者口述 initial patch 由 sine waves 加 white noise 组成。frame_000760 同时显示 Analog 调性层和 Noise，调性层当前 -16 semitones、x4 MAJOR；之后的 Uhbik-F、Snap Heap、MGranularMB、MTransformer 角色来自作者口述，不由该静态帧补造参数。
+  - 核对 rapid-fire 双生成器: frame_000977 的上下模块均明确标为 Wavetable / Default Wavetable，上层 Harmonic x1、Release 1.16 s，下层 Harmonic x36、Release 721 ms，并可见 Filter、Phaser、Dual Delay 与 Delay。作者把它们口述为 sine-wave synth；UI 类型和作者措辞必须并列保留。
+  - 加入 movement 与 melodic voice: 作者说 Flex Chorus 增加 movement，harmonizer 增加 melodic voice。frame_000990 显示 MHarmonizerMB 当前 C major / 1 octave、总 Dry/Wet 42.9%，以及 Flex Chorus 的 Frosted Highs、4 Voices、Smooth、Multi-Band；这些值只属于当前 bubble-fire 分支。
+  - 按角色组装最终版本: frame_001419 的 redesign 回放旁可读 Bass impacts、Laser、Spectral whoosh、Magic Flutter、metallic layer、Pings、Flickers、Bubble Boy、EXP Charge。22:48 起是 original，23:35 起才是 redesign；作者仍指出 white-noise whoosh、hanger action 和 impact accents 可改进。
+- Plugin and processing notes:
+  - Kilohearts Phase Plant: 核心 frame_000187 是 Analog 正弦；rapid-fire frame_000977 是两个 Wavetable / Default Wavetable。不同分支通过发生器类型、包络、Random / LFO、filter 和内部效果改变职责，截图值不构成 preset。
+  - Minimal Audio Wave Shifter: 用 Frequency 与 Feedback 为已成立的 source 增加旁带、金属与液态运动。frame_000332 的 34.3 Hz、1.06 kHz、Width 100% 只绑定一次启用态。
+  - Phase Plant Delay / Filter Table / Frequency Shifter / Transient Shaper: laser 与 spectral 分支分别用短延迟、频谱运动、频移旁带和前后瞬态塑形建立动作；54.3 ms、35.2 ms、12.98 Hz、32.16 Hz 只绑定对应帧。
+  - Minimal Audio Flex Chorus: 作者用于增加 bubble fire 的 movement；frame_000990 当前 Frosted Highs、4 Voices、Smooth、Multi-Band 不构成通用动漫预设。
+  - MeldaProduction MHarmonizerMB: 作者用于增加 melodic voice；frame_000990 当前 C major / 1 octave、42.9% 只属于该画面，视频没有公开全项目调性或 MIDI 旋律。
+  - Uhbik-F / Snap Heap / MGranularMB / MTransformer: metallic 分支中分别承担高反馈 flanger、随机 spectral filter table、颗粒伪影和 robotification。作者把 MTransformer 用在 metallic，不得误写成最终 spectral whoosh 的必经步骤。
+  - TONSTURM TRAVELER: 作者从打印后的 bubble / spectral 素材派生 whoosh、impact 与 Doppler 变体；八张发布帧没有展示其参数。
+- Design principles learned:
+  - 先在 source 层验证身份。短包络、快速 pitch movement 和 filter response 足够清楚时，再用频移、空间和动态处理扩展；长链不应掩盖弱源。
+  - 复用的是调制关系，不是截图数值。核心 pop、laser、spectral 与 rapid-fire 可以共享“快速调制”的语法，却必须按事件长度重做发生器、包络和尾部。
+  - 界面事实与作者措辞不能互相覆盖。frame_000977 的 UI 是 Default Wavetable，作者说 sine-wave synth；记录两者比强行统一名称更可靠。
+  - chorus 与 harmonizer 解决不同问题：前者增加 movement / width，后者增加 melodic voice。逐个旁路，避免同时改动后只剩“更大更宽”的模糊结论。
+  - metallic 分支应保留 sine+noise 基准，再逐级加入 feedback、spectral filter、granular 和 robotification；这样能判断每一级增加的是角色还是仅仅响度 / 刺耳度。
+  - print / resample 是角色分化点。master patch 生成同族素材，打印后的时长、Doppler、音高和编辑位置才把它们变成 laser、whoosh、impact、voice 或 UI。
+  - 最终验收按画面职责而不是插件数量。逐动作 solo / mute，并保留作者明确提出的 white-noise、action recording 与 impact accent 改进项。
+- Use when: 正弦波; bubbly melodic pops; anime sound design; Phase Plant; Analog oscillator; Default Wavetable; random pitch; fast LFO; Wave Shifter; frequency shifting; laser; spectral whoosh; metallic goop; bubble fire; Flex Chorus; MHarmonizerMB; TRAVELER; print and resample; magic; scifi; workflow; 插件技巧; 需要从同一调制语法派生一组动漫魔法和科幻资产; 需要严格区分 UI 类型与作者口述
+
+## 2026-08-08 - iZotope RX De-Clip 的创意声音设计
+- Source: `https://www.youtube.com/watch?v=C_5qPsn1GWY`
+- Domain: workflow, impact, scifi, 插件技巧, iZotope RX De-clip, creative resynthesis, intentional clipping, volume safety, Multi-band De-click, Z-Noise, pitch envelope, tonal sweetener, electricity, dark magic
+- Reusable pattern: 把 De-clip 当作创意再合成器，而不是常规修复器。先选择带清楚 motion 的 source，在降低监听和打印前增益后制造极端削波，再按 source 扫 De-clip threshold；第一轮 EQ + Boost 后先保存可用 core，De-click、Z-Noise 与 soothe2 只按用途选择。用 item rate 与 pitch / rate envelope 生成 scream-like 变体，最后把它作为 tonal sweetener 叠到保留瞬态和重量的 generic cinematic hit。frame_000090 明确警告实际失真远比视频播放响；可见设置、红表头、视频 WAV 与听到的播放音量都不是安全或交付响度模板。
+- Step / event map:
+  - 选择运动源: 作者口述具体来源影响没有想象中大，但素材必须有 motion。frame_000001 同时显示 synth、sine / reverb、bass drop、rock crumbling 与 RX SYNTH SCREAM_01..04；轨名不能证明未显示参数。
+  - 打印极端削波源: 作者用 Event Horizon Clipper、JS Distortion、MSaturator 与 Pro-L 2 建立 clipped print。frame_000090 当前 Event Horizon 为 Threshold -30.0 dB、Ceiling -0.1 dB、Soft Clip 2.0 dB，并明确写出视频已自动降音量、实际远比听到的响；这些值绝不是安全模板。
+  - 深推 De-clip: 作者从 0 阈值开始预听，扩大识别范围后声音快速变得异常。frame_000168 当前为 -16.0 / -16.0 dB、9471 repairs、Quality Low、Makeup 0.0 dB、Post-limiter off；作者没有把它定义为最佳拐点。
+  - 完成最小 core: 作者先用 EQ 去异常 sub 与刺耳频段，再用 Boost 抬低电平细节；完成 De-clip + EQ + Boost 后已经可用，后续属于 optional territory。
+  - 可选 Multi-band De-click: 作者希望少 click / noise、多 tonality，并认为 Multi-band 在这类素材上较少明显 pumping。frame_000287 当前 Sensitivity 10.0、Frequency skew 0.0、Click widening 0.0 ms、82 repairs；数字只属于该播放状态。
+  - 可选低量清理: 作者说明 Z-Noise 看起来激进但实际处理量很低，重点处理 lows / low-mids，soothe2 只收敛突出 artifacts。frame_000306 的 Z-Noise 曲线和数值只绑定该帧，NR -7.9 是动态读数。
+  - 生成 scream 变体: frame_000370 显示 Rate 0.516 (-11.46) 与蓝色 pitch / rate 包络，邻近 item 为 Rate 0.357 (-17.84)。作者用移调和 pitch modulation 生成多种 scream-like 结果；包络节点值不可从该缩放补写。
+  - 核对最终叠层: frame_000430 是 generic-hit 轨组 Solo 的 before，frame_000456 是 Solo 解除、generic hit 与多条 RX scream 共同参与的 after。作者将 screams 定位为 sweetener / supplement；分析归纳为 hit body 加 tonal motion，而非替换主体。
+- Plugin and processing notes:
+  - Event Horizon Clipper / JS Distortion / MSaturator: 串联制造极端 clipped source。frame_000090 只展开 Event Horizon；视频明确自动压低示范音量，任何参数和表头都不能作为监听或交付目标。
+  - FabFilter Pro-L 2: 作者用它把失真后的工作电平拉回较可操作范围再打印，不代表最终 limiter 或响度规范；八张发布帧没有展开其完整设置。
+  - iZotope RX 6 De-clip: 本例用于创意再合成。frame_000168 的 -16 / -16 dB、9471 repairs、Low Quality 与 Post-limiter off 只是一种深推状态，repair count 不是品质分数。
+  - FabFilter Pro-Q 3 / UrsaDSP Boost: 首轮清理异常 sub、刺耳频段与低电平细节；作者在此后已认为素材可用。八张发布帧不支持把隐藏数值写成 preset。
+  - iZotope RX 6 De-click: 可选地减少 click / noise 并突出 tonality。frame_000287 的 Multi-band、Sensitivity 10.0 与 82 repairs 只绑定当前 source / 选区。
+  - Waves Z-Noise / oeksound soothe2: 都是可选清理。frame_000306 只展开 Z-Noise；soothe2 仅在 FX 列表可见，不补写其隐藏参数。
+  - REAPER item rate / pitch-rate envelope: 用降速联动移调和包络调制建立不同时长、音区与弧线的 scream 变体；0.516、0.357 与包络形状不构成固定模板。
+- Design principles learned:
+  - 安全先于复刻。极端 clipping 很响，frame_000090 已明确说明视频播放被自动压低；先降监听、保留 headroom，不用耳机按原电平照抄。
+  - 这是创意再合成，不是忠实修复。把输出作为新 source 管理，并保留独立 dry / clipped print / De-clip core。
+  - De-clip threshold 必须按 source 扫描。repaired intervals 只提示覆盖状态，不能充当质量分数或最佳阈值。
+  - 第一轮 De-clip + EQ + Boost 已是可交付候选；De-click、Z-Noise 与 soothe2 只有在解决明确问题时才加入。
+  - 可见参数只绑定对应帧。-16 dB、Quality Low、Sensitivity 10、82 repairs、Z-Noise 曲线与 rate 都不能推广为 preset。
+  - item rate 改变时长、音区和颗粒尺度，包络负责贴合动作弧线；两者需同时检查 alias、低频堆积与尾长。
+  - generic hit 保留物理撞击瞬态和重量，RX scream 只补 electricity / dark-magic tonal motion；sweetener 不应独自承担 impact body。
+  - 按 hit-only -> sweetener-only -> blend 做相近响度 A/B。若 blend 只显得更响，说明 tonal contribution 尚未建立。
+- Use when: iZotope RX De-clip; creative resynthesis; intentional clipping; extreme distortion; volume safety; Event Horizon Clipper; JS Distortion; MSaturator; Pro-L 2; Pro-Q 3; UrsaDSP Boost; RX De-click; Multi-band De-click; Z-Noise; soothe2; item rate; pitch envelope; synth scream; tonal sweetener; electricity; dark magic; cinematic hit; workflow; impact; scifi; 插件技巧; 需要把极端失真重建成科幻或暗黑魔法补充层; 需要严格区分创意用法、可选清理与安全响度边界

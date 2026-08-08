@@ -790,13 +790,13 @@
   }
 ];
     const categoryCounts = {
-      "all": 67,
-  "magic": 36,
+  "all": 72,
+  "magic": 38,
   "creature": 15,
-      "impact": 33,
-      "scifi": 33,
+  "impact": 35,
+  "scifi": 38,
   "environment": 18,
-      "workflow": 34
+  "workflow": 39
 };
 
     const records = [
@@ -23299,6 +23299,1166 @@
       "分开搭建 launch 与 main explosion，从近乎对齐开始轻微错开主瞬态，并为 flyby 手绘 volume envelope。",
       "最后加入卷积空间并做等响 A/B；若空间遮住颗粒尾音或主起音就回退，另做 mono 与低频检查，并明确标注这些属于分析建议。"
     ]
+  },
+  {
+    "id": "yt-2cTDQ_MetsE",
+    "title": "日常物件制作超写实武器爆炸音效",
+    "videoId": "2cTDQ_MetsE",
+    "url": "https://www.youtube.com/watch?v=2cTDQ_MetsE",
+    "source": "michelleyusound / 插件技巧",
+    "category": "impact",
+    "secondaryCategories": [
+      "workflow",
+      "scifi"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 6 条：依据完整 784 秒时间线、英文字幕和七张指定 1920×1080 原帧整理。六个角色文件夹、可见插件链与当前画面值分别绑定证据；SpaceBlender 4500 ms 只属于 frame_000455，OTT +14 只属于作者在 05:46-05:56 讲解的那条 chip 示例，主总线插件只记录为画面上下文。",
+    "summary": "作者先把薯片袋、地震检波器录下的巧克力罐、钥匙串、水瓶、呼吸、布料和手机脚步按 Kick、Mech、Explosion、Ambience、Zoom、Foley 六类场景职责归档，再用降调、瞬态塑形、饱和、空间和调制让同一批日常物件承担武器低冲、机械细节、爆炸主体、连续环境与动作同步。分析归纳：可迁移重点是先给每层一个可听职责，再决定处理强度，并让简单降调层与重处理层并存；这不是作者给出的固定爆炸预设。",
+    "coreIdeas": [
+      "作者口述与画面共同确认：先按 Kick、Mech、Explosion、Ambience、Zoom、Foley 建立角色文件夹，再把录音分配给画面事件；这是整条教程的组织骨架。",
+      "作者口述：巧克力罐开头的明显瞬态经降调与处理得到 kick-like 结果；作者把处理结果从 sampler 拖出，并与较短 click 层叠。",
+      "分析建议：把较短 click 与较低 kick body 当作两种职责，先对齐起点和相对电平，再判断是否需要额外低频处理。",
+      "作者口述：Explosion 大量使用薯片袋；一层只降调、不加插件，其他示例使用额外 pitch/reverb，或使用瞬态塑形、OTT、RBass、饱和，以及另一条 crunchy 示例中的更强 OTT、失真与 EQ。",
+      "分析建议：把 Explosion 分组试听为简单低部、增强攻击、脆裂高频和空间支持；角色重叠时先删除或改派素材，而不是继续加响。",
+      "作者口述：罐体 Ambience 使用 plate、SpaceBlender default preset 与 Tremolator；大幅降速的水瓶砸击被压低明显瞬态以保留细微 crackle，另有素材使用 ValhallaShimmer、压缩和 EQ。",
+      "分析建议：把冲击素材转作 Ambience 时，先处理会抢前景的瞬态，再决定空间、调制与亮度，使环境层提供连续运动而不是第二个 hit。",
+      "画面确认：frame_000090 可见 Master 上的 Insight 2、RCInflator 2 与 Pro-L 2；作者没有讲解其设置或贡献，因此它们只作为会话上下文，不能写成必需的母带链。",
+      "分析建议：用角色静音、等响旁路、小音箱低频和 mono 兼容检查确认每层确有独立贡献；这些是迁移验收方法，不是作者给出的固定流程。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "先建立六类场景职责",
+        "detail": "作者口述：围绕 Battlefield 画面把工程分成 Kick、Mech、Explosion、Ambience、Zoom 与 Foley。画面事实：frame_000090 显示六个文件夹位于 Submix 下方，同时可见 Master 的 Insight 2、RCInflator 2、Pro-L 2；后者只证明会话中存在，不证明设置、启用状态或对最终声音的具体贡献。",
+        "params": [
+          "分析建议：先列画面事件与层职责，再处理素材；同一录音可以复用，但每个副本应承担不同功能。",
+          "证据边界：六个文件夹来自本教程工程结构，不是作者规定所有武器场景必须照搬的轨道模板。",
+          "无法确认：Master 列表不支持推断阈值、响度目标、启用状态或固定输出链。"
+        ],
+        "imageKey": "2cTDQ_MetsE-role-folders"
+      },
+      {
+        "order": 2,
+        "name": "处理罐体并与较短 click 分层",
+        "detail": "作者口述：巧克力罐开头有明显瞬态，先降调，用 EQ 去掉高频、Transient Shaper 增加 punch、MSaturator 增密，再由 Pro-L 2 防止 clipping；TONSTURM TRAVELER 意外把结果推向可用的 kick。画面事实：frame_000153 确认 Can 轨可见 Pro-Q 4 -> kHs Transient Shaper -> MSaturator -> Pro-L 2 -> TRAVELER 顺序和 `BASIC LEFT TO RIGHT` 当前状态，但不把界面中的运动值写成通用预设。",
+        "params": [
+          "分析建议：先对齐短 click 与低 kick body 的起点，再调相对电平；不要先用额外低频层掩盖时序问题。",
+          "作者口述与无法确认：作者说明降调、去高频、加 punch、饱和和限制，但视频没有给出可迁移的 pitch、EQ、attack、drive 或 limiter 数值。",
+          "画面事实与证据边界：frame_000153 只确认当前链与 TRAVELER 画面状态，不据插件列表断言每个阶段在每次试听中均已启用。"
+        ],
+        "imageKey": "2cTDQ_MetsE-can-kick-traveler"
+      },
+      {
+        "order": 3,
+        "name": "让薯片层分别承担爆炸起音、主体与尾部",
+        "detail": "作者口述：Explosion 主要来自薯片袋，其中一层只做降调、不加插件；其他变体再加入混响、不同 pitch 或增强链。画面事实：frame_000255 显示多个薯片派生事件分布在独立轨道，长度和 item rate 不同，形成短起音、较长主体与尾部角色，而不是复制同一处理。",
+        "params": [
+          "分析建议：先保留一条简单干低部作为基准，再决定哪些层需要攻击、密度、脆裂或空间。",
+          "作者口述：一条增强 chip 示例使用瞬态塑形增加攻击，OTT 与 Waves RBass 增加密度和低频支持，再用饱和让结果更饱满；七张发布帧没有展示这组完整处理，因此不声明精确顺序、参数或启用状态。",
+          "分析建议：若两层承担同一频段和时序角色，先删除或改派其中一层，再考虑增加响度。"
+        ],
+        "imageKey": "2cTDQ_MetsE-chip-explosion-stack"
+      },
+      {
+        "order": 4,
+        "name": "建立脆裂高频并收住噪声",
+        "detail": "作者口述：另一条薯片层用更强 OTT 增益制造额外高频 crunch，再用 distortion 和 EQ 控制被放大的 noisy highs。字幕 05:46-05:56 中的 `+14` 只属于这一个被讲解的 OTT 示例。画面事实：frame_000352 只确认所选 Chips 轨可见 Xfer OTT、kHs Distortion、Pro-Q 4，以及当前 Pro-Q 4 的陡峭高频衰减曲线；画面本身不显示 +14。",
+        "params": [
+          "作者口述与证据边界：OTT +14 只属于该 chip 示例，不是起始值、推荐范围或其他层的参数。",
+          "分析建议：先增加 crunch，再用 EQ 收回过量高频；若高频只变刺而没有提供 debris 身份，应回退 OTT 或 distortion。",
+          "证据边界：不从 FX 列表的复选框或单帧推断隐藏 bypass、自动化和每次试听的启用状态。"
+        ],
+        "imageKey": "2cTDQ_MetsE-chip-crunch-chain"
+      },
+      {
+        "order": 5,
+        "name": "把罐体改造成持续运动的环境层",
+        "detail": "作者口述：罐体 Ambience 使用 plate、SpaceBlender 默认状态与 Tremolator，其中 Tremolator 是产生运动的关键。画面事实：frame_000455 确认所选 Can 轨可见 Pro-Q 4 -> SuperPlate -> SpaceBlender -> Tremolator；SpaceBlender 显示 `Default` 和当前 `Time: 4500 msec`。",
+        "params": [
+          "画面事实与证据边界：4500 ms 只绑定 frame_000455 中 SpaceBlender 的当前状态，不是任意环境或武器尾音的默认建议。",
+          "作者称 SpaceBlender 使用 default preset，并把运动主要归因于 Tremolator；视频没有提供 Tremolator 速率、深度或同步值。",
+          "分析建议：先确认源层不再产生第二个前景撞击，再增加空间和调制。"
+        ],
+        "imageKey": "2cTDQ_MetsE-ambience-space-chain"
+      },
+      {
+        "order": 6,
+        "name": "拆分水瓶 crackle、shimmer 环境层与呼吸纹理",
+        "detail": "作者口述：大幅降速的水瓶砸击只削弱明显瞬态，以保留细微 crackle；另一条环境素材使用 ValhallaShimmer 增加空间、Pro-C 2 压低瞬态峰值、Pro-Q 4 继续削弱亮度；呼吸素材只采用相近的 shimmer 与亮度控制。画面事实：frame_000525 显示 ValhallaShimmer 与 Pro-C 2、Pro-Q 4 位于另一条环境素材的同一可见链；其余恢复类插件只作会话上下文，不补写用途。",
+        "params": [
+          "分析建议：分别验收三种角色：水瓶 crackle 不产生前景 pop；另一条环境素材的 shimmer、压缩和 EQ 不遮蔽 Explosion；呼吸层只检查相近的空间与亮度方向。",
+          "画面事实与证据边界：frame_000525 只支持另一条环境素材的可见链成员与作者说明的角色；不把该链归给水瓶，也不推断呼吸素材使用完全相同的插件链。",
+          "分析建议：与 Explosion 同播检查 crackle 和尾部运动，若遮住主起音就缩短、降电平或进一步削弱瞬态。"
+        ],
+        "imageKey": "2cTDQ_MetsE-shimmer-ambience"
+      },
+      {
+        "order": 7,
+        "name": "拆分瞄具动作并用 Foley 完成场景",
+        "detail": "作者口述：Zoom 文件夹把水瓶 squeeze、钥匙串 scope-in 细节和独立 cocking 声分成短事件；Foley 再用布料、iPhone 室外脚步、钥匙串/机械 rattles 与 reload 小事件解释角色动作，罐体 Kick 只在想象中的靴子缺少低频时支撑布料。画面事实：frame_000700 显示 Foley 文件夹中多排短事件按重复动作对齐，并把低频支撑留在独立轨道。",
+        "params": [
+          "分析建议：每个 zoom、latch、cocking、step 与 reload 对齐一个明确画面状态，不用一条长素材覆盖整段动画。",
+          "作者口述与证据边界：罐体低冲在本场景用于补想象中靴子动作缺少的低频，不能推广为所有脚步都需要 kick。",
+          "分析建议：最终按文件夹逐个静音；检查 Kick/Explosion 是否承担主能量、Mech/Zoom/Foley 是否解释动作、Ambience 是否维持连续性。"
+        ],
+        "imageKey": "2cTDQ_MetsE-foley-layering"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Can Kick chain: FabFilter Pro-Q 4 / kHs Transient Shaper / MSaturator / Pro-L 2",
+        "purpose": "作者口述：把罐体明显瞬态降调、去高频、增加 punch 与密度，并控制增强后的 clipping。",
+        "settings": [
+          "frame_000153 确认可见顺序；处理方向来自作者口述，完整 pitch、EQ、包络、drive 与 limiter 参数未公开。",
+          "分析建议：先确认 click 与低体的层间关系，再决定处理强度，避免把峰值增益误判为重量。"
+        ]
+      },
+      {
+        "name": "TONSTURM TRAVELER",
+        "purpose": "作者口述：TRAVELER 把处理后的罐体意外转化为可用的 kick-like 结果，作者再把结果与较短 click 分层。",
+        "settings": [
+          "frame_000153 显示 `BASIC LEFT TO RIGHT` 当前状态和可见界面；这些 movement 数值只属于该画面。",
+          "分析建议：保留意外的有用结果并重采样分层，而不是复制一个 TRAVELER 预设。"
+        ]
+      },
+      {
+        "name": "Chip body processing: kHs Transient Shaper / Xfer OTT / Waves RBass / MSaturator",
+        "purpose": "按作者口述，在一条选定的薯片层上增加攻击、密度、低频支持与饱满度。",
+        "settings": [
+          "作者口述直接支持瞬态塑形、OTT、Waves RBass 与饱和四类处理及其角色；七张发布帧没有展示这组完整处理。",
+          "无法确认：不声明四者的精确顺序、参数或启用状态；教程同时保留只降调、不加插件的 chip 层。"
+        ]
+      },
+      {
+        "name": "Chip crunch chain: Xfer OTT / kHs Distortion / FabFilter Pro-Q 4",
+        "purpose": "作者口述：用更强 OTT 制造脆裂高频，再用 distortion 与 EQ 控制过量 noisy highs。",
+        "settings": [
+          "作者在 05:46-05:56 说明该示例 OTT gain 为 +14；只属于这一条 chip 层。",
+          "frame_000352 确认可见成员和当前 Pro-Q 4 陡峭高频衰减，不显示 +14，也不证明隐藏启用状态。"
+        ]
+      },
+      {
+        "name": "Soundtoys SuperPlate / SpaceBlender / Tremolator",
+        "purpose": "作者口述：用 plate、SpaceBlender 与 Tremolator 处理罐体 Ambience，其中 Tremolator 产生关键运动。",
+        "settings": [
+          "frame_000455 显示 SpaceBlender `Default` 与当前 4500 ms；该数值只绑定此帧。",
+          "作者明确把 Tremolator 视为运动关键，但没有给出可迁移的 rate、depth 或 sync 数值。"
+        ]
+      },
+      {
+        "name": "ValhallaShimmer / FabFilter Pro-C 2 / Pro-Q 4",
+        "purpose": "作者口述：为选定环境素材增加 shimmer 空间，用压缩降低瞬态峰值，并用 EQ 削弱亮度。",
+        "settings": [
+          "frame_000525 确认另一条环境素材的可见链成员；该链不属于只保留 crackle 的水瓶层，呼吸素材也只确认相近方向。",
+          "同窗可见的 RX 10 De-click、MRatioMB 与 RX 10 Spectral De-noise 只作会话上下文，作者未在该段解释其作用。"
+        ]
+      },
+      {
+        "name": "Master context: Insight 2 / RCInflator 2 / FabFilter Pro-L 2",
+        "purpose": "仅记录 frame_000090 中可见的会话主总线插件，不将其纳入教程规定的最终链。",
+        "settings": [
+          "作者没有展示或解释三者的设置、启用状态和贡献。",
+          "证据边界：不能由可见插件名推出固定响度、增益、限制或母带目标。"
+        ]
+      }
+    ],
+    "materials": [
+      "巧克力曲奇罐的地震检波器录音：明显瞬态、低冲 Kick 与部分环境颜色",
+      "钥匙串：Mech 文件夹的升降调机械细节、瞄具与奔跑 rattles",
+      "薯片袋：Explosion 的简单干低部、增强攻击、脆裂高频与空间变体",
+      "水瓶 squeeze / smash：爆炸支持、scope zoom 和去瞬态后的细微 ambience crackle",
+      "对麦克风呼吸：经过相近空间与亮度控制的环境层",
+      "布料与罐体低冲：角色移动、装备处理和特定靴子重量支撑",
+      "iPhone 室外脚步与短 reload/handling 事件：最终 Foley 同步"
+    ],
+    "keywords": [
+      "插件技巧",
+      "超写实武器爆炸",
+      "daily objects",
+      "role folders",
+      "Kick",
+      "Mech",
+      "Explosion",
+      "Ambience",
+      "Zoom",
+      "Foley",
+      "chip bag",
+      "geophone can",
+      "TONSTURM TRAVELER",
+      "Xfer OTT",
+      "SpaceBlender",
+      "Tremolator",
+      "ValhallaShimmer",
+      "impact",
+      "workflow",
+      "scifi",
+      "REAPER"
+    ],
+    "tips": [
+      "分析建议：先用文件夹静音判断职责，再微调插件；失去某层后听不出重量、清晰度、运动或连续性的变化，说明它可能没有独立价值。",
+      "分析建议：让简单层和重处理层并存；保留一条只降调的 chip 基准，用来辨别 OTT、RBass 或饱和是增加角色还是仅仅变响。",
+      "分析建议：把 `+14` 与 `4500 ms` 写进笔记时同时写上示例和证据帧，防止后来误当成默认预设。",
+      "证据边界：可见 FX 列表只证明成员；旁路、自动化和隐藏参数必须通过更直接证据确认。",
+      "分析建议：把冲击素材改成 ambience 时先处理瞬态，空间和调制应增加连续运动，而不是制造第二个前景事件。"
+    ],
+    "chainFocus": [
+      "画面事实：日常录音工程按 Kick / Mech / Explosion / Ambience / Zoom / Foley 六个职责文件夹组织到 Submix；Master 三个可见插件只作上下文。",
+      "作者口述：Kick 使用罐体明显瞬态、降调、去高频、瞬态塑形、饱和、限制与 TRAVELER 结果，并与短 click 分层。",
+      "作者口述：Explosion 保留简单降调 chip 层；另一增强示例使用瞬态塑形、OTT、RBass 与饱和，但七张发布帧不支持声明精确链序。",
+      "作者口述与画面事实：特定 crunchy chip 示例使用 OTT +14、Distortion 与 EQ；frame_000352 只显示成员和当前高频衰减，+14 来自口述。",
+      "作者口述与画面事实：罐体 Ambience 使用 plate、SpaceBlender default preset 与 Tremolator；frame_000455 当前显示 4500 ms。",
+      "作者口述：大幅降速的水瓶砸击只削弱明显瞬态，以保留细微 crackle。",
+      "作者口述与画面事实：另一条环境素材使用 ValhallaShimmer、Pro-C 2 与 Pro-Q 4；frame_000525 确认可见成员，其他恢复插件不分配未讲解职责。",
+      "作者口述：呼吸素材只采用相近的 shimmer 与亮度控制；不据此推断它与水瓶或另一条环境素材使用完全相同的处理链。",
+      "分析建议：把 Zoom 短事件和 Foley 布料、脚步、机械、低频支撑放回画面逐组复核，检查动作解释与连续性。"
+    ],
+    "parameterLogic": [
+      "分析建议：先判断当前层需要 click、低体、crunch、space、movement 还是 action detail，再决定是否加插件。",
+      "分析建议：先对齐 click 与低体，再依次评估高频、punch、密度和峰值；TRAVELER 是作者保留的意外结果，不是固定终点。",
+      "证据边界：作者 `+14` 只绑定 05:46-05:56 的一个 crunchy chip 示例；分析建议至少保留一条简单降调层作对照。",
+      "画面事实：frame_000455 当前显示 SpaceBlender 4500 ms 与 Default；分析建议按当前素材所需长度重调，不能直接迁移。",
+      "分析建议：水瓶 crackle 单独检查前景 pop；另一条 shimmer 环境素材再评估空间、峰值与高频控制。frame_000525 不提供通用 mix、shift、threshold 或 EQ 数值。",
+      "证据边界：可见链成员、作者口述与分析建议分别记录，不从复选框、母带列表或隐藏控件推断启用状态。",
+      "分析建议：每个处理阶段做等响 A/B，最终检查角色静音、低频焦点、小音箱、mono 兼容和画面同步。"
+    ],
+    "practiceChecklist": [
+      "分析建议（练习）：录制一条硬瞬态罐体、一条颗粒包装、一条金属 rattle、一条 squeeze/smash、一条呼吸、一组布料和脚步，保留原始 take。",
+      "分析建议（练习）：先按 Kick、Mech、Explosion、Ambience、Zoom、Foley 建文件夹，并为每个素材副本写一个主职责。",
+      "分析建议（练习）：从罐体提取短 click 和降调低体，按去高频、瞬态、饱和、峰值控制顺序搭建 Kick；每步等响旁路。",
+      "分析建议（练习）：为 Explosion 保留一条只降调的 chip 基准，再分别制作 body、crunch 和 reverb 角色；避免所有层使用同一链。",
+      "分析建议（练习）：复刻 crunchy chip 时把 +14 只记作作者示例，从更温和增益开始，并用后级 EQ 控制 noisy highs。",
+      "分析建议（练习）：把一条冲击素材降速并只削弱瞬态，保留 crackle；另选一条环境素材测试 shimmer、压缩与 EQ，避免把两种处理误记成同一条链。",
+      "分析建议（练习）：把 SpaceBlender 4500 ms 只当 frame_000455 参考状态，按素材长度重新寻找时间，并独立调整 Tremolator 运动。",
+      "分析建议（练习）：把 squeeze、keychain 与 cocking 拆成 Zoom 小事件；再用布料、脚步、rattle 和 reload 事件逐帧对齐 Foley。",
+      "分析建议（练习）：逐个静音六个文件夹，删除没有独立贡献的层；最后在画面、等响、小音箱和 mono 条件下复核。",
+      "分析建议（练习）：检查最终笔记，确保所有数值都带示例或帧号，主总线插件没有被写成必需链，也没有推断隐藏 bypass 状态。"
+    ]
+  },
+  {
+    "id": "yt-ceC_RDgx71s",
+    "title": "将 DAW 音频路由到 Whoosh 的完整方法",
+    "videoId": "ceC_RDgx71s",
+    "url": "https://www.youtube.com/watch?v=ceC_RDgx71s",
+    "source": "David Dumais Audio / 插件技巧",
+    "category": "workflow",
+    "secondaryCategories": [
+      "scifi"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 7 条：依据完整 406 秒时间线、英文字幕和七张指定 1920×1080 原帧整理。画面证据分别绑定 Reaktor effect 入口、Source+Mix 配对、WHOOSH 顶层端口、REAPER pin matrix、Track 2 发送、四源播放测试与轨道模板；视频未演示打印或反馈故障，因此相关保护措施明确标为分析建议。",
+    "summary": "作者在 REAPER 中以 Reaktor 6 VST effect 载入 TONSTURM Whoosh，在 Source+Mix 和 WHOOSH 顶层各暴露八个输入端口，再把四条立体声源轨依次发送到 1/2、3/4、5/6、7/8，最后由 Whoosh 以 1/2 返回处理后的立体声并把整套层级保存为轨道模板。可迁移重点是保持四对输入与单一立体声返回的单向拓扑；逐对测试、干声旁路检查、低电平启动、打印轨和反馈保护属于分析建议，不是视频已经演示的步骤。",
+    "coreIdeas": [
+      "作者口述与画面共同确认：应选择 Reaktor 6 的 16 通道 VST effect 入口，而不是 VSTi；这样 Whoosh 才作为接收 DAW 音频的效果器工作。",
+      "作者口述：在 Reaktor 的 Source+Mix 内建立八个 Terminal Input，并按 1/2、3/4、5/6、7/8 接到四个 Source 的左右声道；WHOOSH 顶层还要再暴露同样的八个端口。",
+      "作者口述与画面共同确认：REAPER pin matrix 把 Track Channels 1-8 对角映射到 Reaktor 的四对输入，只让 Reaktor 1L/1R 返回 Track Channels 1/2。",
+      "作者口述：四条立体声源轨分别把自身 1/2 发送到 Whoosh 轨的 1/2、3/4、5/6、7/8；这不是八条立体声源。",
+      "作者口述与画面共同确认：四源同时播放是保存模板前的功能测试；外层 Parent 用于后续效果，避免直接改动 Reaktor/Whoosh 路由轨。",
+      "分析建议：先逐条源轨确认只有对应 Source 1-4 电平响应，再做四源测试，可更早发现左右通道或通道对交叉。",
+      "证据边界：视频证明实时播放与模板保存，没有演示打印成文件、反馈环路故障、音频设备设置或唯一正确的 send mode。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "载入 Reaktor 多通道效果器版本",
+        "detail": "作者口述：新建轨道后选择 Reaktor 的 VST effect 版本并载入 Whoosh ensemble。画面事实：frame_000060 同时显示 `VST: Reaktor 6 (Native Instruments GmbH) (16ch)` 与独立的 VSTi 条目，当前教程采用前者处理外部输入。",
+        "params": [
+          "作者事实：Reaktor 在这里承担接收 DAW 音频的效果器角色，因此不选 VSTi instrument 入口。",
+          "画面事实：16ch 只描述本次可见插件入口；不能据此断言其他 DAW 的菜单名称或通道显示完全相同。",
+          "证据边界：视频没有展示声卡、系统输入或输出设备配置。"
+        ],
+        "imageKey": "ceC_RDgx71s-reaktor-vst-effect"
+      },
+      {
+        "order": 2,
+        "name": "在 Source+Mix 内建立四对输入",
+        "detail": "作者口述：开启 Reaktor Edit，进入 `WHOOSH -> Source+Mix`，创建并复制 Terminal Input 到八个，Port 依次设为 1-8；再把 1/2、3/4、5/6、7/8 分别连接到 Source 1-4 的 L/R。画面事实：frame_000135 显示八个编号输入与 Mix 模块 `1L` 至 `4R` 的成对连线。",
+        "params": [
+          "作者事实：八个单声道端口共同构成四个立体声源对，不是八个立体声源。",
+          "画面事实：frame_000135 证明最终配对状态，不补写画面未显示的隐藏属性。",
+          "分析建议：改线时按 1L/1R、2L/2R、3L/3R、4L/4R 逐对命名和核对，减少左右互换。"
+        ],
+        "imageKey": "ceC_RDgx71s-source-mix-pairs"
+      },
+      {
+        "order": 3,
+        "name": "在 WHOOSH 顶层暴露八个端口",
+        "detail": "作者口述：回到 WHOOSH 父结构，再建立 Port 1-8 并连接到 Source+Mix 的八个 In；完成后退出 Edit，并用 Reaktor Host save 保存修改后的 ensemble。画面事实：frame_000180 显示顶层输入 1-8 与 Source+Mix 八个输入的连线。",
+        "params": [
+          "作者事实：Source+Mix 内部端口和 WHOOSH 顶层端口是两个都要完成的编辑层级。",
+          "作者事实：修改后保存 ensemble，确保下一次能重新载入该结构。",
+          "分析建议：给修改版增加项目版本后缀；作者没有规定命名或版本规范。"
+        ],
+        "imageKey": "ceC_RDgx71s-top-level-inputs"
+      },
+      {
+        "order": 4,
+        "name": "设置八入与立体声返回的 pin matrix",
+        "detail": "作者口述：打开 Reaktor/Whoosh 轨的插件 pin connector，把输入侧扩展为八个 track channels，同时只保留主要左右返回。画面事实：frame_000235 的左矩阵将 Track Channels 1-8 对角映射到 Reaktor 1L-4R，右矩阵只把 Reaktor 1L/1R 返回到 Track Channels 1/2。",
+        "params": [
+          "画面事实：输入为 1-8，处理后返回为 1/2；不能把左右矩阵理解成双向发送。",
+          "分析建议：编辑后逐条播放源轨，只让对应 Whoosh Source meter 响应，以捕获错对和左右互换。",
+          "证据边界：教程使用 REAPER pin connector；其他 DAW 的插件输入矩阵和通道命名会不同。"
+        ],
+        "imageKey": "ceC_RDgx71s-plugin-pin-matrix"
+      },
+      {
+        "order": 5,
+        "name": "把四条源轨发送到四个通道对",
+        "detail": "作者口述：源 Track 1-4 的自身 1/2 分别发送到 Whoosh 轨目标 1/2、3/4、5/6、7/8。画面事实：frame_000260 显示 Track 2 的 Audio 1/2 -> 3/4，并显示当前 send state 为 `Post-Fader (Post-Pan)`。",
+        "params": [
+          "作者事实：四个目标对必须与 Reaktor 内部 Source 1-4 的 L/R 配对一致。",
+          "证据边界：Post-Fader (Post-Pan) 是所选发送的可见状态；作者没有比较其他 send mode，因此不能写成唯一要求。",
+          "分析建议：检查源轨是否还有意外的并行干声 1/2 路径；具体是否关闭 parent/master send 取决于工程层级。"
+        ],
+        "imageKey": "ceC_RDgx71s-track-two-send"
+      },
+      {
+        "order": 6,
+        "name": "用四个声音验证完整路由",
+        "detail": "作者口述：把声音放到四条源轨，选择素材并播放，确认设置工作。画面事实：frame_000285 中四条源轨电平同时活动，Whoosh 主视图和四个 Source 区域有信号，Whoosh 轨返回处理后的音频。",
+        "params": [
+          "作者事实：四源播放是保存模板前展示的功能测试。",
+          "分析建议：先单源逐对测试，再同时播放四源；这样能区分个别映射错误与整体返回问题。",
+          "证据边界：该段证明实时播放，不证明录音、打印文件、循环回送或故障恢复。"
+        ],
+        "imageKey": "ceC_RDgx71s-four-source-test"
+      },
+      {
+        "order": 7,
+        "name": "用外层 Parent 保存可复用模板",
+        "detail": "作者口述：把完整 Whoosh 路由放在另一个 Parent 下，让后续 FX 加在外层而不破坏 Reaktor/Whoosh 设置；随后右键顶层 Parent 保存 REAPER track template。画面事实：frame_000345 显示完整层级和 `Whoosh Reaper Routed Audio.RTrackTemplate` 保存对话框。",
+        "params": [
+          "作者事实：外层 Parent 是后续效果位置，模板用于召回整个路由层级。",
+          "作者事实：可直接召回模板，也可通过 nvk_SEARCH；nvk_SEARCH 只是便利工具，不是路由依赖。",
+          "分析建议：在空工程重新载入模板并重复单源逐对测试，确认保存内容完整。"
+        ],
+        "imageKey": "ceC_RDgx71s-track-template"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Native Instruments Reaktor 6 VST (16ch)",
+        "purpose": "画面与作者口述确认：作为多通道效果器接收 REAPER 四对输入并承载 Whoosh ensemble，而不是使用 VSTi 入口。",
+        "settings": [
+          "frame_000060 显示 VST effect 与 VSTi 两个独立条目；本流程选择 VST effect。",
+          "16ch 是画面可见入口信息，不代表每个 DAW 都使用同样菜单或标签。"
+        ]
+      },
+      {
+        "name": "TONSTURM Whoosh v1.5 / Reaktor Source+Mix",
+        "purpose": "作者口述：在 Source+Mix 和 WHOOSH 顶层分别增加八个端口，把四对 DAW 输入送到 Source 1-4。",
+        "settings": [
+          "端口映射为 1/2 -> Source 1 L/R、3/4 -> Source 2 L/R、5/6 -> Source 3 L/R、7/8 -> Source 4 L/R。",
+          "修改后使用 Reaktor Host save 保存 ensemble；作者未给出通用文件命名标准。"
+        ]
+      },
+      {
+        "name": "REAPER plug-in pin connector",
+        "purpose": "画面与作者口述确认：把 Track Channels 1-8 映射到 Reaktor 四对输入，并只从 Reaktor 1L/1R 返回 Track Channels 1/2。",
+        "settings": [
+          "frame_000235 显示八入、立体声出的矩阵终态。",
+          "分析建议：逐对测试 meter；不要从返回轨再发送回任一 Whoosh 输入对。"
+        ]
+      },
+      {
+        "name": "REAPER multichannel sends",
+        "purpose": "作者口述：将四条源轨的 1/2 依次发送到目标 1/2、3/4、5/6、7/8。",
+        "settings": [
+          "frame_000260 显示 Track 2 的 1/2 -> 3/4 和当前 Post-Fader (Post-Pan) 状态。",
+          "作者未比较 send mode；干声路径与 parent/master send 需要按具体工程另行检查。"
+        ]
+      },
+      {
+        "name": "REAPER Track Template / nvk_SEARCH",
+        "purpose": "作者口述：保存外层 Parent 下的完整 Whoosh 路由，以便在后续工程召回；nvk_SEARCH 是可选的召回便利。",
+        "settings": [
+          "frame_000345 显示教程本地模板名，只作当前画面证据。",
+          "分析建议：召回后在干净工程重新执行单源逐对测试。"
+        ]
+      }
+    ],
+    "materials": [
+      "四条任意立体声音频源轨：分别作为 Whoosh Source 1-4 的输入",
+      "修改后的 TONSTURM Whoosh v1.5 Reaktor ensemble：Source+Mix 与顶层 WHOOSH 均暴露八个端口",
+      "Reaktor/Whoosh 路由轨：接收四个立体声通道对并返回处理后的 1/2",
+      "外层 Parent：承载后续 FX，并包住 Whoosh 轨与四条源轨以便保存模板",
+      "REAPER Track Template：保存并召回完整路由层级"
+    ],
+    "keywords": [
+      "插件技巧",
+      "DAW routing",
+      "Whoosh",
+      "TONSTURM Whoosh",
+      "Reaktor 6",
+      "VST effect",
+      "REAPER",
+      "Source+Mix",
+      "plugin pin connector",
+      "multichannel sends",
+      "1/2 3/4 5/6 7/8",
+      "stereo return",
+      "track template",
+      "nvk_SEARCH",
+      "feedback prevention",
+      "workflow",
+      "scifi"
+    ],
+    "tips": [
+      "作者事实：先改 Source+Mix，再改 WHOOSH 顶层；只完成其中一层不会得到完整的八通道入口。",
+      "画面事实：pin matrix 左侧是八个输入，右侧只有 1/2 返回；保持信号方向单向。",
+      "分析建议：先在低电平下单源逐对测试，再做四源齐播，出现持续上升或停止后仍不消失的 meter 时立即静音返回并查循环发送。",
+      "分析建议：若 Whoosh 全湿或预期静音时仍听到干声，检查源轨 parent/master send 与文件夹路径，不要用电平补偿掩盖并行通路。",
+      "证据边界：视频没有演示打印；专用 print track、输出录音模式和回送隔离都是迁移建议。"
+    ],
+    "chainFocus": [
+      "作者口述与画面事实：Reaktor 6 VST effect -> Whoosh ensemble，是接收 DAW 音频的入口；VSTi 不用于本流程。",
+      "作者口述与画面事实：Source+Mix Port 1-8 -> Source 1-4 L/R，WHOOSH 顶层 Port 1-8 -> Source+Mix In 1-8。",
+      "作者口述与画面事实：四条源轨自身 1/2 -> Whoosh 目标 1/2、3/4、5/6、7/8。",
+      "画面事实：Reaktor 输入侧使用 Track Channels 1-8，输出侧只把 Reaktor 1L/1R 返回 Track Channels 1/2。",
+      "作者口述：Whoosh 路由位于外层 Parent 内，后续 FX 放到外层，再将整个层级保存为 Track Template。",
+      "分析建议：打印时只把处理后的外层/Whoosh 立体声返回送到文件夹外的专用轨，并禁止该轨回送到 Whoosh。"
+    ],
+    "parameterLogic": [
+      "固定拓扑事实：八个单声道输入组成四个立体声对；源 1-4 的目标依次为 1/2、3/4、5/6、7/8。",
+      "固定返回事实：处理后的主左右声道经 1/2 返回；教程没有展示其他多通道输出用途。",
+      "画面事实：Track 2 当前使用 Post-Fader (Post-Pan)，但作者没有比较 send mode，不能提升为通用固定参数。",
+      "分析建议：单源测试时只允许一个对应 Source meter 响应；左右反相、错对或多个 Source 同时响应都应先查 pin/send mapping。",
+      "分析建议：监控从低电平开始；停止播放后 meter 继续上升或保持时，先静音返回再查 Whoosh、Parent 或 print track 的循环发送。",
+      "证据边界：教程没有提供音频设备、buffer、打印模式、响度目标或模板版本参数。"
+    ],
+    "practiceChecklist": [
+      "练习：新建 REAPER 工程，载入 Reaktor 6 VST effect 与 Whoosh，不选择 VSTi。",
+      "练习：在 Source+Mix 创建 Port 1-8，并按四对 L/R 接到 Source 1-4；逐条核对编号。",
+      "练习：在 WHOOSH 顶层再创建 Port 1-8，连接到 Source+Mix，并保存修改后的 ensemble。",
+      "练习：设置 pin matrix 为 Track Channels 1-8 对角输入、Reaktor 1L/1R 返回 Track Channels 1/2。",
+      "练习：建立四条立体声源轨，把各自 1/2 发送到目标 1/2、3/4、5/6、7/8。",
+      "练习：低电平逐条播放，确认只命中对应 Whoosh Source；再四条齐播验证主返回。",
+      "练习：检查是否存在意外干声或循环发送；这些保护检查属于分析建议。",
+      "练习：把路由放入外层 Parent，保存 Track Template，并在空工程召回后重复逐对测试。",
+      "练习：若要打印，创建文件夹外的专用立体声 print track，只接处理后返回并禁止回送；这是视频外的分析建议。"
+    ]
+  },
+  {
+    "id": "yt-fYqe17OJRNM",
+    "title": "Wave Shifter 制作科幻与动漫音效",
+    "videoId": "fYqe17OJRNM",
+    "url": "https://www.youtube.com/watch?v=fYqe17OJRNM",
+    "source": "Negativist / 插件技巧",
+    "category": "scifi",
+    "secondaryCategories": [
+      "magic",
+      "workflow"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 8 条：依据完整 442.29 秒视频、英文字幕、本地音频测量和八张指定 1920×1080 原帧整理。八个证据位分别绑定模式菜单、100% Wet、Feedback Time、调制区、正负频移短 hit、串联后处理与 anime 分支；所有可见数值均限定在对应帧和素材，未生成 motion。",
+    "summary": "作者在 Ableton Live 中把 Minimal Audio Wave Shifter 设为 Freq Shift / Stereo，并在素材生成阶段从 100% Wet 开始：先扫描 Frequency，再按素材加入 Feedback、单独调整 Feedback Time，并对短素材轻用内置 modulation。短 Cardboard Falls hit 被分别测试为小幅正、负频移；找到角色后再串联两只 Fuse Compressor、INTENSITY、TransX Multi、可选第二只 Wave Shifter 与 Pro-L 2。动漫分支把 Pro-R 2 放在第二只 Wave Shifter 前，让混响尾部进入后级频移或 FM。画面中的 +26.7 Hz、-7.32 Hz、0.48 ms、5.65 Hz 等只属于各自截图状态，不是通用预设。",
+    "coreIdeas": [
+      "作者口述与画面共同确认：本教程使用独立版 Wave Shifter 的 Freq Shift / Stereo 模式；菜单中的 Ring Mod 与 Amp Mod 只是可选模式，本片没有比较其优劣。",
+      "作者口述：素材生成阶段先设 100% Wet，再扫描 Frequency；这描述本次全湿 source-generation 流程，不等于在成品总线或并行链中永远使用 100% Wet。",
+      "作者口述：Frequency 与 Feedback 要按源素材寻找甜点位，过度处理会丢失低频、瞬态或源动作，并让不同素材趋同。",
+      "作者口述：Feedback Time 是容易遗漏但会显著改变反馈纹理的控制量；画面中的 0.48 ms 只绑定 frame_000195，不能推导固定延迟或梳状滤波公式。",
+      "作者口述：短素材只轻用内置 modulation，通常更偏向绘制外部自动化；本片没有展示一条可读的自动化包络。",
+      "作者对本次短 hit 的判断是小幅正移得到更 bubbly 的分支、小幅负移得到更低沉且更有 punch 的分支；该方向依赖 source，不是频移器的普遍定律。",
+      "作者口述与画面共同确认：后处理和 anime 分支都在找到 core character 后再加入；画面只确认具体插件实例、顺序与瞬时数值。分析建议：逐级等响旁路，不把整链照抄为固定模板。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "确认 Freq Shift 与 Stereo 工作模式",
+        "detail": "作者口述：Wave Shifter 提供 frequency shifting、ring modulation 与 amp modulation，本教程主要使用 frequency shifting。画面事实：frame_000053 展开的 Style 菜单列出 `Freq Shift`、`Ring Mod`、`Amp Mod`，圆点标记当前选中 `Freq Shift`，右侧 Mode 为 `Stereo`；菜单中的浅色悬停项不代表已切换模式。",
+        "params": [
+          "画面事实：当前模式由 Freq Shift 前的选中圆点确认，不能把鼠标悬停的 Ring Mod 误写为当前模式。",
+          "作者事实：本片示范的是 frequency shifting；没有对 Ring Mod 或 Amp Mod 做质量排序。",
+          "分析建议：建立资产前先记录实际 Style 与 Mode，避免后续把不同调制算法的结果混为同一变体。"
+        ],
+        "imageKey": "fYqe17OJRNM-wave-shifter-style-menu"
+      },
+      {
+        "order": 2,
+        "name": "用 100% Wet 建立全湿生成起点",
+        "detail": "作者口述：先把 Wet 设为 100%，再移动 Frequency 观察素材如何变化。画面事实：frame_000061 同时显示 `FREQ SHIFT`、`STEREO`、Wet `100%`、完整主控布局，以及当前较长的 Cardboard Rips 素材。",
+        "params": [
+          "作者事实：100% Wet 是本次 source-generation 的起点，用于清楚听到处理结果。",
+          "证据边界：frame_000061 不支持把全湿状态推广到成品总线、并行处理或所有素材。",
+          "分析建议：保留 dry 副本并做等响 A/B；若后续仍需原动作或瞬态，可从干声与全湿渲染中重新分配角色。"
+        ],
+        "imageKey": "fYqe17OJRNM-wave-shifter-100-wet"
+      },
+      {
+        "order": 3,
+        "name": "把 Feedback Time 作为独立变量",
+        "detail": "作者口述：Feedback Time 常被忽略，却会大幅改变声音；推得过头会变得 washed out，并出现类似另一种 time-stretch 算法的纹理。画面事实：frame_000195 显示当前 Feedback Time 为 `0.48 ms`，Wave Shifter 后已有 Pro-L 2。",
+        "params": [
+          "画面事实：0.48 ms 只属于 frame_000195 的当前状态，不是推荐起点或通用甜点位。",
+          "作者事实：作者在找到 Frequency / Feedback 候选后，单独演示改变 Feedback Time。分析建议：一次只改这一变量，便于听清它对反馈纹理的贡献。",
+          "证据边界：视频没有给出内部算法说明，不能把 Feedback Time 写成固定 comb、delay 或 time-stretch 公式。"
+        ],
+        "imageKey": "fYqe17OJRNM-feedback-time-detail"
+      },
+      {
+        "order": 4,
+        "name": "按素材长度控制 modulation 剂量",
+        "detail": "作者口述：内置 modulation 能增加 movement，但短 asset 只轻用，幅度过大容易过于 chaotic；较长素材可以承受更明显的运动。画面事实：frame_000225 清楚显示 modulation 波形、Mod Depth、Sync、Snap、Rate、Shape、Randomize 与 Offset 控件。",
+        "params": [
+          "画面事实：该帧证明控件组成与当前波形，不提供可迁移的 Rate、Depth 或 Shape 固定值。",
+          "作者事实：作者通常更偏向为短素材绘制外部自动化，但本视频没有展示一条可读的自动化包络。",
+          "分析建议：短 hit 先用小剂量或可重复自动化，长素材再放宽运动范围，并按有效片段筛选。"
+        ],
+        "imageKey": "fYqe17OJRNM-modulation-section"
+      },
+      {
+        "order": 5,
+        "name": "记录正频移的 bubbly 候选",
+        "detail": "作者口述：对当前短、punchy 的 Cardboard Falls 素材，Frequency 略高于 0 Hz 得到作者称为 bubbly 的结果。画面事实：frame_000309 将该短 hit 与当前 `+26.7 Hz` 同时呈现。",
+        "params": [
+          "画面事实：+26.7 Hz 是连续扫参中的一个截图状态，只绑定当前 Cardboard Falls hit。",
+          "作者事实：bubbly 是作者对本次素材和设置的听感描述，不是所有正频移的必然结果。",
+          "分析建议：把正向候选单独渲染并与 dry 等响比较，确认它保留了原始瞬态和低频职责。"
+        ],
+        "imageKey": "fYqe17OJRNM-positive-shift-hit"
+      },
+      {
+        "order": 6,
+        "name": "记录负频移的低沉候选",
+        "detail": "作者口述：同一短 hit 略低于 0 Hz 时，本例听起来更低沉并增加 punch。画面事实：frame_000317 显示同一 Cardboard Falls 素材与当前 `-7.32 Hz`，可与上一帧组成方向对照。",
+        "params": [
+          "画面事实：-7.32 Hz 只属于 frame_000317，不是负频移的推荐数值。",
+          "证据边界：作者的低沉 / punch 判断依赖当前 source；不能写成负频移的普遍因果。",
+          "分析建议：正负候选使用同一干声、相近响度和相同后级条件比较，再按游戏角色命名，而不是按数值命名。"
+        ],
+        "imageKey": "fYqe17OJRNM-negative-shift-hit"
+      },
+      {
+        "order": 7,
+        "name": "在核心频移后串联角色塑形",
+        "detail": "作者口述：找到喜欢的 character 后，再加入 multiband compression、saturation、transient shaping，并可串联第二只 Wave Shifter 产生更多变体，末端继续使用 limiter。画面事实：frame_000365 底部可见 Wave Shifter -> Fuse Compressor -> Fuse Compressor -> INTENSITY -> TransX Multi -> 第二只 Wave Shifter -> Pro-L 2 的顺序；第二只 Wave Shifter 当前显示 `-11.4 Hz`。",
+        "params": [
+          "画面事实：链成员与顺序由 frame_000365 确认；-11.4 Hz 只绑定第二实例当前状态。",
+          "证据边界：作者口述可加入 saturation，但画面不足以把 INTENSITY 定义为唯一或固定的 saturation 算法，也没有给出 TransX 参数。",
+          "分析建议：逐级等响旁路；若某一级只增加响度、抹平瞬态或让不同素材趋同，就减量或移除。"
+        ],
+        "imageKey": "fYqe17OJRNM-stacked-hit-chain"
+      },
+      {
+        "order": 8,
+        "name": "让混响尾部进入第二级频移",
+        "detail": "作者口述：在第二只 Wave Shifter 前加入 reverb，再调 Frequency 并轻用 FM，可以得到 anime-style source sound 与 modulated tremolo movement。画面事实：frame_000410 显示 Pro-R 2 位于第二只 Wave Shifter 前，第二实例当前 Frequency 为 `5.65 Hz`。",
+        "params": [
+          "画面事实：Pro-R 2 -> 第二只 Wave Shifter 的链位由 frame_000410 确认；5.65 Hz 只属于当前帧。",
+          "证据边界：视频没有展示 Pro-R 2 的 reverb 参数，也没有把 FM Amount、Ratio 或 Frequency 定义为固定 anime 预设。",
+          "分析建议：让尾部进入后级频移时先保护主瞬态；若攻击被空间洗平，可把 anime tail 与 core hit 分成独立资产。"
+        ],
+        "imageKey": "fYqe17OJRNM-anime-reverb-before-shifter"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Minimal Audio Wave Shifter",
+        "purpose": "作者口述与画面确认：以 Freq Shift / Stereo 为核心，控制 Frequency、Feedback、Feedback Time、modulation 与 FM，生成科幻、UI 和 anime 风格源素材。",
+        "settings": [
+          "素材生成阶段从 100% Wet 开始；该状态不推广到成品总线。",
+          "+26.7 Hz、-7.32 Hz、-11.4 Hz、5.65 Hz 与 0.48 ms 均只绑定对应证据帧，不构成 preset。"
+        ]
+      },
+      {
+        "name": "Minimal Audio Fuse Compressor x2",
+        "purpose": "作者口述：在核心频移后进行 multiband compression；frame_000365 确认链中有两个连续实例。",
+        "settings": [
+          "本条八张证据帧不提供可迁移的 band、ratio、time、mix 或 preset 数值。",
+          "分析建议：分别旁路两只实例，确认它们承担不同动态职责，而不是重复增加响度。"
+        ]
+      },
+      {
+        "name": "Zynaptiq INTENSITY",
+        "purpose": "画面确认：位于两只 Fuse Compressor 后、TransX Multi 前，作为作者后处理链的一部分。",
+        "settings": [
+          "作者只概括可继续加入 saturation；视频不足以把 INTENSITY 直接定义为某种固定 saturation 算法。",
+          "当前 preset、Dry/Wet 与强度不可从 frame_000365 可靠读取。"
+        ]
+      },
+      {
+        "name": "Waves TransX Multi Stereo",
+        "purpose": "作者口述：用于 transient shaping；frame_000365 确认它位于 INTENSITY 与第二只 Wave Shifter 之间。",
+        "settings": [
+          "插件界面和参数没有在八张发布帧中展开。",
+          "分析建议：先确定需要保留还是强化短 hit 的攻击，再调节多段瞬态，避免只把限制器推得更响。"
+        ]
+      },
+      {
+        "name": "FabFilter Pro-R 2",
+        "purpose": "作者口述与画面确认：anime 分支中放在第二只 Wave Shifter 前，让 reverb tail 进入后级 Frequency / FM。",
+        "settings": [
+          "frame_000410 只确认链位，不公开 Space、Decay、Brightness、Mix 或其他 reverb 参数。",
+          "分析建议：需要保持攻击清晰时，把湿尾与 core hit 分开验收。"
+        ]
+      },
+      {
+        "name": "FabFilter Pro-L 2",
+        "purpose": "作者口述：插件内有限制保护，链末仍加入 Pro-L 2 管理激进 Feedback 和后处理产生的峰值。",
+        "settings": [
+          "画面确认末端链位，但没有可靠 threshold、lookahead、style 或 output 参数。",
+          "发布视频关键窗口未做严格响度匹配，不能把更响误写成音质提升。"
+        ]
+      }
+    ],
+    "materials": [
+      "较长 Cardboard Rips 录音：用于扫描 Frequency、Feedback、Feedback Time 与更明显 modulation",
+      "较短 Cardboard Falls hit：用于对照小幅正、负频移和后处理变体",
+      "dry source 副本：分析建议保留，便于等响 A/B、恢复瞬态与重新分配角色",
+      "core Wave Shifter 变体：正向 bubbly 候选、负向低沉候选与更高 Feedback 候选",
+      "anime tail 分支：Pro-R 2 尾部进入第二只 Wave Shifter 的独立候选"
+    ],
+    "keywords": [
+      "插件技巧",
+      "Wave Shifter",
+      "Minimal Audio",
+      "Freq Shift",
+      "frequency shifting",
+      "Feedback",
+      "Feedback Time",
+      "modulation",
+      "positive shift",
+      "negative shift",
+      "anime sound design",
+      "Fuse Compressor",
+      "INTENSITY",
+      "TransX Multi",
+      "Pro-R 2",
+      "Pro-L 2",
+      "source generation",
+      "scifi",
+      "magic",
+      "workflow"
+    ],
+    "tips": [
+      "作者事实：作者的演示顺序是先扫 Frequency，再增加 Feedback，最后单独改变 Feedback Time。分析建议：每次只改一个变量，避免失去因果。",
+      "证据边界：100% Wet 是本次 source-generation 起点，不是所有插入位置的默认值。",
+      "证据边界：正移 bubbly、负移低沉 / punch 只描述当前短 hit；换源后必须重新找甜点位。",
+      "分析建议：每个阶段保留 dry / core / post chain / anime tail 四类打印，使用等响 A/B 判断插件是否增加角色。",
+      "分析建议：先降低监听电平并保留末端峰值保护；高 Feedback 与多级后处理可能快速抬高电平。"
+    ],
+    "chainFocus": [
+      "作者口述与画面事实：Cardboard source -> Wave Shifter Freq Shift / Stereo / 100% Wet，是核心素材生成入口。",
+      "作者口述：先 Frequency -> 再 Feedback -> 再 Feedback Time；modulation 对短素材轻用，对长素材可增加运动。",
+      "作者口述：短 hit 分成小幅正移与负移候选，但听感方向必须绑定 source。",
+      "画面事实：Wave Shifter -> Fuse Compressor x2 -> INTENSITY -> TransX Multi -> 第二只 Wave Shifter -> Pro-L 2。",
+      "作者口述与画面事实：anime 分支在第二只 Wave Shifter 前插入 Pro-R 2，让空间尾部进入 Frequency / FM。",
+      "分析建议：分阶段打印并逐级旁路；不要把完整链视为每个素材都必须经过的固定模板。"
+    ],
+    "parameterLogic": [
+      "frame_000061 的 Wet 100% 只属于全湿源素材生成阶段；迁移到并行或成品总线时重新决定 Dry/Wet。",
+      "frame_000195 的 Feedback Time 0.48 ms 只证明当前状态；作者强调的是单独扫描该控制量，而不是复制数值。",
+      "frame_000309 的 +26.7 Hz 与 frame_000317 的 -7.32 Hz 构成本素材方向对照，不建立正负频移的普遍听感定律。",
+      "frame_000365 的第二实例 -11.4 Hz 与 frame_000410 的 5.65 Hz 都来自连续扫参，不构成第二级 Wave Shifter 预设。",
+      "modulation 控件可见但没有固定 Rate、Depth、Shape；作者偏好短素材轻用，具体剂量随素材长度和动作调整。",
+      "分析建议：所有候选与 dry 做响度匹配，保持末端 headroom；发布视频的响度和 limiter 状态不是游戏交付标准。"
+    ],
+    "practiceChecklist": [
+      "练习：准备一条自身有运动的较长录音和一条瞬态清晰的短 hit，并保留 dry 副本。",
+      "练习：确认 Wave Shifter 为 Freq Shift / Stereo；记录模式，不把菜单悬停项当选中态。",
+      "练习：在素材生成轨从 100% Wet 开始，只扫描 Frequency，标记仍保留源动作的候选。",
+      "练习：在候选 Frequency 上逐步加入 Feedback，出现低频、瞬态或身份丢失时回退。",
+      "练习：单独扫描 Feedback Time；不要同时改 Frequency、Feedback 与 Time。",
+      "练习：短素材只轻用 modulation 或绘制可重复外部自动化；长素材可放宽后再筛选片段。",
+      "练习：同一短 hit 分别制作小幅正移、负移与高 Feedback 三个 core 候选，不照抄视频数值。",
+      "练习：按需测试 Fuse Compressor x2、INTENSITY、TransX Multi 与第二只 Wave Shifter，逐级等响旁路。",
+      "练习：anime 分支把 Pro-R 2 放在第二只 Wave Shifter 前，从小量 Frequency / FM 开始，并保护 core attack。",
+      "练习：导出 dry / core / post chain / anime tail 四类结果，按 UI、能量弹道、魔法启动或短 hit 的功能命名。"
+    ]
+  },
+  {
+    "id": "yt-j4POSc1YeAo",
+    "title": "正弦波制作动漫气泡旋律弹跳音",
+    "videoId": "j4POSc1YeAo",
+    "url": "https://www.youtube.com/watch?v=j4POSc1YeAo",
+    "source": "Dietrich Dice Sound / 插件技巧",
+    "category": "magic",
+    "secondaryCategories": [
+      "scifi",
+      "workflow"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 9 条：依据完整 1440.63 秒音视频、英文字幕和八张指定 1920×1080 原帧整理。证据位覆盖核心随机音高源、Wave Shifter 状态、laser、spectral、metallic、bubble fire、旋律宽度与最终角色堆栈；frame_000977 的 Wavetable 界面事实与作者的 sine-wave synth 口述严格分开，未生成 motion。",
+    "summary": "作者先用短包络调性源和高速随机音高建立 bubbly 身份，再把同一调制语法扩展为 laser、spectral whoosh、metallic goop 与 rapid-fire bubble。核心不是复制某个预设，而是先让干净 source 在包络和调制层面成立，再按职责加入 Wave Shifter、滤波、延迟、和声、合唱与重采样，最后把打印结果分配到动作角色。frame_000977 的两个生成器在界面中明确是 Wavetable / Default Wavetable；作者口述称其为 sine-wave synth，二者不互相替换。",
+    "coreIdeas": [
+      "作者口述：核心方法可以简单到 sine wave 加 very fast random frequency modulation；可迁移关系是短包络调性源、快速音高运动与后续滤波，而不是固定频率或固定 preset。",
+      "画面事实：frame_000187 的 Phase Plant 当前使用 Analog 正弦、1.00 ms Attack、100 ms Decay、100% Sustain、5.00 ms Release，并以 30.50 Hz Random 调制 pitch；这些只属于该帧状态。",
+      "作者口述与画面事实：Wave Shifter 在既有 bubbly 身份上增加频移和反馈质感；frame_000332 的 34.3 Hz、右侧 1.06 kHz 与 Width 100% 是一次启用态，不是通用参数。",
+      "作者把同一快速调制语法扩展成 laser、spectral whoosh 和 metallic goop；不同角色来自源波形、包络、频谱处理与打印后加工的重新组合。",
+      "关键证据边界：frame_000977 明确显示两个 Wavetable / Default Wavetable 生成器，作者口述把它们称为 sine-wave synth；不得把界面类型改写为两个 Analog oscillator。",
+      "作者口述：Flex Chorus 增加 movement，MHarmonizerMB 增加 melodic voice，TRAVELER 再把打印结果变成 whoosh 与 impact；插件角色应分别验证。",
+      "分析归纳：master patch 的价值是保存一套调制语法，再通过打印、重采样、时长和层级职责派生资产；最终成品仍按画面动作组织，而不是让所有层共享完整效果链。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "建立短包络随机音高核心",
+        "detail": "作者口述：起点可以是 simple sine wave 加 really fast random frequency modulation，并让随机 pitch oscillator 快速往返。画面事实：frame_000187 显示 Phase Plant 的 Analog 正弦、1.00 ms Attack、100 ms Decay、100% Sustain、5.00 ms Release，以及 30.50 Hz Random 到 pitch 的连线。",
+        "params": [
+          "画面事实：Random 调制浮层当前显示 +120.00、范围约 -60.00 至 +60.00；只记录该帧状态，不包装成推荐范围。",
+          "分析归纳：bubbly 身份在长链前已经成立，后级主要扩展颜色、空间和动作用途。",
+          "分析建议：先在低电平下只听 dry patch，确认短促边缘与不规则音高运动可读，再加入后级。"
+        ],
+        "imageKey": "j4POSc1YeAo-sine-random-pitch-core"
+      },
+      {
+        "order": 2,
+        "name": "用 Wave Shifter 扩展旁带运动",
+        "detail": "作者口述：作者在 Wave Shifter 中调节 Frequency 与 Feedback，并描述其产生 bubbly effects。分析描述：启用态带来更现代的金属和液态运动。画面事实：frame_000332 是启用状态，当前主 Frequency 为 34.3 Hz，右侧显示 Freq 1.06 kHz、Width 100%，模式为 Freq Shift / Stereo。",
+        "params": [
+          "画面事实：34.3 Hz、1.06 kHz 与 Width 100% 只绑定这次 A/B 的当前画面。",
+          "证据边界：分析稿另核对了 326 秒旁路状态，但本条发布图只展示 332 秒启用态；视频没有做严格响度匹配。",
+          "分析建议：先打印 dry，再打印启用态，以相近响度比较它是否增加旁带运动而没有抹掉源节奏。"
+        ],
+        "imageKey": "j4POSc1YeAo-wave-shifter-bubble-state"
+      },
+      {
+        "order": 3,
+        "name": "把语法改造成短促 laser",
+        "detail": "作者口述：laser 分支追求 classic sci-fi laser sound。画面事实：frame_000506 显示 Phase Plant 的 Harmonic Wanderer wavetable、Frame 171、1.00 ms Attack、122 ms Decay、0.2% Sustain、5.00 ms Release，以及 12.98 Hz Pyramid LFO、54.3 ms Delay 和 Randflange Filter Table。",
+        "params": [
+          "画面事实：Frame 171、12.98 Hz、122 ms 与 54.3 ms 只属于当前 laser patch。",
+          "画面事实：laser patch 使用更接近 pluck 的短衰减包络，并可见 LFO 到 filter 的调制连线。分析归纳：该分支并非只把核心 bubble 升调。",
+          "分析建议：让 laser 的单次发射轮廓先成立，再决定是否加入更长尾或额外甜化层。"
+        ],
+        "imageKey": "j4POSc1YeAo-laser-pluck-motion"
+      },
+      {
+        "order": 4,
+        "name": "搭建 spectral 瞬态与尾部链",
+        "detail": "作者口述：spectral whoosh 使用 Crystal wavetable、快速 LFO 到 pitch / frequency shifter，并加入 compressor、transient shaper、delay、transient shaper。画面事实：frame_000566 显示 Crystal、1.00 ms Attack、64.1 ms Decay、0% Sustain、0 ms Release、32.16 Hz Pyramid LFO、35.2 ms Delay、Frequency Shifter，以及效果前后两处 Transient Shaper。",
+        "params": [
+          "画面事实：32.16 Hz、64.1 ms 与 35.2 ms 只证明这一帧的当前状态。",
+          "画面事实：链中可见两处 Transient Shaper，分别位于 Delay 前与 Frequency Shifter 后。分析归纳：这形成了处理前激励与处理后反馈 / 尾部的两段瞬态控制。",
+          "证据边界：画面不支持补写 compressor、transient 或 frequency shifter 的隐藏深度和 mix。"
+        ],
+        "imageKey": "j4POSc1YeAo-spectral-transient-chain"
+      },
+      {
+        "order": 5,
+        "name": "用正弦与白噪建立 metallic 源",
+        "detail": "作者口述：metallic goop 的 initial patch 使用 sine waves 加 white noise，之后才进入高反馈 flanger、Snap Heap spectral filter table、granular 与 robotification。画面事实：frame_000760 同时显示一层 Analog 调性源和一层 Noise；调性源当前为 -16 semitones、x4 MAJOR。",
+        "params": [
+          "画面事实：-16 semitones 与 x4 MAJOR 只绑定当前 metallic source。",
+          "作者事实：作者依次使用 Uhbik-F、Snap Heap、MGranularMB 与 MTransformer，并分别描述高反馈、随机频谱、颗粒伪影和 robotification。分析归纳：这些后级重塑已有的 sine+noise 骨架，而非替代源设计。",
+          "分析建议：先打印 sine+noise 基准，再逐级加入后处理，出现刺耳反馈或源节奏消失时回退。"
+        ],
+        "imageKey": "j4POSc1YeAo-metallic-sine-noise-source"
+      },
+      {
+        "order": 6,
+        "name": "核对 rapid-fire 双生成器身份",
+        "detail": "作者口述：bubble fire 的 initial patch 是 fast LFO 驱动 sine-wave synth 的 pitch 往返，并同时控制 filter。画面事实：frame_000977 的上下两个生成器都标为 Wavetable / Default Wavetable，上层 Harmonic x1、Release 1.16 s，下层 Harmonic x36、Release 721 ms；右侧还能看到 Filter、Phaser、Dual Delay 与 Delay。",
+        "params": [
+          "界面事实：两个模块类型都是 Wavetable，不能改写成 Analog oscillator。",
+          "作者措辞：作者把这两个发生器口述为 sine-wave synth；这是对听感 / 用途的口头描述，不覆盖 UI 标签。",
+          "分析建议：分别监听 x1 与 x36 层，确认一层承担基音可读性、另一层承担高阶音色与密度，再检查快速连发时的尾部堆积。"
+        ],
+        "imageKey": "j4POSc1YeAo-bubble-fire-dual-sine"
+      },
+      {
+        "order": 7,
+        "name": "加入旋律声部与宽度运动",
+        "detail": "作者口述：Flex Chorus 增加 movement，harmonizer 增加 melodic voice。画面事实：frame_000990 同时显示 MHarmonizerMB 当前 C major / 1 octave、总 Dry/Wet 42.9%，以及 Flex Chorus 的 Frosted Highs、4 Voices、Smooth、Multi-Band 状态。",
+        "params": [
+          "画面事实：C major、1 octave、42.9%、Frosted Highs 与 4 Voices 只绑定当前 bubble-fire 分支。",
+          "证据边界：视频没有提供固定 MIDI 旋律、项目调性或所有轨道共享的和声规则。",
+          "分析建议：先确认单声部节奏，再逐个加入 chorus 和 harmonizer；若宽度或和声掩盖起音，就减量或拆成 sweetener。"
+        ],
+        "imageKey": "j4POSc1YeAo-bubble-melodic-chorus"
+      },
+      {
+        "order": 8,
+        "name": "按最终画面角色组装与复核",
+        "detail": "画面事实：frame_001419 的最终回放旁可读 Bass impacts、Laser、Spectral whoosh、Magic Flutter、metallic layer、Pings、Flickers、Bubble Boy、EXP Charge 等角色轨。作者在 22:48 起播放 original，23:35 起播放 redesign，并指出 white-noise whoosh、hanger 录音和 impact accents 仍可改进。",
+        "params": [
+          "证据边界：frame_001419 属于 23:35 后的 redesign 回放，不能标成 22:48 的 original。",
+          "作者事实：最终 UI / 动作声由 metallic、spectral、white-noise、降调 metallic 和末尾 musical sound 等角色共同组成。",
+          "分析建议：逐动作 solo / mute，检查每层是否只有一个主要职责，并保留作者明确指出的改进余量。"
+        ],
+        "imageKey": "j4POSc1YeAo-final-role-stack"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "Kilohearts Phase Plant",
+        "purpose": "作者用它建立核心调性源，并派生 laser、spectral、metallic 与 rapid-fire 分支；不同分支通过发生器类型、包络、Random / LFO、滤波和内部效果改变职责。",
+        "settings": [
+          "frame_000187 明确是 Analog 正弦；frame_000977 明确是两个 Wavetable / Default Wavetable，不能互相改写。",
+          "所有 Attack、Decay、Release、Random / LFO 速率、Harmonic 与 Frame 数值只绑定各自截图。"
+        ]
+      },
+      {
+        "name": "Minimal Audio Wave Shifter",
+        "purpose": "作者事实：作者调节 Frequency 与 Feedback，并描述其产生 bubbly effects。分析归纳：这一处理为已有 bubbly / spectral 身份增加旁带、金属感与液态运动。",
+        "settings": [
+          "frame_000332 当前显示 Freq Shift / Stereo、34.3 Hz、右侧 1.06 kHz 与 Width 100%。",
+          "视频的旁路 / 启用演示没有严格响度匹配，不能把更响直接写成更好。"
+        ]
+      },
+      {
+        "name": "Phase Plant internal Delay / Filter Table / Frequency Shifter / Transient Shaper",
+        "purpose": "在 laser 与 spectral 分支中分别承担短延迟、频谱运动、频移旁带和处理前后瞬态塑形。",
+        "settings": [
+          "frame_000506 的 54.3 ms、12.98 Hz 与 Randflange 只属于 laser；frame_000566 的 35.2 ms、32.16 Hz 与两处 Transient Shaper 只属于 spectral。",
+          "不可从静态帧补写隐藏 modulation depth、mix 或完整路由。"
+        ]
+      },
+      {
+        "name": "Minimal Audio Flex Chorus",
+        "purpose": "作者口述：给 bubble fire 增加 movement；frame_000990 确认当前 Frosted Highs、4 Voices、Smooth 与 Multi-Band 界面。",
+        "settings": [
+          "preset 和声部数只绑定当前分支，不构成通用动漫气泡预设。",
+          "分析建议：将 chorus 作为宽度 sweetener 单独旁路，避免低频核心被扩散。"
+        ]
+      },
+      {
+        "name": "MeldaProduction MHarmonizerMB",
+        "purpose": "作者口述：为 bubble fire 增加 melodic voice；frame_000990 显示当前 C major / 1 octave 与总 Dry/Wet 42.9%。",
+        "settings": [
+          "当前 key、octave 和 mix 只绑定该画面，视频没有给出全项目调性或固定旋律。",
+          "分析建议：先确定源的节奏和主音区，再用和声层补充可读旋律，不让它接管瞬态。"
+        ]
+      },
+      {
+        "name": "Uhbik-F / Snap Heap / MGranularMB / MTransformer",
+        "purpose": "作者在 metallic 分支中依次用高反馈 flanger、随机 spectral filter table、颗粒伪影和 robotification 把 sine+noise 源重塑为 goop / metallic 纹理。",
+        "settings": [
+          "frame_000760 只展示源发生器，不展示这组后级的完整启用状态或参数。",
+          "作者明确把 MTransformer 的 robotification 用于 metallic 分支，不能误写成最终 spectral whoosh 的必经步骤。"
+        ]
+      },
+      {
+        "name": "TONSTURM TRAVELER",
+        "purpose": "作者把已打印的 bubble / spectral 素材进一步变形成 whoosh、impact 和 Doppler 方向变体。",
+        "settings": [
+          "八张发布帧没有展开 TRAVELER 参数或 preset。",
+          "分析建议：把源打印和 TRAVELER 变体分开保存，按运动方向与事件角色验收。"
+        ]
+      }
+    ],
+    "materials": [
+      "Phase Plant Analog 正弦短包络：核心 bubbly 身份与随机 pitch 基准",
+      "Harmonic Wanderer 与 Crystal wavetable：laser 和 spectral 分支的不同频谱骨架",
+      "Analog 调性层加 white noise：metallic goop 的源骨架",
+      "两个 UI 明确标为 Default Wavetable 的 rapid-fire 生成器：作者口述称为 sine-wave synth",
+      "打印后的 bubble、spectral 与 metallic 变体：供 harmonizer、chorus、granular、TRAVELER 和角色分层继续加工",
+      "knife / wood、washer taps、bells / chimes、wood rub、pillow / cloth 等录音：只在后续角色中补动作和材质，不取代调性核心",
+      "最终角色层：bass impact、laser、spectral whoosh、magic flutter、metallic、pings、bubble、charge 与白噪 accent"
+    ],
+    "keywords": [
+      "插件技巧",
+      "正弦波",
+      "bubbly melodic pops",
+      "anime sound design",
+      "Phase Plant",
+      "Analog oscillator",
+      "Default Wavetable",
+      "random pitch",
+      "LFO",
+      "Wave Shifter",
+      "frequency shifting",
+      "laser",
+      "spectral whoosh",
+      "metallic goop",
+      "Flex Chorus",
+      "MHarmonizerMB",
+      "TRAVELER",
+      "print and resample",
+      "magic",
+      "scifi",
+      "workflow"
+    ],
+    "tips": [
+      "作者事实：作者把 simple sine wave 与高速随机 frequency modulation 概括为核心方法。分析建议：先让核心源建立身份，再用效果扩展，不要从完整插件链倒推源设计。",
+      "界面事实：frame_000977 是 Wavetable / Default Wavetable；作者口述称 sine-wave synth，两种证据必须并列而不互相覆盖。",
+      "证据边界：30.50 Hz、34.3 Hz、32.16 Hz、x36、C major、1 octave 与 42.9% 都只属于各自截图。",
+      "分析建议：每个角色至少保留 source、core modulation、printed variant 三个阶段，逐级等响旁路。",
+      "作者事实：最终版本仍有 white-noise whoosh、hanger action 和 impact accent 的改进余量，不能写成无缺陷终稿。"
+    ],
+    "chainFocus": [
+      "作者口述与画面事实：短包络调性源 -> very fast Random / LFO 到 pitch，并可同时控制 filter，是 bubbly 核心。",
+      "作者事实：作者在核心 source 后调节 Wave Shifter 的 Frequency / Feedback，并描述 bubbly effects。分析归纳：该步骤增加旁带和液态运动，流程上先有 source 身份，后有频移颜色。",
+      "画面事实：laser 以 Harmonic Wanderer、pluck 包络、LFO、Delay 和 Randflange Filter Table 建立单次发射轮廓。",
+      "作者口述与画面事实：spectral 链包含 Crystal、快速 LFO、Frequency Shifter、Delay 和前后两处 Transient Shaper。分析归纳：这套组合用于塑造脉冲与反馈尾部。",
+      "作者口述与画面事实：metallic 从 sine+white noise 出发，再进入 Uhbik-F -> Snap Heap -> MGranularMB -> MTransformer 等重塑步骤。",
+      "作者口述与画面事实：rapid-fire Wavetable 双层 -> filter / phaser / delay -> Flex Chorus -> MHarmonizerMB -> 可选 TRAVELER 变体。",
+      "分析归纳：print / resample 后按 bass、laser、spectral、magic、metallic、ping、bubble 与 charge 角色组装最终画面。"
+    ],
+    "parameterLogic": [
+      "先用包络决定动作长度：核心 pop、laser 与 spectral 的 Attack / Decay / Release 各不相同，截图值只用于解释本例职责。",
+      "再用 Random / LFO 决定每颗声音内部的音高运动；需要液态音色时才同步影响 filter / resonance。",
+      "Wave Shifter 的 Frequency 与 Feedback 在源身份成立后逐项扫描；旁路 / 启用对比不等于严格响度匹配。",
+      "和声与 chorus 放在节奏可读之后；先验证 movement，再验证 melodic voice，避免同时改动导致无法判断贡献。",
+      "快速连发时重点检查两层 Release 和 delay 尾部是否堆积；不要直接复制 1.16 s、721 ms 或当前 delay 值。",
+      "metallic 分支的高反馈、颗粒与 robotification 容易抬高峰值和刺耳度；分阶段打印并保持监听余量。",
+      "最终按画面职责决定层级和出现时机；原声 22:48 与 redesign 23:35 的回放不能互换标注。"
+    ],
+    "practiceChecklist": [
+      "练习：在 Phase Plant 建立一个短包络调性源，只用 Random / LFO 调制 pitch，先完成可读的 dry bubbly pop。",
+      "练习：保留 dry 打印，再加入 Wave Shifter；只改 Frequency 与 Feedback 中的一个变量，并做相近响度 A/B。",
+      "练习：复制调制关系制作一个 laser 分支，重新设计 wavetable、包络和 filter motion，不照抄截图数值。",
+      "练习：制作一个 spectral 分支，把 transient shaping 分别放在延迟 / 频移前后，并逐级旁路判断职责。",
+      "练习：用调性层加 white noise 建立 metallic 基准，再按反馈、随机频谱、颗粒与 robotification 分阶段打印。",
+      "练习：建立 rapid-fire 双层时，在笔记中明确记录 UI generator 类型；若界面是 Default Wavetable，就不得写成 Analog。",
+      "练习：先单独加入 Flex Chorus 检查 movement，再单独加入 harmonizer 检查 melodic voice。",
+      "练习：用 TRAVELER 或等价 Doppler 工具从打印素材派生 whoosh / impact，但保留未经变形的 source。",
+      "练习：按 bass、laser、spectral、magic、metallic、ping、bubble、charge 建立角色轨，逐动作 solo / mute。",
+      "练习：对比 original 与 redesign，只记录可听角色和同步变化；另列 white-noise、action recording 与 impact accent 改进项。"
+    ]
+  },
+  {
+    "id": "yt-C_5qPsn1GWY",
+    "title": "iZotope RX De-Clip 的创意声音设计",
+    "videoId": "C_5qPsn1GWY",
+    "url": "https://www.youtube.com/watch?v=C_5qPsn1GWY",
+    "source": "Oscar / 插件技巧",
+    "category": "workflow",
+    "secondaryCategories": [
+      "impact",
+      "scifi"
+    ],
+    "addedAt": "2026-08-08",
+    "updatedAt": "2026-08-08",
+    "updateNote": "2026-08-08 插件技巧播放列表第 10 条：依据完整 482.116 秒音视频、英文字幕与八张指定原帧整理。证据位覆盖运动源、极端失真安全警告、De-clip 深推、可选 De-click / Z-Noise、rate 包络及最终 hit 前后态；明确区分创意再合成与常规修复，未生成 motion。",
+    "summary": "作者把 RX De-clip 当成创意再合成器：先将有运动的素材故意压成极端削波，再让 De-clip 在错误前提下大范围重建，得到 scream / growl / glitch 纹理。第一轮 De-clip、EQ 与 Boost 后已经可用；De-click、Z-Noise 和 soothe2 都是可选整理。最终 RX scream 只作为 electricity / dark-magic 方向的 tonal sweetener，与保留瞬态和重量的 generic cinematic hit 叠加。90 秒画面明确警告极端失真实际远比视频播放响；画面设置、红表头、视频 WAV 与听到的播放音量都不是安全或交付响度模板。",
+    "coreIdeas": [
+      "作者明确把这一流程称为非常规用法：目标不是忠实修复偶发削波，而是把 De-clip 的异常重建结果当作新 source。",
+      "作者口述：具体 source 身份影响没有想象中大，但素材必须有 motion；synth、混响 sine sweep、BOOM bass drop 与 rock crumbling 都被用于生成不同结果。",
+      "安全边界：frame_000090 明确写出视频音量已自动压低，实际失真远比听到的响；任何可见参数、电平表、视频 WAV 或红色过载状态都不得作为监听、打印或交付目标。",
+      "画面事实：frame_000168 显示正负阈值 -16.0 / -16.0 dB、9471 clipped intervals repaired、Quality Low、Post-limiter off；这些只证明一次深推状态，不是最佳阈值或推荐 preset。",
+      "作者明确说明第一轮 De-clip + EQ + Boost 后已经可用，后续 De-click、Z-Noise 与 soothe2 属于 optional territory。",
+      "作者口述：降速、移调与 pitch modulation 可把清理后的结果派生成多个 scream-like 变体，但截图中的 rate 和包络只绑定对应 item。",
+      "作者把 synth screams 定位为 sweetener / supplement；分析归纳：generic hit 继续承担撞击瞬态与重量，De-clip 层增加非自然的 tonal motion，而不是替换主体。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "选择有运动的源素材",
+        "detail": "作者口述：具体来源影响没有想象中大，但输入必须有 motion。画面事实：frame_000001 的 REAPER 时间线同时可见 synth、sine / reverb、bass drop、rock crumbling 与打印后的 RX SYNTH SCREAM_01..04。",
+        "params": [
+          "画面事实：轨名只证明四类源与打印结果并存，不能据此补写未显示的合成器、混响或轨道增益。",
+          "证据边界：右上角录屏提示属于捕获界面，不是声音设计步骤或插件状态。",
+          "分析建议：先准备材质不同但都带清楚时间运动的 dry source，并保留未处理版本。"
+        ],
+        "imageKey": "C_5qPsn1GWY-source-motion-overview"
+      },
+      {
+        "order": 2,
+        "name": "在低监听下打印极端削波源",
+        "detail": "作者口述：先用 Event Horizon Clipper、JS Distortion 与 MSaturator 制造可供 De-clip 处理的极端削波，再用 Pro-L 2 把工作电平拉回较可控状态。画面事实：frame_000090 当前选中 Event Horizon，显示 Threshold -30.0 dB、Ceiling -0.1 dB、Soft Clip 2.0 dB，并叠字警告实际远比视频播放响。",
+        "params": [
+          "强制安全边界：视频已自动压低播放音量；不得把 -30.0 dB、-0.1 dB、2.0 dB、红表头、视频 WAV 电平或听到的响度写成安全目标。",
+          "画面事实：frame_000090 只清楚绑定 Event Horizon 的当前数值；列表中其它插件的隐藏设置不可补写。",
+          "分析建议：先降低监听链与打印前增益，避免耳机直听原电平；保留 dry / clipped print，并在后续重新建立安全 headroom。"
+        ],
+        "imageKey": "C_5qPsn1GWY-extreme-distortion-volume-warning"
+      },
+      {
+        "order": 3,
+        "name": "把 De-clip 深推成再合成纹理",
+        "detail": "作者口述：从 0 阈值开始预听，扩大 clipping 识别范围后声音会迅速变得异常，越过某个点后继续推动的差异会变小。画面事实：frame_000168 的当前状态为 -16.0 / -16.0 dB、9471 clipped intervals repaired、Quality Low、Makeup 0.0 dB、Post-limiter off。",
+        "params": [
+          "证据边界：作者没有给出精确最佳拐点；-16 dB 与 9471 repairs 只属于当前 source 和选区。",
+          "画面事实：同一阈值在其它 source 会产生不同 repair count，因此 repaired intervals 不是质量分数或目标指标。",
+          "分析归纳：当大量片段被算法按削波前提重建时，结果成为 scream / growl / glitch source，而不是忠实修复。"
+        ],
+        "imageKey": "C_5qPsn1GWY-declip-deep-threshold-state"
+      },
+      {
+        "order": 4,
+        "name": "按用途选择 Multi-band De-click",
+        "detail": "作者口述：第一轮 De-clip、EQ 与 Boost 后已经可用；若需要减少 click / noise、突出 tonality，可再尝试激进 De-click。画面事实：frame_000287 当前为 Multi-band (random clicks)、Sensitivity 10.0、Frequency skew 0.0、Click widening 0.0 ms、Output clicks only off，并显示 82 clicks repaired。",
+        "params": [
+          "作者事实：在这类极端 clicky 素材上，作者偏好 Multi-band，因为听起来较少明显 pumping。",
+          "证据边界：Sensitivity 10.0 与 82 repairs 是当前播放 / 选区状态，不是跨素材目标。",
+          "分析建议：与第一轮 core 做等响旁路；若 tonality 没有更清楚，或出现空洞、瞬态损失和频带呼吸，就停用该可选步骤。"
+        ],
+        "imageKey": "C_5qPsn1GWY-multiband-declick-repair"
+      },
+      {
+        "order": 5,
+        "name": "少量加入 Z-Noise 与残留清理",
+        "detail": "作者口述：Z-Noise 看起来很激进，但实际处理量很低，曲线重点处理 lows / low-mids；soothe2 只收敛特别突出的 artifacts。画面事实：frame_000306 显示 Z-Noise 当前 Threshold 0.0、Reduction 6.0、Attack 0.01、Release 9.19、Transients Off、Knee 10.2、Smooth，以及偏向低频 / 低中频的权重曲线。",
+        "params": [
+          "画面事实：当前节点显示 Gain -24.5、Frequency 1636、Q 1.00；这些只绑定 frame_000306 的曲线。",
+          "证据边界：NR -7.9 是播放中的动态读数，不写成固定参数；列表可见 soothe2，但该帧没有展开其界面。",
+          "分析建议：Z-Noise 与 soothe2 分别少量旁路验证；若运动尾出现音洞、chirp、wateriness 或失去咬合，就回退。"
+        ],
+        "imageKey": "C_5qPsn1GWY-optional-znoise-lowmid-cleanup"
+      },
+      {
+        "order": 6,
+        "name": "用 rate 与包络派生 scream 变体",
+        "detail": "作者口述：清理后的结果可以通过移调和 pitch modulation 生成许多 scream-like 变体。画面事实：frame_000370 的当前 item 标为 Rate 0.516 (-11.46)，并显示蓝色 pitch / rate 包络；旁边还能看到另一条 Rate 0.357 (-17.84) 的变体。",
+        "params": [
+          "画面事实：0.516、-11.46、0.357 与 -17.84 只属于当前 item，不是推荐音程家族。",
+          "证据边界：包络形状可见，但节点数值在该缩放下不可可靠读取。",
+          "分析归纳：固定 rate 同时改变长度与频谱重心，包络再让 sweetener 贴合 hit 的进入、扭曲与退出弧线。"
+        ],
+        "imageKey": "C_5qPsn1GWY-rate-pitch-envelope-variant"
+      },
+      {
+        "order": 7,
+        "name": "先确认 generic hit 的主体职责",
+        "detail": "画面事实：frame_000430 中上方 generic-hit 相关轨组处于 Solo，RX scream 组未 Solo，对应最终示例的 before 状态。分析稿对完整视频音轨的核验表明，该段保留清楚撞击瞬态、低频主体与衰减骨架。",
+        "params": [
+          "证据边界：画面只证明 Solo 关系；视频 WAV 的 RMS / peak 只用于确认同片段前后关系，不是交付响度。",
+          "分析归纳：generic hit 负责物理撞击身份与重量，不能因 sweetener 更陌生或更响而被省略。",
+          "分析建议：先以低安全电平检查 hit-only 的 attack、body 与 tail，再进入 sweetener-only / blend 对比。"
+        ],
+        "imageKey": "C_5qPsn1GWY-generic-hit-solo-before"
+      },
+      {
+        "order": 8,
+        "name": "把 De-clip scream 作为补充层混入",
+        "detail": "作者口述：这些 synth screams 单独使用往往不理想，更适合作为 sweetener / supplement，为其它声音增加 creepy、evil、陌生的 tonal motion。画面事实：frame_000456 已解除 Solo，generic hit 与多条 RX scream、不同 rate 和包络共同参与，形成最终 after。",
+        "params": [
+          "作者事实：最终示例偏向 electricity / sci-fi，混入后更 evil / dark；作者也喜欢将此类结果用于 electricity 或 dark magic。",
+          "证据边界：frame_000456 证明叠层关系，不证明任何轨道绝对增益、最终峰值或交付响度规范。",
+          "分析归纳：RX scream 是 tonal / electricity / dark-magic sweetener，generic cinematic hit 仍是 impact body；两者不是替换关系。"
+        ],
+        "imageKey": "C_5qPsn1GWY-declip-sweetener-layered-after"
+      }
+    ],
+    "plugins": [
+      {
+        "name": "REAPER Event Horizon Clipper / JS Distortion / MeldaProduction MSaturator",
+        "purpose": "作者将三类失真串联，把带 motion 的 source 故意压成可供 De-clip 大范围重建的极端削波素材。",
+        "settings": [
+          "frame_000090 只显示 Event Horizon 当前 Threshold -30.0 dB、Ceiling -0.1 dB、Soft Clip 2.0 dB；其它插件隐藏参数不补写。",
+          "这些是危险的极端演示状态，视频已自动压低播放音量，绝不是监听或交付目标。"
+        ]
+      },
+      {
+        "name": "FabFilter Pro-L 2",
+        "purpose": "作者用它把极端失真后的工作电平拉回较可操作范围，再打印 clipped source；它不是最终响度配方。",
+        "settings": [
+          "八张发布帧只在 frame_000090 的 FX 列表中确认该插件存在，没有展开完整设置。",
+          "不得从视频音轨、红表头或分析稿中的其它核验帧外推最终 limiter、true peak 或交付标准。"
+        ]
+      },
+      {
+        "name": "iZotope RX 6 De-clip",
+        "purpose": "在本例中承担创意再合成：通过深推 clipping threshold，让算法把极端削波 source 重建为非自然 scream / growl / glitch 纹理。",
+        "settings": [
+          "frame_000168 显示 -16.0 / -16.0 dB、9471 repairs、Quality Low、Makeup 0.0 dB、Post-limiter off。",
+          "作者没有把 -16 dB、Low Quality 或 repair count 定义为最佳设置；必须按 source 做阈值 sweep。"
+        ]
+      },
+      {
+        "name": "FabFilter Pro-Q 3 / UrsaDSP Boost",
+        "purpose": "作者在 De-clip 后先去除异常 sub、压低刺耳中高频，再抬起低电平细节并均匀纹理；完成这一轮后素材已经可用。",
+        "settings": [
+          "八张发布帧没有展开两者的完整参数，不能把分析稿中的其它瞬时画面写成通用 EQ / Boost preset。",
+          "Boost 也会抬起噪声与 click，应以等响旁路判断是否真的改善可编辑细节。"
+        ]
+      },
+      {
+        "name": "iZotope RX 6 De-click",
+        "purpose": "可选地减少 click / noise、突出 tonality；作者在极端 clicky 素材上选择 Multi-band 以减少明显 pumping。",
+        "settings": [
+          "frame_000287 当前为 Multi-band (random clicks)、Sensitivity 10.0、Frequency skew 0.0、Click widening 0.0 ms。",
+          "82 clicks repaired 是当前播放状态，不是质量目标；De-click 后还需检查安静、空洞和瞬态损失。"
+        ]
+      },
+      {
+        "name": "Waves Z-Noise / oeksound soothe2",
+        "purpose": "两者都属于可选清理：作者用低量 Z-Noise 偏重 lows / low-mids，并让 soothe2 只收敛特别突出的残留 artifacts。",
+        "settings": [
+          "frame_000306 只展开 Z-Noise 当前界面；Threshold 0.0、Reduction 6.0、Attack 0.01、Release 9.19 等值只绑定该帧。",
+          "soothe2 仅在 FX 列表中可见，不从该帧补写其隐藏参数。"
+        ]
+      },
+      {
+        "name": "REAPER item rate / pitch-rate envelope",
+        "purpose": "作者用降速联动移调和包络调制把同一 De-clip core 派生成不同时长、音区与弧线的 scream-like 变体。",
+        "settings": [
+          "frame_000370 当前显示 Rate 0.516 (-11.46) 与蓝色包络，邻近 item 显示 Rate 0.357 (-17.84)。",
+          "包络节点值不可从当前缩放读取，两个 rate 也不构成固定推荐音程。"
+        ]
+      }
+    ],
+    "materials": [
+      "带清楚 motion 的 synth：调制运动源",
+      "带混响的 sine sweep：连续音高与空间运动源",
+      "BOOM bass drop：低频运动源",
+      "rock crumbling：颗粒与碎裂运动源",
+      "极端削波 print：供 RX De-clip 创意重建，不替代 dry source",
+      "多条不同 rate 与包络的 RX SYNTH SCREAM：tonal / electricity / dark-magic sweetener",
+      "generic cinematic hit：保留撞击瞬态、低频主体与衰减骨架"
+    ],
+    "keywords": [
+      "插件技巧",
+      "iZotope RX De-clip",
+      "creative resynthesis",
+      "intentional clipping",
+      "extreme distortion",
+      "volume safety",
+      "Event Horizon Clipper",
+      "JS Distortion",
+      "MSaturator",
+      "Pro-L 2",
+      "Pro-Q 3",
+      "UrsaDSP Boost",
+      "RX De-click",
+      "Multi-band De-click",
+      "Z-Noise",
+      "soothe2",
+      "item rate",
+      "pitch envelope",
+      "synth scream",
+      "tonal sweetener",
+      "electricity",
+      "dark magic",
+      "cinematic hit",
+      "workflow",
+      "impact",
+      "scifi"
+    ],
+    "tips": [
+      "安全边界：frame_000090 明确警告实际失真远比视频播放响；先降低监听与打印前增益，绝不把画面设置、红表头、视频 WAV 或听感响度当模板。",
+      "作者事实：这是 De-clip 的非常规创意用法，不是常规削波修复配方；成品应被管理为新 source。",
+      "证据边界：-16 dB、9471 repairs、Quality Low、Sensitivity 10、82 repairs、Z-Noise 曲线与 rate 只绑定对应截图。",
+      "作者事实：第一轮 De-clip + EQ + Boost 后已经可用；De-click、Z-Noise 与 soothe2 都按用途选择，不是默认必需链。",
+      "作者事实与分析归纳：RX scream 作为 tonal sweetener 增加 electricity / dark-magic 运动，generic hit 继续承担 impact body。",
+      "分析建议：按 hit-only -> sweetener-only -> blend 做等响对比；若 blend 只显得更响而没有更清楚的 tonal motion，就重新平衡。"
+    ],
+    "chainFocus": [
+      "作者口述与画面事实：有 motion 的 synth / sine sweep / bass drop / rock crumbling -> 多级极端失真 -> clipped print。",
+      "安全边界：frame_000090 的 Event Horizon 状态伴随明确音量警告；视频播放链已经压低，任何表头和听感都不是复制目标。",
+      "作者口述与画面事实：clipped print -> RX De-clip 阈值 sweep；frame_000168 只证明一次 -16 / -16 dB 深推状态。",
+      "作者口述：De-clip -> Pro-Q 3 去异常 sub / 刺耳频段 -> Boost 抬低电平细节；到此先得到可用 core。",
+      "作者口述：可选 Multi-band De-click -> 再 EQ / Boost；目的为少 click / noise、多 tonality，而非修成干净原声。",
+      "作者口述：可选低量 Z-Noise -> 可选 soothe2；两者只清理特定残留，不应成为所有 source 的固定链。",
+      "作者口述与画面事实：item rate / pitch envelope 变体 -> 与 generic cinematic hit 叠层；分析归纳为 hit body 加 tonal sweetener。"
+    ],
+    "parameterLogic": [
+      "最先控制的是监听安全和工作余量：frame_000090 的可见设置与视频自动降音量警告共同说明该段不可按听感复刻。",
+      "De-clip 从 0 开始逐步扫阈值；每个 source 单独判断运动何时被重塑，repair count 只做覆盖状态提示，不做品质分数。",
+      "Quality Low 只在关键画面中可见；视频没有质量档 A/B，不能外推 Low 优于其它质量。",
+      "首轮 EQ / Boost 按每个 source 的异常 sub、刺耳点和低电平细节决定；八张发布帧不支持补写隐藏参数。",
+      "De-click 是可选 tonal 取舍；Sensitivity 10.0 与 82 repairs 不推广，旁路时监听 pumping、空洞和瞬态损失。",
+      "Z-Noise 当前曲线不等于实时降噪量，NR -7.9 也不是固定值；作者明确实际处理量很低。",
+      "Rate 0.516 / 0.357 与蓝色包络只解释当前变体；生成家族时按动作长度、音区、alias 和尾部重新选择。",
+      "最终 generic / RX scream 的轨道增益、视频 RMS / peak 与接近满幅样本都不构成交付规范；恢复 headroom 后另做 true-peak 与单声道检查。"
+    ],
+    "practiceChecklist": [
+      "练习：准备 3-5 个材质不同但带清楚 motion 的 source，分别保留 dry，并在低安全监听下开始。",
+      "练习：建立多级 clipping 测试时分阶段打印，先保护监听与总线余量，不复制 frame_000090 的极端数值。",
+      "练习：每个 source 保存 0 / medium / deep 三档 De-clip，记录 threshold、repair count、Quality 与 post-limiter 状态。",
+      "练习：完成去异常 sub、控制刺耳频段与 Boost 的最小 core 链，先导出一版再决定是否继续清理。",
+      "练习：仅在 click 阻碍叠层时加入 Multi-band De-click，与 core 做等响旁路并记录 pumping / 空洞 / 瞬态变化。",
+      "练习：Z-Noise 与 soothe2 分开少量加入；一旦出现 wateriness、chirp 或咬合消失就回退。",
+      "练习：用 item rate 生成多档长度和音区，再用 pitch / rate envelope 贴合动作弧线，不照抄 0.516 或 0.357。",
+      "练习：建立 generic hit、De-clip sweetener 与可选高频 electricity 三类 stem，依次检查 hit-only、sweetener-only、blend。",
+      "练习：以相近响度判断 blend 是否增加所需 tonal motion；不要把更响误判为更好。",
+      "练习：交付前恢复安全 headroom，检查 true peak、DC / sub、单声道兼容、尾部点击，并记录所有截图参数的帧绑定范围。"
+    ]
   }
 ];
 
@@ -26330,6 +27490,158 @@
   "f9OrpDtedSI-staggered-final-explosion": {
     "preview": "assets/shots/preview/f9OrpDtedSI-staggered-final-explosion.webp",
     "full": "assets/shots/full/f9OrpDtedSI-staggered-final-explosion.png"
+  },
+  "2cTDQ_MetsE-role-folders": {
+    "preview": "assets/shots/preview/2cTDQ_MetsE-role-folders.webp",
+    "full": "assets/shots/full/2cTDQ_MetsE-role-folders.png"
+  },
+  "2cTDQ_MetsE-can-kick-traveler": {
+    "preview": "assets/shots/preview/2cTDQ_MetsE-can-kick-traveler.webp",
+    "full": "assets/shots/full/2cTDQ_MetsE-can-kick-traveler.png"
+  },
+  "2cTDQ_MetsE-chip-explosion-stack": {
+    "preview": "assets/shots/preview/2cTDQ_MetsE-chip-explosion-stack.webp",
+    "full": "assets/shots/full/2cTDQ_MetsE-chip-explosion-stack.png"
+  },
+  "2cTDQ_MetsE-chip-crunch-chain": {
+    "preview": "assets/shots/preview/2cTDQ_MetsE-chip-crunch-chain.webp",
+    "full": "assets/shots/full/2cTDQ_MetsE-chip-crunch-chain.png"
+  },
+  "2cTDQ_MetsE-ambience-space-chain": {
+    "preview": "assets/shots/preview/2cTDQ_MetsE-ambience-space-chain.webp",
+    "full": "assets/shots/full/2cTDQ_MetsE-ambience-space-chain.png"
+  },
+  "2cTDQ_MetsE-shimmer-ambience": {
+    "preview": "assets/shots/preview/2cTDQ_MetsE-shimmer-ambience.webp",
+    "full": "assets/shots/full/2cTDQ_MetsE-shimmer-ambience.png"
+  },
+  "2cTDQ_MetsE-foley-layering": {
+    "preview": "assets/shots/preview/2cTDQ_MetsE-foley-layering.webp",
+    "full": "assets/shots/full/2cTDQ_MetsE-foley-layering.png"
+  },
+  "ceC_RDgx71s-reaktor-vst-effect": {
+    "preview": "assets/shots/preview/ceC_RDgx71s-reaktor-vst-effect.webp",
+    "full": "assets/shots/full/ceC_RDgx71s-reaktor-vst-effect.png"
+  },
+  "ceC_RDgx71s-source-mix-pairs": {
+    "preview": "assets/shots/preview/ceC_RDgx71s-source-mix-pairs.webp",
+    "full": "assets/shots/full/ceC_RDgx71s-source-mix-pairs.png"
+  },
+  "ceC_RDgx71s-top-level-inputs": {
+    "preview": "assets/shots/preview/ceC_RDgx71s-top-level-inputs.webp",
+    "full": "assets/shots/full/ceC_RDgx71s-top-level-inputs.png"
+  },
+  "ceC_RDgx71s-plugin-pin-matrix": {
+    "preview": "assets/shots/preview/ceC_RDgx71s-plugin-pin-matrix.webp",
+    "full": "assets/shots/full/ceC_RDgx71s-plugin-pin-matrix.png"
+  },
+  "ceC_RDgx71s-track-two-send": {
+    "preview": "assets/shots/preview/ceC_RDgx71s-track-two-send.webp",
+    "full": "assets/shots/full/ceC_RDgx71s-track-two-send.png"
+  },
+  "ceC_RDgx71s-four-source-test": {
+    "preview": "assets/shots/preview/ceC_RDgx71s-four-source-test.webp",
+    "full": "assets/shots/full/ceC_RDgx71s-four-source-test.png"
+  },
+  "ceC_RDgx71s-track-template": {
+    "preview": "assets/shots/preview/ceC_RDgx71s-track-template.webp",
+    "full": "assets/shots/full/ceC_RDgx71s-track-template.png"
+  },
+  "fYqe17OJRNM-wave-shifter-style-menu": {
+    "preview": "assets/shots/preview/fYqe17OJRNM-wave-shifter-style-menu.webp",
+    "full": "assets/shots/full/fYqe17OJRNM-wave-shifter-style-menu.png"
+  },
+  "fYqe17OJRNM-wave-shifter-100-wet": {
+    "preview": "assets/shots/preview/fYqe17OJRNM-wave-shifter-100-wet.webp",
+    "full": "assets/shots/full/fYqe17OJRNM-wave-shifter-100-wet.png"
+  },
+  "fYqe17OJRNM-feedback-time-detail": {
+    "preview": "assets/shots/preview/fYqe17OJRNM-feedback-time-detail.webp",
+    "full": "assets/shots/full/fYqe17OJRNM-feedback-time-detail.png"
+  },
+  "fYqe17OJRNM-modulation-section": {
+    "preview": "assets/shots/preview/fYqe17OJRNM-modulation-section.webp",
+    "full": "assets/shots/full/fYqe17OJRNM-modulation-section.png"
+  },
+  "fYqe17OJRNM-positive-shift-hit": {
+    "preview": "assets/shots/preview/fYqe17OJRNM-positive-shift-hit.webp",
+    "full": "assets/shots/full/fYqe17OJRNM-positive-shift-hit.png"
+  },
+  "fYqe17OJRNM-negative-shift-hit": {
+    "preview": "assets/shots/preview/fYqe17OJRNM-negative-shift-hit.webp",
+    "full": "assets/shots/full/fYqe17OJRNM-negative-shift-hit.png"
+  },
+  "fYqe17OJRNM-stacked-hit-chain": {
+    "preview": "assets/shots/preview/fYqe17OJRNM-stacked-hit-chain.webp",
+    "full": "assets/shots/full/fYqe17OJRNM-stacked-hit-chain.png"
+  },
+  "fYqe17OJRNM-anime-reverb-before-shifter": {
+    "preview": "assets/shots/preview/fYqe17OJRNM-anime-reverb-before-shifter.webp",
+    "full": "assets/shots/full/fYqe17OJRNM-anime-reverb-before-shifter.png"
+  },
+  "j4POSc1YeAo-sine-random-pitch-core": {
+    "preview": "assets/shots/preview/j4POSc1YeAo-sine-random-pitch-core.webp",
+    "full": "assets/shots/full/j4POSc1YeAo-sine-random-pitch-core.png"
+  },
+  "j4POSc1YeAo-wave-shifter-bubble-state": {
+    "preview": "assets/shots/preview/j4POSc1YeAo-wave-shifter-bubble-state.webp",
+    "full": "assets/shots/full/j4POSc1YeAo-wave-shifter-bubble-state.png"
+  },
+  "j4POSc1YeAo-laser-pluck-motion": {
+    "preview": "assets/shots/preview/j4POSc1YeAo-laser-pluck-motion.webp",
+    "full": "assets/shots/full/j4POSc1YeAo-laser-pluck-motion.png"
+  },
+  "j4POSc1YeAo-spectral-transient-chain": {
+    "preview": "assets/shots/preview/j4POSc1YeAo-spectral-transient-chain.webp",
+    "full": "assets/shots/full/j4POSc1YeAo-spectral-transient-chain.png"
+  },
+  "j4POSc1YeAo-metallic-sine-noise-source": {
+    "preview": "assets/shots/preview/j4POSc1YeAo-metallic-sine-noise-source.webp",
+    "full": "assets/shots/full/j4POSc1YeAo-metallic-sine-noise-source.png"
+  },
+  "j4POSc1YeAo-bubble-fire-dual-sine": {
+    "preview": "assets/shots/preview/j4POSc1YeAo-bubble-fire-dual-sine.webp",
+    "full": "assets/shots/full/j4POSc1YeAo-bubble-fire-dual-sine.png"
+  },
+  "j4POSc1YeAo-bubble-melodic-chorus": {
+    "preview": "assets/shots/preview/j4POSc1YeAo-bubble-melodic-chorus.webp",
+    "full": "assets/shots/full/j4POSc1YeAo-bubble-melodic-chorus.png"
+  },
+  "j4POSc1YeAo-final-role-stack": {
+    "preview": "assets/shots/preview/j4POSc1YeAo-final-role-stack.webp",
+    "full": "assets/shots/full/j4POSc1YeAo-final-role-stack.png"
+  },
+  "C_5qPsn1GWY-source-motion-overview": {
+    "preview": "assets/shots/preview/C_5qPsn1GWY-source-motion-overview.webp",
+    "full": "assets/shots/full/C_5qPsn1GWY-source-motion-overview.png"
+  },
+  "C_5qPsn1GWY-extreme-distortion-volume-warning": {
+    "preview": "assets/shots/preview/C_5qPsn1GWY-extreme-distortion-volume-warning.webp",
+    "full": "assets/shots/full/C_5qPsn1GWY-extreme-distortion-volume-warning.png"
+  },
+  "C_5qPsn1GWY-declip-deep-threshold-state": {
+    "preview": "assets/shots/preview/C_5qPsn1GWY-declip-deep-threshold-state.webp",
+    "full": "assets/shots/full/C_5qPsn1GWY-declip-deep-threshold-state.png"
+  },
+  "C_5qPsn1GWY-multiband-declick-repair": {
+    "preview": "assets/shots/preview/C_5qPsn1GWY-multiband-declick-repair.webp",
+    "full": "assets/shots/full/C_5qPsn1GWY-multiband-declick-repair.png"
+  },
+  "C_5qPsn1GWY-optional-znoise-lowmid-cleanup": {
+    "preview": "assets/shots/preview/C_5qPsn1GWY-optional-znoise-lowmid-cleanup.webp",
+    "full": "assets/shots/full/C_5qPsn1GWY-optional-znoise-lowmid-cleanup.png"
+  },
+  "C_5qPsn1GWY-rate-pitch-envelope-variant": {
+    "preview": "assets/shots/preview/C_5qPsn1GWY-rate-pitch-envelope-variant.webp",
+    "full": "assets/shots/full/C_5qPsn1GWY-rate-pitch-envelope-variant.png"
+  },
+  "C_5qPsn1GWY-generic-hit-solo-before": {
+    "preview": "assets/shots/preview/C_5qPsn1GWY-generic-hit-solo-before.webp",
+    "full": "assets/shots/full/C_5qPsn1GWY-generic-hit-solo-before.png"
+  },
+  "C_5qPsn1GWY-declip-sweetener-layered-after": {
+    "preview": "assets/shots/preview/C_5qPsn1GWY-declip-sweetener-layered-after.webp",
+    "full": "assets/shots/full/C_5qPsn1GWY-declip-sweetener-layered-after.png"
   }
 };
 
