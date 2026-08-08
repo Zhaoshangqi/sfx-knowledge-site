@@ -58,6 +58,10 @@ def yt_dlp_command(cookies_from_browser: str | None) -> list[str]:
     return command
 
 
+def video_format_selector(max_height: int) -> str:
+    return f"bv*[height<={max_height}]+140/bv*[height<={max_height}]+ba/b[height<={max_height}]"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Prepare full visual evidence for a sound-design video without an external AI API.")
     parser.add_argument("url", help="YouTube URL or video id")
@@ -123,7 +127,7 @@ def main() -> int:
             "--merge-output-format",
             "mp4",
             "-f",
-            f"bv*[height<={args.max_height}]+ba/b[height<={args.max_height}]",
+            video_format_selector(args.max_height),
             "-o",
             str(data_dir / "video.%(ext)s"),
             canonical_url,
