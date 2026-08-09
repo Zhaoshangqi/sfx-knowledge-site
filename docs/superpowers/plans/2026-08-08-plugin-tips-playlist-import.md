@@ -35,8 +35,8 @@
 
 每个视频任务都必须完成以下结果，缺一项就不能提高 completed 数字：
 
-1. .work/runs/ 下对应真实 Video ID 的目录中存在 local_prepare_summary.json，video_id 正确，frame_count 和 sheet_count 均大于 0，subtitle_only_allowed 为 false。
-2. 从第一张到最后一张联系表检查完整时间线，再查看关键区段的原分辨率 frame_*.png。
+1. `.work/runs/` 下对应真实 Video ID 必须满足一种证据模式：本地完整媒体模式有 `local_prepare_summary.json`，且 `video_id` 正确、`frame_count` 和 `sheet_count` 均大于 0、`subtitle_only_allowed` 为 false；认证浏览器模式则在 `analysis.md` 记录 `acquisition_mode: authenticated-browser`、播放器实际时长、完整时间轴检查、storyboard/关键画面来源和没有本地音频时的结论边界。
+2. 本地完整媒体模式从第一张到最后一张联系表检查完整时间线，再查看关键区段的原分辨率 `frame_*.png`；认证浏览器模式覆盖从开头到结尾的播放器时间轴、官方 storyboard 和关键时点全尺寸画面。两种模式都不得只靠字幕完成。
 3. 对应真实 Video ID 的运行目录中，analysis.md 记录章节、时间点、层角色、插件顺序、可见参数、作者口述、分析推断和最终图片键。
 4. index.html 新记录使用中文标题；source 取 metadata.json 的 channel，缺失时取 uploader，再追加“ / 插件技巧”；keywords 包含独立词条“插件技巧”。
 5. 每个关键步骤有 imageKey；imageManifest 对应 preview/full 文件真实存在。至少三个步骤有画面证据。
@@ -358,7 +358,7 @@ Expected: one commit containing only the manifest and verifier.
 
 ---
 
-### Task 4: Prove Full-Frame Acquisition On Video 1
+### Task 4: Prove The Evidence Acquisition Gate On Video 1
 
 **Files:**
 - Create ignored: .work/runs/Xl5u91oQv-k/*
@@ -372,7 +372,7 @@ Run:
 .\.venv\Scripts\python.exe tools\prepare-sfx-video.py "https://www.youtube.com/watch?v=Xl5u91oQv-k" --max-height 1080 --frame-interval 1 --sheet-interval 10
 ~~~
 
-Expected: exit 0 and a JSON summary under .work/runs/Xl5u91oQv-k.
+Expected: exit 0 and a JSON summary under `.work/runs/Xl5u91oQv-k/`. If reproducible YouTube session binding blocks local media, use the authenticated-browser completion branch from the Per-Video Completion Contract and record the failed acquisition evidence plus browser provenance in `analysis.md`.
 
 - [ ] **Step 2: Verify the evidence gate**
 
@@ -706,7 +706,7 @@ Expected: records 81 and failures empty.
 
 **Files:** index.html, assets/shots/full/cJ75ykkqV64-*, assets/shots/preview/cJ75ykkqV64-*, optional assets/motions/cJ75ykkqV64-*, video-learnings.md, site-video-memory.md
 
-- [ ] Prepare cJ75ykkqV64 and inspect all 50:44 without relying on subtitles alone.
+- [ ] Prepare cJ75ykkqV64 locally when available; otherwise use the authenticated browser to verify the 50:44 duration and inspect the full player timeline, official storyboard and key full-size frames without relying on subtitles alone. Record the acquisition mode and no-local-audio boundary in `analysis.md`.
 - [ ] Document the complete ultimate event sequence, player-state information, layer groups, plugin/routing evidence, variation behavior and in-game implementation reasoning.
 - [ ] Add “Valorant Clove 终极技能音效制作”; primary category magic; secondary categories scifi and workflow; derive source from metadata according to the completion contract.
 - [ ] Publish/register evidence; use motion only for routing or automation that stills cannot explain; append learning.

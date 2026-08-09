@@ -1143,3 +1143,165 @@ These entries were generated from the standalone HTML knowledge base so every an
   - 所有画面数值都是帧绑定状态。复刻时先做 matched-loudness bypass，检查 peak、true peak、DC、mono、尾部 click 与相位风险；视频没有严格等响 A/B。
   - 本片止于素材设计与可复用打印。Mix Bus、响度、精确 export/render、middleware 和 in-game test 都是后续验收项，不能写成教程已经完成。
 - Use when: impactful transient design; rock impact; destruction debris; double-hit structure; time carve; two-frame gap; Rocks; Debris; Explosions; Soundminer Radium; random multisampling; Random Start; Random Semi; trigger delay; stereo support EQ; noise/tonal separation; comp-gate; multiband transient; sustain reduction; offline print; REAPER item editing; tail management; matched-loudness A/B; workflow; impact; 插件技巧; 需要先通过时间让位而非继续叠低频增强冲击; 需要区分作者轨名与 transient/body/debris/tail 分析标签; 需要避免把触发延迟写成空间 delay 或把长碎屑 fade 写成 reverb tail
+
+## 2026-08-08 - Valorant Clove 死亡状态音效设计
+- Source: `https://www.youtube.com/watch?v=LyNsYzCN5_A`
+- Domain: scifi, magic, workflow, 插件技巧, Nathan_SFX, Valorant, Clove, death state, Res Available, Res End, UI alert, Enter/Active/End, REAPER, Wwise, RTPC, flat loops, bell, glass, Tibetan Bowl, Crystallizer, PhaseMistress, Tremolator, EchoBoy Jr, crossfade, HUD expiry
+- Reusable pattern: 先把“死亡后大招仍可用、但玩家没有按 X”画成 `Dead_ResAvailable_Enter -> Active -> EndExpired` 信息链。Enter 是系统主动告知的高优先级 alert，不是按键 click；Active 由 voice、chime、digital flutter 等 flat loops 持续承载机会窗口，并在 Wwise 中通过 RTPC 做实际 volume automation；End 先结束 loops，再用 breath/synth ramp 接到 expired alert，并与 HUD 图形消失同步。bell/glass 可跨阶段复现，ringing metal、voice/chime 与 breath/synth ramp 则分阶段延续 Clove 身份。REAPER 负责源素材编辑、分层和单层处理，Wwise 负责运行时生命周期。完整音轨未完成本地审听，作者的 clicky/glassy/wobbly/ghostly/harsh/calm/wider 等听感词不能改写为本地结论。
+- Step / event map:
+  - 界定死亡分支: `12:12.000` 的正文明确选择死亡后不按 X 的分支；它只界定 Dead/self 语境，不重复前 12 分钟的 Smoke Select、Alive/Dead 烟雾变体或既有 smoke 插件链。
+  - 定义必要信息 alert: `13:49.760` 的字幕说明该声音发生是 because you died and you need to know something；同屏可见 `Kill states` 与截断的 `Clove_Res_Avail...` 分组。轨名后缀、正式 event scope 与 Wwise 容器不可补猜。
+  - 先做 item 编辑: `15:27.040` 显示素材从中间切开并 crossfade。作者保留 lead-up 和 tail、删除过忙中段，再处理淡入/裁尾/淡出；画面没有可抄的精确剪切或淡变数值。
+  - 单层颗粒塑色: `18:40.400` 的字幕为 Adding some crystallizer；画面显示低颤动层 FX 列表，当前打开 ReaPitch。作者说明顺序为 low cut -> pitch up -> Crystallizer -> PhaseMistress 变体 -> transient -> delay -> EQ -> mono control；这不是整个 Dead 父组链。
+  - 物理金属身份: `20:09.640` 的字幕和 item 标签指向 `Tibetan Bowl`。作者说它可能是 bowed metal scrape、曾 reverse，再经 high roll-off、Tremolator 和 reverb 形成 ringy 层；bowed 来源和所有参数均未确认。
+  - 绑定 Res End 与 UI 撤销: `23:30.600` 同屏显示倒地画面、中央状态图形与结束段，作者说明末尾对应 on-screen UI going away，并加入 bird flaps。End 要同时停止循环、撤销权限和关闭 HUD 承诺。
+  - 交付 Active flat loops: `25:11.880` 的字幕明确提到 RTPC，REAPER 可见多条持续 loop。作者说这些层在游戏内分别受 RTPC 控制，actual volume automation 在 Wwise 完成；RTPC 名称、曲线、范围、倒计时长度和 pitch 实际值不可见。
+  - 从循环进入 expired: `29:31.480` 的字幕说明 loops finish 后直接进入 you've run out of time UI；同屏可见 Active loops、两个 inhale/breath、synth ramp 与下方 Res End 分组。该顺序不包含按 X 后的 cast、reposition、revive timer、success/failure 或最终复活结果。
+- Plugin and processing notes:
+  - FabFilter Pro-Q 3 / Cockos ReaPitch: 低颤动层先做低频清理和 pitch up；其它 bell/chime/flutter 层也有减法 EQ。选定证据没有可靠参数，不能抄频点、斜率、Q 或半音值。
+  - Soundtoys Crystallizer / PhaseMistress: 作者明确把 Crystallizer 与 spooky PhaseMistress 变体放在低颤动单层中，之后再接 transient、delay、EQ。不能把它写成 `Kill states` 或 `Clove_Res_Available` 父总线共享处理，也不能复述现有 Clove smoke 父链。
+  - Mono control: 作者说效果把 mono 源变成 stereo，末端用 de-esser 让它回 mono，并明确认为这不是最佳方法。迁移时换明确的 mono fold-down/channel utility，并检查相位、相关度与等响旁路。
+  - Soundtoys Tremolator: Tibetan Bowl/金属刮擦先滚高频，再用 tremolo/pulse 和 reverb 抽象为角色身份；rate、depth、shape、sync、算法和 wet 均未显示。
+  - Bells/chimes: classic bells 主要使用少量 reverb/delay，chimes 使用 EQ、reverb、delay。具体 wet、decay、delay time、feedback、EQ 频点和实际宽度未知。
+  - Soundtoys EchoBoy Jr: digital flutter 先滚高频，再用作者所说的 subtle/slap delay、reverb 与 limiter。更宽、更 encompassing、稍显推远是作者听感，未做本地声像或响度验证。
+  - Audiokinetic Wwise: 可证事实只有多个 flat loops 分别受 RTPC 控制，以及实际 volume envelopes/automation 在 Wwise 完成；Wwise event graph、bus、priority、voice limit、attenuation、spatialization、RTPC 正式名称/数值均未展示。
+- Design principles learned:
+  - UI 声音先按信息职责分类。动作确认告诉玩家“输入被接收”，必要信息 alert 告诉玩家“状态改变且必须做决定”；死亡后 ult 可用属于后者。
+  - 状态窗口不能只有一条漂亮提示。Enter、Active、End 分别建立进入、持续和撤销，缺一段就会让玩家误判机会是否仍有效。
+  - 角色身份材料可以跨阶段复用，但每段的时间行为必须不同：Enter 有明确入口，Active 能循环且不抢前景，End 有决定性关闭和视觉撤销。
+  - 先通过切割、删除和 crossfade 修正信息轮廓，再加插件。插件只负责身份、运动、空间或动态；已无明确贡献的处理应旁路。
+  - Flat loops 不应烘入固定生命周期。离线 DAW 交付可循环资产，运行时按真实状态驱动 volume/pitch；本视频明确证实的实际项是 volume automation。
+  - End 要共同关闭声音循环、操作权限和 HUD 元素。验收顺序应是 loops 退出 -> 过渡层 -> expired alert -> UI 消失，而不是只检查尾音是否悦耳。
+  - REAPER 文件夹、颜色和缩进只能证明编辑组织，不能证明父轨 FX、Wwise bus、self/other/near/far、第三人称、衰减、遮挡或 listener 规则。
+  - 本片只覆盖未按 X 的到期路径。按 X 后的施法、位移、复活计时、成功/失败和最终结果必须由独立证据与模块处理。
+- Use when: death-state UI; limited revive window; Res Available; timer active loop; timer expired; Enter Active End; Valorant Clove; Nathan_SFX; REAPER; Wwise RTPC; flat loop lifecycle; bell and glass identity; Tibetan Bowl; bowed metal uncertainty; Crystallizer; PhaseMistress; Tremolator; EchoBoy Jr; item crossfade; HUD expiry sync; scifi; magic; workflow; 插件技巧; 需要区分玩家按键反馈与系统主动必要信息; 需要把持续状态拆成入口循环结束; 需要把离线 flat loop 与 Wwise 运行时自动化分工; 需要避免把轨道缩进猜成父总线或空间实现; 需要严格排除按 X 后的施法位移复活成功失败分支
+
+## 2026-08-08 - ARC Raiders 风格爆炸：浴帘变低沉冲击
+- Source: `https://www.youtube.com/watch?v=FuFfkk7dxcY`
+- Domain: impact, workflow, scifi, 插件技巧, Dietrich Dice Sound, ARC Raiders, explosion, household Foley, shower curtain, Udu, cardboard, low boom, transient, body, tail, debris, convolution IR, RBass, Saturn 2, OTT, Slapper ST, master automation
+- Reusable pattern: 把参考爆炸拆成 `electronic beeper -> low boom -> bright transient -> Body -> Tail -> Debris`，再从日用品中寻找功能等价源。浴帘只承担 boomy impact 与 early body 的一部分，Udu、纸板、吹麦、真实 ambience、米粒、白噪声、塑料袋和其它碎屑共同完成结构。可迁移的是功能分工、源选择和时域组织，不是 ARC Raiders 官方资产或固定插件处方。先找原始频段与包络已经接近职责的素材，再用 EQ、饱和、瞬态、卷积和包络放大已有性格；插件越多越需要 matched-loudness A/B。
+- Step / event map:
+  - 建立素材清单: `01:10.000` 同屏列出 Udu、毛巾、吹麦、土、米、工具、游戏盒、金属盘/门、纸板、塑料袋、方便面、洗衣容器、浴帘和雨棍，以及 F8n Pro、MKH 416、Rode M5。作者还使用阳台 ambience、沙土和石子；目标是不调用真实爆炸或现成爆炸尾声，不是拒绝白噪声、插件或 IR。
+  - 推纸板瞬态: `05:33.000` 显示 cardboard rip 及 Transient、OTT、双 Saturn、Haas、Pro-Q、第二级 Transient、Clipper、Slapper、末端 Pro-Q。列表只证明功能链，不证明 drive、mix、阈值、preset 或 hidden bypass。
+  - 放大浴帘 boomy 性格: `06:44.000` 同屏显示 Shower curtain 轨、波形与 Saturn 2。作者明确说继续堆插件不如重新录一个本身位于正确频率范围的源；Saturn 频段、style、drive 和 mix 未显示。
+  - 预滚 Udu low boom: `09:20.000` 显示 Bass udu item 早于若干主冲击 item，当前 RBass 实例为 `Freq 79 / Intensity 13.6`。这是项目编排和实例数值，不证明最终低频声学峰必然先到，也不是通用 RBass 预设。
+  - 建立浴帘 Body: `13:04.000` 显示 Decapitator、deactivated Flanger、Pro-Q 3、Saturn 2、Convolver、Fresh Air、RX De-click；当前 Convolver 可读 `Fade In 0.00% / Stretch 100% / Fade Out 0.00% / Delay 0.00 ms`，IR 标签以 Urban 开头。完整 IR 名和 mix 未知。
+  - 建立米粒 Tail: `16:10.000` 显示 Rice 轨 Slapper ST；当前实例可读 `Gain -7.4 dB / Delay 371.5 ms / Feedback 37% / Damp 77% / HPF 93.0 Hz / LPF 1.9 kHz / Mix 100%`。这些数值不得推广到其它 Slapper 实例。
+  - 映射 Debris: `21:15.000` 把塑料袋现场录音与 REAPER 中降速、错开并带 fade 的 debris items 同屏。塑料袋降调为 rock-like debris 是作者口述；精确半音、rate 和样本偏移未知。
+  - 局部 Master 动作: `22:45.000` 显示 `Wet / kHs Transient Shaper` 包络大部分为 0，仅在 bass 后、主瞬态附近形成窄脉冲。它是目标时刻的自动化，不是常开母线 preset；宽度、偏移、阈值和 loudness target 均未给出。
+- Plugin and processing notes:
+  - Kilohearts Transient Shaper / Xfer OTT / Kilohearts Clipper: 纸板主瞬态用多级动态与限幅建立亮、短、可读的峰；Master transient wet 只在目标命中短暂抬起。每级必须等响旁通，避免把更响误判为更有 punch。
+  - FabFilter Saturn 2: 明确参与浴帘 boomy impact、纸板瞬态和 Body 塑形。作者强调 ARC 参考式卷积爆炸应保持失真克制；频段、style、drive、mix 与未明确说明的 bypass 保持 unknown。
+  - Waves Renaissance Bass: 只确认 Bass udu 当前实例的 `Freq 79 / Intensity 13.6`。作者还口述先 EQ 只留 bass、再以鼓压缩和 clipper 管理响度/峰值；截止、阈值和提前毫秒未知。
+  - Kilohearts Convolver: 浴帘 Body 当前实例为 `Delay 0.00 ms / Stretch 100%`，Fade In/Out 均 `0.00%`，IR 标签只可靠读到 `Urban, ...`。这些帧绑定值不能外推到 Tail 或其它卷积。
+  - The Cargo Cult Slapper ST: Rice Tail 当前实例为 `Delay 371.5 ms / Feedback 37% / Damp 77% / HPF 93.0 Hz / LPF 1.9 kHz / Mix 100%`。画面参数只服务该米粒尾层，不能成为全局空间设置。
+  - FabFilter Pro-Q 3 / Haas: 作者按角色清理频段并对部分 mono Foley 加宽。Udu 留低频、Debris 去低并削刺耳高频、风层留高端；具体频点/Q 与低频是否强制 mono未展示，Haas 还需补 mono 和相位测试。
+- Design principles learned:
+  - 先按目标频段与包络选源，再加工。柔软塑料、纸板、陶鼓、食材与日用品可以跨语义重映射，但不能因为标题突出浴帘就忽略其它层。
+  - 低频 item 的时间线起点、输出低频包络起点和低频峰值是三个不同事实。作者把 Udu 前置是编排策略，最终信号仍需分频测量。
+  - Body、Tail、Debris 应分别承担初始反射、地点尺度和末端落物。用单一大混响替代三段会失去清楚的事件叙事。
+  - 环境 IR 是身份和地点层，不只是尾端装饰；过量 broadband distortion 会吞掉直达声到反射声的过渡。
+  - Debris 用频段、密度、起点和 fade 让位。土、沙、石、袋子、米粒与方便面不应全频、同时、同宽度出现。
+  - Master automation 只解决目标瞬间。分层内先完成角色，再用 transient wet 窄脉冲和 clipper/limiter 条件性收口。
+  - ARC Raiders 只是作者的参考目标与功能结构；官方工程、官方素材、精确 pitch/EQ/饱和/IR mix、hidden bypass、独立爆炸 LUFS/true peak、低频 mono、导出、中间件和游戏内结果都未得到证明。
+- Use when: ARC Raiders style explosion; household Foley explosion; shower curtain impact; Udu low boom; cardboard transient; impact body tail debris; convolution body; spatial tail; rice Slapper; plastic bag rock debris; bass pre-roll; transient wet automation; matched-loudness A/B; restrained saturation; functional source selection; impact; workflow; scifi; 插件技巧; 需要把参考风格拆成功能角色而非冒充官方资产; 需要避免把标题素材扩大成整颗爆炸; 需要严格限定 RBass Convolver Slapper 的帧绑定参数; 需要区分时间线前置与最终声学峰值; 需要把母线瞬态自动化限制为目标时刻
+
+## 2026-08-08 - 用史莱姆气泡制作怪物声音
+- Source: `https://www.youtube.com/watch?v=NdGNqhV8cpM`
+- Domain: creature, environment, magic, 插件技巧, Juuso Tolonen, slime bubbles, Uši Pro, hydrophone, dual-perspective recording, snippet sequencing, playback-rate resampling, Vocal Doubler, ReEQ, Radiator, OTT, Decapitator, Traveler, Saike Transience, Digital Drum Compressor, RX De-crackle
+- Reusable pattern: 先从吹入史莱姆、气泡鼓起和破裂的真实动作中挑选已经像发声的短片段，再把同一事件的两种录音视角分工：Uši Pro 外部录音保留高频边缘和 bite，浸入史莱姆的水听器录音提供中低频、粗砺与 throaty 主体。Uši 片段以不保留音高的低速重采样改变尺度，Hydro 先清理泥浊，再按 EQ -> Radiator -> OTT -> Decapitator -> Traveler -> transient -> compression -> EQ -> De-crackle 处理。短 item 之间的留白负责宏观发声包络。这个结构不是固定 wet-mouth/body/air 三层，也没有独立 formant 或 granular 证据。
+- Step / event map:
+  - 记录物理源动作: `00:05.000` 显示吸管插入绿色史莱姆并吹出气泡。它只证明材料与动作，不证明麦克风布置、前级、录音机或增益。
+  - 双视角筛片与编排: `02:31.000` 同屏可见 CREATURE/Uši、Creature Voc Hydro、多条留缝短 item 与 Path Position/TRAVELER 轨。Uši 是普通外部录音，Hydro 浸在史莱姆中；两路按功能互补，不是固定三层模板。
+  - 凝聚 Creature 文件夹: `03:04.000` 的 Vocal Doubler 当前为 Separation 100%、Variation 49%；ReEQ、Saturation Knob、MCompressor 启用，Kilohearts Chorus 条目可见但未启用。不能把 kind of like a chorus 口述改成 Chorus 已启用。
+  - 降速 Uši item: `03:32.000` 当前实例为 Playback rate 0.330146、Volume +6.63 dB、Mono (left)、Preserve pitch 未勾选、RESAMPLED。数值只绑定这一条 item，不是全局设置。
+  - Hydro 前级减法: `04:36.000` 的第一只 ReEQ 显示陡峭高通与宽低中频削减，位于 Radiator/OTT/Decapitator 之前。作者称水听器录音 very muddy；精确频率、Q 和增益不可安全读取。
+  - Hydro 加厚与失真: `05:40.000` 的 Decapitator 显示 Punish 开启、Style A，列表确认 Radiator -> OTT -> Decapitator -> Traveler 顺序。Drive、Tone、Mix 和 Radiator 参数未知。
+  - 驯服 rough transient: `05:50.000` 的 Saike Transience 显示 Attack 0.5、Decay 0.5、Attack -0.4872、Decay 0.0 等当前值。作者先压低粗糙起音，再由后续压缩带回主体；压缩参数未展示。
+  - 链尾 De-crackle: `06:20.000` 的 RX 7 De-crackle 为 Quality Low、Strength 8.3、Amplitude skew 5.9，Output crackle only 未勾选。作者说它处理 clippy 感并凝聚声音；clippy 是听感描述，不等同已测数字削波。
+- Plugin and processing notes:
+  - iZotope Vocal Doubler / Creature folder: 当前可见 Separation 100%、Variation 49%；ReEQ、Softube Saturation Knob 与 MeldaProduction MCompressor 同时启用。Kilohearts Chorus 未启用，Amount 与其它插件参数未知。
+  - Playback-rate resampling: Uši 当前 item 的 0.330146、+6.63 dB、Mono (left)、不保留音高是帧绑定值。视频显示普通 item rate 编辑，不是 formant shift，也不是 granular synthesis。
+  - REAPER JS ReEQ / Soundtoys Radiator: Hydro 先减掉泥浊，再用 Radiator 加 low end 与 saturation。只确认曲线形态、功能和链序，不抄精确 EQ、Input、Bass、Treble 或 Mix。
+  - Xfer OTT: Depth 100%、Time 100%、输入/输出 0.0 dB 是用于暴露 plasticky/aggressive 方向的极端演示；随后 Depth 被明显回退，最终精确值不可读。
+  - Soundtoys Decapitator: 当前帧显示 Punish 和 Style A；Drive、Tone、Mix、输出与 oversampling 未确认，不能推广为全部 Hydro item 的 preset。
+  - Tontum Traveler: 项目存在 Path Position 自动化，作者意图是跟随怪物并在跌落时做 Doppler；作者本人不确定最终 bounce 是否启用，因此只记录设计意图和工程步骤。
+  - Saike Transience / Digital Drum Compressor: 先降低 rough attack，再压缩抬回主体。只有 Transience 当前数值可见；压缩 threshold、ratio、attack、release 与 makeup 均未知。
+  - iZotope RX 7 De-crackle: 当前实例 Low / 8.3 / 5.9，位于后级 ReEQ 之后。它是修整也是音色取舍，过量可能清掉有用的湿润爆点。
+- Design principles learned:
+  - 材料行为先于怪物标签。压力积累、黏稠鼓起、气泡破裂和短脉冲天然具有发声运动，后期只需放大已有性格。
+  - 同一事件的外部与内部/接触视角比按惯用名词堆层更可控。先按频段、拾音视角和动作职责分工，再决定轨名。
+  - 片段间隔既是宏观包络也是混音空间。持续低吼会失去每次发声的起落，并遮挡法术、冲击与环境上下文。
+  - 低速重采样把时长、音高和纹理绑定改变。听见体型变大不能反推独立 formant；看见短片段编排也不能改写成 granular。
+  - 非线性前先减法，非线性后再结构性修整。Radiator、OTT 与 Decapitator 放大的是已清理的喉体，后级 EQ/De-crackle 处理累积副产物。
+  - 极端参数用于辨认方向，不代表交付值。OTT 100% 明确被回退；任何换源复刻都必须从低量开始并做 matched-loudness bypass。
+  - 动态处理要同时观察微观爆点和宏观脉冲。先削 attack 再抬主体，不等于把所有瞬态磨平。
+  - 对作者自我质疑的链保留不确定性。Traveler 在工程中出现过，也有路径意图，但最终 bounce 状态、reverb send、响度、导出和游戏内结果均未证明。
+- Use when: slime creature vocal; monster throat; organic creature source; hydrophone creature; Uši Pro; dual perspective recording; short vocal pulses; playback-rate resampling; no formant evidence; no granular evidence; Vocal Doubler; Hydro shared chain; muddy cleanup; Radiator; OTT exploration; Decapitator; transient reduction; De-crackle timbre cleanup; Traveler uncertainty; creature; environment; magic; 插件技巧; 需要从真实材料行为构造怪物发声而不是先堆插件; 需要按外部高频边缘与内部中低频喉体分工; 需要避免套用 wet-mouth body air 固定三层; 需要把帧绑定参数与最终通用 preset 分开; 需要保留最终 bounce 未确认的空间链不确定性
+
+## 2026-08-08 - 暗黑魔法的基础声音构件
+- Source: `https://www.youtube.com/watch?v=yYUB55kMMV8`
+- Domain: magic, workflow, 插件技巧, Francisco Nascimento, dark magic, building blocks, source palette, visual evidence, Pro Tools, Cloth, Coffe Machine, Saw, Paper, Reversed Paper, Crickets Soundscape, Squeaky Door, Singing Bowl, unknown source, Reversed Glass
+- Reusable pattern: 先把日常物理来源整理成异质 palette，再在另一个阶段按目标场景分配职责。画面按 Layer 1-10 列出 Cloth、`Coffe Machine`、Saw、Paper、Reversed Paper、Crickets Soundscape、Squeaky Door、Singing Bowl、`???` 和 Reversed Glass，并为每层展示 Pro Tools 轨道/波形与 Insert 列表区域。当前没有本地完整视频、完整音频或可用字幕，因此本条只学习来源目录、证据边界与 palette 工作法；不把 Insert 列表补成插件因果教程，不把标题补成听感，也不把十层写成已验证的最终暗黑魔法配方。
+- Asset provenance: 八张正文图来自已认证浏览器帧；原始 `frame_000022/000077/000129/000151.png` 因抓取时播放器尺寸变化为 `1348×758`，其余四张原始帧为 `1920×1080`。站点高清资源均在不裁切画面的前提下规范为 `1920×1080`，预览图为 `960×540`。
+- Step / event map:
+  - 建立 Cloth 入口: `00:07.9` 显示 Layer 1、Source: Cloth、衣物图示、Pro Tools 轨道头、波形、clip 两端淡变线和 Insert 列表。迁移时可把柔性材料当作 gesture 候选，但这不是作者已公开的事件角色。
+  - 记录机械来源: `00:21.8` 显示 Layer 2、长双通道波形、咖啡机图示和设备区域。画面原文为 `Source: Coffe Machine`；正文可规范化为 Coffee Machine，但证据注释必须保留拼写。
+  - 记录 Saw 来源: `00:39.6` 显示 Layer 3、Source: Saw、圆锯图示、Pro Tools 轨道头、Varispeed 控件、双通道波形、播放头和 Insert 列表。锯型、动作与听感均未知。
+  - 区分普通/反向纸: `01:17.3` 显示 Layer 5 / Reversed Paper；分析时间线另确认 Layer 4 / Paper。正文图有意只选反向纸，Reversed 只证明标签，不证明 clip reverse、离线 bounce、反向混响或 delay。
+  - 纳入环境声景: `01:39.1` 显示 Layer 6 / Crickets Soundscape、长波形与多行设备区域。不能从电平活动和波形密度推断颗粒、虫群音色或持续职责。
+  - 保留门的来源身份: `02:08.8` 显示 Layer 7 / Squeaky Door、门图示、长波形与设备区域。不能按门轴素材的常见用法补 pitch、formant、frequency shift 或 creature 角色。
+  - 记录共振金属来源: `02:30.6` 显示 Layer 8 / Singing Bowl、颂钵图示、长波形与设备区域。音高、调性、敲击/摩擦方式、空间和结果均未证明。
+  - 限定反向玻璃证据: `03:08.3` 显示 Layer 10 / Reversed Glass、Pro Tools 轨道头、波形、Insert 列表和覆盖波形区域的碎玻璃装饰图。装饰线条不是可识别的 automation lane、参数包络或节点证据；Layer 9 的 Source: `???` 继续保持未知。
+- Plugin and processing notes:
+  - 本条不把具体插件写成因果教程。八张已认证帧能确认 Pro Tools Insert 列表存在，但不能在当前证据契约下建立插件作用、参数、启用/旁路或听觉因果。
+  - 波形、绿色电平活动、播放头和 Varispeed 控件都是视觉状态，不是可听音色、频谱、动态、空间或处理前后差异的证据。
+  - Reversed Paper / Reversed Glass 只按来源标签记录；reverse 的技术位置、方法和处理顺序全部 unknown。
+  - Layer 10 覆盖波形区域的碎玻璃线条属于装饰图，不把它记录为 envelope/automation 或参数证据。
+  - 普通 Paper 与未知 Layer 9 没有进入八张正文图，但仍属于十层来源目录；未知层不得参与参数教学。
+  - 结尾结果段没有可用音频证据，不能评价最终 blend、响度、频谱、动态、空间、层次或设计成败。
+- Design principles learned:
+  - 标题、来源标签和功能职责分开。Dark Magic 是发布语境，Cloth/Glass 是来源，cast/impact/tail 是后续场景功能，三者不能互相替代证据。
+  - 先按物理行为扩充 palette：柔性、机械、摩擦、薄片、环境、共振和脆性材料提供不同入口；Layer 9 保留 unresolved。
+  - 持续源与瞬态源分开打印。Coffee Machine、Crickets、Door、Singing Bowl 可先做长变体，Cloth、Paper、Glass 可先做短 gesture；这是迁移练习，不是作者轨道角色。
+  - 反向素材先服务动作方向与时间终点。先把能量终点对齐视觉帧，再决定自己的音色处理，不把视频未公开的方法写成配方。
+  - 每个源只设一个实验目标：scale、motion、tone、attack 或 tail；输出弱/中/强三版并做 matched-loudness A/B。
+  - 设备名即使可读，也不等于作用与因果已被证明；参数和 A/B 证据缺失时留空，不从相邻记录借用链路结论。
+  - palette 建好后再写视觉事件表。cast、movement、impact、sustain、release、tail 只能作为自己的 transfer hypothesis，并需由玩家信息职责验证。
+  - 完整交付还需要 dry/intermediate render、fade、mono、响度、true peak、loop/variation、导出、中间件和游戏内遮蔽检查；本片没有提供这些结果。
+- Use when: dark magic source palette; everyday object building blocks; visual-only tutorial evidence; Cloth; Coffee Machine; Coffe Machine spelling; Saw; Paper; Reversed Paper; Crickets Soundscape; Squeaky Door; Singing Bowl; unknown source boundary; Reversed Glass; physical-behavior classification; forward reverse timing; matched-loudness A/B; workflow; magic; 插件技巧; 需要在没有完整音频和字幕时诚实整理可见素材目录; 需要把素材来源与游戏事件角色分开; 需要避免从设备列表、波形或相邻教程补写插件与听感; 需要把 Layer 9 未知来源和 reverse 实现保持为 unknown
+
+## 2026-08-08 - Valorant Clove 终极技能音效制作
+- Source: `https://www.youtube.com/watch?v=cJ75ykkqV64`
+- Domain: magic, scifi, workflow, 插件技巧, Nathan_SFX, Valorant, Clove, ultimate, Initial Cast, perspective cutoff, reverse suck bridge, Reposition Loop, Spawn, post-revive timer, RTPC, success failure, bell chime, bird riser, Soundtoys Crystallizer, Soundtoys PhaseMistress, FabFilter Pro-Q 3, Eventide SP2016 Reverb, REAPER, Wwise
+- Reusable pattern: 从玩家按 X 激活大招后开始，先把交互链拆成 `Ult Cast -> Perspective Bridge -> Reposition Enter/Loop -> Spawn -> Post-Revive Timer -> Success / Failure`，再为每个状态决定一次性 marker、可被切断 tail、持续 loop 与独立结局。Bell/chime 和 butterfly/bird-flap 方向跨阶段维持 Clove 身份；作者当年的透视播放切断问题用独立 reverse-suck bridge 暂时规避。Timer 的 countdown loop 与 heartbeat 由游戏内 RTPC 临近失败时抬起，REAPER 绿色 Volume 包络只为讲解，作者明确说未随资产 bounce。本条严格排除第 16 条按 X 前的 Res Available/End 和 Clove smoke。
+- Asset provenance: 八张正文图来自已认证浏览器帧 `frame_000058/000199/000578/001475/001833/002588/002840/002984.png`，截图均为 `1920×1080`；capture manifest 标记播放器内容为 `1280×720`。对应站点预览图为 `960×540`，无 motion。
+- Evidence boundary: 当前没有本地完整视频或完整音频。画面事实只用于确认当前帧中的 REAPER 组织、插件窗口、数值和包络；作者意图、听感与 RTPC 只按中英 VTT 归因。视频没有展示 Wwise UI，不能填写 event、RTPC、curve、range、switch/state、bus、scope、priority、voice limit 或 3D 字段。Success 与 Failure 是两条独立路径；作者不确定留存条件究竟是 kill 还是 damaging assist，因此不将其写成已核实的当前游戏规则。
+- Step / event map:
+  - 建立按 X 后的事件地图: `00:58.040` 的认证帧显示绿色 `Clove_X_Cast_A...` 组、多段颜色区域、REAPER 全局时间线和游戏参考窗口。字幕说 Ult is split up into sections 并从 initial cast 开始；轨道缩进不等于 Wwise 事件树。
+  - 标记 Initial Cast bell 变体: `03:18.900` 打开 Track 16 的 Crystallizer，当前 Pitch `-50 cents`、Splice `102.7 msec`、Delay `7.3 msec`；FX 列表可见 Pro-Q 3、Crystallizer、PhaseMistress 和另一只 Pro-Q 3。作者把 flutter 归因于 Crystallizer + PhaseMistress；参数只绑定该帧，没有本地听音结论。
+  - 解耦透视切断桥接: `09:37.960` 显示绿色 Cast 与青色后继层分组错开，字幕正说明 crescendo/suck sound。作者让可被切断 tail 与 reverse-suck bridge、后继 marker 分开，使短空隙听成有意停顿；约 `0.1-0.2 s` 属口述近似值，且底层播放问题后来已修复。
+  - 让 bird riser 逐步显形: `24:34.600` 显示 Pro-Q 3 低通形态、`Band 1 Frequency / Pro-Q 3` automation lane、Volume lane 和紫色 item。作者口述该 bird recording 同时使用 pitch、volume 与 EQ automation；截图没有可靠给出完整频率端点、Q、斜率、音量终值或 automation mode，也不证明 envelope 已烘焙。
+  - 独立 Reposition Loop: `30:32.920` 在紫色阶段显示持续 item，其下方另有橙色 Spawn 组；字幕明确说 reposition loop 并进入 first layer。作者说明 Loop 与相邻声音由不同事件触发；loop point、crossfade、variation、voice limit 与 3D 属性未知。
+  - 用 RTPC 处理 post-revive timer: `43:08.360` 显示 `X Active Loop`、重复短 item、长 loop、Volume lane 与下方结局分支，字幕明确提到 RTPC。作者说 loops 从状态开始运行、音量先保持近似不可闻，临近失败时才抬起；`-200 dB` 是口述近似，不是已读 Wwise 曲线值。后续字幕明确说 REAPER 包络只为 session 演示，资产未随它 bounce。
+  - 独立 Success: `47:19.680` 显示绿色 success 分组和多层 item，字幕说达成条件后 fully come back to life。作者说明它与 kill banner 同时发生，允许自身退居 flavor；实际 bus priority、ducking 与响度未知。
+  - 独立 Failure: `49:44.440` 显示蓝色 failure 分组和 Track 63 FX 列表，SP2016 Reverb、Pro-Q 3、Crystallizer 可见，当前 Crystallizer 预设标签为 `ShudderRoom`。作者说结果仍不够 spooky，于是加入 Crystallizer；spooky 是作者听感，完整参数、旁路和导出结果未知。画面下方既有 `Kill states` / `Clove_Res_Avail...` 不进入本条。
+- Plugin and processing notes:
+  - Soundtoys Crystallizer: Initial Cast 当前帧值为 `-50 cents / 102.7 msec / 7.3 msec`，只作单实例档案。Failure 帧显示 `ShudderRoom` 标签；Mix、其它参数、旁路和最终导出状态不补写。
+  - Soundtoys PhaseMistress: 作者将其与 Crystallizer 配合，为 bell、reposition 与 timer 层增加适量 phase movement；03:18.900 只确认列表条目出现，rate、depth、feedback、mix、preset 和当帧启用状态不外推。
+  - FabFilter Pro-Q 3: 多个事件使用减法整理；bird riser 帧能确认低通形态和 Band 1 Frequency automation lane。不同轨道上的 Pro-Q 3 不能拼成一条共享父链。
+  - Eventide SP2016 Reverb: 49:44.440 的 Failure FX 列表可见；preset、decay、predelay、mix、旁路与是否属于父轨均未确认。
+  - Ina-GRM GRM Reson Stereo: 作者口述自己很少使用，A/B 后只能辨认很小差异，并怀疑是复制链遗留。可迁移原则是逐颗 matched-loudness bypass、无明确职责则删除；本站不把它列成必用插件。
+  - Audiokinetic Wwise: 可写事实只有作者所述的 post-revive RTPC volume 生命周期。没有 Wwise 界面证据，正式字段和值全部保持 unknown。
+  - REAPER automation: bird 的 EQ/Volume lane 和 timer 的绿色 Volume 包络都是可见工程状态；作者明确说 timer 资产没有把演示 Volume 包络 bounce 进去，实际自动化发生在游戏中。
+- Design principles learned:
+  - 按玩家状态和触发边界交付资产。Cast、会被切断 tail、bridge、Loop、Spawn、Timer、Success 与 Failure 不应被一个长文件绑死。
+  - 角色 motif 与状态时间行为分开。Bell/chime、flap 可以贯穿全链，但 Cast 要有入口、Loop 要低注意力、Spawn 要确认权限恢复、结局要明确分支。
+  - 技术 workaround 要记录时代背景。先修 listener/ownership/voice-cut 根因；只有发布窗口受限时才用独立 bridge，底层修复后重新评估。
+  - 运行时危险度优于离线固定包络。Timer 前段可以近似不可闻，临近失败再由真实剩余时间抬起 heartbeat/loop。
+  - Success flavor 必须给更高优先级系统确认让位；Failure 则要与按 X 前的机会到期形成不同语义。
+  - 包络服务状态叙事：pitch 表示回身体，filter 表示逐步显形，volume 表示危险临近；具体参数按素材和实机重定，不照抄模糊字幕。
+  - Spooky 是角色标尺，不是越暗越好。作者明确不希望 Clove 变成纯 horror/necromancer 方向。
+  - 插件是否保留只看独立贡献。复制链、preset 和可见 FX 条目都不等于有可听因果；必须旁路、匹配响度并检查角色职责。
+  - 完整交付还需 loop seam、variation、fade、mono、true peak、约 250 Hz 累积、导出、Wwise/FMOD 生命周期和游戏内遮蔽测试；本片证据没有完成这些验收。
+- Use when: interactive ultimate ability; post-activation state machine; temporary revive; ghost reposition; perspective voice cut; reverse suck bridge; independent enter loop spawn; post-revive kill timer; runtime RTPC volume; flat loop not baked; success failure branches; system banner priority; Clove identity motif; bell chime; butterfly bird flap; Crystallizer frame-bound values; Pro-Q 3 automation; PhaseMistress movement; SP2016 failure branch; remove ineffective copied plugins; REAPER Wwise evidence boundary; magic; scifi; workflow; 插件技巧; 需要严格区分按 X 前 Res Available/End 与按 X 后复活执行链; 需要把 REAPER 演示 envelope 与游戏运行时自动化分开; 需要避免从字幕听感或未显示 Wwise 字段补写工程事实

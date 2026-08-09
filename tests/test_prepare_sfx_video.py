@@ -40,6 +40,19 @@ class VideoFormatSelectorTest(unittest.TestCase):
 
 
 class YtDlpCommandTest(unittest.TestCase):
+    @mock.patch("shutil.which", return_value=str(Path("node.exe").resolve()))
+    def test_enables_youtube_challenge_and_impersonation_options(self, _which):
+        module = load_prepare_module()
+
+        command = module.yt_dlp_command(None)
+
+        self.assertIn("--js-runtimes", command)
+        self.assertIn("node", command)
+        self.assertIn("--impersonate", command)
+        self.assertIn("chrome-133:macos-15", command)
+        self.assertIn("--extractor-args", command)
+        self.assertIn("youtube:player_client=mweb", command)
+
     def test_passes_absolute_ffmpeg_location_to_downloader(self):
         module = load_prepare_module()
         ffmpeg = Path("tools") / "ffmpeg.exe"

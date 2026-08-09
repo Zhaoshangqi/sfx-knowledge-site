@@ -66,6 +66,14 @@ def yt_dlp_command(cookies_from_browser: str | None, ffmpeg_location: str | Path
     command = [sys.executable, "-m", "yt_dlp"]
     if shutil.which("node"):
         command.extend(["--js-runtimes", "node"])
+    command.extend(
+        [
+            "--impersonate",
+            "chrome-133:macos-15",
+            "--extractor-args",
+            "youtube:player_client=mweb",
+        ]
+    )
     if ffmpeg_location:
         command.extend(["--ffmpeg-location", str(Path(ffmpeg_location).resolve())])
     if cookies_from_browser:
