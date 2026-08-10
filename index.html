@@ -115,10 +115,39 @@
 
     .toolbar {
       display: grid;
-      grid-template-columns: minmax(220px, 1fr) auto auto;
+      grid-template-columns: minmax(220px, 1fr) repeat(4, auto);
       gap: 12px;
       max-width: 1180px;
       margin: 22px auto 0;
+    }
+    .view-switch {
+      display: inline-grid;
+      grid-template-columns: repeat(2, minmax(112px, 1fr));
+      gap: 4px;
+      margin-top: 22px;
+      padding: 4px;
+      border: 1px solid rgba(22, 24, 25, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.58);
+    }
+    .view-switch-button {
+      min-height: 38px;
+      padding: 7px 12px;
+      border: 0;
+      border-radius: 6px;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .view-switch-button.active {
+      color: #fff;
+      background: var(--ink);
+      font-weight: 900;
+    }
+    .view-switch-button:focus-visible {
+      outline: 3px solid rgba(15, 139, 141, 0.46);
+      outline-offset: 2px;
     }
     .search {
       min-height: 46px;
@@ -153,6 +182,17 @@
       flex-wrap: wrap;
       gap: 8px;
       margin-bottom: 18px;
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
     .tab {
       min-height: 40px;
@@ -241,6 +281,56 @@
     .category-note {
       color: var(--muted);
       font-weight: 600;
+    }
+    .effect-list {
+      display: grid;
+      gap: 18px;
+    }
+    .effect-group {
+      border-top: 1px solid var(--line);
+    }
+    .effect-group-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 0 8px;
+    }
+    .effect-group-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .effect-use-row {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.7fr) minmax(240px, 1.3fr) minmax(170px, 0.8fr);
+      gap: 16px;
+      width: 100%;
+      min-height: 74px;
+      padding: 12px 0;
+      border: 0;
+      border-top: 1px solid rgba(22, 24, 25, 0.08);
+      color: inherit;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+    .effect-use-row:hover,
+    .effect-use-row:focus-visible {
+      background: rgba(15, 139, 141, 0.08);
+    }
+    .effect-use-row:focus-visible {
+      outline: 3px solid rgba(15, 139, 141, 0.46);
+      outline-offset: 2px;
+    }
+    .effect-use-purpose,
+    .effect-use-target,
+    .effect-use-source {
+      line-height: 1.55;
+    }
+    .effect-use-target,
+    .effect-use-source {
+      color: var(--muted);
+      font-size: 12px;
     }
     .grid {
       display: grid;
@@ -616,6 +706,13 @@
       .reader-detail .step { grid-template-columns: 1fr; }
       .reader-detail .detail-body { padding-inline: 16px; }
     }
+    @media (max-width: 760px) {
+      .view-switch { width: 100%; }
+      .effect-use-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
     @media (max-width: 640px) {
       .site-header { align-items: flex-start; flex-direction: column; }
       .header-stats { justify-content: flex-start; }
@@ -709,17 +806,33 @@
   <section class="hero">
     <div class="hero-inner">
       <h1>音效知识库</h1>
-      <p>把已分析的视频按音效用途重新整理成可检索的制作资料库。每个模块保留制作步骤、核心观点、插件/处理点、材料和实用技巧，方便后续继续补充。</p>
+      <p>通过视频案例拆解声音设计思路，并交叉检索真实效果器与插件的使用方式、参数线索和素材目标。</p>
+      <div class="view-switch" id="viewSwitch" role="tablist" aria-label="知识库视图">
+        <button class="view-switch-button active" type="button" role="tab" aria-selected="true" data-mode="videos">视频案例</button>
+        <button class="view-switch-button" type="button" role="tab" aria-selected="false" data-mode="effects">效果器索引</button>
+      </div>
       <div class="toolbar">
-        <input id="search" class="search" type="search" placeholder="搜索：魔法、怪物、Wwise、Transient、Raw Magic、火焰、电系...">
+        <input id="search" class="search" type="search" placeholder="搜索视频、设计目标、效果器、参数或素材...">
+        <select id="effectCategoryFilter" class="select" aria-label="效果器功能筛选" hidden>
+          <option value="all">全部效果器功能</option>
+        </select>
+        <select id="effectEvidenceFilter" class="select" aria-label="证据状态筛选" hidden>
+          <option value="all">全部证据状态</option>
+          <option value="画面确认">画面确认</option>
+          <option value="作者口述">作者口述</option>
+          <option value="音频可辨">音频可辨</option>
+          <option value="分析推断">分析推断</option>
+          <option value="视频未展示">视频未展示</option>
+          <option value="unstructured">尚未结构化</option>
+        </select>
         <select id="sourceFilter" class="select" aria-label="来源筛选">
           <option value="all">全部来源</option>
         </select>
         <select id="sortOrder" class="select" aria-label="排序方式">
-          <option value="updatedDesc">更新时间：最新优先</option>
-          <option value="updatedAsc">更新时间：最早优先</option>
-          <option value="addedDesc">学习时间：最新优先</option>
-          <option value="titleAsc">标题：A-Z / 拼音</option>
+          <option value="updatedDesc">更新时间最新</option>
+          <option value="updatedAsc">更新时间最早</option>
+          <option value="addedDesc">收录时间最新</option>
+          <option value="titleAsc">标题 A-Z/拼音</option>
         </select>
       </div>
     </div>
@@ -727,18 +840,30 @@
 
   <main id="appMain">
     <section class="library-view" id="libraryView">
-      <nav class="tabs" id="tabs" aria-label="音效分类页签"></nav>
-      <div class="results-bar">
-        <span id="resultCount"></span>
-        <span class="category-note" id="categoryNote"></span>
-      </div>
-      <div class="grid" id="grid"></div>
+      <section id="videoLibrary" aria-labelledby="videosModeLabel">
+        <h2 class="visually-hidden" id="videosModeLabel">视频案例</h2>
+        <nav class="tabs" id="tabs" aria-label="音效分类页签"></nav>
+        <div class="results-bar">
+          <span id="resultCount"></span>
+          <span class="category-note" id="categoryNote"></span>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+
+      <section id="effectLibrary" aria-labelledby="effectsModeLabel" hidden>
+        <h2 class="visually-hidden" id="effectsModeLabel">效果器索引</h2>
+        <div class="results-bar">
+          <span id="effectResultCount"></span>
+          <span class="category-note">每一条用法都保留独立视频来源</span>
+        </div>
+        <div class="effect-list" id="effectList"></div>
+      </section>
     </section>
 
     <section class="reader-view" id="readerView" hidden>
       <div class="reader-bar">
         <button class="reader-back" id="backToLibrary" type="button">返回列表</button>
-        <div class="reader-hint">沉浸式学习模式</div>
+        <div class="reader-hint" id="readerHint">完整案例阅读</div>
       </div>
       <article class="detail reader-detail" id="detail"></article>
     </section>
@@ -751,6 +876,7 @@
     <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
 
+  <script src="src/knowledge-model.js"></script>
   <script>
     const categories = [
   {
