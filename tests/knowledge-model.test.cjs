@@ -25,9 +25,9 @@ test('uniqueFacts strips facts once and deduplicates only whitespace-normalized 
 
 test('buildEffectUses accepts arrays and normalizes explicit and legacy sources', () => {
   const records = [{
-    id: 'rec-7', source: '  视频作者  ', sourceVideoId: 'vid-2', title: '脚步',
+    id: '  rec-7  ', source: '  视频作者  ', sourceVideoId: 'vid-2', title: '脚步',
     keywords: ['  脚步  ', '脚步', '空间'],
-    steps: [{ imageKey: 'image-0' }],
+    steps: [{ screenshotKey: 'wrong', imageKey: 'right' }],
     plugins: [
       { name: 'EQ', vendor: 'FabFilter', settings: { gain: '-3 dB' } },
       { id: 'plugin-id', name: 'Reverb', vendor: 'Valhalla', settings: ['作者口述', '  画面确认  '] },
@@ -47,7 +47,7 @@ test('buildEffectUses accepts arrays and normalizes explicit and legacy sources'
   assert.equal(uses.length, 3);
   assert.equal(uses[0].id, '  explicit-id  ');
   assert.equal(uses[0].source, '  视频作者  ');
-  assert.equal(uses[0].screenshotKey, 'image-0');
+  assert.equal(uses[0].screenshotKey, 'right');
   assert.equal(uses[0].stepIndex, 0);
   assert.deepEqual(uses[0].evidence, ['画面确认', '作者口述']);
   assert.deepEqual(uses[0].sourceKeywords, ['脚步', '空间']);
@@ -60,12 +60,12 @@ test('buildEffectUses accepts arrays and normalizes explicit and legacy sources'
   assert.equal(uses[0].limitations, '不能过量');
   assert.equal(uses[0].parameters.length, 2);
   assert.deepEqual(uses[1].sourcePluginIndexes, [1]);
-  assert.equal(uses[1].id, 'rec-7:effect:reverb:2');
+  assert.equal(uses[1].id, '  rec-7  :effect:reverb:2');
   assert.deepEqual(uses[1].parameters, [
     { name: '参数线索', value: '作者口述', direction: '', evidence: '作者口述' },
     { name: '参数线索', value: '  画面确认  ', direction: '', evidence: '画面确认' }
   ]);
-  assert.equal(uses[2].id, 'rec-7:effect:limiter:3');
+  assert.equal(uses[2].id, '  rec-7  :effect:limiter:3');
   assert.deepEqual(uses[2].parameters, []);
   assert.deepEqual(model.buildEffectUses([{ id: 'empty-array-record' }]), []);
 });

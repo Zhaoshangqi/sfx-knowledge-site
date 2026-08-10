@@ -138,7 +138,7 @@
     var stepIndex = normalizeStepIndex(input && (input.stepIndex != null ? input.stepIndex : input.step));
     var step = stepIndex >= 0 ? (record.steps || [])[stepIndex] : null;
     var replacementIndexes = Array.isArray(input && input.replacesPluginIndexes) ? input.replacesPluginIndexes.filter(function (index) { return Number.isInteger(index) && index >= 0; }) : [];
-    var generatedId = cleanText(record.id) + ':effect:' + effectSlug(name) + ':' + (pluginIndex + 1);
+    var generatedId = String(record.id) + ':effect:' + effectSlug(name) + ':' + (pluginIndex + 1);
     var use = {
       id: legacy ? generatedId : (input && input.id != null ? input.id : generatedId),
       name: name,
@@ -153,7 +153,7 @@
       limitations: stripCourseScaffolding(input && input.limitations),
       timestamp: cleanText(input && input.timestamp),
       stepIndex: stepIndex,
-      screenshotKey: cleanText(input && input.screenshotKey) || cleanText(step && (step.screenshotKey || step.imageKey)),
+      screenshotKey: cleanText(input && input.screenshotKey) || cleanText(step && step.imageKey),
       evidence: inferEvidence(input && [input.evidence, input.purpose, input.result, input.notes].join(' ')),
       sourceRecordId: cleanText(record.id),
       sourceVideoId: cleanText(record.sourceVideoId || record.videoId),
