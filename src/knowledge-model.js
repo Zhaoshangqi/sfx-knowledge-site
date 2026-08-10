@@ -30,7 +30,7 @@
   function uniqueFacts(facts) {
     var seen = Object.create(null);
     return (Array.isArray(facts) ? facts : []).map(stripCourseScaffolding).filter(function (fact) {
-      var key = normalizeKey(fact);
+      var key = whitespaceKey(fact);
       if (!key || seen[key]) return false;
       seen[key] = true;
       return true;
@@ -39,6 +39,10 @@
 
   function normalizeKey(value) {
     return cleanText(value).normalize('NFKC').replace(/\s+/g, ' ').toLowerCase();
+  }
+
+  function whitespaceKey(value) {
+    return value == null ? '' : String(value).replace(/\s+/g, ' ').trim();
   }
 
   function canonicalEffectName(name, referenceCatalog) {
@@ -102,11 +106,9 @@
 
   function normalizeParameters(parameters, legacy) {
     if (legacy) {
-      if (!parameters || typeof parameters !== 'object' || Array.isArray(parameters)) return [];
-      var evidenceText = JSON.stringify(parameters);
-      var firstEvidence = inferEvidence(evidenceText)[0] || '';
-      return Object.keys(parameters).map(function (name) {
-        return { name: '参数线索', value: cleanText(name + ': ' + parameters[name]), direction: '', evidence: firstEvidence };
+      if (!Array.isArray(parameters)) return [];
+      return parameters.map(function (setting) {
+        return { name: '参数线索', value: setting, direction: '', evidence: inferEvidence(setting)[0] || '' };
       });
     }
     if (Array.isArray(parameters)) return parameters.filter(function (parameter) {
@@ -125,12 +127,6 @@
     return value.map(function (item) { return cleanText(typeof item === 'object' ? item.name || item.title || JSON.stringify(item) : item); }).filter(Boolean);
   }
 
-  function findStep(record, stepIndex) {
-    return (Array.isArray(record.steps) ? record.steps : []).find(function (step) {
-      return step && (step.index === stepIndex || step.stepIndex === stepIndex);
-    });
-  }
-
   function normalizeStepIndex(value) {
     if (Number.isInteger(value)) return value;
     if (typeof value === 'string' && /^-?\d+$/.test(value.trim())) return Number(value);
@@ -140,10 +136,11 @@
   function makeUse(record, input, legacy, pluginIndex) {
     var name = cleanText(input && input.name);
     var stepIndex = normalizeStepIndex(input && (input.stepIndex != null ? input.stepIndex : input.step));
-    var step = findStep(record, stepIndex);
+    var step = stepIndex >= 0 ? (record.steps || [])[stepIndex] : null;
     var replacementIndexes = Array.isArray(input && input.replacesPluginIndexes) ? input.replacesPluginIndexes.filter(function (index) { return Number.isInteger(index) && index >= 0; }) : [];
+    var generatedId = cleanText(record.id) + ':effect:' + effectSlug(name) + ':' + (pluginIndex + 1);
     var use = {
-      id: input && input.id != null ? input.id : (cleanText(record.id) + ':effect:' + effectSlug(name) + ':' + (pluginIndex + 1)),
+      id: legacy ? generatedId : (input && input.id != null ? input.id : generatedId),
       name: name,
       vendor: cleanText(input && input.vendor),
       category: classifyEffectUse(input),
@@ -161,7 +158,7 @@
       sourceRecordId: cleanText(record.id),
       sourceVideoId: cleanText(record.sourceVideoId || record.videoId),
       sourceTitle: cleanText(record.title),
-      source: cleanText(record.source),
+      source: record.source === undefined ? '' : record.source,
       sourceKeywords: uniqueFacts(record.keywords),
       sourcePluginIndexes: legacy ? [pluginIndex] : replacementIndexes,
       legacy: Boolean(legacy)
@@ -175,15 +172,15 @@
       record = record || {};
       var explicit = Array.isArray(record.effectUses) ? record.effectUses : [];
       var plugins = Array.isArray(record.plugins) ? record.plugins : [];
-      var replaced = Object.create(null);
+      var replaced = new Set();
       explicit.forEach(function (use) {
         (Array.isArray(use.replacesPluginIndexes) ? use.replacesPluginIndexes : []).forEach(function (index) {
-          if (Number.isInteger(index) && index >= 0) replaced[index] = true;
+          if (Number.isInteger(index) && index >= 0) replaced.add(index);
         });
       });
       explicit.forEach(function (use, index) { all.push(makeUse(record, use, false, index)); });
       plugins.forEach(function (plugin, index) {
-        if (!replaced[index]) all.push(makeUse(record, plugin || {}, true, index));
+        if (!replaced.has(index)) all.push(makeUse(record, plugin || {}, true, index));
       });
       return all;
     }, []);

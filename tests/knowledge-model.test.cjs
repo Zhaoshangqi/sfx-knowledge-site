@@ -3,44 +3,50 @@ const assert = require('node:assert/strict');
 
 const model = require('../src/knowledge-model.js');
 
-test('stripCourseScaffolding removes only known suffixes and preserves factual narration', () => {
-  assert.equal(
-    model.stripCourseScaffolding('用 EQ 处理。复习时先听它改变的是素材身份、频谱、运动、空间、动态还是响度，再决定是否保留。'),
-    '用 EQ 处理。'
-  );
+test('stripCourseScaffolding removes all known suffixes and preserves factual narration', () => {
+  const suffixCases = [
+    '复习时先看每一步负责的声音角色，再看插件名称。',
+    '学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。',
+    '复习时先听它改变的是素材身份、频谱、运动、空间、动态还是响度，再决定是否保留。',
+    '复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。',
+    '复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。'
+  ];
+  suffixCases.forEach((suffix) => assert.equal(model.stripCourseScaffolding(`事实。${suffix}`), '事实。'));
   assert.equal(model.stripCourseScaffolding('事实   文本。'), '事实   文本。');
   assert.equal(model.stripCourseScaffolding('复刻时保留原始噪声。'), '复刻时保留原始噪声。');
 });
 
 test('uniqueFacts strips facts once and deduplicates only whitespace-normalized keys', () => {
   assert.deepEqual(
-    model.uniqueFacts(['  用滤波器   清理。  ', '用滤波器\t清理。', '用滤波器清理', '保留瞬态']),
-    ['用滤波器   清理。', '用滤波器清理', '保留瞬态']
+    model.uniqueFacts(['  用滤波器   清理。  ', '用滤波器\t清理。', '用滤波器清理', 'Noise', 'noise', 'Ａ', 'A']),
+    ['用滤波器   清理。', '用滤波器清理', 'Noise', 'noise', 'Ａ', 'A']
   );
 });
 
-test('buildEffectUses accepts record arrays and normalizes explicit and legacy sources', () => {
+test('buildEffectUses accepts arrays and normalizes explicit and legacy sources', () => {
   const records = [{
-    id: 'rec-7', source: '视频作者', sourceVideoId: 'vid-2', title: '脚步',
+    id: 'rec-7', source: '  视频作者  ', sourceVideoId: 'vid-2', title: '脚步',
     keywords: ['  脚步  ', '脚步', '空间'],
-    steps: [{ index: 0, imageKey: 'image-0' }],
+    steps: [{ imageKey: 'image-0' }],
     plugins: [
-      { name: 'EQ', vendor: 'FabFilter', settings: { gain: '-3 dB', evidence: '画面确认 作者口述' } },
-      { name: 'Reverb', vendor: 'Valhalla', settings: { mix: '作者口述' } }
+      { name: 'EQ', vendor: 'FabFilter', settings: { gain: '-3 dB' } },
+      { id: 'plugin-id', name: 'Reverb', vendor: 'Valhalla', settings: ['作者口述', '  画面确认  '] },
+      { name: 'Limiter', settings: { gain: '-1 dB' } }
     ],
     effectUses: [{
       id: '  explicit-id  ', name: 'EQ', replacesPluginIndexes: [0], stepIndex: 0,
       target: '目标。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。',
-      chainPosition: 1, purpose: '削低频。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。', result: '更干净。复习时先看每一步负责的声音角色，再看插件名称。', interactions: '  与混响   叠加 ',
+      chainPosition: 1, purpose: '削低频。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。',
+      result: '更干净。复习时先看每一步负责的声音角色，再看插件名称。', interactions: '  与混响   叠加 ',
       limitations: ' 不能过量 ', evidence: '画面确认 作者口述',
       parameters: [{ name: '频率', value: '3kHz' }, { name: '空值' }, { name: '方向', direction: '向上' }]
     }]
   }, { id: 'empty' }];
   const uses = model.buildEffectUses(records);
   assert.deepEqual(model.buildEffectUses({ id: 'wrong-shape' }), []);
-  assert.equal(uses.length, 2);
+  assert.equal(uses.length, 3);
   assert.equal(uses[0].id, '  explicit-id  ');
-  assert.equal(uses[0].source, '视频作者');
+  assert.equal(uses[0].source, '  视频作者  ');
   assert.equal(uses[0].screenshotKey, 'image-0');
   assert.equal(uses[0].stepIndex, 0);
   assert.deepEqual(uses[0].evidence, ['画面确认', '作者口述']);
@@ -55,13 +61,16 @@ test('buildEffectUses accepts record arrays and normalizes explicit and legacy s
   assert.equal(uses[0].parameters.length, 2);
   assert.deepEqual(uses[1].sourcePluginIndexes, [1]);
   assert.equal(uses[1].id, 'rec-7:effect:reverb:2');
-  assert.equal(uses[1].parameters.length, 1);
-  assert.equal(uses[1].parameters[0].name, '参数线索');
-  assert.equal(uses[1].parameters[0].evidence, '作者口述');
+  assert.deepEqual(uses[1].parameters, [
+    { name: '参数线索', value: '作者口述', direction: '', evidence: '作者口述' },
+    { name: '参数线索', value: '  画面确认  ', direction: '', evidence: '画面确认' }
+  ]);
+  assert.equal(uses[2].id, 'rec-7:effect:limiter:3');
+  assert.deepEqual(uses[2].parameters, []);
   assert.deepEqual(model.buildEffectUses([{ id: 'empty-array-record' }]), []);
 });
 
-test('classifyEffectUse uses only name, purpose, and target and inferEvidence returns all labels', () => {
+test('classifyEffectUse excludes vendor and inferEvidence returns all labels', () => {
   assert.equal(model.classifyEffectUse({ name: 'Mystery', vendor: 'Compressor', purpose: '处理声音' }), '未分类');
   assert.equal(model.classifyEffectUse({ name: 'EQ', purpose: '滤波共振控制' }), '频谱与音色');
   assert.equal(model.classifyEffectUse({ name: 'EQ + Reverb', purpose: '同时改变频谱和空间' }), '未分类');
