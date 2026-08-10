@@ -70,3 +70,28 @@ test('removes course-oriented shell copy', () => {
   assert.doesNotMatch(indexHtml, /沉浸式学习模式/);
   assert.doesNotMatch(indexHtml, /学习时间：最新优先/);
 });
+
+test('builds and renders the effect-use projection', () => {
+  [
+    'SfxKnowledgeModel.buildEffectUses(records)',
+    'function filteredEffectUses()',
+    'function renderEffectLibrary()',
+    'function renderEffectDetail(effectId)',
+    'state.effectEvidence',
+    'use.sourceKeywords',
+    'canonicalEffectName(use.name, pluginReferenceCatalog)'
+  ].forEach((source) => assert.ok(indexHtml.includes(source), `missing ${source}`));
+});
+
+test('supports stable video and effect hash routes', () => {
+  assert.match(indexHtml, /function parseHashRoute\(\)/);
+  assert.match(indexHtml, /params\.get\("video"\)/);
+  assert.match(indexHtml, /params\.get\("effect"\)/);
+  assert.match(indexHtml, /window\.addEventListener\("hashchange"/);
+});
+
+test('effect rows open independent uses and can return to a video', () => {
+  ['data-effect-id', 'data-open-video', '查看完整视频案例', 'effect-use-target', 'effect-use-evidence'].forEach((source) => {
+    assert.ok(indexHtml.includes(source), `missing ${source}`);
+  });
+});

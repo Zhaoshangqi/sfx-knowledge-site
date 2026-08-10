@@ -31413,10 +31413,28 @@
 ];
 
     const categoryById = Object.fromEntries(categories.map((category) => [category.id, category]));
+    const effectUses = SfxKnowledgeModel.buildEffectUses(records);
+    const effectCategories = ["频谱与音色", "动态与响度", "饱和与失真", "音高与频率", "调制与运动", "空间与时间", "修复与非常规处理", "自动化、脚本与路由", "未分类"];
     const sources = Array.from(new Set(records.map((record) => record.source))).sort((a, b) => a.localeCompare(b, "zh-CN"));
-    const state = { category: "all", query: "", source: "all", sort: "updatedDesc", activeId: "", view: "library" };
+    const canonicalEffectName = SfxKnowledgeModel.canonicalEffectName;
+    const state = {
+      mode: "videos",
+      category: "all",
+      effectCategory: "all",
+      effectEvidence: "all",
+      query: "",
+      source: "all",
+      sort: "updatedDesc",
+      activeId: "",
+      activeEffectId: "",
+      view: "library",
+      returnMode: "videos"
+    };
 
     const tabsEl = document.getElementById("tabs");
+    const viewSwitchEl = document.getElementById("viewSwitch");
+    const videoLibraryEl = document.getElementById("videoLibrary");
+    const effectLibraryEl = document.getElementById("effectLibrary");
     const videoCountStatEl = document.getElementById("videoCountStat");
     const gridEl = document.getElementById("grid");
     const detailEl = document.getElementById("detail");
@@ -31428,6 +31446,11 @@
     const searchEl = document.getElementById("search");
     const sourceEl = document.getElementById("sourceFilter");
     const sortEl = document.getElementById("sortOrder");
+    const effectCategoryEl = document.getElementById("effectCategoryFilter");
+    const effectEvidenceEl = document.getElementById("effectEvidenceFilter");
+    const effectCountEl = document.getElementById("effectResultCount");
+    const effectListEl = document.getElementById("effectList");
+    const readerHintEl = document.getElementById("readerHint");
     const lightboxEl = document.getElementById("lightbox");
     const lightboxImageEl = document.getElementById("lightboxImage");
     const lightboxVideoEl = document.getElementById("lightboxVideo");
@@ -31435,6 +31458,7 @@
     const lightboxCloseEl = document.getElementById("lightboxClose");
 
     sourceEl.innerHTML += sources.map((source) => "<option value=\"" + escapeAttr(source) + "\">" + escapeHtml(source) + "</option>").join("");
+    effectCategoryEl.innerHTML += effectCategories.map((category) => "<option value=\"" + escapeAttr(category) + "\">" + escapeHtml(category) + "</option>").join("");
 
     function escapeHtml(value) {
       const map = {
@@ -31502,6 +31526,103 @@
       return sortedRecords(list);
     }
 
+    function effectSearchable(use) {
+      return [
+        use.name,
+        canonicalEffectName(use.name, pluginReferenceCatalog),
+        use.vendor,
+        use.category,
+        use.target,
+        use.chainPosition,
+        use.purpose,
+        use.result,
+        use.interactions,
+        use.limitations,
+        use.sourceTitle,
+        use.source,
+        use.sourceKeywords,
+        use.evidence,
+        (use.parameters || []).map((parameter) => [parameter.name, parameter.value, parameter.direction].join(" ")).join(" ")
+      ].flat().join(" ").toLowerCase();
+    }
+
+    function filteredEffectUses() {
+      const query = state.query.trim().toLowerCase();
+      return effectUses.filter((use) => {
+        const categoryMatch = state.effectCategory === "all" || use.category === state.effectCategory;
+        const sourceMatch = state.source === "all" || use.source === state.source;
+        const evidence = Array.isArray(use.evidence) ? use.evidence : [];
+        const evidenceMatch = state.effectEvidence === "all"
+          || (state.effectEvidence === "unstructured" ? !evidence.length : evidence.includes(state.effectEvidence));
+        const queryMatch = !query || effectSearchable(use).includes(query);
+        return categoryMatch && sourceMatch && evidenceMatch && queryMatch;
+      });
+    }
+
+    function effectParameterSummary(use) {
+      const parameter = Array.isArray(use.parameters) ? use.parameters[0] : null;
+      if (!parameter) return "参数尚未结构化";
+      const detail = [parameter.value, parameter.direction].filter(Boolean).join(" / ");
+      return (parameter.name || "参数") + (detail ? "：" + detail : "：参数尚未结构化");
+    }
+
+    function renderEvidenceLabels(labels) {
+      const values = Array.isArray(labels) ? labels.filter(Boolean) : [];
+      return values.length
+        ? '<div class="chips">' + values.map((label) => '<span class="chip">' + escapeHtml(label) + '</span>').join("") + '</div>'
+        : '<span class="category-note">尚未结构化证据</span>';
+    }
+
+    function sourceStepFor(use) {
+      const sourceRecord = records.find((record) => record.id === use.sourceRecordId);
+      const sourceStep = sourceRecord && Number.isInteger(use.stepIndex) && use.stepIndex >= 0
+        ? sourceRecord.steps[use.stepIndex]
+        : null;
+      return { sourceRecord, sourceStep };
+    }
+
+    function renderModeSwitch() {
+      viewSwitchEl.querySelectorAll("[data-mode]").forEach((button) => {
+        const selected = button.dataset.mode === state.mode;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-selected", String(selected));
+        button.tabIndex = selected ? 0 : -1;
+      });
+      videoLibraryEl.hidden = state.mode !== "videos";
+      effectLibraryEl.hidden = state.mode !== "effects";
+      effectCategoryEl.hidden = state.mode !== "effects";
+      effectEvidenceEl.hidden = state.mode !== "effects";
+      sortEl.hidden = state.mode !== "videos";
+      searchEl.placeholder = state.mode === "effects"
+        ? "搜索效果器、厂商、处理目标、参数或来源..."
+        : "搜索视频、设计目标、效果器、参数或素材...";
+    }
+
+    function renderEffectLibrary() {
+      const list = filteredEffectUses();
+      const groups = SfxKnowledgeModel.groupEffectUses(list, pluginReferenceCatalog);
+      effectCountEl.textContent = "当前显示 " + list.length + " 条用法 / " + groups.length + " 个效果器";
+
+      if (!list.length) {
+        effectListEl.innerHTML = '<div class="empty">没有匹配的效果器用法。</div>';
+        return;
+      }
+
+      effectListEl.innerHTML = groups.map((group) => {
+        const rows = group.uses.map((use) => {
+          const source = sourceStepFor(use);
+          const sourceStepLabel = source.sourceStep ? "步骤 " + source.sourceStep.order : "步骤未关联";
+          const timestamp = use.timestamp ? " · " + use.timestamp : "";
+          return '<button class="effect-use-row" type="button" data-effect-id="' + escapeAttr(use.id) + '">' +
+            '<span><strong>' + escapeHtml(use.category || "未分类") + '</strong><span class="effect-use-target">' + escapeHtml(use.vendor || "厂商未记录") + '</span><span class="effect-use-target">' + escapeHtml(effectParameterSummary(use)) + '</span></span>' +
+            '<span class="effect-use-purpose"><strong>' + escapeHtml(use.target || "处理对象未展示") + '</strong><span>' + escapeHtml(use.purpose || "用途未展示") + '</span></span>' +
+            '<div class="effect-use-source"><strong>' + escapeHtml(use.sourceTitle || "来源视频未记录") + '</strong><span>' + escapeHtml(sourceStepLabel + timestamp) + '</span><div class="effect-use-evidence">' + renderEvidenceLabels(use.evidence) + '</div></div>' +
+          '</button>';
+        }).join("");
+        return '<section class="effect-group"><div class="effect-group-header"><h3>' + escapeHtml(group.name) + '</h3><span class="category-note">' + group.uses.length + ' 条用法</span></div>' + rows + '</section>';
+      }).join("");
+    }
+
     function renderTabs() {
       tabsEl.innerHTML = categories.map((category) => {
         const count = category.id === "all"
@@ -31557,6 +31678,81 @@
       libraryViewEl.hidden = true;
       readerViewEl.hidden = false;
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function writeHashRoute(values, replace = false) {
+      const params = new URLSearchParams();
+      Object.entries(values || {}).forEach(([key, value]) => {
+        if (value) params.set(key, value);
+      });
+      const hash = params.toString();
+      const nextUrl = window.location.pathname + window.location.search + (hash ? "#" + hash : "");
+      try {
+        if (replace) window.history.replaceState(null, "", nextUrl);
+        else window.history.pushState(null, "", nextUrl);
+        return;
+      } catch (error) {
+        try {
+          if (replace) window.location.replace(hash ? "#" + hash : "#");
+          else window.location.hash = hash;
+        } catch (fallbackError) {
+          // File URLs and embedded previews can reject both history operations.
+        }
+      }
+    }
+
+    function parseHashRoute() {
+      const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      return {
+        video: params.get("video"),
+        effect: params.get("effect"),
+        view: params.get("view")
+      };
+    }
+
+    function openVideoDetail(recordId, syncHash = false) {
+      const record = records.find((item) => item.id === recordId);
+      readerHintEl.textContent = "完整案例阅读";
+      state.activeEffectId = "";
+      if (!record) {
+        state.activeId = "";
+        detailEl.innerHTML = '<div class="empty">找不到这个视频案例。</div>';
+        showReader();
+        return;
+      }
+      state.activeId = record.id;
+      state.activeEffectId = "";
+      renderDetail();
+      showReader();
+      if (syncHash) writeHashRoute({ video: record.id });
+    }
+
+    function openEffectDetail(effectId, syncHash = false) {
+      readerHintEl.textContent = "效果器实际用法";
+      state.activeId = "";
+      state.activeEffectId = effectId || "";
+      state.returnMode = "effects";
+      renderEffectDetail(effectId);
+      showReader();
+      if (syncHash && effectId) writeHashRoute({ effect: effectId });
+    }
+
+    function applyHashRoute() {
+      const route = parseHashRoute();
+      if (route.effect) {
+        state.mode = "effects";
+        openEffectDetail(route.effect, false);
+        return;
+      }
+      if (route.video) {
+        state.mode = "videos";
+        openVideoDetail(route.video, false);
+        return;
+      }
+      state.mode = route.view === "effects" ? "effects" : "videos";
+      state.returnMode = state.mode;
+      showLibrary();
+      render();
     }
 
     function imageAsset(kind, key) {
@@ -31712,6 +31908,54 @@
       loadDetailPreviews();
     }
 
+    function renderEffectDetail(effectId) {
+      const use = effectUses.find((item) => item.id === effectId);
+      if (!use) {
+        detailEl.innerHTML = '<div class="empty">找不到这个效果器用法。</div>';
+        return;
+      }
+
+      const source = sourceStepFor(use);
+      const sourceRecord = source.sourceRecord;
+      const sourceStep = source.sourceStep;
+      const parameters = Array.isArray(use.parameters) ? use.parameters : [];
+      const parameterHtml = parameters.length
+        ? parameters.map((parameter) => '<div class="learning-point"><strong>' + escapeHtml(parameter.name || "参数") + '</strong><div>' + escapeHtml([parameter.value, parameter.direction].filter(Boolean).join(" / ") || "参数尚未结构化") + '</div>' + renderEvidenceLabels(parameter.evidence ? [parameter.evidence] : []) + '</div>').join("")
+        : '<div class="learning-point">参数尚未结构化。</div>';
+      const effectShotHtml = use.screenshotKey
+        ? '<button class="step-shot effect-shot" type="button" data-effect-shot="' + escapeAttr(use.screenshotKey) + '" aria-label="放大效果器截图：' + escapeAttr(use.name) + '">' +
+            '<img data-shot-preview="' + escapeAttr(use.screenshotKey) + '" alt="' + escapeAttr(use.name + " 使用截图") + '" loading="lazy" decoding="async">' +
+            '<span>点击放大查看高清效果器截图</span>' +
+          '</button>'
+        : '';
+      const referenceHtml = sourceRecord
+        ? (use.sourcePluginIndexes || []).map((pluginIndex) => {
+            const plugin = sourceRecord.plugins[pluginIndex];
+            return plugin ? renderPluginReferences(sourceRecord, plugin, pluginIndex) : "";
+          }).join("")
+        : '';
+      const sourceVideoHtml = sourceRecord
+        ? '<a class="open-video" href="' + escapeAttr(sourceRecord.url) + '" target="_blank" rel="noopener">打开原视频</a>'
+        : '<div class="category-note">来源视频未记录。</div>';
+
+      detailEl.innerHTML =
+        '<div class="detail-body effect-detail">' +
+          '<h2 class="detail-title">' + escapeHtml(canonicalEffectName(use.name, pluginReferenceCatalog)) + '</h2>' +
+          '<div class="card-meta"><span>' + escapeHtml(use.category || "未分类") + '</span><span>' + escapeHtml(use.vendor || "厂商未记录") + '</span></div>' +
+          '<p class="detail-summary">' + escapeHtml(use.purpose || "用途未展示") + '</p>' +
+          (sourceRecord ? '<button class="open-video" type="button" data-open-video="' + escapeAttr(sourceRecord.id) + '">查看完整视频案例</button>' : '') +
+          effectShotHtml +
+          '<div class="section"><h3>处理对象与链路位置</h3><div class="learning-point"><strong>处理对象</strong><div>' + escapeHtml(use.target || "处理对象未展示") + '</div></div><div class="learning-point"><strong>链路位置</strong><div>' + escapeHtml(use.chainPosition || "链路位置未展示") + '</div></div></div>' +
+          '<div class="section"><h3>参数与调节方向</h3>' + parameterHtml + '</div>' +
+          listSection("处理结果", use.result ? [use.result] : []) +
+          listSection("交互与前后关系", use.interactions ? [use.interactions] : []) +
+          listSection("限制与注意事项", use.limitations ? [use.limitations] : []) +
+          '<div class="section"><h3>证据</h3>' + renderEvidenceLabels(use.evidence) + referenceHtml + '</div>' +
+          '<div class="section"><h3>来源视频</h3><div class="learning-point"><strong>' + escapeHtml(use.sourceTitle || "来源视频未记录") + '</strong><div>' + escapeHtml((sourceStep ? "步骤 " + sourceStep.order : "步骤未关联") + (use.timestamp ? " · " + use.timestamp : "")) + '</div></div>' + sourceVideoHtml + '</div>' +
+        '</div>';
+      loadDetailPreviews();
+    }
+
     function openLightbox(src, caption) {
       lightboxVideoEl.pause();
       lightboxVideoEl.removeAttribute("src");
@@ -31759,10 +32003,24 @@
     }
 
     function render() {
-      renderTabs();
-      renderGrid();
-      renderDetail();
+      renderModeSwitch();
+      if (state.mode === "videos") {
+        renderTabs();
+        renderGrid();
+      } else {
+        renderEffectLibrary();
+      }
     }
+
+    viewSwitchEl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-mode]");
+      if (!button) return;
+      state.mode = button.dataset.mode === "effects" ? "effects" : "videos";
+      state.returnMode = state.mode;
+      showLibrary();
+      writeHashRoute({ view: state.mode });
+      render();
+    });
 
     tabsEl.addEventListener("click", (event) => {
       const button = event.target.closest(".tab");
@@ -31774,19 +32032,40 @@
     gridEl.addEventListener("click", (event) => {
       const card = event.target.closest(".card");
       if (!card) return;
-      state.activeId = card.dataset.id;
-      renderGrid();
-      renderDetail();
-      showReader();
+      state.returnMode = "videos";
+      openVideoDetail(card.dataset.id, true);
+    });
+
+    effectListEl.addEventListener("click", (event) => {
+      const row = event.target.closest("[data-effect-id]");
+      if (!row) return;
+      state.returnMode = "effects";
+      openEffectDetail(row.dataset.effectId, true);
     });
 
     backToLibraryEl.addEventListener("click", () => {
+      state.mode = state.returnMode;
       showLibrary();
-      renderGrid();
+      writeHashRoute({ view: state.mode });
+      render();
     });
 
     detailEl.addEventListener("click", (event) => {
       const target = event.target;
+      const openVideo = target.closest ? target.closest("[data-open-video]") : null;
+      if (openVideo) {
+        state.returnMode = "effects";
+        openVideoDetail(openVideo.dataset.openVideo, true);
+        return;
+      }
+      const effectShot = target.closest ? target.closest("[data-effect-shot]") : null;
+      if (effectShot) {
+        const key = effectShot.dataset.effectShot;
+        const use = effectUses.find((item) => item.id === state.activeEffectId);
+        const src = imageAsset("full", key) || imageAsset("preview", key);
+        if (src) openLightbox(src, (use?.name || "效果器") + " 使用截图");
+        return;
+      }
       const pluginShot = target.closest ? target.closest(".plugin-reference-shot") : null;
       if (pluginShot) {
         const src = pluginShot.dataset.pluginFull;
@@ -31832,7 +32111,12 @@
         closeLightbox();
         return;
       }
-      if (event.key === "Escape" && state.view === "reader") showLibrary();
+      if (event.key === "Escape" && state.view === "reader") {
+        state.mode = state.returnMode;
+        showLibrary();
+        writeHashRoute({ view: state.mode });
+        render();
+      }
     });
 
     searchEl.addEventListener("input", (event) => {
@@ -31843,6 +32127,7 @@
     sourceEl.addEventListener("change", (event) => {
       state.source = event.target.value;
       state.activeId = "";
+      state.activeEffectId = "";
       render();
     });
 
@@ -31852,8 +32137,22 @@
       render();
     });
 
+    effectCategoryEl.addEventListener("change", (event) => {
+      state.effectCategory = event.target.value;
+      state.activeEffectId = "";
+      renderEffectLibrary();
+    });
+
+    effectEvidenceEl.addEventListener("change", (event) => {
+      state.effectEvidence = event.target.value;
+      state.activeEffectId = "";
+      renderEffectLibrary();
+    });
+
+    window.addEventListener("hashchange", applyHashRoute);
+
     videoCountStatEl.textContent = records.length + " 个视频模块";
-    render();
+    applyHashRoute();
   </script>
   <script>
 if (window.loadDetailPreviews) window.loadDetailPreviews();
