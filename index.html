@@ -685,6 +685,66 @@
       color: var(--blue);
       text-decoration: none;
     }
+    .effect-use-summary {
+      width: 100%;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .effect-use-summary:last-child {
+      border-bottom: none;
+    }
+    .effect-use-summary-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .effect-use-summary-title {
+      color: var(--green);
+      font-size: 16px;
+      line-height: 1.4;
+    }
+    .effect-use-detail-link {
+      padding: 0;
+      border: 0;
+      color: var(--blue);
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      text-align: left;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .effect-use-detail-link:focus-visible {
+      outline: 3px solid rgba(15, 139, 141, 0.46);
+      outline-offset: 3px;
+    }
+    .effect-use-summary-purpose {
+      margin: 6px 0 0;
+      color: var(--ink);
+    }
+    .effect-use-summary-meta {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .effect-use-summary-params {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 16px;
+      margin-top: 10px;
+    }
+    .effect-use-summary-param {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .effect-use-summary-param strong {
+      color: var(--ink);
+    }
     .update-note {
       margin-top: 8px;
       color: var(--red);
@@ -720,6 +780,8 @@
         grid-template-columns: 1fr;
         gap: 6px;
       }
+      .effect-use-summary-header { align-items: flex-start; flex-direction: column; }
+      .effect-use-summary-params { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       .site-header { align-items: flex-start; flex-direction: column; }
@@ -31548,23 +31610,7 @@
     }
 
     function searchable(record) {
-      return [
-        record.title,
-        record.source,
-        record.addedAt || "",
-        record.updatedAt || "",
-        record.updateNote || "",
-        categoryById[record.category]?.label || "",
-        record.summary,
-        record.keywords.join(" "),
-        record.materials.join(" "),
-        record.coreIdeas.join(" "),
-        record.plugins.map((plugin) => [plugin.name, plugin.purpose, ...(plugin.settings || [])].join(" ")).join(" "),
-        record.steps.map((step) => [step.name, step.detail, ...(step.params || [])].join(" ")).join(" "),
-        (record.chainFocus || []).join(" "),
-        (record.parameterLogic || []).join(" "),
-        (record.practiceChecklist || []).join(" ")
-      ].join(" ").toLowerCase();
+      return SfxKnowledgeModel.searchableRecordText(record, categoryById[record.category]?.label || "");
     }
 
     function recordTime(record, field) {
@@ -31866,6 +31912,14 @@
         '</div>';
     }
 
+    function cleanedFacts(items) {
+      return SfxKnowledgeModel.uniqueFacts(items).filter(Boolean);
+    }
+
+    function cleanedText(value) {
+      return SfxKnowledgeModel.stripCourseScaffolding(value);
+    }
+
     function normalizePluginLookup(value) {
       return String(value || "")
         .toLowerCase()
@@ -31932,56 +31986,68 @@
       }).join("") + '</div>';
     }
 
+    function renderEffectUseSummary(record, use) {
+      const parameters = Array.isArray(use.parameters) ? use.parameters : [];
+      const parameterHtml = parameters.length
+        ? '<div class="effect-use-summary-params">' + parameters.map((parameter) => {
+            const value = cleanedText([parameter.value, parameter.direction].filter(Boolean).join(" / ")) || "参数尚未结构化";
+            return '<div class="effect-use-summary-param"><strong>' + escapeHtml(cleanedText(parameter.name) || "参数") + '</strong><div>' + escapeHtml(value) + '</div>' + renderEvidenceLabels(parameter.evidence ? [parameter.evidence] : []) + '</div>';
+          }).join("") + '</div>'
+        : '<p class="effect-use-summary-meta">参数尚未结构化。</p>';
+      return '<div class="effect-use-summary">' +
+        '<div class="effect-use-summary-header"><strong class="effect-use-summary-title">' + escapeHtml(canonicalEffectName(use.name, pluginReferenceCatalog)) + '</strong>' +
+          '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '">查看独立效果器档案</button></div>' +
+        '<p class="effect-use-summary-purpose">' + escapeHtml(cleanedText(use.purpose) || "用途未展示") + '</p>' +
+        '<p class="effect-use-summary-meta">处理对象：' + escapeHtml(cleanedText(use.target) || "未展示") + ' · 链路位置：' + escapeHtml(cleanedText(use.chainPosition) || "未展示") + '</p>' +
+        parameterHtml + renderEvidenceLabels(use.evidence) + (use.sourcePluginIndexes || []).map((pluginIndex) => {
+          const plugin = record.plugins[pluginIndex];
+          return plugin ? renderPluginReferences(record, plugin, pluginIndex) : "";
+        }).join("") +
+      '</div>';
+    }
+
     function renderDetail() {
       const record = records.find((item) => item.id === state.activeId);
       if (!record) return;
       const category = categoryById[record.category];
-      const stepHtml = record.steps.map((step, index) => {
+      const stepHtml = (record.steps || []).map((step, index) => {
+        const name = cleanedText(step.name);
+        const detail = cleanedText(step.detail);
+        const params = cleanedFacts(step.params);
         const motion = step.motion && step.motion.src ? step.motion : null;
         const shotHtml = step.imageKey
           ? '<button class="step-shot' + (motion ? ' has-motion' : '') + '" type="button" data-step-index="' + index + '" data-image-key="' + escapeAttr(step.imageKey) + '"' +
               (motion ? ' data-motion-src="' + escapeAttr(motion.src) + '" data-motion-poster="' + escapeAttr(motion.poster || imageAsset("preview", step.imageKey)) + '"' : '') +
-              ' aria-label="' + escapeAttr((motion ? "播放流程动图：" : "放大步骤截图：") + step.name) + '">' +
-              '<img data-shot-preview="' + escapeAttr(step.imageKey) + '" alt="' + escapeAttr(record.title + " - " + step.name) + '" loading="lazy" decoding="async">' +
+              ' aria-label="' + escapeAttr((motion ? "播放流程动图：" : "放大步骤截图：") + name) + '">' +
+              '<img data-shot-preview="' + escapeAttr(step.imageKey) + '" alt="' + escapeAttr(record.title + " - " + name) + '" loading="lazy" decoding="async">' +
               '<span>' + (motion ? '动图准备中，稍后可播放' : '截图准备中，稍后可放大查看') + '</span>' +
               (motion ? '<span class="step-motion-badge">1080p 动图</span>' : '') +
             '</button>'
           : '';
-        return '<div class="step">' + shotHtml + '<strong>' + step.order + '. ' + escapeHtml(step.name) + '</strong><p>' + escapeHtml(step.detail) + '</p>' +
-          (step.params.length ? '<div class="chips">' + step.params.slice(0, 8).map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
+        return '<div class="step">' + shotHtml + '<strong>' + step.order + '. ' + escapeHtml(name) + '</strong><p>' + escapeHtml(detail) + '</p>' +
+          (params.length ? '<div class="chips">' + params.slice(0, 8).map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
           '</div>';
       }).join("");
-      const chainFocusHtml = listSection("效果链学习重点", record.chainFocus, "learning-point");
-      const parameterLogicHtml = listSection("参数调试逻辑", record.parameterLogic, "learning-point");
-      const practiceHtml = listSection("练习复盘", record.practiceChecklist, "tip");
-      const ideasHtml = record.coreIdeas.map((idea) => '<div class="idea">' + escapeHtml(idea) + '</div>').join("");
-      const pluginHtml = record.plugins.map((plugin, pluginIndex) => {
-        const settings = Array.isArray(plugin.settings) && plugin.settings.length
-          ? '<div class="chips plugin-settings">' + plugin.settings.slice(0, 8).map((setting) => '<span class="chip">' + escapeHtml(setting) + '</span>').join("") + '</div>'
-          : '';
-        return '<div class="plugin"><strong>' + escapeHtml(plugin.name) + '</strong><div>' + escapeHtml(plugin.purpose) + '</div>' + settings + renderPluginReferences(record, plugin, pluginIndex) + '</div>';
-      }).join("");
-      const keywordHtml = record.keywords.slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
-      const materialHtml = record.materials.slice(0, 18).map((material) => '<span class="chip">' + escapeHtml(material) + '</span>').join("");
-      const tipHtml = listSection("实用技巧", record.tips, "tip");
+      const ideasHtml = cleanedFacts(record.coreIdeas).map((idea) => '<div class="idea">' + escapeHtml(idea) + '</div>').join("");
+      const materialHtml = cleanedFacts(record.materials).slice(0, 18).map((material) => '<span class="chip">' + escapeHtml(material) + '</span>').join("");
+      const chainHtml = cleanedFacts([...(record.chainFocus || []), ...(record.parameterLogic || [])]).map((fact) => '<div class="learning-point">' + escapeHtml(fact) + '</div>').join("");
+      const effectHtml = effectUses.filter((use) => use.sourceRecordId === record.id).map((use) => renderEffectUseSummary(record, use)).join("");
+      const decisionHtml = cleanedFacts([...(record.tips || []), record.updateNote]).map((fact) => '<div class="tip">' + escapeHtml(fact) + '</div>').join("");
+      const keywordHtml = cleanedFacts(record.keywords).slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
 
       detailEl.innerHTML =
         '<div class="detail-cover"><img src="' + thumbnail(record, "hqdefault") + '" alt="' + escapeAttr(record.title) + '" loading="lazy" decoding="async" onerror="this.style.display=\'none\'"></div>' +
         '<div class="detail-body">' +
           '<h2 class="detail-title">' + escapeHtml(record.title) + '</h2>' +
-          '<div class="card-meta"><span>' + escapeHtml(category.label) + '</span><span>' + escapeHtml(record.source) + '</span><span>学习 ' + escapeHtml(record.addedAt || "") + '</span><span>更新 ' + escapeHtml(record.updatedAt || record.addedAt || "") + '</span></div>' +
-          (record.updateNote ? '<div class="update-note">' + escapeHtml(record.updateNote) + '</div>' : '') +
-          '<p class="detail-summary">' + escapeHtml(record.summary) + '</p>' +
-          '<a class="open-video" href="' + escapeAttr(record.url) + '" target="_blank" rel="noopener">打开原视频</a>' +
-          chainFocusHtml +
-          parameterLogicHtml +
-          '<div class="section"><h3>制作步骤</h3>' + stepHtml + '</div>' +
-          '<div class="section"><h3>核心观点</h3>' + ideasHtml + '</div>' +
-          '<div class="section"><h3>插件 / 处理点</h3>' + pluginHtml + '</div>' +
-          practiceHtml +
-          '<div class="section"><h3>材料</h3><div class="chips">' + materialHtml + '</div></div>' +
-          '<div class="section"><h3>关键词</h3><div class="chips">' + keywordHtml + '</div></div>' +
-          tipHtml +
+          '<div class="card-meta"><span>' + escapeHtml(category?.label || "未分类") + '</span><span>' + escapeHtml(record.source) + '</span><span>收录 ' + escapeHtml(record.addedAt || "") + '</span><span>更新 ' + escapeHtml(record.updatedAt || record.addedAt || "") + '</span></div>' +
+          '<div class="section"><h3>设计目标</h3><p class="detail-summary">' + escapeHtml(cleanedText(record.summary)) + '</p></div>' +
+          '<div class="section"><h3>设计思路</h3>' + ideasHtml + '</div>' +
+          '<div class="section"><h3>素材与分层</h3><div class="chips">' + materialHtml + '</div></div>' +
+          '<div class="section"><h3>完整制作流程</h3>' + stepHtml + '</div>' +
+          '<div class="section"><h3>完整效果链</h3>' + chainHtml + '</div>' +
+          '<div class="section"><h3>效果器用法</h3>' + effectHtml + '</div>' +
+          '<div class="section"><h3>关键决策与证据边界</h3>' + decisionHtml + '</div>' +
+          '<div class="section"><h3>来源与关键词</h3><div class="learning-point"><strong>' + escapeHtml(record.source) + '</strong><div>' + escapeHtml(record.url) + '</div></div><div class="chips">' + keywordHtml + '</div><a class="open-video" href="' + escapeAttr(record.url) + '" target="_blank" rel="noopener">打开原视频</a></div>' +
         '</div>';
       loadDetailPreviews();
     }
@@ -32147,6 +32213,11 @@
       if (openVideo) {
         state.returnMode = "effects";
         openVideoDetail(openVideo.dataset.openVideo, true);
+        return;
+      }
+      const effectButton = target.closest ? target.closest("[data-effect-id]") : null;
+      if (effectButton) {
+        openEffectDetail(effectButton.dataset.effectId, true);
         return;
       }
       const effectShot = target.closest ? target.closest("[data-effect-shot]") : null;

@@ -143,3 +143,30 @@ test('effect rows open independent uses and can return to a video', () => {
   assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'End')), { mode: 'effects', focusMode: 'effects' });
   assert.deepEqual(plainValue(navigation.tabNavigation('effects', 'Home')), { mode: 'videos', focusMode: 'videos' });
 });
+
+test('searches video records through the shared factual model only', () => {
+  const searchableSource = indexHtml.match(/function searchable\(record\) \{([\s\S]*?)\n    \}/)?.[1] || '';
+
+  assert.equal(searchableSource.trim(), 'return SfxKnowledgeModel.searchableRecordText(record, categoryById[record.category]?.label || "");');
+  assert.doesNotMatch(searchableSource, /practiceChecklist/);
+});
+
+test('uses conservative shared cleaners for factual detail arrays', () => {
+  assert.match(indexHtml, /function cleanedFacts\(items\) \{\s*return SfxKnowledgeModel\.uniqueFacts\(items\)\.filter\(Boolean\);\s*\}/);
+  assert.match(indexHtml, /SfxKnowledgeModel\.stripCourseScaffolding/);
+});
+
+test('renders a dry-goods archive with effect links and sources at the end', () => {
+  const detailSource = indexHtml.match(/function renderDetail\(\) \{([\s\S]*?)\n    \}\n\n    function renderEffectDetail/)?.[1] || '';
+  const requiredHeadings = ['设计目标', '设计思路', '素材与分层', '完整制作流程', '完整效果链', '效果器用法', '关键决策与证据边界', '来源与关键词'];
+  const positions = requiredHeadings.map((heading) => detailSource.indexOf('<h3>' + heading + '</h3>'));
+
+  assert.ok(positions.every((position) => position !== -1));
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions);
+  assert.ok(detailSource.indexOf('<h3>来源与关键词</h3>') < detailSource.indexOf('打开原视频'));
+  assert.doesNotMatch(detailSource, /practiceChecklist|练习复盘|<span>学习/);
+  assert.match(indexHtml, /function renderEffectUseSummary\(record, use\) \{[\s\S]*?data-effect-id=[\s\S]*?renderPluginReferences\(record, plugin, pluginIndex\)/);
+  const detailClick = indexHtml.match(/detailEl\.addEventListener\("click", \(event\) => \{([\s\S]*?)\n    \}\);/)?.[1] || '';
+  assert.ok(detailClick.indexOf('[data-effect-id]') < detailClick.indexOf('[data-effect-shot]'));
+  assert.match(detailClick, /openEffectDetail\(effectButton\.dataset\.effectId, true\)/);
+});
