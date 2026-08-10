@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 
 const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 
@@ -25,6 +26,21 @@ function attribute(tag, name) {
 
 function hasBooleanAttribute(tag, name) {
   return new RegExp(`(?:^|\\s)${name}(?:\\s|=|>)`, 'i').test(tag);
+}
+
+function loadDualIndexNavigation() {
+  const start = indexHtml.indexOf('    const DualIndexNavigation = (() => {');
+  const end = indexHtml.indexOf('    })();', start);
+  assert.notEqual(start, -1, 'missing DualIndexNavigation helpers');
+  assert.notEqual(end, -1, 'unterminated DualIndexNavigation helpers');
+  const source = indexHtml.slice(start, end + '    })();'.length) + '\nthis.DualIndexNavigation = DualIndexNavigation;';
+  const context = { URLSearchParams };
+  vm.runInNewContext(source, context);
+  return context.DualIndexNavigation;
+}
+
+function plainValue(value) {
+  return JSON.parse(JSON.stringify(value));
 }
 
 test('loads the shared knowledge model before the inline application data', () => {
@@ -84,6 +100,10 @@ test('builds and renders the effect-use projection', () => {
     'matchedEffectReferenceAliases(use)'
   ].forEach((source) => assert.ok(indexHtml.includes(source), `missing ${source}`));
   assert.match(indexHtml, /function matchedEffectReferenceAliases\(use\) \{[\s\S]*?\.\.\.\(reference\.aliases \|\| \[\]\)/);
+  const navigation = loadDualIndexNavigation();
+  const hash = navigation.serializeHashRoute({ video: 'video-1', origin: 'effects' });
+  assert.equal(hash, '#video=video-1&origin=effects');
+  assert.deepEqual(plainValue(navigation.parseHashRouteHash(hash)), { video: 'video-1', effect: '', view: '', origin: 'effects' });
 });
 
 test('supports stable video and effect hash routes', () => {
@@ -91,8 +111,25 @@ test('supports stable video and effect hash routes', () => {
   assert.match(indexHtml, /params\.get\("video"\)/);
   assert.match(indexHtml, /params\.get\("effect"\)/);
   assert.match(indexHtml, /window\.addEventListener\("hashchange"/);
-  assert.match(indexHtml, /state\.mode = "effects";\s+renderModeSwitch\(\);\s+openEffectDetail\(route\.effect, false\)/);
-  assert.match(indexHtml, /state\.mode = "videos";\s+renderModeSwitch\(\);\s+openVideoDetail\(route\.video, false\)/);
+  assert.match(indexHtml, /state\.mode = route\.mode;\s+state\.returnMode = route\.returnMode;/);
+  assert.match(indexHtml, /route\.target === "effect" \|\| route\.target === "invalidEffect"[\s\S]*?renderModeSwitch\(\);\s+openEffectDetail\(route\.id, false\)/);
+  assert.match(indexHtml, /route\.target === "video" \|\| route\.target === "invalidVideo"[\s\S]*?renderModeSwitch\(\);\s+openVideoDetail\(route\.id, false\)/);
+  const navigation = loadDualIndexNavigation();
+  assert.deepEqual(plainValue(navigation.routeDecision('#video=video-1&origin=effects', { video: () => true })), {
+    target: 'video', id: 'video-1', mode: 'videos', returnMode: 'effects'
+  });
+  assert.deepEqual(plainValue(navigation.routeDecision('#video=video-1', { video: () => true })), {
+    target: 'video', id: 'video-1', mode: 'videos', returnMode: 'videos'
+  });
+  assert.deepEqual(plainValue(navigation.routeDecision('#effect=missing', { effect: () => false })), {
+    target: 'invalidEffect', id: 'missing', mode: 'effects', returnMode: 'effects'
+  });
+  assert.deepEqual(plainValue(navigation.routeWriteIntent('#video=video-1', { view: 'videos' }, true)), {
+    method: 'replace', hash: '#view=videos'
+  });
+  assert.deepEqual(plainValue(navigation.routeWriteIntent('#view=videos', { view: 'videos' })), {
+    method: 'none', hash: '#view=videos'
+  });
 });
 
 test('effect rows open independent uses and can return to a video', () => {
@@ -100,4 +137,9 @@ test('effect rows open independent uses and can return to a video', () => {
     assert.ok(indexHtml.includes(source), `missing ${source}`);
   });
   assert.match(indexHtml, /function openEffectDetail\(effectId, syncHash = false\) \{[\s\S]*?const use = effectUses\.find\(\(item\) => item\.id === effectId\);[\s\S]*?if \(!use\) \{\s+state\.activeEffectId = "";/);
+  const navigation = loadDualIndexNavigation();
+  assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'ArrowLeft')), { mode: 'effects', focusMode: 'effects' });
+  assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'ArrowRight')), { mode: 'effects', focusMode: 'effects' });
+  assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'End')), { mode: 'effects', focusMode: 'effects' });
+  assert.deepEqual(plainValue(navigation.tabNavigation('effects', 'Home')), { mode: 'videos', focusMode: 'videos' });
 });

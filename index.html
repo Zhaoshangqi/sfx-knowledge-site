@@ -31417,6 +31417,73 @@
     const effectCategories = ["频谱与音色", "动态与响度", "饱和与失真", "音高与频率", "调制与运动", "空间与时间", "修复与非常规处理", "自动化、脚本与路由", "未分类"];
     const sources = Array.from(new Set(records.map((record) => record.source))).sort((a, b) => a.localeCompare(b, "zh-CN"));
     const canonicalEffectName = SfxKnowledgeModel.canonicalEffectName;
+    const DualIndexNavigation = (() => {
+      const modes = ["videos", "effects"];
+
+      function normalizeMode(value) {
+        return modes.includes(value) ? value : "videos";
+      }
+
+      function parseHashRouteHash(hash) {
+        const params = new URLSearchParams(String(hash || "").replace(/^#/, ""));
+        return {
+          video: params.get("video") || "",
+          effect: params.get("effect") || "",
+          view: params.get("view") || "",
+          origin: params.get("origin") || ""
+        };
+      }
+
+      function serializeHashRoute(values) {
+        const params = new URLSearchParams();
+        ["video", "effect", "view", "origin"].forEach((key) => {
+          const value = values && values[key];
+          if (!value) return;
+          if ((key === "view" || key === "origin") && !modes.includes(value)) return;
+          params.set(key, value);
+        });
+        const query = params.toString();
+        return query ? "#" + query : "";
+      }
+
+      function routeDecision(hash, validators = {}) {
+        const route = parseHashRouteHash(hash);
+        if (route.effect) {
+          const valid = typeof validators.effect !== "function" || validators.effect(route.effect);
+          return { target: valid ? "effect" : "invalidEffect", id: route.effect, mode: "effects", returnMode: "effects" };
+        }
+        if (route.video) {
+          const valid = typeof validators.video !== "function" || validators.video(route.video);
+          return {
+            target: valid ? "video" : "invalidVideo",
+            id: route.video,
+            mode: "videos",
+            returnMode: route.origin === "effects" ? "effects" : "videos"
+          };
+        }
+        const mode = normalizeMode(route.view);
+        return { target: "library", id: "", mode, returnMode: mode };
+      }
+
+      function routeWriteIntent(currentHash, values, replace = false) {
+        const hash = serializeHashRoute(values);
+        const current = serializeHashRoute(parseHashRouteHash(currentHash));
+        if (current === hash) return { method: "none", hash };
+        return { method: replace ? "replace" : "push", hash };
+      }
+
+      function tabNavigation(mode, key) {
+        const current = normalizeMode(mode);
+        let next = current;
+        if (key === "ArrowLeft" || key === "ArrowRight") next = current === "videos" ? "effects" : "videos";
+        else if (key === "Home") next = "videos";
+        else if (key === "End") next = "effects";
+        else return null;
+        return { mode: next, focusMode: next };
+      }
+
+      return { parseHashRouteHash, routeDecision, routeWriteIntent, serializeHashRoute, tabNavigation };
+    })();
     const state = {
       mode: "videos",
       category: "all",
@@ -31456,6 +31523,7 @@
     const lightboxVideoEl = document.getElementById("lightboxVideo");
     const lightboxCaptionEl = document.getElementById("lightboxCaption");
     const lightboxCloseEl = document.getElementById("lightboxClose");
+    let searchRenderTimer = 0;
 
     sourceEl.innerHTML += sources.map((source) => "<option value=\"" + escapeAttr(source) + "\">" + escapeHtml(source) + "</option>").join("");
     effectCategoryEl.innerHTML += effectCategories.map((category) => "<option value=\"" + escapeAttr(category) + "\">" + escapeHtml(category) + "</option>").join("");
@@ -31686,20 +31754,17 @@
     }
 
     function writeHashRoute(values, replace = false) {
-      const params = new URLSearchParams();
-      Object.entries(values || {}).forEach(([key, value]) => {
-        if (value) params.set(key, value);
-      });
-      const hash = params.toString();
-      const nextUrl = window.location.pathname + window.location.search + (hash ? "#" + hash : "");
+      const intent = DualIndexNavigation.routeWriteIntent(window.location.hash, values, replace);
+      if (intent.method === "none") return;
+      const nextUrl = window.location.pathname + window.location.search + intent.hash;
       try {
-        if (replace) window.history.replaceState(null, "", nextUrl);
+        if (intent.method === "replace") window.history.replaceState(null, "", nextUrl);
         else window.history.pushState(null, "", nextUrl);
         return;
       } catch (error) {
         try {
-          if (replace) window.location.replace(hash ? "#" + hash : "#");
-          else window.location.hash = hash;
+          if (intent.method === "replace") window.location.replace(intent.hash || "#");
+          else window.location.hash = intent.hash;
         } catch (fallbackError) {
           // File URLs and embedded previews can reject both history operations.
         }
@@ -31707,12 +31772,7 @@
     }
 
     function parseHashRoute() {
-      const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-      return {
-        video: params.get("video"),
-        effect: params.get("effect"),
-        view: params.get("view")
-      };
+      return DualIndexNavigation.parseHashRouteHash(window.location.hash);
     }
 
     function openVideoDetail(recordId, syncHash = false) {
@@ -31729,7 +31789,10 @@
       state.activeEffectId = "";
       renderDetail();
       showReader();
-      if (syncHash) writeHashRoute({ video: record.id });
+      if (syncHash) writeHashRoute({
+        video: record.id,
+        origin: state.returnMode === "effects" ? "effects" : ""
+      });
     }
 
     function openEffectDetail(effectId, syncHash = false) {
@@ -31750,21 +31813,22 @@
     }
 
     function applyHashRoute() {
-      const route = parseHashRoute();
-      if (route.effect) {
-        state.mode = "effects";
+      const route = DualIndexNavigation.routeDecision(window.location.hash, {
+        effect: (id) => effectUses.some((use) => use.id === id),
+        video: (id) => records.some((record) => record.id === id)
+      });
+      state.mode = route.mode;
+      state.returnMode = route.returnMode;
+      if (route.target === "effect" || route.target === "invalidEffect") {
         renderModeSwitch();
-        openEffectDetail(route.effect, false);
+        openEffectDetail(route.id, false);
         return;
       }
-      if (route.video) {
-        state.mode = "videos";
+      if (route.target === "video" || route.target === "invalidVideo") {
         renderModeSwitch();
-        openVideoDetail(route.video, false);
+        openVideoDetail(route.id, false);
         return;
       }
-      state.mode = route.view === "effects" ? "effects" : "videos";
-      state.returnMode = state.mode;
       showLibrary();
       render();
     }
@@ -32026,14 +32090,27 @@
       }
     }
 
+    function activateLibraryMode(mode, syncHash = true) {
+      state.mode = mode === "effects" ? "effects" : "videos";
+      state.returnMode = state.mode;
+      showLibrary();
+      if (syncHash) writeHashRoute({ view: state.mode });
+      render();
+    }
+
     viewSwitchEl.addEventListener("click", (event) => {
       const button = event.target.closest("[data-mode]");
       if (!button) return;
-      state.mode = button.dataset.mode === "effects" ? "effects" : "videos";
-      state.returnMode = state.mode;
-      showLibrary();
-      writeHashRoute({ view: state.mode });
-      render();
+      activateLibraryMode(button.dataset.mode);
+    });
+
+    viewSwitchEl.addEventListener("keydown", (event) => {
+      const navigation = DualIndexNavigation.tabNavigation(state.mode, event.key);
+      if (!navigation) return;
+      event.preventDefault();
+      const button = viewSwitchEl.querySelector('[data-mode="' + navigation.focusMode + '"]');
+      if (button) button.focus();
+      activateLibraryMode(navigation.mode);
     });
 
     tabsEl.addEventListener("click", (event) => {
@@ -32060,7 +32137,7 @@
     backToLibraryEl.addEventListener("click", () => {
       state.mode = state.returnMode;
       showLibrary();
-      writeHashRoute({ view: state.mode });
+      writeHashRoute({ view: state.mode }, true);
       render();
     });
 
@@ -32128,14 +32205,15 @@
       if (event.key === "Escape" && state.view === "reader") {
         state.mode = state.returnMode;
         showLibrary();
-        writeHashRoute({ view: state.mode });
+        writeHashRoute({ view: state.mode }, true);
         render();
       }
     });
 
     searchEl.addEventListener("input", (event) => {
       state.query = event.target.value;
-      render();
+      window.clearTimeout(searchRenderTimer);
+      searchRenderTimer = window.setTimeout(render, 120);
     });
 
     sourceEl.addEventListener("change", (event) => {
