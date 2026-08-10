@@ -5,6 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const SfxKnowledgeModel = require('../src/knowledge-model.js');
 
 function extractTagById(id) {
   const match = indexHtml.match(new RegExp(`<[^>]+\\bid="${id}"(?=\\s|>)[^>]*>`, 'i'));
@@ -37,6 +38,17 @@ function loadDualIndexNavigation() {
   const context = { URLSearchParams };
   vm.runInNewContext(source, context);
   return context.DualIndexNavigation;
+}
+
+function loadVideoDetailData() {
+  const start = indexHtml.indexOf('    const VideoDetailData = (() => {');
+  const end = indexHtml.indexOf('    })();', start);
+  assert.notEqual(start, -1, 'missing VideoDetailData helpers');
+  assert.notEqual(end, -1, 'unterminated VideoDetailData helpers');
+  const source = indexHtml.slice(start, end + '    })();'.length) + '\nthis.VideoDetailData = VideoDetailData;';
+  const context = { SfxKnowledgeModel };
+  vm.runInNewContext(source, context);
+  return context.VideoDetailData;
 }
 
 function plainValue(value) {
@@ -154,6 +166,29 @@ test('searches video records through the shared factual model only', () => {
 test('uses conservative shared cleaners for factual detail arrays', () => {
   assert.match(indexHtml, /function cleanedFacts\(items\) \{\s*return SfxKnowledgeModel\.uniqueFacts\(items\)\.filter\(Boolean\);\s*\}/);
   assert.match(indexHtml, /SfxKnowledgeModel\.stripCourseScaffolding/);
+  const detailData = loadVideoDetailData();
+  const projected = plainValue(detailData.project({
+    chainFocus: ['链路事实 复习时先看每一步负责的声音角色，再看插件名称。'],
+    parameterLogic: ['参数事实'],
+    tips: ['决策事实'],
+    updateNote: '更新元数据',
+    coreIdeas: 'malformed',
+    materials: null,
+    keywords: {},
+    steps: 'malformed',
+    plugins: { malformed: true }
+  }));
+
+  assert.deepEqual(projected.chainFacts, ['链路事实']);
+  assert.deepEqual(projected.decisionFacts, ['参数事实', '决策事实']);
+  assert.equal(projected.updateNote, '更新元数据');
+  assert.ok(!projected.decisionFacts.includes('更新元数据'));
+  ['coreIdeas', 'materials', 'keywords', 'steps', 'plugins'].forEach((key) => assert.deepEqual(projected[key], []));
+  assert.deepEqual(plainValue(detailData.effectUse({ plugins: null }, { parameters: 'malformed', sourcePluginIndexes: { bad: true } })), {
+    plugins: [], parameters: [], sourcePluginIndexes: []
+  });
+  assert.deepEqual(plainValue(detailData.effectUse({ plugins: [null, { name: 'Valid' }] }, { sourcePluginIndexes: [-1, 0, 1, 2, '1'] }).sourcePluginIndexes), [0, 1]);
+  assert.deepEqual(plainValue(detailData.effectUse({}, { parameters: [null, {}, 'malformed'] }).parameters), []);
 });
 
 test('renders a dry-goods archive with effect links and sources at the end', () => {
@@ -165,7 +200,11 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
   assert.deepEqual([...positions].sort((a, b) => a - b), positions);
   assert.ok(detailSource.indexOf('<h3>来源与关键词</h3>') < detailSource.indexOf('打开原视频'));
   assert.doesNotMatch(detailSource, /practiceChecklist|练习复盘|<span>学习/);
+  assert.match(detailSource, /const chainHtml = detailData\.chainFacts/);
+  assert.match(detailSource, /const decisionHtml = detailData\.decisionFacts/);
+  assert.doesNotMatch(detailSource, /decisionFacts.*updateNote/);
   assert.match(indexHtml, /function renderEffectUseSummary\(record, use\) \{[\s\S]*?data-effect-id=[\s\S]*?renderPluginReferences\(record, plugin, pluginIndex\)/);
+  assert.match(indexHtml, /VideoDetailData\.effectUse\(record, use\)/);
   const detailClick = indexHtml.match(/detailEl\.addEventListener\("click", \(event\) => \{([\s\S]*?)\n    \}\);/)?.[1] || '';
   assert.ok(detailClick.indexOf('[data-effect-id]') < detailClick.indexOf('[data-effect-shot]'));
   assert.match(detailClick, /openEffectDetail\(effectButton\.dataset\.effectId, true\)/);

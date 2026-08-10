@@ -31694,8 +31694,9 @@
 
     function sourceStepFor(use) {
       const sourceRecord = records.find((record) => record.id === use.sourceRecordId);
-      const sourceStep = sourceRecord && Number.isInteger(use.stepIndex) && use.stepIndex >= 0
-        ? sourceRecord.steps[use.stepIndex]
+      const sourceSteps = sourceRecord && Array.isArray(sourceRecord.steps) ? sourceRecord.steps : [];
+      const sourceStep = Number.isInteger(use.stepIndex) && use.stepIndex >= 0
+        ? sourceSteps[use.stepIndex] || null
         : null;
       return { sourceRecord, sourceStep };
     }
@@ -31920,6 +31921,52 @@
       return SfxKnowledgeModel.stripCourseScaffolding(value);
     }
 
+    const VideoDetailData = (() => {
+      function array(value) {
+        return Array.isArray(value) ? value : [];
+      }
+
+      function record(value) {
+        return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+      }
+
+      function facts(value) {
+        return SfxKnowledgeModel.uniqueFacts(array(value)).filter(Boolean);
+      }
+
+      function text(value) {
+        return typeof value === "string" || typeof value === "number"
+          ? SfxKnowledgeModel.stripCourseScaffolding(value)
+          : "";
+      }
+
+      function project(value) {
+        const source = record(value);
+        return {
+          steps: array(source.steps),
+          plugins: array(source.plugins),
+          chainFacts: facts(source.chainFocus),
+          decisionFacts: facts([...array(source.parameterLogic), ...array(source.tips)]),
+          coreIdeas: facts(source.coreIdeas),
+          materials: facts(source.materials),
+          keywords: facts(source.keywords),
+          updateNote: text(source.updateNote)
+        };
+      }
+
+      function effectUse(value, use) {
+        const detail = project(value);
+        const source = record(use);
+        return {
+          plugins: detail.plugins,
+          parameters: array(source.parameters).filter((parameter) => parameter && typeof parameter === "object" && !Array.isArray(parameter) && ["name", "value", "direction", "evidence"].some((key) => Object.prototype.hasOwnProperty.call(parameter, key))),
+          sourcePluginIndexes: array(source.sourcePluginIndexes).filter((index) => Number.isInteger(index) && index >= 0 && index < detail.plugins.length)
+        };
+      }
+
+      return { array, project, effectUse };
+    })();
+
     function normalizePluginLookup(value) {
       return String(value || "")
         .toLowerCase()
@@ -31987,7 +32034,8 @@
     }
 
     function renderEffectUseSummary(record, use) {
-      const parameters = Array.isArray(use.parameters) ? use.parameters : [];
+      const effectData = VideoDetailData.effectUse(record, use);
+      const parameters = effectData.parameters;
       const parameterHtml = parameters.length
         ? '<div class="effect-use-summary-params">' + parameters.map((parameter) => {
             const value = cleanedText([parameter.value, parameter.direction].filter(Boolean).join(" / ")) || "参数尚未结构化";
@@ -31999,8 +32047,8 @@
           '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '">查看独立效果器档案</button></div>' +
         '<p class="effect-use-summary-purpose">' + escapeHtml(cleanedText(use.purpose) || "用途未展示") + '</p>' +
         '<p class="effect-use-summary-meta">处理对象：' + escapeHtml(cleanedText(use.target) || "未展示") + ' · 链路位置：' + escapeHtml(cleanedText(use.chainPosition) || "未展示") + '</p>' +
-        parameterHtml + renderEvidenceLabels(use.evidence) + (use.sourcePluginIndexes || []).map((pluginIndex) => {
-          const plugin = record.plugins[pluginIndex];
+        parameterHtml + renderEvidenceLabels(use.evidence) + effectData.sourcePluginIndexes.map((pluginIndex) => {
+          const plugin = effectData.plugins[pluginIndex];
           return plugin ? renderPluginReferences(record, plugin, pluginIndex) : "";
         }).join("") +
       '</div>';
@@ -32009,8 +32057,10 @@
     function renderDetail() {
       const record = records.find((item) => item.id === state.activeId);
       if (!record) return;
+      const detailData = VideoDetailData.project(record);
       const category = categoryById[record.category];
-      const stepHtml = (record.steps || []).map((step, index) => {
+      const stepHtml = detailData.steps.map((rawStep, index) => {
+        const step = rawStep && typeof rawStep === "object" ? rawStep : {};
         const name = cleanedText(step.name);
         const detail = cleanedText(step.detail);
         const params = cleanedFacts(step.params);
@@ -32028,12 +32078,12 @@
           (params.length ? '<div class="chips">' + params.slice(0, 8).map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
           '</div>';
       }).join("");
-      const ideasHtml = cleanedFacts(record.coreIdeas).map((idea) => '<div class="idea">' + escapeHtml(idea) + '</div>').join("");
-      const materialHtml = cleanedFacts(record.materials).slice(0, 18).map((material) => '<span class="chip">' + escapeHtml(material) + '</span>').join("");
-      const chainHtml = cleanedFacts([...(record.chainFocus || []), ...(record.parameterLogic || [])]).map((fact) => '<div class="learning-point">' + escapeHtml(fact) + '</div>').join("");
-      const effectHtml = effectUses.filter((use) => use.sourceRecordId === record.id).map((use) => renderEffectUseSummary(record, use)).join("");
-      const decisionHtml = cleanedFacts([...(record.tips || []), record.updateNote]).map((fact) => '<div class="tip">' + escapeHtml(fact) + '</div>').join("");
-      const keywordHtml = cleanedFacts(record.keywords).slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
+      const ideasHtml = detailData.coreIdeas.map((idea) => '<div class="idea">' + escapeHtml(idea) + '</div>').join("");
+      const materialHtml = detailData.materials.slice(0, 18).map((material) => '<span class="chip">' + escapeHtml(material) + '</span>').join("");
+      const chainHtml = detailData.chainFacts.map((fact) => '<div class="learning-point">' + escapeHtml(fact) + '</div>').join("");
+      const effectHtml = VideoDetailData.array(effectUses).filter((use) => use && use.sourceRecordId === record.id).map((use) => renderEffectUseSummary(record, use)).join("");
+      const decisionHtml = detailData.decisionFacts.map((fact) => '<div class="tip">' + escapeHtml(fact) + '</div>').join("");
+      const keywordHtml = detailData.keywords.slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
 
       detailEl.innerHTML =
         '<div class="detail-cover"><img src="' + thumbnail(record, "hqdefault") + '" alt="' + escapeAttr(record.title) + '" loading="lazy" decoding="async" onerror="this.style.display=\'none\'"></div>' +
@@ -32062,7 +32112,8 @@
       const source = sourceStepFor(use);
       const sourceRecord = source.sourceRecord;
       const sourceStep = source.sourceStep;
-      const parameters = Array.isArray(use.parameters) ? use.parameters : [];
+      const effectData = VideoDetailData.effectUse(sourceRecord, use);
+      const parameters = effectData.parameters;
       const parameterHtml = parameters.length
         ? parameters.map((parameter) => '<div class="learning-point"><strong>' + escapeHtml(parameter.name || "参数") + '</strong><div>' + escapeHtml([parameter.value, parameter.direction].filter(Boolean).join(" / ") || "参数尚未结构化") + '</div>' + renderEvidenceLabels(parameter.evidence ? [parameter.evidence] : []) + '</div>').join("")
         : '<div class="learning-point">参数尚未结构化。</div>';
@@ -32073,8 +32124,8 @@
           '</button>'
         : '';
       const referenceHtml = sourceRecord
-        ? (use.sourcePluginIndexes || []).map((pluginIndex) => {
-            const plugin = sourceRecord.plugins[pluginIndex];
+        ? effectData.sourcePluginIndexes.map((pluginIndex) => {
+            const plugin = effectData.plugins[pluginIndex];
             return plugin ? renderPluginReferences(sourceRecord, plugin, pluginIndex) : "";
           }).join("")
         : '';
