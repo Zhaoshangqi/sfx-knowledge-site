@@ -79,8 +79,11 @@ test('builds and renders the effect-use projection', () => {
     'function renderEffectDetail(effectId)',
     'state.effectEvidence',
     'use.sourceKeywords',
-    'canonicalEffectName(use.name, pluginReferenceCatalog)'
+    'canonicalEffectName(use.name, pluginReferenceCatalog)',
+    'function matchedEffectReferenceAliases(use)',
+    'matchedEffectReferenceAliases(use)'
   ].forEach((source) => assert.ok(indexHtml.includes(source), `missing ${source}`));
+  assert.match(indexHtml, /function matchedEffectReferenceAliases\(use\) \{[\s\S]*?\.\.\.\(reference\.aliases \|\| \[\]\)/);
 });
 
 test('supports stable video and effect hash routes', () => {
@@ -88,10 +91,13 @@ test('supports stable video and effect hash routes', () => {
   assert.match(indexHtml, /params\.get\("video"\)/);
   assert.match(indexHtml, /params\.get\("effect"\)/);
   assert.match(indexHtml, /window\.addEventListener\("hashchange"/);
+  assert.match(indexHtml, /state\.mode = "effects";\s+renderModeSwitch\(\);\s+openEffectDetail\(route\.effect, false\)/);
+  assert.match(indexHtml, /state\.mode = "videos";\s+renderModeSwitch\(\);\s+openVideoDetail\(route\.video, false\)/);
 });
 
 test('effect rows open independent uses and can return to a video', () => {
   ['data-effect-id', 'data-open-video', '查看完整视频案例', 'effect-use-target', 'effect-use-evidence'].forEach((source) => {
     assert.ok(indexHtml.includes(source), `missing ${source}`);
   });
+  assert.match(indexHtml, /function openEffectDetail\(effectId, syncHash = false\) \{[\s\S]*?const use = effectUses\.find\(\(item\) => item\.id === effectId\);[\s\S]*?if \(!use\) \{\s+state\.activeEffectId = "";/);
 });

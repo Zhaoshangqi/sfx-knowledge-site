@@ -31526,10 +31526,15 @@
       return sortedRecords(list);
     }
 
+    function matchedEffectReferenceAliases(use) {
+      return pluginReferenceCandidates({ name: use.name }).flatMap((reference) => [reference.title, ...(reference.aliases || [])]);
+    }
+
     function effectSearchable(use) {
       return [
         use.name,
         canonicalEffectName(use.name, pluginReferenceCatalog),
+        matchedEffectReferenceAliases(use),
         use.vendor,
         use.category,
         use.target,
@@ -31728,24 +31733,33 @@
     }
 
     function openEffectDetail(effectId, syncHash = false) {
+      const use = effectUses.find((item) => item.id === effectId);
       readerHintEl.textContent = "效果器实际用法";
       state.activeId = "";
-      state.activeEffectId = effectId || "";
       state.returnMode = "effects";
-      renderEffectDetail(effectId);
+      if (!use) {
+        state.activeEffectId = "";
+        detailEl.innerHTML = '<div class="empty">找不到这个效果器用法。</div>';
+        showReader();
+        return;
+      }
+      state.activeEffectId = use.id;
+      renderEffectDetail(use.id);
       showReader();
-      if (syncHash && effectId) writeHashRoute({ effect: effectId });
+      if (syncHash) writeHashRoute({ effect: use.id });
     }
 
     function applyHashRoute() {
       const route = parseHashRoute();
       if (route.effect) {
         state.mode = "effects";
+        renderModeSwitch();
         openEffectDetail(route.effect, false);
         return;
       }
       if (route.video) {
         state.mode = "videos";
+        renderModeSwitch();
         openVideoDetail(route.video, false);
         return;
       }
