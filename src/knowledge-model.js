@@ -20,7 +20,7 @@
   ];
 
   function stripCourseScaffolding(value) {
-    var result = cleanText(value);
+    var result = value == null ? '' : String(value).trim();
     suffixes.forEach(function (suffix) {
       result = result.replace(suffix, '').trim();
     });
@@ -29,9 +29,10 @@
 
   function uniqueFacts(facts) {
     var seen = Object.create(null);
-    return (Array.isArray(facts) ? facts : []).map(cleanText).filter(function (fact) {
-      if (!fact || seen[fact]) return false;
-      seen[fact] = true;
+    return (Array.isArray(facts) ? facts : []).map(stripCourseScaffolding).filter(function (fact) {
+      var key = normalizeKey(fact);
+      if (!key || seen[key]) return false;
+      seen[key] = true;
       return true;
     });
   }
@@ -47,7 +48,7 @@
       var candidates = [reference && reference.title].concat(reference && Array.isArray(reference.aliases) ? reference.aliases : []);
       var match = candidates.some(function (candidate) { return normalizeKey(candidate) === key; });
       if (match) {
-        raw = cleanText(reference.title);
+        raw = reference.title;
       }
       return match;
     });
@@ -72,7 +73,7 @@
   function classifyEffectUse(use) {
     var explicit = cleanText(use && use.category);
     if (explicit) return explicit;
-    var text = [use && use.name, use && use.vendor, use && use.purpose, use && use.target].map(cleanText).join(' ');
+    var text = [use && use.name, use && use.purpose, use && use.target].map(cleanText).join(' ');
     var matches = categoryRules.filter(function (rule) { return rule[1].test(text); }).map(function (rule) { return rule[0]; });
     return matches.length === 1 ? matches[0] : '未分类';
   }
@@ -80,10 +81,11 @@
   function inferEvidence(text) {
     var value = cleanText(text);
     var labels = ['画面确认', '作者口述', '分析推断', '视频未展示'];
+    var matches = [];
     for (var i = 0; i < labels.length; i += 1) {
-      if (value.indexOf(labels[i]) !== -1) return labels[i];
+      if (value.indexOf(labels[i]) !== -1) matches.push(labels[i]);
     }
-    return '';
+    return matches;
   }
 
   function normalizeParameter(parameter, fallbackName) {
@@ -100,11 +102,20 @@
 
   function normalizeParameters(parameters, legacy) {
     if (legacy) {
-      return [{ name: '参数线索', value: parameters == null ? '' : cleanText(JSON.stringify(parameters)), direction: '', evidence: '' }];
+      if (!parameters || typeof parameters !== 'object' || Array.isArray(parameters)) return [];
+      var evidenceText = JSON.stringify(parameters);
+      var firstEvidence = inferEvidence(evidenceText)[0] || '';
+      return Object.keys(parameters).map(function (name) {
+        return { name: '参数线索', value: cleanText(name + ': ' + parameters[name]), direction: '', evidence: firstEvidence };
+      });
     }
-    if (Array.isArray(parameters)) return parameters.map(function (parameter) { return normalizeParameter(parameter, '参数'); });
+    if (Array.isArray(parameters)) return parameters.filter(function (parameter) {
+      return cleanText(parameter && parameter.value) || cleanText(parameter && parameter.direction);
+    }).map(function (parameter) { return normalizeParameter(parameter, '参数'); });
     if (parameters && typeof parameters === 'object') {
-      return Object.keys(parameters).map(function (name) { return normalizeParameter(parameters[name], name); });
+      return Object.keys(parameters).map(function (name) { return normalizeParameter(parameters[name], name); }).filter(function (parameter) {
+        return parameter.value || parameter.direction;
+      });
     }
     return [];
   }
@@ -120,58 +131,67 @@
     });
   }
 
+  function normalizeStepIndex(value) {
+    if (Number.isInteger(value)) return value;
+    if (typeof value === 'string' && /^-?\d+$/.test(value.trim())) return Number(value);
+    return -1;
+  }
+
   function makeUse(record, input, legacy, pluginIndex) {
     var name = cleanText(input && input.name);
-    var stepIndex = input && (input.stepIndex != null ? input.stepIndex : input.step);
+    var stepIndex = normalizeStepIndex(input && (input.stepIndex != null ? input.stepIndex : input.step));
     var step = findStep(record, stepIndex);
     var replacementIndexes = Array.isArray(input && input.replacesPluginIndexes) ? input.replacesPluginIndexes.filter(function (index) { return Number.isInteger(index) && index >= 0; }) : [];
     var use = {
-      id: cleanText(input && input.id) || [cleanText(record.id), effectSlug(name), legacy ? pluginIndex + 1 : 'explicit'].join('-'),
+      id: input && input.id != null ? input.id : (cleanText(record.id) + ':effect:' + effectSlug(name) + ':' + (pluginIndex + 1)),
       name: name,
       vendor: cleanText(input && input.vendor),
       category: classifyEffectUse(input),
-      target: cleanText(input && input.target),
-      chainPosition: input && input.chainPosition != null ? input.chainPosition : legacy ? pluginIndex + 1 : null,
-      purpose: cleanText(input && input.purpose),
+      target: stripCourseScaffolding(input && input.target),
+      chainPosition: stripCourseScaffolding(input && input.chainPosition != null ? input.chainPosition : legacy ? pluginIndex + 1 : ''),
+      purpose: stripCourseScaffolding(input && input.purpose),
       parameters: normalizeParameters(input && (input.parameters != null ? input.parameters : input.settings), legacy),
-      result: cleanText(input && input.result),
-      interactions: listText(input && input.interactions),
-      limitations: listText(input && input.limitations),
+      result: stripCourseScaffolding(input && input.result),
+      interactions: stripCourseScaffolding(input && input.interactions),
+      limitations: stripCourseScaffolding(input && input.limitations),
       timestamp: cleanText(input && input.timestamp),
-      stepIndex: stepIndex == null ? null : stepIndex,
-      screenshotKey: cleanText(input && input.screenshotKey) || cleanText(step && step.screenshotKey),
-      evidence: cleanText(input && input.evidence) || inferEvidence(input && [input.purpose, input.result, input.notes].join(' ')),
+      stepIndex: stepIndex,
+      screenshotKey: cleanText(input && input.screenshotKey) || cleanText(step && (step.screenshotKey || step.imageKey)),
+      evidence: inferEvidence(input && [input.evidence, input.purpose, input.result, input.notes].join(' ')),
       sourceRecordId: cleanText(record.id),
       sourceVideoId: cleanText(record.sourceVideoId || record.videoId),
       sourceTitle: cleanText(record.title),
-      source: cleanText(input && input.source) || (legacy ? 'plugin' : 'effectUse'),
-      sourceKeywords: listText(record.keywords),
+      source: cleanText(record.source),
+      sourceKeywords: uniqueFacts(record.keywords),
       sourcePluginIndexes: legacy ? [pluginIndex] : replacementIndexes,
       legacy: Boolean(legacy)
     };
     return use;
   }
 
-  function buildEffectUses(record) {
-    record = record || {};
-    var explicit = Array.isArray(record.effectUses) ? record.effectUses : [];
-    var plugins = Array.isArray(record.plugins) ? record.plugins : [];
-    var replaced = Object.create(null);
-    explicit.forEach(function (use) {
-      (Array.isArray(use.replacesPluginIndexes) ? use.replacesPluginIndexes : []).forEach(function (index) {
-        if (Number.isInteger(index) && index >= 0) replaced[index] = true;
+  function buildEffectUses(records) {
+    if (!Array.isArray(records)) return [];
+    return records.reduce(function (all, record) {
+      record = record || {};
+      var explicit = Array.isArray(record.effectUses) ? record.effectUses : [];
+      var plugins = Array.isArray(record.plugins) ? record.plugins : [];
+      var replaced = Object.create(null);
+      explicit.forEach(function (use) {
+        (Array.isArray(use.replacesPluginIndexes) ? use.replacesPluginIndexes : []).forEach(function (index) {
+          if (Number.isInteger(index) && index >= 0) replaced[index] = true;
+        });
       });
-    });
-    var result = explicit.map(function (use) { return makeUse(record, use, false); });
-    plugins.forEach(function (plugin, index) {
-      if (!replaced[index]) result.push(makeUse(record, plugin || {}, true, index));
-    });
-    return result;
+      explicit.forEach(function (use, index) { all.push(makeUse(record, use, false, index)); });
+      plugins.forEach(function (plugin, index) {
+        if (!replaced[index]) all.push(makeUse(record, plugin || {}, true, index));
+      });
+      return all;
+    }, []);
   }
 
-  function searchableRecordText(record) {
+  function searchableRecordText(record, categoryLabel) {
     var values = [];
-    var fields = ['title', 'source', 'date', 'createdAt', 'updatedAt', 'updateNote', 'categoryLabel', 'summary', 'keywords', 'materials', 'coreIdeas', 'chainFocus', 'parameterLogic', 'tips', 'plugins', 'steps', 'effectUses'];
+    var fields = ['title', 'source', 'addedAt', 'updatedAt', 'updateNote', 'summary', 'keywords', 'materials', 'coreIdeas', 'chainFocus', 'parameterLogic', 'tips', 'plugins', 'steps', 'effectUses'];
     function collect(value) {
       if (value == null) return;
       if (typeof value === 'string' || typeof value === 'number') values.push(stripCourseScaffolding(value).toLowerCase());
@@ -179,6 +199,7 @@
       else if (typeof value === 'object') Object.keys(value).forEach(function (key) { if (key !== 'practiceChecklist') collect(value[key]); });
     }
     (record && typeof record === 'object' ? fields : []).forEach(function (field) { collect(record[field]); });
+    collect(categoryLabel);
     return values.filter(Boolean).join(' ');
   }
 

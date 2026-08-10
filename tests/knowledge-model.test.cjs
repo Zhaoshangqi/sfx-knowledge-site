@@ -3,79 +3,96 @@ const assert = require('node:assert/strict');
 
 const model = require('../src/knowledge-model.js');
 
-test('stripCourseScaffolding removes only known generated suffixes and preserves factual narration', () => {
+test('stripCourseScaffolding removes only known suffixes and preserves factual narration', () => {
   assert.equal(
-    model.stripCourseScaffolding('用 EQ 削掉 3kHz。复习时先听它改变的是素材身份、频谱、运动、空间、动态还是响度，再决定是否保留。'),
-    '用 EQ 削掉 3kHz。'
+    model.stripCourseScaffolding('用 EQ 处理。复习时先听它改变的是素材身份、频谱、运动、空间、动态还是响度，再决定是否保留。'),
+    '用 EQ 处理。'
   );
-  assert.equal(
-    model.stripCourseScaffolding('复刻这个声音时，先保留原始噪声。'),
-    '复刻这个声音时，先保留原始噪声。'
-  );
-  assert.equal(model.stripCourseScaffolding('  事实   文本。  '), '事实 文本。');
+  assert.equal(model.stripCourseScaffolding('事实   文本。'), '事实   文本。');
+  assert.equal(model.stripCourseScaffolding('复刻时保留原始噪声。'), '复刻时保留原始噪声。');
 });
 
-test('uniqueFacts deduplicates whitespace-normalized facts but keeps punctuation differences', () => {
+test('uniqueFacts strips facts once and deduplicates only whitespace-normalized keys', () => {
   assert.deepEqual(
-    model.uniqueFacts(['  用滤波器   清理。', '用滤波器\t清理。', '用滤波器清理', '保留瞬态']),
-    ['用滤波器 清理。', '用滤波器清理', '保留瞬态']
+    model.uniqueFacts(['  用滤波器   清理。  ', '用滤波器\t清理。', '用滤波器清理', '保留瞬态']),
+    ['用滤波器   清理。', '用滤波器清理', '保留瞬态']
   );
 });
 
-test('buildEffectUses deterministically merges explicit and legacy plugin uses', () => {
-  const record = {
-    id: 'rec-7', sourceVideoId: 'vid-2', title: '脚步', keywords: ['脚步', '空间'],
-    steps: [{ index: 2, screenshotKey: 'shot-2' }],
+test('buildEffectUses accepts record arrays and normalizes explicit and legacy sources', () => {
+  const records = [{
+    id: 'rec-7', source: '视频作者', sourceVideoId: 'vid-2', title: '脚步',
+    keywords: ['  脚步  ', '脚步', '空间'],
+    steps: [{ index: 0, imageKey: 'image-0' }],
     plugins: [
-      { name: 'EQ', vendor: 'FabFilter', purpose: '削低频', settings: { gain: '-3 dB' } },
-      { name: 'Reverb', vendor: 'Valhalla' },
-      { name: 'Limiter', vendor: 'FabFilter' }
+      { name: 'EQ', vendor: 'FabFilter', settings: { gain: '-3 dB', evidence: '画面确认 作者口述' } },
+      { name: 'Reverb', vendor: 'Valhalla', settings: { mix: '作者口述' } }
     ],
-    effectUses: [{ id: 'explicit-1', name: 'EQ', replacesPluginIndexes: [0], stepIndex: 2, result: '更干净', parameters: { frequency: '3kHz' } }]
-  };
-  const first = model.buildEffectUses(record);
-  assert.deepEqual(first, model.buildEffectUses(record));
-  assert.equal(first.length, 3);
-  assert.equal(first[0].id, 'explicit-1');
-  assert.deepEqual(first[0].sourcePluginIndexes, [0]);
-  assert.equal(first[0].screenshotKey, 'shot-2');
-  assert.deepEqual(first[0].sourceKeywords, ['脚步', '空间']);
-  assert.equal(first[0].sourceRecordId, 'rec-7');
-  assert.deepEqual(first.map((use) => use.name), ['EQ', 'Reverb', 'Limiter']);
-  assert.deepEqual(first[1].sourcePluginIndexes, [1]);
-  assert.match(first[1].id, /^rec-7-reverb-2$/);
-  assert.deepEqual(first[1].parameters, [{ name: '参数线索', value: '', direction: '', evidence: '' }]);
-  assert.deepEqual(model.buildEffectUses({ id: 'empty' }), []);
+    effectUses: [{
+      id: '  explicit-id  ', name: 'EQ', replacesPluginIndexes: [0], stepIndex: 0,
+      target: '目标。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。',
+      chainPosition: 1, purpose: '削低频。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。', result: '更干净。复习时先看每一步负责的声音角色，再看插件名称。', interactions: '  与混响   叠加 ',
+      limitations: ' 不能过量 ', evidence: '画面确认 作者口述',
+      parameters: [{ name: '频率', value: '3kHz' }, { name: '空值' }, { name: '方向', direction: '向上' }]
+    }]
+  }, { id: 'empty' }];
+  const uses = model.buildEffectUses(records);
+  assert.deepEqual(model.buildEffectUses({ id: 'wrong-shape' }), []);
+  assert.equal(uses.length, 2);
+  assert.equal(uses[0].id, '  explicit-id  ');
+  assert.equal(uses[0].source, '视频作者');
+  assert.equal(uses[0].screenshotKey, 'image-0');
+  assert.equal(uses[0].stepIndex, 0);
+  assert.deepEqual(uses[0].evidence, ['画面确认', '作者口述']);
+  assert.deepEqual(uses[0].sourceKeywords, ['脚步', '空间']);
+  assert.deepEqual(uses[0].sourcePluginIndexes, [0]);
+  assert.equal(uses[0].target, '目标。');
+  assert.equal(uses[0].chainPosition, '1');
+  assert.equal(uses[0].purpose, '削低频。');
+  assert.equal(uses[0].result, '更干净。');
+  assert.equal(uses[0].interactions, '与混响   叠加');
+  assert.equal(uses[0].limitations, '不能过量');
+  assert.equal(uses[0].parameters.length, 2);
+  assert.deepEqual(uses[1].sourcePluginIndexes, [1]);
+  assert.equal(uses[1].id, 'rec-7:effect:reverb:2');
+  assert.equal(uses[1].parameters.length, 1);
+  assert.equal(uses[1].parameters[0].name, '参数线索');
+  assert.equal(uses[1].parameters[0].evidence, '作者口述');
+  assert.deepEqual(model.buildEffectUses([{ id: 'empty-array-record' }]), []);
 });
 
-test('classifyEffectUse selects one high-confidence category and falls back for mixed chains', () => {
-  assert.equal(model.classifyEffectUse({ name: 'FabFilter Pro-Q 3', purpose: '滤波共振控制' }), '频谱与音色');
-  assert.equal(model.classifyEffectUse({ name: 'Compressor', purpose: '控制响度' }), '动态与响度');
+test('classifyEffectUse uses only name, purpose, and target and inferEvidence returns all labels', () => {
+  assert.equal(model.classifyEffectUse({ name: 'Mystery', vendor: 'Compressor', purpose: '处理声音' }), '未分类');
+  assert.equal(model.classifyEffectUse({ name: 'EQ', purpose: '滤波共振控制' }), '频谱与音色');
   assert.equal(model.classifyEffectUse({ name: 'EQ + Reverb', purpose: '同时改变频谱和空间' }), '未分类');
-  assert.equal(model.classifyEffectUse({ name: 'Mystery Box', purpose: '处理声音' }), '未分类');
+  assert.deepEqual(model.inferEvidence('画面确认，作者口述；分析推断，视频未展示'), ['画面确认', '作者口述', '分析推断', '视频未展示']);
+  assert.deepEqual(model.inferEvidence('没有证据标签'), []);
 });
 
-test('searchableRecordText includes factual fields but excludes practiceChecklist', () => {
+test('searchableRecordText uses supplied category label and factual fields only', () => {
   const text = model.searchableRecordText({
-    title: '脚步设计', source: '视频课', date: '2025-01-02', updateNote: '已复核',
-    categoryLabel: '空间', summary: '用混响拉开距离', keywords: ['脚步'], materials: ['干声'],
-    coreIdeas: ['先定素材'], chainFocus: '空间层次', parameterLogic: '预延迟控制清晰度', tips: ['少量使用'],
-    plugins: [{ name: 'Reverb' }], steps: [{ narration: '听尾音' }], effectUses: [{ name: 'Delay', purpose: '回声' }],
-    practiceChecklist: ['这段练习不应被检索']
-  });
-  assert.match(text, /脚步设计/);
-  assert.match(text, /预延迟控制清晰度/);
-  assert.doesNotMatch(text, /这段练习不应被检索/);
+    title: '脚步设计', source: '视频课', date: '不要收录', addedAt: '2025-01-02', updatedAt: '2025-02-03',
+    updateNote: '已复核', categoryLabel: '记录分类', summary: '用混响拉开距离', keywords: ['脚步'],
+    materials: ['干声'], coreIdeas: ['先定素材'], chainFocus: '空间层次', parameterLogic: '预延迟控制清晰度',
+    tips: ['少量使用'], plugins: [{ name: 'Reverb' }], steps: [{ narration: '听尾音' }],
+    effectUses: [{ name: 'Delay', purpose: '回声' }], practiceChecklist: ['不可检索']
+  }, '传入分类');
+  assert.match(text, /传入分类/);
+  assert.match(text, /2025-01-02/);
+  assert.match(text, /2025-02-03/);
+  assert.match(text, /已复核/);
+  assert.doesNotMatch(text, /记录分类|不要收录|不可检索/);
 });
 
-test('groupEffectUses normalizes aliases, preserves uses, and sorts groups', () => {
-  const eq = { id: 'a', name: '  pro-Q 3 ', vendor: 'FabFilter' };
-  const delay = { id: 'b', name: 'Delay', vendor: 'X' };
-  const groups = model.groupEffectUses([delay, eq, { id: 'c', name: 'PRO-Q 3', vendor: 'FabFilter' }], [
+test('groupEffectUses preserves uses and canonicalizes exact aliases to reference titles', () => {
+  const eq = { id: 'a', name: '  pro-Q 3 ' };
+  const delay = { id: 'b', name: 'Delay' };
+  const groups = model.groupEffectUses([delay, eq, { id: 'c', name: 'PRO-Q 3' }], [
     { title: 'FabFilter Pro-Q 3', aliases: ['Pro-Q 3'] },
     { title: 'Delay', aliases: ['Echo'] }
   ]);
   assert.deepEqual(groups.map((group) => group.name), ['Delay', 'FabFilter Pro-Q 3']);
-  assert.deepEqual(groups[1].uses, [eq, groups[1].uses[1]]);
+  assert.strictEqual(groups[1].uses[0], eq);
+  assert.equal(groups[1].uses[1].id, 'c');
   assert.equal(model.canonicalEffectName(' PRO-Q 3 ', [{ title: 'FabFilter Pro-Q 3', aliases: ['Pro-Q 3'] }]), 'FabFilter Pro-Q 3');
 });
