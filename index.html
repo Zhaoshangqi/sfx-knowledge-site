@@ -120,6 +120,10 @@
       max-width: 1180px;
       margin: 22px auto 0;
     }
+    .search,
+    .select {
+      min-width: 0;
+    }
     .view-switch {
       display: inline-grid;
       grid-template-columns: repeat(2, minmax(112px, 1fr));
@@ -702,6 +706,9 @@
       background: var(--panel);
     }
 
+    @media (max-width: 1200px) {
+      .toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     @media (max-width: 980px) {
       .toolbar { grid-template-columns: 1fr; }
       .reader-detail .step { grid-template-columns: 1fr; }
@@ -809,8 +816,8 @@
       <h1>音效知识库</h1>
       <p>通过视频案例拆解声音设计思路，并交叉检索真实效果器与插件的使用方式、参数线索和素材目标。</p>
       <div class="view-switch" id="viewSwitch" role="tablist" aria-label="知识库视图">
-        <button class="view-switch-button active" type="button" role="tab" aria-selected="true" data-mode="videos">视频案例</button>
-        <button class="view-switch-button" type="button" role="tab" aria-selected="false" data-mode="effects">效果器索引</button>
+        <button class="view-switch-button active" id="videosModeTab" type="button" role="tab" aria-controls="videoLibrary" aria-selected="true" data-mode="videos">视频案例</button>
+        <button class="view-switch-button" id="effectsModeTab" type="button" role="tab" aria-controls="effectLibrary" aria-selected="false" tabindex="-1" data-mode="effects">效果器索引</button>
       </div>
       <div class="toolbar">
         <input id="search" class="search" type="search" placeholder="搜索视频、设计目标、效果器、参数或素材...">
@@ -841,7 +848,7 @@
 
   <main id="appMain">
     <section class="library-view" id="libraryView">
-      <section id="videoLibrary" aria-labelledby="videosModeLabel">
+      <section id="videoLibrary" role="tabpanel" aria-labelledby="videosModeTab">
         <h2 class="visually-hidden" id="videosModeLabel">视频案例</h2>
         <nav class="tabs" id="tabs" aria-label="音效分类页签"></nav>
         <div class="results-bar">
@@ -851,7 +858,7 @@
         <div class="grid" id="grid"></div>
       </section>
 
-      <section id="effectLibrary" aria-labelledby="effectsModeLabel" hidden>
+      <section id="effectLibrary" role="tabpanel" aria-labelledby="effectsModeTab" hidden>
         <h2 class="visually-hidden" id="effectsModeLabel">效果器索引</h2>
         <div class="results-bar">
           <span id="effectResultCount"></span>
