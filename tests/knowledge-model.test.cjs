@@ -33,13 +33,13 @@ test('buildEffectUses accepts arrays and normalizes explicit and legacy sources'
       { id: 'plugin-id', name: 'Reverb', vendor: 'Valhalla', settings: ['作者口述', '  画面确认  '] },
       { name: 'Limiter', settings: { gain: '-1 dB' } }
     ],
-    effectUses: [{
+    effectUses: [null, undefined, 'malformed', {
       id: '  explicit-id  ', name: 'EQ', replacesPluginIndexes: [0], stepIndex: 0,
       target: '目标。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。',
-      chainPosition: 1, purpose: '削低频。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。',
+      chainPosition: 1, purpose: '削低频，作者口述。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。',
       result: '更干净。复习时先看每一步负责的声音角色，再看插件名称。', interactions: '  与混响   叠加 ',
-      limitations: ' 不能过量 ', evidence: '画面确认 作者口述',
-      parameters: [{ name: '频率', value: '3kHz' }, { name: '空值' }, { name: '方向', direction: '向上' }]
+      limitations: ' 不能过量 ', evidence: '画面确认', notes: '分析推断', settings: ['视频未展示'],
+      parameters: [{ name: '频率', value: '3kHz', evidence: '作者口述' }, { name: '空值' }, { name: '方向', direction: '向上' }]
     }]
   }, { id: 'empty' }];
   const uses = model.buildEffectUses(records);
@@ -47,14 +47,15 @@ test('buildEffectUses accepts arrays and normalizes explicit and legacy sources'
   assert.equal(uses.length, 3);
   assert.equal(uses[0].id, '  explicit-id  ');
   assert.equal(uses[0].source, '  视频作者  ');
+  assert.equal(uses[0].sourceRecordId, '  rec-7  ');
   assert.equal(uses[0].screenshotKey, 'right');
   assert.equal(uses[0].stepIndex, 0);
-  assert.deepEqual(uses[0].evidence, ['画面确认', '作者口述']);
+  assert.deepEqual(uses[0].evidence, ['画面确认', '作者口述', '分析推断', '视频未展示']);
   assert.deepEqual(uses[0].sourceKeywords, ['脚步', '空间']);
   assert.deepEqual(uses[0].sourcePluginIndexes, [0]);
   assert.equal(uses[0].target, '目标。');
   assert.equal(uses[0].chainPosition, '1');
-  assert.equal(uses[0].purpose, '削低频。');
+  assert.equal(uses[0].purpose, '削低频，作者口述。');
   assert.equal(uses[0].result, '更干净。');
   assert.equal(uses[0].interactions, '与混响   叠加');
   assert.equal(uses[0].limitations, '不能过量');
@@ -63,11 +64,18 @@ test('buildEffectUses accepts arrays and normalizes explicit and legacy sources'
   assert.equal(uses[1].id, '  rec-7  :effect:reverb:2');
   assert.deepEqual(uses[1].parameters, [
     { name: '参数线索', value: '作者口述', direction: '', evidence: '作者口述' },
-    { name: '参数线索', value: '  画面确认  ', direction: '', evidence: '画面确认' }
+    { name: '参数线索', value: '画面确认', direction: '', evidence: '画面确认' }
   ]);
+  assert.deepEqual(uses[1].evidence, ['画面确认', '作者口述']);
   assert.equal(uses[2].id, '  rec-7  :effect:limiter:3');
   assert.deepEqual(uses[2].parameters, []);
   assert.deepEqual(model.buildEffectUses([{ id: 'empty-array-record' }]), []);
+  assert.equal(model.buildEffectUses([{ id: 'bad-source', source: 42, plugins: [{ name: 'EQ' }] }])[0].source, '');
+  const collisionUses = model.buildEffectUses([{
+    id: 'collision', effectUses: [{ name: 'Delay' }], plugins: [{ id: 'plugin-id', name: 'Delay' }]
+  }]);
+  assert.equal(collisionUses[0].id, 'collision:effect:delay:explicit-1');
+  assert.equal(collisionUses[1].id, 'collision:effect:delay:1');
 });
 
 test('classifyEffectUse excludes vendor and inferEvidence returns all labels', () => {

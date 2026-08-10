@@ -92,6 +92,20 @@
     return matches;
   }
 
+  function scalarText(value) {
+    return typeof value === 'string' || typeof value === 'number' ? cleanText(value) : '';
+  }
+
+  function collectEvidenceText(value, parts) {
+    if (typeof value === 'string' || typeof value === 'number') {
+      parts.push(String(value));
+    } else if (Array.isArray(value)) {
+      value.forEach(function (item) { collectEvidenceText(item, parts); });
+    } else if (value && typeof value === 'object') {
+      Object.keys(value).forEach(function (key) { collectEvidenceText(value[key], parts); });
+    }
+  }
+
   function normalizeParameter(parameter, fallbackName) {
     if (parameter && typeof parameter === 'object' && !Array.isArray(parameter)) {
       return {
@@ -108,8 +122,8 @@
     if (legacy) {
       if (!Array.isArray(parameters)) return [];
       return parameters.map(function (setting) {
-        return { name: '参数线索', value: setting, direction: '', evidence: inferEvidence(setting)[0] || '' };
-      });
+        return { name: '参数线索', value: scalarText(setting), direction: '', evidence: inferEvidence(setting)[0] || '' };
+      }).filter(function (parameter) { return parameter.value !== ''; });
     }
     if (Array.isArray(parameters)) return parameters.filter(function (parameter) {
       return cleanText(parameter && parameter.value) || cleanText(parameter && parameter.direction);
@@ -139,26 +153,35 @@
     var step = stepIndex >= 0 ? (record.steps || [])[stepIndex] : null;
     var replacementIndexes = Array.isArray(input && input.replacesPluginIndexes) ? input.replacesPluginIndexes.filter(function (index) { return Number.isInteger(index) && index >= 0; }) : [];
     var generatedId = String(record.id) + ':effect:' + effectSlug(name) + ':' + (pluginIndex + 1);
+    var explicitFallbackId = String(record.id) + ':effect:' + effectSlug(name) + ':explicit-' + (pluginIndex + 1);
+    var normalizedParameters = normalizeParameters(input && (input.parameters != null ? input.parameters : input.settings), legacy);
+    var evidenceParts = [];
+    [input && input.evidence, input && input.purpose, input && input.result, input && input.limitations, input && input.notes, input && input.settings].forEach(function (value) {
+      collectEvidenceText(value, evidenceParts);
+    });
+    normalizedParameters.forEach(function (parameter) {
+      evidenceParts.push(parameter.evidence, parameter.value);
+    });
     var use = {
-      id: legacy ? generatedId : (input && input.id != null ? input.id : generatedId),
+      id: legacy ? generatedId : (input && typeof input.id === 'string' && input.id.trim() ? input.id : explicitFallbackId),
       name: name,
       vendor: cleanText(input && input.vendor),
       category: classifyEffectUse(input),
       target: stripCourseScaffolding(input && input.target),
       chainPosition: stripCourseScaffolding(input && input.chainPosition != null ? input.chainPosition : legacy ? pluginIndex + 1 : ''),
       purpose: stripCourseScaffolding(input && input.purpose),
-      parameters: normalizeParameters(input && (input.parameters != null ? input.parameters : input.settings), legacy),
+      parameters: normalizedParameters,
       result: stripCourseScaffolding(input && input.result),
       interactions: stripCourseScaffolding(input && input.interactions),
       limitations: stripCourseScaffolding(input && input.limitations),
       timestamp: cleanText(input && input.timestamp),
       stepIndex: stepIndex,
       screenshotKey: cleanText(input && input.screenshotKey) || cleanText(step && step.imageKey),
-      evidence: inferEvidence(input && [input.evidence, input.purpose, input.result, input.notes].join(' ')),
-      sourceRecordId: cleanText(record.id),
+      evidence: inferEvidence(evidenceParts.join(' ')),
+      sourceRecordId: record.id === undefined ? '' : record.id,
       sourceVideoId: cleanText(record.sourceVideoId || record.videoId),
       sourceTitle: cleanText(record.title),
-      source: record.source === undefined ? '' : record.source,
+      source: typeof record.source === 'string' ? record.source : '',
       sourceKeywords: uniqueFacts(record.keywords),
       sourcePluginIndexes: legacy ? [pluginIndex] : replacementIndexes,
       legacy: Boolean(legacy)
@@ -170,7 +193,9 @@
     if (!Array.isArray(records)) return [];
     return records.reduce(function (all, record) {
       record = record || {};
-      var explicit = Array.isArray(record.effectUses) ? record.effectUses : [];
+      var explicit = Array.isArray(record.effectUses) ? record.effectUses.filter(function (use) {
+        return use && typeof use === 'object' && !Array.isArray(use);
+      }) : [];
       var plugins = Array.isArray(record.plugins) ? record.plugins : [];
       var replaced = new Set();
       explicit.forEach(function (use) {
