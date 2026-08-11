@@ -554,19 +554,19 @@ These entries were generated from the standalone HTML knowledge base so every an
 ## 2026-05-09 - 《Destiny 2》音效设计深度剖析：声码器应用
 - Source: `https://www.youtube.com/watch?v=zxfbE0exXKk`
 - Domain: scifi, magic, Vocoder, OTT, Multi-band compression, Serum synthesis, Tape saturation, SampHold filter, Transient processing, Game audio design
-- Reusable pattern: 视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、iZotope Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。
+- Reusable pattern: 视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、Ableton Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。
 - Step / event map:
   - 分析源音材料质量: 检查音频波形质量，区分good source、not as good source和very good source三个等级，评估立体声声道清晰度和噪声水平，优质源素材能承受更多效果处理。
   - 使用Serum生成基础音色: 在Serum中配置Sub低频层、Noise噪声层、OSC A (Monster 6)和OSC B (Trilobyte 2)振荡器，调整波表位置、八度数(OCT)、细调(FIN)和混合(BLEND)参数。
   - 应用SampHold采样保持滤波器: 在Serum的滤波器模块中选择SampHold预设，调整CUTOFF、RES、DRIVE、PAN、MIX五个参数来创建采样保持效果，产生独特的步进式频率调制和'颗粒感'音色。
-  - 配置双Vocoder实例并联处理: 在混音链中串联两个Vocoder效果器实例，左实例设置8频段(7.9dB增益)产生粗糙感，右实例设置40频段(14dB增益)产生平滑感，两者均采用Enhance载波模式、Fast响应速度。
-  - 调整Vocoder核心参数: 设置Vocoder的载波模式为Enhance，配置频段数40、带宽18kHz、Mono深度分别为120%和105%，启用快速检测模式(Fast)，微调Formant参数至-15.8/-8.40dB。
+  - 配置双Vocoder实例并联处理: 关联截图确认两个Ableton Vocoder实例均为40 Bands、Level 7.9 dB，并启用Enhance与Fast；两路Depth与Formant不同。既有8 / 40 Bands与7.9 dB / 14 dB记录需回原视频复核。
+  - 调整Vocoder核心参数: 关联截图记录40 Bands、18kHz带宽、Stereo Depth 120% / 105%与Formant -15.8 / -8.40（界面未标单位）；这些数值只属于当前工程。
   - 应用OTT多频段动态处理: 使用OTT动态均衡器将音频分为三频段独立处理：高频(2.50kHz)增益+5.4~+14.6dB、中频+2.7~+11.9dB、低频(88.3Hz)增益+8.8~+14.5dB，输出8.4~10.3dB，攻击13.5ms，释放282ms，Soft Knee。
   - 集成iZotope磁带饱和失真: 在Trash 2或Ozone的Distortion模块中应用Tape Sat.预设，设置频率330Hz、Q值2.0~3.0，在中低频点增加谐波内容和温暖感而不掩盖高频细节。
   - 应用Little Radiator前级放大: 使用Soundtoys Little Radiator 1566A前级话筒放大器插件模拟模拟硬件的温暖感，调整NOISE噪声、BIAS偏置、HEAT温暖度(-15到+15)和MIX干湿比参数，比Decapitator更温和透明。
 - Plugin and processing notes:
   - Serum合成器: 生成基础合成音色，Sub+Noise+OSC A/B四层音源，SampHold滤波器产生颗粒感
-  - iZotope Vocoder: 双实例并联调制音色，8频段+40频段组合创建复杂谐波结构
+  - Ableton Vocoder: 双实例并联调制音色；关联截图确认两路均为 40 Bands，既有 8 / 40 记录需回原视频复核
   - OTT多频段压缩器: 三频段独立动态控制，平衡音频频率响应
   - iZotope Trash 2 / Ozone Distortion: 磁带饱和失真，在330Hz增加谐波和温暖感
   - Soundtoys Little Radiator 1566A: 模拟前级放大器，比Decapitator更温和的过载特性
@@ -574,13 +574,13 @@ These entries were generated from the standalone HTML knowledge base so every an
   - iZotope RX De-click: 前期音频修复，自动检测并修复点击/杂音，允许后期更激进处理
   - Delay延迟效果器: 配合SampHold创建节奏化步进空间效果
 - Design principles learned:
-  - Vocoder双实例并联处理：8频段(粗糙感)与40频段(平滑感)的左右组合，两者均使用Enhance载波模式+18kHz带宽，创建更丰富的谐波层次
-  - OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围
+  - Vocoder双实例并联处理：关联截图确认两路均为40 Bands、7.9 dB，并使用Enhance与Fast；较少/较多频段的听感差异属于一般解释，既有8 / 40记录需回原视频复核
+  - OTT页面记录当前工程的三频段分界、增益、攻击与释放数值；这些读数只属于该截图和素材，不能解释为游戏音效的通用安全范围
   - SampHold采样保持滤波器产生步进式频率调制和'颗粒感'音色，是创建异质感电子游戏音效的关键Serum滤波器预设
   - 效果链顺序实验：先压缩后失真产生温暖感，先失真后压缩产生激进感——两种顺序截然不同
   - 磁带饱和(Tape Sat.)在330Hz处增加谐波内容，配合OTT压缩能模拟模拟硬件温暖感
   - NI Transient Master应用于Master轨而非单轨，获得更整体的瞬态控制效果
-- Use when: Vocoder; OTT; Multi-band compression; Serum synthesis; Tape saturation; SampHold filter; Transient processing; Game audio design; Convolution; Audio restoration; Vocoder频段数影响调制细节：8频段产生粗糙感，40频段产生平滑感，可根据需要并联两者同时使用; OTT的三频段输出增益应匹配整体混音电平，8.4-10.3dB输出范围是游戏音效的安全值; SampHold滤波器与延迟级联时，延迟时间5-30ms能创建自然步进感而不产生明显回声
+- Use when: Vocoder; OTT; Multi-band compression; Serum synthesis; Tape saturation; SampHold filter; Transient processing; Game audio design; Convolution; Audio restoration; 需要核对Ableton Vocoder双实例截图与未确认历史数值时
 
 ## 2026-05-09 - 《Valorant》Veto 拦截器装备音效制作全流程
 - Source: `https://www.youtube.com/watch?v=Ns8e5612fUw`

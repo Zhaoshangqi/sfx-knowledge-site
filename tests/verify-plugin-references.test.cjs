@@ -31,3 +31,22 @@ test("plugin reference verifier accepts CRLF HTML", () => {
     fs.rmSync(workdir, { recursive: true, force: true });
   }
 });
+
+test("known error-page captures are excluded from generated reference catalogs", () => {
+  const root = path.resolve(__dirname, "..");
+  const source = fs.readFileSync(path.join(root, "tools", "prepare-plugin-reference-shots.cjs"), "utf8");
+  const assetCatalog = JSON.parse(fs.readFileSync(path.join(root, "assets", "plugin-shots", "catalog.json"), "utf8"));
+  const blockedSlugs = [
+    "izotope-stutter-edit-2",
+    "izotope-rx",
+    "izotope-ozone",
+    "izotope-trash",
+    "izotope-vocalsynth",
+    "ableton-vocoder"
+  ];
+
+  for (const slug of blockedSlugs) {
+    assert.doesNotMatch(source, new RegExp(`\\["${slug}"`));
+    assert.ok(!assetCatalog.entries.some((entry) => entry.slug === slug), `${slug} remains in catalog.json`);
+  }
+});

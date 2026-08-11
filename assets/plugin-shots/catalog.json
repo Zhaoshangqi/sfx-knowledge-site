@@ -377,69 +377,6 @@
       "match": "官方参考截图，已按插件名与厂商页面核对"
     },
     {
-      "slug": "izotope-stutter-edit-2",
-      "title": "iZotope Stutter Edit 2",
-      "source": "https://www.izotope.com/en/shop/stutter-edit-2-stutter-edit-2",
-      "aliases": [
-        "iZotope Stutter Edit 2",
-        "Stutter Edit 2"
-      ],
-      "preview": "assets/plugin-shots/preview/izotope-stutter-edit-2.webp",
-      "full": "assets/plugin-shots/full/izotope-stutter-edit-2.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
-      "slug": "izotope-rx",
-      "title": "iZotope RX",
-      "source": "https://www.izotope.com/en/products/rx.html",
-      "aliases": [
-        "iZotope RX De-click",
-        "RX De-click",
-        "De-click",
-        "de-crackle"
-      ],
-      "preview": "assets/plugin-shots/preview/izotope-rx.webp",
-      "full": "assets/plugin-shots/full/izotope-rx.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
-      "slug": "izotope-ozone",
-      "title": "iZotope Ozone",
-      "source": "https://www.izotope.com/en/products/ozone.html",
-      "aliases": [
-        "iZotope Ozone",
-        "Ozone EQ",
-        "Ozone Maximizer"
-      ],
-      "preview": "assets/plugin-shots/preview/izotope-ozone.webp",
-      "full": "assets/plugin-shots/full/izotope-ozone.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
-      "slug": "izotope-trash",
-      "title": "iZotope Trash",
-      "source": "https://www.izotope.com/en/products/trash.html",
-      "aliases": [
-        "iZotope Trash 2",
-        "Trash"
-      ],
-      "preview": "assets/plugin-shots/preview/izotope-trash.webp",
-      "full": "assets/plugin-shots/full/izotope-trash.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
-      "slug": "izotope-vocalsynth",
-      "title": "iZotope VocalSynth",
-      "source": "https://www.izotope.com/en/products/vocalsynth.html",
-      "aliases": [
-        "iZotope Vocoder",
-        "VocalSynth"
-      ],
-      "preview": "assets/plugin-shots/preview/izotope-vocalsynth.webp",
-      "full": "assets/plugin-shots/full/izotope-vocalsynth.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
       "slug": "eventide-blackhole",
       "title": "Eventide Blackhole",
       "source": "https://www.eventideaudio.com/plug-ins/blackhole/",
@@ -834,17 +771,6 @@
       ],
       "preview": "assets/plugin-shots/preview/vital.webp",
       "full": "assets/plugin-shots/full/vital.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
-      "slug": "ableton-vocoder",
-      "title": "Ableton Vocoder",
-      "source": "https://www.ableton.com/en/live-manual/live-audio-effect-reference/#vocoder",
-      "aliases": [
-        "Ableton Vocoder"
-      ],
-      "preview": "assets/plugin-shots/preview/ableton-vocoder.webp",
-      "full": "assets/plugin-shots/full/ableton-vocoder.webp",
       "match": "官方参考截图，已按插件名与厂商页面核对"
     },
     {

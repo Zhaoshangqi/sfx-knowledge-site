@@ -216,62 +216,42 @@ Records: 82
 1. **音源录制**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：音源录制
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_f6bcb10b5692c436`
 2. **音频导入与轨道编排**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：音频导入与轨道编排
    - 链路参考：EQ（均衡器）
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_1f156f5f52ba0567`
 3. **瞬态塑形处理**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：瞬态塑形处理
    - 链路参考：StereoLab
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_927bfa16238340ca`
 4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立攻击速度
    - 链路参考：Enforcer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_110242f3c63517a5`
 5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：塑造主体重量
    - 链路参考：Spire合成器
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_d142487e13c6f293`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入纹理破裂
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_f1a765eab8a69872`
 7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：制造运动和预备感
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_531dc4e47a5e630b`
 8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：控制空间与尾音
    - 链路参考：EQ（均衡器）
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_0122130ddcc6181e`
 9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：频段让位和动态整理
    - 链路参考：StereoLab
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `img_0f78446845c81dd4`
 10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Transient Shaper -> EQ（均衡器） -> StereoLab -> Enforcer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：渲染变体并挑选
    - 链路参考：Enforcer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 
 ### Plugin and Processing Notes
 - **Transient Shaper**: 调整音频的瞬态特性，强化或削弱攻击部分和衰减部分
@@ -279,8 +259,6 @@ Records: 82
   - Speed（速度）参数
   - Sustain（延音）参数
   - Clip控制
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
 - **EQ（均衡器）**: 对音频频率进行精细调整，塑造音效的音色特征和亮度
   - 频率范围调整
@@ -300,8 +278,6 @@ Records: 82
   - Depth调整
   - Mix混合
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
 
 ### Materials / Layer Sources
@@ -324,7 +300,7 @@ Records: 82
 - StereoLab 参数逻辑：立体声宽度参数；频率均衡。
 - Enforcer 参数逻辑：频率参数；增益控制。
 - Spire合成器 参数逻辑：Pump参数；Speed控制。
-- Pro-Q 3 / EQ 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Pro-Q 3 / EQ 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -614,11 +590,11 @@ Records: 82
 - Creator: Destiny
 - Added / updated: 2026-05-09 / 2026-05-09
 - Category: scifi, magic
-- Summary: 视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、iZotope Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。
+- Summary: 视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、Ableton Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。
 
 ### Core Ideas
 - Vocoder双实例并联处理：关联截图确认两路均为 40 Bands、Level 7.9 dB，均使用 Enhance 与 Fast，且 Depth/Formant 不同；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。
-- OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围
+- OTT页面记录了当前工程的三频段分界、增益、攻击与释放数值；这些读数只属于该截图和素材，不能解释为游戏音效的通用安全范围。
 - SampHold采样保持滤波器产生步进式频率调制和'颗粒感'音色，是创建异质感电子游戏音效的关键Serum滤波器预设
 - 效果链顺序实验：先压缩后失真产生温暖感，先失真后压缩产生激进感——两种顺序截然不同
 - 磁带饱和(Tape Sat.)在330Hz处增加谐波内容，配合OTT压缩能模拟模拟硬件温暖感
@@ -660,7 +636,7 @@ Records: 82
    - 检测: Fast
    - Formant: -15.8 / -8.40（界面未标单位）
    - Evidence image key: `img_826066613016e075`
-6. **应用OTT多频段动态处理**: 使用OTT动态均衡器将音频分为三频段独立处理：高频(2.50kHz)增益+5.4~+14.6dB、中频+2.7~+11.9dB、低频(88.3Hz)增益+8.8~+14.5dB，输出8.4~10.3dB，攻击13.5ms，释放282ms，Soft Knee。
+6. **应用OTT多频段动态处理**: 关联截图记录OTT三频段界面：高频2.50kHz、中频、低频88.3Hz，以及各段增益、输出、攻击13.5ms、释放282ms和Soft Knee；这些读数只属于当前工程与素材。
    - High: 2.50kHz, +5.4~+14.6dB
    - Mid: +2.7~+11.9dB
    - Low: 88.3Hz, +8.8~+14.5dB
@@ -668,7 +644,7 @@ Records: 82
    - 攻击: 13.5ms
    - 释放: 282ms
    - Evidence image key: `img_451d68a1ab00021b`
-7. **集成iZotope磁带饱和失真**: 在Trash 2或Ozone的Distortion模块中应用Tape Sat.预设，设置频率330Hz、Q值2.0~3.0，在中低频点增加谐波内容和温暖感而不掩盖高频细节。
+7. **集成iZotope磁带饱和失真**: 关联截图记录Trash 2或Ozone Distortion中的Tape Sat.、330Hz与Q值2.0~3.0；关于谐波、温暖感和高频保留的听感解释需回原视频复核。
    - 预设: Tape Sat.
    - 频率: 330Hz
    - Q值: 2.0~3.0
@@ -685,13 +661,13 @@ Records: 82
    - Gain: 整体增益
    - Limit: 启用防止峰值
    - Evidence image key: `img_e1400338622ee078`
-10. **集成RX De-click修复音频**: 使用iZotope RX De-click处理音频中的点击和杂音，设置低延迟算法、灵敏度8.6、频率偏移6.9、点击拓宽5.0ms，自动扫描并修复检测到的点击(已修复66次)，前期清理允许更激进的后期处理。
+10. **集成RX De-click修复音频**: 关联截图记录iZotope RX De-click的低延迟算法、灵敏度8.6、频率偏移6.9、点击拓宽5.0ms与已修复66次；这些设置只属于当前素材。
    - 算法: 低延迟
    - 灵敏度: 8.6
    - 频率偏移: 6.9
    - 点击拓宽: 5.0ms
    - Evidence image key: `img_c7498f04509eff33`
-11. **应用延迟效果器创建空间感**: 配置延迟效果器参数：BPM 35.52、频率1310Hz、Q值4.8，延迟时间28毫秒，与SampHold级联创建节奏化的步进空间效果。
+11. **应用延迟效果器创建空间感**: 关联截图记录延迟效果器的BPM 35.52、频率1310Hz、Q值4.8与延迟28ms；与SampHold级联的具体听感和选择理由需回原视频复核。
    - BPM: 35.52
    - 频率: 1310Hz
    - Q值: 4.8
@@ -700,8 +676,8 @@ Records: 82
 12. **混合Serum合成和录音素材**: 在混音过程中结合Serum生成的合成音和现场录制的真实音源，通过效果链和EQ调整实现有机混合，最终输出Composite2混音轨。
    - 源: Serum合成+现场录音
    - Evidence image key: `img_1ffab4b28357898b`
-13. **实现音色变化的六大技巧**: 应用六种方法在同一基础音源上衍生多种变体：①颤音自动化(0.5-2Hz不改变音高，>5Hz产生明显调制)、②改变效果参数、③改变效果链顺序、④卷积混响处理。
-   - 颤音: 0.5~2Hz范围无音高变化
+13. **实现音色变化的六大技巧**: 既有整理记录同一基础音源的六类变体方法：①颤音自动化、②改变效果参数、③改变效果链顺序、④卷积混响、⑤辅助返回重过、⑥时间错位；具体频率与听感边界需回原视频复核。
+   - 既有整理待复核: 0.5-2 Hz / >5 Hz
    - Evidence image key: `img_2f17b7e747bdaa13`
 14. **进阶音色变化方法**: 扩展应用两种进阶技巧：⑤通过辅助返回通道重新过机架处理、⑥应用时间错位(Time Offset)处理增加复杂性和深度感，实现更丰富的音色变体。
    - Evidence image key: `img_c1fa87b9cd031680`
@@ -711,7 +687,7 @@ Records: 82
   - OSC A: Monster 6
   - OSC B: Trilobyte 2
   - SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX
-- **iZotope Vocoder**: 双实例并联调制音色。关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance/Fast，Depth 与 Formant 不同；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。
+- **Ableton Vocoder**: 双实例并联调制音色。关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance/Fast，Depth 与 Formant 不同；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。
   - 关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier mode Enhance、Fast；Depth 与 Formant 不同。
   - 既有整理待复核：8 / 40 Bands 与 7.9 dB / 14 dB；需回原视频复核。
   - Bandwidth: 18kHz；Attack: 1ms；Release: 10ms；Formant: -15.8 / -8.40（界面未标单位）。
@@ -746,7 +722,7 @@ Records: 82
   - THRESH/RATIO/ATTACK/RELEASE/GAIN/MIX
 
 ### Structured Effect Uses
-- **iZotope Vocoder** (iZotope): 用双实例并联建立复合谐波层；较少频段通常更粗糙，较多频段通常更平滑，但本条关联截图只确认两路均为 40 Bands，具体 8 / 40 变体需回原视频复核。
+- **Ableton Vocoder** (Ableton): 用双实例并联建立复合谐波层；较少频段通常更粗糙，较多频段通常更平滑，但本条关联截图只确认两路均为 40 Bands，具体 8 / 40 变体需回原视频复核。
   - Effect use ID: `d8ed0db4:izotope-vocoder:1`
   - Category: 音高与频率
   - Target: Serum 合成音色的双路调制层
@@ -767,18 +743,16 @@ Records: 82
 
 ### Effect-Chain Reasoning
 - 效果链阅读顺序：分析源音材料质量 -> 使用Serum生成基础音色 -> 应用SampHold采样保持滤波器 -> 配置双Vocoder实例并联处理 -> 调整Vocoder核心参数 -> 应用OTT多频段动态处理。
-- 主要处理点：Serum合成器 / iZotope Vocoder / OTT多频段压缩器 / iZotope Trash 2 / Ozone Distortion / Soundtoys Little Radiator 1566A / NI Transient Master。
+- 主要处理点：Serum合成器 / Ableton Vocoder / OTT多频段压缩器 / iZotope Trash 2 / Ozone Distortion / Soundtoys Little Radiator 1566A / NI Transient Master。
 - 源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。
-- 本条核心问题：视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、iZotope Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。
+- 本条核心问题：视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、Ableton Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。
 - Vocoder双实例并联处理：关联截图确认两路 40 Bands、Level 7.9 dB、Enhance/Fast 与不同 Depth/Formant；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。
-- OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围
+- OTT页面记录当前工程的三频段分界与动态数值；只作为当前截图参数记录，不外推为通用响度或安全范围。
 
 ### Parameter Logic
 - 记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance、Fast，Depth 与 Formant 不同；带宽: 18kHz；攻击: 1ms；释放: 10ms；Formant: -15.8 / -8.40（界面未标单位）；既有整理待复核：8 / 40 Bands、7.9 dB / 14 dB，需回原视频复核；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。
-- 动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。
-- 空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。
-- 音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。
-- 第一颗处理点的判断：Serum合成器 负责 生成基础合成音色，Sub+Noise+OSC A/B四层音源，SampHold滤波器产生颗粒感。先验证它是否真的改善了源素材，再继续下一级。
+- 证据边界：除 Ableton Vocoder 条目外，其余 legacy plugins 尚未逐条迁移为 effectUses；页面中的参数只作历史线索，不自动获得“画面确认”标签。
+- 未确认项：OTT 通用安全范围、Delay 5-30ms自然步进、RX 8.6通用阈值和颤音固定听感边界，当前证据均不支持外推。
 
 - Use when: Vocoder; OTT; Multi-band compression; Serum synthesis; Tape saturation; SampHold filter; Transient processing; Game audio design; Convolution; Audio restoration
 
@@ -1327,74 +1301,57 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **普通野外录音当生态底料**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d of exotic bird sound so this first one the original sounds like this so kind of a mix of different types of birds but then I stretched out the rate to .3 and it sounds like [Music] this so you get some really cool sounding birds in the background there and the second one here originally sounded like this but stretche
+1. **普通野外录音当生态底料**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：普通野外录音当生态底料
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-01-be7d7cc220`
-2. **播放率拉慢改变物种尺度**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t I'd just pull a few sounds in of regular Wildlife recordings with birds in the background and do the classic trick of stretching them out so that it has a low rate it lowers the pitch and you get that kind of exotic bird sound so this first one the original sounds like this so kind of a mix of different types of bird
+2. **播放率拉慢改变物种尺度**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：播放率拉慢改变物种尺度
    - 链路参考：EQ
    - 可见/字幕数值：0.4
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-02-6cdc598ed8`
-3. **EQ 先清掉现实录音瑕疵**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：second one here originally sounded like this but stretched out to a rate of 0.4 and then also with just a little bit of EQ on there to cut out some the noise it sounds like this it's a really nice mix of birds in there and I thought s really really cool and very like jungle like so this next one originally sounded like
+3. **EQ 先清掉现实录音瑕疵**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：EQ 先清掉现实录音瑕疵
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-03-5b9bec0639`
 4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：清理现实瑕疵
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-04-b41ee73d1c`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：分层建立景深
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-05-4022c08cff`
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入缓慢运动
    - 链路参考：EQ
    - 可见/字幕数值：0.4
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-06-593d33f023`
-7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d of exotic bird sound so this first one the original sounds like this so kind of a mix of different types of birds but then I stretched out the rate to .3 and it sounds like [Music] this so you get some really cool sounding birds in the background there and the second one here originally sounded like this but stretche
+7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制频谱密度
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-07-22c740db97`
-8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t I'd just pull a few sounds in of regular Wildlife recordings with birds in the background and do the classic trick of stretching them out so that it has a low rate it lowers the pitch and you get that kind of exotic bird sound so this first one the original sounds like this so kind of a mix of different types of bird
+8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做循环和变体
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-08-fed4fab196`
-9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：second one here originally sounded like this but stretched out to a rate of 0.4 and then also with just a little bit of EQ on there to cut out some the noise it sounds like this it's a really nice mix of birds in there and I thought s really really cool and very like jungle like so this next one originally sounded like
+9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间与距离
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-09-6454f3a9af`
 10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Playback rate / item rate -> EQ -> Pro-Q 3 / EQ -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：响度和动态
    - 链路参考：EQ
    - 可见/字幕数值：0.4
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-10-fa5c4863d0`
 
@@ -1402,26 +1359,14 @@ Records: 82
 - **Playback rate / item rate**: 主要身份变化工具，把真实鸟叫拉到陌生生物尺度。
   - Rate about 0.3-0.4
   - Pitch drops naturally with rate
-  - 字幕/画面线索：hello so for day 23 of noise vember over on air Wiggles The Prompt his wildlife and I actually went for something super dup simple for this one and I realized I didn't really have any sounds in my library for kind of exotic birds so I thought I'd just pull a f
-  - 可确认的数值/范围：23
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：t I'd just pull a few sounds in of regular Wildlife recordings with birds in the background and do the classic trick of stretching them out so that it has a low rate it lowers the pitch and you get that kind of exotic bird sound so this first one the original sounds like this so kind of a mix of different types of bird
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **EQ**: 清理雨声、噪声和被拉慢后放大的共振。
   - Subtractive cuts first
   - Keep useful organic texture
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：.4 and then also with just a little bit of EQ on there to cut out some the noise it sounds like this it's a really nice mix of birds in there and I thought s really really cool and very like jungle like so this next one originally sounded like this a lot of ra
-  - 可确认的数值/范围：4
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：second one here originally sounded like this but stretched out to a rate of 0.4 and then also with just a little bit of EQ on there to cut out some the noise it sounds like this it's a really nice mix of birds in there and I thought s really really cool and very like jungle like so this next one originally sounded like
-  - 可确认的数值/范围：0.4
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：hello so for day 23 of noise vember over on air Wiggles The Prompt his wildlife and I actually went for something super dup simple for this one and I realized I didn't really have any sounds in my library for kind of exotic birds so I thought I'd just pull a f
-  - 可确认的数值/范围：23
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：gs with birds in the background and do the classic trick of stretching them out so that it has a low rate it lowers the pitch and you get that kind of exotic bird sound so this first one the original sounds like this so kind of a mix of different types of birds but then I stretched out the rate to .3 and it sounds like
-  - 可确认的数值/范围：3
 
 ### Materials / Layer Sources
 - wildlife ambience recordings
@@ -1439,11 +1384,8 @@ Records: 82
 - 4. Little AlterBoy / pitch-formant：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：23；3；0.4；0.3。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Playback rate / item rate 参数逻辑：Rate about 0.3-0.4；Pitch drops naturally with rate。
 - EQ 参数逻辑：Subtractive cuts first；Keep useful organic texture。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：.4 and then also with just a little bit of EQ on there to cut out some the noise it sounds like this it's a really nice mix of birds in there and I thought s really really cool and very like jungle like so this next one originally sounded like this a lot of ra；可确认的数值/范围：4。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：hello so for day 23 of noise vember over on air Wiggles The Prompt his wildlife and I actually went for something super dup simple for this one and I realized I didn't really have any sounds in my library for kind of exotic birds so I thought I'd just pull a f；可确认的数值/范围：23。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 动态判断：如果限制器超过轻微抓峰，回到单层调整 transient 或 gain staging，不要靠总线硬压。
@@ -1465,74 +1407,54 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **从 whoosh 预设建立运动骨架**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o have a play around with Wave warer 2 today so I thought I'd make some kind of smooth sounding whooshes so I basically started by going through just a few of the presets seeing what kind of stuff there is in the whooshes folder I found four that I thought I'd kind of go as a base off of and I then basically went throu
+1. **从 whoosh 预设建立运动骨架**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：从 whoosh 预设建立运动骨架
    - 链路参考：Wave Warper 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-01-a5fe0cb335`
-2. **替换模块音频而不是只调预设**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：e just by playing around with the pad here but basically the main things that I play around with are the volume and the rate knobs and have them change depending on like the radius or the X and the y axis and this second one here sounds like this [Music] a bit more of a Spacey aleny Vibe and I'm pretty sure for this on
+2. **替换模块音频而不是只调预设**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：替换模块音频而不是只调预设
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-02-62a309825c`
 3. **XY/radius 做丝滑体积和速度变化**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：XY/radius 做丝滑体积和速度变化
    - 链路参考：Wave Warper 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-03-c242aa8fdc`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：depending on like the radius or the X and the y axis and this second one here sounds like this [Music] a bit more of a Spacey aleny Vibe and I'm pretty sure for this one I chose all the samples from the library that comes with it so it's all quite like Sci-Fi [Music] Sounds and for the third one here sounds like this k
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-04-9a28afce9e`
 5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：增加随机运动
    - 链路参考：Wave Warper 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-05-86a4740006`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ules some just from my library but also some that are built into wave warper that's a big library of stuff that you can pick from so this first one is quite a like fiery smooth whoosh which I thought sounded nice so you can get a lot of source out of these just by playing around with the pad here but basically the main
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-06-d1e1ec8a9f`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o have a play around with Wave warer 2 today so I thought I'd make some kind of smooth sounding whooshes so I basically started by going through just a few of the presets seeing what kind of stuff there is in the whooshes folder I found four that I thought I'd kind of go as a base off of and I then basically went throu
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Wave Warper 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-07-c367572b5f`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：e just by playing around with the pad here but basically the main things that I play around with are the volume and the rate knobs and have them change depending on like the radius or the X and the y axis and this second one here sounds like this [Music] a bit more of a Spacey aleny Vibe and I'm pretty sure for this on
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-08-fd6342f75c`
 9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：整理频段和动态
    - 链路参考：Wave Warper 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-09-c755a51a58`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：depending on like the radius or the X and the y axis and this second one here sounds like this [Music] a bit more of a Spacey aleny Vibe and I'm pretty sure for this one I chose all the samples from the library that comes with it so it's all quite like Sci-Fi [Music] Sounds and for the third one here sounds like this k
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Wave Warper 2 -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-10-dc6f5393b7`
 
@@ -1543,11 +1465,7 @@ Records: 82
   - XY/radius controls volume/rate/motion
   - 补充调参检查：确认该插件是在清理、塑形、制造运动、增加空间、控制动态还是统一响度。
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hello so for day 22 of November the prompt is silky and I wanted to have a play around with Wave warer 2 today so I thought I'd make some kind of smooth sounding whooshes so I basically started by going through just a few of the presets seeing what kind of stu
-  - 可确认的数值/范围：22；2
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：depending on like the radius or the X and the y axis and this second one here sounds like this [Music] a bit more of a Spacey aleny Vibe and I'm pretty sure for this one I chose all the samples from the library that comes with it so it's all quite like Sci-Fi [Music] Sounds and for the third one here sounds like this k
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - whoosh preset sources
@@ -1565,9 +1483,7 @@ Records: 82
 - 复用检查：把本条链路抽象成源素材选择、第一层处理、二次采样、最终混音四个阶段。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：22；2。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Wave Warper 2 参数逻辑：Whoosh preset；Replace module sources。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：hello so for day 22 of November the prompt is silky and I wanted to have a play around with Wave warer 2 today so I thought I'd make some kind of smooth sounding whooshes so I basically started by going through just a few of the presets seeing what kind of stu；可确认的数值/范围：22；2。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 频段判断：低频负责重量，中频负责识别，高频负责材质；每次 EQ 前先确认要保留哪一层。
@@ -1591,65 +1507,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **气泡录音提供液体起点**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：n manipulator I need to breaked it a little bit with the [Music] harmonics added in some nice lowend details in there I then added in crystallizer this Crystal Builder preset here which I thought sounded really nice but I actually really liked the Left Channel of that so I grabbed output from the global sampler up here
+1. **气泡录音提供液体起点**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：气泡录音提供液体起点
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-01-d96087e3f9`
 2. **Manipulator 强化谐波和低端**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Manipulator 强化谐波和低端
    - 链路参考：Crystallizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-02-5b8b667ed6`
 3. **Crystallizer 加结晶尾巴**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Crystallizer 加结晶尾巴
    - 链路参考：Transmutator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-03-9ff6865784`
-4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：at so first put on manipulator I need to breaked it a little bit with the [Music] harmonics added in some nice lowend details in there I then added in crystallizer this Crystal Builder preset here which I thought sounded really nice but I actually really liked the Left Channel of that so I grabbed output from the globa
+4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：清理现实瑕疵
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-04-2438d6e165`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：分层建立景深
    - 链路参考：Crystallizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-05-cf79ea44b6`
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入缓慢运动
    - 链路参考：Transmutator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-06-8e0fb75b6d`
-7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：n manipulator I need to breaked it a little bit with the [Music] harmonics added in some nice lowend details in there I then added in crystallizer this Crystal Builder preset here which I thought sounded really nice but I actually really liked the Left Channel of that so I grabbed output from the global sampler up here
+7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制频谱密度
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-07-e69e133f19`
 8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做循环和变体
    - 链路参考：Crystallizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-08-4cae9086c2`
 9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：空间与距离
    - 链路参考：Transmutator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-09-2758dc8432`
-10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：at so first put on manipulator I need to breaked it a little bit with the [Music] harmonics added in some nice lowend details in there I then added in crystallizer this Crystal Builder preset here which I thought sounded really nice but I actually really liked the Left Channel of that so I grabbed output from the globa
+10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Manipulator -> Crystallizer -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：响度和动态
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ZjRnoIezCnA-10-01c2cbf735`
 
 ### Plugin and Processing Notes
@@ -1680,7 +1576,6 @@ Records: 82
 - 复用检查：把本条链路抽象成源素材选择、第一层处理、二次采样、最终混音四个阶段。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：21。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Manipulator 参数逻辑：Enhance harmonics；Add low-end detail。
 - Crystallizer 参数逻辑：Crystal Builder style preset；Use as magical tail。
 - Transmutator 参数逻辑：Use inverse/opposite output；Record both directions。
@@ -1706,65 +1601,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **狗低吼提供真实喉咙纹理**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：de it a bit more deep sounding and kind of bought out the growley texture a little bit which I thought sounded cool and then basically all did after that was Pitch it down so it kind of sounds like a bit more of a big growley monster rather than a smaller dog [Applause] so yeah that's what I got for day 18
+1. **狗低吼提供真实喉咙纹理**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：狗低吼提供真实喉咙纹理
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-01-b52a857305`
-2. **Manipulator 调整谐波和粗糙度**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d of bought out the growley texture a little bit which I thought sounded cool and then basically all did after that was Pitch it down so it kind of sounds like a bit more of a big growley monster rather than a smaller dog [Applause] so yeah that's what I got for day 18
+2. **Manipulator 调整谐波和粗糙度**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Manipulator 调整谐波和粗糙度
    - 链路参考：Pitch shifting / item pitch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-02-792f8a1aef`
 3. **再 pitch down 放大体型**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：再 pitch down 放大体型
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-03-ff1866bd41`
 4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：音高和共振峰塑形
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-04-90c506b84d`
 5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立发声包络
    - 链路参考：Pitch shifting / item pitch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-05-f42e7e32d2`
 6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：叠加材质细节
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-06-52a5f5ebb3`
-7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：de it a bit more deep sounding and kind of bought out the growley texture a little bit which I thought sounded cool and then basically all did after that was Pitch it down so it kind of sounds like a bit more of a big growley monster rather than a smaller dog [Applause] so yeah that's what I got for day 18
+7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间和身体感
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-07-1075bbfb09`
-8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d of bought out the growley texture a little bit which I thought sounded cool and then basically all did after that was Pitch it down so it kind of sounds like a bit more of a big growley monster rather than a smaller dog [Applause] so yeah that's what I got for day 18
+8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：动态和清晰度
    - 链路参考：Pitch shifting / item pitch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-08-3946ebd5a7`
 9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做变体和表情库
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-09-ec91ed8f4b`
 10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Manipulator -> Pitch shifting / item pitch -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线微调
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-ruFsZPu3qO0-10-671baf36e3`
 
 ### Plugin and Processing Notes
@@ -1775,10 +1650,7 @@ Records: 82
 - **Pitch shifting / item pitch**: 放大体型和胸腔比例。
   - Pitch down after texture shaping
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：hello so for day 18 of noise F The Prompt is hairy and for this one I actually went for something super basic so pulled in just some dog [Applause] sounds yeah just some kind of growls breathing and run that through just a couple of plugins to basically make s
-  - 可确认的数值/范围：18
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：d of bought out the growley texture a little bit which I thought sounded cool and then basically all did after that was Pitch it down so it kind of sounds like a bit more of a big growley monster rather than a smaller dog [Applause] so yeah that's what I got for day 18
 
 ### Materials / Layer Sources
 - dog growls
@@ -1795,10 +1667,8 @@ Records: 82
 - 复用检查：把本条链路抽象成源素材选择、第一层处理、二次采样、最终混音四个阶段。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：18。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Manipulator 参数逻辑：Lower/reshape harmonic content；Emphasize throat texture。
 - Pitch shifting / item pitch 参数逻辑：Pitch down after texture shaping。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：hello so for day 18 of noise F The Prompt is hairy and for this one I actually went for something super basic so pulled in just some dog [Applause] sounds yeah just some kind of growls breathing and run that through just a couple of plugins to basically make s；可确认的数值/范围：18。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 运动判断：LFO/random/envelope follower 的深度不应固定照抄，要按画面速度和素材长度微调。
@@ -1821,65 +1691,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **用 drone 或普通音频喂插件**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to have a play with this plugin called stutter edit 2 by isotope that I've not really played around with too much so I started off just by bringing in some audio [Music] files so just some drones to run through and then I basically just went through a few of the banks that they have and played around and recorded the o
+1. **用 drone 或普通音频喂插件**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：用 drone 或普通音频喂插件
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-01-a8dc2789e6`
 2. **Stutter Edit 2 现场触发预设**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Stutter Edit 2 现场触发预设
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-02-da7fd53e6d`
 3. **录下输出作为 glitch 素材**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：录下输出作为 glitch 素材
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-03-2fe9e15258`
 4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立瞬态和触感
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-04-0ebbb44095`
 5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做机械/材质主体
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-05-1209af95b5`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入电子运动
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-06-695bbdcdfc`
-7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to have a play with this plugin called stutter edit 2 by isotope that I've not really played around with too much so I started off just by bringing in some audio [Music] files so just some drones to run through and then I basically just went through a few of the banks that they have and played around and recorded the o
+7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：处理空间和距离
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-07-cd4ef2f8dd`
 8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：频段分配
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-08-ad07c1afa5`
 9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：渲染随机变体
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-09-f6a2aa4696`
 10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 iZotope Stutter Edit 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线和峰值控制
    - 链路参考：iZotope Stutter Edit 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-vU0EZlUoW7g-10-856e8bb9ab`
 
 ### Plugin and Processing Notes
@@ -1905,7 +1755,6 @@ Records: 82
 - 复用检查：把本条链路抽象成源素材选择、第一层处理、二次采样、最终混音四个阶段。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：17；2。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - iZotope Stutter Edit 2 参数逻辑：Preset banks；Live triggering。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
@@ -1931,83 +1780,63 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **空气感呼吸做上层**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ello so for day 16 of noise fber The Prompt is terrifying and I decided to go and make a face plant patch for this so I started out with finding some kind of Airy breaths so the original file is this one here and I pulled that in the granular module added a little bit of EQ on there and just with that it sounds like [M
+1. **空气感呼吸做上层**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空气感呼吸做上层
    - 链路参考：Kilohearts Phase Plant / Faceplant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-01-d93718f111`
-2. **低层 growl 下移并扩宽**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bit of EQ on there and just with that it sounds like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite creepy I then wanted to add on a bit of a like kind of lower growl uh so I found this file here and did the same thin
+2. **低层 growl 下移并扩宽**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：低层 growl 下移并扩宽
    - 链路参考：Ensemble / Reverser / Reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-02-db8921293e`
-3. **长尾 creature growl 进第三粒子层**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：nd of Airy breaths so the original file is this one here and I pulled that in the granular module added a little bit of EQ on there and just with that it sounds like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite cree
+3. **长尾 creature growl 进第三粒子层**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：长尾 creature growl 进第三粒子层
    - 链路参考：Phase Plant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-03-02123e46d6`
-4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite creepy I then wanted to add on a bit of a like kind of lower growl uh so I found this file here and did the same thing put it into the granular patch here for this
+4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：清理现实瑕疵
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-04-598626f4e1`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：分层建立景深
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-05-8ffc97b719`
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入缓慢运动
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-06-64604c2ad0`
-7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ello so for day 16 of noise fber The Prompt is terrifying and I decided to go and make a face plant patch for this so I started out with finding some kind of Airy breaths so the original file is this one here and I pulled that in the granular module added a little bit of EQ on there and just with that it sounds like [M
+7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制频谱密度
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-07-57f4c937fe`
-8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bit of EQ on there and just with that it sounds like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite creepy I then wanted to add on a bit of a like kind of lower growl uh so I found this file here and did the same thin
+8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做循环和变体
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-08-0ec2881f5c`
-9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：nd of Airy breaths so the original file is this one here and I pulled that in the granular module added a little bit of EQ on there and just with that it sounds like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite cree
+9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间与距离
    - 链路参考：Kilohearts Phase Plant / Faceplant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-09-6d1c82f27b`
-10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite creepy I then wanted to add on a bit of a like kind of lower growl uh so I found this file here and did the same thing put it into the granular patch here for this
+10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Kilohearts Phase Plant / Faceplant -> Ensemble / Reverser / Reverb -> Phase Plant -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：响度和动态
    - 链路参考：Ensemble / Reverser / Reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-10-6c034dbcb6`
@@ -2021,34 +1850,16 @@ Records: 82
   - Use on upper breath layer
   - Create reversed/blurred motion
 - **Phase Plant**: 合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hello so for day 16 of noise fber The Prompt is terrifying and I decided to go and make a face plant patch for this so I started out with finding some kind of Airy breaths so the original file is this one here and I pulled that in the granular module added a l
-  - 可确认的数值/范围：16
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：nd of Airy breaths so the original file is this one here and I pulled that in the granular module added a little bit of EQ on there and just with that it sounds like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite cree
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hello so for day 16 of noise fber The Prompt is terrifying and I decided to go and make a face plant patch for this so I started out with finding some kind of Airy breaths so the original file is this one here and I pulled that in the granular module added a l
-  - 可确认的数值/范围：16
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：s like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite creepy I then wanted to add on a bit of a like kind of lower growl uh so I found this file here and did the same thing put it into the granular patch here for this
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hello so for day 16 of noise fber The Prompt is terrifying and I decided to go and make a face plant patch for this so I started out with finding some kind of Airy breaths so the original file is this one here and I pulled that in the granular module added a l
-  - 可确认的数值/范围：16
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：bit of EQ on there and just with that it sounds like [Music] this I then added on some effects to so put on emble and a reverser on there as well and then Chuck some Reverb on so it already sounds quite creepy I then wanted to add on a bit of a like kind of lower growl uh so I found this file here and did the same thin
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Materials / Layer Sources
@@ -2071,15 +1882,11 @@ Records: 82
 - 8. Little AlterBoy / pitch-formant：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：16。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Kilohearts Phase Plant / Faceplant 参数逻辑：Granular breath；Granular low growl。
 - Ensemble / Reverser / Reverb 参数逻辑：Use on upper breath layer；Create reversed/blurred motion。
-- Phase Plant 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：hello so for day 16 of noise fber The Prompt is terrifying and I decided to go and make a face plant patch for this so I started out with finding some kind of Airy breaths so the original file is this one here and I pulled that in the granular module added a l；可确认的数值/范围：16。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：hello so for day 16 of noise fber The Prompt is terrifying and I decided to go and make a face plant patch for this so I started out with finding some kind of Airy breaths so the original file is this one here and I pulled that in the granular module added a l；可确认的数值/范围：16。
-- Disperser / phase rotation 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Playback rate / item rate 参数逻辑：字幕/画面线索：hello so for day 16 of noise fber The Prompt is terrifying and I decided to go and make a face plant patch for this so I started out with finding some kind of Airy breaths so the original file is this one here and I pulled that in the granular module added a l；可确认的数值/范围：16。
-- Little AlterBoy / pitch-formant 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Phase Plant 参数逻辑：
+- Disperser / phase rotation 参数逻辑：
+- Little AlterBoy / pitch-formant 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: beckys_audio; 6MMXjU4mH3w; phase_plant; faceplant; granular; horror_drone; creature; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -2099,74 +1906,54 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **Love 产生 ping-pong 运动**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lo so for day 15 of no V The Prompt is opposite so for this one I decided to play around with some ping pong delay so I started off using this plugin called love that I've used on a couple of the days before and I only used this delay section here because it has some ping pong effects on there so this is what that soun
+1. **Love 产生 ping-pong 运动**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Love 产生 ping-pong 运动
    - 链路参考：Love
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-01-aa4f8dfdbc`
 2. **Snap Heap bounce/dual delay 扩展回声**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Snap Heap bounce/dual delay 扩展回声
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-02-5bcb60c43c`
 3. **清理点击和 crackle**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：清理点击和 crackle
    - 链路参考：De-click / de-crackle
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-03-7c85e1b38a`
-4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hello so for day 15 of no V The Prompt is opposite so for this one I decided to play around with some ping pong delay so I started off using this plugin called love that I've used on a couple of the days before and I only used this delay section here because it has some ping pong effects on there so this is what that s
+4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：清理现实瑕疵
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-04-7cd08b45db`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：分层建立景深
    - 链路参考：Love
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-05-5d894bfee1`
-6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d some stereo effects on there and then I basically layed that up into snap peep with a delay while also turning on the bounce switch and then I led top of that a jewel delay pulled the tone knob down on both of these so it's a bit more of like the low end I thought it sounded quite a cool kind of sci-fi stereo drone I
+6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：加入缓慢运动
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-06-45a8b20ddd`
-7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lo so for day 15 of no V The Prompt is opposite so for this one I decided to play around with some ping pong delay so I started off using this plugin called love that I've used on a couple of the days before and I only used this delay section here because it has some ping pong effects on there so this is what that soun
+7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制频谱密度
    - 链路参考：De-click / de-crackle
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-07-040cf27ad7`
 8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做循环和变体
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-08-3189c43fba`
 9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：空间与距离
    - 链路参考：Love
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-09-635e3925a8`
-10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hello so for day 15 of no V The Prompt is opposite so for this one I decided to play around with some ping pong delay so I started off using this plugin called love that I've used on a couple of the days before and I only used this delay section here because it has some ping pong effects on there so this is what that s
+10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Love -> Snap Heap -> De-click / de-crackle -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：响度和动态
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-10-bc346666f5`
 
@@ -2178,18 +1965,12 @@ Records: 82
   - Bounce switch
   - Dual delay
   - Tone down
-  - 字幕/画面线索：hello so for day 15 of no V The Prompt is opposite so for this one I decided to play around with some ping pong delay so I started off using this plugin called love that I've used on a couple of the days before and I only used this delay section here because i
-  - 可确认的数值/范围：15
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：unds like without and with so it's already created some stereo effects on there and then I basically layed that up into snap peep with a delay while also turning on the bounce switch and then I led top of that a jewel delay pulled the tone knob down on both of these so it's a bit more of like the low end I thought it s
 - **De-click / de-crackle**: 清理实验处理后的伪影。
   - Remove clicks
   - Reduce crackle
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：hello so for day 15 of no V The Prompt is opposite so for this one I decided to play around with some ping pong delay so I started off using this plugin called love that I've used on a couple of the days before and I only used this delay section here because i
-  - 可确认的数值/范围：15
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：hello so for day 15 of no V The Prompt is opposite so for this one I decided to play around with some ping pong delay so I started off using this plugin called love that I've used on a couple of the days before and I only used this delay section here because it has some ping pong effects on there so this is what that s
 
 ### Materials / Layer Sources
 - generic source textures
@@ -2206,11 +1987,9 @@ Records: 82
 - 4. EchoBoy / short delay：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：15。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Love 参数逻辑：Ping-pong delay；Use for stereo motion。
 - Snap Heap 参数逻辑：Bounce switch；Dual delay。
 - De-click / de-crackle 参数逻辑：Remove clicks；Reduce crackle。
-- EchoBoy / short delay 参数逻辑：字幕/画面线索：hello so for day 15 of no V The Prompt is opposite so for this one I decided to play around with some ping pong delay so I started off using this plugin called love that I've used on a couple of the days before and I only used this delay section here because i；可确认的数值/范围：15。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 动态判断：如果限制器超过轻微抓峰，回到单层调整 transient 或 gain staging，不要靠总线硬压。
@@ -2232,83 +2011,63 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **复用 shimmer patch 作为基础乐器**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：it far down and this one is going straight to Lane three so it Dodges the filter and the filters on this Lane here and then this last group I hadn't changed very much from the patch that I made the other day apart from changing the sound so it now sounds like this and I had put a transient shaper on there to try and sm
+1. **复用 shimmer patch 作为基础乐器**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复用 shimmer patch 作为基础乐器
    - 链路参考：Faceplant granular shimmer patch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-01-b8550f4d70`
-2. **酒杯尾音跳过 transient**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：p here really similar to this I changed the grain envelope a little bit and made length a little bit shorter and I also pitched it far down and this one is going straight to Lane three so it Dodges the filter and the filters on this Lane here and then this last group I hadn't changed very much from the patch that I mad
+2. **酒杯尾音跳过 transient**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：酒杯尾音跳过 transient
    - 链路参考：Transient shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-02-59d5d3f52f`
-3. **Lane 3 直通绕开部分处理**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：st one and extended the grain envelope a little bit so that on its own with all the effects sounds like this so I put a filter on this it's just softening it little bit and that's actually going straight to Lane three so it's dodging these effects in lane two here so the second group here is originally a wine glass imp
+3. **Lane 3 直通绕开部分处理**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Lane 3 直通绕开部分处理
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-03-0eb1b14d99`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s one as like a base to go off of because it already uses this granular synthesis which works really well also has some Reverb some Ensemble so it creates that drone like sound anyway I ended up dragging a few different sounds in but I'll play the whole sound for you here so this first sound that I dragged in is sound
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-04-796c584295`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：raight to Lane three so it's dodging these effects in lane two here so the second group here is originally a wine glass impact and I just took the tail of this skipped out the transient and dragged that in to this group here really similar to this I changed the grain envelope a little bit and made length a little bit s
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-05-836cea4c17`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Faceplant granular shimmer patch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-06-fd4c447bea`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：it far down and this one is going straight to Lane three so it Dodges the filter and the filters on this Lane here and then this last group I hadn't changed very much from the patch that I made the other day apart from changing the sound so it now sounds like this and I had put a transient shaper on there to try and sm
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Transient shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-07-dec48ecee9`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：p here really similar to this I changed the grain envelope a little bit and made length a little bit shorter and I also pitched it far down and this one is going straight to Lane three so it Dodges the filter and the filters on this Lane here and then this last group I hadn't changed very much from the patch that I mad
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-08-238bfa135d`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：st one and extended the grain envelope a little bit so that on its own with all the effects sounds like this so I put a filter on this it's just softening it little bit and that's actually going straight to Lane three so it's dodging these effects in lane two here so the second group here is originally a wine glass imp
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-09-ad8bc1149c`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s one as like a base to go off of because it already uses this granular synthesis which works really well also has some Reverb some Ensemble so it creates that drone like sound anyway I ended up dragging a few different sounds in but I'll play the whole sound for you here so this first sound that I dragged in is sound
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Faceplant granular shimmer patch -> Transient shaper -> Pro-R / reverb -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-10-f3610fe946`
@@ -2320,23 +2079,11 @@ Records: 82
 - **Transient shaper**: 削弱或平滑突兀攻击，而不是增加 punch。
   - Smooth impact edge
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hello so for day 14 of noise vember The Prompt is in a piece and I decided to make a kind of like ethereal drone for this one so I actually use the Shimmer patch that I made for day 12 on this one as like a base to go off of because it already uses this granul
-  - 可确认的数值/范围：14；12
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：s one as like a base to go off of because it already uses this granular synthesis which works really well also has some Reverb some Ensemble so it creates that drone like sound anyway I ended up dragging a few different sounds in but I'll play the whole sound for you here so this first sound that I dragged in is sound
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：hello so for day 14 of noise vember The Prompt is in a piece and I decided to make a kind of like ethereal drone for this one so I actually use the Shimmer patch that I made for day 12 on this one as like a base to go off of because it already uses this granul
-  - 可确认的数值/范围：14；12
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：p here really similar to this I changed the grain envelope a little bit and made length a little bit shorter and I also pitched it far down and this one is going straight to Lane three so it Dodges the filter and the filters on this Lane here and then this last group I hadn't changed very much from the patch that I mad
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：hello so for day 14 of noise vember The Prompt is in a piece and I decided to make a kind of like ethereal drone for this one so I actually use the Shimmer patch that I made for day 12 on this one as like a base to go off of because it already uses this granul
-  - 可确认的数值/范围：14；12
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：much from the patch that I made the other day apart from changing the sound so it now sounds like this and I had put a transient shaper on there to try and smooth out some of the impact sounds I don't really think it's having too much of an effect but I left it on there anyway and yeah that's them being sent to Lane th
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - wine glass impact tail
@@ -2354,12 +2101,8 @@ Records: 82
 - 5. Transient Shaper：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：14；12。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Faceplant granular shimmer patch 参数逻辑：Replace source audio；Use grain envelope。
 - Transient shaper 参数逻辑：Smooth impact edge。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：hello so for day 14 of noise vember The Prompt is in a piece and I decided to make a kind of like ethereal drone for this one so I actually use the Shimmer patch that I made for day 12 on this one as like a base to go off of because it already uses this granul；可确认的数值/范围：14；12。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：hello so for day 14 of noise vember The Prompt is in a piece and I decided to make a kind of like ethereal drone for this one so I actually use the Shimmer patch that I made for day 12 on this one as like a base to go off of because it already uses this granul；可确认的数值/范围：14；12。
-- Transient Shaper 参数逻辑：字幕/画面线索：hello so for day 14 of noise vember The Prompt is in a piece and I decided to make a kind of like ethereal drone for this one so I actually use the Shimmer patch that I made for day 12 on this one as like a base to go off of because it already uses this granul；可确认的数值/范围：14；12。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -2380,83 +2123,63 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **同一 rifle source 拆多层**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：these layers apart from the mech sounds are all from this one source sound here but with those of effects added on so I started off with making a lower impact which sounds like this and this has a few effects on the first one is this plugin here and I'll show you the effect that it has so it brings up the tail a bit an
+1. **同一 rifle source 拆多层**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：同一 rifle source 拆多层
    - 链路参考：Beat Slammer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-01-51d7f9b152`
-2. **低冲击用尾巴增强和 slam**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：yer here I then thought I'd quite like a little buildup so ended up duplicating this layer taking the start section and stretching it down I had some Mech sounds trigger before and then one trigger after after the main impact I then added on the master ozone n so just did a little bit of EQ and put a maximizer on there
+2. **低冲击用尾巴增强和 slam**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：低冲击用尾巴增强和 slam
    - 链路参考：Deja Vu / Cymatics Memory / Sub Filter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-02-b79e973177`
-3. **闷击层用 Deja Vu/Memory/Sub Filter**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Vu on here it sounds like this and then adding on seatics memory gave it that kind of muffled sound I then added on sub filter and then the same plugin as on the last layer to beef it up a little bit so both of those layers together sound like this and I then wanted to enhance the tail a little bit more so I found this
+3. **闷击层用 Deja Vu/Memory/Sub Filter**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：闷击层用 Deja Vu/Memory/Sub Filter
    - 链路参考：Cryogen / SoundSpot Glitch / Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-03-eb51679700`
-4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：his has a few effects on the first one is this plugin here and I'll show you the effect that it has so it brings up the tail a bit and I thought it sounding quite good on the low end now this next plugin Reaper crashes every time I try and open it today I'm not sure why but it's called beat Slammer and the effect that
+4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立攻击速度
    - 链路参考：Ozone EQ / Inflator / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-04-23744c5756`
-5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：sounds are all from this one source sound here but with those of effects added on so I started off with making a lower impact which sounds like this and this has a few effects on the first one is this plugin here and I'll show you the effect that it has so it brings up the tail a bit and I thought it sounding quite goo
+5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：塑造主体重量
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-05-d897b33874`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入纹理破裂
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-06-201b61f64f`
-7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：these layers apart from the mech sounds are all from this one source sound here but with those of effects added on so I started off with making a lower impact which sounds like this and this has a few effects on the first one is this plugin here and I'll show you the effect that it has so it brings up the tail a bit an
+7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：制造运动和预备感
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-07-e0e1bb8284`
-8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：yer here I then thought I'd quite like a little buildup so ended up duplicating this layer taking the start section and stretching it down I had some Mech sounds trigger before and then one trigger after after the main impact I then added on the master ozone n so just did a little bit of EQ and put a maximizer on there
+8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制空间与尾音
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-08-b4a37b76c7`
-9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Vu on here it sounds like this and then adding on seatics memory gave it that kind of muffled sound I then added on sub filter and then the same plugin as on the last layer to beef it up a little bit so both of those layers together sound like this and I then wanted to enhance the tail a little bit more so I found this
+9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段让位和动态整理
    - 链路参考：Beat Slammer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-09-a2d372191e`
-10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：his has a few effects on the first one is this plugin here and I'll show you the effect that it has so it brings up the tail a bit and I thought it sounding quite good on the low end now this next plugin Reaper crashes every time I try and open it today I'm not sure why but it's called beat Slammer and the effect that
+10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Beat Slammer -> Deja Vu / Cymatics Memory / Sub Filter -> Cryogen / SoundSpot Glitch / Manipulator -> Ozone EQ / Inflator / limiter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染变体并挑选
    - 链路参考：Deja Vu / Cymatics Memory / Sub Filter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-10-0bc3d53510`
@@ -2474,28 +2197,13 @@ Records: 82
 - **Ozone EQ / Inflator / limiter**: 最终母线亮度、密度和峰值控制。
   - Final impact bus shaping
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hello so for day 13 of November the prompt is ouch and I decided to go for weapon sound for this one so I found this recording of a rifle with quite a few variations and I wanted to see what I could make out of this using some new plugins to basically make it
-  - 可确认的数值/范围：13
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：at it didn't interfere with the other two layers I then also added in a kind of higher transient layer so this just has EQ on and transient shaper so all together those four layers sound like this I then ended up playing around with a few other plugins and got quite a cool sci-fi like texture used cryogen by Glitch mac
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：hello so for day 13 of November the prompt is ouch and I decided to go for weapon sound for this one so I found this recording of a rifle with quite a few variations and I wanted to see what I could make out of this using some new plugins to basically make it
-  - 可确认的数值/范围：13
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：ximizer on there so without them with these ones it sounds like this and then I added on inflator and then I just put a limiter on there so yeah that's the sound I made for today so day 13
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：hello so for day 13 of November the prompt is ouch and I decided to go for weapon sound for this one so I found this recording of a rifle with quite a few variations and I wanted to see what I could make out of this using some new plugins to basically make it
-  - 可确认的数值/范围：13
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：'t interfere with the other two layers I then also added in a kind of higher transient layer so this just has EQ on and transient shaper so all together those four layers sound like this I then ended up playing around with a few other plugins and got quite a cool sci-fi like texture used cryogen by Glitch machines I th
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hello so for day 13 of November the prompt is ouch and I decided to go for weapon sound for this one so I found this recording of a rifle with quite a few variations and I wanted to see what I could make out of this using some new plugins to basically make it
-  - 可确认的数值/范围：13
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：yer here I then thought I'd quite like a little buildup so ended up duplicating this layer taking the start section and stretching it down I had some Mech sounds trigger before and then one trigger after after the main impact I then added on the master ozone n so just did a little bit of EQ and put a maximizer on there
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - rifle recording
@@ -2517,15 +2225,10 @@ Records: 82
 - 8. Playback rate / item rate：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：13。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Beat Slammer 参数逻辑：Bring up tail；Add slam。
 - Deja Vu / Cymatics Memory / Sub Filter 参数逻辑：Muffled impact；Sub support。
 - Cryogen / SoundSpot Glitch / Manipulator 参数逻辑：Glitch flutter；Pitch/formant transformation。
 - Ozone EQ / Inflator / limiter 参数逻辑：Final impact bus shaping。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：hello so for day 13 of November the prompt is ouch and I decided to go for weapon sound for this one so I found this recording of a rifle with quite a few variations and I wanted to see what I could make out of this using some new plugins to basically make it ；可确认的数值/范围：13。
-- Pro-L 2 / limiter 参数逻辑：字幕/画面线索：hello so for day 13 of November the prompt is ouch and I decided to go for weapon sound for this one so I found this recording of a rifle with quite a few variations and I wanted to see what I could make out of this using some new plugins to basically make it ；可确认的数值/范围：13。
-- Transient Shaper 参数逻辑：字幕/画面线索：hello so for day 13 of November the prompt is ouch and I decided to go for weapon sound for this one so I found this recording of a rifle with quite a few variations and I wanted to see what I could make out of this using some new plugins to basically make it ；可确认的数值/范围：13。
-- Playback rate / item rate 参数逻辑：字幕/画面线索：hello so for day 13 of November the prompt is ouch and I decided to go for weapon sound for this one so I found this recording of a rifle with quite a few variations and I wanted to see what I could make out of this using some new plugins to basically make it ；可确认的数值/范围：13。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: beckys_audio; 8-DGPoItgcE; weapon; rifle; ouch; beat_slammer; cryogen; mech; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -2545,65 +2248,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **两个 granular 模块形成 shimmer 主体**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：so it adds a bit more Dynamics to it and so it's not constantly flat so yeah this is what the first one sounds like and then the second one sounds like this so yeah Shimmer effect is already kind of coming through with this one then you put both of those together and it sounds like that which sounds cool but I then plo
+1. **两个 granular 模块形成 shimmer 主体**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：两个 granular 模块形成 shimmer 主体
    - 链路参考：Faceplant granular modules
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-01-84b4b45674`
 2. **Randomizer 控制 grain position**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Randomizer 控制 grain position
    - 链路参考：Randomizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-02-0f3566ccda`
-3. **第二 randomizer 控制动态层级**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：er and it sounds like that which sounds cool but I then plop these through into the effects Lanes so this first one the filter um there's a frequency that I don't quite like so it's just taking that out then added ensemble with quite a [Music] widespread and then added the [Music] reeverb and then a filter on end there
+3. **第二 randomizer 控制动态层级**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：第二 randomizer 控制动态层级
    - 链路参考：Ensemble / Reverb / Filter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-03-8acc2ef8a3`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做 tonal/resonant 层
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-04-d01a67d9b9`
 5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：增加随机运动
    - 链路参考：Faceplant granular modules
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-05-9cb53c8664`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ally replace these audio files so I'm using the granular modules in PH BL and I've got two set up here I basically just picked from the factory sounds went through selecting some that I thought sounded cool let me turn off these effects here and and I'll play each group so we've got two randomizers here so this first o
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Randomizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-06-77a2b11945`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：so it adds a bit more Dynamics to it and so it's not constantly flat so yeah this is what the first one sounds like and then the second one sounds like this so yeah Shimmer effect is already kind of coming through with this one then you put both of those together and it sounds like that which sounds cool but I then plo
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Ensemble / Reverb / Filter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-07-e29b883885`
 8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：设计尾音和空间
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-08-877cda5d52`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：er and it sounds like that which sounds cool but I then plop these through into the effects Lanes so this first one the filter um there's a frequency that I don't quite like so it's just taking that out then added ensemble with quite a [Music] widespread and then added the [Music] reeverb and then a filter on end there
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Faceplant granular modules
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-09-d6037f764d`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Faceplant granular modules -> Randomizer -> Ensemble / Reverb / Filter -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：组合成完整施法句子
    - 链路参考：Randomizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-TNnLxeWVjM0-10-dffc164a38`
 
 ### Plugin and Processing Notes
@@ -2619,8 +2302,6 @@ Records: 82
   - Wide Ensemble
   - High-focused final filter
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 
 ### Materials / Layer Sources
@@ -2638,11 +2319,10 @@ Records: 82
 - 4. Pro-R / reverb：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：12。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Faceplant granular modules 参数逻辑：Two granular modules；Replace source for new timbre。
 - Randomizer 参数逻辑：Randomizer 1: grain position；Randomizer 2: second grain level。
 - Ensemble / Reverb / Filter 参数逻辑：Filter bad frequency；Wide Ensemble。
-- Pro-R / reverb 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Pro-R / reverb 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 动态判断：如果限制器超过轻微抓峰，回到单层调整 transient 或 gain staging，不要靠总线硬压。
@@ -2664,65 +2344,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **noise 当声带原料**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t the link to that short in the description so you can watch it if you want but basically yeah it consists of noise and then this filter here and some effects so I have this randomizer here that's moving quite quickly kind to make it sound like something's talking or quickly making sound and as you can see that's doing
+1. **noise 当声带原料**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：noise 当声带原料
    - 链路参考：Faceplant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-01-381f723bff`
 2. **fast randomizer 做碎语动态**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：fast randomizer 做碎语动态
    - 链路参考：Randomizer / LFO
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-02-da393e73f3`
-3. **resonator/formant 赋予口腔感**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to that short in the description so you can watch it if you want but basically yeah it consists of noise and then this filter here and some effects so I have this randomizer here that's moving quite quickly kind to make it sound like something's talking or quickly making sound and as you can see that's doing a lot of s
+3. **resonator/formant 赋予口腔感**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：resonator/formant 赋予口腔感
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-03-aa456f578b`
 4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立瞬态和触感
    - 链路参考：Faceplant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-04-6ffd61314e`
 5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做机械/材质主体
    - 链路参考：Randomizer / LFO
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-05-b71e049fa1`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入电子运动
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-06-fcf22ada87`
-7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t the link to that short in the description so you can watch it if you want but basically yeah it consists of noise and then this filter here and some effects so I have this randomizer here that's moving quite quickly kind to make it sound like something's talking or quickly making sound and as you can see that's doing
+7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：处理空间和距离
    - 链路参考：Faceplant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-07-5345b447b4`
 8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：频段分配
    - 链路参考：Randomizer / LFO
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-08-b133b0bf68`
-9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to that short in the description so you can watch it if you want but basically yeah it consists of noise and then this filter here and some effects so I have this randomizer here that's moving quite quickly kind to make it sound like something's talking or quickly making sound and as you can see that's doing a lot of s
+9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染随机变体
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-09-803b3694e4`
 10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Faceplant -> Randomizer / LFO -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线和峰值控制
    - 链路参考：Faceplant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-nRPOnY3a8YU-10-9101ecd07d`
 
 ### Plugin and Processing Notes
@@ -2734,8 +2394,6 @@ Records: 82
   - Fast randomizer for robotic chatter
   - Rhythmic LFO for designed speech pattern
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Materials / Layer Sources
@@ -2755,7 +2413,7 @@ Records: 82
 ### Parameter Logic
 - Faceplant 参数逻辑：Noise source；Lane routing。
 - Randomizer / LFO 参数逻辑：Fast randomizer for robotic chatter；Rhythmic LFO for designed speech pattern。
-- Little AlterBoy / pitch-formant 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Little AlterBoy / pitch-formant 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 频段判断：低频负责重量，中频负责识别，高频负责材质；每次 EQ 前先确认要保留哪一层。
@@ -2779,74 +2437,54 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **快速 envelope 塑心跳包络**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ace plant just using noise changing the envelopes adding LFO and a few effects so this is what it sounds like so yeah I started off with this noise here changing the envelope to be super quick to get shape of the heartbeat of that kind of quick impact so in this first Lane the effects I pitched it way down and I also p
+1. **快速 envelope 塑心跳包络**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：快速 envelope 塑心跳包络
    - 链路参考：Faceplant envelope/noise
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-01-a9215f70b4`
-2. **Lane 1 做低频身体**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：velope to be super quick to get shape of the heartbeat of that kind of quick impact so in this first Lane the effects I pitched it way down and I also put on a filter to cut out all of the higher end which got it to the kind of sound that I was aiming for and then in lane two so I'm actually modulating the pitch in the
+2. **Lane 1 做低频身体**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Lane 1 做低频身体
    - 链路参考：Pitch shifter + LFO
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-02-fb6aa85b7d`
-3. **Lane 2 用 LFO 推 pitch shifter**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：the heartbeat of that kind of quick impact so in this first Lane the effects I pitched it way down and I also put on a filter to cut out all of the higher end which got it to the kind of sound that I was aiming for and then in lane two so I'm actually modulating the pitch in the pitch shifter just using this LFO here t
+3. **Lane 2 用 LFO 推 pitch shifter**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Lane 2 用 LFO 推 pitch shifter
    - 链路参考：Resonator / Reverb / Phaser
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-03-3292cd96b0`
-4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bit more full and then just boosted the gain of that because it became quite quiet and then in Lane three I added some Reverb and then a phaser after this so with the Reverb make it quite Spacey it sounds like this and then yeah I added a phaser after that because I thought it sounded cool I added the spread here at 50
+4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：音高和共振峰塑形
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-04-c3f9a3e41a`
-5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ed off with this noise here changing the envelope to be super quick to get shape of the heartbeat of that kind of quick impact so in this first Lane the effects I pitched it way down and I also put on a filter to cut out all of the higher end which got it to the kind of sound that I was aiming for and then in lane two
+5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立发声包络
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-05-53979a547a`
 6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：叠加材质细节
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-06-75152adadf`
-7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ace plant just using noise changing the envelopes adding LFO and a few effects so this is what it sounds like so yeah I started off with this noise here changing the envelope to be super quick to get shape of the heartbeat of that kind of quick impact so in this first Lane the effects I pitched it way down and I also p
+7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间和身体感
    - 链路参考：Faceplant envelope/noise
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-07-4174020a27`
-8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：velope to be super quick to get shape of the heartbeat of that kind of quick impact so in this first Lane the effects I pitched it way down and I also put on a filter to cut out all of the higher end which got it to the kind of sound that I was aiming for and then in lane two so I'm actually modulating the pitch in the
+8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：动态和清晰度
    - 链路参考：Pitch shifter + LFO
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-08-339a6f5264`
-9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：the heartbeat of that kind of quick impact so in this first Lane the effects I pitched it way down and I also put on a filter to cut out all of the higher end which got it to the kind of sound that I was aiming for and then in lane two so I'm actually modulating the pitch in the pitch shifter just using this LFO here t
+9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做变体和表情库
    - 链路参考：Resonator / Reverb / Phaser
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-09-5ebe84d907`
-10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bit more full and then just boosted the gain of that because it became quite quiet and then in Lane three I added some Reverb and then a phaser after this so with the Reverb make it quite Spacey it sounds like this and then yeah I added a phaser after that because I thought it sounded cool I added the spread here at 50
+10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Faceplant envelope/noise -> Pitch shifter + LFO -> Resonator / Reverb / Phaser -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微调
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-10-f29a7dfd45`
 
@@ -2861,22 +2499,11 @@ Records: 82
   - Reverb/phaser
   - Spread around 50%
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hello this is day eight of noise vember and the prompt for this one is organ now for this one I actually didn't have a lot of time so I just think super super simple so I made a heartbeat in face plant just using noise changing the envelopes adding LFO and a f
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：bit more full and then just boosted the gain of that because it became quite quiet and then in Lane three I added some Reverb and then a phaser after this so with the Reverb make it quite Spacey it sounds like this and then yeah I added a phaser after that because I thought it sounded cool I added the spread here at 50
-  - 可确认的数值/范围：50
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：hello this is day eight of noise vember and the prompt for this one is organ now for this one I actually didn't have a lot of time so I just think super super simple so I made a heartbeat in face plant just using noise changing the envelopes adding LFO and a f
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：velope to be super quick to get shape of the heartbeat of that kind of quick impact so in this first Lane the effects I pitched it way down and I also put on a filter to cut out all of the higher end which got it to the kind of sound that I was aiming for and then in lane two so I'm actually modulating the pitch in the
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：hello this is day eight of noise vember and the prompt for this one is organ now for this one I actually didn't have a lot of time so I just think super super simple so I made a heartbeat in face plant just using noise changing the envelopes adding LFO and a f
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：then just boosted the gain of that because it became quite quiet and then in Lane three I added some Reverb and then a phaser after this so with the Reverb make it quite Spacey it sounds like this and then yeah I added a phaser after that because I thought it sounded cool I added the spread here at 50% which gave it a
-  - 可确认的数值/范围：50
 
 ### Materials / Layer Sources
 - noise source
@@ -2895,13 +2522,9 @@ Records: 82
 - 6. Disperser / phase rotation：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：50。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Faceplant envelope/noise 参数逻辑：Noise source；Quick envelope。
 - Pitch shifter + LFO 参数逻辑：LFO modulates pitch shifter。
 - Resonator / Reverb / Phaser 参数逻辑：Resonator body；Reverb/phaser。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：hello this is day eight of noise vember and the prompt for this one is organ now for this one I actually didn't have a lot of time so I just think super super simple so I made a heartbeat in face plant just using noise changing the envelopes adding LFO and a f；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：hello this is day eight of noise vember and the prompt for this one is organ now for this one I actually didn't have a lot of time so I just think super super simple so I made a heartbeat in face plant just using noise changing the envelopes adding LFO and a f；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Disperser / phase rotation 参数逻辑：字幕/画面线索：hello this is day eight of noise vember and the prompt for this one is organ now for this one I actually didn't have a lot of time so I just think super super simple so I made a heartbeat in face plant just using noise changing the envelopes adding LFO and a f；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -2922,74 +2545,56 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **复用 rocky texture 做传送门碎片**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：yer here so without any effects and without the stretching it sounds like this I ended up that out to a rate of 0.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah
+1. **复用 rocky texture 做传送门碎片**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复用 rocky texture 做传送门碎片
    - 链路参考：EQ
    - 可见/字幕数值：0.5
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-01-3f8f7b159d`
-2. **免费 glitch 素材拉慢到 0.5**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ade playing around with some plugins by Michael Norris so this second layer here so without any effects and without the stretching it sounds like this I ended up that out to a rate of 0.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and
+2. **免费 glitch 素材拉慢到 0.5**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：免费 glitch 素材拉慢到 0.5
    - 链路参考：Blue Cat Chorus
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-02-65f59fae7c`
-3. **glow 层 pitch down 后加 Chorus**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：effects and without the stretching it sounds like this I ended up that out to a rate of 0.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah that was kind of like t
+3. **glow 层 pitch down 后加 Chorus**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：glow 层 pitch down 后加 Chorus
    - 链路参考：Pitch shifting
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-03-639b3a968c`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做 tonal/resonant 层
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-04-b9abde8e66`
 5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：增加随机运动
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-05-018ffcfdbf`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-06-1eb9963826`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：yer here so without any effects and without the stretching it sounds like this I ended up that out to a rate of 0.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：EQ
    - 可见/字幕数值：0.5
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-07-f0c573f65f`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ade playing around with some plugins by Michael Norris so this second layer here so without any effects and without the stretching it sounds like this I ended up that out to a rate of 0.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Blue Cat Chorus
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-08-b65068d9ab`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：effects and without the stretching it sounds like this I ended up that out to a rate of 0.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah that was kind of like t
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Pitch shifting
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-09-b30f4a0c45`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 EQ -> Blue Cat Chorus -> Pitch shifting -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：组合成完整施法句子
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-10-1fce29ef0e`
 
@@ -3001,23 +2606,11 @@ Records: 82
 - **Pitch shifting**: 建立暗色低光和恐怖体积。
   - -24 semitone layer
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah that was kind of like the dark Rocky aspect covered
-  - 可确认的数值/范围：5
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：effects and without the stretching it sounds like this I ended up that out to a rate of 0.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah that was kind of like t
-  - 可确认的数值/范围：0.5
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah that was kind of like the dark Rocky aspect covered
-  - 可确认的数值/范围：5
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：k Rocky aspect covered and then I moved on to the glow aspect so this first one originally sounded like this I ended up pitching that down to make it sound a bit darker and then I added some chorus on there this is blue cats chorus which is actually a free plugin yeah added some cool texture in there and then the fourt
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hello so for day seven of noise bember over on air Wiggles The Prompt is glow I ended up finding this VFX portal clip this is what I came up with for one as you can see it's only made up of four layers so the first layer here is actually one of sounds that I m
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：ade playing around with some plugins by Michael Norris so this second layer here so without any effects and without the stretching it sounds like this I ended up that out to a rate of 0.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and
-  - 可确认的数值/范围：0.5
 
 ### Materials / Layer Sources
 - rocky shard texture
@@ -3037,13 +2630,9 @@ Records: 82
 - 6. Playback rate / item rate：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：0.5；24。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - EQ 参数逻辑：Cut resonant low frequencies。
 - Blue Cat Chorus 参数逻辑：Use on glow layer。
 - Pitch shifting 参数逻辑：-24 semitone layer。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah that was kind of like the dark Rocky aspect covered ；可确认的数值/范围：5。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：.5 and then I just added some EQ there was a really resonant frequency in the low end that was a bit too much so I pulled that down and I thought that that went quite well along with this first layer so yeah that was kind of like the dark Rocky aspect covered ；可确认的数值/范围：5。
-- Playback rate / item rate 参数逻辑：字幕/画面线索：hello so for day seven of noise bember over on air Wiggles The Prompt is glow I ended up finding this VFX portal clip this is what I came up with for one as you can see it's only made up of four layers so the first layer here is actually one of sounds that I m；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -3064,83 +2653,63 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **kick/metal impact 做主 hit**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hing a little bit different and thought about when in things like horror games you've got kind of pressure building and then the Stinger plays when something happens to kind of break that pressure or increase the pressure so I decided to make a stinger layering up those the different SS so yeah this is what I came up w
+1. **kick/metal impact 做主 hit**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：kick/metal impact 做主 hit
    - 链路参考：Spectral Plugins Spacer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-01-ce4cc30d6a`
-2. **Spacer 和 grain delay 做节奏压力**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hat happens and this next layer is the buildup this was actually I ended up reversing this so it's sounding like this I reversed that and also sent it to the Reverb without the delay on I lined that up so that it kind of Fades out and then first impact happens and then the last layer here was another wood impact I like
+2. **Spacer 和 grain delay 做节奏压力**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Spacer 和 grain delay 做节奏压力
    - 链路参考：Grain delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-02-3ecb9485e7`
-3. **低金属层和 sub impact 补体积**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d then the last layer here was another wood impact I liked the higher end of this which is why I've butched it was some EQ so I've taken out some of the low end and boosted all like the mids to the highs and that's also just going through Reverb too that's day six thanks for watching
+3. **低金属层和 sub impact 补体积**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：低金属层和 sub impact 补体积
    - 链路参考：Crystallizer / de-crackle
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-03-3f82f8e361`
-4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s all like kick sounds and some metal impacts in there as well I think so the main layer is this one here that has that delay on the end so I used this plugin called spacer by Spectral plugins it's another one that I hadn't used before it has some really cool stuff like this grain delay which is the thing that's adding
+4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立攻击速度
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-04-fbacce70d6`
-5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：th so as you can see it's made up of a few layers it's mostly actually I think it's all like kick sounds and some metal impacts in there as well I think so the main layer is this one here that has that delay on the end so I used this plugin called spacer by Spectral plugins it's another one that I hadn't used before it
+5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：塑造主体重量
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-05-d8b7100e1b`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入纹理破裂
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-06-200538e3b6`
-7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hing a little bit different and thought about when in things like horror games you've got kind of pressure building and then the Stinger plays when something happens to kind of break that pressure or increase the pressure so I decided to make a stinger layering up those the different SS so yeah this is what I came up w
+7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：制造运动和预备感
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-07-aed6455108`
-8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hat happens and this next layer is the buildup this was actually I ended up reversing this so it's sounding like this I reversed that and also sent it to the Reverb without the delay on I lined that up so that it kind of Fades out and then first impact happens and then the last layer here was another wood impact I like
+8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制空间与尾音
    - 链路参考：Spectral Plugins Spacer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-08-28665b26ca`
-9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d then the last layer here was another wood impact I liked the higher end of this which is why I've butched it was some EQ so I've taken out some of the low end and boosted all like the mids to the highs and that's also just going through Reverb too that's day six thanks for watching
+9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段让位和动态整理
    - 链路参考：Grain delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-09-03af8c88e0`
-10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s all like kick sounds and some metal impacts in there as well I think so the main layer is this one here that has that delay on the end so I used this plugin called spacer by Spectral plugins it's another one that I hadn't used before it has some really cool stuff like this grain delay which is the thing that's adding
+10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Spectral Plugins Spacer -> Grain delay -> Crystallizer / de-crackle -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染变体并挑选
    - 链路参考：Crystallizer / de-crackle
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-10-322033b3ed`
@@ -3154,25 +2723,13 @@ Records: 82
   - Multiple presets in containers
   - De-crackle after crystallized layer
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hello for day six of noise vember The Prompt is pressure and I originally thought of trying to make some kind of big Mech Pria like hydraulic sounds but thought I'd go for something a little bit different and thought about when in things like horror games you'
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：d then the last layer here was another wood impact I liked the higher end of this which is why I've butched it was some EQ so I've taken out some of the low end and boosted all like the mids to the highs and that's also just going through Reverb too that's day six thanks for watching
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hello for day six of noise vember The Prompt is pressure and I originally thought of trying to make some kind of big Mech Pria like hydraulic sounds but thought I'd go for something a little bit different and thought about when in things like horror games you'
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：in there as well I think so the main layer is this one here that has that delay on the end so I used this plugin called spacer by Spectral plugins it's another one that I hadn't used before it has some really cool stuff like this grain delay which is the thing that's adding the rhythmic delay in there at the end I then
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：hello for day six of noise vember The Prompt is pressure and I originally thought of trying to make some kind of big Mech Pria like hydraulic sounds but thought I'd go for something a little bit different and thought about when in things like horror games you'
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：s all like kick sounds and some metal impacts in there as well I think so the main layer is this one here that has that delay on the end so I used this plugin called spacer by Spectral plugins it's another one that I hadn't used before it has some really cool stuff like this grain delay which is the thing that's adding
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hello for day six of noise vember The Prompt is pressure and I originally thought of trying to make some kind of big Mech Pria like hydraulic sounds but thought I'd go for something a little bit different and thought about when in things like horror games you'
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hat happens and this next layer is the buildup this was actually I ended up reversing this so it's sounding like this I reversed that and also sent it to the Reverb without the delay on I lined that up so that it kind of Fades out and then first impact happens and then the last layer here was another wood impact I like
 
 ### Materials / Layer Sources
 - kick
@@ -3198,10 +2755,6 @@ Records: 82
 - Spectral Plugins Spacer 参数逻辑：Used on main hit。
 - Grain delay 参数逻辑：Rhythmic delay texture。
 - Crystallizer / de-crackle 参数逻辑：Multiple presets in containers；De-crackle after crystallized layer。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：hello for day six of noise vember The Prompt is pressure and I originally thought of trying to make some kind of big Mech Pria like hydraulic sounds but thought I'd go for something a little bit different and thought about when in things like horror games you'；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：hello for day six of noise vember The Prompt is pressure and I originally thought of trying to make some kind of big Mech Pria like hydraulic sounds but thought I'd go for something a little bit different and thought about when in things like horror games you'；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- EchoBoy / short delay 参数逻辑：字幕/画面线索：hello for day six of noise vember The Prompt is pressure and I originally thought of trying to make some kind of big Mech Pria like hydraulic sounds but thought I'd go for something a little bit different and thought about when in things like horror games you'；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Playback rate / item rate 参数逻辑：字幕/画面线索：hello for day six of noise vember The Prompt is pressure and I originally thought of trying to make some kind of big Mech Pria like hydraulic sounds but thought I'd go for something a little bit different and thought about when in things like horror games you'；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -3222,74 +2775,54 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **纸板刮擦提供干燥摩擦**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：used on one of my other days one turned off all these but kept on this swarm granular processor so this is without and then with that [Music] on so yeah I thought that sounded quite cool kind of like a like a ship engine or something that so yeah I recorded the output of [Music] that so yeah that's first layer I made j
+1. **纸板刮擦提供干燥摩擦**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：纸板刮擦提供干燥摩擦
    - 链路参考：Morph EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-01-9588532a2c`
-2. **Morph EQ Twin Peaks 做共振运动**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：inimal audio and yeah I think it it ended up sounding quite cool and then I wanted to try what it would sound like if I stretched out this layer with that same effect on so I duplicated that stretched it out a rate of 0.3 yeah I thought that sounded quite cool quite like alien Vibes just recorded the output of that to
+2. **Morph EQ Twin Peaks 做共振运动**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Morph EQ Twin Peaks 做共振运动
    - 链路参考：Love
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-02-1d1b995df5`
-3. **Love swarm granular 加群体颗粒**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：tuff from my cardboard Library some scrapes and things like that and for each of them I added this plug-in called morph EQ I picked just a preset Twin Peaks it has loads of these kind of resonant Parts in there and I added parameter modulation to the mor parameter so yeah I did three layers in total I'll kind of go thr
+3. **Love swarm granular 加群体颗粒**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Love swarm granular 加群体颗粒
    - 链路参考：Rift Feedback Lite
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-03-207e173f97`
 4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：清理现实瑕疵
    - 链路参考：Transmutator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-04-b6221364a0`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：分层建立景深
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-05-1bb1811ae0`
-6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：from my cardboard Library some scrapes and things like that and for each of them I added this plug-in called morph EQ I picked just a preset Twin Peaks it has loads of these kind of resonant Parts in there and I added parameter modulation to the mor parameter so yeah I did three layers in total I'll kind of go through
+6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：加入缓慢运动
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-06-a5e8bcd114`
-7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：used on one of my other days one turned off all these but kept on this swarm granular processor so this is without and then with that [Music] on so yeah I thought that sounded quite cool kind of like a like a ship engine or something that so yeah I recorded the output of [Music] that so yeah that's first layer I made j
+7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制频谱密度
    - 链路参考：Morph EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-07-a4a71242ee`
-8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：inimal audio and yeah I think it it ended up sounding quite cool and then I wanted to try what it would sound like if I stretched out this layer with that same effect on so I duplicated that stretched it out a rate of 0.3 yeah I thought that sounded quite cool quite like alien Vibes just recorded the output of that to
+8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做循环和变体
    - 链路参考：Love
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-08-16958ed755`
-9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：tuff from my cardboard Library some scrapes and things like that and for each of them I added this plug-in called morph EQ I picked just a preset Twin Peaks it has loads of these kind of resonant Parts in there and I added parameter modulation to the mor parameter so yeah I did three layers in total I'll kind of go thr
+9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间与距离
    - 链路参考：Rift Feedback Lite
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-09-4e13b8b4ca`
 10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Morph EQ -> Love -> Rift Feedback Lite -> Transmutator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：响度和动态
    - 链路参考：Transmutator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-10-010b51a1b1`
 
@@ -3305,16 +2838,9 @@ Records: 82
   - Preset variations
   - Record texture pool
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hello so for day five of noise vember over on air Wiggles The Prompt is resonant so for this one I wanted to play around with a few plugins I'd not used before so I ended up grabbing some stuff from my cardboard Library some scrapes and things like that and fo
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：tuff from my cardboard Library some scrapes and things like that and for each of them I added this plug-in called morph EQ I picked just a preset Twin Peaks it has loads of these kind of resonant Parts in there and I added parameter modulation to the mor parameter so yeah I did three layers in total I'll kind of go thr
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hello so for day five of noise vember over on air Wiggles The Prompt is resonant so for this one I wanted to play around with a few plugins I'd not used before so I ended up grabbing some stuff from my cardboard Library some scrapes and things like that and fo
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：inimal audio and yeah I think it it ended up sounding quite cool and then I wanted to try what it would sound like if I stretched out this layer with that same effect on so I duplicated that stretched it out a rate of 0.3 yeah I thought that sounded quite cool quite like alien Vibes just recorded the output of that to
-  - 可确认的数值/范围：0.3
 
 ### Materials / Layer Sources
 - cardboard scrapes
@@ -3334,13 +2860,10 @@ Records: 82
 - 6. Playback rate / item rate：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：0.3。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Morph EQ 参数逻辑：Twin Peaks；Parameter modulation on morph。
 - Love 参数逻辑：Swarm granular processor。
 - Rift Feedback Lite 参数逻辑：Use on lower-end layer。
 - Transmutator 参数逻辑：Preset variations；Record texture pool。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：hello so for day five of noise vember over on air Wiggles The Prompt is resonant so for this one I wanted to play around with a few plugins I'd not used before so I ended up grabbing some stuff from my cardboard Library some scrapes and things like that and fo；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Playback rate / item rate 参数逻辑：字幕/画面线索：hello so for day five of noise vember over on air Wiggles The Prompt is resonant so for this one I wanted to play around with a few plugins I'd not used before so I ended up grabbing some stuff from my cardboard Library some scrapes and things like that and fo；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -3361,74 +2884,54 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **从 Sound Effects Pro 9000 取原始输出**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：he sound effects Pro 9000 add-on pack so I basically found some patches that I liked recorded the output with a plan to then drag those back into my own face plant patch and create something new with them you so to make one whole sound out of those I've pulled them all into face plan each in their own sampler here I've
+1. **从 Sound Effects Pro 9000 取原始输出**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：从 Sound Effects Pro 9000 取原始输出
    - 链路参考：Faceplant sampler
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-01-e6b6b24cdd`
-2. **所有 gain 绑定 envelope**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：the same shape I've also added this randomizer here which is being used for a multitude of things we've got it on some Pitch shifting it is also being used to choose the offset of the longer files that I've got so that we can random the position that it plays at each time I actually wanted a couple of these layers here
+2. **所有 gain 绑定 envelope**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：所有 gain 绑定 envelope
    - 链路参考：Randomizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-02-a62e062828`
 3. **Randomizer 控制 pitch 和 sample offset**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Randomizer 控制 pitch 和 sample offset
    - 链路参考：Chorus / Compression / Flanger / Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-03-0ed5ac4764`
 4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立攻击速度
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-04-36d631676f`
-5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：it is with and without so it really gives it a lot more in and add some cool Textures in there with the chorus a bit of compression and the flanger on few of these effects I use the envelope to also modulate the parameters so that's those two sounds and then for the other three I thought I'd just try and put them throu
+5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：塑造主体重量
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-05-cfec0581d0`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入纹理破裂
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-06-0c65df70e4`
-7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：he sound effects Pro 9000 add-on pack so I basically found some patches that I liked recorded the output with a plan to then drag those back into my own face plant patch and create something new with them you so to make one whole sound out of those I've pulled them all into face plan each in their own sampler here I've
+7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：制造运动和预备感
    - 链路参考：Faceplant sampler
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-07-e17524a7fd`
-8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：the same shape I've also added this randomizer here which is being used for a multitude of things we've got it on some Pitch shifting it is also being used to choose the offset of the longer files that I've got so that we can random the position that it plays at each time I actually wanted a couple of these layers here
+8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制空间与尾音
    - 链路参考：Randomizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-08-aad56dabb9`
 9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：频段让位和动态整理
    - 链路参考：Chorus / Compression / Flanger / Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-09-701e39d195`
 10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Faceplant sampler -> Randomizer -> Chorus / Compression / Flanger / Transient Shaper -> Little AlterBoy / pitch-formant 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：渲染变体并挑选
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-10-d210ec5130`
 
@@ -3443,23 +2946,11 @@ Records: 82
   - Lane 1 movement chain
   - Transient shaping on impact layers
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：hello so over on air Wiggles for noise V The Prompt for day four is instrumental I wasn't 100% sure what to do with this one because I'm not too musical more sound design so I decided to have a play with some face PL instrument patches I got recently from the
-  - 可确认的数值/范围：100
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：the same shape I've also added this randomizer here which is being used for a multitude of things we've got it on some Pitch shifting it is also being used to choose the offset of the longer files that I've got so that we can random the position that it plays at each time I actually wanted a couple of these layers here
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：hello so over on air Wiggles for noise V The Prompt for day four is instrumental I wasn't 100% sure what to do with this one because I'm not too musical more sound design so I decided to have a play with some face PL instrument patches I got recently from the
-  - 可确认的数值/范围：100
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：te the parameters so that's those two sounds and then for the other three I thought I'd just try and put them through a transient shaper because I really like the textures of these two sounds and I wanted them to match up a bit better with the main kind of punchy impact so I put those through lane two and I made sure t
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：hello so over on air Wiggles for noise V The Prompt for day four is instrumental I wasn't 100% sure what to do with this one because I'm not too musical more sound design so I decided to have a play with some face PL instrument patches I got recently from the
-  - 可确认的数值/范围：100
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：it is with and without so it really gives it a lot more in and add some cool Textures in there with the chorus a bit of compression and the flanger on few of these effects I use the envelope to also modulate the parameters so that's those two sounds and then for the other three I thought I'd just try and put them throu
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - Sound Effects Pro 9000 outputs
@@ -3478,13 +2969,9 @@ Records: 82
 - 6. Compressor / clipper：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：100；9000。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Faceplant sampler 参数逻辑：Sampler layers；Envelope-linked gains。
 - Randomizer 参数逻辑：Pitch shifting；Sample offset for longer files。
 - Chorus / Compression / Flanger / Transient Shaper 参数逻辑：Lane 1 movement chain；Transient shaping on impact layers。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：hello so over on air Wiggles for noise V The Prompt for day four is instrumental I wasn't 100% sure what to do with this one because I'm not too musical more sound design so I decided to have a play with some face PL instrument patches I got recently from the ；可确认的数值/范围：100。
-- Transient Shaper 参数逻辑：字幕/画面线索：hello so over on air Wiggles for noise V The Prompt for day four is instrumental I wasn't 100% sure what to do with this one because I'm not too musical more sound design so I decided to have a play with some face PL instrument patches I got recently from the ；可确认的数值/范围：100。
-- Compressor / clipper 参数逻辑：字幕/画面线索：hello so over on air Wiggles for noise V The Prompt for day four is instrumental I wasn't 100% sure what to do with this one because I'm not too musical more sound design so I decided to have a play with some face PL instrument patches I got recently from the ；可确认的数值/范围：100。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -3505,74 +2992,54 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **小刀素材先切片分轨**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ally believe it's a close enough link to the prompt but you know you may decide otherwise is what it is but basically I started off with uh pulling in just loads of like small knife sounds and these are all stretched out so like already made a lot lower same with these they started off sounding like this yeah so I basi
+1. **小刀素材先切片分轨**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：小刀素材先切片分轨
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-01-8a991320c9`
-2. **Reaper parallel containers 放三组 Manipulator**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：se is what it is but basically I started off with uh pulling in just loads of like small knife sounds and these are all stretched out so like already made a lot lower same with these they started off sounding like this yeah so I basically then chop these in half and yeah split those over two tracks and then I was playi
+2. **Reaper parallel containers 放三组 Manipulator**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Reaper parallel containers 放三组 Manipulator
    - 链路参考：Stereo/space processor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-02-03d5c3eaea`
 3. **整体 pitch down 建立巨剑尺度**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：整体 pitch down 建立巨剑尺度
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-03-332b989085`
 4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立攻击速度
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-04-2f8a35a524`
-5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：th a little bit of pit shifting down sounded like [Music] this and then added just some little whooshes I also added an impact on the end for each of those made up of a couple of metal hits and also a knife impact on [Music] wood I think for the most part it was mainly like stretching these out again and then just putt
+5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：塑造主体重量
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-05-3bf4513f90`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入纹理破裂
    - 链路参考：Stereo/space processor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-06-bce5ed5aa7`
-7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ally believe it's a close enough link to the prompt but you know you may decide otherwise is what it is but basically I started off with uh pulling in just loads of like small knife sounds and these are all stretched out so like already made a lot lower same with these they started off sounding like this yeah so I basi
+7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：制造运动和预备感
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-07-993533df70`
-8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：se is what it is but basically I started off with uh pulling in just loads of like small knife sounds and these are all stretched out so like already made a lot lower same with these they started off sounding like this yeah so I basically then chop these in half and yeah split those over two tracks and then I was playi
+8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制空间与尾音
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-08-aec562aae7`
 9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：频段让位和动态整理
    - 链路参考：Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-09-a3d4e2cac5`
 10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Manipulator -> Stereo/space processor -> Pro-R / reverb -> Playback rate / item rate 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：渲染变体并挑选
    - 链路参考：Stereo/space processor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-10-31602d17c9`
 
@@ -3584,14 +3051,9 @@ Records: 82
 - **Stereo/space processor**: 统一所有层的位置和宽度。
   - Use similar stereo treatment across layers
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hello so third prompt for November over on air Wiggles is sandwich I basically just thought about getting some recordings of me making a sandwich but to be honest I didn't want one for lunch so instead thought I'd try making some small knife sounds into like a
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：se is what it is but basically I started off with uh pulling in just loads of like small knife sounds and these are all stretched out so like already made a lot lower same with these they started off sounding like this yeah so I basically then chop these in half and yeah split those over two tracks and then I was playi
 
 ### Materials / Layer Sources
 - small knife sounds
@@ -3611,8 +3073,7 @@ Records: 82
 ### Parameter Logic
 - Manipulator 参数逻辑：Parallel containers；Multiple presets。
 - Stereo/space processor 参数逻辑：Use similar stereo treatment across layers。
-- Pro-R / reverb 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Playback rate / item rate 参数逻辑：字幕/画面线索：hello so third prompt for November over on air Wiggles is sandwich I basically just thought about getting some recordings of me making a sandwich but to be honest I didn't want one for lunch so instead thought I'd try making some small knife sounds into like a；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Pro-R / reverb 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 运动判断：LFO/random/envelope follower 的深度不应固定照抄，要按画面速度和素材长度微调。
@@ -3635,47 +3096,37 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **长水声拉伸成 ambience**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ally just have some like really simple EQ some of them had just some like low end item one in there so cut that out and then the final thing was adding some Reverb on to kind of tie it all in so I used black hole and it's a really good good one for creating some kind of big and spacious ambiances so with and without yo
+1. **长水声拉伸成 ambience**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：长水声拉伸成 ambience
    - 链路参考：Blackhole
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-01-7952c1d70e`
-2. **EQ 和 Blackhole 统一水下空间**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ater recordings some like hydrophone ones and consistent bubbles um and actually most of these these top three are also stretched out in Reaper just while like clicking and dragging so changing the rate it just made them fit a bit better for like an Ambiance layer with less defined kind of higher bubbles um so yeah you
+2. **EQ 和 Blackhole 统一水下空间**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：EQ 和 Blackhole 统一水下空间
    - 链路参考：Phase / OTT / Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-02-5dc4c18e58`
-3. **小泡泡剪成 UI select**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hear each of those layers that I added yeah and uh these bottom three here basically just have some like really simple EQ some of them had just some like low end item one in there so cut that out and then the final thing was adding some Reverb on to kind of tie it all in so I used black hole and it's a really good good
+3. **小泡泡剪成 UI select**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：小泡泡剪成 UI select
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-03-caa1c2b6c4`
-4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：e EQ some of them had just some like low end item one in there so cut that out and then the final thing was adding some Reverb on to kind of tie it all in so I used black hole and it's a really good good one for creating some kind of big and spacious ambiances so with and without you can hear that here so those were th
+4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：清理现实瑕疵
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-04-5d30d88dce`
-5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and yeah so this is what I came up for a little layer for a select sound yeah so this first layer I really like the the transients in and then this second one I added some effects to uh it was quite like a calm bubble like quite calm and light but I wanted a bit more of a transient uh lead uh that the plot layer in oka
+5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：分层建立景深
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -3683,44 +3134,34 @@ Records: 82
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入缓慢运动
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-06-d62d75f1f8`
-7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ally just have some like really simple EQ some of them had just some like low end item one in there so cut that out and then the final thing was adding some Reverb on to kind of tie it all in so I used black hole and it's a really good good one for creating some kind of big and spacious ambiances so with and without yo
+7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制频谱密度
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-07-0647745aef`
-8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ater recordings some like hydrophone ones and consistent bubbles um and actually most of these these top three are also stretched out in Reaper just while like clicking and dragging so changing the rate it just made them fit a bit better for like an Ambiance layer with less defined kind of higher bubbles um so yeah you
+8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做循环和变体
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-08-adf885d256`
-9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hear each of those layers that I added yeah and uh these bottom three here basically just have some like really simple EQ some of them had just some like low end item one in there so cut that out and then the final thing was adding some Reverb on to kind of tie it all in so I used black hole and it's a really good good
+9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间与距离
    - 链路参考：Blackhole
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-09-aa73140f2e`
-10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：e EQ some of them had just some like low end item one in there so cut that out and then the final thing was adding some Reverb on to kind of tie it all in so I used black hole and it's a really good good one for creating some kind of big and spacious ambiances so with and without you can hear that here so those were th
+10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Blackhole -> Phase / OTT / Transient Shaper -> Pro-Q 3 / EQ -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：响度和动态
    - 链路参考：Phase / OTT / Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -3734,35 +3175,17 @@ Records: 82
   - OTT brightness/density
   - Transient punch
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hear each of those layers that I added yeah and uh these bottom three here basically just have some like really simple EQ some of them had just some like low end item one in there so cut that out and then the final thing was adding some Reverb on to kind of tie it all in so I used black hole and it's a really good good
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：e EQ some of them had just some like low end item one in there so cut that out and then the final thing was adding some Reverb on to kind of tie it all in so I used black hole and it's a really good good one for creating some kind of big and spacious ambiances so with and without you can hear that here so those were th
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：led the same plop layer from the other sound but I made the play rate a lot faster so they're a lot kind of like higher pitched and then yeah these are the Reversed bubbles kind of chopped up randomly yeah so here's it all together so this is what adds most to the texture and then I duplicated that and pulled the play
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：d a bit more of a transient uh lead uh that the plot layer in okay we Reaper crashing every time I try and show you the phase so there's phase on there um I also added some OT to boost it a little bit and then just a transient shaper as you can see so yeah those are the select sounds that I made um and then I also had
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：I try and show you the phase so there's phase on there um I also added some OT to boost it a little bit and then just a transient shaper as you can see so yeah those are the select sounds that I made um and then I also had to go at reversing some of the bubble sounds um so first of all I pulled the same plop layer from
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：ater recordings some like hydrophone ones and consistent bubbles um and actually most of these these top three are also stretched out in Reaper just while like clicking and dragging so changing the rate it just made them fit a bit better for like an Ambiance layer with less defined kind of higher bubbles um so yeah you
 
 ### Materials / Layer Sources
 - water ambience recordings
@@ -3788,12 +3211,6 @@ Records: 82
 ### Parameter Logic
 - Blackhole 参数逻辑：Used on ambience bed。
 - Phase / OTT / Transient Shaper 参数逻辑：Phase color；OTT brightness/density。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Disperser / phase rotation 参数逻辑：字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Transient Shaper 参数逻辑：字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Playback rate / item rate 参数逻辑：字幕/画面线索：hello so today from noise V over on air Wiggles The Prompt is bubbly so I decided to do a couple of things to make some sounds for my library for this one so the first one was making some Ambience here's final outcome for that so this consists of a few long wa；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -3815,83 +3232,63 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **日常布料当魔法源**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design I thought I'd record my ramblings about the source that I m
+1. **日常布料当魔法源**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：日常布料当魔法源
    - 链路参考：Noise/Tonal separation processor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-01-cfe5c0fb74`
-2. **噪声/音调分离塑 tonal whoosh**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：you get some really nice nice sounding effects from that so I'll just show you this Source on its own so this it's not stretched out or anything uh just as is and yeah so plopping this on and like I kind of tweaked a bit turn the noise down because I wanted the tonal aspects to come through yeah it like isolates these
+2. **噪声/音调分离塑 tonal whoosh**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：噪声/音调分离塑 tonal whoosh
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-02-8eec9900f5`
-3. **FilterFreak 和 Wave Warper 做动作**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hose effects so they used this plugin and I had never touched this before but it is actually really really cool you can filter out like the noise or the tonal like aspects of sound and kind of isolate those and it works really really well you get some really nice nice sounding effects from that so I'll just show you th
+3. **FilterFreak 和 Wave Warper 做动作**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：FilterFreak 和 Wave Warper 做动作
    - 链路参考：Wave Warper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-03-183c78d391`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：th the flanger that was the depth of that was controlled by the input so I wanted that more on to like come in with the tail so you can see like when sound gets loud it kind of ducks out I tried a frequency shifter didn't really get me the kind of sound I was imagining so I switched to just pit shifting yeah now onto t
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-04-26946a6504`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：xperimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design I thought I'd record my ramblings about the source that I made the different plugins I discovered and how I also made use of those sounds in a redesign that I show at the end of the vide
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Ravage / Ratio MB / MicroShift / OTT
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-05-bb75f052b6`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-06-620dd627a8`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design I thought I'd record my ramblings about the source that I m
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Pro-MB / multiband dynamics
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-07-40feaf6d56`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：you get some really nice nice sounding effects from that so I'll just show you this Source on its own so this it's not stretched out or anything uh just as is and yeah so plopping this on and like I kind of tweaked a bit turn the noise down because I wanted the tonal aspects to come through yeah it like isolates these
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-08-b1f81c1d3d`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hose effects so they used this plugin and I had never touched this before but it is actually really really cool you can filter out like the noise or the tonal like aspects of sound and kind of isolate those and it works really really well you get some really nice nice sounding effects from that so I'll just show you th
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-09-fbe3b4d0f7`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：th the flanger that was the depth of that was controlled by the input so I wanted that more on to like come in with the tail so you can see like when sound gets loud it kind of ducks out I tried a frequency shifter didn't really get me the kind of sound I was imagining so I switched to just pit shifting yeah now onto t
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Noise/Tonal separation processor -> FilterFreak -> Wave Warper -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-10-4ccabc9d9f`
@@ -3902,58 +3299,31 @@ Records: 82
   - Reduce noise for cleaner magic body
 - **FilterFreak**: 用 envelope/threshold 做滤波运动。
   - Motion-following filter
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
 - **Wave Warper**: 替代 Doppler/掠过动作，生成魔法飞行曲线。
   - Y axis controls filtering/rate
   - Granular position moved by LFO
 - **Snap Heap**: 用 audio follower 调制多个效果深度。
   - Follower -> transient shaper/phase distortion/comb/flanger
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
 - **Ravage / Ratio MB / MicroShift / OTT**: 分别增加 rumble、multiband density、宽度和高频 whiz。
   - Render separated texture roles
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：of boosts up when the sound comes through which adds a nice effect and then I think yeah just some regular like little EQ bits so I definitely recommend this plugin this is free but you can upgrade but yeah it is free to to kind of play around with I edited those a little bit to make some snappier sounds and then just
 - **Pro-MB / multiband dynamics**: 多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：e bit more like lowend tonal stuff in there which is cool was playing around with ravage just kind of pushing it to its limit type of stuff this I again had never used before but I'll show you the effect it's having so it's like really making this like Rumble without it kind of like blowing your ear off um and then jus
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：try and get some shape into the sound because this as you can see controls a lot of different stuff first off use this phase Distortion which i' not used before so makes it sound like kind of like really gritty I and then tried adding this comb filter yeah same with with the flanger that was the depth of that was contr
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：dio follower which just follows the the input coming in you can change this to be a like side chain input as well added transient shaper into this so it was more impact type sounds that I was looking for here so just like on its own sounds like this and then with these effects yeah this like really wacky kind of phasin
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：ng so it's like really making this like Rumble without it kind of like blowing your ear off um and then just added on a compressor to calm it down a little [Music] bit so yeah this is still all ranco sounds was just again playing around with some this plugin that i' not really used before again for this one was using t
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：nted that more on to like come in with the tail so you can see like when sound gets loud it kind of ducks out I tried a frequency shifter didn't really get me the kind of sound I was imagining so I switched to just pit shifting yeah now onto the soundspot plugins I haven't really used a lot of these don't know if it ad
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：you get some really nice nice sounding effects from that so I'll just show you this Source on its own so this it's not stretched out or anything uh just as is and yeah so plopping this on and like I kind of tweaked a bit turn the noise down because I wanted the tonal aspects to come through yeah it like isolates these
 
 ### Materials / Layer Sources
 - raincoat/nylon cloth
@@ -3978,13 +3348,11 @@ Records: 82
 
 ### Parameter Logic
 - Noise/Tonal separation processor 参数逻辑：Separate noise vs tonal；Reduce noise for cleaner magic body。
-- FilterFreak 参数逻辑：Motion-following filter；视频未显示完整参数页：按插件承担的角色做 A/B 微调。。
+- FilterFreak 参数逻辑：Motion-following filter
 - Wave Warper 参数逻辑：Y axis controls filtering/rate；Granular position moved by LFO。
-- Snap Heap 参数逻辑：Follower -> transient shaper/phase distortion/comb/flanger；视频未显示完整参数页：按插件承担的角色做 A/B 微调。。
+- Snap Heap 参数逻辑：Follower -> transient shaper/phase distortion/comb/flanger
 - Ravage / Ratio MB / MicroShift / OTT 参数逻辑：Render separated texture roles。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-MB / multiband dynamics 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-L 2 / limiter 参数逻辑：字幕/画面线索：hey there this is actually a continuation of a series I started a couple years ago but haven't updated in while so when I was experimenting with designing some sounds yesterday after watching no citron's YouTube breakdown video on magic casts and impact design；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Pro-MB / multiband dynamics 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -4005,83 +3373,64 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **drone 和 glass ringing 铺魔法频谱**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ng to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by adding these character sounds and then the atmosphere tracked so I laid these two ambiences that I found on sound snap and then I started to b
+1. **drone 和 glass ringing 铺魔法频谱**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：drone 和 glass ringing 铺魔法频谱
    - 链路参考：Crystallizer / Little Plate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-01-c82fd3eb31`
-2. **Crystallizer/Little Plate 做 wet-only shimmer**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：can see here so for this sound I use the recording I captured of ice in a glass which originally sounded like this then reversed it and shifted up the frequency so altogether that section sounded like this next I worked on the sounds for when the character is floating in the Ember I wanted a shimmering sound to match t
+2. **Crystallizer/Little Plate 做 wet-only shimmer**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Crystallizer/Little Plate 做 wet-only shimmer
    - 链路参考：Phaser
    - 可见/字幕数值：12
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-02-e56733f82a`
-3. **瓶子/水 plop 做生物身体**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ittle to make the sound a bit more crisp the second mechanical originally sounded like this and after shifting up the frequency and also adding a chorus effect result was this so the ring part of the sound I used a wineglass being hit and faded out the impact at the beginning are then duplicated this and had one higher
+3. **瓶子/水 plop 做生物身体**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：瓶子/水 plop 做生物身体
    - 链路参考：Ring Modulator / FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-03-a9d92eedac`
-4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：I did the sand toys crystallized at the LEI plugin I played around with the parameters in the plugin to get the kind of delay that I wanted and then I made output only the delayed signal but then adding some reverb and again only sending out the wet signal this gave the shimmering effect that I was looking for I wanted
+4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：音高和共振峰塑形
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-04-27ab437b92`
-5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lso adding a chorus effect result was this so the ring part of the sound I used a wineglass being hit and faded out the impact at the beginning are then duplicated this and had one higher and one at a lower frequency and then realized that there was a small explosion after the ember appears as you can see here so for t
+5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立发声包络
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-05-b07b9e142e`
-6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s and lows in there so I started off with this layer which was the drone like sound that I found from sound snap I then picked shifted it up to make it sound like this I then found this glass ringing sound to cover the higher end of the frequency spectrum however I wanted it to be a bit less constant so I copied this l
+6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：叠加材质细节
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-06-9a19f3c693`
-7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ng to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by adding these character sounds and then the atmosphere tracked so I laid these two ambiences that I found on sound snap and then I started to b
+7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间和身体感
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-07-aaf8d48c22`
-8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：can see here so for this sound I use the recording I captured of ice in a glass which originally sounded like this then reversed it and shifted up the frequency so altogether that section sounded like this next I worked on the sounds for when the character is floating in the Ember I wanted a shimmering sound to match t
+8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：动态和清晰度
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-08-7f95843eda`
-9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ittle to make the sound a bit more crisp the second mechanical originally sounded like this and after shifting up the frequency and also adding a chorus effect result was this so the ring part of the sound I used a wineglass being hit and faded out the impact at the beginning are then duplicated this and had one higher
+9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做变体和表情库
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-09-6a2dc0e0a4`
-10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：I did the sand toys crystallized at the LEI plugin I played around with the parameters in the plugin to get the kind of delay that I wanted and then I made output only the delayed signal but then adding some reverb and again only sending out the wet signal this gave the shimmering effect that I was looking for I wanted
+10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Crystallizer / Little Plate -> Phaser -> Ring Modulator / FilterFreak -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微调
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-WOl66EfI9EQ-10-066159f07f`
@@ -4096,59 +3445,23 @@ Records: 82
   - Ring-mod motion
   - FilterFreak threshold/rise
 - **Soundtoys Effect Rack**: 串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 字幕/画面线索：d one of those is a woosh as the creature gets ejected for the sound added ring modulator and the filterfreak plugin by soundToys with this plugin you can control two filters that rise a certain amount in frequency depending on the threshold you set so the last layer of this sound I wanted to add a variation of static
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：ayers to this sound and one of those is a woosh as the creature gets ejected for the sound added ring modulator and the filterfreak plugin by soundToys with this plugin you can control two filters that rise a certain amount in frequency depending on the threshold you set so the last layer of this sound I wanted to add
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：ical sound which I thought fit perfectly layered with the bottle sound effect I shifted up the frequency and I did some EQ to boost the high end you as I said before i duplicated these sounds and had them at different pictures to act as the different colored orbs so I'll play those four layers for you now the last smal
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：n the plugin to get the kind of delay that I wanted and then I made output only the delayed signal but then adding some reverb and again only sending out the wet signal this gave the shimmering effect that I was looking for I wanted to add a layer that sat around the middle of the frequency spectrum as it still sounded
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：I did the sand toys crystallized at the LEI plugin I played around with the parameters in the plugin to get the kind of delay that I wanted and then I made output only the delayed signal but then adding some reverb and again only sending out the wet signal this gave the shimmering effect that I was looking for I wanted
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：to cover the higher end of the frequency spectrum however I wanted it to be a bit less constant so I copied this layer pitch shifted the sound even higher and I did the sand toys crystallized at the LEI plugin I played around with the parameters in the plugin to get the kind of delay that I wanted and then I made outpu
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：s redesign to cover the higher frequencies I like this water bottle clapping sound on top I used the Native Instruments phase this plugin to add some variation to the sound and I also pitch shifted this down [Music] I then duplicated this pitch shifting the sound higher while also changing the faces setting slightly to
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：ere are just two more layers to this sound and one of those is a woosh as the creature gets ejected for the sound added ring modulator and the filterfreak plugin by soundToys with this plugin you can control two filters that rise a certain amount in frequency depending on the threshold you set so the last layer of this
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad
-  - 可确认的数值/范围：3
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：can see here so for this sound I use the recording I captured of ice in a glass which originally sounded like this then reversed it and shifted up the frequency so altogether that section sounded like this next I worked on the sounds for when the character is floating in the Ember I wanted a shimmering sound to match t
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - Soundsnap drone
@@ -4172,15 +3485,9 @@ Records: 82
 - 8. EchoBoy / short delay：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：3；12。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Crystallizer / Little Plate 参数逻辑：Wet-only layers；Use on glass ringing。
 - Phaser 参数逻辑：Variation on body layers。
 - Ring Modulator / FilterFreak 参数逻辑：Ring-mod motion；FilterFreak threshold/rise。
-- Soundtoys Effect Rack 参数逻辑：字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad；可确认的数值/范围：3。
-- FilterFreak 参数逻辑：字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad；可确认的数值/范围：3。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad；可确认的数值/范围：3。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad；可确认的数值/范围：3。
-- EchoBoy / short delay 参数逻辑：字幕/画面线索：hi everyone welcome to episode 3 of Samsonite experiments and in today's I'm going to be doing a breakdown of my embers of Miriam sound redesign so first I'll play you the full clip with my audio and then get into how I created the sounds okay so I began by ad；可确认的数值/范围：3。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: beckys_audio; WOl66EfI9EQ; embers_of_mirrim; orb; crystallizer; little_plate; filterfreak; ring_mod; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -4201,83 +3508,63 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **先做 atmosphere 和脚步**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：m going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sounds ok so I started off by adding in the atmosphere tracks and their character footsteps so I did a layer of grass that I recorded and I did a layer of
+1. **先做 atmosphere 和脚步**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先做 atmosphere 和脚步
    - 链路参考：Delay / Frequency Shifter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-01-cf652bb2a8`
-2. **casting 层用门吱声和 delay/frequency shifter**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：released so I used my recording of a light switch that originally sounded like this so to play around with this sound I reversed it shifted the frequency down and added a delay to make it sound like this I then wanted to add a layer similar to white noise fill up the frequency spectrum so I recorded my sliding shower d
+2. **casting 层用门吱声和 delay/frequency shifter**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：casting 层用门吱声和 delay/frequency shifter
    - 链路参考：Decapitator / Devil-Loc
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-02-1d4f051796`
-3. **release 用反向 light switch**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：spell sound and as you can see I use quite a lot of layers for the whole sound to make sure I covered as much of the frequency spectrum as I could okay so I initially split the spell into two sections one being the casting and one the explosion so to start with the casting section I used a recording of a door creaking
+3. **release 用反向 light switch**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：release 用反向 light switch
    - 链路参考：Chorus / Sidechain gain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-03-1dec419963`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bus which was outputting a whoosh sound effect down here this sound was then used to shake the gain of the door creak a delay and a frequency shifter so here's the sound dry and with each effect added so with the base layer of the soundin I wanted to create a sound for the spell being released so I used my recording of
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-04-e02bc0f9ca`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：he spell sounded like altogether okay so next I focused on the explosion part of the sound I started off with the metal impact and added an EQ to cut out below end and boost the high end I then again made use of side chaining with the woosh sound so this ended up affecting gain a frequency shifter and the high band of
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-05-00e98c10fa`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Decapitator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-06-baee3b8c3c`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：m going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sounds ok so I started off by adding in the atmosphere tracks and their character footsteps so I did a layer of grass that I recorded and I did a layer of
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-07-90849240de`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：released so I used my recording of a light switch that originally sounded like this so to play around with this sound I reversed it shifted the frequency down and added a delay to make it sound like this I then wanted to add a layer similar to white noise fill up the frequency spectrum so I recorded my sliding shower d
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-08-5ae9292238`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：spell sound and as you can see I use quite a lot of layers for the whole sound to make sure I covered as much of the frequency spectrum as I could okay so I initially split the spell into two sections one being the casting and one the explosion so to start with the casting section I used a recording of a door creaking
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-09-458e9bb89b`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bus which was outputting a whoosh sound effect down here this sound was then used to shake the gain of the door creak a delay and a frequency shifter so here's the sound dry and with each effect added so with the base layer of the soundin I wanted to create a sound for the spell being released so I used my recording of
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Delay / Frequency Shifter -> Decapitator / Devil-Loc -> Chorus / Sidechain gain -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Frequency shifter / ring mod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-10-3551108924`
@@ -4292,60 +3579,24 @@ Records: 82
   - Stretch goose hiss
   - Sidechain gain to whoosh effect
 - **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound
-  - 可确认的数值/范围：2
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：ng section I used a recording of a door creaking and sidechaining to help shape the sound and certain effects so I used snap heat plugin to connect this track to a bus which was outputting a whoosh sound effect down here this sound was then used to shake the gain of the door creak a delay and a frequency shifter so her
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Soundtoys Effect Rack**: 串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound
-  - 可确认的数值/范围：2
   - 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 字幕/画面线索：in a slightly different position however this time the side chain was only affecting the gain of the sound I then added soundToys Decapitator and deadlock plugins wanted to add one more layer as I thought the sounds still sounded a little thin so I used a recording I found over goose hiss and I then stretched out this
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound
-  - 可确认的数值/范围：2
   - 参数逻辑：饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：tly different position however this time the side chain was only affecting the gain of the sound I then added soundToys Decapitator and deadlock plugins wanted to add one more layer as I thought the sounds still sounded a little thin so I used a recording I found over goose hiss and I then stretched out this layer usin
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound
-  - 可确认的数值/范围：2
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：e altogether okay so next I focused on the explosion part of the sound I started off with the metal impact and added an EQ to cut out below end and boost the high end I then again made use of side chaining with the woosh sound so this ended up affecting gain a frequency shifter and the high band of an EQ I then added t
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound
-  - 可确认的数值/范围：2
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：t frequencies and then two different delays to make it sound like this to finish this off on some of the sounds I added reverb sense so the reverb I ended up using was the plug-in a little plate by sound toys so those are all the sounds I led to create this piece I'll play it through once more thank you all so much for
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound
-  - 可确认的数值/范围：2
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：bus which was outputting a whoosh sound effect down here this sound was then used to shake the gain of the door creak a delay and a frequency shifter so here's the sound dry and with each effect added so with the base layer of the soundin I wanted to create a sound for the spell being released so I used my recording of
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound
-  - 可确认的数值/范围：2
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：s outputting a whoosh sound effect down here this sound was then used to shake the gain of the door creak a delay and a frequency shifter so here's the sound dry and with each effect added so with the base layer of the soundin I wanted to create a sound for the spell being released so I used my recording of a light swi
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound
-  - 可确认的数值/范围：2
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：released so I used my recording of a light switch that originally sounded like this so to play around with this sound I reversed it shifted the frequency down and added a delay to make it sound like this I then wanted to add a layer similar to white noise fill up the frequency spectrum so I recorded my sliding shower d
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Materials / Layer Sources
@@ -4375,15 +3626,9 @@ Records: 82
 - 8. Pro-R / reverb：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：2。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Delay / Frequency Shifter 参数逻辑：Door creak + delay/frequency shifter；Reversed light switch + delay。
 - Decapitator / Devil-Loc 参数逻辑：Distortion/compression for explosion。
 - Chorus / Sidechain gain 参数逻辑：Stretch goose hiss；Sidechain gain to whoosh effect。
-- Snap Heap 参数逻辑：字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound；可确认的数值/范围：2。
-- Soundtoys Effect Rack 参数逻辑：字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound；可确认的数值/范围：2。
-- Decapitator 参数逻辑：字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound；可确认的数值/范围：2。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound；可确认的数值/范围：2。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：hi everyone and welcome to episode 2 of sound design experiments and in today's episode I'm going to be doing a breakdown of my majors of Australia sound redesign I'll show you the whole clip with my audio and then I'll get into how I created layered the sound；可确认的数值/范围：2。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: beckys_audio; 3yrKFdjORy0; mages_of_mystralia; spell; atmosphere; door_creak; goose; decapitator; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -4404,83 +3649,63 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **Unity 脚步调用改成 Wwise**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：y okay so first I integrated the wise project with the unity project so that they would communicate with each other and then went into the FPS controller object edited the scripts of first-person controller script in the inspector within that I changed one line of code and this basically means that the first-person con
+1. **Unity 脚步调用改成 Wwise**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Unity 脚步调用改成 Wwise
    - 链路参考：Wwise Random Containers
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-01-54d67d2d81`
-2. **Wwise 按材质建 random containers**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：e looking at how it implemented footsteps with wise into the demo level of Viking village in unity okay so first I integrated the wise project with the unity project so that they would communicate with each other and then went into the FPS controller object edited the scripts of first-person controller script in the in
+2. **Wwise 按材质建 random containers**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Wwise 按材质建 random containers
    - 链路参考：Wwise randomization
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-02-aa9c95bccc`
 3. **generic、sweetener、accessory 分层**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：generic、sweetener、accessory 分层
    - 链路参考：Unity + Audiokinetic integration
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-03-8b13920354`
-4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：es weren't always being repeated near each other also for the bag and the key sounds I ended up randomizing the initial delay time only by a small amount but this means that every time footstep happens the sound won't play immediately it will play within these values here without this the footsteps could end up soundin
+4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立可复用处理链
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-04-6ac1e3dd61`
 5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：打印中间结果
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-05-d03635778b`
-6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：anding so our next generated all my banks and once that was done I saved the project and went over into unity into wise picker refreshed the project we can now see in the wise picker the switches that we made in that we can now attach to our game objects in unity okay so be able to have the game know what surface you'r
+6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做变体和命名
    - 链路参考：Wwise Random Containers
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-06-a79bfe3017`
-7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：y okay so first I integrated the wise project with the unity project so that they would communicate with each other and then went into the FPS controller object edited the scripts of first-person controller script in the inspector within that I changed one line of code and this basically means that the first-person con
+7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理总线
    - 链路参考：Wwise randomization
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-07-ebe2d0f433`
-8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：e looking at how it implemented footsteps with wise into the demo level of Viking village in unity okay so first I integrated the wise project with the unity project so that they would communicate with each other and then went into the FPS controller object edited the scripts of first-person controller script in the in
+8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘失败点
    - 链路参考：Unity + Audiokinetic integration
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-08-10a6ff3f15`
 9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：准备游戏落地
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-09-856ced8a33`
-10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：es weren't always being repeated near each other also for the bag and the key sounds I ended up randomizing the initial delay time only by a small amount but this means that every time footstep happens the sound won't play immediately it will play within these values here without this the footsteps could end up soundin
+10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 Wwise Random Containers -> Wwise randomization -> Unity + Audiokinetic integration -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：归档知识
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-10-ab59c55a1b`
@@ -4497,15 +3722,9 @@ Records: 82
   - FPS controller calls Wwise
   - Assign switch containers to game objects
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：hello Becky here and today we're going to be looking at how it implemented footsteps with wise into the demo level of Viking village in unity okay so first I integrated the wise project with the unity project so that they would communicate with each other and
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：es weren't always being repeated near each other also for the bag and the key sounds I ended up randomizing the initial delay time only by a small amount but this means that every time footstep happens the sound won't play immediately it will play within these values here without this the footsteps could end up soundin
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：hello Becky here and today we're going to be looking at how it implemented footsteps with wise into the demo level of Viking village in unity okay so first I integrated the wise project with the unity project so that they would communicate with each other and
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：and I mainly turned down generic footstep because it was too loud and mixed in the bag and the key sounds a next added pitch volume randomization for each container to add more variation to the sound also for some of these random containers I changed this setting here so the avoid repeating last however many played for
 
 ### Materials / Layer Sources
 - generic footsteps
@@ -4530,8 +3749,6 @@ Records: 82
 - Wwise Random Containers 参数逻辑：Grass/dirt/wood/stone switches；Generic/sweetener/accessory layers。
 - Wwise randomization 参数逻辑：Pitch/volume randomization；Avoid-repeat last N。
 - Unity + Audiokinetic integration 参数逻辑：FPS controller calls Wwise；Assign switch containers to game objects。
-- EchoBoy / short delay 参数逻辑：字幕/画面线索：hello Becky here and today we're going to be looking at how it implemented footsteps with wise into the demo level of Viking village in unity okay so first I integrated the wise project with the unity project so that they would communicate with each other and ；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：hello Becky here and today we're going to be looking at how it implemented footsteps with wise into the demo level of Viking village in unity okay so first I integrated the wise project with the unity project so that they would communicate with each other and ；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 动态判断：如果限制器超过轻微抓峰，回到单层调整 transient 或 gain staging，不要靠总线硬压。
@@ -4556,62 +3773,42 @@ Records: 82
 1. **作为成片听整体声场**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：作为成片听整体声场
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-01-946980220b`
 2. **环境与动作共存**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：环境与动作共存
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-02-556a098553`
 3. **短片级同步优先**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：短片级同步优先
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-03-cc30bf9c19`
 4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立瞬态和触感
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-04-5915e41e56`
 5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做机械/材质主体
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-05-b112842ce9`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入电子运动
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-06-bd71379812`
 7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：处理空间和距离
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-07-df33ff0f2f`
 8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：频段分配
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-08-53ad0dcf5c`
 9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：渲染随机变体
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-09-1a17ea8b0e`
 10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 No confirmed plugin chain 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线和峰值控制
    - 链路参考：No confirmed plugin chain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-D0qibJgxYHY-10-1b6113ecb1`
 
 ### Plugin and Processing Notes
@@ -4658,65 +3855,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **先按游戏需求录全水素材**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：around with a few new plugins thanks so much for watching and if you have any plugins you use regularly in sound design then I'd love to hear about them so let me know down in the comments see in the next one
+1. **先按游戏需求录全水素材**: 先判断声音是近景物体、远景生态、天气、房间、洞穴还是外星环境；尺度决定 pitch、rate、空间和密度。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先按游戏需求录全水素材
    - 链路参考：Glitchmachines Cataract
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-01-8c50b52ae9`
 2. **movement 声音最适合再设计**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：movement 声音最适合再设计
    - 链路参考：Soundtoys processors
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-02-e4a7587f9e`
 3. **Soundtoys 和 Cataract 做生物化纹理**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Soundtoys 和 Cataract 做生物化纹理
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-03-6d71ed3339`
 4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：清理现实瑕疵
    - 链路参考：Glitchmachines Cataract
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-04-80ab81e423`
-5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：le different water sounds for a shooter game I'm currently adding audio to so I was trying to capture things like alter impact sounds like this one water droplets like this and also splashes and movement sounds when listening to the water movement sounds I decided I wanted to mess around with the sound a bit more and s
+5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：分层建立景深
    - 链路参考：Soundtoys processors
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-05-e900f25de0`
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入缓慢运动
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-06-2b9f1b1c8b`
-7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：around with a few new plugins thanks so much for watching and if you have any plugins you use regularly in sound design then I'd love to hear about them so let me know down in the comments see in the next one
+7. **控制频谱密度**: 环境容易堆低中频；用 EQ 和多段动态给对话、UI、战斗声留空间。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制频谱密度
    - 链路参考：Glitchmachines Cataract
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-07-8cf9027953`
 8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做循环和变体
    - 链路参考：Soundtoys processors
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-08-e0f8af47bf`
 9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：空间与距离
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-09-a3b3806ac2`
 10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。 本条的主要链路可以按 Glitchmachines Cataract -> Soundtoys processors -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：响度和动态
    - 链路参考：Glitchmachines Cataract
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-Pvkfc32V8Mo-10-97109c30ef`
 
 ### Plugin and Processing Notes
@@ -4728,8 +3905,6 @@ Records: 82
   - Crystallizer
   - MicroShift
 - **Soundtoys Effect Rack**: 串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
 
 ### Materials / Layer Sources
@@ -4751,7 +3926,7 @@ Records: 82
 ### Parameter Logic
 - Glitchmachines Cataract 参数逻辑：Use on recorded water movement；补充调参检查：确认该插件是在清理、塑形、制造运动、增加空间、控制动态还是统一响度。。
 - Soundtoys processors 参数逻辑：Decapitator；Crystallizer。
-- Soundtoys Effect Rack 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Soundtoys Effect Rack 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 - 频段判断：低频负责重量，中频负责识别，高频负责材质；每次 EQ 前先确认要保留哪一层。
@@ -4778,83 +3953,55 @@ Records: 82
 1. **读取画面能量节奏**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：读取画面能量节奏
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-01-fc6d7c58a8`
 2. **建立攻击性感知**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立攻击性感知
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-02-5a4a075094`
 3. **用作后续设计标尺**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：用作后续设计标尺
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-03-ce40bbc07e`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做 tonal/resonant 层
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-04-9545b72add`
 5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：增加随机运动
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-05-790dbcaa74`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-06-1a5f66db10`
 7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做冲击或释放点
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-07-018e188e3c`
 8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：设计尾音和空间
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-08-e7a53bd3ae`
 9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：整理频段和动态
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-09-61e899b1e7`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：组合成完整施法句子
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-dZsVzf2NWw0-10-e636251453`
 11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线微整和响度
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘参数逻辑
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：确定魔法语气
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：挑选真实纹理源
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 
 ### Plugin and Processing Notes
 - **未确认插件链**: 本视频没有可确认的制作画面或字幕讲解，仅记录成品特征。
@@ -4905,83 +4052,55 @@ Records: 82
 1. **质量层**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：质量层
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-01-c2274cf343`
 2. **机构层**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：机构层
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-02-108d2ad50c`
 3. **终止层**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：终止层
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-03-06d84cde0f`
 4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立攻击速度
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-04-c48db5237f`
 5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：塑造主体重量
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-05-177fc934f5`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入纹理破裂
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-06-72dc730a4a`
 7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：制造运动和预备感
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-07-a30becca35`
 8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：控制空间与尾音
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-08-09a9ad74ef`
 9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：频段让位和动态整理
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-09-2063b78e05`
 10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：渲染变体并挑选
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-2L6qe8uRf0Y-10-d44d7487db`
 11. **总线响度和峰值**: 总线只做 glue、轻微削峰和响度统一，限制器抓峰不负责重新设计声音。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线响度和峰值
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 12. **复盘可复用链路**: 记录每层源素材、核心插件、关键参数和失败点，下次做武器/爆炸/近战可以直接复用判断顺序。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘可复用链路
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 13. **锁定冲击角色**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：锁定冲击角色
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 14. **拆分源素材层**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：拆分源素材层
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 
 ### Plugin and Processing Notes
 - **未确认插件链**: 该条是成品演示，未出现可确认的处理链。
@@ -5033,80 +4152,52 @@ Records: 82
 1. **喉咙和身体**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：喉咙和身体
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-WdZ9DFDHaqI-01-a84b1c73ce`
 2. **嘴部细节**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：嘴部细节
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-WdZ9DFDHaqI-02-d07654faa8`
 3. **威胁高频**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：威胁高频
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-WdZ9DFDHaqI-03-d9d6e33521`
 4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：音高和共振峰塑形
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-WdZ9DFDHaqI-04-e49ca96ca0`
 5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立发声包络
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-WdZ9DFDHaqI-05-f9e16c0b29`
 6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：叠加材质细节
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-WdZ9DFDHaqI-06-ac7abfed22`
 7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：空间和身体感
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-WdZ9DFDHaqI-07-a82313c300`
 8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：动态和清晰度
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做变体和表情库
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线微调
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 11. **命名和落地**: 按情绪/动作/距离命名，给随机播放和参数切换留空间。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：命名和落地
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 12. **复盘设计逻辑**: 记录哪些素材负责生物性，哪些负责风格化，哪些负责可读动作。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘设计逻辑
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 13. **定义生物体型和情绪**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：定义生物体型和情绪
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 14. **选择声源角色**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 未确认插件链 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：选择声源角色
    - 链路参考：未确认插件链
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 
 ### Plugin and Processing Notes
 - **未确认插件链**: 该条是声音库成品展示，未出现可确认插件链。
@@ -5155,47 +4246,37 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **先理解源素材**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：tchered that. Really apologies to all the Monster Hunter fans. I'm going play the final redesign once through first and then we'll get into things. So here it is. The goal for this redesign was to only use audio from the raw folder of the Creature Vox large library. The first thing I did was I just made a Reaper Media
+1. **先理解源素材**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先理解源素材
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-01-157a2e3f4d`
-2. **无处理排节奏**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：udio is just having good understanding of your source. This was a super fun challenge to be able to do, and I'm really grateful to Paul for giving me the chance to do it. I really hope you enjoyed this video, and I'll see you in the next one.
+2. **无处理排节奏**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：无处理排节奏
    - 链路参考：OTT-style compression
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-02-c03fb1c235`
-3. **构建吼叫主体**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：them into my session. Once the database was created, I pulled in layers that I thought fit for high, medium, and low frequencies. And then I listened for some fun textures for the growls, the high-end details, and other little vocal bits like air, hissing, jaw snaps, and all that kind of fun stuff. I'll play some of th
+3. **构建吼叫主体**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：构建吼叫主体
    - 链路参考：Basement / RoboVoice
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-03-0c4109d316`
-4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ght fit for high, medium, and low frequencies. And then I listened for some fun textures for the growls, the high-end details, and other little vocal bits like air, hissing, jaw snaps, and all that kind of fun stuff. I'll play some of those layers just the way that I brought them into the session, just so you can see.
+4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：音高和共振峰塑形
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-04-240489aaef`
-5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：nd closed its mouth. This is pretty much just the watermelon and the dog recordings. And all that's on here really is a transient shaper. Not much else had to be added to make this really sound dynamic. After that comes the growls that are in between all the roars. Um when the mouth is closed but it's kind of still mak
+5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立发声包络
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -5203,77 +4284,59 @@ Records: 82
 6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：叠加材质细节
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-06-3980de3fc9`
-7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：tchered that. Really apologies to all the Monster Hunter fans. I'm going play the final redesign once through first and then we'll get into things. So here it is. The goal for this redesign was to only use audio from the raw folder of the Creature Vox large library. The first thing I did was I just made a Reaper Media
+7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间和身体感
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-07-234418eab0`
-8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：udio is just having good understanding of your source. This was a super fun challenge to be able to do, and I'm really grateful to Paul for giving me the chance to do it. I really hope you enjoyed this video, and I'll see you in the next one.
+8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：动态和清晰度
    - 链路参考：Frequency shifter / ring mod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-08-4efea0e4c5`
-9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：them into my session. Once the database was created, I pulled in layers that I thought fit for high, medium, and low frequencies. And then I listened for some fun textures for the growls, the high-end details, and other little vocal bits like air, hissing, jaw snaps, and all that kind of fun stuff. I'll play some of th
+9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做变体和表情库
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-09-01efb47ce9`
-10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ght fit for high, medium, and low frequencies. And then I listened for some fun textures for the growls, the high-end details, and other little vocal bits like air, hissing, jaw snaps, and all that kind of fun stuff. I'll play some of those layers just the way that I brought them into the session, just so you can see.
+10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微调
    - 链路参考：OTT-style compression
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-10-8feb7d7ecd`
-11. **命名和落地**: 按情绪/动作/距离命名，给随机播放和参数切换留空间。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：nd closed its mouth. This is pretty much just the watermelon and the dog recordings. And all that's on here really is a transient shaper. Not much else had to be added to make this really sound dynamic. After that comes the growls that are in between all the roars. Um when the mouth is closed but it's kind of still mak
+11. **命名和落地**: 按情绪/动作/距离命名，给随机播放和参数切换留空间。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：命名和落地
    - 链路参考：Basement / RoboVoice
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 12. **复盘设计逻辑**: 记录哪些素材负责生物性，哪些负责风格化，哪些负责可读动作。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘设计逻辑
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **定义生物体型和情绪**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：tchered that. Really apologies to all the Monster Hunter fans. I'm going play the final redesign once through first and then we'll get into things. So here it is. The goal for this redesign was to only use audio from the raw folder of the Creature Vox large library. The first thing I did was I just made a Reaper Media
+13. **定义生物体型和情绪**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：定义生物体型和情绪
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **选择声源角色**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：udio is just having good understanding of your source. This was a super fun challenge to be able to do, and I'm really grateful to Paul for giving me the chance to do it. I really hope you enjoyed this video, and I'll see you in the next one.
+14. **选择声源角色**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Snap Heap -> OTT-style compression -> Basement / RoboVoice -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：选择声源角色
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -5281,38 +4344,21 @@ Records: 82
 ### Plugin and Processing Notes
 - **Snap Heap**: 对 creature 层做电感、颤动和运动调制。
   - 结合 LFO/tremolo 自动化
-  - 字幕/画面线索：. Um, I have this snap heat preset that I'll show off. Um, a little bit of like OTT style stuff. Um, some tremolo that I automated in as well
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：retty easy to process all things considered. They were just so textured already from the raw recording. Um, I have this snap heat preset that I'll show off. Um, a little bit of like OTT style stuff. Um, some tremolo that I automated in as well. And some of those layers sound like this. [Music] Once I had these base lay
 - **OTT-style compression**: 提高层的密度和存在感。
   - 用于吼叫主体，不让尾巴过度糊住
 - **Basement / RoboVoice**: 补低频和异常声码器质感。
   - 用于 bass/drone 层
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：. Um, some tremolo that I automated in as well. And some of those layers sound like this. [Music] Once I had these base layers, I wanted to add to the high end and add the kind of danger and scariness of this creature
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：raw recording. Um, I have this snap heat preset that I'll show off. Um, a little bit of like OTT style stuff. Um, some tremolo that I automated in as well. And some of those layers sound like this. [Music] Once I had these base layers, I wanted to add to the high end and add the kind of danger and scariness of this cre
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：. Uh, I sent those all to a stereo delay and tried to make it just really strange sounding. [Music] Since these textures kind of matched the squeaky layer, I threw a gate on this folder and had it listening to the squeak layers
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：thing that's about to eat you. Uh, so this is where the weird textures layers came in. Uh, I sent those all to a stereo delay and tried to make it just really strange sounding. [Music] Since these textures kind of matched the squeaky layer, I threw a gate on this folder and had it listening to the squeak layers. So all
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：. And all that's on here really is a transient shaper. Not much else had to be added to make this really sound dynamic
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：nd closed its mouth. This is pretty much just the watermelon and the dog recordings. And all that's on here really is a transient shaper. Not much else had to be added to make this really sound dynamic. After that comes the growls that are in between all the roars. Um when the mouth is closed but it's kind of still mak
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：. And then from there, I was using mostly uh it's this uh Mela frequency shifter frog king preset. It made some really cool textures, so I threw that on there
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：ely wherever possible. So, this was a lot of hand editing. And then from there, I was using mostly uh it's this uh Mela frequency shifter frog king preset. It made some really cool textures, so I threw that on there. Next up, I just needed to fill in some bass. So, I got some droney layers. Uh, added basement to them.
 
 ### Materials / Layer Sources
 - birds
@@ -5340,14 +4386,10 @@ Records: 82
 - 8. Frequency shifter / ring mod：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
 
 ### Parameter Logic
-- Snap Heap 参数逻辑：结合 LFO/tremolo 自动化；字幕/画面线索：. Um, I have this snap heat preset that I'll show off. Um, a little bit of like OTT style stuff. Um, some tremolo that I automated in as well。
+- Snap Heap 参数逻辑：结合 LFO/tremolo 自动化
 - OTT-style compression 参数逻辑：用于吼叫主体，不让尾巴过度糊住。
 - Basement / RoboVoice 参数逻辑：用于 bass/drone 层。
-- Tremolator 参数逻辑：字幕/画面线索：. Um, some tremolo that I automated in as well. And some of those layers sound like this. [Music] Once I had these base layers, I wanted to add to the high end and add the kind of danger and scariness of this creature；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- EchoBoy / short delay 参数逻辑：字幕/画面线索：. Uh, I sent those all to a stereo delay and tried to make it just really strange sounding. [Music] Since these textures kind of matched the squeaky layer, I threw a gate on this folder and had it listening to the squeak layers；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Transient Shaper 参数逻辑：字幕/画面线索：. And all that's on here really is a transient shaper. Not much else had to be added to make this really sound dynamic；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Compressor / clipper 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Frequency shifter / ring mod 参数逻辑：字幕/画面线索：. And then from there, I was using mostly uh it's this uh Mela frequency shifter frog king preset. It made some really cool textures, so I threw that on there；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Compressor / clipper 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -5368,112 +4410,84 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **加载 S-Layer**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Do you want to create some amazing magic sounds? Then let's do it with penguin grenade. Penguin grenades the infinity magic. Just kidding. Today I'm going to show you the infinity magic generator using S layer which I also uploaded on my LinkedIn. Here's what you will need. S layer the penguin grenade library. o
+1. **加载 S-Layer**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：加载 S-Layer
    - 链路参考：Reaktor 6 S-Layer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-01-110472ae08`
-2. **设置随机范围**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：er pile. This is what it looks like at the start. There are seven slots where you can adjust things like sample, start, pitch, panning, and volume. The key feature of S layer is that every time you press the randomizer trigger, the assigned areas will change sounds randomly. For now, only the sample tab is activated. S
+2. **设置随机范围**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设置随机范围
    - 链路参考：Reverb / Soft Clipper / Compressor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-02-4531f395ec`
-3. **录制随机演奏**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o individual files, you can really feel how powerful and dynamic they are. [Music] I plan to load about 128 of them in sequence. Dragging about this much gives me 110. This part takes a little time. If you wait patiently, you can eventually get them all loaded in. Now, all the files all in, but since we are still 18 sh
+3. **录制随机演奏**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：录制随机演奏
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-03-5d466cc0c0`
-4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：rigger, the assigned areas will change sounds randomly. For now, only the sample tab is activated. Start lets you add a delay between fires so they can crossfade while playing. Pitch ranges from + 24 to minus 24 semmitones. Panning can be adjust here and so can volume. You can check the basic audio files here. Right no
+4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立可复用处理链
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-04-cd4db23875`
-5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s, I emphasize the transent to prevent picss from getting out of control. I also applied a soft clicker and then a blue compress. So once I had this set up, I turned on recording. Now every time I press a key, the sounds are re-triggered and generated randomly. [Music] Where are you? [Music] Each time you press a key,
+5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：打印中间结果
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-05-da1eb05ec6`
 6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做变体和命名
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-06-6c21396f6c`
-7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Do you want to create some amazing magic sounds? Then let's do it with penguin grenade. Penguin grenades the infinity magic. Just kidding. Today I'm going to show you the infinity magic generator using S layer which I also uploaded on my LinkedIn. Here's what you will need. S layer the penguin grenade library. o
+7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理总线
    - 链路参考：Reaktor 6 S-Layer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-07-698ac46bad`
-8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：er pile. This is what it looks like at the start. There are seven slots where you can adjust things like sample, start, pitch, panning, and volume. The key feature of S layer is that every time you press the randomizer trigger, the assigned areas will change sounds randomly. For now, only the sample tab is activated. S
+8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘失败点
    - 链路参考：Reverb / Soft Clipper / Compressor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-08-e30d3ac9e0`
-9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o individual files, you can really feel how powerful and dynamic they are. [Music] I plan to load about 128 of them in sequence. Dragging about this much gives me 110. This part takes a little time. If you wait patiently, you can eventually get them all loaded in. Now, all the files all in, but since we are still 18 sh
+9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：准备游戏落地
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-09-f2d6ee89b4`
-10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：rigger, the assigned areas will change sounds randomly. For now, only the sample tab is activated. Start lets you add a delay between fires so they can crossfade while playing. Pitch ranges from + 24 to minus 24 semmitones. Panning can be adjust here and so can volume. You can check the basic audio files here. Right no
+10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：归档知识
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-10-fe2263a20b`
-11. **确定工作目标**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s, I emphasize the transent to prevent picss from getting out of control. I also applied a soft clicker and then a blue compress. So once I had this set up, I turned on recording. Now every time I press a key, the sounds are re-triggered and generated randomly. [Music] Where are you? [Music] Each time you press a key,
+11. **确定工作目标**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定工作目标
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
 12. **建立素材池**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立素材池
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-13. **先做最小可听版本**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Do you want to create some amazing magic sounds? Then let's do it with penguin grenade. Penguin grenades the infinity magic. Just kidding. Today I'm going to show you the infinity magic generator using S layer which I also uploaded on my LinkedIn. Here's what you will need. S layer the penguin grenade library. o
+13. **先做最小可听版本**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先做最小可听版本
    - 链路参考：Reaktor 6 S-Layer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-14. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：er pile. This is what it looks like at the start. There are seven slots where you can adjust things like sample, start, pitch, panning, and volume. The key feature of S layer is that every time you press the randomizer trigger, the assigned areas will change sounds randomly. For now, only the sample tab is activated. S
+14. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Reaktor 6 S-Layer -> Reverb / Soft Clipper / Compressor -> Pro-R / reverb -> EchoBoy / short delay 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立可复用处理链
    - 链路参考：Reverb / Soft Clipper / Compressor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
 
@@ -5487,25 +4501,13 @@ Records: 82
   - soft clipper
   - blue compressor
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：. Once that's done, click remap to single note and it will neatly arrange the files without ribbing any empty spaces. Let's add just five more here. Now everything is filled. At this point we can adjust the randomization range
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：a few more. Once that's done, click remap to single note and it will neatly arrange the files without ribbing any empty spaces. Let's add just five more here. Now everything is filled. At this point we can adjust the randomization range. We'll also activate the randomizers for the start timing. For pitch, it's better n
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：. Start lets you add a delay between fires so they can crossfade while playing. Pitch ranges from + 24 to minus 24 semmitones
-  - 可确认的数值/范围：24
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：rigger, the assigned areas will change sounds randomly. For now, only the sample tab is activated. Start lets you add a delay between fires so they can crossfade while playing. Pitch ranges from + 24 to minus 24 semmitones. Panning can be adjust here and so can volume. You can check the basic audio files here. Right no
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：. There are seven slots where you can adjust things like sample, start, pitch, panning, and volume. The key feature of S layer is that every time you press the randomizer trigger, the assigned areas will change sounds randomly
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：er pile. This is what it looks like at the start. There are seven slots where you can adjust things like sample, start, pitch, panning, and volume. The key feature of S layer is that every time you press the randomizer trigger, the assigned areas will change sounds randomly. For now, only the sample tab is activated. S
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：. I also applied a soft clicker and then a blue compress. So once I had this set up, I turned on recording. Now every time I press a key, the sounds are re-triggered and generated randomly
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：s, I emphasize the transent to prevent picss from getting out of control. I also applied a soft clicker and then a blue compress. So once I had this set up, I turned on recording. Now every time I press a key, the sounds are re-triggered and generated randomly. [Music] Where are you? [Music] Each time you press a key,
 
 ### Materials / Layer Sources
 - Penguin Grenade library samples
@@ -5527,13 +4529,8 @@ Records: 82
 - 6. Compressor / clipper：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：6；24；128；110；18。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Reaktor 6 S-Layer 参数逻辑：pitch ±12；pan 70/30。
 - Reverb / Soft Clipper / Compressor 参数逻辑：Full D reverb；soft clipper。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：. Once that's done, click remap to single note and it will neatly arrange the files without ribbing any empty spaces. Let's add just five more here. Now everything is filled. At this point we can adjust the randomization range；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- EchoBoy / short delay 参数逻辑：字幕/画面线索：. Start lets you add a delay between fires so they can crossfade while playing. Pitch ranges from + 24 to minus 24 semmitones；可确认的数值/范围：24。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：. There are seven slots where you can adjust things like sample, start, pitch, panning, and volume. The key feature of S layer is that every time you press the randomizer trigger, the assigned areas will change sounds randomly；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Compressor / clipper 参数逻辑：字幕/画面线索：. I also applied a soft clicker and then a blue compress. So once I had this set up, I turned on recording. Now every time I press a key, the sounds are re-triggered and generated randomly；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -5554,128 +4551,100 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **在家录怪物源**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d box, but it was through a very small hole, so you could hear the resonances that were happening inside the box. And I finally also did a bunch of recordings of me making weird mouth noises into the microphone because what's more organic than a recording of an actual human? All of these recordings were done with the S
+1. **在家录怪物源**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：在家录怪物源
    - 链路参考：Shade / Transgressor / Soothe / Sonic Maximizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-01-fb93ae89a7`
-2. **先破坏再整理**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：g this microphone is ultrasonic microphone, which means that it captures super super super high frequencies. And if you pitch stuff down, you're going to retain a lot of the definition and fidelity that would have been lost if you recorded it with a regular microphone. To talk a little bit about my thinking process rea
+2. **先破坏再整理**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先破坏再整理
    - 链路参考：Enforcer / MRatioMB
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-02-4b68e497c0`
-3. **从素材池重建角色**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ature. The reason being this microphone is ultrasonic microphone, which means that it captures super super super high frequencies. And if you pitch stuff down, you're going to retain a lot of the definition and fidelity that would have been lost if you recorded it with a regular microphone. To talk a little bit about m
+3. **从素材池重建角色**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：从素材池重建角色
    - 链路参考：MOCoder / Pro-Q 3 / FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-03-72a5706299`
-4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：se I've actually found that they're pretty good for like the saliva as well. In this role, it kind of adds a bit more detail and realism to the creature. It kind of painted a picture of like the creature opening his mouth, roaring, and then you hear salam dripping on the floor. So, I thought that was something cool to
+4. **音高和共振峰塑形**: 用 pitch/formant、granular 或 frequency shift 改体型；formant 改角色，pitch 改尺度。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：音高和共振峰塑形
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-04-8ca42811e3`
-5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：a balloon, make a entire longer, more sustained wishbed and then use snippets of that for the foley and then also make transients with reactor 6 for some actual footstep impacts. Um, so unfortunately during this design process I actually lost the session to making this file and I tried to recreate it here with this plu
+5. **建立发声包络**: 攻击、持续、尾音要像一次生物动作；用 fade、envelope、tremolo 或 transient 让呼吸和吼叫有肌肉感。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立发声包络
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-05-7c06735d1f`
-6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：seis, hit learn. So, it learns the noise profile. You adjust these two faders using your ear. Select everything and hit render. And as you can see, it cleans out a lot of the noise and your recording is a lot cleaner. So, yeah, that's how we got here. So my thought process here was to make it sound less like a balloon,
+6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：叠加材质细节
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-06-85ead1b5e5`
-7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d box, but it was through a very small hole, so you could hear the resonances that were happening inside the box. And I finally also did a bunch of recordings of me making weird mouth noises into the microphone because what's more organic than a recording of an actual human? All of these recordings were done with the S
+7. **空间和身体感**: 短空间/卷积可以给胸腔、金属腔或口腔尺寸；长 reverb 只放在远景/怪物规模层。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：空间和身体感
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-07-a17669ea92`
-8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：g this microphone is ultrasonic microphone, which means that it captures super super super high frequencies. And if you pitch stuff down, you're going to retain a lot of the definition and fidelity that would have been lost if you recorded it with a regular microphone. To talk a little bit about my thinking process rea
+8. **动态和清晰度**: 压缩、EQ、多段动态让 body 稳定，高频刺耳要切，低频拖尾要短。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：动态和清晰度
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-08-4258b716a4`
-9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ature. The reason being this microphone is ultrasonic microphone, which means that it captures super super super high frequencies. And if you pitch stuff down, you're going to retain a lot of the definition and fidelity that would have been lost if you recorded it with a regular microphone. To talk a little bit about m
+9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做变体和表情库
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-09-1a2e4388db`
-10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：se I've actually found that they're pretty good for like the saliva as well. In this role, it kind of adds a bit more detail and realism to the creature. It kind of painted a picture of like the creature opening his mouth, roaring, and then you hear salam dripping on the floor. So, I thought that was something cool to
+10. **总线微调**: 总线控制峰值、轻微 glue 和空间统一，保留每个层的表情差异。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微调
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-10-213b688eda`
-11. **命名和落地**: 按情绪/动作/距离命名，给随机播放和参数切换留空间。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：a balloon, make a entire longer, more sustained wishbed and then use snippets of that for the foley and then also make transients with reactor 6 for some actual footstep impacts. Um, so unfortunately during this design process I actually lost the session to making this file and I tried to recreate it here with this plu
+11. **命名和落地**: 按情绪/动作/距离命名，给随机播放和参数切换留空间。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：命名和落地
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-11-a118af2d28`
-12. **复盘设计逻辑**: 记录哪些素材负责生物性，哪些负责风格化，哪些负责可读动作。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：seis, hit learn. So, it learns the noise profile. You adjust these two faders using your ear. Select everything and hit render. And as you can see, it cleans out a lot of the noise and your recording is a lot cleaner. So, yeah, that's how we got here. So my thought process here was to make it sound less like a balloon,
+12. **复盘设计逻辑**: 记录哪些素材负责生物性，哪些负责风格化，哪些负责可读动作。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘设计逻辑
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-12-3bc7a4e3b5`
-13. **定义生物体型和情绪**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d box, but it was through a very small hole, so you could hear the resonances that were happening inside the box. And I finally also did a bunch of recordings of me making weird mouth noises into the microphone because what's more organic than a recording of an actual human? All of these recordings were done with the S
+13. **定义生物体型和情绪**: 先确定大/小、愤怒/受伤/警觉、真实/机械/魔法；体型决定 pitch、formant、低频和节奏。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：定义生物体型和情绪
    - 链路参考：Unfilter / restoration
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Iz4rtBgqLlg-13-d0552a49fb`
-14. **选择声源角色**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：g this microphone is ultrasonic microphone, which means that it captures super super super high frequencies. And if you pitch stuff down, you're going to retain a lot of the definition and fidelity that would have been lost if you recorded it with a regular microphone. To talk a little bit about my thinking process rea
+14. **选择声源角色**: 用动物、人声、金属、机械、液体或摩擦分别承担喉咙、口腔、胸腔、皮肤和细节。 本条的主要链路可以按 Shade / Transgressor / Soothe / Sonic Maximizer -> Enforcer / MRatioMB -> MOCoder / Pro-Q 3 / FilterFreak -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：选择声源角色
    - 链路参考：Shade / Transgressor / Soothe / Sonic Maximizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -5689,55 +4658,25 @@ Records: 82
 - **MOCoder / Pro-Q 3 / FilterFreak**: 给橡胶、口腔和黏液层增加有机调制和频段控制。
   - 配合音量/滤波自动化
 - **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：. It's just MO coder, ProQ3, and Filter Freak with some volume automation. Um, the idea here was to create some sort of textural layer that could be used to highlight some of the throat movement of the creature
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：file. Just trying to find little gold nuggets here and there. Pretty simple processing. It's just MO coder, ProQ3, and Filter Freak with some volume automation. Um, the idea here was to create some sort of textural layer that could be used to highlight some of the throat movement of the creature. And this is just the s
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：. This is just this sound but pitch down, some intense M ratio, some limiting sonic maximizer and tremolator to give a bit more movement. I think I use that [Music] here. And yeah, so that's a shower screen
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：th some of the plugins. This is just this sound but pitch down, some intense M ratio, some limiting sonic maximizer and tremolator to give a bit more movement. I think I use that [Music] here. And yeah, so that's a shower screen. So another recording that I did was scraping my forks on a pan. I tried to capture some or
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：. Just a little bit of clean up with the EQ. Add some bass inflator [Music] radiator O enforcer sonic maximizer even more enforcer and some trend and shaping
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：And here's kind of what it sounds like at the end. I just wanted the transient. Just a little bit of clean up with the EQ. Add some bass inflator [Music] radiator O enforcer sonic maximizer even more enforcer and some trend and shaping. And this is just good because it's like a sweetener layer that could be layered in
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：. And what that also means is that you're also kind of limited in terms of processing because if you throw too much plugins on something, it's going to sound sci-fi and it's not going to sound realistic and grounded anymore
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：arious synthesis techniques tends to make it sound way too sci-fi. And what that also means is that you're also kind of limited in terms of processing because if you throw too much plugins on something, it's going to sound sci-fi and it's not going to sound realistic and grounded anymore. So, one of the biggest challen
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：. The idea is to artificially add back in some of the resonance of various spaces. And this is actually a technique that I learned from Ash Reed from Sony PlayStation
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：a whole lot. This is fed through speakerphone. The idea is to artificially add back in some of the resonance of various spaces. And this is actually a technique that I learned from Ash Reed from Sony PlayStation. He used this technique a lot on some of Returnal's creatures and I thought that game sounded amazing. So, w
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：. Um, what I think it's doing is a combination of pitch shifting, some granular syn stuff, and some delay. There's also some various presets here that also layers in the existing creature roar with what you feed into it
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：s a plugin by Crotos. Um, what I think it's doing is a combination of pitch shifting, some granular syn stuff, and some delay. There's also some various presets here that also layers in the existing creature roar with what you feed into it. So, that could lead to some happy accidents as well. And here are other plugins
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：. And if you pitch stuff down, you're going to retain a lot of the definition and fidelity that would have been lost if you recorded it with a regular microphone
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：g this microphone is ultrasonic microphone, which means that it captures super super super high frequencies. And if you pitch stuff down, you're going to retain a lot of the definition and fidelity that would have been lost if you recorded it with a regular microphone. To talk a little bit about my thinking process rea
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：. So my thought process here was to make it sound less like a balloon, make a entire longer, more sustained wishbed and then use snippets of that for the foley and then also make transients with reactor 6 for some actual footstep impacts
-  - 可确认的数值/范围：6
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：that's how we got here. So my thought process here was to make it sound less like a balloon, make a entire longer, more sustained wishbed and then use snippets of that for the foley and then also make transients with reactor 6 for some actual footstep impacts. Um, so unfortunately during this design process I actually
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：. We have some compression, H3000, RBS, M ratio, Oxford inflator, and finally portal. So with the exception of portal, all of this is to enhance the file, add a bit more low end, and make it bit louder
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：some whooshes and try to capture some of that that slimy texture on the body that the creature might have. We have some compression, H3000, RBS, M ratio, Oxford inflator, and finally portal. So with the exception of portal, all of this is to enhance the file, add a bit more low end, and make it bit louder. This is impo
 - **Unfilter / restoration**: 修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
-  - 字幕/画面线索：. And before getting to the stage, I already did one pass of cleaning of the recordings in RX. And to briefly demonstrate how I did that, you can open it external editor. Um, I just have it on the menu bar
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
-  - 字幕/画面线索：got to do it for the creature. And before getting to the stage, I already did one pass of cleaning of the recordings in RX. And to briefly demonstrate how I did that, you can open it external editor. Um, I just have it on the menu bar. It's the same thing. You open it like this. And basically all of the yellow fuzzy st
 
 ### Materials / Layer Sources
 - plastic pipe
@@ -5765,15 +4704,9 @@ Records: 82
 - 8. Pro-R / reverb：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：6；192；32；12；30 seconds。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Shade / Transgressor / Soothe / Sonic Maximizer 参数逻辑：用于源素材渲染阶段。
 - Enforcer / MRatioMB 参数逻辑：用于怪物主体和冲击层。
 - MOCoder / Pro-Q 3 / FilterFreak 参数逻辑：配合音量/滤波自动化。
-- FilterFreak 参数逻辑：字幕/画面线索：. It's just MO coder, ProQ3, and Filter Freak with some volume automation. Um, the idea here was to create some sort of textural layer that could be used to highlight some of the throat movement of the creature；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Tremolator 参数逻辑：字幕/画面线索：. This is just this sound but pitch down, some intense M ratio, some limiting sonic maximizer and tremolator to give a bit more movement. I think I use that [Music] here. And yeah, so that's a shower screen；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：. Just a little bit of clean up with the EQ. Add some bass inflator [Music] radiator O enforcer sonic maximizer even more enforcer and some trend and shaping；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-L 2 / limiter 参数逻辑：字幕/画面线索：. And what that also means is that you're also kind of limited in terms of processing because if you throw too much plugins on something, it's going to sound sci-fi and it's not going to sound realistic and grounded anymore；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：. The idea is to artificially add back in some of the resonance of various spaces. And this is actually a technique that I learned from Ash Reed from Sony PlayStation；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: creature; home recording; Shade; Transgressor; MOCoder; FilterFreak; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -5793,128 +4726,100 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **按画面角色建组**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：n grenades raw magic essential magic and dark magic libraries and I'm going to be showing you how I've done this so the first thing I'd like to do before jumping into action is of course to look at the footage I'm going to be working on and pinpoint things that needs to be either pulled from a library or things that ne
+1. **按画面角色建组**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：按画面角色建组
    - 链路参考：Phase Plant / Faceplant granular
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-01-27aa30c7df`
-2. **素材库和现场源结合**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：is pretty dense and it's pretty packed with action and what I like to do to have an idea of where I'm heading is to narrate uh what's happening um while I play the video uh strip of sound so here we have a very Nimble Archer wearing a cloak um bow and she seemingly wears light armor she's jumping over a burning assault
+2. **素材库和现场源结合**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：素材库和现场源结合
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-02-42d826e147`
-3. **箭矢系统化处理**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：row um that comes from the dark magic libraries and this part was a little bit more affected um so yeah again pissed up EQ nothing too crazy right what else it's tough it's tough that's going to be um pitched um and uh time stretched uh faster and then of course add some excited with shops and uh low cut um so yeah you
+3. **箭矢系统化处理**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：箭矢系统化处理
    - 链路参考：Soundtoys Effect Rack / Tremolator / FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-03-e5ead1b8bf`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o be either used for the sound design session or for the spotting session now I'm not going to be going too much into detail on how I've cleaned them up this is not why we here for today uh but BAS basically what I do is when these guys are ready like to balce them to um specific folder you know like um dialogue Folly
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：FabFilter Pro-Q 3 / Pro-MB / Pro-L 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-04-df17230027`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：affected that's reversed so what is in there some pitching some uh low cut again so um things that would resemble an AR impact on wood um what else this part this one is absolutely amazing this is uh I don't know this is like some paper cutter cut Rusty hinge that he used and at first it's like an old crunky uh car uh
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Phase Plant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-05-6359e0b4c1`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Suite had like a delay and of course duplicated that part here and you know like in a and in protol sorry you can like render straight away after that listen to what you did and have it like render here so that it's easier you know to to mix and here for the [Applause] h is the the other voice design parts and then her
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-06-081f833c7e`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：n grenades raw magic essential magic and dark magic libraries and I'm going to be showing you how I've done this so the first thing I'd like to do before jumping into action is of course to look at the footage I'm going to be working on and pinpoint things that needs to be either pulled from a library or things that ne
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-07-a64280e2ec`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：is pretty dense and it's pretty packed with action and what I like to do to have an idea of where I'm heading is to narrate uh what's happening um while I play the video uh strip of sound so here we have a very Nimble Archer wearing a cloak um bow and she seemingly wears light armor she's jumping over a burning assault
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-08-fb58dda2e3`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：row um that comes from the dark magic libraries and this part was a little bit more affected um so yeah again pissed up EQ nothing too crazy right what else it's tough it's tough that's going to be um pitched um and uh time stretched uh faster and then of course add some excited with shops and uh low cut um so yeah you
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-09-e4be66bb9f`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o be either used for the sound design session or for the spotting session now I'm not going to be going too much into detail on how I've cleaned them up this is not why we here for today uh but BAS basically what I do is when these guys are ready like to balce them to um specific folder you know like um dialogue Folly
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-10-e8e06321c0`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：affected that's reversed so what is in there some pitching some uh low cut again so um things that would resemble an AR impact on wood um what else this part this one is absolutely amazing this is uh I don't know this is like some paper cutter cut Rusty hinge that he used and at first it's like an old crunky uh car uh
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-11-906596fefa`
-12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Suite had like a delay and of course duplicated that part here and you know like in a and in protol sorry you can like render straight away after that listen to what you did and have it like render here so that it's easier you know to to mix and here for the [Applause] h is the the other voice design parts and then her
+12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘参数逻辑
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-12-f336778d7e`
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：n grenades raw magic essential magic and dark magic libraries and I'm going to be showing you how I've done this so the first thing I'd like to do before jumping into action is of course to look at the footage I'm going to be working on and pinpoint things that needs to be either pulled from a library or things that ne
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-kFxuNtkv4CU-13-f50b64d54d`
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：is pretty dense and it's pretty packed with action and what I like to do to have an idea of where I'm heading is to narrate uh what's happening um while I play the video uh strip of sound so here we have a very Nimble Archer wearing a cloak um bow and she seemingly wears light armor she's jumping over a burning assault
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Phase Plant / Faceplant granular -> Snap Heap -> Soundtoys Effect Rack / Tremolator / FilterFreak -> FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -5927,8 +4832,6 @@ Records: 82
   - gain percent mode
   - LFO/random LFO
   - envelope to pitch/drive/gain
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
 - **Soundtoys Effect Rack / Tremolator / FilterFreak**: 制作 phase、propeller、threshold-filter 和低通运动。
   - Tremolator propeller
@@ -5938,61 +4841,29 @@ Records: 82
   - Pro-L2 1:1 during print
   - Pro-MB mastering preset
 - **Phase Plant**: 合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
 - **Soundtoys Effect Rack**: 串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
 - **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：a little bit more um design there so on its own it plays this way oops for the hard so really like shaky pitchy and and tremolo on a tone for each plugin they play this way so of course for the heart that's the dry part so the crystallizer again for heart for the flingy spaciness a bit more Spacey this time pitch delay
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：row um that comes from the dark magic libraries and this part was a little bit more affected um so yeah again pissed up EQ nothing too crazy right what else it's tough it's tough that's going to be um pitched um and uh time stretched uh faster and then of course add some excited with shops and uh low cut um so yeah you
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：hat um I have here is just you know eing for um later on mix mixing stages and these are uh my sends uh to uh different reverbs um so these guys are going to be rooted to of course the F the background bus straight away uh and same applies to every other um I can't grab that every other folder so the dialog folder and
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：d then that's the part where we sound designed for so that's the dry elements so you hear this like Reverb and a bit of delay but it it was not long enough so what I did is just like you know bring up um audio Suite had like a delay and of course duplicated that part here and you know like in a and in protol sorry you
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：nd more feathery arrows right so this part is only from pul stout and [Music] um U raw magic libraries so simple things pitch up and low low cut sorry and that's the same set reversed so yeah you know rocket launch from toys that he used um same but reversed in the the correct order anything that would sound you know l
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：she jumps mingle with the moment she turns into this type of shadow that you have here right so for the first part the attack it's it's I think it's a what is it uh yeah swish so let's play this guy and then this and that so so so all these stuff played together sound like that and so we have already created the space
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：and also to get you know bit things to play together nicely and and some makeup there to to to regain from what we were compressing for the which is just like gentle right so idea is also not to have um that part uh being too uh Dynamic either because this is going to be the Flesh and the the most dynamic part is going
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：pul stout and [Music] um U raw magic libraries so simple things pitch up and low low cut sorry and that's the same set reversed so yeah you know rocket launch from toys that he used um same but reversed in the the correct order anything that would sound you know like as a true um whistle from an arrow um that comes fro
 
 ### Materials / Layer Sources
 - Raw Magic
@@ -6020,15 +4891,13 @@ Records: 82
 - 8. Tremolator：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：10。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Phase Plant / Faceplant granular 参数逻辑：random LFO to pitch/grain/playhead macro。
 - Snap Heap 参数逻辑：gain percent mode；LFO/random LFO。
 - Soundtoys Effect Rack / Tremolator / FilterFreak 参数逻辑：Tremolator propeller；FilterFreak input threshold to filter frequency。
 - FabFilter Pro-Q 3 / Pro-MB / Pro-L 2 参数逻辑：Pro-Q3 natural phase；Pro-L2 1:1 during print。
-- Phase Plant 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Soundtoys Effect Rack 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- FilterFreak 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Tremolator 参数逻辑：字幕/画面线索：[Music] for the hor I'm TI French sound designer and I'm absolutely delighted to share with you this sound redesign of the uh famous opening cinematic of World Warcraft battle for aoth now for this specific project I used only my own recordings and penguin gre；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Phase Plant 参数逻辑：
+- Soundtoys Effect Rack 参数逻辑：
+- FilterFreak 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: cinematic magic; Phase Plant; Snap Heap; Tremolator; Pro-Q3; Pro-MB; whoosh; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -6048,121 +4917,91 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **拆出火法事件**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ssion some Distortion absolutely lovely uh kiloh Hearts Ensemble it's barely in there but it's in there just enough and then tonstrom traveler doing the heavy lifting to make it whooshy next we have this sandp sane crackle sounds like this already kind of sounds like uh Embers crackling on a fire for effects some simpl
+1. **拆出火法事件**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：拆出火法事件
    - 链路参考：Decapitator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-01-fe332e4540`
-2. **选择火源素材**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：EQ getting rid of a lot of the low ends and just boost in the high range of course decapitator my beloved really exaggerate everything and then traveler the last print that I did was paper crumbles sustained of course decapitator as you will tell I love using it kiloh Heartz ensemble next we have volcano 3 by Fab filte
+2. **选择火源素材**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：选择火源素材
    - 链路参考：FabFilter Volcano 3
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-02-5a8108cb96`
-3. **饱和和包络滤波**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s sandp sane crackle sounds like this already kind of sounds like uh Embers crackling on a fire for effects some simple EQ getting rid of a lot of the low ends and just boost in the high range of course decapitator my beloved really exaggerate everything and then traveler the last print that I did was paper crumbles su
+3. **饱和和包络滤波**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：饱和和包络滤波
    - 链路参考：Snap Heap transient shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-03-92ac7063ce`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做 tonal/resonant 层
    - 链路参考：Tonsturm Traveler / Tremolator / Ensemble
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-04-81a7bf2683`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：first time I used with fingernail scraping on a guitar sounds like this that's slowed down so for effects we have some compression some Distortion absolutely lovely uh kiloh Hearts Ensemble it's barely in there but it's in there just enough and then tonstrom traveler doing the heavy lifting to make it whooshy next we h
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-05-86cb2a39a9`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：with to get your creative juices flowing so without further Ado let's break down this design starting with a couple of prints that I made for specifically for making some whooshes the first time I used with fingernail scraping on a guitar sounds like this that's slowed down so for effects we have some compression some
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-06-143ff202ca`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ssion some Distortion absolutely lovely uh kiloh Hearts Ensemble it's barely in there but it's in there just enough and then tonstrom traveler doing the heavy lifting to make it whooshy next we have this sandp sane crackle sounds like this already kind of sounds like uh Embers crackling on a fire for effects some simpl
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-07-761e7b6c60`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：EQ getting rid of a lot of the low ends and just boost in the high range of course decapitator my beloved really exaggerate everything and then traveler the last print that I did was paper crumbles sustained of course decapitator as you will tell I love using it kiloh Heartz ensemble next we have volcano 3 by Fab filte
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Pro-MB / multiband dynamics
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-08-985fdf2732`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s sandp sane crackle sounds like this already kind of sounds like uh Embers crackling on a fire for effects some simple EQ getting rid of a lot of the low ends and just boost in the high range of course decapitator my beloved really exaggerate everything and then traveler the last print that I did was paper crumbles su
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-09-df477e024f`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：组合成完整施法句子
    - 链路参考：Convolver / convolution
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-10-fbaa914861`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：first time I used with fingernail scraping on a guitar sounds like this that's slowed down so for effects we have some compression some Distortion absolutely lovely uh kiloh Hearts Ensemble it's barely in there but it's in there just enough and then tonstrom traveler doing the heavy lifting to make it whooshy next we h
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：with to get your creative juices flowing so without further Ado let's break down this design starting with a couple of prints that I made for specifically for making some whooshes the first time I used with fingernail scraping on a guitar sounds like this that's slowed down so for effects we have some compression some
+12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘参数逻辑
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ssion some Distortion absolutely lovely uh kiloh Hearts Ensemble it's barely in there but it's in there just enough and then tonstrom traveler doing the heavy lifting to make it whooshy next we have this sandp sane crackle sounds like this already kind of sounds like uh Embers crackling on a fire for effects some simpl
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：EQ getting rid of a lot of the low ends and just boost in the high range of course decapitator my beloved really exaggerate everything and then traveler the last print that I did was paper crumbles sustained of course decapitator as you will tell I love using it kiloh Heartz ensemble next we have volcano 3 by Fab filte
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Decapitator -> FabFilter Volcano 3 -> Snap Heap transient shaper -> Tonsturm Traveler / Tremolator / Ensemble 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 
 ### Plugin and Processing Notes
 - **Decapitator**: 给火焰和纸/沙素材增加热感、粗糙度和密度。
   - 多层使用，按层控制强度
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：ng on a fire for effects some simple EQ getting rid of a lot of the low ends and just boost in the high range of course decapitator my beloved really exaggerate everything and then traveler the last print that I did was paper crumbles sustained of course decapitator as you will tell I love using it kiloh Heartz ensembl
 - **FabFilter Volcano 3**: 用 envelope follower 做火焰滤波运动。
   - slower attack
 - **Snap Heap transient shaper**: 用 audio follower 控制 attack/sustain，让火焰瞬态更有动作。
@@ -6170,50 +5009,26 @@ Records: 82
 - **Tonsturm Traveler / Tremolator / Ensemble**: 增加 whoosh、摆动和宽度。
   - 用于运动层
 - **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：t kind of sounds like those old school uh exaggerated punches uh this is slowed down almost by half for effects we have snap peep on this and the first uh effect in it is transient shaper and I have this audio follower tied to the attack and the sustain so it's pushing attack up it's pushing the sustain down here's the
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：rst hot pan short uh I believe this is reversed extend it out yeah this is reversed and on here we have decapitator and tremolator to add some movements next is fire ignite flash paper ignites long uh these are really cool sounds like this I just took a little bit just a bit of that and then add a distortion to kind of
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：s sandp sane crackle sounds like this already kind of sounds like uh Embers crackling on a fire for effects some simple EQ getting rid of a lot of the low ends and just boost in the high range of course decapitator my beloved really exaggerate everything and then traveler the last print that I did was paper crumbles su
 - **Pro-MB / multiband dynamics**: 多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：st and uh let's just listen to the spellcast first and then break it down on the master track for the spellcast we have Pro MB and then just a mastering preset I think this is B it's either one or two I think it's one and then L2 limiter so layer by layer let's do it so I pretty much shortened it it's also slowed down
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：t we have Pro MB and then just a mastering preset I think this is B it's either one or two I think it's one and then L2 limiter so layer by layer let's do it so I pretty much shortened it it's also slowed down so for effects we have of course to no one's surpris decapitator and then volcano 3 this is with a envelope fo
-  - 可确认的数值/范围：3
 - **Convolver / convolution**: 卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 字幕/画面线索：hat it sounds again just full rate uh for effects we have L2 with a lot of gain on it kind of smush it and then we have convolver on the nuclear reactor setting which is a very popular used one and I trimmed the area that I used for it so I did it kind of towards the end and I added a fade out and stretched it a bit so
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：w there is a bit of a peak here and this is uh all being followed by an envelope follower Melda Productions M free form phase with some random craziness another bit of decapitator Pro Q3 getting rid of the low ends and last but not least traveler I let these all print and run and then I pretty much just took them then
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：urse decapitator my beloved really exaggerate everything and then traveler the last print that I did was paper crumbles sustained of course decapitator as you will tell I love using it kiloh Heartz ensemble next we have volcano 3 by Fab filter now there is a bit of a peak here and this is uh all being followed by an en
-  - 可确认的数值/范围：3
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：first time I used with fingernail scraping on a guitar sounds like this that's slowed down so for effects we have some compression some Distortion absolutely lovely uh kiloh Hearts Ensemble it's barely in there but it's in there just enough and then tonstrom traveler doing the heavy lifting to make it whooshy next we h
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：storted just kind of mid High opening uh the next sound we have is water steam burst hot pan short uh I believe this is reversed extend it out yeah this is reversed and on here we have decapitator and tremolator to add some movements next is fire ignite flash paper ignites long uh these are really cool sounds like this
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Materials / Layer Sources
@@ -6239,15 +5054,14 @@ Records: 82
 - 8. Pro-MB / multiband dynamics：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：3；08；27；016。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
-- Decapitator 参数逻辑：多层使用，按层控制强度；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Decapitator 参数逻辑：多层使用，按层控制强度
 - FabFilter Volcano 3 参数逻辑：slower attack。
 - Snap Heap transient shaper 参数逻辑：attack/sustain follower。
 - Tonsturm Traveler / Tremolator / Ensemble 参数逻辑：用于运动层。
-- Snap Heap 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。。
-- Tremolator 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
-- Pro-Q 3 / EQ 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
-- Pro-MB / multiband dynamics 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。。
+- Snap Heap 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。。
+- Tremolator 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
+- Pro-Q 3 / EQ 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
+- Pro-MB / multiband dynamics 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: fire; magic; Decapitator; Volcano; Traveler; Snap Heap; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -6267,128 +5081,100 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **先做源素材**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：or sending me a copy of their Library so let's listen to the final redesign [Music] first so how I made this as usual I started with a load of source creation this first rack I'm using here I've called phase Doppler it's basically me creating a kind of dopl rack without using plugins like spin Tracer traveler or wh kin
+1. **先做源素材**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先做源素材
    - 链路参考：Kilohearts pitch shifter / filter / gain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-01-1bd69bf7d5`
-2. **Phase Doppler rack**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：epth both modulated by the incoming signal volume so you get this nice super phy point at the peak of the sound and the pitch kind of changes across the whole thing which adds to the kind of Doppler effect so listen that here M ratio MB is smoothing out a few of those transients after the vcoder just so that it fits ni
+2. **Phase Doppler rack**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Phase Doppler rack
    - 链路参考：Supercharger GT / Diablo Lite
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-02-65567b0e20`
-3. **Impact rack**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：aveler or wh kind of a more budget version the main three elements of this rack are Kilz pit shifter Kilz gain and Kilz filter the shifter and gain are both just being automated here up and down to create the kind of Doppler effect and the filter is having its cut off modulated by the incoming signal volume so I'll jus
+3. **Impact rack**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Impact rack
    - 链路参考：Kilohearts Transient Shaper / Ensemble / Space Modulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-03-8082bb224f`
-4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ly off of the little kind of transients that we have here and again kind of putting it in the aesthetic that I want how space modulator is having its mix and depth both modulated by the incoming signal volume so you get this nice super phy point at the peak of the sound and the pitch kind of changes across the whole th
+4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立瞬态和触感
    - 链路参考：Short feedback delays
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-04-0d64287710`
-5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d of making it sound a bit more full and a bit more sci-fi enoc coder which is playing nicely off of the little kind of transients that we have here and again kind of putting it in the aesthetic that I want how space modulator is having its mix and depth both modulated by the incoming signal volume so you get this nice
+5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做机械/材质主体
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-05-bc2a5da7ac`
-6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：harge up start right from the beginning of the clip gives it a nice sense tension whole way through the next layer is a bounced Reverb just from a super slowed down tail of a drone to me this had like a massive TIE fighter Vibes and that's exactly what I was going for with this so I just compressed it so it was a bit m
+6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：加入电子运动
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-06-11f9688aec`
-7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：or sending me a copy of their Library so let's listen to the final redesign [Music] first so how I made this as usual I started with a load of source creation this first rack I'm using here I've called phase Doppler it's basically me creating a kind of dopl rack without using plugins like spin Tracer traveler or wh kin
+7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：处理空间和距离
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-07-65721ac8ee`
-8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：epth both modulated by the incoming signal volume so you get this nice super phy point at the peak of the sound and the pitch kind of changes across the whole thing which adds to the kind of Doppler effect so listen that here M ratio MB is smoothing out a few of those transients after the vcoder just so that it fits ni
+8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段分配
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-08-18d9913a21`
-9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：aveler or wh kind of a more budget version the main three elements of this rack are Kilz pit shifter Kilz gain and Kilz filter the shifter and gain are both just being automated here up and down to create the kind of Doppler effect and the filter is having its cut off modulated by the incoming signal volume so I'll jus
+9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染随机变体
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-09-8e31cdcbb7`
-10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ly off of the little kind of transients that we have here and again kind of putting it in the aesthetic that I want how space modulator is having its mix and depth both modulated by the incoming signal volume so you get this nice super phy point at the peak of the sound and the pitch kind of changes across the whole th
+10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线和峰值控制
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-10-08bc9f2556`
-11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d of making it sound a bit more full and a bit more sci-fi enoc coder which is playing nicely off of the little kind of transients that we have here and again kind of putting it in the aesthetic that I want how space modulator is having its mix and depth both modulated by the incoming signal volume so you get this nice
+11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：交互实现思路
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-11-7f39b8deb2`
-12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：harge up start right from the beginning of the clip gives it a nice sense tension whole way through the next layer is a bounced Reverb just from a super slowed down tail of a drone to me this had like a massive TIE fighter Vibes and that's exactly what I was going for with this so I just compressed it so it was a bit m
+12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘可复用规则
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-12-632a956057`
-13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：or sending me a copy of their Library so let's listen to the final redesign [Music] first so how I made this as usual I started with a load of source creation this first rack I'm using here I've called phase Doppler it's basically me creating a kind of dopl rack without using plugins like spin Tracer traveler or wh kin
+13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：锁定科技功能
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cLhevQYlvlI-13-f1b0bef2ab`
-14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：epth both modulated by the incoming signal volume so you get this nice super phy point at the peak of the sound and the pitch kind of changes across the whole thing which adds to the kind of Doppler effect so listen that here M ratio MB is smoothing out a few of those transients after the vcoder just so that it fits ni
+14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Kilohearts pitch shifter / filter / gain -> Supercharger GT / Diablo Lite -> Kilohearts Transient Shaper / Ensemble / Space Modulator -> Short feedback delays 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：拆成反馈层
    - 链路参考：Frequency shifter / ring mod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -6406,60 +5192,27 @@ Records: 82
 - **Short feedback delays**: 用两个极短 delay 形成 tonal rack。
   - perform delay time live
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：e thing as flanger but I think after the ring mod it has quite a nice sound as it's being kind of crunched [Music] up M tremolo doing a lot of heavy lifting here also having its rate automated this is kind of Sugg testing the state of the engine and kind of how hard it's working especially in the leadup to the Big Boos
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：y bringing up some of the mids and making sure that we can hear the movement the whole way through finally just Dynamic EQ not actually being used as a dynamic because the low end was getting bit much and high end was not really sticking out enough and then I have a limiter at the end just for some extra gain and becau
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：as a dynamic because the low end was getting bit much and high end was not really sticking out enough and then I have a limiter at the end just for some extra gain and because I put it on all of my racks just if I'm doing more experimental processing I think it's necessary so in terms of source here I mainly went with
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：ly off of the little kind of transients that we have here and again kind of putting it in the aesthetic that I want how space modulator is having its mix and depth both modulated by the incoming signal volume so you get this nice super phy point at the peak of the sound and the pitch kind of changes across the whole th
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：the engine of the ship the last rack I want to show you here is this tonal rack which is mainly based around these two delays here which are set super close to each other and I'm just constantly moving them around as I'm doing the source creation if I turn everything else off so as you probably know if you put a delay
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：epth both modulated by the incoming signal volume so you get this nice super phy point at the peak of the sound and the pitch kind of changes across the whole thing which adds to the kind of Doppler effect so listen that here M ratio MB is smoothing out a few of those transients after the vcoder just so that it fits ni
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：] first so how I made this as usual I started with a load of source creation this first rack I'm using here I've called phase Doppler it's basically me creating a kind of dopl rack without using plugins like spin Tracer traveler or wh kind of a more budget version the main three elements of this rack are Kilz pit shift
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：generating those kicks transients that are in the final redesigned this is quite a good way of getting transients from sustained sounds that sound pretty good I'll turn everything off here initially just supercharger GT this is actually free with the complete access bundle from Native Instruments which is just kind of
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：I think it has kind of a unique tone a unique form of distortion that's a bit dirty that I like just doing bit of hard clipping here next is kind of the main part of the rack killer Hearts transient shaper attack all way up Pump a little bit up and sustain all the way down so you get this nice transient shape which whi
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：illow flaps the cardboard drags and I experimented with these playing card shuffling which kind of goes nicely into the vocoder but ultimately was a bit too it kind of wasn't dense enough for the sound to really work and you can see I'm layering them up here slightly panning them and pitching around differently so you
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 可确认的数值/范围：42；2
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：st basically keeping that screamy resonance in there next is this treadmill start and I've taken two of these takes and reversed this one so that same with the prop plane it kind of comes in and out so feels like it's charging up then releasing [Music] afterwards it's kind of a more subtle element but I think having th
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - fabric ripping
@@ -6487,15 +5240,14 @@ Records: 82
 - 8. Pro-R / reverb：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：42；2；10；16；70 HZ。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Kilohearts pitch shifter / filter / gain 参数逻辑：incoming volume follower。
 - Supercharger GT / Diablo Lite 参数逻辑：flatten source；hard clipping/dirty distortion。
 - Kilohearts Transient Shaper / Ensemble / Space Modulator 参数逻辑：transient attack；movement widening。
 - Short feedback delays 参数逻辑：perform delay time live。
-- Tremolator 参数逻辑：可确认的数值/范围：42；2；参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
-- Pro-Q 3 / EQ 参数逻辑：可确认的数值/范围：42；2；参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
-- Pro-L 2 / limiter 参数逻辑：可确认的数值/范围：42；2；参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。。
-- Pro-R / reverb 参数逻辑：可确认的数值/范围：42；2；参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。。
+- Tremolator 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
+- Pro-Q 3 / EQ 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
+- Pro-L 2 / limiter 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。。
+- Pro-R / reverb 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: spaceship; Doppler; Kilohearts; impact rack; engine; tonal delay; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -6515,125 +5267,97 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **Reaper 预听处理架**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：such an open-ended task as like making a magic sound can be really daunting to me without some kind of road map so the first thing I set out to do was to figure out the techniques that I wanted Showcase in the video as well as some scenario ideas but the first kind of pre-pro task I did was to go through the entire lib
+1. **Reaper 预听处理架**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Reaper 预听处理架
    - 链路参考：Reaper routing / Media Explorer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-01-19398345fd`
-2. **source drawer**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：but this is how I achieve a similar result with some added benefits of it being entirely inside Reaper instead of a separate process so if you didn't know you can preview your media Explorer through any track inside your session and the way I have this set up is that the source feeds into all three of these effects pro
+2. **source drawer**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：source drawer
    - 链路参考：EQ / Distortion / Compressor / Flanger
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-02-d3506a15a6`
-3. **瞬态 cast**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：here he gets the ideas for this stuff it's a great great content as you will see as we get into the session they don't require a lot of work to get you to really exciting places but before we dive into the individual layers of the session I wanted to take you through my process for this assignment having such an open-e
+3. **瞬态 cast**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：瞬态 cast
    - 链路参考：Transient Shaper / Limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-03-bd5a9e6f1f`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ady mastering it is what it is but you can quickly change that to a buy or an Impulse or if I don't really like this um delay anymore can change it to something else so depending on the type of sound I'm working on I'll either grab it straight out of the global sampler here uh and put it in my source drawer here which
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-04-71fbf6892e`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：existence and then funneled into an object in order to enchant it I thought this would give a nice mix of sustained and impactful moments uh it turned out to be a lot more work than just a portal sound or a force Bush or something and for the techniques the main one I wanted to Showcase was how I personally set up kind
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-05-08eaaaab44`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：sely use them for they just struck me as demanding to be used somewhere I think that's a really great practice whenever pick up a new library not only to familiarize myself with content but to also kind of short list the particular gems in any batch of content so for the scenario I settled on a scene where strands of m
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-06-67f6523f05`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：such an open-ended task as like making a magic sound can be really daunting to me without some kind of road map so the first thing I set out to do was to figure out the techniques that I wanted Showcase in the video as well as some scenario ideas but the first kind of pre-pro task I did was to go through the entire lib
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-07-8c546d9b55`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：but this is how I achieve a similar result with some added benefits of it being entirely inside Reaper instead of a separate process so if you didn't know you can preview your media Explorer through any track inside your session and the way I have this set up is that the source feeds into all three of these effects pro
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-08-cb0f8e6c9a`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：here he gets the ideas for this stuff it's a great great content as you will see as we get into the session they don't require a lot of work to get you to really exciting places but before we dive into the individual layers of the session I wanted to take you through my process for this assignment having such an open-e
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-09-8ca072b547`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ady mastering it is what it is but you can quickly change that to a buy or an Impulse or if I don't really like this um delay anymore can change it to something else so depending on the type of sound I'm working on I'll either grab it straight out of the global sampler here uh and put it in my source drawer here which
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-Ze9enZLKA2I-10-23b4b9ec89`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：existence and then funneled into an object in order to enchant it I thought this would give a nice mix of sustained and impactful moments uh it turned out to be a lot more work than just a portal sound or a force Bush or something and for the techniques the main one I wanted to Showcase was how I personally set up kind
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Frequency shifter / ring mod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：sely use them for they just struck me as demanding to be used somewhere I think that's a really great practice whenever pick up a new library not only to familiarize myself with content but to also kind of short list the particular gems in any batch of content so for the scenario I settled on a scene where strands of m
+12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘参数逻辑
    - 链路参考：Reaper routing / Media Explorer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：such an open-ended task as like making a magic sound can be really daunting to me without some kind of road map so the first thing I set out to do was to figure out the techniques that I wanted Showcase in the video as well as some scenario ideas but the first kind of pre-pro task I did was to go through the entire lib
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：EQ / Distortion / Compressor / Flanger
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：but this is how I achieve a similar result with some added benefits of it being entirely inside Reaper instead of a separate process so if you didn't know you can preview your media Explorer through any track inside your session and the way I have this set up is that the source feeds into all three of these effects pro
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Reaper routing / Media Explorer -> EQ / Distortion / Compressor / Flanger -> Transient Shaper / Limiter -> Tremolator 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Transient Shaper / Limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -6646,37 +5370,21 @@ Records: 82
 - **Transient Shaper / Limiter**: 施法瞬态的攻击与峰值控制。
   - minimal processing on transient
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：a more unified sound then the processing at the end to kind of pull things together I have this things motor which is a tremolo and it's got this nice button that you press the button and it kind of like slowly ramps in the speed which I super like I also kind of pitched it down and then narrowed the width over time ca
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：ady mastering it is what it is but you can quickly change that to a buy or an Impulse or if I don't really like this um delay anymore can change it to something else so depending on the type of sound I'm working on I'll either grab it straight out of the global sampler here uh and put it in my source drawer here which
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：er here to get it just some more scattered debris sense have a tone layer this goblet nice good stuff really good sound pitched up a little bit and then we've got some Bassy effects give it a little bit more carry and uh yeah present there [Music] uh this jet of air compressed air again traveler giving us a nice impuls
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：e called into existence and then funneled into an object in order to enchant it I thought this would give a nice mix of sustained and impactful moments uh it turned out to be a lot more work than just a portal sound or a force Bush or something and for the techniques the main one I wanted to Showcase was how I personal
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：I could pretty quickly find a way to shape them to apply them to this list so doing this live a little bit I found this compressed air which gives a nice Airy slidy movement um and in the steady mastering it is what it is but you can quickly change that to a buy or an Impulse or if I don't really like this um delay any
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：e library I like that those touch has turned out the layers are roughly in order of frequency got some nice little like ring mod high frequency bite at the top so got some ring mod and then that was probably like a traveler by do blur they give that shape to it not very uh good with my Fades here it looks like uh nice
 
 ### Materials / Layer Sources
 - roll whistle
@@ -6703,15 +5411,14 @@ Records: 82
 - 8. Little AlterBoy / pitch-formant：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：10；15；8。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Reaper routing / Media Explorer 参数逻辑：parallel processing buses。
 - EQ / Distortion / Compressor / Flanger 参数逻辑：用于纸、气球、芯片、摩擦等纹理。
 - Transient Shaper / Limiter 参数逻辑：minimal processing on transient。
-- Tremolator 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
-- Pro-Q 3 / EQ 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-L 2 / limiter 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- EchoBoy / short delay 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。。
-- Little AlterBoy / pitch-formant 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。。
+- Tremolator 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
+- Pro-Q 3 / EQ 参数逻辑：
+- Pro-L 2 / limiter 参数逻辑：
+- EchoBoy / short delay 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。。
+- Little AlterBoy / pitch-formant 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: Reaper; magic spell; source drawer; Media Explorer; processing bus; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -6731,128 +5438,100 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **从感觉找源**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：everything I've done here let's move these out these down here and mute them cool starting to sound a little better huh then what have I got here let me just listen to all my layers again so that's that that's that bit of movement all right let's keep looking for some interesting bits dude what wow um I'm going to thro
+1. **从感觉找源**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：从感觉找源
    - 链路参考：Multipass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-01-087a6a8ae1`
-2. **快速试错和重采样**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：p in multipass and I just messed with a couple of macroon knobs didn't do much um but I wanted to get some of that high pitch stuff out of it I think I'm going to try throwing some of the low stuff underneath it and see if that does something cool let's find out [Music] h [Applause] [Music] [Applause] [Music] is that n
+2. **快速试错和重采样**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：快速试错和重采样
    - 链路参考：PaulXStretch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-02-c3ef617368`
-3. **烟雾身体层**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：k I want to again kind of control the low end on this I feel like it needs a little bit of Pan um maybe now let's put theq after and then let's see add another ELO well e there we go took me a minute to figure out how to get back and forth pan going but we'll see that might be too much let's try it not too bad I kind o
+3. **烟雾身体层**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：烟雾身体层
    - 链路参考：Tremolo / Vibrato / Ensemble / All-pass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-03-72acede8bc`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：p a little over an octave and that's it without with just get a little bit of that let me do little bit of uh okay it's Reverb it's too much [Music] not all right maybe see what this sounds [Music] like I like the stere of it oh wrong button H ultimately I think this works better let's turn the thing down just a little
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Convolver / delay / saturation / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-04-fee094abdc`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：em or re-recording them and seeing if I can just find something that works man that's [Music] cool okay this is another transient option these things usually work pretty well see that gives it just a little bit of highend punctuation that's kind of cool I like that all I did was Pitch it up a little over an octave and
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-05-ea3a2baf15`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：loaded that little bit of the whatever it was friction brush it was this thing I loaded that into Paul stretch kind of picked my section um made a little bit of a long recording of just the texture that Frozen Paul stretch is a free plug-in Paul X stretch if you're out there looking for it really cool wow that's more t
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-06-e2b05a6482`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：everything I've done here let's move these out these down here and mute them cool starting to sound a little better huh then what have I got here let me just listen to all my layers again so that's that that's that bit of movement all right let's keep looking for some interesting bits dude what wow um I'm going to thro
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-07-4ec5efec7a`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：p in multipass and I just messed with a couple of macroon knobs didn't do much um but I wanted to get some of that high pitch stuff out of it I think I'm going to try throwing some of the low stuff underneath it and see if that does something cool let's find out [Music] h [Applause] [Music] [Applause] [Music] is that n
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-08-2f9b1b5f18`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：k I want to again kind of control the low end on this I feel like it needs a little bit of Pan um maybe now let's put theq after and then let's see add another ELO well e there we go took me a minute to figure out how to get back and forth pan going but we'll see that might be too much let's try it not too bad I kind o
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-09-aa8890a922`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：p a little over an octave and that's it without with just get a little bit of that let me do little bit of uh okay it's Reverb it's too much [Music] not all right maybe see what this sounds [Music] like I like the stere of it oh wrong button H ultimately I think this works better let's turn the thing down just a little
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-10-6582d32f0c`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：em or re-recording them and seeing if I can just find something that works man that's [Music] cool okay this is another transient option these things usually work pretty well see that gives it just a little bit of highend punctuation that's kind of cool I like that all I did was Pitch it up a little over an octave and
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Convolver / convolution
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-11-5c6f964b3d`
-12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：loaded that little bit of the whatever it was friction brush it was this thing I loaded that into Paul stretch kind of picked my section um made a little bit of a long recording of just the texture that Frozen Paul stretch is a free plug-in Paul X stretch if you're out there looking for it really cool wow that's more t
+12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘参数逻辑
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-12-dcfe65a977`
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：everything I've done here let's move these out these down here and mute them cool starting to sound a little better huh then what have I got here let me just listen to all my layers again so that's that that's that bit of movement all right let's keep looking for some interesting bits dude what wow um I'm going to thro
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-BPuxpbey-Ks-13-52bf0e41e6`
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：p in multipass and I just messed with a couple of macroon knobs didn't do much um but I wanted to get some of that high pitch stuff out of it I think I'm going to try throwing some of the low stuff underneath it and see if that does something cool let's find out [Music] h [Applause] [Music] [Applause] [Music] is that n
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Multipass -> PaulXStretch -> Tremolo / Vibrato / Ensemble / All-pass -> Convolver / delay / saturation / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -6861,9 +5540,7 @@ Records: 82
 ### Plugin and Processing Notes
 - **Multipass**: 快速试 preset、微调 macro、做运动和动态。
   - used for high-pitch extraction and later subtle processing
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 字幕/画面线索：going to turn into something cool or not but yeah I resampled this little thing through just some preset I pulled up in multipass and I just messed with a couple of macroon knobs didn't do much um but I wanted to get some of that high pitch stuff out of it I think I'm going to try throwing some of the low stuff underne
 - **PaulXStretch**: 把 friction brush 变成长烟雾/呼吸纹理。
   - frozen stretch
   - texture recording
@@ -6873,49 +5550,27 @@ Records: 82
   - nuclear reactor hall impulse
   - high-pass lows
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：ubtle movement which is really really simple all it does that's without that's with all it does is a subtle vibr subtle tremolo and you could use a different tremolo plugin I'm using sound toise here but you know just any tremolo plugin would work I think Melda has a free one um a little bit of Ensemble just moving stu
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：k I want to again kind of control the low end on this I feel like it needs a little bit of Pan um maybe now let's put theq after and then let's see add another ELO well e there we go took me a minute to figure out how to get back and forth pan going but we'll see that might be too much let's try it not too bad I kind o
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：ttle warble for a second and then it goes away okay the transient still not doing it for me um I'm also going to slap a limiter on here um oh gosh how do I normally do this yeah Distortion I'm trying to use killer hearts for everything no it's not going to work okay I'm just gonna have to use the old standby um leave i
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：p a little over an octave and that's it without with just get a little bit of that let me do little bit of uh okay it's Reverb it's too much [Music] not all right maybe see what this sounds [Music] like I like the stere of it oh wrong button H ultimately I think this works better let's turn the thing down just a little
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：a little more of a sense of it moving again it's super subtle and that's cool uh I almost want to do let's try a little delay don't if it's going to work kind of dig that I think I'll leave it it's really subtle but it feels like glues it together just a tiny bit but it doesn't do it so much that it's stepping on the t
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：p in multipass and I just messed with a couple of macroon knobs didn't do much um but I wanted to get some of that high pitch stuff out of it I think I'm going to try throwing some of the low stuff underneath it and see if that does something cool let's find out [Music] h [Applause] [Music] [Applause] [Music] is that n
 - **Convolver / convolution**: 卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 字幕/画面线索：have no idea what it is uh running into an ensemble and the three of them together are kind of giving us that yeah that convolver is doing a lot of it but it's cool it gives it kind of a whispery creepy texture but I'm not actually using Whispers for it I really don't know about this whole crackle thing maybe that's a
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：I need that I don't want it to get too cluttered up [Music] P better drive here actually let's try I haven't tried that phase Distortion yet let's try that [Applause] kind of like that modulate that uh LFO oh yeah sorry sorry I'm working on the parameter modulation here so going to make it centered strength slow it dow
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：a transient designer to the lowest layer uh oh yeah dir let's yeah actually there we go it's on now okay we'll pull the attack down ah we'll leave the attack alone we'll actually turn the sustain down because that's really what I want is I don't want the rumble to carry on too far that's too [Music] much that pulls it
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：m just trying to do this really really fast here um but I I like to add like a little bit of saturation a little bit of compression something that just kind of glues the The Sounds together it I know that sounds very like record mixery kind of thing to say but if you apply processing that kind of hits all the layers it
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：ce texture all right see it already happened yeah there's so many cool useful things in here so this is pitched down in Reverse I'm actually going to reverse it back sorry Paul um but I want to see if it works well like that that's kind of a cool texture again I think I'm going to take some of the low end out of it cuz
 
 ### Materials / Layer Sources
 - Raw Magic library
@@ -6943,15 +5598,14 @@ Records: 82
 - 8. Pro-R / reverb：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：39；24；1；30；40。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
-- Multipass 参数逻辑：used for high-pitch extraction and later subtle processing；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Multipass 参数逻辑：used for high-pitch extraction and later subtle processing
 - PaulXStretch 参数逻辑：frozen stretch；texture recording。
 - Tremolo / Vibrato / Ensemble / All-pass 参数逻辑：movement should be felt more than heard。
 - Convolver / delay / saturation / EQ 参数逻辑：nuclear reactor hall impulse；high-pass lows。
-- Tremolator 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
-- Pro-Q 3 / EQ 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
-- Pro-L 2 / limiter 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。。
-- Pro-R / reverb 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。。
+- Tremolator 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
+- Pro-Q 3 / EQ 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
+- Pro-L 2 / limiter 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。。
+- Pro-R / reverb 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: Mark Kilborn; Raw Magic; PaulXStretch; evil spell; iteration; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -6971,47 +5625,37 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **buildup 层**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ldup we've got this little thing here this is that with a bit of Ensemble on it was a trash can lid Bode cool all right then we got this fan flutter constant we got this glass bottle blow just adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shi
+1. **buildup 层**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：buildup 层
    - 链路参考：Transient Shaper / Polyverse Wider
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-01-f0abf1e29a`
-2. **punch/cast 层**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shifter moving up slightly got the little movement thing that I said I like to use my subtle movement chain which is just the vibr trimor Ensemble req req um with all pass filter so let's move o
+2. **punch/cast 层**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：punch/cast 层
    - 链路参考：Convolver / Ensemble
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-02-2b4824703d`
-3. **sparkle 和 whistle**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ot this glass bottle blow just adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shifter moving up slightly got the little movement thing that I said I like to use my subtle movement chain which is just the vibr trimor Ensemble req req um with al
+3. **sparkle 和 whistle**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：sparkle 和 whistle
    - 链路参考：PaulStretch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-03-a40611b129`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ck thump whistle swish thing gives a little bit of a character like that little bit of water hitting a pan through some delay and then the whole thing is hitting the transient shaper and I'm using just a tiny bit of that polyverse wider this is a free plug just to widen it up tiny bit then we got this element we added
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Saturation / compression / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-04-51a69992d7`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t of a character like that little bit of water hitting a pan through some delay and then the whole thing is hitting the transient shaper and I'm using just a tiny bit of that polyverse wider this is a free plug just to widen it up tiny bit then we got this element we added which is just some firework Sparkle whoo ignit
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Multipass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -7019,77 +5663,59 @@ Records: 82
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-06-c184de755c`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ldup we've got this little thing here this is that with a bit of Ensemble on it was a trash can lid Bode cool all right then we got this fan flutter constant we got this glass bottle blow just adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shi
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-07-0d36091991`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shifter moving up slightly got the little movement thing that I said I like to use my subtle movement chain which is just the vibr trimor Ensemble req req um with all pass filter so let's move o
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-08-d6f798867d`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ot this glass bottle blow just adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shifter moving up slightly got the little movement thing that I said I like to use my subtle movement chain which is just the vibr trimor Ensemble req req um with al
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Convolver / convolution
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-09-b7f8adce83`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ck thump whistle swish thing gives a little bit of a character like that little bit of water hitting a pan through some delay and then the whole thing is hitting the transient shaper and I'm using just a tiny bit of that polyverse wider this is a free plug just to widen it up tiny bit then we got this element we added
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-10-e053c55fbe`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t of a character like that little bit of water hitting a pan through some delay and then the whole thing is hitting the transient shaper and I'm using just a tiny bit of that polyverse wider this is a free plug just to widen it up tiny bit then we got this element we added which is just some firework Sparkle whoo ignit
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘参数逻辑
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ldup we've got this little thing here this is that with a bit of Ensemble on it was a trash can lid Bode cool all right then we got this fan flutter constant we got this glass bottle blow just adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shi
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Transient Shaper / Polyverse Wider
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shifter moving up slightly got the little movement thing that I said I like to use my subtle movement chain which is just the vibr trimor Ensemble req req um with all pass filter so let's move o
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Transient Shaper / Polyverse Wider -> Convolver / Ensemble -> PaulStretch -> Saturation / compression / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Convolver / Ensemble
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -7105,44 +5731,21 @@ Records: 82
 - **Saturation / compression / EQ**: 总线轻微粘合，控制 resonance 和 mud。
   - do not overdrive bus
 - **Multipass**: 多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 可确认的数值/范围：80
   - 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 字幕/画面线索：ted earlier I kind of layered something up and resampled it through a plugin I don't remember what the chain was but um multipass is just adding some subtle pan to it or it's not very but it's not dramatic um narrow is the word I'm looking for a little bit of narrow pan to it then this was the thing I ran through Paul
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 可确认的数值/范围：80
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：ot the little movement thing that I said I like to use my subtle movement chain which is just the vibr trimor Ensemble req req um with all pass filter so let's move on to the next bit we've got this little sound which I just kind of left in the middle here which is a stick deep wood reverse who stick deep wood reverse
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 可确认的数值/范围：80
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：ck thump whistle swish thing gives a little bit of a character like that little bit of water hitting a pan through some delay and then the whole thing is hitting the transient shaper and I'm using just a tiny bit of that polyverse wider this is a free plug just to widen it up tiny bit then we got this element we added
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 可确认的数值/范围：80
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：t adding a little bit of tonal thing then I've got a little bit of volume automation got a filter opening up I've got a pitch shifter moving up slightly got the little movement thing that I said I like to use my subtle movement chain which is just the vibr trimor Ensemble req req um with all pass filter so let's move o
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Convolver / convolution**: 卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 可确认的数值/范围：80
   - 参数逻辑：卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 字幕/画面线索：n't know how Paul got that but it's a cool sound um probably stuck something on it and then I've got it running through convolver with this nuclear reactor Hall preset that somebody on Discord told me about and a little bit of EQ just yeah rolling off the lows high pass everything yay um and then let's look at the body
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 可确认的数值/范围：80
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：t of a character like that little bit of water hitting a pan through some delay and then the whole thing is hitting the transient shaper and I'm using just a tiny bit of that polyverse wider this is a free plug just to widen it up tiny bit then we got this element we added which is just some firework Sparkle whoo ignit
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 可确认的数值/范围：80
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：on to the next bit we've got this little sound which I just kind of left in the middle here which is a stick deep wood reverse who stick deep wood reverse yeah it's just a whoo um I gotta be honest I don't know if that's still contributing it might be it's hard to tell um then I got the punch which is right here so in
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - trash can lid bowed
@@ -7170,15 +5773,14 @@ Records: 82
 - 8. Little AlterBoy / pitch-formant：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：80；1；30；40。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Transient Shaper / Polyverse Wider 参数逻辑：Wider used tiny amount。
 - Convolver / Ensemble 参数逻辑：beverage impulse；high-pass after。
 - PaulStretch 参数逻辑：long frozen texture。
 - Saturation / compression / EQ 参数逻辑：do not overdrive bus。
-- Multipass 参数逻辑：可确认的数值/范围：80；参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。。
-- Pro-Q 3 / EQ 参数逻辑：可确认的数值/范围：80；参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
-- EchoBoy / short delay 参数逻辑：可确认的数值/范围：80；参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。。
-- Little AlterBoy / pitch-formant 参数逻辑：可确认的数值/范围：80；参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。。
+- Multipass 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。。
+- Pro-Q 3 / EQ 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
+- EchoBoy / short delay 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。。
+- Little AlterBoy / pitch-formant 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: magic first pass; Mark Kilborn; PaulStretch; Convolver; game iteration; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -7198,75 +5800,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **能量脉冲池**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：can be all achieved utilizing just the killer heart Suite the Fab filter suite and the sound toys plug-in bundle so the first thing that I did here was I took uh several different I think like 10 15 I can't I don't know how many of this is but um just a bunch sounds from the actual uh raw magic Sound Library um and I w
+1. **能量脉冲池**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：能量脉冲池
    - 链路参考：Multiband/rack processing
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-01-14e3a84abc`
-2. **多段/宏控制**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ty cool uh we have a fan Cage being dragged [Music] along then we have a goblet being scraped and I believe I have this reversed actually so let me go ahead and un reverse it really [Music] quickly it's a little met metal goblet being scraped and I went and I reversed this one sounds a bit more magicky already um we've
+2. **多段/宏控制**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：多段/宏控制
    - 链路参考：EQ / filter automation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-02-8b4d4e22fd`
-3. **瞬态与尾巴分离**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s design might seem a bit complicated at first but it can be all achieved utilizing just the killer heart Suite the Fab filter suite and the sound toys plug-in bundle so the first thing that I did here was I took uh several different I think like 10 15 I can't I don't know how many of this is but um just a bunch sounds
+3. **瞬态与尾巴分离**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：瞬态与尾巴分离
    - 链路参考：Render/print workflow
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-03-83777f74e9`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做 tonal/resonant 层
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-04-ab58c10542`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：give it some movement uh then we have uh this no Ott um presets on multipass which is their version of the classic Ott compressor get some nice low and top end in there so let control the mids um we have this ooc disperser um I've just uh I believe just mess with the knobs on this one give a bit more tonal movement to
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Multipass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-05-45e9fad59a`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：both textural and tonal contents there uh let me go ahead and just mute the actual raw layers here we can hear what the normalized uh printed um output sounded like that be recorded so yeah um got have some nice clean raw sounding whooshes but we also want to do some processing to uh for for our whooshes just so that w
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Phase Plant
    - 可见/字幕数值：1 ratio
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-06-ef94e30452`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：can be all achieved utilizing just the killer heart Suite the Fab filter suite and the sound toys plug-in bundle so the first thing that I did here was I took uh several different I think like 10 15 I can't I don't know how many of this is but um just a bunch sounds from the actual uh raw magic Sound Library um and I w
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-07-1d9a09f301`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ty cool uh we have a fan Cage being dragged [Music] along then we have a goblet being scraped and I believe I have this reversed actually so let me go ahead and un reverse it really [Music] quickly it's a little met metal goblet being scraped and I went and I reversed this one sounds a bit more magicky already um we've
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-08-f76050351b`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s design might seem a bit complicated at first but it can be all achieved utilizing just the killer heart Suite the Fab filter suite and the sound toys plug-in bundle so the first thing that I did here was I took uh several different I think like 10 15 I can't I don't know how many of this is but um just a bunch sounds
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-09-c2b9adb403`
@@ -7274,36 +5859,27 @@ Records: 82
    - 角色：组合成完整施法句子
    - 链路参考：Saturn 2
    - 可见/字幕数值：2
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-10-f0c43144c6`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：give it some movement uh then we have uh this no Ott um presets on multipass which is their version of the classic Ott compressor get some nice low and top end in there so let control the mids um we have this ooc disperser um I've just uh I believe just mess with the knobs on this one give a bit more tonal movement to
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：both textural and tonal contents there uh let me go ahead and just mute the actual raw layers here we can hear what the normalized uh printed um output sounded like that be recorded so yeah um got have some nice clean raw sounding whooshes but we also want to do some processing to uh for for our whooshes just so that w
+12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘参数逻辑
    - 链路参考：Pro-MB / multiband dynamics
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：can be all achieved utilizing just the killer heart Suite the Fab filter suite and the sound toys plug-in bundle so the first thing that I did here was I took uh several different I think like 10 15 I can't I don't know how many of this is but um just a bunch sounds from the actual uh raw magic Sound Library um and I w
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ty cool uh we have a fan Cage being dragged [Music] along then we have a goblet being scraped and I believe I have this reversed actually so let me go ahead and un reverse it really [Music] quickly it's a little met metal goblet being scraped and I went and I reversed this one sounds a bit more magicky already um we've
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Multiband/rack processing -> EQ / filter automation -> Render/print workflow -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 
@@ -7315,69 +5891,35 @@ Records: 82
 - **Render/print workflow**: 把处理结果打印为音频片段再挑选。
   - commit useful variations
 - **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：is is but um just a bunch sounds from the actual uh raw magic Sound Library um and I went and I whooshed them inside of snap Heap um but let me just go ahead and get those uh show you show you the the raw sound just so you can get kind of get an idea of what we're going for here we've got some uh twinkling uh cluster o
 - **Multipass**: 多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 字幕/画面线索：s I re I uh went and I reached for uh multi effect uh Solutions so we have the effect rack here from from sound toys uh multi pass and you'll later see on actually you'll see right now uh snap Heap from uh kill hearts um and then you have a bunch of plugins from uh Fab filter itself um so right here on this first one w
 - **Phase Plant**: 合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
-  - 字幕/画面线索：more warblade so what I initially ended up doing was um bringing the entire recording the entire long sausage file into phas plant and um oh it is currently hanging um but because I anticipated that um I went I made the screenshot of the actual phas plant uh preset itself um all we did like I said said was drag the log
 - **Soundtoys Effect Rack**: 串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 字幕/画面线索：bit complicated at first but it can be all achieved utilizing just the killer heart Suite the Fab filter suite and the sound toys plug-in bundle so the first thing that I did here was I took uh several different I think like 10 15 I can't I don't know how many of this is but um just a bunch sounds from the actual uh ra
-  - 可确认的数值/范围：10；15
 - **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：flashback presets in effect rack um this stuttering diffused preset inside of Timeless 3 um I and uh I I dragged in uh filter freak here put it in low pass mode um and I'm just using um the threshold the input threshold to kind of modulate the frequency of the filter itself as well as kind letting some of the original
-  - 可确认的数值/范围：3
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：t from effect rack there then we have uh this propeller preset that has been modified a little bit um I believe um from tremolator just to give it some movement uh then we have uh this no Ott um presets on multipass which is their version of the classic Ott compressor get some nice low and top end in there so let contr
 - **Saturn 2**: 多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
-  - 字幕/画面线索：first one we have uh the uh Faso preset um then we have um this this Mega smudge preset that I have personally made on Saturn 2 where we all these x lfos uh modulating uh five different bands on the smudge presets that can be found inside of Saturn 2 um it's modulating the uh frequency of the feedback for each one of t
-  - 可确认的数值/范围：2
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：'ve just uh I believe just mess with the knobs on this one give a bit more tonal movement to that and then we have some eqing going on here with Pro Q3 in natural phase mode um which as the drop down menu will show here uh matches the magnitude response and the phase response of analog eqs of traditional analog eq's an
 - **Pro-MB / multiband dynamics**: 多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：nse and the phase response of analog eqs of traditional analog eq's and then we have um this mastering preset inside of pro MB and uh Pro L2 in uh one: one ratio mode just to kind of squash it all together and this is initially going to sound um a bit uh like I said squashed but uh we will bring some life back into it
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：ase response of analog eqs of traditional analog eq's and then we have um this mastering preset inside of pro MB and uh Pro L2 in uh one: one ratio mode just to kind of squash it all together and this is initially going to sound um a bit uh like I said squashed but uh we will bring some life back into it in a later sta
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：this is actually forward um um we have uh the Goblet scraping here we put it through U kill Hearts frequency shifter U pro R2 with just um just just a bit of wash going on here this is manually tuned um we have a octus burer here again on Snap peep we we have uh the filter free trick again on um effect track with the l
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：one mode and pro MB with of the mastering presets on a again uh the next one again uh we have snap Heap with the parap pitch presets um with some knobs messed up some of the uh uh macro knobs messed around with um then we have that Mega smudge preset again from Saturn 2 uh ooc disperser off snap Heap um Pro Q3 pro2 and
-  - 可确认的数值/范围：2
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：ersion of the classic Ott compressor get some nice low and top end in there so let control the mids um we have this ooc disperser um I've just uh I believe just mess with the knobs on this one give a bit more tonal movement to that and then we have some eqing going on here with Pro Q3 in natural phase mode um which as
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：st a bit more life um then we're eqing it a bit and then we're finally using um killer Hearts transing shaper with some attack pump and sustain and we're uh modifying the speed just a little bit just to kind of make the transients uh hit the way that we want to very subtle but adds a bit more texture and movement um an
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：give it some movement uh then we have uh this no Ott um presets on multipass which is their version of the classic Ott compressor get some nice low and top end in there so let control the mids um we have this ooc disperser um I've just uh I believe just mess with the knobs on this one give a bit more tonal movement to
 
 ### Materials / Layer Sources
 - energy pulses
@@ -7399,15 +5941,14 @@ Records: 82
 - 8. FilterFreak：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：10；15；2；3；1 ratio。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Multiband/rack processing 参数逻辑：macro/filter envelope workflow。
 - EQ / filter automation 参数逻辑：visible envelope/filter curves。
 - Render/print workflow 参数逻辑：commit useful variations。
-- Snap Heap 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。。
-- Multipass 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。。
-- Phase Plant 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。。
-- Soundtoys Effect Rack 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。。
-- FilterFreak 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。。
+- Snap Heap 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。。
+- Multipass 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。。
+- Phase Plant 参数逻辑：合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。。
+- Soundtoys Effect Rack 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。。
+- FilterFreak 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: modern magic; energy; multiband; rack; pulse; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -7427,47 +5968,38 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **金属 goblet 魔法化**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and I compiled few of those Explorations here using uh mostly free plugins affordable plugins kind of $50 and lower and then I also use serum which you can uh pay rent to own pay like $7.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on usi
+1. **金属 goblet 魔法化**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：金属 goblet 魔法化
    - 链路参考：Valhalla FreqEcho / Crystallizer / Shimmer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-01-fb0dcc2f4d`
-2. **Serum sampler 演奏源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ects I took all these files and made one continuous file drop that into the sampler in serum then hook up an LFO to the pitch to just barely to move it up a little bit up and down and then the face is going to be moving up and down this amount and then a little LFO on the cut off of this flanger plus to give it a littl
+2. **Serum sampler 演奏源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Serum sampler 演奏源
    - 链路参考：Serum sampler
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-02-467d2c1892`
-3. **firework 做爆裂**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o to touch the face and make it go up and down same for the pitch LFO on the pitch um and then let's turn off this comb filter for now some Distortion and compression and just by having this lfos working you can see them working we get these cool sounds already oh I got to activate it [Music] we turn on the com filter
+3. **firework 做爆裂**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：firework 做爆裂
    - 链路参考：SoundHack Pitch Delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-03-40f7acd079`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：we have some Distortion uh might not be doing a lot here and then the compressor kind of boosting everything all the details um and then that's going to sound so the original was like this and then this is the electricity we get so we can start messing with the face with the rate of the face on the on flanger LFO can a
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：OTT / Devil-Loc / Frequency Shifter
    - 可见/字幕数值：50
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-04-45d36cb8b9`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：a little top mixed down a little bit uh and then we have some Distortion uh might not be doing a lot here and then the compressor kind of boosting everything all the details um and then that's going to sound so the original was like this and then this is the electricity we get so we can start messing with the face with
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Serum 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -7475,77 +6007,59 @@ Records: 82
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-06-5f31e11e5b`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and I compiled few of those Explorations here using uh mostly free plugins affordable plugins kind of $50 and lower and then I also use serum which you can uh pay rent to own pay like $7.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on usi
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-07-4a0dd50583`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ects I took all these files and made one continuous file drop that into the sampler in serum then hook up an LFO to the pitch to just barely to move it up a little bit up and down and then the face is going to be moving up and down this amount and then a little LFO on the cut off of this flanger plus to give it a littl
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-08-a67f597ec1`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o to touch the face and make it go up and down same for the pitch LFO on the pitch um and then let's turn off this comb filter for now some Distortion and compression and just by having this lfos working you can see them working we get these cool sounds already oh I got to activate it [Music] we turn on the com filter
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-09-6b856dd8df`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：we have some Distortion uh might not be doing a lot here and then the compressor kind of boosting everything all the details um and then that's going to sound so the original was like this and then this is the electricity we get so we can start messing with the face with the rate of the face on the on flanger LFO can a
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-10-ee0cb37b10`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：a little top mixed down a little bit uh and then we have some Distortion uh might not be doing a lot here and then the compressor kind of boosting everything all the details um and then that's going to sound so the original was like this and then this is the electricity we get so we can start messing with the face with
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Frequency shifter / ring mod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘参数逻辑
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and I compiled few of those Explorations here using uh mostly free plugins affordable plugins kind of $50 and lower and then I also use serum which you can uh pay rent to own pay like $7.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on usi
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Valhalla FreqEcho / Crystallizer / Shimmer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ects I took all these files and made one continuous file drop that into the sampler in serum then hook up an LFO to the pitch to just barely to move it up a little bit up and down and then the face is going to be moving up and down this amount and then a little LFO on the cut off of this flanger plus to give it a littl
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Valhalla FreqEcho / Crystallizer / Shimmer -> Serum sampler -> SoundHack Pitch Delay -> OTT / Devil-Loc / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Serum sampler
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -7561,53 +6075,21 @@ Records: 82
   - automate cutoff
   - record many variations
 - **Serum 2**: 粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
-  - 字幕/画面线索：hey y' so in this video I'll be using the raw magic Sound Library and the way I got inspired by it was when I was browsing I realized how many unique types of sounds there are and how different they are so each sound would inspire a new type of technique or a
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
-  - 字幕/画面线索：ew of those Explorations here using uh mostly free plugins affordable plugins kind of $50 and lower and then I also use serum which you can uh pay rent to own pay like $7.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic
-  - 可确认的数值/范围：50；7.99
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any
-  - 可确认的数值/范围：99
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：in and then I just have gate to just get out some of the noise and then some protection but you can use any gate or any limiter uh but once we turn on so the original was this [Music] and then by turning this [Music] on it starts getting some interesting what if we pitch it up for [Music] example P it down half quarter
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any
-  - 可确认的数值/范围：99
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：arts when you if you take that same signal and then you duplicate it exact replica but then you offset the transient by milliseconds Ben bir Style like Star Wars explosion style cut off the transient so you don't get too much doubling and then get this [Music] cool so again this would be the original and then duplicate
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any
-  - 可确认的数值/范围：99
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：ects I took all these files and made one continuous file drop that into the sampler in serum then hook up an LFO to the pitch to just barely to move it up a little bit up and down and then the face is going to be moving up and down this amount and then a little LFO on the cut off of this flanger plus to give it a littl
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any
-  - 可确认的数值/范围：99
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：ordings clean no processing great transient lots of stuff going on nice and crunchy uh we do some basic stuff here just transient shaper from killer Hearts pump up the attack mess with the plug uh with settings a little bit this is a free plugin that's kind of like a phas flinger kind of cool for tails and then bring u
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any
-  - 可确认的数值/范围：99
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：a little top mixed down a little bit uh and then we have some Distortion uh might not be doing a lot here and then the compressor kind of boosting everything all the details um and then that's going to sound so the original was like this and then this is the electricity we get so we can start messing with the face with
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any
-  - 可确认的数值/范围：99
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：le rubbing uh with no plugins I grab that drop it into the sampler um not changing pretty much anything then I add this ring mod x two and the compressor to just boost all the details and then you get this cool screams when you start moving the cut up [Music] so here we have a really nice recording of liquid slime comp
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any
-  - 可确认的数值/范围：99
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：nd so the original was like this and then this is the electricity we get so we can start messing with the face with the rate of the face on the on flanger LFO can also bring this a little tighter is but yeah at point I just play with some coal electricity and record it here we have some of Paul's beautifully recorded m
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - metal goblet
@@ -7632,15 +6114,10 @@ Records: 82
 - 8. Little AlterBoy / pitch-formant：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：50；7.99。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Valhalla FreqEcho / Crystallizer / Shimmer 参数逻辑：goblet hits/scrapes。
 - Serum sampler 参数逻辑：LFO to pitch and cutoff。
 - SoundHack Pitch Delay 参数逻辑：with limiter。
 - OTT / Devil-Loc / Frequency Shifter 参数逻辑：automate cutoff；record many variations。
-- Serum 2 参数逻辑：字幕/画面线索：hey y' so in this video I'll be using the raw magic Sound Library and the way I got inspired by it was when I was browsing I realized how many unique types of sounds there are and how different they are so each sound would inspire a new type of technique or a ；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-L 2 / limiter 参数逻辑：字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any ；可确认的数值/范围：99。
-- EchoBoy / short delay 参数逻辑：字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any ；可确认的数值/范围：99。
-- Little AlterBoy / pitch-formant 参数逻辑：字幕/画面线索：.99 a month and I use it quite a bit here cuz love using the sampler in it but yeah here's a few random little techniques based on using the raw magic Sound Library okay so for this one we have one of Paul's cloth movement fan open stutter this is without any ；可确认的数值/范围：99。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: Serum; FreqEcho; Crystallizer; OTT; slime; Pitch Delay; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -7660,112 +6137,84 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **避开黑魔法套路**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：al elements so I took it in my own Direction and it ended up sounding maybe too space magicky but it is what it is so I started off by going through the library and pulling some recordings I felt like had some potential to them we can take a quick listen uh I had a bunch of cloth recordings here then we got some natura
+1. **避开黑魔法套路**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：避开黑魔法套路
    - 链路参考：Named processing chains
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-01-9f44e628f9`
-2. **建立源池**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：what I called it uh this uses the balloon myar rub crackle Source it's also by the way I forgot to mention some of are stretched out this one is 0.5 speed [Music] and it looks like one of these variations when I was bouncing it um I really enjoyed because I put a little smiley face marker on it and I have no idea how I
+2. **建立源池**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立源池
    - 链路参考：Doppler / high-pass / modulation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-02-4eea19fe4c`
-3. **命名处理链**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：a little dark magic spellcast using his recordings I was trying to subvert some tropes here mainly that dark magic uh frequently uses with spre vocals a lot of noise or disant tonal elements so I took it in my own Direction and it ended up sounding maybe too space magicky but it is what it is so I started off by going
+3. **命名处理链**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：命名处理链
    - 链路参考：Render/bounce workflow
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-03-97d059e2a5`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：spre vocals a lot of noise or disant tonal elements so I took it in my own Direction and it ended up sounding maybe too space magicky but it is what it is so I started off by going through the library and pulling some recordings I felt like had some potential to them we can take a quick listen uh I had a bunch of cloth
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-04-cba91ba4f9`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：potential to them we can take a quick listen uh I had a bunch of cloth recordings here then we got some natural sort of impact Source uh some pillow hits and some fireworks and we also got a bunch of paper plastic movement then from there I knew I was going to need some impacts some sustained textures some whooshes all
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-05-8ddcbf6187`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to keep playing back these glued recordings for you because I think you get the idea it's just me playing around then I bounced it this next one I called phas more we use some of the leather creaking source e this next one is balloon modulator is what I called it uh this uses the balloon myar rub crackle Source it's al
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-06-28d2c46b58`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：al elements so I took it in my own Direction and it ended up sounding maybe too space magicky but it is what it is so I started off by going through the library and pulling some recordings I felt like had some potential to them we can take a quick listen uh I had a bunch of cloth recordings here then we got some natura
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-07-54f07782c6`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：what I called it uh this uses the balloon myar rub crackle Source it's also by the way I forgot to mention some of are stretched out this one is 0.5 speed [Music] and it looks like one of these variations when I was bouncing it um I really enjoyed because I put a little smiley face marker on it and I have no idea how I
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Named processing chains
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-08-c9a56e10f5`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：a little dark magic spellcast using his recordings I was trying to subvert some tropes here mainly that dark magic uh frequently uses with spre vocals a lot of noise or disant tonal elements so I took it in my own Direction and it ended up sounding maybe too space magicky but it is what it is so I started off by going
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Doppler / high-pass / modulation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-09-12828f9c5c`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：spre vocals a lot of noise or disant tonal elements so I took it in my own Direction and it ended up sounding maybe too space magicky but it is what it is so I started off by going through the library and pulling some recordings I felt like had some potential to them we can take a quick listen uh I had a bunch of cloth
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Render/bounce workflow
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uP135z2QBTM-10-8435a2745e`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：potential to them we can take a quick listen uh I had a bunch of cloth recordings here then we got some natural sort of impact Source uh some pillow hits and some fireworks and we also got a bunch of paper plastic movement then from there I knew I was going to need some impacts some sustained textures some whooshes all
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to keep playing back these glued recordings for you because I think you get the idea it's just me playing around then I bounced it this next one I called phas more we use some of the leather creaking source e this next one is balloon modulator is what I called it uh this uses the balloon myar rub crackle Source it's al
+12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘参数逻辑
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：al elements so I took it in my own Direction and it ended up sounding maybe too space magicky but it is what it is so I started off by going through the library and pulling some recordings I felt like had some potential to them we can take a quick listen uh I had a bunch of cloth recordings here then we got some natura
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：what I called it uh this uses the balloon myar rub crackle Source it's also by the way I forgot to mention some of are stretched out this one is 0.5 speed [Music] and it looks like one of these variations when I was bouncing it um I really enjoyed because I put a little smiley face marker on it and I have no idea how I
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Named processing chains -> Doppler / high-pass / modulation -> Render/bounce workflow -> Pro-R / reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 
@@ -7779,27 +6228,13 @@ Records: 82
 - **Render/bounce workflow**: 将链输出做成可剪素材池。
   - mark favorites
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：my friend Paul sent me a copy of his magic Source library to try out so I figured I'd have some fun design a little dark magic spellcast using his recordings I was trying to subvert some tropes here mainly that dark magic uh frequently uses with spre vocals a
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：spre vocals a lot of noise or disant tonal elements so I took it in my own Direction and it ended up sounding maybe too space magicky but it is what it is so I started off by going through the library and pulling some recordings I felt like had some potential to them we can take a quick listen uh I had a bunch of cloth
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：.5 speed [Music] and it looks like one of these variations when I was bouncing it um I really enjoyed because I put a little smiley face marker on it and I have no idea how I did that usually they don't have anything um next to them yeah I think that became a
-  - 可确认的数值/范围：5
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：o have some pretty sweet um it just add lots of cool interesting motion so from there as I approached the actual design phase um I just grabbed all my favorite bits from those various bounces and sort of stacked them up on top of each other here's Mr smiley face and um yeah I knew I wanted to create sort of like a spel
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：my friend Paul sent me a copy of his magic Source library to try out so I figured I'd have some fun design a little dark magic spellcast using his recordings I was trying to subvert some tropes here mainly that dark magic uh frequently uses with spre vocals a
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：ireworks and we also got a bunch of paper plastic movement then from there I knew I was going to need some impacts some sustained textures some whooshes all the building blocks for my final design so I started pulling samples from his source and throwing it through some of my effects chains for inspiration this first o
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：my friend Paul sent me a copy of his magic Source library to try out so I figured I'd have some fun design a little dark magic spellcast using his recordings I was trying to subvert some tropes here mainly that dark magic uh frequently uses with spre vocals a
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：what I called it uh this uses the balloon myar rub crackle Source it's also by the way I forgot to mention some of are stretched out this one is 0.5 speed [Music] and it looks like one of these variations when I was bouncing it um I really enjoyed because I put a little smiley face marker on it and I have no idea how I
-  - 可确认的数值/范围：0.5
 
 ### Materials / Layer Sources
 - cloth
@@ -7825,14 +6260,9 @@ Records: 82
 - 7. Playback rate / item rate：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：20 DB；15 DB；20；50；55 DB。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Named processing chains 参数逻辑：impact grain modulator；spin Trace sweep。
 - Doppler / high-pass / modulation 参数逻辑：line up gaps carefully。
 - Render/bounce workflow 参数逻辑：mark favorites。
-- Pro-R / reverb 参数逻辑：字幕/画面线索：my friend Paul sent me a copy of his magic Source library to try out so I figured I'd have some fun design a little dark magic spellcast using his recordings I was trying to subvert some tropes here mainly that dark magic uh frequently uses with spre vocals a ；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Disperser / phase rotation 参数逻辑：字幕/画面线索：.5 speed [Music] and it looks like one of these variations when I was bouncing it um I really enjoyed because I put a little smiley face marker on it and I have no idea how I did that usually they don't have anything um next to them yeah I think that became a ；可确认的数值/范围：5。
-- Transient Shaper 参数逻辑：字幕/画面线索：my friend Paul sent me a copy of his magic Source library to try out so I figured I'd have some fun design a little dark magic spellcast using his recordings I was trying to subvert some tropes here mainly that dark magic uh frequently uses with spre vocals a ；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Playback rate / item rate 参数逻辑：字幕/画面线索：my friend Paul sent me a copy of his magic Source library to try out so I figured I'd have some fun design a little dark magic spellcast using his recordings I was trying to subvert some tropes here mainly that dark magic uh frequently uses with spre vocals a ；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -7853,125 +6283,97 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **限制素材范围**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and I don't like Preamble too much before letting people hear things so I'm just going to run through these sounds and then we'll come back and talk about what we heard here is design01 here is design O2 here is design 03 [Music] so I want to do a track BYT trck breakdown so you can really hear what's going on but befo
+1. **限制素材范围**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：限制素材范围
    - 链路参考：Pitch/time stretching
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-01-aa21a53aa3`
-2. **三种同画面方案**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：es were pulled from anywhere else and the only processing you will be hearing are plugins I added as well as any volume pitch or time stretching manipulation in Reaper I chose to treat this as a work assignment of a hero or a player skill so I came up with three different designs trying to take different approaches and
+2. **三种同画面方案**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：三种同画面方案
    - 链路参考：Parallel compression
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-02-1d9968c96c`
-3. **选让耳朵有反应的源**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：pan and we bring it to the center to show that the beam is being focused before it shoots out we've got some high pass filtering going on to clean it up and just a little gain lazy gain staging with a plugin uh if I turn that off and we look at the child tracks let's see there is a plugin on here just a little devil lo
+3. **选让耳朵有反应的源**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：选让耳朵有反应的源
    - 链路参考：Reverb / width
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-03-cfe7c70f16`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：I call this The Lazy Man's compressor um this is really just a quick way to to kind of level out a sound and bring up detail uh that might get lost in the tail as it starts to compete with other layers or even other sounds in the in the full game mix and uh just bringing that mix knob back until you blend it to taste s
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-04-41edc0f0b1`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Sound by itself and I just wanted to help move it along to show it was pitching up and we're gaining energy before this attack happens uh continuing on the windup we've got this wind and that's kind of starting panned wide and then coming to the center uh there are no plugins on child tracks but I am doing a little tre
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-05-dc4b660c30`
-6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ult settings I might adjust the Decay and the pre- delay and the mix and that's probably all I did in this session so I printed that Reverb uh to a new take and reversed [Music] it so sorry I reversed it I printed the Reverb on it and then reverse that and to me that just added another element of focusing that magical
+6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把素材打印成调色板
    - 链路参考：Decapitator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-06-c29dd4e0a2`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and I don't like Preamble too much before letting people hear things so I'm just going to run through these sounds and then we'll come back and talk about what we heard here is design01 here is design O2 here is design 03 [Music] so I want to do a track BYT trck breakdown so you can really hear what's going on but befo
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-07-eb10cc671a`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：es were pulled from anywhere else and the only processing you will be hearing are plugins I added as well as any volume pitch or time stretching manipulation in Reaper I chose to treat this as a work assignment of a hero or a player skill so I came up with three different designs trying to take different approaches and
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-08-a64307ec8b`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：pan and we bring it to the center to show that the beam is being focused before it shoots out we've got some high pass filtering going on to clean it up and just a little gain lazy gain staging with a plugin uh if I turn that off and we look at the child tracks let's see there is a plugin on here just a little devil lo
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-09-8ffff878f5`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：I call this The Lazy Man's compressor um this is really just a quick way to to kind of level out a sound and bring up detail uh that might get lost in the tail as it starts to compete with other layers or even other sounds in the in the full game mix and uh just bringing that mix knob back until you blend it to taste s
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-fpazzwJnMdM-10-aeea02810c`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：Sound by itself and I just wanted to help move it along to show it was pitching up and we're gaining energy before this attack happens uh continuing on the windup we've got this wind and that's kind of starting panned wide and then coming to the center uh there are no plugins on child tracks but I am doing a little tre
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ult settings I might adjust the Decay and the pre- delay and the mix and that's probably all I did in this session so I printed that Reverb uh to a new take and reversed [Music] it so sorry I reversed it I printed the Reverb on it and then reverse that and to me that just added another element of focusing that magical
+12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘参数逻辑
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and I don't like Preamble too much before letting people hear things so I'm just going to run through these sounds and then we'll come back and talk about what we heard here is design01 here is design O2 here is design 03 [Music] so I want to do a track BYT trck breakdown so you can really hear what's going on but befo
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：es were pulled from anywhere else and the only processing you will be hearing are plugins I added as well as any volume pitch or time stretching manipulation in Reaper I chose to treat this as a work assignment of a hero or a player skill so I came up with three different designs trying to take different approaches and
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Pitch/time stretching -> Parallel compression -> Reverb / width -> Soundtoys Effect Rack 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -7984,52 +6386,27 @@ Records: 82
 - **Reverb / width**: 让 wide wind 和魔法尾巴进入游戏空间。
   - contextual space
 - **Soundtoys Effect Rack**: 串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 字幕/画面线索：group so if I turn all these off this is what this sounds like I don't need the low end and we've got the echo boy from sound toys I'm using space Echo preset which is my favorite preset that's just giving us a little density few more uh instances of that whippy sound happening same thing with the frequency Echo kind o
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：at off that's a cool sound now that's a loud cool sound uh we've already heard our rubber chicken which is just using a tremolo just to give it a little something uh I think while I was listening to the vocal sound I heard these vocal sounds which is just more crazy beatbox sounds and I'm using a devil lock on both of
 - **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：e and gain and then getting that into a register I liked and then we had our beam LF which all I'm doing is adding some decapitator too just to give it some upper harmonic content and then uh I started playing with this swell idea and was looking at this blue Mana bar thinking maybe that's something we would track in t
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：.2 and was like oh my God that's so cool and then we add a few plugins so I've got a EQ which is just sort of giving us a clean out with that filter sweep uh decapitator which is giving us a lot of [Applause] character and then an echo boy set to the space Ech
-  - 可确认的数值/范围：2
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：ound I gave it a playback rate of 0.2 and was like oh my God that's so cool and then we add a few plugins so I've got a EQ which is just sort of giving us a clean out with that filter sweep uh decapitator which is giving us a lot of [Applause] character and then an echo boy set to the space Echo preset [Applause] becau
-  - 可确认的数值/范围：0.2
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：goal as a sound designer is to make myself laugh and I I can never resist the rubber chicken uh love to find the Absurd limits of how far is too far uh and when you can see that on someone else's face know it's it's a great feeling um this first sound has no plugins on it uh I'm just using a stretch marker and Reaper w
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：ere are no plugins on child tracks but I am doing a little treatment on the parent track I've got this even tied stereo room re RB and is just a trick I use with the mix at 100 and the position at front which is something I've seen Alan Myerson do uh it just kind of pushes things off the front of the speaker and to me
-  - 可确认的数值/范围：100
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：ee this plug in a lot through my session it's literally just the default settings I might adjust the Decay and the pre- delay and the mix and that's probably all I did in this session so I printed that Reverb uh to a new take and reversed [Music] it so sorry I reversed it I printed the Reverb on it and then reverse tha
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：es were pulled from anywhere else and the only processing you will be hearing are plugins I added as well as any volume pitch or time stretching manipulation in Reaper I chose to treat this as a work assignment of a hero or a player skill so I came up with three different designs trying to take different approaches and
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：Sound by itself and I just wanted to help move it along to show it was pitching up and we're gaining energy before this attack happens uh continuing on the windup we've got this wind and that's kind of starting panned wide and then coming to the center uh there are no plugins on child tracks but I am doing a little tre
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：m that and then a devil lock set to one one with mix of three you're going to see this a lot I call this The Lazy Man's compressor um this is really just a quick way to to kind of level out a sound and bring up detail uh that might get lost in the tail as it starts to compete with other layers or even other sounds in t
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：from anywhere else and the only processing you will be hearing are plugins I added as well as any volume pitch or time stretching manipulation in Reaper I chose to treat this as a work assignment of a hero or a player skill so I came up with three different designs trying to take different approaches and I don't like P
 
 ### Materials / Layer Sources
 - Raw Magic library
@@ -8053,15 +6430,13 @@ Records: 82
 - 8. Pro-L 2 / limiter：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：03；100；25；7；8。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Pitch/time stretching 参数逻辑：mostly DAW-level processing。
 - Parallel compression 参数逻辑：blend to taste。
 - Reverb / width 参数逻辑：contextual space。
-- Soundtoys Effect Rack 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。。
-- Tremolator 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
-- Decapitator 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：.2 and was like oh my God that's so cool and then we add a few plugins so I've got a EQ which is just sort of giving us a clean out with that filter sweep uh decapitator which is giving us a lot of [Applause] character and then an echo boy set to the space Ech；可确认的数值/范围：2。
-- Pro-L 2 / limiter 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。。
+- Soundtoys Effect Rack 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。。
+- Tremolator 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。。
+- Decapitator 参数逻辑：饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。。
+- Pro-L 2 / limiter 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: Elden Ring; Raw Magic; minimal processing; parallel compression; variation; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -8081,112 +6456,84 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **只用库和免费工具**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：kind of followed here was to just build this kind of first layer based off of all these different uh raw sounds um and then dupe that out and and tweak layers to give me different variations um that that sound good so uh I used uh I made kind of like an ice ice spell type sound um so I will play that and then I'll brea
+1. **只用库和免费工具**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：只用库和免费工具
    - 链路参考：Reaper EQ/Distortion/Compressor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-01-16d0312a93`
-2. **冰法瞬态**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hort snippet of a few of them uh this roll whistle and this beatbox kick to give us like a snap I guess they're kind of reversed um uh but layer in uh with this feather duster s sand hit it gives us a cool um casting snap and I have these this cie pool hose as some high-end snap and a umbrella whoo um so that's the the
+2. **冰法瞬态**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：冰法瞬态
    - 链路参考：Kilohearts Distortion
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-02-07e7257e2e`
-3. **movement bus**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：whoo um so that's the the transient part of the cast uh I I'm not doing too many too much processing there uh just some EQ um little transient shaper little limiter um nothing fancy uh so the rest of the sound is kind of is grouped into this this movement bus um which is just going through again some EQ uh Distortion a
+3. **movement bus**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：movement bus
    - 链路参考：Transient Shaper / Compressor / Limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-03-7cd3a415ba`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做 tonal/resonant 层
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-04-9960fc8683`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ice spell type sound um so I will play that and then I'll break down each [Music] layer so to start I have this uh this transient here and that's made up of a few things um just little Snippets I took this these beatbox sounds uh that you can find here um and those are pretty cool uh and I just took a very short snippe
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-05-8ce8857b06`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-06-17e60e1abc`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：kind of followed here was to just build this kind of first layer based off of all these different uh raw sounds um and then dupe that out and and tweak layers to give me different variations um that that sound good so uh I used uh I made kind of like an ice ice spell type sound um so I will play that and then I'll brea
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-07-70d532ace7`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hort snippet of a few of them uh this roll whistle and this beatbox kick to give us like a snap I guess they're kind of reversed um uh but layer in uh with this feather duster s sand hit it gives us a cool um casting snap and I have these this cie pool hose as some high-end snap and a umbrella whoo um so that's the the
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-08-28b3daa868`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：whoo um so that's the the transient part of the cast uh I I'm not doing too many too much processing there uh just some EQ um little transient shaper little limiter um nothing fancy uh so the rest of the sound is kind of is grouped into this this movement bus um which is just going through again some EQ uh Distortion a
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Reaper EQ/Distortion/Compressor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-09-6d804b0f10`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：组合成完整施法句子
    - 链路参考：Kilohearts Distortion
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-10-be95adb8a5`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ice spell type sound um so I will play that and then I'll break down each [Music] layer so to start I have this uh this transient here and that's made up of a few things um just little Snippets I took this these beatbox sounds uh that you can find here um and those are pretty cool uh and I just took a very short snippe
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Transient Shaper / Compressor / Limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘参数逻辑
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：kind of followed here was to just build this kind of first layer based off of all these different uh raw sounds um and then dupe that out and and tweak layers to give me different variations um that that sound good so uh I used uh I made kind of like an ice ice spell type sound um so I will play that and then I'll brea
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：hort snippet of a few of them uh this roll whistle and this beatbox kick to give us like a snap I guess they're kind of reversed um uh but layer in uh with this feather duster s sand hit it gives us a cool um casting snap and I have these this cie pool hose as some high-end snap and a umbrella whoo um so that's the the
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Reaper EQ/Distortion/Compressor -> Kilohearts Distortion -> Transient Shaper / Compressor / Limiter -> Pro-Q 3 / EQ 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 
@@ -8199,25 +6546,15 @@ Records: 82
   - minor attack/sustain
   - game-audio submix
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：whoo um so that's the the transient part of the cast uh I I'm not doing too many too much processing there uh just some EQ um little transient shaper little limiter um nothing fancy uh so the rest of the sound is kind of is grouped into this this movement bus um which is just going through again some EQ uh Distortion a
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：art of the cast uh I I'm not doing too many too much processing there uh just some EQ um little transient shaper little limiter um nothing fancy uh so the rest of the sound is kind of is grouped into this this movement bus um which is just going through again some EQ uh Distortion and then compressor uh these two are a
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：at's the the transient part of the cast uh I I'm not doing too many too much processing there uh just some EQ um little transient shaper little limiter um nothing fancy uh so the rest of the sound is kind of is grouped into this this movement bus um which is just going through again some EQ uh Distortion and then compr
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：d is kind of is grouped into this this movement bus um which is just going through again some EQ uh Distortion and then compressor uh these two are are Reaper effects actually these are Reaper Reaper effects here so um breaking that down I got muffled finger scrapes cement shoe slide think there's some other layers in
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：hort snippet of a few of them uh this roll whistle and this beatbox kick to give us like a snap I guess they're kind of reversed um uh but layer in uh with this feather duster s sand hit it gives us a cool um casting snap and I have these this cie pool hose as some high-end snap and a umbrella whoo um so that's the the
 
 ### Materials / Layer Sources
 - beatbox roll whistle
@@ -8250,11 +6587,11 @@ Records: 82
 - Reaper EQ/Distortion/Compressor 参数逻辑：accessible stock effects。
 - Kilohearts Distortion 参数逻辑：drive a little。
 - Transient Shaper / Compressor / Limiter 参数逻辑：minor attack/sustain；game-audio submix。
-- Pro-Q 3 / EQ 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
-- Pro-L 2 / limiter 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。。
-- Transient Shaper 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。。
-- Compressor / clipper 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。。
-- Playback rate / item rate 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。。
+- Pro-Q 3 / EQ 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
+- Pro-L 2 / limiter 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。。
+- Transient Shaper 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。。
+- Compressor / clipper 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。。
+- Playback rate / item rate 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -8275,112 +6612,84 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **电源不只用电**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and really really really cool um so I'll walk through how I got a lot of the electricity sounds out of these things and then I'll also go through a couple of other layers uh that I also recorded everything in my layers was done pretty much with this plug-in chain just with messing with a couple of the different paramet
+1. **电源不只用电**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：电源不只用电
    - 链路参考：Melda/Snap patch audio follower
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-01-dbd47227c4`
-2. **通用电链**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s um and then for my pan stuff I drew in some pan automation to follow uh the picture a little bit more and then I just pitched up one of the layers to give some more sort that high staticky feel um so all of together sounds like this it's awesome and to add a little bit more texture I took a couple more layers and the
+2. **通用电链**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：通用电链
    - 链路参考：Multipass / Transient Shaper / Ambassador / Exciter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-02-202eec65d2`
-3. **audio follower 触发电感**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lug-in chain just with messing with a couple of the different parameters as I was going along uh depending on what uh frequencies and textures that I was looking for at the time whether it more highend or lowend or more warbly or static and that kind of thing um so for the most part I was using a lot of the Paper Sourc
+3. **audio follower 触发电感**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：audio follower 触发电感
    - 链路参考：Tonsturm Traveler
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-03-4c121a7c7a`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：yered them all together up here um not much has been done on this end uh I have a snap he patch with some convolver and Reverb just to give it a little bit more space um these are all also just default uh within convolver and stuff like that so nothing is super uh hard to acquire uh and then for this layer here uh this
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Snap Heap convolver/reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-04-036b7175ce`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：rocessing comes from this snap he patch that I made um a bunch of things running through uh this random LFO mostly this transient shaper is kind of the most important bit uh it's all attached to the random LFO and as the attack goes up the sustain goes down so you're getting a lot of uh variation in the attack and how
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-05-88bb97068b`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Multipass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-06-11da9c751d`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and really really really cool um so I'll walk through how I got a lot of the electricity sounds out of these things and then I'll also go through a couple of other layers uh that I also recorded everything in my layers was done pretty much with this plug-in chain just with messing with a couple of the different paramet
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-07-507154906c`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s um and then for my pan stuff I drew in some pan automation to follow uh the picture a little bit more and then I just pitched up one of the layers to give some more sort that high staticky feel um so all of together sounds like this it's awesome and to add a little bit more texture I took a couple more layers and the
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Pro-MB / multiband dynamics
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-08-e151339b60`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lug-in chain just with messing with a couple of the different parameters as I was going along uh depending on what uh frequencies and textures that I was looking for at the time whether it more highend or lowend or more warbly or static and that kind of thing um so for the most part I was using a lot of the Paper Sourc
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-09-8a6756d45b`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：yered them all together up here um not much has been done on this end uh I have a snap he patch with some convolver and Reverb just to give it a little bit more space um these are all also just default uh within convolver and stuff like that so nothing is super uh hard to acquire uh and then for this layer here uh this
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-10-237a554473`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：rocessing comes from this snap he patch that I made um a bunch of things running through uh this random LFO mostly this transient shaper is kind of the most important bit uh it's all attached to the random LFO and as the attack goes up the sustain goes down so you're getting a lot of uh variation in the attack and how
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘参数逻辑
    - 链路参考：Convolver / convolution
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：and really really really cool um so I'll walk through how I got a lot of the electricity sounds out of these things and then I'll also go through a couple of other layers uh that I also recorded everything in my layers was done pretty much with this plug-in chain just with messing with a couple of the different paramet
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s um and then for my pan stuff I drew in some pan automation to follow uh the picture a little bit more and then I just pitched up one of the layers to give some more sort that high staticky feel um so all of together sounds like this it's awesome and to add a little bit more texture I took a couple more layers and the
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Melda/Snap patch audio follower -> Multipass / Transient Shaper / Ambassador / Exciter -> Tonsturm Traveler -> Snap Heap convolver/reverb 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Tremolator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 
@@ -8395,44 +6704,24 @@ Records: 82
 - **Snap Heap convolver/reverb**: 最终空间和电感尾巴。
   - space glue
 - **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
 - **Multipass**: 多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 字幕/画面线索：llower here uh that's just listening to what's currently being played on the track after the snapy Patch I have um this multipass patch which is basically just two different kinds of filter tables three different kinds of filter tables sorry um two of which are being run through the audio follower uh just to give a lit
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：mphasize certain moments um it's all going through this sort of main track here that pretty much just has a nice subtle EQ uh and a bit more black box uh so we'll play through all these together [Music] awesome and then I will play it through one more time with everything and I hope this was a helpful walkr
 - **Pro-MB / multiband dynamics**: 多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：is is the rice paper and some packing tape um so the actual effects chain looks like this uh I used melda's granular um multiband for making things sound a little bit more textured and weird and kind of electricity zappy um that kind of stuff a lot of the processing comes from this snap he patch that I made um a bunch
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：yered them all together up here um not much has been done on this end uh I have a snap he patch with some convolver and Reverb just to give it a little bit more space um these are all also just default uh within convolver and stuff like that so nothing is super uh hard to acquire uh and then for this layer here uh this
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：y is a duplicated track from intense zappy and then I added some trolo I took out some of the highend and and I added a delay just to kind of give it little bit of a an echo effect and then as for the impacts uh nothing much here really just uh blackbox hg2 which I put on most things um and then for my pan stuff I drew
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：s um and then for my pan stuff I drew in some pan automation to follow uh the picture a little bit more and then I just pitched up one of the layers to give some more sort that high staticky feel um so all of together sounds like this it's awesome and to add a little bit more texture I took a couple more layers and the
 - **Convolver / convolution**: 卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 字幕/画面线索：ust sort of layered them all together up here um not much has been done on this end uh I have a snap he patch with some convolver and Reverb just to give it a little bit more space um these are all also just default uh within convolver and stuff like that so nothing is super uh hard to acquire uh and then for this laye
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：rocessing comes from this snap he patch that I made um a bunch of things running through uh this random LFO mostly this transient shaper is kind of the most important bit uh it's all attached to the random LFO and as the attack goes up the sustain goes down so you're getting a lot of uh variation in the attack and how
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
 
 ### Materials / Layer Sources
@@ -8468,10 +6757,10 @@ Records: 82
 - Multipass / Transient Shaper / Ambassador / Exciter 参数逻辑：two filter types；per-layer tweaks。
 - Tonsturm Traveler 参数逻辑：low-end whooshes。
 - Snap Heap convolver/reverb 参数逻辑：space glue。
-- Snap Heap 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Multipass 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。。
-- Pro-Q 3 / EQ 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
-- Pro-MB / multiband dynamics 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。。
+- Snap Heap 参数逻辑：
+- Multipass 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。。
+- Pro-Q 3 / EQ 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。。
+- Pro-MB / multiband dynamics 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -8492,112 +6781,84 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **反转金属 lead-in**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：] layer and I believe measuring spoons were thrown and caught and I reversed it here's the original without the chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the original recording sounds like you add multipass gets
+1. **反转金属 lead-in**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：反转金属 lead-in
    - 链路参考：Kilohearts Multipass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-01-ed15b9ab43`
-2. **旋转亮层**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：everything so here's the first little leadin [Music] layer and I believe measuring spoons were thrown and caught and I reversed it here's the original without the chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the ori
+2. **旋转亮层**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：旋转亮层
    - 链路参考：Slate Infinity Bass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-02-74f2af6901`
-3. **冲击和低频**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s really great presets on there and just till you find something cool and then start tweaking it but you break up the frequency spectrum and put little modules on certain parts of the lows mid or highs however you want to cut it up and move things around get some really crazy stuff out of that one all right next layer
+3. **冲击和低频**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：冲击和低频
    - 链路参考：Eventide Crystals
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-03-9f1b8047de`
-4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ink I only have it about Blended halfway even tide crystals not doing time but adding a little bit of movement and some Reverb to just have a little more even Decay on everything yeah and then really cool Trash Can Lid being bowed this is the original from the library really cool and I just pitched it up and I think eq
+4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做 tonal/resonant 层
    - 链路参考：Ozone Maximizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-04-4ae06f061f`
-5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：want to cut it up and move things around get some really crazy stuff out of that one all right next layer first little impact layer which I didn't do anything to that's just a metal sheet with a little bit of wobble to it and just sounded cool in there it didn't put anything extra on it here's the other impact [Music]
+5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：增加随机运动
    - 链路参考：Multipass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-05-410caa5b1a`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-06-ec582c561b`
-7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：] layer and I believe measuring spoons were thrown and caught and I reversed it here's the original without the chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the original recording sounds like you add multipass gets
+7. **做冲击或释放点**: 用短包络、pitch drop、distortion 和 transient shaper 把能量落点做出来，否则 whoosh 只有飘没有力。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做冲击或释放点
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-07-9d6c10461d`
-8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：everything so here's the first little leadin [Music] layer and I believe measuring spoons were thrown and caught and I reversed it here's the original without the chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the ori
+8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：设计尾音和空间
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-08-1e8025c169`
-9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：s really great presets on there and just till you find something cool and then start tweaking it but you break up the frequency spectrum and put little modules on certain parts of the lows mid or highs however you want to cut it up and move things around get some really crazy stuff out of that one all right next layer
+9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理频段和动态
    - 链路参考：Kilohearts Multipass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-09-4a1f569b00`
-10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ink I only have it about Blended halfway even tide crystals not doing time but adding a little bit of movement and some Reverb to just have a little more even Decay on everything yeah and then really cool Trash Can Lid being bowed this is the original from the library really cool and I just pitched it up and I think eq
+10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：组合成完整施法句子
    - 链路参考：Slate Infinity Bass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-10-e828504b36`
-11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：want to cut it up and move things around get some really crazy stuff out of that one all right next layer first little impact layer which I didn't do anything to that's just a metal sheet with a little bit of wobble to it and just sounded cool in there it didn't put anything extra on it here's the other impact [Music]
+11. **总线微整和响度**: 总线只做轻压、M/S EQ、峰值控制和必要亮度，保留层之间的动态起伏。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线微整和响度
    - 链路参考：Eventide Crystals
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘参数逻辑
    - 链路参考：Ozone Maximizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：] layer and I believe measuring spoons were thrown and caught and I reversed it here's the original without the chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the original recording sounds like you add multipass gets
+13. **确定魔法语气**: 先决定魔法是明亮、黑暗、神圣、腐蚀、火焰、电、传送还是 UI 化；语气决定滤波、失真和空间的方向。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定魔法语气
    - 链路参考：Multipass
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：everything so here's the first little leadin [Music] layer and I believe measuring spoons were thrown and caught and I reversed it here's the original without the chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the ori
+14. **挑选真实纹理源**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。 本条的主要链路可以按 Kilohearts Multipass -> Slate Infinity Bass -> Eventide Crystals -> Ozone Maximizer 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：挑选真实纹理源
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
 
@@ -8611,21 +6872,13 @@ Records: 82
 - **Ozone Maximizer**: 最终响度控制。
   - level finish
 - **Multipass**: 多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。
-  - 字幕/画面线索：chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the original recording sounds like you add multipass gets pretty crazy uh if don't know uh from Kill Hearts very very cool uh to be honest most of the time I'm just click
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：ink I only have it about Blended halfway even tide crystals not doing time but adding a little bit of movement and some Reverb to just have a little more even Decay on everything yeah and then really cool Trash Can Lid being bowed this is the original from the library really cool and I just pitched it up and I think eq
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：e's the original without the chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the original recording sounds like you add multipass gets pretty crazy uh if don't know uh from Kill Hearts very very cool uh to be honest mo
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：everything so here's the first little leadin [Music] layer and I believe measuring spoons were thrown and caught and I reversed it here's the original without the chus so then it became this and here's another layer that was a ball bearing spinning in a pitcher I believe uh without multi pass on it this is what the ori
 
 ### Materials / Layer Sources
 - measuring spoons
@@ -8653,10 +6906,10 @@ Records: 82
 - Slate Infinity Bass 参数逻辑：sub support。
 - Eventide Crystals 参数逻辑：movement/reverb。
 - Ozone Maximizer 参数逻辑：level finish。
-- Multipass 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。。
-- Pro-R / reverb 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。。
-- Little AlterBoy / pitch-formant 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。。
-- Playback rate / item rate 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。。
+- Multipass 参数逻辑：多段处理宿主，把低频、中频、高频拆开分别做失真、瞬态、压缩或滤波，避免一个处理把全频段一起压扁。。
+- Pro-R / reverb 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。。
+- Little AlterBoy / pitch-formant 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。。
+- Playback rate / item rate 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -8677,99 +6930,71 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **理解库定位**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bit of movement using something like grm douer for the FR sorry stop doing silly accents uh if we add a bit of this and then just and then and maybe just a bit of interesting um quite cool death whistle interesting I was expecting the the whistle sound that's more ceramic ball bearing stuff [Music] nice nice very nice
+1. **理解库定位**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：理解库定位
    - 链路参考：FilterFreak / UberMod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-01-cf782ec2f9`
-2. **用 DSP rack 测试**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：traight in and just have a little play and and yeah see what it sounds like very cool some dog stuff very cool innately pitch very nice stuff sorry all my plugins open on the other screen for some reason um so let's do a bit of that quite interesting just um something like filter freak maybe um because it could be quit
+2. **用 DSP rack 测试**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：用 DSP rack 测试
    - 链路参考：PitchMonster
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-02-d8099a6028`
-3. **材料范围**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：plugins open on the other screen for some reason um so let's do a bit of that quite interesting just um something like filter freak maybe um because it could be quite interesting to like modulate that um let's do another [Music] fast fast still yeah uh very cool um sorry I'm getting sidetracked hamster scream it's grea
+3. **材料范围**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：材料范围
    - 链路参考：Transient/punch processors
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-03-d212fbc627`
 4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立可复用处理链
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-04-e10c7e58d1`
-5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d yeah all right all right we're cooking low end yeah that's fun yeah that's really nice stuff um wow whoa those little transients there that are that are catching in it lovely so nice catching my uh transex that's nice wonderful sounds that's awesome little some sand some lovely El o that's lovely let's do a little so
+5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：打印中间结果
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-05-3f11d7d15e`
-6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：so nice that transient stuff yeah those are really gorgeous sound o I love the kind of crackly stuff I wonder if we can pick that out even more why is that happening kind of low mids is it yeah very nice stuff should turn my processing off [Music] oh shower door friction matter that's lovely bit Distortion from the old
+6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做变体和命名
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-06-4f53f09b5c`
-7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bit of movement using something like grm douer for the FR sorry stop doing silly accents uh if we add a bit of this and then just and then and maybe just a bit of interesting um quite cool death whistle interesting I was expecting the the whistle sound that's more ceramic ball bearing stuff [Music] nice nice very nice
+7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理总线
    - 链路参考：FilterFreak / UberMod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-07-ca68d483a1`
-8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：traight in and just have a little play and and yeah see what it sounds like very cool some dog stuff very cool innately pitch very nice stuff sorry all my plugins open on the other screen for some reason um so let's do a bit of that quite interesting just um something like filter freak maybe um because it could be quit
+8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘失败点
    - 链路参考：PitchMonster
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-08-2d54e470ca`
-9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：plugins open on the other screen for some reason um so let's do a bit of that quite interesting just um something like filter freak maybe um because it could be quite interesting to like modulate that um let's do another [Music] fast fast still yeah uh very cool um sorry I'm getting sidetracked hamster scream it's grea
+9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：准备游戏落地
    - 链路参考：Transient/punch processors
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-09-368cf7edb7`
 10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：归档知识
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-10-3695ea17f3`
-11. **确定工作目标**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：d yeah all right all right we're cooking low end yeah that's fun yeah that's really nice stuff um wow whoa those little transients there that are that are catching in it lovely so nice catching my uh transex that's nice wonderful sounds that's awesome little some sand some lovely El o that's lovely let's do a little so
+11. **确定工作目标**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定工作目标
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-12. **建立素材池**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：so nice that transient stuff yeah those are really gorgeous sound o I love the kind of crackly stuff I wonder if we can pick that out even more why is that happening kind of low mids is it yeah very nice stuff should turn my processing off [Music] oh shower door friction matter that's lovely bit Distortion from the old
+12. **建立素材池**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立素材池
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-13. **先做最小可听版本**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：bit of movement using something like grm douer for the FR sorry stop doing silly accents uh if we add a bit of this and then just and then and maybe just a bit of interesting um quite cool death whistle interesting I was expecting the the whistle sound that's more ceramic ball bearing stuff [Music] nice nice very nice
+13. **先做最小可听版本**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先做最小可听版本
    - 链路参考：FilterFreak / UberMod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
-14. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：traight in and just have a little play and and yeah see what it sounds like very cool some dog stuff very cool innately pitch very nice stuff sorry all my plugins open on the other screen for some reason um so let's do a bit of that quite interesting just um something like filter freak maybe um because it could be quit
+14. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 FilterFreak / UberMod -> PitchMonster -> Transient/punch processors -> FilterFreak 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立可复用处理链
    - 链路参考：PitchMonster
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
 
 ### Plugin and Processing Notes
@@ -8780,16 +7005,10 @@ Records: 82
 - **Transient/punch processors**: 测试源是否能成为可用 attack。
   - punch check
 - **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：plugins open on the other screen for some reason um so let's do a bit of that quite interesting just um something like filter freak maybe um because it could be quite interesting to like modulate that um let's do another [Music] fast fast still yeah uh very cool um sorry I'm getting sidetracked hamster scream it's grea
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：traight in and just have a little play and and yeah see what it sounds like very cool some dog stuff very cool innately pitch very nice stuff sorry all my plugins open on the other screen for some reason um so let's do a bit of that quite interesting just um something like filter freak maybe um because it could be quit
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
 
 ### Materials / Layer Sources
@@ -8820,9 +7039,9 @@ Records: 82
 - FilterFreak / UberMod 参数逻辑：DSP audition rack。
 - PitchMonster 参数逻辑：double granular doubler。
 - Transient/punch processors 参数逻辑：punch check。
-- FilterFreak 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。。
-- Little AlterBoy / pitch-formant 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。。
-- Transient Shaper 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- FilterFreak 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。。
+- Little AlterBoy / pitch-formant 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。。
+- Transient Shaper 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -8846,115 +7065,87 @@ Records: 82
 - 切片重排能把慢节奏素材改造成更密、更稳定的 pulse，不一定要重新找素材。
 
 ### Step / Event Map
-1. **先确认游戏里的信息职责**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：al quick. take a listen in game real quick. &gt;&gt; Dizzy's up. &gt;&gt; Dizzy's up. &gt;&gt; Dizzy's up. &gt;&gt; And then we can hear the enemy version. &gt;&gt; And then we can hear the enemy version. &gt;&gt; And then we can hear the enemy version. I'm going to throw it behind the wall so I'm going to throw it beh
+1. **先确认游戏里的信息职责**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先确认游戏里的信息职责
    - 链路参考：Serato Pitch 'n Time Pro
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-01-c8bfb42f60`
-2. **把游戏声音还原成 Pro Tools 结构**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：layers, um, combining these three layers, um, combining these three layers, um, bouncing it out into this and then just pitching it up and and then just pitching it up and pitching it down to start and stop it. pitching it down to start and stop it. pitching it down to start and stop it. Um, and I probably did that wit
+2. **把游戏声音还原成 Pro Tools 结构**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把游戏声音还原成 Pro Tools 结构
    - 链路参考：Soundtoys FilterFreak 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-02-b01ce8cd81`
-3. **用 varispeed 做起停 ramp**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t going to move on. Uh, next layer. So, that's some cool electricity stuff. So, that's some cool electricity stuff. Uh, Filter Freak's not doing too much, Uh, Filter Freak's not doing too much, Uh, Filter Freak's not doing too much, so I'm not going to get into it. Uh, the so I'm not going to get into it. Uh, the so I'
+3. **用 varispeed 做起停 ramp**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：用 varispeed 做起停 ramp
    - 链路参考：FabFilter Pro-Q 3
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-03-ba3227bbb4`
-4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：is sound, I don't want those fighting for sound, I don't want those fighting for sound, I don't want those fighting for space with the same uh frequency bands space with the same uh frequency bands space with the same uh frequency bands in this sound because this sound is more in this sound because this sound is more i
+4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立瞬态和触感
    - 链路参考：Soundtoys PhaseMistress
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-04-369bef2471`
-5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：or, um, I just then before the decapitator, um, I just then before the decapitator, um, I just have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, so we can just see what that does really so we can just see what that does really so we can just see w
+5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做机械/材质主体
    - 链路参考：Spring Reverb / Little Spring 类混响
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-05-f6433f4429`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入电子运动
    - 链路参考：Soundtoys Decapitator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-06-4b4373739e`
-7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：al quick. take a listen in game real quick. &gt;&gt; Dizzy's up. &gt;&gt; Dizzy's up. &gt;&gt; Dizzy's up. &gt;&gt; And then we can hear the enemy version. &gt;&gt; And then we can hear the enemy version. &gt;&gt; And then we can hear the enemy version. I'm going to throw it behind the wall so I'm going to throw it beh
+7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：处理空间和距离
    - 链路参考：FabFilter Pro-MB / Multiband Compressor
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-07-16425e7087`
-8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：layers, um, combining these three layers, um, combining these three layers, um, bouncing it out into this and then just pitching it up and and then just pitching it up and pitching it down to start and stop it. pitching it down to start and stop it. pitching it down to start and stop it. Um, and I probably did that wit
+8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段分配
    - 链路参考：Waves L3 Multimaximizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-08-44d164b271`
-9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t going to move on. Uh, next layer. So, that's some cool electricity stuff. So, that's some cool electricity stuff. Uh, Filter Freak's not doing too much, Uh, Filter Freak's not doing too much, Uh, Filter Freak's not doing too much, so I'm not going to get into it. Uh, the so I'm not going to get into it. Uh, the so I'
+9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染随机变体
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-09-e98d6b3d7c`
-10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：is sound, I don't want those fighting for sound, I don't want those fighting for sound, I don't want those fighting for space with the same uh frequency bands space with the same uh frequency bands space with the same uh frequency bands in this sound because this sound is more in this sound because this sound is more i
+10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线和峰值控制
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-10-ca31c8a6ff`
-11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：or, um, I just then before the decapitator, um, I just then before the decapitator, um, I just have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, so we can just see what that does really so we can just see what that does really so we can just see w
+11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：交互实现思路
    - 链路参考：Decapitator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-11-ead2495b18`
 12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘可复用规则
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-12-56df566b24`
-13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：al quick. take a listen in game real quick. &gt;&gt; Dizzy's up. &gt;&gt; Dizzy's up. &gt;&gt; Dizzy's up. &gt;&gt; And then we can hear the enemy version. &gt;&gt; And then we can hear the enemy version. &gt;&gt; And then we can hear the enemy version. I'm going to throw it behind the wall so I'm going to throw it beh
+13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：锁定科技功能
    - 链路参考：Pro-MB / multiband dynamics
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-13-3ba0db3dc8`
-14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：layers, um, combining these three layers, um, combining these three layers, um, bouncing it out into this and then just pitching it up and and then just pitching it up and pitching it down to start and stop it. pitching it down to start and stop it. pitching it down to start and stop it. Um, and I probably did that wit
+14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Serato Pitch 'n Time Pro -> Soundtoys FilterFreak 2 -> FabFilter Pro-Q 3 -> Soundtoys PhaseMistress 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：拆成反馈层
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-14-de939fa29d`
@@ -8969,50 +7160,23 @@ Records: 82
 - **FabFilter Pro-MB / Multiband Compressor**: 作者把多段压缩解释成“有条件发生的 EQ”。它只在特定频段超过阈值时压缩，适合在失真前后控制脉冲层的尖叫感。
 - **Waves L3 Multimaximizer**: 工程插入链中可见，用于总线或轨道电平限制/收束；它不是讲解主角，但提醒最终循环需要受控峰值。
 - **Soundtoys Effect Rack**: 串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 字幕/画面线索：. So decapitator is like you know a So decapitator is like you know a So decapitator is like you know a distortion type plugin uh from Sound distortion type plugin uh from Sound distortion type plugin uh from Sound Toys. Uh so if we remind ourselves this Toys.
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 字幕/画面线索：ike you know a distortion type plugin uh from Sound distortion type plugin uh from Sound distortion type plugin uh from Sound Toys. Uh so if we remind ourselves this Toys. Uh so if we remind ourselves this Toys. Uh so if we remind ourselves this is what the um Ally version sounds like. it's a lot more aggressive. Um, a
 - **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：. Uh, Filter Freak's not doing too much, Uh, Filter Freak's not doing too much, Uh, Filter Freak's not doing too much, so I'm not going to get into it
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：t going to move on. Uh, next layer. So, that's some cool electricity stuff. So, that's some cool electricity stuff. Uh, Filter Freak's not doing too much, Uh, Filter Freak's not doing too much, Uh, Filter Freak's not doing too much, so I'm not going to get into it. Uh, the so I'm not going to get into it. Uh, the so I'
 - **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：. Uh and the way I did that mostly was with uh decapitator. was with uh decapitator. was with uh decapitator. So decapitator is like you know a So decapitator is like you know a So decapitator is like you know a distortion type plugin uh from Sound distortion
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：d the way I did that mostly harsh. Uh and the way I did that mostly harsh. Uh and the way I did that mostly was with uh decapitator. was with uh decapitator. was with uh decapitator. So decapitator is like you know a So decapitator is like you know a So decapitator is like you know a distortion type plugin uh from Soun
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：. Uh, the only thing that's really happening here only thing that's really happening here only thing that's really happening here is some EQ. You can see I'm rolling off this mids, You can see I'm rolling off this mids, low mids
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：ng that's really happening here only thing that's really happening here only thing that's really happening here is some EQ. You can see I'm rolling off this mids, You can see I'm rolling off this mids, low mids. Um, and the reason I'm doing low mids. Um, and the reason I'm doing low mids. Um, and the reason I'm doing t
 - **Pro-MB / multiband dynamics**: 多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：. Um, and then before the decapitator, um, I just then before the decapitator, um, I just then before the decapitator, um, I just have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, so we c
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：e the decapitator, um, I just then before the decapitator, um, I just then before the decapitator, um, I just have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, so we can just see what that does really so we can just see what that does really so we
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：. So the low low mids of this sound, I don't want those fighting for sound, I don't want those fighting for sound, I don't want those fighting for space with the same uh frequency bands space with the same uh frequency bands space with the same uh frequency ba
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：is sound, I don't want those fighting for sound, I don't want those fighting for sound, I don't want those fighting for space with the same uh frequency bands space with the same uh frequency bands space with the same uh frequency bands in this sound because this sound is more in this sound because this sound is more i
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：. So, the way that was made was by So, the way that was made was by So, the way that was made was by combining these three layers, um, combining these three layers, um, combining these three layers, um, bouncing it out into this and then just pitching it up an
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：layers, um, combining these three layers, um, combining these three layers, um, bouncing it out into this and then just pitching it up and and then just pitching it up and pitching it down to start and stop it. pitching it down to start and stop it. pitching it down to start and stop it. Um, and I probably did that wit
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：. Uh phase Mistress is going That's cool. Uh phase Mistress is going to be the big uh processing plugin here
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：'s go ahead and important. Uh so let's go ahead and important. Uh so let's go ahead and listen to that. That's cool. Uh phase Mistress is going That's cool. Uh phase Mistress is going to be the big uh processing plugin here. to be the big uh processing plugin here. to be the big uh processing plugin here. So, let's go
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：. Um, and then before the decapitator, um, I just then before the decapitator, um, I just then before the decapitator, um, I just have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, so we c
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：or, um, I just then before the decapitator, um, I just then before the decapitator, um, I just have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, have this multiband, uh, compressor, uh, so we can just see what that does really so we can just see what that does really so we can just see w
 
 ### Materials / Layer Sources
 - NEON_ZIPS / CA 类飞行素材
@@ -9072,89 +7236,61 @@ Records: 82
 - 团队素材库里的 building blocks 很有价值；录音素材切好入库后，可以在不同角色和技能中复用。
 
 ### Step / Event Map
-1. **先听 Alive 与 Dead 的游戏语境**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t was done. So here's the see how it was done. So here's the see how it was done. So here's the Reaper session. Um, and first thing I'm Reaper session. Um, and first thing I'm Reaper session. Um, and first thing I'm going to do is kind of go through the going to do is kind of go through the going to do is kind of go th
+1. **先听 Alive 与 Dead 的游戏语境**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先听 Alive 与 Dead 的游戏语境
    - 链路参考：Soundtoys Crystallizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-01-98be637524`
-2. **把技能拆成完整事件序列**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：nal alive smoke except for like the original alive smoke except for like the original alive smoke except for it's lower pitch, which you can see like it's lower pitch, which you can see like it's lower pitch, which you can see like I've knocked it down seven semmitones. I've knocked it down seven semmitones. I've knock
+2. **把技能拆成完整事件序列**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：把技能拆成完整事件序列
    - 链路参考：Cockos ReaPitch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-02-09d84849aa`
-3. **Spawn 与 Loop 分开负责出现和持续**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o do is kind of go through the going to do is kind of go through the going to do is kind of go through the whole smoke sequence from equip, select whole smoke sequence from equip, select whole smoke sequence from equip, select location, cast, spawn, smoke, all that location, cast, spawn, smoke, all that location, cast,
+3. **Spawn 与 Loop 分开负责出现和持续**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Spawn 与 Loop 分开负责出现和持续
    - 链路参考：Eventide SP2016 Reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-03-85f2563180`
 4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立瞬态和触感
    - 链路参考：FabFilter Pro-Q 3
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-04-c2753bbd2a`
-5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：a nice little kind of it's So, it's just a nice little kind of it's So, it's just a nice little kind of it's kind of an impact. Um, but it's just a kind of an impact. Um, but it's just a kind of an impact. Um, but it's just a start to the sound. Uh, next layer. Uh, next layer. Now, that's definitely an impact. Um, Now,
+5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做机械/材质主体
    - 链路参考：Waves S1 Imager Stereo
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-05-d71efc1d7e`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入电子运动
    - 链路参考：REAPER Parent / Folder Routing
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-06-6b98624a97`
-7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t was done. So here's the see how it was done. So here's the see how it was done. So here's the Reaper session. Um, and first thing I'm Reaper session. Um, and first thing I'm Reaper session. Um, and first thing I'm going to do is kind of go through the going to do is kind of go through the going to do is kind of go th
+7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：处理空间和距离
    - 链路参考：Soundtoys Effect Rack
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-07-224c359191`
-8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：nal alive smoke except for like the original alive smoke except for like the original alive smoke except for it's lower pitch, which you can see like it's lower pitch, which you can see like it's lower pitch, which you can see like I've knocked it down seven semmitones. I've knocked it down seven semmitones. I've knock
+8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段分配
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-08-3ec902187d`
-9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o do is kind of go through the going to do is kind of go through the going to do is kind of go through the whole smoke sequence from equip, select whole smoke sequence from equip, select whole smoke sequence from equip, select location, cast, spawn, smoke, all that location, cast, spawn, smoke, all that location, cast,
+9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染随机变体
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-09-15413689cc`
 10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线和峰值控制
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-10-e6cd8f1aea`
-11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：a nice little kind of it's So, it's just a nice little kind of it's So, it's just a nice little kind of it's kind of an impact. Um, but it's just a kind of an impact. Um, but it's just a kind of an impact. Um, but it's just a start to the sound. Uh, next layer. Uh, next layer. Now, that's definitely an impact. Um, Now,
+11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：交互实现思路
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-11-9aff7c8bbb`
 12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘可复用规则
    - 链路参考：Soundtoys Crystallizer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-12-005181d77b`
-13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：t was done. So here's the see how it was done. So here's the see how it was done. So here's the Reaper session. Um, and first thing I'm Reaper session. Um, and first thing I'm Reaper session. Um, and first thing I'm going to do is kind of go through the going to do is kind of go through the going to do is kind of go th
+13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：锁定科技功能
    - 链路参考：Cockos ReaPitch
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-13-84b915becf`
-14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：nal alive smoke except for like the original alive smoke except for like the original alive smoke except for it's lower pitch, which you can see like it's lower pitch, which you can see like it's lower pitch, which you can see like I've knocked it down seven semmitones. I've knocked it down seven semmitones. I've knock
+14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Soundtoys Crystallizer -> Cockos ReaPitch -> Eventide SP2016 Reverb -> FabFilter Pro-Q 3 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：拆成反馈层
    - 链路参考：Eventide SP2016 Reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-iyAwO9g_rAQ-14-ab8edb384e`
 
 ### Plugin and Processing Notes
@@ -9165,27 +7301,15 @@ Records: 82
 - **Waves S1 Imager Stereo**: 作为 Dead 父轨链末端的立体声处理，让处理后的烟雾更包裹，但核心信息仍需要保持清晰。
 - **REAPER Parent / Folder Routing**: 多个 Dead 子轨缩进到父轨，父轨插件统一作用于所有子层。这是快速制作同源状态变体的关键工作流。
 - **Soundtoys Effect Rack**: 串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：串联 Soundtoys 预设和处理，快速得到相位、延迟、调制、滤波和饱和的复合运动。
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：. It's mostly like EQ and of processing. It's mostly like EQ and of processing. It's mostly like EQ and layering stuff
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：not a ton and for this sound, uh, it's not a ton and for this sound, uh, it's not a ton of processing. It's mostly like EQ and of processing. It's mostly like EQ and of processing. It's mostly like EQ and layering stuff. Uh, so we can listen to layering stuff. Uh, so we can listen to layering stuff. Uh, so we can liste
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：. So you can tell it sounds like a lot So you can tell it sounds like a lot like the original alive smoke except for like the original alive smoke except for like the original alive smoke except for it's lower pitch, which you can see like it's lower pitch, wh
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：nal alive smoke except for like the original alive smoke except for like the original alive smoke except for it's lower pitch, which you can see like it's lower pitch, which you can see like it's lower pitch, which you can see like I've knocked it down seven semmitones. I've knocked it down seven semmitones. I've knock
 
 ### Materials / Layer Sources
 - Bamboo flute 式 whoosh / 角色身份层
@@ -9222,8 +7346,7 @@ Records: 82
 - FabFilter Pro-Q 3 参数逻辑：。
 - Waves S1 Imager Stereo 参数逻辑：。
 - REAPER Parent / Folder Routing 参数逻辑：。
-- Soundtoys Effect Rack 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：. It's mostly like EQ and of processing. It's mostly like EQ and of processing. It's mostly like EQ and layering stuff；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Soundtoys Effect Rack 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -9469,128 +7592,101 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **高频用 Serum 粒子做随机 glitch impact**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o give them resonator and bitc crusher to give them resonator and bitc crusher to give them that piercing digital tone. Then they're that piercing digital tone. Then they're that piercing digital tone. Then they're going through reverb, ensemble, and going through reverb, ensemble, and going through reverb, ensemble, a
+1. **高频用 Serum 粒子做随机 glitch impact**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：高频用 Serum 粒子做随机 glitch impact
    - 链路参考：Serum 2
    - 可见/字幕数值：2
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-01-22bccc94c6`
-2. **Tonal 层用 Phase Plant 反向 impact + resonator**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ion with the discount in the description with the discount in the description with the discount code you can use. I separated this code you can use. I separated this code you can use. I separated this design into five groups when design into five groups when design into five groups when constructing it, being the lows,
+2. **Tonal 层用 Phase Plant 反向 impact + resonator**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Tonal 层用 Phase Plant 反向 impact + resonator
    - 链路参考：Phase Plant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-02-633b0e1b3d`
-3. **用 Radiator / limiter 把 tonal scream 做脏**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：me FM from a saw wave and using some FM from a saw wave and using some FM from a saw wave and running it through a comb filter for a running it through a comb filter for a running it through a comb filter for a slightly different sound. Messing with slightly different sound. Messing with slightly different sound. Messi
+3. **用 Radiator / limiter 把 tonal scream 做脏**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：用 Radiator / limiter 把 tonal scream 做脏
    - 链路参考：Little Radiator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-03-0ed20ec516`
-4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to flatten the grains Using a compressor to flatten the grains Using a compressor to flatten the grains out a bit and a delay to give it more of out a bit and a delay to give it more of out a bit and a delay to give it more of a tail, as well as some transient a tail, as well as some transient a tail, as well as some t
+4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立可复用处理链
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-04-a03e3e35f2`
-5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：alled Seismic it's a cinematic library called Seismic it's a cinematic library called Seismic Core, which has a load of impacts, Core, which has a load of impacts, Core, which has a load of impacts, whooes, and transitions that are great whooes, and transitions that are great whooes, and transitions that are great for
+5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：打印中间结果
    - 链路参考：MRatio
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-05-c2b9e7d833`
-6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ew. And sending it over for me to review. And sending it over for me to review. And just like last time, if you want to pick just like last time, if you want to pick just like last time, if you want to pick it up yourself, I have an affiliate link it up yourself, I have an affiliate link it up yourself, I have an affil
+6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做变体和命名
    - 链路参考：FilterFreak / Decapitator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-06-ec7f4962b2`
-7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o give them resonator and bitc crusher to give them resonator and bitc crusher to give them that piercing digital tone. Then they're that piercing digital tone. Then they're that piercing digital tone. Then they're going through reverb, ensemble, and going through reverb, ensemble, and going through reverb, ensemble, a
+7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理总线
    - 链路参考：Trash / Codec
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-07-e1aad1318d`
-8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ion with the discount in the description with the discount in the description with the discount code you can use. I separated this code you can use. I separated this code you can use. I separated this design into five groups when design into five groups when design into five groups when constructing it, being the lows,
+8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘失败点
    - 链路参考：Skanner / RX De-click / Killer Stereo / Little AlterBoy
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-08-387f6ce86a`
-9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：me FM from a saw wave and using some FM from a saw wave and using some FM from a saw wave and running it through a comb filter for a running it through a comb filter for a running it through a comb filter for a slightly different sound. Messing with slightly different sound. Messing with slightly different sound. Messi
+9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：准备游戏落地
    - 链路参考：FilterFreak
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-09-fe9edd5b3d`
-10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to flatten the grains Using a compressor to flatten the grains Using a compressor to flatten the grains out a bit and a delay to give it more of out a bit and a delay to give it more of out a bit and a delay to give it more of a tail, as well as some transient a tail, as well as some transient a tail, as well as some t
+10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：归档知识
    - 链路参考：Decapitator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-10-56e6019fe9`
-11. **确定工作目标**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：alled Seismic it's a cinematic library called Seismic it's a cinematic library called Seismic Core, which has a load of impacts, Core, which has a load of impacts, Core, which has a load of impacts, whooes, and transitions that are great whooes, and transitions that are great whooes, and transitions that are great for
+11. **确定工作目标**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：确定工作目标
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-11-339b74a8f0`
-12. **建立素材池**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ew. And sending it over for me to review. And sending it over for me to review. And just like last time, if you want to pick just like last time, if you want to pick just like last time, if you want to pick it up yourself, I have an affiliate link it up yourself, I have an affiliate link it up yourself, I have an affil
+12. **建立素材池**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立素材池
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-12-8cc3c3f990`
-13. **先做最小可听版本**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o give them resonator and bitc crusher to give them resonator and bitc crusher to give them that piercing digital tone. Then they're that piercing digital tone. Then they're that piercing digital tone. Then they're going through reverb, ensemble, and going through reverb, ensemble, and going through reverb, ensemble, a
+13. **先做最小可听版本**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先做最小可听版本
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-uh9yIziU8Pk-13-2f2e9a6145`
-14. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ion with the discount in the description with the discount in the description with the discount code you can use. I separated this code you can use. I separated this code you can use. I separated this design into five groups when design into five groups when design into five groups when constructing it, being the lows,
+14. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 Serum 2 -> Phase Plant -> Little Radiator -> Snap Heap 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立可复用处理链
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -9598,75 +7694,36 @@ Records: 82
 
 ### Plugin and Processing Notes
 - **Serum 2**: 高频 granular impact、持续 texture 和随机 scan 变化。
-  - 字幕/画面线索：. The first one is using Serum 2's granular first one is using Serum 2's granular first one is using Serum 2's granular sampler to make little impacts by making sampler to make little impacts by making sampler to make little impacts by making a volume envelope
-  - 可确认的数值/范围：2
   - 参数逻辑：粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
-  - 字幕/画面线索：different techniques. The with a few different techniques. The with a few different techniques. The first one is using Serum 2's granular first one is using Serum 2's granular first one is using Serum 2's granular sampler to make little impacts by making sampler to make little impacts by making sampler to make little i
 - **Phase Plant**: 反向 sampler、resonator、bitcrusher、granular whoosh 和 tonal scream。
-  - 字幕/画面线索：. [Music] [Music] The tonal elements all come from these The tonal elements all come from these The tonal elements all come from these two phase plant patches. The first is two phase plant patches. The first is two phase plant patches
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
-  - 字幕/画面线索：he tonal elements all come from these The tonal elements all come from these The tonal elements all come from these two phase plant patches. The first is two phase plant patches. The first is two phase plant patches. The first is using the sampler to reverse some using the sampler to reverse some using the sampler to r
 - **Little Radiator**: 给数字 tonal 层增加饱和、粗糙和紧张感。
 - **Snap Heap**: 低频 tonal 链里的 ring mod、comb filter 和跟随输入的调制。
-  - 字幕/画面线索：. So I have a snap heat dnoising them. So I have a snap heat dnoising them. So I have a snap heat patch with some ring mod and comb patch with some ring mod and comb patch with some ring mod and comb filtering that's being modulated by the filtering that's bei
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：unds, then tonality to some of the sub sounds, then tonality to some of the sub sounds, then dnoising them. So I have a snap heat dnoising them. So I have a snap heat dnoising them. So I have a snap heat patch with some ring mod and comb patch with some ring mod and comb patch with some ring mod and comb filtering that
 - **MRatio**: 平滑被 ring mod / comb 搅动后的低频动态，让尾巴可控。
 - **FilterFreak / Decapitator**: 给低频和能量层增加运动、滤波扫动与失真密度。
 - **Trash / Codec**: 把中频 texture 统一成数字化、破碎、压缩后的脏感。
 - **Skanner / RX De-click / Killer Stereo / Little AlterBoy**: Skanner 做再合成隆隆声；De-click 取 clicks-only 细节；Killer Stereo 去中心；AlterBoy 降八度扩展氛围床。
 - **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：. The best results came when I stacked a load of files on top of each stacked a load of files on top of each stacked a load of files on top of each other in interesting cadences before other in interesting cadences before other in interesting cadences before p
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
-  - 字幕/画面线索：m through the chain so that putting them through the chain so that putting them through the chain so that Snap Heap and Filter Freak could move Snap Heap and Filter Freak could move Snap Heap and Filter Freak could move around as much as possible. These might around as much as possible. These might around as much as po
 - **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：. So I have a snap heat patch with some ring mod and comb patch with some ring mod and comb patch with some ring mod and comb filtering that's being modulated by the filtering that's being modulated by the filtering that's being modulated by the incoming volum
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：of smooth it out before M ratio to kind of smooth it out before M ratio to kind of smooth it out before filter free and decapitator give it more filter free and decapitator give it more filter free and decapitator give it more movement. The best results came when I movement. The best results came when I movement. The b
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：. The other patch is a similar idea with a The other patch is a similar idea with a resonator to add tonality to some resonator to add tonality to some resonator to add tonality to some whooes, but then I'm kind of destroying whooes, but then I'm kind of destr
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：ith distortion and slamming it it with distortion and slamming it it with distortion and slamming it really hard into a limiter to get these really hard into a limiter to get these really hard into a limiter to get these really intense synthetic sounding really intense synthetic sounding really intense synthetic soundi
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：. Then they're going through reverb, ensemble, and going through reverb, ensemble, and going through reverb, ensemble, and highpass to give them more space and highpass to give them more space and highpass to give them more space and just keep the tonal parts
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：ital tone. Then they're that piercing digital tone. Then they're that piercing digital tone. Then they're going through reverb, ensemble, and going through reverb, ensemble, and going through reverb, ensemble, and highpass to give them more space and highpass to give them more space and highpass to give them more space
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：. Using a compressor to flatten the grains Using a compressor to flatten the grains Using a compressor to flatten the grains out a bit and a delay to give it more of out a bit and a delay to give it more of out a bit and a delay to give it more of a tail, as w
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：to flatten the grains Using a compressor to flatten the grains Using a compressor to flatten the grains out a bit and a delay to give it more of out a bit and a delay to give it more of out a bit and a delay to give it more of a tail, as well as some transient a tail, as well as some transient a tail, as well as some t
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：. [Music] [Music] [Music] When arranging these into the final When arranging these into the final When arranging these into the final design, I ended up pitching them around design, I ended up pitching them around design, I ended up pitching them around a lot
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：ranging these into the final When arranging these into the final When arranging these into the final design, I ended up pitching them around design, I ended up pitching them around design, I ended up pitching them around a lot to get more variation from them a lot to get more variation from them a lot to get more varia
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：. [Music] [Music] The tonal elements all come from these The tonal elements all come from these The tonal elements all come from these two phase plant patches. The first is two phase plant patches. The first is two phase plant patches
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：he tonal elements all come from these The tonal elements all come from these The tonal elements all come from these two phase plant patches. The first is two phase plant patches. The first is two phase plant patches. The first is using the sampler to reverse some using the sampler to reverse some using the sampler to r
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：. I also made some more sustained textures I also made some more sustained textures in this style just by dragging the mouse in this style just by dragging the mouse in this style just by dragging the mouse across Serum's keyboard to play loads of across Serum
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：ransient a tail, as well as some transient a tail, as well as some transient shaping after serum. I also made some more sustained textures I also made some more sustained textures in this style just by dragging the mouse in this style just by dragging the mouse in this style just by dragging the mouse across Serum's ke
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：. Using a compressor to flatten the grains Using a compressor to flatten the grains Using a compressor to flatten the grains out a bit and a delay to give it more of out a bit and a delay to give it more of out a bit and a delay to give it more of a tail, as w
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：will always sound different. source that will always sound different. source that will always sound different. Using a compressor to flatten the grains Using a compressor to flatten the grains Using a compressor to flatten the grains out a bit and a delay to give it more of out a bit and a delay to give it more of out
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：. So I have a snap heat patch with some ring mod and comb patch with some ring mod and comb patch with some ring mod and comb filtering that's being modulated by the filtering that's being modulated by the filtering that's being modulated by the incoming volum
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：g them. So I have a snap heat dnoising them. So I have a snap heat dnoising them. So I have a snap heat patch with some ring mod and comb patch with some ring mod and comb patch with some ring mod and comb filtering that's being modulated by the filtering that's being modulated by the filtering that's being modulated b
 
 ### Materials / Layer Sources
 - Seismic Core
@@ -9694,11 +7751,7 @@ Records: 82
 - 8. Skanner / RX De-click / Killer Stereo / Little AlterBoy：Skanner 做再合成隆隆声；De-click 取 clicks-only 细节；Killer Stereo 去中心；AlterBoy 降八度扩展氛围床。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：2；60。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
-- Serum 2 参数逻辑：字幕/画面线索：. The first one is using Serum 2's granular first one is using Serum 2's granular first one is using Serum 2's granular sampler to make little impacts by making sampler to make little impacts by making sampler to make little impacts by making a volume envelope；可确认的数值/范围：2。
-- Phase Plant 参数逻辑：字幕/画面线索：. [Music] [Music] The tonal elements all come from these The tonal elements all come from these The tonal elements all come from these two phase plant patches. The first is two phase plant patches. The first is two phase plant patches；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - Little Radiator 参数逻辑：。
-- Snap Heap 参数逻辑：字幕/画面线索：. So I have a snap heat dnoising them. So I have a snap heat dnoising them. So I have a snap heat patch with some ring mod and comb patch with some ring mod and comb patch with some ring mod and comb filtering that's being modulated by the filtering that's bei；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - MRatio 参数逻辑：。
 - FilterFreak / Decapitator 参数逻辑：。
 - Trash / Codec 参数逻辑：。
@@ -9727,83 +7780,55 @@ Records: 82
 1. **Ambience 用慢速弦乐和纹理做界面空间**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Ambience 用慢速弦乐和纹理做界面空间
    - 链路参考：Serum
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-01-feb1515f44`
 2. **Hover 用枪械/金属 foley 给轻触反馈**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Hover 用枪械/金属 foley 给轻触反馈
    - 链路参考：Ableton Vocoder
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-02-985a5b3ee4`
 3. **Node Tick 用 Serum + De-click 做 click + whoosh**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：Node Tick 用 Serum + De-click 做 click + whoosh
    - 链路参考：Skanner
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-03-e4cd363890`
 4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：建立瞬态和触感
    - 链路参考：Disperser / Phaser / OTT
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-04-c9e6da0d81`
 5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：做机械/材质主体
    - 链路参考：Sidechain
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-05-4992b3840d`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入电子运动
    - 链路参考：Pitch automation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-06-07c994b513`
 7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：处理空间和距离
    - 链路参考：Serum 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-07-d521584f11`
 8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：频段分配
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-08-defe7ee98a`
 9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：渲染随机变体
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-09-77f1eec513`
 10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：总线和峰值控制
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - Evidence image key: `deep-YVto08ZB9Lk-10-0d362e59b0`
 11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：交互实现思路
    - 链路参考：Frequency shifter / ring mod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘可复用规则
    - 链路参考：Serum
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：锁定科技功能
    - 链路参考：Ableton Vocoder
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Serum -> Ableton Vocoder -> Skanner -> Disperser / Phaser / OTT 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：拆成反馈层
    - 链路参考：Skanner
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
 
 ### Plugin and Processing Notes
 - **Serum**: 低 digital wave + volume ramp + delay 做 click/woosh；也做 sub drop 和独特 white noise。
@@ -9813,24 +7838,14 @@ Records: 82
 - **Sidechain**: 把 UI stack 侧链到 redeem/kick，让大事件清楚穿透整个界面层。
 - **Pitch automation**: appear pitch up、disappear pitch down，给界面状态切换方向感。
 - **Serum 2**: 粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
 
 ### Materials / Layer Sources
@@ -9867,8 +7882,8 @@ Records: 82
 - Disperser / Phaser / OTT 参数逻辑：。
 - Sidechain 参数逻辑：。
 - Pitch automation 参数逻辑：。
-- Serum 2 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- EchoBoy / short delay 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Serum 2 参数逻辑：
+- EchoBoy / short delay 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 - 每条链最后做旁路检查：如果插件只让声音变大，没有增加角色、运动或清晰度，就减量或删除。
 
@@ -9892,128 +7907,102 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
-1. **素材库按爆炸组件找，不只搜 explosion**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：processed have like the, you know, the processed have like the, you know, the processed sort of design recordings. And then you sort of design recordings. And then you sort of design recordings. And then you have have have a bunch of uh stylized, kind of a bunch of uh stylized, kind of a bunch of uh stylized, kind of s
+1. **素材库按爆炸组件找，不只搜 explosion**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：素材库按爆炸组件找，不只搜 explosion
    - 链路参考：Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-01-ba8501314f`
-2. **先决定真实还是风格化，再分组规划**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：gt; And before that, I was in more of the &gt;&gt; And before that, I was in more of the indie space. I worked on The Pirate indie space. I worked on The Pirate indie space. I worked on The Pirate Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Uh wor
+2. **先决定真实还是风格化，再分组规划**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先决定真实还是风格化，再分组规划
    - 链路参考：Saturation / Distortion
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-02-395d573c7d`
-3. **Sweetener 只给叙事重点加，不给每个爆炸都加**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ons for example, know, maybe 20 variations for example, know, maybe 20 variations for example, cuz they can happen so frequently and cuz they can happen so frequently and cuz they can happen so frequently and you want everything to be a bit more you want everything to be a bit more you want everything to be a bit more
+3. **Sweetener 只给叙事重点加，不给每个爆炸都加**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Sweetener 只给叙事重点加，不给每个爆炸都加
    - 链路参考：EQ / Filtering
    - 可见/字幕数值：20
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-03-5ddcea4824`
-4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：was in more of the &gt;&gt; And before that, I was in more of the &gt;&gt; And before that, I was in more of the indie space. I worked on The Pirate indie space. I worked on The Pirate indie space. I worked on The Pirate Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Queen. I worked on uh
+4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立攻击速度
    - 链路参考：Sidechain / Ducking
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-04-14677cc69f`
-5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：sion, aggression, um it can be great to use in like um it can be great to use in like um it can be great to use in like transient layers and stuff like that. In transient layers and stuff like that. In transient layers and stuff like that. In terms of stuff you can do at home, I terms of stuff you can do at home, I ter
+5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：塑造主体重量
    - 链路参考：Small speaker check
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-05-ca298f7765`
-6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：cessary. And that's not you know, if necessary. And that's not necessarily to necessarily to necessarily to um for like rendering purposes, it's um for like rendering purposes, it's um for like rendering purposes, it's more just for more just for more just for kind of mixing kind of mixing kind of mixing um and being a
+6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：加入纹理破裂
    - 链路参考：Decapitator
    - 可见/字幕数值：50
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-06-5fb54031cc`
-7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：processed have like the, you know, the processed have like the, you know, the processed sort of design recordings. And then you sort of design recordings. And then you sort of design recordings. And then you have have have a bunch of uh stylized, kind of a bunch of uh stylized, kind of a bunch of uh stylized, kind of s
+7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：制造运动和预备感
    - 链路参考：Pro-Q 3 / EQ
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-07-f2024aae32`
-8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：gt; And before that, I was in more of the &gt;&gt; And before that, I was in more of the indie space. I worked on The Pirate indie space. I worked on The Pirate indie space. I worked on The Pirate Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Uh wor
+8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制空间与尾音
    - 链路参考：Pro-MB / multiband dynamics
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-08-4923258d32`
-9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ons for example, know, maybe 20 variations for example, know, maybe 20 variations for example, cuz they can happen so frequently and cuz they can happen so frequently and cuz they can happen so frequently and you want everything to be a bit more you want everything to be a bit more you want everything to be a bit more
+9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段让位和动态整理
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-09-59fa534815`
-10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：was in more of the &gt;&gt; And before that, I was in more of the &gt;&gt; And before that, I was in more of the indie space. I worked on The Pirate indie space. I worked on The Pirate indie space. I worked on The Pirate Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Queen. I worked on uh
+10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染变体并挑选
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-10-8cc2b3a80c`
-11. **总线响度和峰值**: 总线只做 glue、轻微削峰和响度统一，限制器抓峰不负责重新设计声音。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：sion, aggression, um it can be great to use in like um it can be great to use in like um it can be great to use in like transient layers and stuff like that. In transient layers and stuff like that. In transient layers and stuff like that. In terms of stuff you can do at home, I terms of stuff you can do at home, I ter
+11. **总线响度和峰值**: 总线只做 glue、轻微削峰和响度统一，限制器抓峰不负责重新设计声音。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线响度和峰值
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-11-fb56eeaf0a`
-12. **复盘可复用链路**: 记录每层源素材、核心插件、关键参数和失败点，下次做武器/爆炸/近战可以直接复用判断顺序。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：cessary. And that's not you know, if necessary. And that's not necessarily to necessarily to necessarily to um for like rendering purposes, it's um for like rendering purposes, it's um for like rendering purposes, it's more just for more just for more just for kind of mixing kind of mixing kind of mixing um and being a
+12. **复盘可复用链路**: 记录每层源素材、核心插件、关键参数和失败点，下次做武器/爆炸/近战可以直接复用判断顺序。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘可复用链路
    - 链路参考：Convolver / convolution
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-12-48d7f83b7a`
-13. **锁定冲击角色**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：processed have like the, you know, the processed have like the, you know, the processed sort of design recordings. And then you sort of design recordings. And then you sort of design recordings. And then you have have have a bunch of uh stylized, kind of a bunch of uh stylized, kind of a bunch of uh stylized, kind of s
+13. **锁定冲击角色**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：锁定冲击角色
    - 链路参考：Compressor / clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-cHWeJHlXb54-13-1b81a10fa2`
-14. **拆分源素材层**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：gt; And before that, I was in more of the &gt;&gt; And before that, I was in more of the indie space. I worked on The Pirate indie space. I worked on The Pirate indie space. I worked on The Pirate Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Uh wor
+14. **拆分源素材层**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Transient Shaper -> Saturation / Distortion -> EQ / Filtering -> Sidechain / Ducking 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：拆分源素材层
    - 链路参考：Frequency shifter / ring mod
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -10021,65 +8010,31 @@ Records: 82
 
 ### Plugin and Processing Notes
 - **Transient Shaper**: 控制近/远、攻击性和冲击清晰度。远距离可减少 attack，近距离可强调 punch。
-  - 字幕/画面线索：. They happen so fast, but really what the They happen so fast, but really what the They happen so fast, but really what the player's going to be picking up on a lot player's going to be picking up on a lot player's going to be picking up on a lot of the time
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：of the time is the tail cuz it's going of the time is the tail cuz it's going of the time is the tail cuz it's going to sustain for a bit longer period and to sustain for a bit longer period and to sustain for a bit longer period and be like, "Oh, okay, that happened." Like be like, "Oh, okay, that happened." Like be l
 - **Saturation / Distortion**: 增加危险、热度和密度，但容易压扁 transient，必要时后接 transient shaping。
 - **EQ / Filtering**: 为 mix 清空间，控制低中频泥和高频刺耳；优先选对素材频段。
 - **Sidechain / Ducking**: 当近爆炸和远爆炸 bed 同时出现时，让远层退让，避免大事件不突出。
 - **Small speaker check**: 用小音箱确认没有 sub 时爆炸形状仍可读，避免只在大系统上显得巨大。
 - **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：. In processing in general, I find, you know, like less is more and find, you know, like less is more and find, you know, like less is more and unless you want to be really aggressive unless you want to be really aggressive unless you want to be really aggress
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
-  - 字幕/画面线索：little bit of kind of corrective EQ kind of corrective EQ kind of corrective EQ um and um and um and most of the time a Decapitator at like most of the time a Decapitator at like most of the time a Decapitator at like 50% um just to give it a bit more crunch 50% um just to give it a bit more crunch 50% um just to give
-  - 可确认的数值/范围：50
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：. There's other ways you can you can kind of approximate that by can kind of approximate that by can kind of approximate that by um using EQ. um using EQ. um using EQ. So doing like a a low pass and a high So doing like a a low pass and a high So doing like a
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：ys you can you can kind of approximate that by can kind of approximate that by can kind of approximate that by um using EQ. um using EQ. um using EQ. So doing like a a low pass and a high So doing like a a low pass and a high So doing like a a low pass and a high shelf to kind of just shelf to kind of just shelf to kin
 - **Pro-MB / multiband dynamics**: 多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：. Multiband compression can be really Multiband compression can be really Multiband compression can be really helpful to sort of control the low end
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：ow, the explosion itself using, you know, compression and limiting. compression and limiting. compression and limiting. Multiband compression can be really Multiband compression can be really Multiband compression can be really helpful to sort of control the low end. helpful to sort of control the low end. helpful to s
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：. Um But then otherwise is um But then otherwise is um But then otherwise is um you can also control the dynamics of the you can also control the dynamics of the you can also control the dynamics of the the explosion itself using, you know, the explosion itsel
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：ion itself using, you know, the explosion itself using, you know, the explosion itself using, you know, compression and limiting. compression and limiting. compression and limiting. Multiband compression can be really Multiband compression can be really Multiband compression can be really helpful to sort of control the
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：. &gt;&gt; [music] &gt;&gt; [music] &gt;&gt; [music] &gt;&gt; And before that, I was in more of the &gt;&gt; And before that, I was in more of the &gt;&gt; And before that, I was in more of the indie space. I worked on The Pirate indie space. I worked on The P
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：was in more of the &gt;&gt; And before that, I was in more of the &gt;&gt; And before that, I was in more of the indie space. I worked on The Pirate indie space. I worked on The Pirate indie space. I worked on The Pirate Queen. I worked on uh Super Auto Pets. Queen. I worked on uh Super Auto Pets. Queen. I worked on uh
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：? And like these are things that happen within like milliseconds. happen within like milliseconds. happen within like milliseconds. And And And the a lot of people may not realize it, the a lot of people may not realize it, the a lot of people may not realize
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：hese are things that explode? And like these are things that explode? And like these are things that happen within like milliseconds. happen within like milliseconds. happen within like milliseconds. And And And the a lot of people may not realize it, the a lot of people may not realize it, the a lot of people may not
 - **Convolver / convolution**: 卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 字幕/画面线索：. It's got a lot of content that you might not think is like content that you might not think is like content that you might not think is like immediately applicable, but it's like, immediately applicable, but it's like, immediately applicable, but it's like,
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：卷积着色工具，把声音放进金属、机箱、喇叭或特殊材质响应里。
-  - 字幕/画面线索：ht not think is like content that you might not think is like content that you might not think is like immediately applicable, but it's like, immediately applicable, but it's like, immediately applicable, but it's like, yeah, a lot of nice tonal elements that yeah, a lot of nice tonal elements that yeah, a lot of nice
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：. Um But then otherwise is um But then otherwise is um But then otherwise is um you can also control the dynamics of the you can also control the dynamics of the you can also control the dynamics of the the explosion itself using, you know, the explosion itsel
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
-  - 字幕/画面线索：f the the explosion itself using, you know, the explosion itself using, you know, the explosion itself using, you know, compression and limiting. compression and limiting. compression and limiting. Multiband compression can be really Multiband compression can be really Multiband compression can be really helpful to sor
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：. Like even just pulling up a like synthesizer and just having fun a like synthesizer and just having fun a like synthesizer and just having fun with like noise and with like noise and with like noise and distortion, ring mod, or whatever. distortion, ring mod
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：ving fun a like synthesizer and just having fun with like noise and with like noise and with like noise and distortion, ring mod, or whatever. distortion, ring mod, or whatever. distortion, ring mod, or whatever. I think that's all cool. Just have fun I think that's all cool. Just have fun I think that's all cool. Just
 - **Unfilter / restoration**: 修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
-  - 字幕/画面线索：. We're not going to be going to RX, like none of going to be going to RX, like none of going to be going to RX, like none of that
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
-  - 字幕/画面线索：to be clean. We're not It's not going to be clean. We're not It's not going to be clean. We're not going to be going to RX, like none of going to be going to RX, like none of going to be going to RX, like none of that. Take that. that. Take that. that. Take that. And just layer your stuff together. And And just layer y
 
 ### Materials / Layer Sources
 - Boom Urban Explosions
@@ -10107,15 +8062,10 @@ Records: 82
 - 8. Pro-MB / multiband dynamics：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：6；5；10；20；8。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
-- Transient Shaper 参数逻辑：字幕/画面线索：. They happen so fast, but really what the They happen so fast, but really what the They happen so fast, but really what the player's going to be picking up on a lot player's going to be picking up on a lot player's going to be picking up on a lot of the time ；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - Saturation / Distortion 参数逻辑：。
 - EQ / Filtering 参数逻辑：。
 - Sidechain / Ducking 参数逻辑：。
 - Small speaker check 参数逻辑：。
-- Decapitator 参数逻辑：字幕/画面线索：. In processing in general, I find, you know, like less is more and find, you know, like less is more and find, you know, like less is more and unless you want to be really aggressive unless you want to be really aggressive unless you want to be really aggress；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-Q 3 / EQ 参数逻辑：字幕/画面线索：. There's other ways you can you can kind of approximate that by can kind of approximate that by can kind of approximate that by um using EQ. um using EQ. um using EQ. So doing like a a low pass and a high So doing like a a low pass and a high So doing like a ；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
-- Pro-MB / multiband dynamics 参数逻辑：字幕/画面线索：. Multiband compression can be really Multiband compression can be really Multiband compression can be really helpful to sort of control the low end；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: explosion; transient; body; tail; debris; sweetener; distance; mix; saturation; Cataclysm; Boom; The Recordist; artillery; game audio; deep_rework; effect_chain; parameter_logic; step_screenshots
@@ -10138,128 +8088,100 @@ Records: 82
 - 这条要按效果链学习：Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter -> Mace -> Soothe，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。
 
 ### Step / Event Map
-1. **Kick 3 做 impulse 瞬态素材**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：buffer I'm just going to let the record buffer I'm just going to let the record buffer go and we'll see what we get and then go and we'll see what we get and then go and we'll see what we get and then I'll probably scrpt or and post to just I'll probably scrpt or and post to just I'll probably scrpt or and post to just
+1. **Kick 3 做 impulse 瞬态素材**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Kick 3 做 impulse 瞬态素材
    - 链路参考：Kick 3
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-01-601c3fa147`
-2. **Phase Plant 做 trills 和扫描音**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：g the frequency textures and also changing the frequency textures and also changing the frequency shift remod amount um rate of the shift remod amount um rate of the shift remod amount um rate of the scrolling LFO and the envelope shape to scrolling LFO and the envelope shape to scrolling LFO and the envelope shape to
+2. **Phase Plant 做 trills 和扫描音**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Phase Plant 做 trills 和扫描音
    - 链路参考：Phase Plant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-02-a398a091f5`
-3. **Telemetry 用 FM、随机 pitch 和 Disperser 圆滑化**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type sounds usually it's to serve as
+3. **Telemetry 用 FM、随机 pitch 和 Disperser 圆滑化**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Telemetry 用 FM、随机 pitch 和 Disperser 圆滑化
    - 链路参考：Disperser
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-03-08cc14832b`
-4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：as we go through it you how it sounds as we go through it you how it sounds as we go through it but we're starting with Reverb which is but we're starting with Reverb which is but we're starting with Reverb which is something I seldom use but this is to something I seldom use but this is to something I seldom use but t
+4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立瞬态和触感
    - 链路参考：Chorus / Frequency Shifter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-04-60a37d04ce`
-5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lses so I'm going to be with some impulses so I'm going to be with some impulses so I'm going to be looking for uh kick impact D transient looking for uh kick impact D transient looking for uh kick impact D transient kind of sounds maybe with some slight kind of sounds maybe with some slight kind of sounds maybe with s
+5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做机械/材质主体
    - 链路参考：Mace
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-05-4841d1840f`
-6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：coming in the output of Reaper it's not actually output of Reaper it's not actually output of Reaper it's not actually printing that so it helps the um jam printing that so it helps the um jam printing that so it helps the um jam files be a little bit more manageable I files be a little bit more manageable I files be a
+6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：加入电子运动
    - 链路参考：Soothe
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-06-8eed08e529`
-7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：buffer I'm just going to let the record buffer I'm just going to let the record buffer go and we'll see what we get and then go and we'll see what we get and then go and we'll see what we get and then I'll probably scrpt or and post to just I'll probably scrpt or and post to just I'll probably scrpt or and post to just
+7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：处理空间和距离
    - 链路参考：iZotope RX De-click / De-crackle
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-07-3602dd95b6`
-8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：g the frequency textures and also changing the frequency textures and also changing the frequency shift remod amount um rate of the shift remod amount um rate of the shift remod amount um rate of the scrolling LFO and the envelope shape to scrolling LFO and the envelope shape to scrolling LFO and the envelope shape to
+8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段分配
    - 链路参考：Vital
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-08-63408eb89f`
-9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type sounds usually it's to serve as
+9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染随机变体
    - 链路参考：GRM Shift
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-09-6051d901bf`
-10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：as we go through it you how it sounds as we go through it you how it sounds as we go through it but we're starting with Reverb which is but we're starting with Reverb which is but we're starting with Reverb which is something I seldom use but this is to something I seldom use but this is to something I seldom use but t
+10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线和峰值控制
    - 链路参考：S-Layer
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-10-4a2cfcd373`
-11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lses so I'm going to be with some impulses so I'm going to be with some impulses so I'm going to be looking for uh kick impact D transient looking for uh kick impact D transient looking for uh kick impact D transient kind of sounds maybe with some slight kind of sounds maybe with some slight kind of sounds maybe with s
+11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：交互实现思路
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-11-99da69040c`
-12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：coming in the output of Reaper it's not actually output of Reaper it's not actually output of Reaper it's not actually printing that so it helps the um jam printing that so it helps the um jam printing that so it helps the um jam files be a little bit more manageable I files be a little bit more manageable I files be a
+12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘可复用规则
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-12-50311b1430`
-13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：buffer I'm just going to let the record buffer I'm just going to let the record buffer go and we'll see what we get and then go and we'll see what we get and then go and we'll see what we get and then I'll probably scrpt or and post to just I'll probably scrpt or and post to just I'll probably scrpt or and post to just
+13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：锁定科技功能
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-6oJUotZGz0k-13-3503512a72`
-14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：g the frequency textures and also changing the frequency textures and also changing the frequency shift remod amount um rate of the shift remod amount um rate of the shift remod amount um rate of the scrolling LFO and the envelope shape to scrolling LFO and the envelope shape to scrolling LFO and the envelope shape to
+14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：拆成反馈层
    - 链路参考：Little AlterBoy / pitch-formant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -10276,8 +8198,6 @@ Records: 82
   - Shift / Harmonic modulation
   - Random LFO
   - Sustain / decay 按动作长度调整
-  - 字幕/画面线索：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type soun
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
 - **Disperser**: 把硬 click 和 telemetry 的尖峰变得更圆滑，便于堆叠。
   - 放在 clicky synth 后
@@ -10306,45 +8226,20 @@ Records: 82
   - grain/stretch
   - random pitch
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type soun
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：ncy of the primary modulating the frequency of the primary modulating the frequency of the primary oscillator uh we got limiter disperser oscillator uh we got limiter disperser oscillator uh we got limiter disperser like last time and high pass filter just like last time and high pass filter just like last time and hig
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type soun
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：as we go through it you how it sounds as we go through it you how it sounds as we go through it but we're starting with Reverb which is but we're starting with Reverb which is but we're starting with Reverb which is something I seldom use but this is to something I seldom use but this is to something I seldom use but t
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type soun
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：gs I have it don't say buffer settings I have it don't say buffer settings I have it don't say below um 60 DB for 2,000 milliseconds below um 60 DB for 2,000 milliseconds below um 60 DB for 2,000 milliseconds this basically makes it so that at this basically makes it so that at this basically makes it so that at moment
-  - 可确认的数值/范围：60 DB；2；000
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type soun
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 字幕/画面线索：ry that's just controlling the master sorry that's just controlling the master sorry that's just controlling the master pitch so if we like disable this pitch so if we like disable this pitch so if we like disable this it's just essentially a bunch of waves it's just essentially a bunch of waves it's just essentially a
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type soun
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：ly like the galactic it's basically like the galactic it's basically like the galactic assistant Max Patch recreated in Phase assistant Max Patch recreated in Phase assistant Max Patch recreated in Phase plant goes like plant goes like plant goes like this well I already tweaked a little bit this well I already tweaked
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type soun
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
-  - 字幕/画面线索：nvelope shape to scrolling LFO and the envelope shape to scrolling LFO and the envelope shape to either give us more um sustained either give us more um sustained either give us more um sustained scrolling textures with sustain 100% you scrolling textures with sustain 100% you scrolling textures with sustain 100% you c
-  - 可确认的数值/范围：100
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：[Music] [Music] pretty frequently I find myself in need pretty frequently I find myself in need pretty frequently I find myself in need of clean modern kind of digital UI type of clean modern kind of digital UI type of clean modern kind of digital UI type soun
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
-  - 字幕/画面线索：is just mono um um and yeah most of this is just mono um um and yeah most of this is just mono um um and yeah as always frequency shifters are really as always frequency shifters are really as always frequency shifters are really good for this kind of stuff onto the good for this kind of stuff onto the good for this ki
 - **Unfilter / restoration**: 修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
 
 ### Materials / Layer Sources
@@ -10372,7 +8267,6 @@ Records: 82
 - 8. Vital：制作 squidge 类有机科技层。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：100；60 DB；2；000；48 khz。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Kick 3 参数逻辑：短 attack；短 decay。
 - Phase Plant 参数逻辑：FM Depth macro；Shift / Harmonic modulation。
 - Disperser 参数逻辑：放在 clicky synth 后；用于 round peaks / smooth transient。
@@ -10403,115 +8297,87 @@ Records: 82
 - 这条要按效果链学习：SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 -> Kilohearts Triad -> OTT，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。
 
 ### Step / Event Map
-1. **用 SkannerXT SFX preset 做可表演 morph**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：unveil and filter and gas after it like unveil and filter and gas after it like unveil and filter and gas after it and then just like um letting that ride and then just like um letting that ride and then just like um letting that ride and record a long buffer with both of and record a long buffer with both of and recor
+1. **用 SkannerXT SFX preset 做可表演 morph**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：用 SkannerXT SFX preset 做可表演 morph
    - 链路参考：SkannerXT
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-01-89824e447f`
-2. **Unveil + Unfilter 清理 preset 自带空间**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：'m interested in parameters here that I'm interested in parameters here that I'm interested in are grain size speed and rate and along are grain size speed and rate and along are grain size speed and rate and along the bottom here I have three chaos the bottom here I have three chaos the bottom here I have three chaos
+2. **Unveil + Unfilter 清理 preset 自带空间**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Unveil + Unfilter 清理 preset 自带空间
    - 链路参考：Zynaptiq Unveil
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-02-627395f80d`
-3. **Saturn 2 Mega Smudge 做多段粘稠运动**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：I'll usually counteract into them so I'll usually counteract into them so I'll usually counteract that oh and like some filtering as well that oh and like some filtering as well that oh and like some filtering as well um so I'll counteract that by adding um so I'll counteract that by adding um so I'll counteract that b
+3. **Saturn 2 Mega Smudge 做多段粘稠运动**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Saturn 2 Mega Smudge 做多段粘稠运动
    - 链路参考：Zynaptiq Unfilter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-03-aafec69b81`
-4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：tely a lot of these going on um unfortunately a lot of these going on um unfortunately a lot of these patches have like Reverb And Delay baked patches have like Reverb And Delay baked patches have like Reverb And Delay baked into them so I'll usually counteract into them so I'll usually counteract into them so I'll usu
+4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立瞬态和触感
    - 链路参考：FabFilter Saturn 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-04-f722e69420`
-5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to give it some traveler on top of it to give it some traveler on top of it to give it some more useful shapes like an impact impact or just a or just a or just a [Music] whoosh oh and on top of that I just had whoosh oh and on top of that I just had a pro L boosting it by 20 DB which is a a pro L boosting it by 20 DB
+5. **做机械/材质主体**: 用 servo、metal、plastic、tool、VCR、cassette 或 library mech 层作为 body，给科技音一个可触摸的物理来源。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做机械/材质主体
    - 链路参考：Kilohearts Triad
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-05-98ca3cbdcf`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：加入电子运动
    - 链路参考：OTT
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-06-9cbfdd3abd`
-7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：unveil and filter and gas after it like unveil and filter and gas after it like unveil and filter and gas after it and then just like um letting that ride and then just like um letting that ride and then just like um letting that ride and record a long buffer with both of and record a long buffer with both of and recor
+7. **处理空间和距离**: 装备/UI 多用短空间和早反射，飞船/护盾/大型装置可以给更长 tail，但核心反馈仍要清楚。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：处理空间和距离
    - 链路参考：Tonsturm Traveler
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-07-a72589709f`
-8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：'m interested in parameters here that I'm interested in parameters here that I'm interested in are grain size speed and rate and along are grain size speed and rate and along are grain size speed and rate and along the bottom here I have three chaos the bottom here I have three chaos the bottom here I have three chaos
+8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段分配
    - 链路参考：FabFilter Pro-L
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-08-177d17b309`
-9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：I'll usually counteract into them so I'll usually counteract into them so I'll usually counteract that oh and like some filtering as well that oh and like some filtering as well that oh and like some filtering as well um so I'll counteract that by adding um so I'll counteract that by adding um so I'll counteract that b
+9. **渲染随机变体**: 把处理链打印成多版，挑不同强度做轻/中/重反馈，避免游戏里重复感明显。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染随机变体
    - 链路参考：Polyverse Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-09-01294c59d6`
-10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：tely a lot of these going on um unfortunately a lot of these going on um unfortunately a lot of these patches have like Reverb And Delay baked patches have like Reverb And Delay baked patches have like Reverb And Delay baked into them so I'll usually counteract into them so I'll usually counteract into them so I'll usu
+10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线和峰值控制
    - 链路参考：UVI Shade
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-10-024e030df3`
-11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to give it some traveler on top of it to give it some traveler on top of it to give it some more useful shapes like an impact impact or just a or just a or just a [Music] whoosh oh and on top of that I just had whoosh oh and on top of that I just had a pro L boosting it by 20 DB which is a a pro L boosting it by 20 DB
+11. **交互实现思路**: 如果要进游戏，把 loop、start、stop、confirm、release 分开，给 Wwise/Unity 留出参数控制空间。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：交互实现思路
    - 链路参考：Saturn 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-11-622b9f5607`
 12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：复盘可复用规则
    - 链路参考：Pro-MB / multiband dynamics
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-12-64871e794c`
-13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：unveil and filter and gas after it like unveil and filter and gas after it like unveil and filter and gas after it and then just like um letting that ride and then just like um letting that ride and then just like um letting that ride and record a long buffer with both of and record a long buffer with both of and recor
+13. **锁定科技功能**: 先判断这是 UI、武器、机器人、飞船、护盾还是装置；功能越明确，效果链越不会乱加。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：锁定科技功能
    - 链路参考：Pro-R / reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-13-c5dc01bac8`
-14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：'m interested in parameters here that I'm interested in parameters here that I'm interested in are grain size speed and rate and along are grain size speed and rate and along are grain size speed and rate and along the bottom here I have three chaos the bottom here I have three chaos the bottom here I have three chaos
+14. **拆成反馈层**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。 本条的主要链路可以按 SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：拆成反馈层
    - 链路参考：EchoBoy / short delay
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-14-0cd24c22ea`
@@ -10546,46 +8412,21 @@ Records: 82
   - LPF down then up
   - Mix 约 85%
 - **Saturn 2**: 多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
-  - 字幕/画面线索：scanner XD is one of those often scanner XD is one of those often overlooked plugins that you probably overlooked plugins that you probably overlooked plugins that you probably popped open once if you even own it popped open once if you even own it popped open
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
-  - 字幕/画面线索：tors going on here the first main modulators going on here the first main modulators going on here the first one is the Saturn patch which I call one is the Saturn patch which I call one is the Saturn patch which I call Mega smudge um that's because each one Mega smudge um that's because each one Mega smudge um that's
 - **Pro-MB / multiband dynamics**: 多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：scanner XD is one of those often scanner XD is one of those often overlooked plugins that you probably overlooked plugins that you probably overlooked plugins that you probably popped open once if you even own it popped open once if you even own it popped open
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 字幕/画面线索：it and this is I put Triad on top of it and this is I put Triad on top of it and this is another one of my sort of like multiband another one of my sort of like multiband another one of my sort of like multiband scram sort of setups um in each one of scram sort of setups um in each one of scram sort of setups um in eac
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：scanner XD is one of those often scanner XD is one of those often overlooked plugins that you probably overlooked plugins that you probably overlooked plugins that you probably popped open once if you even own it popped open once if you even own it popped open
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：tely a lot of these going on um unfortunately a lot of these going on um unfortunately a lot of these patches have like Reverb And Delay baked patches have like Reverb And Delay baked patches have like Reverb And Delay baked into them so I'll usually counteract into them so I'll usually counteract into them so I'll usu
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：scanner XD is one of those often scanner XD is one of those often overlooked plugins that you probably overlooked plugins that you probably overlooked plugins that you probably popped open once if you even own it popped open once if you even own it popped open
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
-  - 字幕/画面线索：of these going on um unfortunately a lot of these going on um unfortunately a lot of these patches have like Reverb And Delay baked patches have like Reverb And Delay baked patches have like Reverb And Delay baked into them so I'll usually counteract into them so I'll usually counteract into them so I'll usually counte
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：scanner XD is one of those often scanner XD is one of those often overlooked plugins that you probably overlooked plugins that you probably overlooked plugins that you probably popped open once if you even own it popped open once if you even own it popped open
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 字幕/画面线索：in and yeah they're like different rates out of they're like different rates out of they're like different rates out of phase with each other and that has this phase with each other and that has this phase with each other and that has this effect uh we'll listen without the Saturns it's got just a ton of variation Satu
 - **Unfilter / restoration**: 修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
-  - 字幕/画面线索：.75 see what that sounds [Music] [Music] [Music] like it's actually not too bad it feels like it's actually not too bad it feels like it's actually not too bad it feels a little less cramped like the elements a little less cramped like the elements a little le
-  - 可确认的数值/范围：75
   - 参数逻辑：修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
-  - 字幕/画面线索：re room to breathe um I'm just have more room to breathe um I'm just have more room to breathe um I'm just going to put unfilter on it cuz my going to put unfilter on it cuz my going to put unfilter on it cuz my session's at 48k we just stretched out session's at 48k we just stretched out session's at 48k we just stret
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：.75 see what that sounds [Music] [Music] [Music] like it's actually not too bad it feels like it's actually not too bad it feels like it's actually not too bad it feels a little less cramped like the elements a little less cramped like the elements a little le
-  - 可确认的数值/范围：75
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：ut unfilter on it cuz my going to put unfilter on it cuz my going to put unfilter on it cuz my session's at 48k we just stretched out session's at 48k we just stretched out session's at 48k we just stretched out so top end's getting shorn off a little so top end's getting shorn off a little so top end's getting shorn o
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
 
 ### Materials / Layer Sources
 - SkannerXT laser/glider SFX presets
@@ -10611,7 +8452,6 @@ Records: 82
 - 8. FabFilter Pro-L：重链路后大幅恢复电平。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：100；1；20 DB；85；0.75。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - SkannerXT 参数逻辑：降低 Morpher Speed；手动或 LFO 移动 preset position。
 - Zynaptiq Unveil 参数逻辑：放在 SkannerXT 后；先清旧空间再设计新空间。
 - Zynaptiq Unfilter 参数逻辑：Unveil 后；0.75x stretch 后也可再用。
@@ -10642,128 +8482,104 @@ Records: 82
 - 这条要按效果链学习：Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo -> Polyverse Manipulator -> Frequency Shifter，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。
 
 ### Step / Event Map
-1. **录制非枪械来源，先建立材料清单**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ive it another shot here as figured I'd give it another shot here as figured I'd give it another shot here as well. The first thing I focused on was well. The first thing I focused on was well. The first thing I focused on was trying to find stuff for the reload trying to find stuff for the reload trying to find stuff
+1. **录制非枪械来源，先建立材料清单**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：录制非枪械来源，先建立材料清单
    - 链路参考：Phase Plant
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-01-2f6a7d587b`
-2. **先堆出 general tonal source**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o, I just wanted to breakdown of the video, I just wanted to breakdown of the video, I just wanted to go over how I generated a bunch of these go over how I generated a bunch of these go over how I generated a bunch of these tonal sci-fi textures for the gunshots. tonal sci-fi textures for the gunshots. tonal sci-fi te
+2. **先堆出 general tonal source**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先堆出 general tonal source
    - 链路参考：OTT
    - 可见/字幕数值：2
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-02-56100c9a8d`
-3. **Reload Foley 用小物件分层**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：again sounds pretty cool. M transformer again sounds pretty cool. M transformer again just on one of the presets. Um frequency just on one of the presets. Um frequency just on one of the presets. Um frequency echo manipulator M granular just so it echo manipulator M granular just so it echo manipulator M granular just
+3. **Reload Foley 用小物件分层**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Reload Foley 用小物件分层
    - 链路参考：Saturation / Clipper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-03-bb11109afb`
-4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to make sure we bring it down an imager to make sure we bring it down an imager to make sure we bring it down to world space. Um, a transient shaper, to world space. Um, a transient shaper, to world space. Um, a transient shaper, just getting cleaning up some of the low just getting cleaning up some of the low just get
+4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立攻击速度
    - 链路参考：Flanger / Ripple Phaser / Tremolo
    - 可见/字幕数值：2
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-04-b7e133d739`
-5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lugins. That way you different Doppler plugins. That way you different Doppler plugins. That way you can make different impacts and whooshes can make different impacts and whooshes can make different impacts and whooshes with them. Um, so here I generated with with them. Um, so here I generated with with them. Um, so h
+5. **塑造主体重量**: 低频 body 要短、稳、居中；如果主体太长，先缩 sustain 或切低中频，再考虑加 sub。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：塑造主体重量
    - 链路参考：Polyverse Manipulator
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-05-c988552084`
-6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：it online. Um, and then after to find it online. Um, and then after to find it online. Um, and then after that, I just printed it out because that, I just printed it out because that, I just printed it out because morph has a tendency to mess up and not morph has a tendency to mess up and not morph has a tendency to me
+6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：加入纹理破裂
    - 链路参考：Frequency Shifter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-06-5416572175`
-7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ive it another shot here as figured I'd give it another shot here as figured I'd give it another shot here as well. The first thing I focused on was well. The first thing I focused on was well. The first thing I focused on was trying to find stuff for the reload trying to find stuff for the reload trying to find stuff
+7. **制造运动和预备感**: 用 pitch ramp、filter sweep、tremolo 或 whoosh 引导耳朵进入撞击点，运动层不要盖住主瞬态。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：制造运动和预备感
    - 链路参考：FabFilter Saturn / Saturn 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-07-0432b47a27`
-8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o, I just wanted to breakdown of the video, I just wanted to breakdown of the video, I just wanted to go over how I generated a bunch of these go over how I generated a bunch of these go over how I generated a bunch of these tonal sci-fi textures for the gunshots. tonal sci-fi textures for the gunshots. tonal sci-fi te
+8. **控制空间与尾音**: 空间层放在攻击后面，短 room/plate/特殊 reverb 负责规模，湿声过早会削弱 punch。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：控制空间与尾音
    - 链路参考：Rift
    - 可见/字幕数值：2
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-08-eca3384a77`
-9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：again sounds pretty cool. M transformer again sounds pretty cool. M transformer again just on one of the presets. Um frequency just on one of the presets. Um frequency just on one of the presets. Um frequency echo manipulator M granular just so it echo manipulator M granular just so it echo manipulator M granular just
+9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：频段让位和动态整理
    - 链路参考：MRatio / Fresh Air
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-09-ad210b04f3`
-10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：to make sure we bring it down an imager to make sure we bring it down an imager to make sure we bring it down to world space. Um, a transient shaper, to world space. Um, a transient shaper, to world space. Um, a transient shaper, just getting cleaning up some of the low just getting cleaning up some of the low just get
+10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：渲染变体并挑选
    - 链路参考：Convolution Reverb
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-10-864dd6229d`
-11. **总线响度和峰值**: 总线只做 glue、轻微削峰和响度统一，限制器抓峰不负责重新设计声音。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：lugins. That way you different Doppler plugins. That way you different Doppler plugins. That way you can make different impacts and whooshes can make different impacts and whooshes can make different impacts and whooshes with them. Um, so here I generated with with them. Um, so here I generated with with them. Um, so h
+11. **总线响度和峰值**: 总线只做 glue、轻微削峰和响度统一，限制器抓峰不负责重新设计声音。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：总线响度和峰值
    - 链路参考：Disperser
    - 可见/字幕数值：2
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-11-388fc1f7a7`
-12. **复盘可复用链路**: 记录每层源素材、核心插件、关键参数和失败点，下次做武器/爆炸/近战可以直接复用判断顺序。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：it online. Um, and then after to find it online. Um, and then after to find it online. Um, and then after that, I just printed it out because that, I just printed it out because that, I just printed it out because morph has a tendency to mess up and not morph has a tendency to mess up and not morph has a tendency to me
+12. **复盘可复用链路**: 记录每层源素材、核心插件、关键参数和失败点，下次做武器/爆炸/近战可以直接复用判断顺序。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘可复用链路
    - 链路参考：FabFilter Pro-Q 3 / Bloom / Transient Shaper
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-12-b3ae548757`
-13. **锁定冲击角色**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ive it another shot here as figured I'd give it another shot here as figured I'd give it another shot here as well. The first thing I focused on was well. The first thing I focused on was well. The first thing I focused on was trying to find stuff for the reload trying to find stuff for the reload trying to find stuff
+13. **锁定冲击角色**: 先判断这条声音是主撞击、预备 whoosh、低频 body、破碎 texture 还是 tail；角色定错，后面加插件只会变厚不变准。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：锁定冲击角色
    - 链路参考：Snap Heap
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-EQw3BCxIRPk-13-3f57a79e37`
-14. **拆分源素材层**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o, I just wanted to breakdown of the video, I just wanted to breakdown of the video, I just wanted to go over how I generated a bunch of these go over how I generated a bunch of these go over how I generated a bunch of these tonal sci-fi textures for the gunshots. tonal sci-fi textures for the gunshots. tonal sci-fi te
+14. **拆分源素材层**: 把素材分成 transient、body、texture、motion、tail；每层只承担一个主要任务，避免所有轨道都在同一频段抢位置。 本条的主要链路可以按 Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：拆分源素材层
    - 链路参考：Serum 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
@@ -10774,10 +8590,7 @@ Records: 82
   - Sample length automation
   - metal tap source
   - electric sweetener patch
-  - 字幕/画面线索：. And that was generated from a phase And that was generated from a phase plant patch, which I call arc machine plant patch, which I call arc machine plant patch, which I call arc machine here
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
-  - 字幕/画面线索：s like layer, which is up here, uh, sounds like this. And that was generated from a phase And that was generated from a phase plant patch, which I call arc machine plant patch, which I call arc machine plant patch, which I call arc machine here. And the arc machine uh, is just here. And the arc machine uh, is just here
 - **OTT**: 把 airsoft / reload 层压得更硬、更靠前。
   - 用于 small mech snap
   - 注意后续 EQ 控制高频
@@ -10809,35 +8622,17 @@ Records: 82
 - **FabFilter Pro-Q 3 / Bloom / Transient Shaper**: 整理尾音频谱、增加厚度并重塑攻击/衰减。
   - 用于 shower curtain tail chain
 - **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：. Uh, and then I just added OTT, an instance of snap peep, which I'll go an instance of snap peep, which I'll go an instance of snap peep, which I'll go over in a second
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
-  - 字幕/画面线索：d then I just added OTT, session. Uh, and then I just added OTT, session. Uh, and then I just added OTT, an instance of snap peep, which I'll go an instance of snap peep, which I'll go an instance of snap peep, which I'll go over in a second. Uh, and then another over in a second. Uh, and then another over in a second.
 - **Serum 2**: 粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
-  - 字幕/画面线索：. So all that is is I started with, and then I ran it through um Traveler and then I ran it through um Traveler and then Serum Effects with this hyper and then Serum Effects with this hyper and then Serum Effects with this hyper dimension thing that is kind of
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
-  - 字幕/画面线索：So all that is is I started with, and then I ran it through um Traveler and then I ran it through um Traveler and then Serum Effects with this hyper and then Serum Effects with this hyper and then Serum Effects with this hyper dimension thing that is kind of like an dimension thing that is kind of like an dimension thi
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：. Um, and then after that, we just have a little bit of this that, we just have a little bit of this that, we just have a little bit of this like power up sound like power up sound like power up sound that has a automated tremolo going up. that has a automated
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
-  - 字幕/画面线索：hat, we just have a little bit of this like power up sound like power up sound like power up sound that has a automated tremolo going up. that has a automated tremolo going up. that has a automated tremolo going up. It has uh M convolver M convolution EZ It has uh M convolver M convolution EZ It has uh M convolver M co
 - **Saturn 2**: 多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
-  - 字幕/画面线索：. And then after it goes through this effects chain and all that is is just and all that is is just um OTT flanger, another flanger, an um OTT flanger, another flanger, an um OTT flanger, another flanger, an excider um Saturn 2 with like a default excider um S
-  - 可确认的数值/范围：2
   - 参数逻辑：多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
-  - 字幕/画面线索：um OTT flanger, another flanger, an um OTT flanger, another flanger, an um OTT flanger, another flanger, an excider um Saturn 2 with like a default excider um Saturn 2 with like a default excider um Saturn 2 with like a default preset, RBS disperser, unic G which is a preset, RBS disperser, unic G which is a preset, RB
 - **Pro-Q 3 / EQ**: 减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：. And then a little bit of saturation then a little bit of saturation then a little bit of saturation um and then just a little bit of EQ. Um, um and then just a little bit of EQ. Um, um and then just a little bit of EQ
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
-  - 字幕/画面线索：ttle bit of saturation then a little bit of saturation then a little bit of saturation um and then just a little bit of EQ. Um, um and then just a little bit of EQ. Um, um and then just a little bit of EQ. Um, so it's really just about the timing. so it's really just about the timing. so it's really just about the timi
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：. Um, and then on the master track, I just did and then on the master track, I just did and then on the master track, I just did some more processing, uh, which includes some more processing, uh, which includes some more processing, uh, which includes an image
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
-  - 字幕/画面线索：to make sure we bring it down an imager to make sure we bring it down an imager to make sure we bring it down to world space. Um, a transient shaper, to world space. Um, a transient shaper, to world space. Um, a transient shaper, just getting cleaning up some of the low just getting cleaning up some of the low just get
 
 ### Materials / Layer Sources
 - Taser
@@ -10870,7 +8665,6 @@ Records: 82
 - 8. Rift：为 tonal reverb source 增加极端失真/反馈质地。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：2。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - Phase Plant 参数逻辑：Sample length automation；metal tap source。
 - OTT 参数逻辑：用于 small mech snap；注意后续 EQ 控制高频。
 - Saturation / Clipper 参数逻辑：用于 airsoft、tail、impact；不要完全压扁 transient。
@@ -10901,102 +8695,74 @@ Records: 82
 - 这条要按效果链学习：REAPER -> Whoosh Machine -> Sound Particles -> Disperser -> Chorus -> Multiband Distortion，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。
 
 ### Step / Event Map
-1. **先做 spotting 和三幕结构**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：w that whip of those actual bullet throw that whip of those actual bullet throw that whip of those bullets going by and then the explosion bullets going by and then the explosion bullets going by and then the explosion sort of happen off screen in the visor sort of happen off screen in the visor sort of happen off scre
+1. **先做 spotting 和三幕结构**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先做 spotting 和三幕结构
    - 链路参考：REAPER
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-01-180d004422`
-2. **40 分钟做 color palette，并录成长文件**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：professional sound and a big part of professional sound and a big part of professional sound design is coming up with strategies to design is coming up with strategies to design is coming up with strategies to help get the quality sound design you help get the quality sound design you help get the quality sound design
+2. **40 分钟做 color palette，并录成长文件**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：40 分钟做 color palette，并录成长文件
    - 链路参考：Whoosh Machine
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-02-e00370d0c4`
-3. **Whoosh / impact / forcefield 各自先有颜色**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o and in it is a nice self-contained Sci-Fi Action nice self-contained Sci-Fi Action nice self-contained Sci-Fi Action sequence that tells a little story and sequence that tells a little story and sequence that tells a little story and that I think would be fun to redesign that I think would be fun to redesign that I t
+3. **Whoosh / impact / forcefield 各自先有颜色**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：Whoosh / impact / forcefield 各自先有颜色
    - 链路参考：Sound Particles
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-03-b27d5cdebd`
-4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：f stakeholder and I'll play the role of stakeholder and I'll play the role of stakeholder and say that we need a full detailed say that we need a full detailed say that we need a full detailed immersive sound pass we need modern immersive sound pass we need modern immersive sound pass we need modern stylized sci-fi sou
+4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立可复用处理链
    - 链路参考：Disperser
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-04-1ece8f8516`
 5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：打印中间结果
    - 链路参考：Chorus
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-05-d4390ee9a4`
-6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ments I was making to the sounds are just I was making to the sounds are just I was making to the sounds are just being printed in Long individual files being printed in Long individual files being printed in Long individual files this is way easier for me to work with this is way easier for me to work with this is way
+6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：做变体和命名
    - 链路参考：Multiband Distortion
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-06-13282993be`
-7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：w that whip of those actual bullet throw that whip of those actual bullet throw that whip of those bullets going by and then the explosion bullets going by and then the explosion bullets going by and then the explosion sort of happen off screen in the visor sort of happen off screen in the visor sort of happen off scre
+7. **整理总线**: 总线负责响度、峰值和轻微 glue，不要把角色塑形都塞到 master 上。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：整理总线
    - 链路参考：Serum
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-07-4b7008d15a`
-8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：professional sound and a big part of professional sound and a big part of professional sound design is coming up with strategies to design is coming up with strategies to design is coming up with strategies to help get the quality sound design you help get the quality sound design you help get the quality sound design
+8. **复盘失败点**: 记录哪个阶段变糊、哪个参数过量、哪个素材没角色，下次先避开这些问题。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：复盘失败点
    - 链路参考：Serum 2
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-08-9dba9023ef`
-9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：o and in it is a nice self-contained Sci-Fi Action nice self-contained Sci-Fi Action nice self-contained Sci-Fi Action sequence that tells a little story and sequence that tells a little story and sequence that tells a little story and that I think would be fun to redesign that I think would be fun to redesign that I t
+9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：准备游戏落地
    - 链路参考：Pro-MB / multiband dynamics
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-09-5ae3085027`
-10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：f stakeholder and I'll play the role of stakeholder and I'll play the role of stakeholder and say that we need a full detailed say that we need a full detailed say that we need a full detailed immersive sound pass we need modern immersive sound pass we need modern immersive sound pass we need modern stylized sci-fi sou
+10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：归档知识
    - 链路参考：Pro-L 2 / limiter
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-10-c5da4a6042`
 11. **确定工作目标**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 若画面没有显示具体数值，只把它当作可复用的调参判断点。
    - 角色：确定工作目标
    - 链路参考：Disperser / phase rotation
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-11-cef1a0ddb6`
-12. **建立素材池**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：ments I was making to the sounds are just I was making to the sounds are just I was making to the sounds are just being printed in Long individual files being printed in Long individual files being printed in Long individual files this is way easier for me to work with this is way easier for me to work with this is way
+12. **建立素材池**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立素材池
    - 链路参考：Playback rate / item rate
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-12-6df16a3908`
-13. **先做最小可听版本**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：w that whip of those actual bullet throw that whip of those actual bullet throw that whip of those bullets going by and then the explosion bullets going by and then the explosion bullets going by and then the explosion sort of happen off screen in the visor sort of happen off screen in the visor sort of happen off scre
+13. **先做最小可听版本**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：先做最小可听版本
    - 链路参考：REAPER
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-13-9712f86f53`
-14. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。 视频证据：professional sound and a big part of professional sound and a big part of professional sound design is coming up with strategies to design is coming up with strategies to design is coming up with strategies to help get the quality sound design you help get the quality sound design you help get the quality sound design
+14. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。 本条的主要链路可以按 REAPER -> Whoosh Machine -> Sound Particles -> Disperser 来读：先判断这一段承担什么声音角色，再决定参数服务于清理、运动、攻击、空间还是响度。
    - 角色：建立可复用处理链
    - 链路参考：Whoosh Machine
-   - 具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。
-   - A/B：旁路本步骤，听它是否增加了清晰角色，而不是只增加响度。
    - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-14-7b7390593b`
 
@@ -11020,27 +8786,15 @@ Records: 82
 - **Serum**: 快速生成 slow-mo bass / side synth 这类可控合成低频。
   - 用于 slow-motion bass idea
 - **Serum 2**: 粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
 - **Pro-MB / multiband dynamics**: 多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：多段动态工具，用来压住堆积频段、做 upward expansion 或在总线维持清晰度。
 - **Pro-L 2 / limiter**: 限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：I've had some questions come in asking I've had some questions come in asking how I approach the sound effects passes how I approach the sound effects passes how I approach the sound effects passes for the professional game cinematics I for the professional ga
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：限制器和响度控制；早期可用 1:1/轻限制做 glue，最终只抓峰值保留动态。
-  - 字幕/画面线索：quality sound design you help get the quality sound design you help get the quality sound design you want within those limitations want within those limitations want within those limitations frankly three hours is not enough time frankly three hours is not enough time frankly three hours is not enough time for me to ge
 - **Disperser / phase rotation**: 相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
-  - 视频未显示完整参数页：按插件承担的角色做 A/B 微调。
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：I've had some questions come in asking I've had some questions come in asking how I approach the sound effects passes how I approach the sound effects passes how I approach the sound effects passes for the professional game cinematics I for the professional ga
-  - 具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
-  - 字幕/画面线索：out building up that big epic dramatic building up that big epic dramatic building up that big epic dramatic Matrix Neo reverse bullet throw I think Matrix Neo reverse bullet throw I think Matrix Neo reverse bullet throw I think the climax of the entire piece is the the climax of the entire piece is the the climax of t
 
 ### Materials / Layer Sources
 - Warframe cinematic
@@ -11070,7 +8824,6 @@ Records: 82
 - 8. Serum 2：粒化或采样式重合成工具，用伺服、机械、空气或噪声源做可控的科幻/生物音色。
 
 ### Parameter Logic
-- 字幕中出现的数值线索：40；15；30；33 second。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。
 - REAPER 参数逻辑：Record output into long files；快速切片。
 - Whoosh Machine 参数逻辑：用于 whiz-by / transition / missile motion。
 - Sound Particles 参数逻辑：forcefield pad；layered spatial texture。
@@ -11078,7 +8831,7 @@ Records: 82
 - Chorus 参数逻辑：用于 upper texture / pad。
 - Multiband Distortion 参数逻辑：按频段加 distortion；避免整段糊掉。
 - Serum 参数逻辑：用于 slow-motion bass idea。
-- Serum 2 参数逻辑：视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。
+- Serum 2 参数逻辑：
 - 没有明确数值的插件页必须标注为“视频未显示具体数值”，只记录方向：更快/更慢、更亮/更暗、更湿/更干、更硬/更软。
 
 - Use when: Warframe; redesign blitz; spotting; color palette; editorial blitz; REAPER output recording; VCA; forcefield; whiz-by; ground fire; missile incoming; Magic Arcane Forces; Sound Particles; Serum; deep_rework; effect_chain; parameter_logic; step_screenshots

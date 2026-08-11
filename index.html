@@ -774,7 +774,7 @@
       .reader-detail .step { grid-template-columns: 1fr; }
       .reader-detail .detail-body { padding-inline: 16px; }
     }
-    @media (max-width: 760px) {
+    @media (max-width: 820px) {
       .view-switch { width: 100%; }
       .effect-use-row {
         grid-template-columns: 1fr;
@@ -946,7 +946,7 @@
     <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
 
-  <script src="src/knowledge-model.js"></script>
+  <script src="src/knowledge-model.js?v=20260811-dry-goods-4"></script>
   <script>
     const categories = [
   {
@@ -2312,7 +2312,7 @@
     "secondaryCategories": [
       "magic"
     ],
-    "summary": "视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、iZotope Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。",
+    "summary": "视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、Ableton Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。",
     "steps": [
       {
         "order": 1,
@@ -2377,7 +2377,7 @@
       {
         "order": 6,
         "name": "应用OTT多频段动态处理",
-        "detail": "使用OTT动态均衡器将音频分为三频段独立处理：高频(2.50kHz)增益+5.4~+14.6dB、中频+2.7~+11.9dB、低频(88.3Hz)增益+8.8~+14.5dB，输出8.4~10.3dB，攻击13.5ms，释放282ms，Soft Knee。",
+        "detail": "关联截图记录OTT三频段界面：高频2.50kHz、中频、低频88.3Hz，以及各段增益、输出、攻击13.5ms、释放282ms和Soft Knee；这些读数只属于当前工程与素材。",
         "params": [
           "High: 2.50kHz, +5.4~+14.6dB",
           "Mid: +2.7~+11.9dB",
@@ -2391,7 +2391,7 @@
       {
         "order": 7,
         "name": "集成iZotope磁带饱和失真",
-        "detail": "在Trash 2或Ozone的Distortion模块中应用Tape Sat.预设，设置频率330Hz、Q值2.0~3.0，在中低频点增加谐波内容和温暖感而不掩盖高频细节。",
+        "detail": "关联截图记录Trash 2或Ozone Distortion中的Tape Sat.、330Hz与Q值2.0~3.0；关于谐波、温暖感和高频保留的听感解释需回原视频复核。",
         "params": [
           "预设: Tape Sat.",
           "频率: 330Hz",
@@ -2426,7 +2426,7 @@
       {
         "order": 10,
         "name": "集成RX De-click修复音频",
-        "detail": "使用iZotope RX De-click处理音频中的点击和杂音，设置低延迟算法、灵敏度8.6、频率偏移6.9、点击拓宽5.0ms，自动扫描并修复检测到的点击(已修复66次)，前期清理允许更激进的后期处理。",
+        "detail": "关联截图记录iZotope RX De-click的低延迟算法、灵敏度8.6、频率偏移6.9、点击拓宽5.0ms与已修复66次；这些设置只属于当前素材。",
         "params": [
           "算法: 低延迟",
           "灵敏度: 8.6",
@@ -2438,7 +2438,7 @@
       {
         "order": 11,
         "name": "应用延迟效果器创建空间感",
-        "detail": "配置延迟效果器参数：BPM 35.52、频率1310Hz、Q值4.8，延迟时间28毫秒，与SampHold级联创建节奏化的步进空间效果。",
+        "detail": "关联截图记录延迟效果器的BPM 35.52、频率1310Hz、Q值4.8与延迟28ms；与SampHold级联的具体听感和选择理由需回原视频复核。",
         "params": [
           "BPM: 35.52",
           "频率: 1310Hz",
@@ -2459,9 +2459,9 @@
       {
         "order": 13,
         "name": "实现音色变化的六大技巧",
-        "detail": "应用六种方法在同一基础音源上衍生多种变体：①颤音自动化(0.5-2Hz不改变音高，>5Hz产生明显调制)、②改变效果参数、③改变效果链顺序、④卷积混响处理。",
+        "detail": "既有整理记录同一基础音源的六类变体方法：①颤音自动化、②改变效果参数、③改变效果链顺序、④卷积混响、⑤辅助返回重过、⑥时间错位；具体频率与听感边界需回原视频复核。",
         "params": [
-          "颤音: 0.5~2Hz范围无音高变化"
+          "既有整理待复核: 0.5-2 Hz / >5 Hz"
         ],
         "imageKey": "img_2f17b7e747bdaa13"
       },
@@ -2475,7 +2475,7 @@
     ],
     "coreIdeas": [
       "Vocoder双实例并联处理：关联截图确认两路均为 40 Bands、Level 7.9 dB，均使用 Enhance 与 Fast，且 Depth/Formant 不同；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
-      "OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围",
+      "OTT页面记录了当前工程的三频段分界、增益、攻击与释放数值；这些读数只属于该截图和素材，不能解释为游戏音效的通用安全范围。",
       "SampHold采样保持滤波器产生步进式频率调制和'颗粒感'音色，是创建异质感电子游戏音效的关键Serum滤波器预设",
       "效果链顺序实验：先压缩后失真产生温暖感，先失真后压缩产生激进感——两种顺序截然不同",
       "磁带饱和(Tape Sat.)在330Hz处增加谐波内容，配合OTT压缩能模拟模拟硬件温暖感",
@@ -2496,7 +2496,7 @@
         ]
       },
       {
-        "name": "iZotope Vocoder",
+        "name": "Ableton Vocoder",
         "purpose": "双实例并联调制音色。关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance/Fast，Depth 与 Formant 不同；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。",
         "settings": [
           "关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier mode Enhance、Fast；Depth 与 Formant 不同。",
@@ -2572,8 +2572,8 @@
     "effectUses": [
       {
         "id": "d8ed0db4:izotope-vocoder:1",
-        "name": "iZotope Vocoder",
-        "vendor": "iZotope",
+        "name": "Ableton Vocoder",
+        "vendor": "Ableton",
         "category": "音高与频率",
         "target": "Serum 合成音色的双路调制层",
         "chainPosition": "SampHold 之后、OTT 多频段动态之前；两个 Vocoder 实例并行组合",
@@ -2635,15 +2635,15 @@
     "materials": [],
     "tips": [
       "Vocoder频段数影响调制细节：较少频段通常更粗糙，较多频段通常更平滑，这是一般规律；关联截图只确认两路 40 Bands，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
-      "OTT的三频段输出增益应匹配整体混音电平，8.4-10.3dB输出范围是游戏音效的安全值",
-      "SampHold滤波器与延迟级联时，延迟时间5-30ms能创建自然步进感而不产生明显回声",
-      "Vocoder的Enhance模式相比基础Vocoder模式提供更多谐波内容，适合需要更多能量的游戏音效",
-      "磁带饱和在330Hz这个中低频点工作，能增加沉重感而不掩盖高频细节",
-      "RX De-click灵敏度8.6对游戏音效通常足够，过高会移除有意义的瞬态",
-      "效果链顺序实验：先压缩后失真与先失真后压缩产生截然不同音色，前者温暖，后者激进",
-      "颤音自动化幅度0.5-2Hz不会明显改变音高，>5Hz创建明显调制效果",
+      "OTT截图记录的输出与各频段增益只属于当前工程，不能解释为游戏音效的通用安全范围。",
+      "本条延迟步骤记录28ms；5-30ms的“自然步进感”范围未由当前关联证据确认，不能作为通用范围。",
+      "关联截图确认Ableton Vocoder的Enhance已开启；其听感作用需要回原视频或产品文档复核。",
+      "关联截图记录Tape Sat.与330Hz；“增加沉重感且不掩盖高频”属于既有解释，需回原视频复核。",
+      "关联截图记录RX De-click灵敏度8.6；该值只属于当前素材，不能作为游戏音效的通用阈值。",
+      "既有整理记录先压缩/失真顺序会产生不同音色；具体“温暖/激进”描述需回原视频复核。",
+      "既有整理记录0.5-2Hz与>5Hz两个调制区间；具体听感边界需回原视频复核，不能作为通用阈值。",
       "Formant参数微调能改变Vocoder音色特性而不需重建整个效果链；关联截图中的 -15.8 / -8.40 界面未标单位。",
-      "在Master轨应用Transient Master能获得比单个轨道更整体的瞬态控制效果"
+      "画面记录Transient Master位于Master轨；其作用只按当前链路描述，不外推为通用做法。"
     ],
     "keywords": [
       "Vocoder",
@@ -2658,19 +2658,17 @@
       "Audio restoration"
     ],
     "chainFocus": [
-      "效果链阅读顺序：分析源音材料质量 -> 使用Serum生成基础音色 -> 应用SampHold采样保持滤波器 -> 配置双Vocoder实例并联处理 -> 调整Vocoder核心参数 -> 应用OTT多频段动态处理。复习这条时先看每一步负责的声音角色，再看插件名称。",
-      "主要处理点：Serum合成器 / iZotope Vocoder / OTT多频段压缩器 / iZotope Trash 2 / Ozone Distortion / Soundtoys Little Radiator 1566A / NI Transient Master。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
+      "效果链阅读顺序：分析源音材料质量 -> 使用Serum生成基础音色 -> 应用SampHold采样保持滤波器 -> 配置双Vocoder实例并联处理 -> 调整Vocoder核心参数 -> 应用OTT多频段动态处理。",
+      "主要处理点：Serum合成器 / Ableton Vocoder / OTT多频段压缩器 / iZotope Trash 2 / Ozone Distortion / Soundtoys Little Radiator 1566A / NI Transient Master。",
       "源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
-      "本条核心问题：视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、iZotope Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。",
+      "本条核心问题：视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、Ableton Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。",
       "Vocoder双实例并联处理：关联截图确认两路 40 Bands、Level 7.9 dB、Enhance/Fast 与不同 Depth/Formant；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
-      "OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围"
+      "OTT页面记录当前工程的三频段分界与动态数值；只作为当前截图参数记录，不外推为通用响度或安全范围。"
     ],
     "parameterLogic": [
-      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance、Fast，Depth 与 Formant 不同；带宽: 18kHz；攻击: 1ms；释放: 10ms；Formant: -15.8 / -8.40（界面未标单位）；既有整理待复核：8 / 40 Bands、7.9 dB / 14 dB，需回原视频复核；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
-      "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
-      "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
-      "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",
-      "第一颗处理点的判断：Serum合成器 负责 生成基础合成音色，Sub+Noise+OSC A/B四层音源，SampHold滤波器产生颗粒感。先验证它是否真的改善了源素材，再继续下一级。"
+      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance、Fast，Depth 与 Formant 不同；带宽: 18kHz；攻击: 1ms；释放: 10ms；Formant: -15.8 / -8.40（界面未标单位）；既有整理待复核：8 / 40 Bands、7.9 dB / 14 dB，需回原视频复核；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。",
+      "证据边界：除 Ableton Vocoder 条目外，其余 legacy plugins 尚未逐条迁移为 effectUses；页面中的参数只作历史线索，不自动获得“画面确认”标签。",
+      "未确认项：OTT 通用安全范围、Delay 5-30ms自然步进、RX 8.6通用阈值和颤音固定听感边界，当前证据均不支持外推。"
     ],
     "practiceChecklist": [
       "复刻练习：用自己的素材重做「《Destiny 2》音效设计深度剖析：声码器应用」的前三个步骤，只保留干声版本和处理后版本做 A/B。",
@@ -31064,64 +31062,6 @@
     "match": "官方参考截图，已按插件名与厂商页面核对"
   },
   {
-    "title": "iZotope Stutter Edit 2",
-    "source": "https://www.izotope.com/en/shop/stutter-edit-2-stutter-edit-2",
-    "aliases": [
-      "iZotope Stutter Edit 2",
-      "Stutter Edit 2"
-    ],
-    "preview": "assets/plugin-shots/preview/izotope-stutter-edit-2.webp",
-    "full": "assets/plugin-shots/full/izotope-stutter-edit-2.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
-    "title": "iZotope RX",
-    "source": "https://www.izotope.com/en/products/rx.html",
-    "aliases": [
-      "iZotope RX De-click",
-      "RX De-click",
-      "De-click",
-      "de-crackle"
-    ],
-    "preview": "assets/plugin-shots/preview/izotope-rx.webp",
-    "full": "assets/plugin-shots/full/izotope-rx.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
-    "title": "iZotope Ozone",
-    "source": "https://www.izotope.com/en/products/ozone.html",
-    "aliases": [
-      "iZotope Ozone",
-      "Ozone EQ",
-      "Ozone Maximizer"
-    ],
-    "preview": "assets/plugin-shots/preview/izotope-ozone.webp",
-    "full": "assets/plugin-shots/full/izotope-ozone.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
-    "title": "iZotope Trash",
-    "source": "https://www.izotope.com/en/products/trash.html",
-    "aliases": [
-      "iZotope Trash 2",
-      "Trash"
-    ],
-    "preview": "assets/plugin-shots/preview/izotope-trash.webp",
-    "full": "assets/plugin-shots/full/izotope-trash.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
-    "title": "iZotope VocalSynth",
-    "source": "https://www.izotope.com/en/products/vocalsynth.html",
-    "aliases": [
-      "iZotope Vocoder",
-      "VocalSynth"
-    ],
-    "preview": "assets/plugin-shots/preview/izotope-vocalsynth.webp",
-    "full": "assets/plugin-shots/full/izotope-vocalsynth.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
     "title": "Eventide Blackhole",
     "source": "https://www.eventideaudio.com/plug-ins/blackhole/",
     "aliases": [
@@ -31482,16 +31422,6 @@
     ],
     "preview": "assets/plugin-shots/preview/vital.webp",
     "full": "assets/plugin-shots/full/vital.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
-    "title": "Ableton Vocoder",
-    "source": "https://www.ableton.com/en/live-manual/live-audio-effect-reference/#vocoder",
-    "aliases": [
-      "Ableton Vocoder"
-    ],
-    "preview": "assets/plugin-shots/preview/ableton-vocoder.webp",
-    "full": "assets/plugin-shots/full/ableton-vocoder.webp",
     "match": "官方参考截图，已按插件名与厂商页面核对"
   },
   {
@@ -32388,11 +32318,18 @@
       openEffectDetail(row.dataset.effectId, true);
     });
 
-    backToLibraryEl.addEventListener("click", () => {
+    function returnToLibrary() {
       state.mode = state.returnMode;
       showLibrary();
       writeHashRoute({ view: state.mode }, true);
       render();
+    }
+
+    backToLibraryEl.addEventListener("click", returnToLibrary);
+    backToLibraryEl.addEventListener("keydown", (event) => {
+      if (!["Enter", " "].includes(event.key)) return;
+      event.preventDefault();
+      returnToLibrary();
     });
 
     detailEl.addEventListener("click", (event) => {

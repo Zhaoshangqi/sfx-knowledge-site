@@ -34,13 +34,21 @@ test("exports dry goods and structured effect uses without practice sections", (
     steps: [{
       order: 1,
       name: "调制",
-      detail: "保留瞬态。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。",
-      params: ["Bands 8 / 40。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。"]
+      detail: "保留瞬态。 视频证据：unstructured transcript fragment",
+      params: [
+        "Bands 8 / 40。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。",
+        "A/B：旁路本步骤，听它是否只增加响度。",
+        "具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。"
+      ]
     }],
     plugins: [{
       name: "Vocoder",
       purpose: "建立双路调制。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。",
-      settings: ["Bands 8 / 40"]
+      settings: [
+        "Bands 8 / 40",
+        "字幕/画面线索：raw transcript fragment",
+        "可确认的数值/范围：2024；2"
+      ]
     }],
     materials: [
       "每次只改一个维度并输出弱/中/强三版，做 matched-loudness A/B。",
@@ -51,7 +59,10 @@ test("exports dry goods and structured effect uses without practice sections", (
       "迁移练习假设：这条课程任务不应进入干货导出。",
       "效果链事实。复习这条时先看每一步负责的声音角色，再看插件名称。"
     ],
-    parameterLogic: ["Bands 8 / 40。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。"],
+    parameterLogic: [
+      "Bands 8 / 40。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。",
+      "Pro-Q 3 参数逻辑：字幕/画面线索：raw transcript fragment"
+    ],
     practiceChecklist: ["不应进入导出"],
     keywords: ["Vocoder"],
     effectUses: [{
@@ -95,7 +106,7 @@ test("exports dry goods and structured effect uses without practice sections", (
   assert.match(output, /效果链事实。/);
   assert.doesNotMatch(
     output,
-    /Practice Checklist|不应进入导出|弱\/中\/强三版|3 个强度版本|迁移练习假设|练习|复习/
+    /Practice Checklist|不应进入导出|弱\/中\/强三版|3 个强度版本|迁移练习假设|练习|复习|视频证据|字幕\/画面线索|可确认的数值\/范围|A\/B：旁路本步骤|具体数值未完整显示/
   );
 
   const malformed = renderRecord({
@@ -135,6 +146,6 @@ test("exports dry goods and structured effect uses without practice sections", (
   const productionMemory = fs.readFileSync(memoryPath, "utf8");
   assert.doesNotMatch(
     productionMemory,
-    /### Practice Checklist|复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习|复习/
+    /### Practice Checklist|复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习|复习|字幕\/画面线索|可确认的数值\/范围|A\/B：旁路本步骤|具体数值未完整显示/
   );
 });

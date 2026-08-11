@@ -12,18 +12,50 @@
   }
 
   var suffixes = [
-    /复习时先看每一步负责的声音角色，再看插件名称[。！？；.!?;]?$/,
+    /复习(?:这条)?时先看每一步负责的声音角色，再看插件名称[。！？；.!?;]?$/,
     /学习时给每颗插件标注“[^”]+”之一[。！？；.!?;]?$/,
     /复习时先听它改变的是素材身份、频谱、运动、空间、动态还是响度，再决定是否保留[。！？；.!?;]?$/,
     /复刻时只调一个核心旋钮，渲染弱\/中\/强三版并响度匹配比较[。！？；.!?;]?$/,
-    /复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度[。！？；.!?;]?$/
+    /复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度[。！？；.!?;]?$/,
+    /复刻时只动一个核心参数并渲染 3 个强度版本，避免同时改太多导致无法判断贡献[。！？；.!?;]?$/,
+    /每次只改一个维度并输出弱\/中\/强三版，做 matched-loudness A\/B[。！？；.!?;]?$/i,
+    /复刻时先做干声\/处理声响度匹配，再逐个 bypass 插件[。！？；.!?;]?$/i,
+    /视频未显示完整参数页：按插件承担的角色做 A\/B 微调[。！？；.!?;]*$/,
+    /具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化[。！？；.!?;]*$/,
+    /具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面[。！？；.!?;]*$/,
+    /A\/B：旁路本步骤，听它是否(?:增加了清晰角色，而不是|只)增加响度[。！？；.!?;]*$/
   ];
+
+  function stripGeneratedWrapper(value, marker) {
+    var match = marker.exec(value);
+    if (!match) return value;
+    var before = value.slice(0, match.index).trim();
+    var wrapped = value.slice(match.index);
+    var factualSuffix = wrapped.match(/[；;](参数逻辑[:：][\s\S]+)$/);
+    if (factualSuffix) {
+      var label = before.replace(/参数逻辑[:：]\s*$/, '').replace(/[；;]+$/, '').trim();
+      return [label, factualSuffix[1]].filter(Boolean).join(' ');
+    }
+    if (!before || /参数逻辑[:：]\s*$/.test(before)) return '';
+    return before.replace(/[；;]+$/, '').trim();
+  }
 
   function stripCourseScaffolding(value) {
     var result = value == null ? '' : String(value).trim();
-    suffixes.forEach(function (suffix) {
-      result = result.replace(suffix, '').trim();
-    });
+    result = result.replace(/\s*视频证据[:：][\s\S]*$/, '').trim();
+    result = stripGeneratedWrapper(result, /字幕\/画面线索[:：]/);
+    result = stripGeneratedWrapper(result, /可确认的数值\/范围[:：]/);
+    result = stripGeneratedWrapper(result, /具体数值未完整显示[:：](?:重点听运动速度、频段位置、湿度和瞬态变化|用耳朵确认速度、频点、湿度或攻击是否服务画面)/);
+    if (/^字幕中出现的数值线索[:：]/.test(result)) return '';
+    var previous;
+    do {
+      previous = result;
+      suffixes.forEach(function (suffix) {
+        result = result.replace(suffix, '').trim();
+      });
+      if (result !== previous) result = result.replace(/[；;]+$/, '').trim();
+    } while (result !== previous);
+    if (/^(?:A\/B[:：]旁路本步骤|具体数值未完整显示[:：](?:重点听|用耳朵确认))/.test(result)) return '';
     return result;
   }
 
@@ -118,11 +150,23 @@
     return { name: cleanText(fallbackName), value: cleanText(parameter), direction: '', evidence: '' };
   }
 
+  function normalizeLegacySetting(setting) {
+    var value = stripCourseScaffolding(scalarText(setting));
+    if (!value) return '';
+    if (/^(?:字幕\/画面线索|可确认的数值\/范围)[:：]/.test(value)) {
+      var factualSuffix = value.match(/[；;](参数逻辑[:：][\s\S]+)$/);
+      if (!factualSuffix) return '';
+      value = stripCourseScaffolding(factualSuffix[1]);
+    }
+    return value;
+  }
+
   function normalizeParameters(parameters, legacy) {
     if (legacy) {
       if (!Array.isArray(parameters)) return [];
       return parameters.map(function (setting) {
-        return { name: '参数线索', value: scalarText(setting), direction: '', evidence: inferEvidence(setting)[0] || '' };
+        var value = normalizeLegacySetting(setting);
+        return { name: '参数线索', value: value, direction: '', evidence: inferEvidence(value)[0] || '' };
       }).filter(function (parameter) { return parameter.value !== ''; });
     }
     if (Array.isArray(parameters)) return parameters.filter(function (parameter) {

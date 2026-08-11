@@ -47,12 +47,6 @@ const entries = [
   ["xfer-serum-2", "Xfer Serum 2", "https://xferrecords.com/products/serum-2", ["Serum 2", "Xfer Serum 2", "Serum", "Serum合成器"]],
   ["xfer-ott", "Xfer OTT", "https://xferrecords.com/freeware", ["OTT", "OTT-style compression", "OTT多频段压缩器"]],
 
-  ["izotope-stutter-edit-2", "iZotope Stutter Edit 2", "https://www.izotope.com/en/shop/stutter-edit-2-stutter-edit-2", ["iZotope Stutter Edit 2", "Stutter Edit 2"]],
-  ["izotope-rx", "iZotope RX", "https://www.izotope.com/en/products/rx.html", ["iZotope RX De-click", "RX De-click", "De-click", "de-crackle"]],
-  ["izotope-ozone", "iZotope Ozone", "https://www.izotope.com/en/products/ozone.html", ["iZotope Ozone", "Ozone EQ", "Ozone Maximizer"]],
-  ["izotope-trash", "iZotope Trash", "https://www.izotope.com/en/products/trash.html", ["iZotope Trash 2", "Trash"]],
-  ["izotope-vocalsynth", "iZotope VocalSynth", "https://www.izotope.com/en/products/vocalsynth.html", ["iZotope Vocoder", "VocalSynth"]],
-
   ["eventide-blackhole", "Eventide Blackhole", "https://www.eventideaudio.com/plug-ins/blackhole/", ["Blackhole", "Eventide Blackhole"]],
   ["eventide-crystals", "Eventide Crystals", "https://www.eventideaudio.com/plug-ins/crystals/", ["Eventide Crystals"]],
   ["eventide-sp2016", "Eventide SP2016 Reverb", "https://www.eventideaudio.com/plug-ins/sp2016-reverb/", ["Eventide SP2016 Reverb", "SP2016"]],
@@ -97,7 +91,6 @@ const entries = [
   ["vital", "Vital", "https://vital.audio/", ["Vital"]],
   ["reveal-spire", "Reveal Sound Spire", "https://reveal-sound.com/plug-ins/spire", ["Spire"]],
 
-  ["ableton-vocoder", "Ableton Vocoder", "https://www.ableton.com/en/live-manual/live-audio-effect-reference/#vocoder", ["Ableton Vocoder"]],
   ["cockos-reaplugs", "Cockos ReaPlugs", "https://www.reaper.fm/reaplugs/", ["Cockos ReaPitch", "ReaPitch", "ReaEQ"]],
   ["wwise", "Audiokinetic Wwise", "https://www.audiokinetic.com/en/wwise/overview/", ["Wwise"]],
   ["serato-pitchntime", "Serato Pitch 'n Time Pro", "https://serato.com/pitchntime-pro", ["Serato Pitch 'n Time Pro"]],

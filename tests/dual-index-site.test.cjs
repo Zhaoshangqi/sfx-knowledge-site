@@ -56,10 +56,11 @@ function plainValue(value) {
 }
 
 test('loads the shared knowledge model before the inline application data', () => {
-  const modelScript = indexHtml.indexOf('<script src="src/knowledge-model.js"></script>');
+  const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const modelScript = indexHtml.indexOf(modelTag);
   const inlineCategories = indexHtml.indexOf('const categories = [');
 
-  assert.notEqual(modelScript, -1);
+  assert.ok(modelTag, 'knowledge model script must be cache-versioned');
   assert.ok(modelScript < inlineCategories);
 });
 
@@ -154,6 +155,13 @@ test('effect rows open independent uses and can return to a video', () => {
   assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'ArrowRight')), { mode: 'effects', focusMode: 'effects' });
   assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'End')), { mode: 'effects', focusMode: 'effects' });
   assert.deepEqual(plainValue(navigation.tabNavigation('effects', 'Home')), { mode: 'videos', focusMode: 'videos' });
+});
+
+test('tablet effect rows collapse and the reader return control handles keyboard activation', () => {
+  assert.match(indexHtml, /@media \(max-width: 820px\) \{[\s\S]*?\.effect-use-row \{\s*grid-template-columns: 1fr;/);
+  assert.match(indexHtml, /function returnToLibrary\(\) \{[\s\S]*?writeHashRoute\(\{ view: state\.mode \}, true\);[\s\S]*?render\(\);/);
+  assert.match(indexHtml, /backToLibraryEl\.addEventListener\("click", returnToLibrary\)/);
+  assert.match(indexHtml, /backToLibraryEl\.addEventListener\("keydown", \(event\) => \{[\s\S]*?\["Enter", " "\]\.includes\(event\.key\)[\s\S]*?event\.preventDefault\(\);[\s\S]*?returnToLibrary\(\);/);
 });
 
 test('searches video records through the shared factual model only', () => {

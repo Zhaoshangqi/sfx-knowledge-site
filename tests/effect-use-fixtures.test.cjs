@@ -5,6 +5,7 @@ const path = require('node:path');
 
 const SfxKnowledgeModel = require('../src/knowledge-model.js');
 const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const videoLearnings = fs.readFileSync(path.join(__dirname, '..', 'skills', 'sfx-knowledge', 'references', 'video-learnings.md'), 'utf8');
 
 function records() {
   const prefix = '    const records = ';
@@ -24,10 +25,28 @@ function imageManifest() {
   return JSON.parse(indexHtml.slice(start + prefix.length, end).trim().replace(/;$/, ''));
 }
 
+function pluginReferenceCatalog() {
+  const prefix = '    const pluginReferenceCatalog = ';
+  const start = indexHtml.indexOf(prefix);
+  const end = indexHtml.indexOf('    const categoryById', start);
+  assert.notEqual(start, -1, 'missing plugin reference catalog JSON');
+  assert.notEqual(end, -1, 'missing plugin reference catalog JSON boundary');
+  return JSON.parse(indexHtml.slice(start + prefix.length, end).trim().replace(/;$/, ''));
+}
+
 function recordById(id) {
   const record = records().find((item) => item.id === id);
   assert.ok(record, `missing record ${id}`);
   return record;
+}
+
+function videoLearningBlock(videoId) {
+  const source = `- Source: \`https://www.youtube.com/watch?v=${videoId}\``;
+  const sourceIndex = videoLearnings.indexOf(source);
+  assert.notEqual(sourceIndex, -1, `missing video-learning source ${videoId}`);
+  const start = videoLearnings.lastIndexOf('\n## ', sourceIndex);
+  const end = videoLearnings.indexOf('\n## ', sourceIndex);
+  return videoLearnings.slice(start === -1 ? 0 : start, end === -1 ? videoLearnings.length : end);
 }
 
 function assertUniqueIds(uses) {
@@ -46,13 +65,13 @@ function assertScreenshotAsset(record, effectUse) {
   }
 }
 
-test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row', () => {
+test('d8ed0db4 exposes the dual Ableton Vocoder use and replaces its legacy row', () => {
   const record = recordById('d8ed0db4');
   assert.ok(Array.isArray(record.effectUses), 'd8ed0db4 effectUses do not yet exist');
   const expected = {
     id: 'd8ed0db4:izotope-vocoder:1',
-    name: 'iZotope Vocoder',
-    vendor: 'iZotope',
+    name: 'Ableton Vocoder',
+    vendor: 'Ableton',
     category: '音高与频率',
     target: 'Serum 合成音色的双路调制层',
     chainPosition: 'SampHold 之后、OTT 多频段动态之前；两个 Vocoder 实例并行组合',
@@ -98,6 +117,15 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
     }
   }
   [record.steps, record.coreIdeas, record.plugins, record.tips, record.chainFocus, record.parameterLogic].forEach(collectVisibleStrings);
+  const visibleArchive = visibleStrings.join('\n');
+  assert.doesNotMatch(visibleArchive, /是游戏音效(?:的)?安全范围|延迟时间5-30ms能创建自然步进感|灵敏度8\.6对游戏音效通常足够|0\.5-2Hz不会明显改变音高/);
+  assert.match(visibleArchive, /不能解释为游戏音效的通用安全范围/);
+  assert.match(visibleArchive, /其余 legacy plugins 尚未逐条迁移为 effectUses/);
+  assert.equal(record.parameterLogic.length, 3);
+  const learningBlock = videoLearningBlock(record.videoId);
+  assert.doesNotMatch(learningBlock, /左实例设置8频段|Mono深度|Formant参数至-15\.8\/-8\.40dB|8频段\(粗糙感\)与40频段|游戏音效(?:的)?安全范围|延迟时间5-30ms能创建自然步进感/);
+  assert.match(learningBlock, /关联截图确认两路均为 40 Bands/);
+  assert.match(learningBlock, /不能解释为游戏音效的通用安全范围/);
   const disputedStrings = visibleStrings.filter((value) => /8频段|14dB|8 \/ 40|7\.9 dB \/ 14 dB/.test(value));
   assert.ok(disputedStrings.length, 'expected the visible record text to retain qualified historical notes');
   for (const value of disputedStrings) {
@@ -122,7 +150,7 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
   assert.ok(vocoderCoreStep.params.includes('Stereo Depth: 120% / 105%'));
   assert.ok(vocoderCoreStep.params.includes('Formant: -15.8 / -8.40（界面未标单位）'));
 
-  const vocoderPlugin = record.plugins.find((plugin) => plugin.name === 'iZotope Vocoder');
+  const vocoderPlugin = record.plugins.find((plugin) => plugin.name === 'Ableton Vocoder');
   assert.ok(vocoderPlugin);
   assert.ok(vocoderPlugin.settings.includes('关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier mode Enhance、Fast；Depth 与 Formant 不同。'));
   assert.ok(vocoderPlugin.settings.includes('既有整理待复核：8 / 40 Bands 与 7.9 dB / 14 dB；需回原视频复核。'));
@@ -133,6 +161,8 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
   assert.equal(normalized.legacy, false);
   assert.deepEqual(normalized.sourcePluginIndexes, [1]);
   assert.equal(uses.filter((use) => use.legacy && use.sourcePluginIndexes.includes(1)).length, 0);
+  assert.equal(SfxKnowledgeModel.canonicalEffectName(explicit.name, pluginReferenceCatalog()), 'Ableton Vocoder');
+  assert.ok(!pluginReferenceCatalog().some((reference) => /plugin-shots\/(?:preview|full)\/(?:izotope-|ableton-vocoder)/.test([reference.preview, reference.full].join(' '))));
   assertUniqueIds(uses);
 });
 

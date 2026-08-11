@@ -6,12 +6,34 @@ const model = require('../src/knowledge-model.js');
 test('stripCourseScaffolding removes all known suffixes and preserves factual narration', () => {
   const suffixCases = [
     '复习时先看每一步负责的声音角色，再看插件名称。',
+    '复习这条时先看每一步负责的声音角色，再看插件名称。',
     '学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。',
     '复习时先听它改变的是素材身份、频谱、运动、空间、动态还是响度，再决定是否保留。',
     '复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。',
-    '复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。'
+    '复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。',
+    '视频未显示完整参数页：按插件承担的角色做 A/B 微调。',
+    '具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。'
   ];
   suffixCases.forEach((suffix) => assert.equal(model.stripCourseScaffolding(`事实。${suffix}`), '事实。'));
+  assert.equal(
+    model.stripCourseScaffolding('事实；视频未显示完整参数页：按插件承担的角色做 A/B 微调。；具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。'),
+    '事实'
+  );
+  assert.equal(model.stripCourseScaffolding('事实描述。 视频证据：truncated transcript fragment'), '事实描述。');
+  assert.equal(model.stripCourseScaffolding('字幕/画面线索：hello this is raw transcript'), '');
+  assert.equal(model.stripCourseScaffolding('可确认的数值/范围：2024；2'), '');
+  assert.equal(
+    model.stripCourseScaffolding('可确认的数值/范围：2024；2；参数逻辑：包络跟随滤波运动。'),
+    '参数逻辑：包络跟随滤波运动。'
+  );
+  assert.equal(model.stripCourseScaffolding('Pro-Q 3 参数逻辑：字幕/画面线索：raw transcript'), '');
+  assert.equal(model.stripCourseScaffolding('A/B：旁路本步骤，听它是否只增加响度。'), '');
+  assert.equal(model.stripCourseScaffolding('具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。'), '');
+  assert.equal(
+    model.stripCourseScaffolding('Snap Heap 参数逻辑：具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。；参数逻辑：用包络跟随建立运动。'),
+    'Snap Heap 参数逻辑：用包络跟随建立运动。'
+  );
+  assert.equal(model.stripCourseScaffolding('复刻时只动一个核心参数并渲染 3 个强度版本，避免同时改太多导致无法判断贡献。'), '');
   assert.equal(model.stripCourseScaffolding('事实   文本。'), '事实   文本。');
   assert.equal(model.stripCourseScaffolding('复刻时保留原始噪声。'), '复刻时保留原始噪声。');
 });
@@ -76,6 +98,32 @@ test('buildEffectUses accepts arrays and normalizes explicit and legacy sources'
   }]);
   assert.equal(collisionUses[0].id, 'collision:effect:delay:explicit-1');
   assert.equal(collisionUses[1].id, 'collision:effect:delay:1');
+});
+
+test('legacy effect projection omits generated transcript and pseudo-parameter scaffolding', () => {
+  const [use] = model.buildEffectUses([{
+    id: 'legacy-cleanup',
+    plugins: [{
+      name: 'Filter',
+      settings: [
+        '视频未显示完整参数页：按插件承担的角色做 A/B 微调。',
+        '字幕/画面线索：hello this is an unstructured transcript fragment',
+        '可确认的数值/范围：42；2',
+        '可确认的数值/范围：42；2；参数逻辑：跟随输入包络控制滤波运动。',
+        'Motion-following filter；视频未显示完整参数页：按插件承担的角色做 A/B 微调。',
+        'Cutoff 250 Hz，画面确认',
+        'Dry/Wet 63%，作者口述'
+      ]
+    }]
+  }]);
+
+  assert.deepEqual(use.parameters, [
+    { name: '参数线索', value: '参数逻辑：跟随输入包络控制滤波运动。', direction: '', evidence: '' },
+    { name: '参数线索', value: 'Motion-following filter', direction: '', evidence: '' },
+    { name: '参数线索', value: 'Cutoff 250 Hz，画面确认', direction: '', evidence: '画面确认' },
+    { name: '参数线索', value: 'Dry/Wet 63%，作者口述', direction: '', evidence: '作者口述' }
+  ]);
+  assert.doesNotMatch(JSON.stringify(use), /A\/B 微调|字幕\/画面线索|可确认的数值\/范围/);
 });
 
 test('classifyEffectUse excludes vendor and inferEvidence returns all labels', () => {
