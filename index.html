@@ -115,7 +115,7 @@
 
     .toolbar {
       display: grid;
-      grid-template-columns: minmax(220px, 1fr) repeat(4, auto);
+      grid-template-columns: minmax(220px, 1fr) repeat(2, auto);
       gap: 12px;
       max-width: 1180px;
       margin: 22px auto 0;
@@ -288,54 +288,108 @@
     }
     .effect-list {
       display: grid;
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      align-items: stretch;
     }
-    .effect-group {
-      border-top: 1px solid var(--line);
-    }
-    .effect-group-header {
+    .effect-profile-card {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 16px 0 8px;
-    }
-    .effect-group-header h3 {
-      margin: 0;
-      font-size: 18px;
-    }
-    .effect-use-row {
-      display: grid;
-      grid-template-columns: minmax(150px, 0.7fr) minmax(240px, 1.3fr) minmax(170px, 0.8fr);
-      gap: 16px;
-      width: 100%;
-      min-height: 74px;
-      padding: 12px 0;
-      border: 0;
-      border-top: 1px solid rgba(22, 24, 25, 0.08);
+      min-width: 0;
+      height: 100%;
+      padding: 0;
+      overflow: hidden;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: 8px;
       color: inherit;
-      background: transparent;
+      background: var(--panel);
       cursor: pointer;
       text-align: left;
+      transition: border-color 140ms, box-shadow 140ms, transform 140ms;
     }
-    .effect-use-row:hover,
-    .effect-use-row:focus-visible {
-      background: rgba(15, 139, 141, 0.08);
+    .effect-profile-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(15, 139, 141, 0.42);
+      box-shadow: 0 12px 26px rgba(22, 24, 25, 0.11);
     }
-    .effect-use-row:focus-visible {
+    .effect-profile-card:focus-visible {
       outline: 3px solid rgba(15, 139, 141, 0.46);
-      outline-offset: 2px;
+      outline-offset: 3px;
     }
-    .effect-use-purpose,
-    .effect-use-target,
-    .effect-use-source {
+    .effect-profile-shot {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #202526;
+    }
+    .effect-profile-shot img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .effect-profile-shot-kind {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      padding: 4px 7px;
+      border-radius: 6px;
+      color: #fff;
+      background: rgba(22, 24, 25, 0.78);
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .effect-profile-body {
+      display: flex;
+      min-width: 0;
+      height: 100%;
+      padding: 14px;
+      flex-direction: column;
+    }
+    .effect-profile-title {
+      min-height: 44px;
+      margin: 0 0 10px;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.35;
+      font-weight: 900;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .effect-profile-facts {
+      display: grid;
+      gap: 8px;
+    }
+    .effect-profile-fact {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+    }
+    .effect-profile-fact strong {
+      color: var(--teal);
+      font-size: 11px;
       line-height: 1.55;
     }
-    .effect-use-target,
-    .effect-use-evidence,
-    .effect-use-source {
+    .effect-profile-fact span {
+      min-width: 0;
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .effect-profile-meta {
+      margin-top: auto;
+      padding-top: 12px;
       color: var(--muted);
       font-size: 12px;
+      font-weight: 700;
     }
     .grid {
       display: grid;
@@ -699,8 +753,11 @@
       text-decoration: none;
     }
     .effect-use-summary {
+      display: grid;
+      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+      gap: 18px;
       width: 100%;
-      padding: 16px 0;
+      padding: 20px 0;
       border-bottom: 1px solid var(--line);
     }
     .effect-use-summary:last-child {
@@ -714,8 +771,26 @@
     }
     .effect-use-summary-title {
       color: var(--green);
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1.4;
+    }
+    .effect-summary-shot {
+      width: 100%;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #202526;
+      cursor: zoom-in;
+    }
+    .effect-summary-shot img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+    }
+    .effect-summary-copy {
+      min-width: 0;
     }
     .effect-use-detail-link {
       padding: 0;
@@ -737,26 +812,135 @@
     .effect-use-summary-purpose {
       margin: 6px 0 0;
       color: var(--ink);
+      font-size: 14px;
+      line-height: 1.65;
     }
     .effect-use-summary-meta {
-      margin: 4px 0 0;
+      margin: 8px 0 0;
       color: var(--muted);
       font-size: 13px;
+      line-height: 1.6;
     }
-    .effect-use-summary-params {
+    .effect-detail .detail-title {
+      max-width: 720px;
+      color: var(--ink);
+      font-size: 42px;
+      line-height: 1.12;
+    }
+    .effect-detail-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 8px 16px;
+      grid-template-columns: minmax(260px, 0.78fr) minmax(420px, 1.22fr);
+      gap: 40px;
+      align-items: start;
+    }
+    .effect-detail-copy {
+      min-width: 0;
+    }
+    .effect-detail-kicker {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .effect-quick-guide {
+      margin-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .effect-guide-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .effect-guide-item h3,
+    .effect-case-panel > h3 {
+      margin: 0 0 6px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .effect-guide-item p {
+      margin: 0;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .effect-case-panel {
+      min-width: 0;
+    }
+    .effect-case-list {
+      display: grid;
+      gap: 22px;
+    }
+    .effect-case {
+      min-width: 0;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .effect-case:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+    .effect-case-shot {
+      width: 100%;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #202526;
+      cursor: zoom-in;
+      text-align: left;
+    }
+    .effect-case-shot img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: contain;
+    }
+    .effect-case-shot span {
+      display: block;
+      padding: 7px 9px;
+      color: var(--muted);
+      background: var(--panel);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .effect-case-copy {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
       margin-top: 10px;
     }
-    .effect-use-summary-param {
+    .effect-case-source {
       min-width: 0;
-      color: var(--muted);
+      color: var(--ink);
       font-size: 13px;
       line-height: 1.55;
     }
-    .effect-use-summary-param strong {
-      color: var(--ink);
+    .effect-case-source span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .effect-case-link {
+      flex: 0 0 auto;
+      padding: 0;
+      border: 0;
+      color: var(--blue);
+      background: transparent;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .effect-caution {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
     }
     .update-note {
       margin-top: 8px;
@@ -786,21 +970,25 @@
       .toolbar { grid-template-columns: 1fr; }
       .reader-detail .step { grid-template-columns: 1fr; }
       .reader-detail .detail-body { padding-inline: 16px; }
+      .effect-detail-grid { grid-template-columns: 1fr; gap: 28px; }
     }
     @media (max-width: 820px) {
       .view-switch { width: 100%; }
-      .effect-use-row {
+      .effect-use-summary {
         grid-template-columns: 1fr;
-        gap: 6px;
+        gap: 12px;
       }
+      .effect-summary-shot { max-width: 420px; }
       .effect-use-summary-header { align-items: flex-start; flex-direction: column; }
-      .effect-use-summary-params { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
       .site-header { align-items: flex-start; flex-direction: column; }
       .header-stats { justify-content: flex-start; }
       main { padding-inline: 14px; }
       .grid { grid-template-columns: 1fr; }
+      .effect-list { grid-template-columns: 1fr; }
+      .effect-detail .detail-title { font-size: 32px; }
+      .effect-case-copy { flex-direction: column; }
     }
     .lightbox {
       position: fixed;
@@ -889,25 +1077,13 @@
   <section class="hero">
     <div class="hero-inner">
       <h1>音效知识库</h1>
-      <p>通过视频案例拆解声音设计思路，并交叉检索真实效果器与插件的使用方式、参数线索和素材目标。</p>
+      <p>通过视频案例拆解声音设计思路，并快速查清效果器适合什么素材、主要作用和听感结果。</p>
       <div class="view-switch" id="viewSwitch" role="tablist" aria-label="知识库视图">
         <button class="view-switch-button active" id="videosModeTab" type="button" role="tab" aria-controls="videoLibrary" aria-selected="true" data-mode="videos">视频案例</button>
         <button class="view-switch-button" id="effectsModeTab" type="button" role="tab" aria-controls="effectLibrary" aria-selected="false" tabindex="-1" data-mode="effects">效果器索引</button>
       </div>
       <div class="toolbar">
-        <input id="search" class="search" type="search" placeholder="搜索视频、设计目标、效果器、参数或素材...">
-        <select id="effectCategoryFilter" class="select" aria-label="效果器功能筛选" hidden>
-          <option value="all">全部效果器功能</option>
-        </select>
-        <select id="effectEvidenceFilter" class="select" aria-label="证据状态筛选" hidden>
-          <option value="all">全部证据状态</option>
-          <option value="画面确认">画面确认</option>
-          <option value="作者口述">作者口述</option>
-          <option value="音频可辨">音频可辨</option>
-          <option value="分析推断">分析推断</option>
-          <option value="视频未展示">视频未展示</option>
-          <option value="unstructured">尚未结构化</option>
-        </select>
+        <input id="search" class="search" type="search" placeholder="搜索视频、设计目标、效果器或素材...">
         <select id="sourceFilter" class="select" aria-label="来源筛选">
           <option value="all">全部来源</option>
         </select>
@@ -937,7 +1113,7 @@
         <h2 class="visually-hidden" id="effectsModeLabel">效果器索引</h2>
         <div class="results-bar">
           <span id="effectResultCount"></span>
-          <span class="category-note">每一条用法都保留独立视频来源</span>
+          <span class="category-note">每个档案都配有视频截图或已核对的官方界面图</span>
         </div>
         <div class="effect-list" id="effectList"></div>
       </section>
@@ -31519,7 +31695,6 @@
 
     const categoryById = Object.fromEntries(categories.map((category) => [category.id, category]));
     const effectUses = SfxKnowledgeModel.buildEffectUses(records);
-    const effectCategories = ["频谱与音色", "动态与响度", "饱和与失真", "音高与频率", "调制与运动", "空间与时间", "修复与非常规处理", "自动化、脚本与路由", "未分类"];
     const sources = Array.from(new Set(records.map((record) => record.source))).sort((a, b) => a.localeCompare(b, "zh-CN"));
     const canonicalEffectName = SfxKnowledgeModel.canonicalEffectName;
     const DualIndexNavigation = (() => {
@@ -31589,11 +31764,323 @@
 
       return { parseHashRouteHash, routeDecision, routeWriteIntent, serializeHashRoute, tabNavigation };
     })();
+    const EffectIndexData = (() => {
+      const fallbackRules = [
+        {
+          pattern: /\b(?:eq|equalizer|filter|gullfoss|soothe|unfilter)\b|均衡|滤波|频谱|共振/i,
+          suitable: "频段失衡、浑浊、刺耳或需要重新塑色的素材",
+          purpose: "整理频谱关系并明确音色重心",
+          outcome: "频段更清楚，主体更容易被听见"
+        },
+        {
+          pattern: /transient|compress|limiter|clipper|expander|loudness|gain|ott|squash|动态|瞬态|压缩|限制|响度|削峰/i,
+          suitable: "起音不清楚、动态不稳或峰值过大的素材",
+          purpose: "重塑攻击、持续段与整体动态",
+          outcome: "起音更明确，力度和峰值更稳定"
+        },
+        {
+          pattern: /saturat|distort|drive|decapitator|devil.?loc|trash|crush|exciter|失真|饱和|过载|谐波/i,
+          suitable: "需要增加密度、重量或侵略感的素材",
+          purpose: "增加谐波并强化材质存在感",
+          outcome: "声音更厚、更密，也更有冲击力"
+        },
+        {
+          pattern: /pitch|formant|vocoder|frequency\s*shift|harmoni|alterboy|manipulator|音高|共振峰|声码|频移/i,
+          suitable: "需要改变体型、音高身份或角色感的素材",
+          purpose: "改变音高、共振峰或频率身份",
+          outcome: "体型与角色感发生明显变化"
+        },
+        {
+          pattern: /phaser|flanger|chorus|tremolo|doppler|ensemble|motion|imager|wider|声像|调制|相位|镶边|合唱|颤音|多普勒/i,
+          suitable: "持续音、尾音和需要节奏或方向变化的素材",
+          purpose: "制造周期、宽度或方向运动",
+          outcome: "声音产生更清楚的运动和空间变化"
+        },
+        {
+          pattern: /reverb|delay|echo|convol|granular|crystallizer|space|room|plate|混响|延迟|回声|卷积|颗粒|空间/i,
+          suitable: "需要距离、深度、尾音或时间层次的素材",
+          purpose: "建立空间尺度并延展声音尾部",
+          outcome: "距离、深度和尾音层次更明确"
+        },
+        {
+          pattern: /\brx\b|de[- ]?(?:click|clip|noise|crackle)|repair|noise|unveil|修复|去噪|去点击|去削波/i,
+          suitable: "带有噪声、点击、削波或多余空间的录音",
+          purpose: "清理瑕疵并恢复可用细节",
+          outcome: "杂质减少，主体细节更清楚"
+        },
+        {
+          pattern: /automation|script|routing|rtpc|wwise|middleware|container|路由|自动化|脚本|中间件/i,
+          suitable: "需要随时间、距离或游戏状态变化的声音",
+          purpose: "控制处理链、路由与运行时变化",
+          outcome: "声音变化更可控，也更贴合游戏状态"
+        },
+        {
+          pattern: /synth|serum|phase\s*plant|reaktor|sampler|wavetable|oscillator|合成|采样器|振荡器/i,
+          suitable: "需要重新合成、扩展或生成新音色的素材",
+          purpose: "从源素材或振荡器重新建立音色",
+          outcome: "得到更鲜明、可继续加工的声音身份"
+        }
+      ];
+      const aliasStopWords = new Set([
+        "audio", "digital", "labs", "lab", "sound", "sounds", "plugin", "plugins", "effect", "effects",
+        "processor", "processing", "studio", "stereo", "native", "instruments", "production", "productions",
+        "soundtoys", "izotope", "kilohearts", "fabfilter", "melda", "meldaproduction", "valhalla", "waves",
+        "eventide", "minimal", "slate", "cockos", "brainworx", "xfer", "polyverse", "zynaptiq", "serato"
+      ]);
+      const genericEffectAliases = new Set([
+        "eq", "equalizer", "filter", "compressor", "limiter", "clipper", "transient", "shaper", "reverb",
+        "delay", "echo", "chorus", "flanger", "phaser", "tremolo", "vocoder", "distortion", "saturator",
+        "sampler", "synthesizer", "pitch", "shifter", "frequency", "imager", "stereo", "widener", "gain",
+        "gate", "expander", "convolver", "均衡", "均衡器", "滤波", "滤波器", "压缩", "压缩器", "限制器",
+        "削波器", "瞬态", "混响", "延迟", "回声", "合唱", "镶边", "颤音", "声码器", "失真", "饱和"
+      ]);
+      const technicalDetailPattern = /[+-]?\d+(?:\.\d+)?\s*(?:khz|hz|ms|dbfs|db|bpm)\b|[+-]?\d+(?:\.\d+)?\s*%|\b(?:hz|khz|ms|db|dbfs|bpm|bands?|mix|wet|dry|attack|release|ratio|feedback|frequency|drive|depth|rate|width|threshold|parameter|crossover|lfo)s?\b|参数|数值|旋钮|阈值|频率值|毫秒/i;
+
+      function array(value) {
+        return Array.isArray(value) ? value : [];
+      }
+
+      function text(value) {
+        return typeof value === "string" || typeof value === "number"
+          ? SfxKnowledgeModel.stripCourseScaffolding(value)
+          : "";
+      }
+
+      function normalize(value) {
+        return String(value || "")
+          .normalize("NFKC")
+          .toLowerCase()
+          .replace(/([a-z0-9])([\u3400-\u9fff])/g, "$1 $2")
+          .replace(/([\u3400-\u9fff])([a-z0-9])/g, "$1 $2")
+          .replace(/[^a-z0-9\u3400-\u9fff]+/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function referenceCandidates(name, catalog) {
+        const pluginName = normalize(name);
+        const matches = [];
+        array(catalog).forEach((reference) => {
+          let bestAlias = "";
+          [reference?.title, ...array(reference?.aliases)].forEach((alias) => {
+            const normalizedAlias = normalize(alias);
+            if (!normalizedAlias) return;
+            if (pluginName === normalizedAlias || pluginName.includes(normalizedAlias) || normalizedAlias.includes(pluginName)) {
+              if (normalizedAlias.length > bestAlias.length) bestAlias = normalizedAlias;
+            }
+          });
+          if (bestAlias) matches.push({ reference, alias: bestAlias, score: bestAlias.length });
+        });
+        matches.sort((a, b) => b.score - a.score || String(a.reference.title || "").localeCompare(String(b.reference.title || "")));
+        return matches.slice(0, 4).map((match) => match.reference);
+      }
+
+      function expandAlias(value) {
+        const variants = new Set();
+        String(value || "").split(/\s*(?:\/|\+|->| x\d+)\s*/i).forEach((part) => {
+          const normalized = normalize(part);
+          if (!normalized) return;
+          variants.add(normalized);
+          const tokens = normalized.split(" ");
+          for (let index = 1; index < tokens.length; index += 1) {
+            variants.add(tokens.slice(index).join(" "));
+          }
+          tokens.forEach((token) => {
+            if ((token.length >= 4 || token === "eq" || token === "rx") && !aliasStopWords.has(token) && !/^\d+$/.test(token)) {
+              variants.add(token);
+            }
+          });
+        });
+        return [...variants].filter((variant) => variant.length >= 2 && !aliasStopWords.has(variant));
+      }
+
+      function effectAliases(name, catalog) {
+        const values = [name];
+        referenceCandidates(name, catalog).forEach((reference) => {
+          values.push(reference.title, ...array(reference.aliases));
+        });
+        return [...new Set(values.flatMap(expandAlias))].sort((a, b) => b.length - a.length);
+      }
+
+      function assetForKey(key, manifest) {
+        const asset = key && manifest && manifest[key];
+        if (!asset || (!asset.preview && !asset.full)) return null;
+        return {
+          preview: asset.preview || asset.full,
+          full: asset.full || asset.preview
+        };
+      }
+
+      function sourceRecordFor(use, records) {
+        return array(records).find((record) => record && record.id === use?.sourceRecordId) || null;
+      }
+
+      function stepVisual(use, step, record, manifest) {
+        const asset = assetForKey(step?.imageKey || use?.screenshotKey, manifest);
+        if (!asset) return null;
+        return {
+          kind: "video",
+          preview: asset.preview,
+          full: asset.full,
+          imageKey: step?.imageKey || use?.screenshotKey || "",
+          caption: [record?.title || use?.sourceTitle || "视频案例", step?.name || use?.name || "效果器界面"].filter(Boolean).join(" / "),
+          useId: use?.id || "",
+          sourceRecordId: record?.id || use?.sourceRecordId || "",
+          sourceTitle: record?.title || use?.sourceTitle || "视频案例",
+          sourceUrl: record?.url || "",
+          stepOrder: step?.order ?? "",
+          stepName: step?.name || "",
+          timestamp: use?.timestamp || ""
+        };
+      }
+
+      function explicitVisual(use, records, manifest) {
+        if (!assetForKey(use?.screenshotKey, manifest)) return null;
+        const record = sourceRecordFor(use, records);
+        const step = array(record?.steps).find((candidate) => candidate?.imageKey === use.screenshotKey) || null;
+        return stepVisual(use, step, record, manifest);
+      }
+
+      function matchedStepVisual(use, profileName, records, catalog, manifest) {
+        const record = sourceRecordFor(use, records);
+        if (!record) return null;
+        const aliases = effectAliases(profileName, catalog);
+        let best = null;
+        array(record.steps).forEach((step, index) => {
+          if (!assetForKey(step?.imageKey, manifest)) return;
+          const factualDetail = SfxKnowledgeModel.stripCourseScaffolding(step?.detail);
+          const nameHaystack = " " + normalize(step?.name) + " ";
+          const detailHaystack = " " + normalize(factualDetail) + " ";
+          const alias = aliases.find((candidate) => (
+            nameHaystack.includes(" " + candidate + " ")
+            || (!genericEffectAliases.has(candidate) && detailHaystack.includes(" " + candidate + " "))
+          ));
+          if (!alias) return;
+          const score = alias.length * 100 - index;
+          if (!best || score > best.score) best = { step, score };
+        });
+        return best ? stepVisual(use, best.step, record, manifest) : null;
+      }
+
+      function officialVisuals(profileName, catalog, useId) {
+        return referenceCandidates(profileName, catalog).map((reference) => {
+          if (!reference?.preview && !reference?.full) return null;
+          return {
+            kind: "official",
+            preview: reference.preview || reference.full,
+            full: reference.full || reference.preview,
+            imageKey: "",
+            caption: (reference.title || profileName) + " / 官方界面参考",
+            useId: useId || "",
+            sourceRecordId: "",
+            sourceTitle: "官方界面参考",
+            sourceUrl: reference.source || "",
+            stepOrder: "",
+            stepName: reference.title || profileName,
+            timestamp: ""
+          };
+        }).filter(Boolean);
+      }
+
+      function ruleFor(use) {
+        const value = [use?.name, use?.category, use?.purpose, use?.target, use?.result].map(text).join(" ");
+        return fallbackRules.find((rule) => rule.pattern.test(value)) || {
+          suitable: "需要进一步塑形、分层或强化身份的声音素材",
+          purpose: "完成这一处理点承担的声音角色",
+          outcome: "声音角色更清楚，也更容易放进完整效果链"
+        };
+      }
+
+      function conciseCopy(value, fallback, maxLength = 72) {
+        const cleaned = text(value).replace(/^(?:作者口述与画面确认|作者口述|画面确认|画面事实|分析归纳|分析建议)[:：]\s*/i, "");
+        if (!cleaned || cleaned.length > maxLength || technicalDetailPattern.test(cleaned)) return fallback;
+        const firstSentence = cleaned.split(/[。；;]/)[0].trim();
+        if (!firstSentence || firstSentence.length > maxLength || technicalDetailPattern.test(firstSentence)) return fallback;
+        return firstSentence;
+      }
+
+      function suitableText(use) {
+        const fallback = ruleFor(use).suitable;
+        return conciseCopy(use?.target, fallback, 56);
+      }
+
+      function purposeText(use) {
+        const fallback = ruleFor(use).purpose;
+        return conciseCopy(use?.purpose, fallback);
+      }
+
+      function outcomeText(use) {
+        const fallback = ruleFor(use).outcome;
+        return conciseCopy(use?.result, fallback, 64);
+      }
+
+      function orderedUses(uses, preferredUseId) {
+        return [...array(uses)].sort((a, b) => {
+          const preferred = Number(b?.id === preferredUseId) - Number(a?.id === preferredUseId);
+          if (preferred) return preferred;
+          const explicit = Number(Boolean(b?.screenshotKey)) - Number(Boolean(a?.screenshotKey));
+          if (explicit) return explicit;
+          const structured = Number(!b?.legacy) - Number(!a?.legacy);
+          if (structured) return structured;
+          return String(a?.sourceTitle || "").localeCompare(String(b?.sourceTitle || ""), "zh-CN");
+        });
+      }
+
+      function buildProfile(name, uses, records, catalog, manifest, preferredUseId = "") {
+        const ordered = orderedUses(uses, preferredUseId);
+        if (!name || name === "未确认插件链" || !ordered.length) return null;
+        const visuals = [];
+        const seenVisuals = new Set();
+        function addVisual(visual) {
+          if (!visual || visuals.length >= 3) return;
+          const key = visual.full || visual.preview;
+          if (!key || seenVisuals.has(key)) return;
+          seenVisuals.add(key);
+          visuals.push(visual);
+        }
+        ordered.forEach((use) => addVisual(explicitVisual(use, records, manifest)));
+        ordered.forEach((use) => addVisual(matchedStepVisual(use, name, records, catalog, manifest)));
+        officialVisuals(name, catalog, ordered[0]?.id).forEach(addVisual);
+        if (!visuals.length) return null;
+
+        const copyUse = ordered.find((use) => text(use?.target) || text(use?.result)) || ordered.find((use) => !use?.legacy) || ordered[0];
+        const sourceCount = new Set(ordered.map((use) => use?.sourceRecordId).filter(Boolean)).size;
+        return {
+          id: preferredUseId || visuals.find((visual) => visual.useId)?.useId || ordered[0].id,
+          name,
+          uses: ordered,
+          useCount: ordered.length,
+          sourceCount,
+          category: ordered.find((use) => use?.category && use.category !== "未分类")?.category || ordered[0]?.category || "综合处理",
+          suitable: suitableText(copyUse),
+          purpose: purposeText(copyUse),
+          outcome: outcomeText(copyUse),
+          limitation: conciseCopy(ordered.find((use) => text(use?.limitations))?.limitations, "", 64),
+          visuals
+        };
+      }
+
+      function profiles(uses, records, catalog, manifest) {
+        return SfxKnowledgeModel.groupEffectUses(array(uses), catalog).map((group) => (
+          buildProfile(group.name, group.uses, records, catalog, manifest)
+        )).filter(Boolean);
+      }
+
+      function profileForUse(use, uses, records, catalog, manifest) {
+        if (!use) return null;
+        const name = SfxKnowledgeModel.canonicalEffectName(use.name, catalog);
+        const key = normalize(name);
+        const matchingUses = array(uses).filter((candidate) => (
+          normalize(SfxKnowledgeModel.canonicalEffectName(candidate?.name, catalog)) === key
+        ));
+        return buildProfile(name, matchingUses, records, catalog, manifest, use.id);
+      }
+
+      return { outcomeText, profileForUse, profiles, purposeText, referenceCandidates, suitableText };
+    })();
     const state = {
       mode: "videos",
       category: "all",
-      effectCategory: "all",
-      effectEvidence: "all",
       query: "",
       source: "all",
       sort: "updatedDesc",
@@ -31618,8 +32105,6 @@
     const searchEl = document.getElementById("search");
     const sourceEl = document.getElementById("sourceFilter");
     const sortEl = document.getElementById("sortOrder");
-    const effectCategoryEl = document.getElementById("effectCategoryFilter");
-    const effectEvidenceEl = document.getElementById("effectEvidenceFilter");
     const effectCountEl = document.getElementById("effectResultCount");
     const effectListEl = document.getElementById("effectList");
     const readerHintEl = document.getElementById("readerHint");
@@ -31631,7 +32116,6 @@
     let searchRenderTimer = 0;
 
     sourceEl.innerHTML += sources.map((source) => "<option value=\"" + escapeAttr(source) + "\">" + escapeHtml(source) + "</option>").join("");
-    effectCategoryEl.innerHTML += effectCategories.map((category) => "<option value=\"" + escapeAttr(category) + "\">" + escapeHtml(category) + "</option>").join("");
 
     function escapeHtml(value) {
       const map = {
@@ -31683,49 +32167,29 @@
       return sortedRecords(list);
     }
 
-    function matchedEffectReferenceAliases(use) {
-      return pluginReferenceCandidates({ name: use.name }).flatMap((reference) => [reference.title, ...(reference.aliases || [])]);
-    }
-
     function effectSearchable(use) {
       return [
         use.name,
         canonicalEffectName(use.name, pluginReferenceCatalog),
-        matchedEffectReferenceAliases(use),
-        use.vendor,
+        EffectIndexData.referenceCandidates(use.name, pluginReferenceCatalog).flatMap((reference) => [reference.title, ...(reference.aliases || [])]),
         use.category,
         use.target,
-        use.chainPosition,
         use.purpose,
         use.result,
-        use.interactions,
         use.limitations,
         use.sourceTitle,
         use.source,
-        use.sourceKeywords,
-        use.evidence,
-        (use.parameters || []).map((parameter) => [parameter.name, parameter.value, parameter.direction].join(" ")).join(" ")
+        use.sourceKeywords
       ].flat().join(" ").toLowerCase();
     }
 
     function filteredEffectUses() {
       const query = state.query.trim().toLowerCase();
       return effectUses.filter((use) => {
-        const categoryMatch = state.effectCategory === "all" || use.category === state.effectCategory;
         const sourceMatch = state.source === "all" || use.source === state.source;
-        const evidence = Array.isArray(use.evidence) ? use.evidence : [];
-        const evidenceMatch = state.effectEvidence === "all"
-          || (state.effectEvidence === "unstructured" ? !evidence.length : evidence.includes(state.effectEvidence));
         const queryMatch = !query || effectSearchable(use).includes(query);
-        return categoryMatch && sourceMatch && evidenceMatch && queryMatch;
+        return sourceMatch && queryMatch;
       });
-    }
-
-    function effectParameterSummary(use) {
-      const parameter = Array.isArray(use.parameters) ? use.parameters[0] : null;
-      if (!parameter) return "参数尚未结构化";
-      const detail = [parameter.value, parameter.direction].filter(Boolean).join(" / ");
-      return (parameter.name || "参数") + (detail ? "：" + detail : "：参数尚未结构化");
     }
 
     function renderEvidenceLabels(labels) {
@@ -31753,36 +32217,36 @@
       });
       videoLibraryEl.hidden = state.mode !== "videos";
       effectLibraryEl.hidden = state.mode !== "effects";
-      effectCategoryEl.hidden = state.mode !== "effects";
-      effectEvidenceEl.hidden = state.mode !== "effects";
       sortEl.hidden = state.mode !== "videos";
       searchEl.placeholder = state.mode === "effects"
-        ? "搜索效果器、厂商、处理目标、参数或来源..."
-        : "搜索视频、设计目标、效果器、参数或素材...";
+        ? "搜索效果器、适用素材、作用或来源..."
+        : "搜索视频、设计目标、效果器或素材...";
     }
 
     function renderEffectLibrary() {
       const list = filteredEffectUses();
-      const groups = SfxKnowledgeModel.groupEffectUses(list, pluginReferenceCatalog);
-      effectCountEl.textContent = "当前显示 " + list.length + " 条用法 / " + groups.length + " 个效果器";
+      const profiles = EffectIndexData.profiles(list, records, pluginReferenceCatalog, imageManifest);
+      effectCountEl.textContent = "当前显示 " + profiles.length + " 个效果器档案 / " + list.length + " 条视频用法";
 
-      if (!list.length) {
-        effectListEl.innerHTML = '<div class="empty">没有匹配的效果器用法。</div>';
+      if (!profiles.length) {
+        effectListEl.innerHTML = '<div class="empty">没有找到同时匹配内容和截图的效果器档案。</div>';
         return;
       }
 
-      effectListEl.innerHTML = groups.map((group) => {
-        const rows = group.uses.map((use) => {
-          const source = sourceStepFor(use);
-          const sourceStepLabel = source.sourceStep ? "步骤 " + source.sourceStep.order : "步骤未关联";
-          const timestamp = use.timestamp ? " · " + use.timestamp : "";
-          return '<button class="effect-use-row" type="button" data-effect-id="' + escapeAttr(use.id) + '">' +
-            '<span><strong>' + escapeHtml(use.category || "未分类") + '</strong><span class="effect-use-target">' + escapeHtml(use.vendor || "厂商未记录") + '</span><span class="effect-use-target">' + escapeHtml(effectParameterSummary(use)) + '</span></span>' +
-            '<span class="effect-use-purpose"><strong>' + escapeHtml(use.target || "处理对象未展示") + '</strong><span>' + escapeHtml(use.purpose || "用途未展示") + '</span></span>' +
-            '<div class="effect-use-source"><strong>' + escapeHtml(use.sourceTitle || "来源视频未记录") + '</strong><span>' + escapeHtml(sourceStepLabel + timestamp) + '</span><div class="effect-use-evidence">' + renderEvidenceLabels(use.evidence) + '</div></div>' +
-          '</button>';
-        }).join("");
-        return '<section class="effect-group"><div class="effect-group-header"><h3>' + escapeHtml(group.name) + '</h3><span class="category-note">' + group.uses.length + ' 条用法</span></div>' + rows + '</section>';
+      effectListEl.innerHTML = profiles.map((profile) => {
+        const visual = profile.visuals[0];
+        const visualLabel = visual.kind === "video" ? "视频操作截图" : "官方界面图";
+        return '<button class="effect-profile-card" type="button" data-effect-id="' + escapeAttr(profile.id) + '">' +
+          '<span class="effect-profile-shot"><img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(profile.name + " 效果器截图") + '" loading="lazy" decoding="async"><span class="effect-profile-shot-kind">' + visualLabel + '</span></span>' +
+          '<span class="effect-profile-body"><strong class="effect-profile-title">' + escapeHtml(profile.name) + '</strong>' +
+            '<span class="effect-profile-facts">' +
+              '<span class="effect-profile-fact"><strong>适合用在</strong><span>' + escapeHtml(profile.suitable) + '</span></span>' +
+              '<span class="effect-profile-fact"><strong>主要作用</strong><span>' + escapeHtml(profile.purpose) + '</span></span>' +
+              '<span class="effect-profile-fact"><strong>听感结果</strong><span>' + escapeHtml(profile.outcome) + '</span></span>' +
+            '</span>' +
+            '<span class="effect-profile-meta">' + profile.sourceCount + ' 个视频案例 · ' + profile.useCount + ' 条用法</span>' +
+          '</span>' +
+        '</button>';
       }).join("");
     }
 
@@ -32099,23 +32563,20 @@
     }
 
     function renderEffectUseSummary(record, use) {
-      const effectData = VideoDetailData.effectUse(record, use);
-      const parameters = effectData.parameters;
-      const parameterHtml = parameters.length
-        ? '<div class="effect-use-summary-params">' + parameters.map((parameter) => {
-            const value = cleanedText([parameter.value, parameter.direction].filter(Boolean).join(" / ")) || "参数尚未结构化";
-            return '<div class="effect-use-summary-param"><strong>' + escapeHtml(cleanedText(parameter.name) || "参数") + '</strong><div>' + escapeHtml(value) + '</div>' + renderEvidenceLabels(parameter.evidence ? [parameter.evidence] : []) + '</div>';
-          }).join("") + '</div>'
-        : '<p class="effect-use-summary-meta">参数尚未结构化。</p>';
+      const profile = EffectIndexData.profileForUse(use, effectUses, records, pluginReferenceCatalog, imageManifest);
+      if (!profile) return "";
+      const visual = profile.visuals.find((candidate) => candidate.useId === use.id) || profile.visuals[0];
+      const purpose = profile.purpose;
       return '<div class="effect-use-summary">' +
-        '<div class="effect-use-summary-header"><strong class="effect-use-summary-title">' + escapeHtml(canonicalEffectName(use.name, pluginReferenceCatalog)) + '</strong>' +
-          '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '">查看独立效果器档案</button></div>' +
-        '<p class="effect-use-summary-purpose">' + escapeHtml(cleanedText(use.purpose) || "用途未展示") + '</p>' +
-        '<p class="effect-use-summary-meta">处理对象：' + escapeHtml(cleanedText(use.target) || "未展示") + ' · 链路位置：' + escapeHtml(cleanedText(use.chainPosition) || "未展示") + '</p>' +
-        parameterHtml + renderEvidenceLabels(use.evidence) + effectData.sourcePluginIndexes.map((pluginIndex) => {
-          const plugin = effectData.plugins[pluginIndex];
-          return plugin ? renderPluginReferences(record, plugin, pluginIndex) : "";
-        }).join("") +
+        '<button class="effect-summary-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大效果器截图：' + escapeAttr(profile.name) + '">' +
+          '<img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(profile.name + " 效果器截图") + '" loading="lazy" decoding="async">' +
+        '</button>' +
+        '<div class="effect-summary-copy">' +
+          '<div class="effect-use-summary-header"><strong class="effect-use-summary-title">' + escapeHtml(profile.name) + '</strong>' +
+            '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '">查看适用方式</button></div>' +
+          '<p class="effect-use-summary-purpose">' + escapeHtml(purpose) + '</p>' +
+          '<p class="effect-use-summary-meta"><strong>适合：</strong>' + escapeHtml(profile.suitable) + '<br><strong>听感：</strong>' + escapeHtml(profile.outcome) + '</p>' +
+        '</div>' +
       '</div>';
     }
 
@@ -32174,47 +32635,51 @@
         detailEl.innerHTML = '<div class="empty">找不到这个效果器用法。</div>';
         return;
       }
-
-      const source = sourceStepFor(use);
-      const sourceRecord = source.sourceRecord;
-      const sourceStep = source.sourceStep;
-      const effectData = VideoDetailData.effectUse(sourceRecord, use);
-      const parameters = effectData.parameters;
-      const parameterHtml = parameters.length
-        ? parameters.map((parameter) => '<div class="learning-point"><strong>' + escapeHtml(parameter.name || "参数") + '</strong><div>' + escapeHtml([parameter.value, parameter.direction].filter(Boolean).join(" / ") || "参数尚未结构化") + '</div>' + renderEvidenceLabels(parameter.evidence ? [parameter.evidence] : []) + '</div>').join("")
-        : '<div class="learning-point">参数尚未结构化。</div>';
-      const effectShotHtml = use.screenshotKey
-        ? '<button class="step-shot effect-shot" type="button" data-effect-shot="' + escapeAttr(use.screenshotKey) + '" aria-label="放大效果器截图：' + escapeAttr(use.name) + '">' +
-            '<img data-shot-preview="' + escapeAttr(use.screenshotKey) + '" alt="' + escapeAttr(use.name + " 使用截图") + '" loading="lazy" decoding="async">' +
-            '<span>点击放大查看高清效果器截图</span>' +
-          '</button>'
+      const profile = EffectIndexData.profileForUse(use, effectUses, records, pluginReferenceCatalog, imageManifest);
+      if (!profile) {
+        detailEl.innerHTML = '<div class="empty">这个条目还没有可核对的效果器截图，因此暂不生成独立档案。</div>';
+        return;
+      }
+      const caseHtml = profile.visuals.slice(0, 3).map((visual) => {
+        const sourceRecord = visual.sourceRecordId
+          ? records.find((record) => record.id === visual.sourceRecordId)
+          : null;
+        const location = visual.kind === "video"
+          ? [visual.stepOrder !== "" ? "步骤 " + visual.stepOrder : "视频操作画面", visual.timestamp].filter(Boolean).join(" · ")
+          : "已核对的官方界面图";
+        const action = sourceRecord
+          ? '<button class="effect-case-link" type="button" data-open-video="' + escapeAttr(sourceRecord.id) + '">查看完整视频案例</button>'
+          : (visual.sourceUrl
+            ? '<a class="effect-case-link" href="' + escapeAttr(visual.sourceUrl) + '" target="_blank" rel="noopener">查看官方来源</a>'
+            : '');
+        return '<div class="effect-case">' +
+          '<button class="effect-case-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大效果器截图：' + escapeAttr(profile.name) + '">' +
+            '<img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(visual.caption) + '" loading="lazy" decoding="async">' +
+            '<span>' + (visual.kind === "video" ? "视频中的实际操作截图" : "官方效果器界面参考") + '</span>' +
+          '</button>' +
+          '<div class="effect-case-copy"><div class="effect-case-source"><strong>' + escapeHtml(visual.sourceTitle) + '</strong><span>' + escapeHtml(location) + '</span></div>' + action + '</div>' +
+        '</div>';
+      }).join("");
+      const cautionHtml = profile.limitation
+        ? '<p class="effect-caution"><strong>注意：</strong>' + escapeHtml(profile.limitation) + '</p>'
         : '';
-      const referenceHtml = sourceRecord
-        ? effectData.sourcePluginIndexes.map((pluginIndex) => {
-            const plugin = effectData.plugins[pluginIndex];
-            return plugin ? renderPluginReferences(sourceRecord, plugin, pluginIndex) : "";
-          }).join("")
-        : '';
-      const sourceVideoHtml = sourceRecord
-        ? '<a class="open-video" href="' + escapeAttr(sourceRecord.url) + '" target="_blank" rel="noopener">打开原视频</a>'
-        : '<div class="category-note">来源视频未记录。</div>';
 
       detailEl.innerHTML =
         '<div class="detail-body effect-detail">' +
-          '<h2 class="detail-title" tabindex="-1">' + escapeHtml(canonicalEffectName(use.name, pluginReferenceCatalog)) + '</h2>' +
-          '<div class="card-meta"><span>' + escapeHtml(use.category || "未分类") + '</span><span>' + escapeHtml(use.vendor || "厂商未记录") + '</span></div>' +
-          '<p class="detail-summary">' + escapeHtml(use.purpose || "用途未展示") + '</p>' +
-          (sourceRecord ? '<button class="open-video" type="button" data-open-video="' + escapeAttr(sourceRecord.id) + '">查看完整视频案例</button>' : '') +
-          effectShotHtml +
-          '<div class="section"><h3>处理对象与链路位置</h3><div class="learning-point"><strong>处理对象</strong><div>' + escapeHtml(use.target || "处理对象未展示") + '</div></div><div class="learning-point"><strong>链路位置</strong><div>' + escapeHtml(use.chainPosition || "链路位置未展示") + '</div></div></div>' +
-          '<div class="section"><h3>参数与调节方向</h3>' + parameterHtml + '</div>' +
-          listSection("处理结果", use.result ? [use.result] : []) +
-          listSection("交互与前后关系", use.interactions ? [use.interactions] : []) +
-          listSection("限制与注意事项", use.limitations ? [use.limitations] : []) +
-          '<div class="section"><h3>证据</h3>' + renderEvidenceLabels(use.evidence) + referenceHtml + '</div>' +
-          '<div class="section"><h3>来源视频</h3><div class="learning-point"><strong>' + escapeHtml(use.sourceTitle || "来源视频未记录") + '</strong><div>' + escapeHtml((sourceStep ? "步骤 " + sourceStep.order : "步骤未关联") + (use.timestamp ? " · " + use.timestamp : "")) + '</div></div>' + sourceVideoHtml + '</div>' +
+          '<div class="effect-detail-grid">' +
+            '<div class="effect-detail-copy">' +
+              '<span class="effect-detail-kicker">一句话结论</span>' +
+              '<h2 class="detail-title" tabindex="-1">' + escapeHtml(profile.name) + '</h2>' +
+              '<p class="detail-summary">' + escapeHtml(profile.purpose) + '</p>' +
+              '<div class="effect-quick-guide">' +
+                '<div class="effect-guide-item"><h3>适合用在</h3><p>' + escapeHtml(profile.suitable) + '</p></div>' +
+                '<div class="effect-guide-item"><h3>能带来什么</h3><p>' + escapeHtml(profile.outcome) + '</p></div>' +
+              '</div>' +
+              cautionHtml +
+            '</div>' +
+            '<div class="effect-case-panel"><h3>视频案例</h3><div class="effect-case-list">' + caseHtml + '</div></div>' +
+          '</div>' +
         '</div>';
-      loadDetailPreviews();
     }
 
     function openLightbox(src, caption) {
@@ -32352,12 +32817,10 @@
         openEffectDetail(effectButton.dataset.effectId, true);
         return;
       }
-      const effectShot = target.closest ? target.closest("[data-effect-shot]") : null;
-      if (effectShot) {
-        const key = effectShot.dataset.effectShot;
-        const use = effectUses.find((item) => item.id === state.activeEffectId);
-        const src = imageAsset("full", key) || imageAsset("preview", key);
-        if (src) openLightbox(src, (use?.name || "效果器") + " 使用截图");
+      const effectImage = target.closest ? target.closest("[data-effect-image]") : null;
+      if (effectImage) {
+        const src = effectImage.dataset.effectImage;
+        if (src) openLightbox(src, effectImage.dataset.effectCaption || "效果器使用截图");
         return;
       }
       const pluginShot = target.closest ? target.closest(".plugin-reference-shot") : null;
@@ -32427,18 +32890,6 @@
       state.sort = event.target.value;
       state.activeId = "";
       render();
-    });
-
-    effectCategoryEl.addEventListener("change", (event) => {
-      state.effectCategory = event.target.value;
-      state.activeEffectId = "";
-      renderEffectLibrary();
-    });
-
-    effectEvidenceEl.addEventListener("change", (event) => {
-      state.effectEvidence = event.target.value;
-      state.activeEffectId = "";
-      renderEffectLibrary();
     });
 
     window.addEventListener("hashchange", applyHashRoute);

@@ -51,6 +51,17 @@ function loadVideoDetailData() {
   return context.VideoDetailData;
 }
 
+function loadEffectIndexData() {
+  const start = indexHtml.indexOf('    const EffectIndexData = (() => {');
+  const end = indexHtml.indexOf('    })();', start);
+  assert.notEqual(start, -1, 'missing EffectIndexData helpers');
+  assert.notEqual(end, -1, 'unterminated EffectIndexData helpers');
+  const source = indexHtml.slice(start, end + '    })();'.length) + '\nthis.EffectIndexData = EffectIndexData;';
+  const context = { SfxKnowledgeModel };
+  vm.runInNewContext(source, context);
+  return context.EffectIndexData;
+}
+
 function plainValue(value) {
   return JSON.parse(JSON.stringify(value));
 }
@@ -98,10 +109,12 @@ test('exposes accessible video and effect index modes', () => {
   assert.ok(hasBooleanAttribute(effectsPanel, 'hidden'));
 });
 
-test('provides effect index controls and render target', () => {
-  ['effectCategoryFilter', 'effectEvidenceFilter', 'effectResultCount', 'effectList'].forEach((id) => {
+test('provides a minimal effect index toolbar and render target', () => {
+  ['search', 'sourceFilter', 'effectResultCount', 'effectList'].forEach((id) => {
     assert.match(indexHtml, new RegExp(`id="${id}"`));
   });
+  assert.doesNotMatch(indexHtml, /id="effectCategoryFilter"/);
+  assert.doesNotMatch(indexHtml, /id="effectEvidenceFilter"/);
 });
 
 test('removes course-oriented shell copy', () => {
@@ -109,23 +122,174 @@ test('removes course-oriented shell copy', () => {
   assert.doesNotMatch(indexHtml, /学习时间：最新优先/);
 });
 
-test('builds and renders the effect-use projection', () => {
+test('builds and renders screenshot-backed effect profiles', () => {
   [
     'SfxKnowledgeModel.buildEffectUses(records)',
     'function filteredEffectUses()',
     'function renderEffectLibrary()',
     'function renderEffectDetail(effectId)',
-    'state.effectEvidence',
+    'EffectIndexData.profiles(',
+    'EffectIndexData.profileForUse(',
     'use.sourceKeywords',
-    'canonicalEffectName(use.name, pluginReferenceCatalog)',
-    'function matchedEffectReferenceAliases(use)',
-    'matchedEffectReferenceAliases(use)'
+    'canonicalEffectName(use.name, pluginReferenceCatalog)'
   ].forEach((source) => assert.ok(indexHtml.includes(source), `missing ${source}`));
-  assert.match(indexHtml, /function matchedEffectReferenceAliases\(use\) \{[\s\S]*?\.\.\.\(reference\.aliases \|\| \[\]\)/);
   const navigation = loadDualIndexNavigation();
   const hash = navigation.serializeHashRoute({ video: 'video-1', origin: 'effects' });
   assert.equal(hash, '#video=video-1&origin=effects');
   assert.deepEqual(plainValue(navigation.parseHashRouteHash(hash)), { video: 'video-1', effect: '', view: '', origin: 'effects' });
+});
+
+test('effect profiles prefer video screenshots, stay concise, and cap galleries', () => {
+  const effectIndexData = loadEffectIndexData();
+  const manifest = {
+    shot1: { preview: 'shot1-preview.webp', full: 'shot1-full.webp' },
+    shot2: { preview: 'shot2-preview.webp', full: 'shot2-full.webp' },
+    shot3: { preview: 'shot3-preview.webp', full: 'shot3-full.webp' },
+    shot4: { preview: 'shot4-preview.webp', full: 'shot4-full.webp' }
+  };
+  const testRecords = [1, 2, 3, 4].map((number) => ({
+    id: `record-${number}`,
+    title: `Video ${number}`,
+    url: `https://example.com/${number}`,
+    steps: [{ order: number, name: `Test Effect case ${number}`, detail: 'Visible Test Effect interface.', imageKey: `shot${number}` }]
+  }));
+  const uses = testRecords.map((record, index) => ({
+    id: `use-${index + 1}`,
+    name: 'Test Effect',
+    category: 'dynamic',
+    target: index === 0 ? 'impact and weapon layers' : '',
+    purpose: 'Make the hit clearer and more controlled.',
+    result: index === 0 ? 'A clearer and more controlled hit.' : '',
+    limitations: '',
+    screenshotKey: '',
+    sourceRecordId: record.id,
+    sourceTitle: record.title,
+    source: 'Test',
+    legacy: false
+  }));
+  const catalog = [{
+    title: 'Test Effect',
+    aliases: ['Test Effect'],
+    preview: 'official-preview.webp',
+    full: 'official-full.webp',
+    source: 'https://example.com/official'
+  }];
+
+  const profile = plainValue(effectIndexData.profileForUse(uses[0], uses, testRecords, catalog, manifest));
+
+  assert.equal(profile.name, 'Test Effect');
+  assert.equal(profile.suitable, 'impact and weapon layers');
+  assert.equal(profile.purpose, 'Make the hit clearer and more controlled.');
+  assert.equal(profile.outcome, 'A clearer and more controlled hit.');
+  assert.equal(profile.visuals.length, 3);
+  assert.ok(profile.visuals.every((visual) => visual.kind === 'video'));
+  assert.equal(profile.visuals[0].preview, 'shot1-preview.webp');
+  assert.doesNotMatch(JSON.stringify(profile), /parameterValues|parameters/);
+});
+
+test('effect profiles replace technical control notes with a plain application summary', () => {
+  const effectIndexData = loadEffectIndexData();
+  const use = {
+    id: 'technical-use',
+    name: 'Transient Shaper',
+    category: '动态与响度',
+    target: '',
+    purpose: '在330Hz增加谐波和温暖感。',
+    result: '',
+    limitations: '-0.13Hz 负速率会产生幽灵漂移感。',
+    screenshotKey: 'technical-shot',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1',
+    legacy: false
+  };
+  const records = [{ id: 'record-1', title: 'Video 1', steps: [{ order: 1, name: 'Transient Shaper', imageKey: 'technical-shot' }] }];
+  const manifest = { 'technical-shot': { preview: 'technical-preview.webp', full: 'technical-full.webp' } };
+
+  const profile = plainValue(effectIndexData.profileForUse(use, [use], records, [], manifest));
+
+  assert.equal(profile.purpose, '重塑攻击、持续段与整体动态');
+  assert.equal(profile.limitation, '');
+  assert.doesNotMatch(profile.purpose, /330|Hz|参数|阈值/i);
+});
+
+test('effect profiles ignore screenshots matched only by generated chain scaffolding', () => {
+  const effectIndexData = loadEffectIndexData();
+  const use = {
+    id: 'generated-chain-use',
+    name: 'Test Effect',
+    category: '未分类',
+    target: '',
+    purpose: 'Give the source a different identity.',
+    result: '',
+    screenshotKey: '',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1',
+    legacy: true
+  };
+  const records = [{
+    id: 'record-1',
+    title: 'Video 1',
+    steps: [{
+      order: 1,
+      name: 'Unrelated ambience edit',
+      detail: '本条的主要链路可以按 Test Effect -> Reverb 来读：这是自动生成的通用链路说明。',
+      params: ['链路参考：Test Effect'],
+      imageKey: 'unrelated-shot'
+    }]
+  }];
+  const manifest = { 'unrelated-shot': { preview: 'unrelated-preview.webp', full: 'unrelated-full.webp' } };
+
+  assert.equal(effectIndexData.profileForUse(use, [use], records, [], manifest), null);
+});
+
+test('product profiles do not claim screenshots from generic effect mentions', () => {
+  const effectIndexData = loadEffectIndexData();
+  const use = {
+    id: 'vocoder-use',
+    name: 'Ableton Vocoder',
+    category: '音高与频率',
+    target: '',
+    purpose: 'Give the source a synthetic identity.',
+    result: '',
+    screenshotKey: '',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1',
+    legacy: true
+  };
+  const records = [{
+    id: 'record-1',
+    title: 'Video 1',
+    steps: [{
+      order: 1,
+      name: 'Add electronic motion',
+      detail: 'Use pitch, filter, ring modulation, vocoder, FM, grain, or tremolo to create motion.',
+      imageKey: 'generic-motion-shot'
+    }]
+  }];
+  const manifest = { 'generic-motion-shot': { preview: 'generic-preview.webp', full: 'generic-full.webp' } };
+
+  assert.equal(effectIndexData.profileForUse(use, [use], records, [], manifest), null);
+});
+
+test('effect profiles omit uncertain entries without a reliable screenshot', () => {
+  const effectIndexData = loadEffectIndexData();
+  const use = {
+    id: 'missing-shot',
+    name: 'Unverified Processor',
+    category: 'unclassified',
+    target: '',
+    purpose: 'Unverified legacy note.',
+    result: '',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1'
+  };
+  const records = [{ id: 'record-1', title: 'Video 1', steps: [{ order: 1, name: 'Unrelated editing', imageKey: 'unrelated' }] }];
+
+  assert.equal(effectIndexData.profileForUse(use, [use], records, [], {}), null);
+  assert.deepEqual(plainValue(effectIndexData.profiles([
+    use,
+    { ...use, id: 'placeholder', name: '未确认插件链' }
+  ], records, [], {})), []);
 });
 
 test('supports stable video and effect hash routes', () => {
@@ -154,11 +318,13 @@ test('supports stable video and effect hash routes', () => {
   });
 });
 
-test('effect rows open independent uses and can return to a video', () => {
-  ['data-effect-id', 'data-open-video', '查看完整视频案例', 'effect-use-target', 'effect-use-evidence'].forEach((source) => {
+test('effect profile cards open aggregated uses and can return to a video', () => {
+  ['effect-profile-card', 'data-effect-id', 'data-open-video', '查看完整视频案例', '适合用在', '主要作用', '听感结果'].forEach((source) => {
     assert.ok(indexHtml.includes(source), `missing ${source}`);
   });
   assert.match(indexHtml, /function openEffectDetail\(effectId, syncHash = false\) \{[\s\S]*?const use = effectUses\.find\(\(item\) => item\.id === effectId\);[\s\S]*?if \(!use\) \{\s+state\.activeEffectId = "";/);
+  const libraryRenderer = indexHtml.match(/function renderEffectLibrary\(\) \{([\s\S]*?)\n    \}\n\n    function renderTabs/)?.[1] || '';
+  assert.doesNotMatch(libraryRenderer, /effectParameterSummary|renderEvidenceLabels|effect-use-row|厂商|参数|链路位置/);
   const navigation = loadDualIndexNavigation();
   assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'ArrowLeft')), { mode: 'effects', focusMode: 'effects' });
   assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'ArrowRight')), { mode: 'effects', focusMode: 'effects' });
@@ -166,8 +332,9 @@ test('effect rows open independent uses and can return to a video', () => {
   assert.deepEqual(plainValue(navigation.tabNavigation('effects', 'Home')), { mode: 'videos', focusMode: 'videos' });
 });
 
-test('tablet effect rows collapse and the reader return control handles keyboard activation', () => {
-  assert.match(indexHtml, /@media \(max-width: 820px\) \{[\s\S]*?\.effect-use-row \{\s*grid-template-columns: 1fr;/);
+test('effect cards use stable responsive grids and the reader return control handles keyboard activation', () => {
+  assert.match(indexHtml, /\.effect-list \{[\s\S]*?grid-template-columns: repeat\(auto-fill, minmax\(280px, 1fr\)\)/);
+  assert.match(indexHtml, /@media \(max-width: 640px\) \{[\s\S]*?\.effect-list \{ grid-template-columns: 1fr; \}/);
   assert.match(indexHtml, /function focusLibraryModeTab\(\) \{[\s\S]*?requestAnimationFrame[\s\S]*?\.focus\(\{ preventScroll: true \}\)/);
   assert.match(indexHtml, /function returnToLibrary\(\) \{[\s\S]*?writeHashRoute\(\{ view: state\.mode \}, true\);[\s\S]*?render\(\);[\s\S]*?focusLibraryModeTab\(\);/);
   assert.match(indexHtml, /function applyHashRoute\(\) \{[\s\S]*?const returningFromReader = state\.view === "reader";[\s\S]*?showLibrary\(\);\s*render\(\);\s*if \(returningFromReader\) focusLibraryModeTab\(\);/);
@@ -271,10 +438,15 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
   assert.match(detailSource, /const chainHtml = detailData\.chainFacts/);
   assert.match(detailSource, /const decisionHtml = detailData\.decisionFacts/);
   assert.doesNotMatch(detailSource, /decisionFacts.*updateNote/);
-  assert.match(indexHtml, /function renderEffectUseSummary\(record, use\) \{[\s\S]*?data-effect-id=[\s\S]*?renderPluginReferences\(record, plugin, pluginIndex\)/);
-  assert.match(indexHtml, /VideoDetailData\.effectUse\(record, use\)/);
+  const effectSummarySource = indexHtml.match(/function renderEffectUseSummary\(record, use\) \{([\s\S]*?)\n    \}\n\n    function renderDetail/)?.[1] || '';
+  assert.match(effectSummarySource, /EffectIndexData\.profileForUse/);
+  assert.match(effectSummarySource, /const purpose = profile\.purpose;/);
+  assert.doesNotMatch(effectSummarySource, /use\.purpose/);
+  assert.match(effectSummarySource, /data-effect-id/);
+  assert.match(effectSummarySource, /effect-summary-shot/);
+  assert.doesNotMatch(effectSummarySource, /parameters|parameterHtml|renderEvidenceLabels|链路位置|参数/);
   const detailClick = indexHtml.match(/detailEl\.addEventListener\("click", \(event\) => \{([\s\S]*?)\n    \}\);/)?.[1] || '';
-  assert.ok(detailClick.indexOf('[data-effect-id]') < detailClick.indexOf('[data-effect-shot]'));
+  assert.ok(detailClick.indexOf('[data-effect-id]') < detailClick.indexOf('[data-effect-image]'));
   assert.match(detailClick, /openEffectDetail\(effectButton\.dataset\.effectId, true\)/);
 
   const titlePosition = detailSource.indexOf('<h2 class="detail-title"');
@@ -283,4 +455,16 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
   const coverPosition = detailSource.indexOf('<div class="detail-cover">');
   const materialsPosition = detailSource.indexOf('<h3>素材与分层</h3>');
   assert.ok(titlePosition < goalPosition && goalPosition < ideasPosition && ideasPosition < coverPosition && coverPosition < materialsPosition);
+});
+
+test('effect detail is an image-led application guide without parameter information', () => {
+  const effectDetailSource = indexHtml.match(/function renderEffectDetail\(effectId\) \{([\s\S]*?)\n    \}\n\n    function openLightbox/)?.[1] || '';
+
+  ['一句话结论', '适合用在', '能带来什么', '视频案例'].forEach((heading) => {
+    assert.ok(effectDetailSource.includes(heading), `missing ${heading}`);
+  });
+  assert.match(effectDetailSource, /EffectIndexData\.profileForUse/);
+  assert.match(effectDetailSource, /profile\.visuals\.slice\(0, 3\)/);
+  assert.match(effectDetailSource, /effect-case-shot/);
+  assert.doesNotMatch(effectDetailSource, /parameterHtml|parameters|参数与调节方向|链路位置|厂商未记录|renderEvidenceLabels/);
 });
