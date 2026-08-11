@@ -24,7 +24,7 @@ const entries = [
   ["soundtoys-little-radiator", "Soundtoys Little Radiator", "https://www.soundtoys.com/product/little-radiator/", ["Little Radiator", "Soundtoys Little Radiator"]],
   ["soundtoys-superplate", "Soundtoys SuperPlate", "https://www.soundtoys.com/product/superplate/", ["Soundtoys Superplate", "Superplate"]],
 
-  ["fabfilter-pro-q", "FabFilter Pro-Q", "https://www.fabfilter.com/products/pro-q-4-equalizer-plug-in", ["FabFilter Pro-Q 3", "Pro-Q 3", "FabFilter Pro-Q"]],
+  ["fabfilter-pro-q", "FabFilter Pro-Q 4（当前继任版本参考）", "https://www.fabfilter.com/products/pro-q-4-equalizer-plug-in", ["FabFilter Pro-Q 3", "Pro-Q 3", "FabFilter Pro-Q"], "当前官方继任版本参考；视频内 Pro-Q 3 的界面与参数以步骤证据为准"],
   ["fabfilter-pro-r", "FabFilter Pro-R", "https://www.fabfilter.com/products/pro-r-2-reverb-plug-in", ["FabFilter Pro-R", "Pro-R"]],
   ["fabfilter-pro-l-2", "FabFilter Pro-L 2", "https://www.fabfilter.com/products/pro-l-2-limiter-plug-in", ["FabFilter Pro-L 2", "FabFilter Pro-L", "Pro-L 2"]],
   ["fabfilter-pro-mb", "FabFilter Pro-MB", "https://www.fabfilter.com/products/pro-mb-multiband-compressor-plug-in", ["FabFilter Pro-MB", "Pro-MB"]],
@@ -178,7 +178,7 @@ function main() {
   const catalog = [];
   const failures = [];
   for (const entry of entries) {
-    const [slug, title, source, aliases] = entry;
+    const [slug, title, source, aliases, match] = entry;
     try {
       const raw = capture(entry);
       const assets = convert(raw, slug);
@@ -189,7 +189,7 @@ function main() {
         aliases,
         preview: assets.preview,
         full: assets.full,
-        match: "官方参考截图，已按插件名与厂商页面核对"
+        match: match || "官方参考截图，已按插件名与厂商页面核对"
       });
       console.log(`ok ${title}`);
     } catch (error) {

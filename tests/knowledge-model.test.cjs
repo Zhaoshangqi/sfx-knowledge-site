@@ -34,8 +34,25 @@ test('stripCourseScaffolding removes all known suffixes and preserves factual na
     'Snap Heap 参数逻辑：用包络跟随建立运动。'
   );
   assert.equal(model.stripCourseScaffolding('复刻时只动一个核心参数并渲染 3 个强度版本，避免同时改太多导致无法判断贡献。'), '');
+  assert.equal(
+    model.stripCourseScaffolding('通用模板。本条的主要链路可以按 EQ -> Reverb 来读：先判断角色。视频证据：raw transcript'),
+    ''
+  );
+  assert.equal(
+    model.stripCourseScaffolding('画面确认：作者先做减法 EQ。 本条的主要链路可以按 EQ -> Reverb 来读：先判断角色。 若画面没有显示具体数值，只把它当作可复用的调参判断点。'),
+    '画面确认：作者先做减法 EQ。'
+  );
+  [
+    '分析推断练习：旁路插件并写下听感。',
+    '迁移练习假设：把这一层改成 UI 反馈。',
+    '练习：导出三版并比较。',
+    '每次只改一个维度并输出弱/中/强三版，做 matched-loudness A/B。',
+    '复用检查：把本条链路抽象成源素材选择、第一层处理、二次采样、最终混音四个阶段。',
+    '第一步参数优先级：原始录音。这通常决定整条链后面的尺度、速度或素材质量。'
+  ].forEach((value) => assert.equal(model.stripCourseScaffolding(value), ''));
   assert.equal(model.stripCourseScaffolding('事实   文本。'), '事实   文本。');
   assert.equal(model.stripCourseScaffolding('复刻时保留原始噪声。'), '复刻时保留原始噪声。');
+  assert.equal(model.stripCourseScaffolding('作者把工程中的按钮命名为“练习模式”。'), '作者把工程中的按钮命名为“练习模式”。');
 });
 
 test('uniqueFacts strips facts once and deduplicates only whitespace-normalized keys', () => {
@@ -130,7 +147,9 @@ test('classifyEffectUse excludes vendor and inferEvidence returns all labels', (
   assert.equal(model.classifyEffectUse({ name: 'Mystery', vendor: 'Compressor', purpose: '处理声音' }), '未分类');
   assert.equal(model.classifyEffectUse({ name: 'EQ', purpose: '滤波共振控制' }), '频谱与音色');
   assert.equal(model.classifyEffectUse({ name: 'EQ + Reverb', purpose: '同时改变频谱和空间' }), '未分类');
-  assert.deepEqual(model.inferEvidence('画面确认，作者口述；分析推断，视频未展示'), ['画面确认', '作者口述', '分析推断', '视频未展示']);
+  assert.deepEqual(model.inferEvidence('画面确认，作者口述；音频可辨，分析推断，视频未展示'), ['画面确认', '作者口述', '音频可辨', '分析推断', '视频未展示']);
+  assert.deepEqual(model.inferEvidence('字幕定位线索（需画面确认）'), []);
+  assert.deepEqual(model.inferEvidence('尚待画面确认；作者口述'), ['作者口述']);
   assert.deepEqual(model.inferEvidence('没有证据标签'), []);
 });
 

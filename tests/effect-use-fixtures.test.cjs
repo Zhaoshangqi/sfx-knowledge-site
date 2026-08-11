@@ -78,10 +78,19 @@ test('d8ed0db4 exposes the dual Ableton Vocoder use and replaces its legacy row'
     purpose: '用双实例并联建立复合谐波层；较少频段通常更粗糙，较多频段通常更平滑，但本条关联截图只确认两路均为 40 Bands，具体 8 / 40 变体需回原视频复核。',
     parameters: [
       { name: 'Bands', value: '40 / 40（关联截图）', direction: '既有视频整理记录为 8 / 40；当前关联截图未支持该差异，需回原视频复核', evidence: '画面确认' },
-      { name: 'Gain', value: '7.9 dB / 7.9 dB（关联截图）', direction: '既有视频整理记录为 7.9 dB / 14 dB；当前关联截图未支持该差异，需回原视频复核', evidence: '画面确认' },
-      { name: 'Carrier mode', value: 'Enhance', direction: '两路均启用以增加谐波内容', evidence: '画面确认' },
-      { name: 'Bandwidth', value: '18 kHz', direction: '两路共用', evidence: '画面确认' },
+      { name: 'Level', value: '7.9 dB / 7.9 dB（关联截图）', direction: '既有视频整理记录为 7.9 dB / 14 dB；当前关联截图未支持该差异，需回原视频复核', evidence: '画面确认' },
+      { name: 'Carrier source', value: 'Modulator / Modulator', direction: '两路 Carrier 下拉菜单均显示 Modulator', evidence: '画面确认' },
+      { name: 'Enhance', value: 'Enabled / Enabled', direction: '两路均启用；这是独立开关，不是 Carrier mode', evidence: '画面确认' },
+      { name: 'Range', value: '20 Hz - 18 kHz / 20 Hz - 18 kHz', direction: '两路共用', evidence: '画面确认' },
+      { name: 'BW', value: '100% / 100%', direction: '两路共用', evidence: '画面确认' },
+      { name: 'Gate', value: '-inf dB / -inf dB', direction: '两路共用', evidence: '画面确认' },
+      { name: 'Sens.', value: '50.0% / 50.0%', direction: '两路共用', evidence: '画面确认' },
+      { name: 'Fast', value: 'Enabled / Enabled', direction: '两路均启用', evidence: '画面确认' },
+      { name: 'Precise', value: 'Enabled / Enabled', direction: '两路均启用', evidence: '画面确认' },
+      { name: 'Depth', value: '120% / 105%', direction: '分别调整两路调制深度', evidence: '画面确认' },
       { name: 'Attack', value: '1 ms', direction: '快速跟随', evidence: '画面确认' },
+      { name: 'Release', value: '10 ms', direction: '两路共用', evidence: '画面确认' },
+      { name: 'Dry/Wet', value: '100% / 100%', direction: '两路共用', evidence: '画面确认' },
       { name: 'Formant', value: '-15.8 / -8.40（界面未标单位）', direction: '分别调整两路音色', evidence: '画面确认' }
     ],
     result: '双路通过不同 Formant 和 Depth 提供互补调制细节；既有笔记记录的 8 / 40 Bands 对比需回原视频复核。',
@@ -136,23 +145,25 @@ test('d8ed0db4 exposes the dual Ableton Vocoder use and replaces its legacy row'
   const formantParameter = explicit.parameters.find((parameter) => parameter.name === 'Formant');
   assert.ok(formantParameter);
   assert.doesNotMatch(formantParameter.value, /dB/);
+  assert.ok(!explicit.parameters.some((parameter) => ['Gain', 'Carrier mode', 'Bandwidth'].includes(parameter.name)));
 
   const vocoderStep = record.steps[3];
-  assert.match(vocoderStep.detail, /关联截图确认两路均为 40 Bands、7\.9 dB/);
-  assert.match(vocoderStep.detail, /Enhance.*Fast/);
-  assert.match(vocoderStep.detail, /不同 Depth.*Formant/);
+  assert.match(vocoderStep.detail, /关联截图确认两路均为 40 Bands、Level 7\.9 dB/);
+  assert.match(vocoderStep.detail, /Carrier.*Modulator/);
+  assert.match(vocoderStep.detail, /Enhance.*Fast.*Precise/);
+  assert.match(vocoderStep.detail, /Depth.*Formant.*不同/);
   assert.ok(vocoderStep.params.includes('关联截图 Bands: 40 / 40'));
   assert.ok(vocoderStep.params.includes('关联截图 Level: 7.9 dB / 7.9 dB'));
   assert.ok(vocoderStep.params.includes('既有整理待复核: 8 / 40 Bands, 7.9 dB / 14 dB'));
 
   const vocoderCoreStep = record.steps[4];
-  assert.match(vocoderCoreStep.detail, /Stereo Depth 120% \/ 105%/);
+  assert.match(vocoderCoreStep.detail, /Stereo Depth.*120% \/ 105%/);
   assert.ok(vocoderCoreStep.params.includes('Stereo Depth: 120% / 105%'));
   assert.ok(vocoderCoreStep.params.includes('Formant: -15.8 / -8.40（界面未标单位）'));
 
   const vocoderPlugin = record.plugins.find((plugin) => plugin.name === 'Ableton Vocoder');
   assert.ok(vocoderPlugin);
-  assert.ok(vocoderPlugin.settings.includes('关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier mode Enhance、Fast；Depth 与 Formant 不同。'));
+  assert.ok(vocoderPlugin.settings.includes('关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier source 为 Modulator；Enhance、Fast、Precise 均启用，Depth 与 Formant 不同。'));
   assert.ok(vocoderPlugin.settings.includes('既有整理待复核：8 / 40 Bands 与 7.9 dB / 14 dB；需回原视频复核。'));
 
   const uses = SfxKnowledgeModel.buildEffectUses([record]);

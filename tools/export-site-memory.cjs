@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const {
+  isGeneratedStepScaffolding,
   stripCourseScaffolding,
   uniqueFacts
 } = require("../src/knowledge-model.js");
@@ -109,6 +110,7 @@ function renderRecord(input) {
 
   arrayOrEmpty(record.steps).forEach((step, index) => {
     step = objectOrEmpty(step);
+    if (isGeneratedStepScaffolding(step.detail)) return;
     const detail = fact(step.detail);
     const params = list(step.params, "   ");
     const imageKey = fact(step.imageKey);
@@ -140,7 +142,11 @@ function renderRecord(input) {
 
   lines.push("", "### Materials / Layer Sources", list(record.materials));
   lines.push("", "### Effect-Chain Reasoning", list(record.chainFocus));
-  lines.push("", "### Parameter Logic", list(record.parameterLogic));
+  lines.push(
+    "",
+    "### Key Decisions and Evidence Boundaries",
+    list([...arrayOrEmpty(record.parameterLogic), ...arrayOrEmpty(record.tips)])
+  );
   lines.push("", `- Use when: ${facts(record.keywords).join("; ")}`);
   return lines.filter((line, index, all) => line !== "" || all[index - 1] !== "").join("\n");
 }

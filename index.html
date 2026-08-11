@@ -343,12 +343,15 @@
       gap: 12px;
     }
     .card {
+      display: block;
       min-width: 0;
       overflow: hidden;
       border: 1px solid var(--line);
       border-radius: 8px;
+      color: inherit;
       background: var(--panel);
       cursor: pointer;
+      text-decoration: none;
       transition: border-color 140ms, box-shadow 140ms, transform 140ms;
     }
     .card:hover {
@@ -359,6 +362,10 @@
     .card.active {
       border-color: var(--teal);
       box-shadow: 0 0 0 3px rgba(15, 139, 141, 0.1);
+    }
+    .card:focus-visible {
+      outline: 3px solid rgba(15, 139, 141, 0.42);
+      outline-offset: 3px;
     }
     .thumb-wrap {
       position: relative;
@@ -474,6 +481,12 @@
     .detail-cover {
       aspect-ratio: 16 / 9;
       background: #e4e1d9;
+    }
+    .reader-detail .detail-cover {
+      max-width: 980px;
+      margin-top: 34px;
+      overflow: hidden;
+      border-radius: 8px;
     }
     .detail-cover img {
       width: 100%;
@@ -946,7 +959,7 @@
     <div class="lightbox-caption" id="lightboxCaption"></div>
   </div>
 
-  <script src="src/knowledge-model.js?v=20260811-dry-goods-4"></script>
+  <script src="src/knowledge-model.js?v=20260811-dry-goods-6"></script>
   <script>
     const categories = [
   {
@@ -2348,14 +2361,22 @@
       {
         "order": 4,
         "name": "配置双Vocoder实例并联处理",
-        "detail": "关联截图确认两路均为 40 Bands、7.9 dB，并均启用 Enhance 载波模式和 Fast 响应；两路有不同 Depth 与 Formant，以形成互补调制。较少频段通常更粗糙、较多频段通常更平滑是一般规律；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。",
+        "detail": "关联截图确认两路均为 40 Bands、Level 7.9 dB，Carrier 下拉菜单均为 Modulator；Enhance、Fast 与 Precise 均启用。两路 Depth 与 Formant 不同，以形成互补调制。较少频段通常更粗糙、较多频段通常更平滑是一般规律；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。",
         "params": [
           "关联截图 Bands: 40 / 40",
           "关联截图 Level: 7.9 dB / 7.9 dB",
           "既有整理待复核: 8 / 40 Bands, 7.9 dB / 14 dB",
-          "带宽: 18kHz",
+          "Carrier source: Modulator / Modulator",
+          "Enhance: Enabled / Enabled",
+          "Range: 20Hz-18kHz / 20Hz-18kHz",
+          "BW: 100% / 100%",
+          "Gate: -inf dB / -inf dB",
+          "Sens.: 50.0% / 50.0%",
+          "Fast / Precise: Enabled / Enabled",
+          "Depth: 120% / 105%",
           "攻击: 1ms",
           "释放: 10ms",
+          "Dry/Wet: 100% / 100%",
           "Formant: -15.8 / -8.40（界面未标单位）"
         ],
         "imageKey": "img_d43e4e82e77fb756"
@@ -2363,13 +2384,15 @@
       {
         "order": 5,
         "name": "调整Vocoder核心参数",
-        "detail": "设置Vocoder的载波模式为Enhance，配置频段数40、带宽18kHz、Stereo Depth 120% / 105%，启用快速检测模式(Fast)，微调Formant参数至-15.8 / -8.40（界面未标单位）。",
+        "detail": "关联截图中 Carrier source 为 Modulator，Enhance 是独立启用开关；两路均为 40 Bands、Range 20Hz-18kHz、BW 100%、Fast 与 Precise 启用，Stereo Depth 分别为 120% / 105%，Formant 为 -15.8 / -8.40（界面未标单位）。",
         "params": [
-          "模式: Enhance",
+          "Carrier source: Modulator",
+          "Enhance: Enabled",
           "频段: 40",
-          "带宽: 18kHz",
+          "Range: 20Hz-18kHz",
+          "BW: 100%",
           "Stereo Depth: 120% / 105%",
-          "检测: Fast",
+          "Fast / Precise: Enabled",
           "Formant: -15.8 / -8.40（界面未标单位）"
         ],
         "imageKey": "img_826066613016e075"
@@ -2474,7 +2497,7 @@
       }
     ],
     "coreIdeas": [
-      "Vocoder双实例并联处理：关联截图确认两路均为 40 Bands、Level 7.9 dB，均使用 Enhance 与 Fast，且 Depth/Formant 不同；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
+      "Vocoder双实例并联处理：关联截图确认两路均为 40 Bands、Level 7.9 dB、Carrier source Modulator，Enhance/Fast/Precise 均启用，且 Depth/Formant 不同；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
       "OTT页面记录了当前工程的三频段分界、增益、攻击与释放数值；这些读数只属于该截图和素材，不能解释为游戏音效的通用安全范围。",
       "SampHold采样保持滤波器产生步进式频率调制和'颗粒感'音色，是创建异质感电子游戏音效的关键Serum滤波器预设",
       "效果链顺序实验：先压缩后失真产生温暖感，先失真后压缩产生激进感——两种顺序截然不同",
@@ -2497,11 +2520,11 @@
       },
       {
         "name": "Ableton Vocoder",
-        "purpose": "双实例并联调制音色。关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance/Fast，Depth 与 Formant 不同；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。",
+        "purpose": "双实例并联调制音色。关联截图确认两路均为 40 Bands、Level 7.9 dB、Carrier source Modulator，Enhance/Fast/Precise 均启用，Depth 与 Formant 不同；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。",
         "settings": [
-          "关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier mode Enhance、Fast；Depth 与 Formant 不同。",
+          "关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier source 为 Modulator；Enhance、Fast、Precise 均启用，Depth 与 Formant 不同。",
           "既有整理待复核：8 / 40 Bands 与 7.9 dB / 14 dB；需回原视频复核。",
-          "Bandwidth: 18kHz；Attack: 1ms；Release: 10ms；Formant: -15.8 / -8.40（界面未标单位）。"
+          "Range: 20Hz-18kHz；BW: 100%；Gate: -inf dB；Sens.: 50.0%；Attack: 1ms；Release: 10ms；Dry/Wet: 100%；Formant: -15.8 / -8.40（界面未标单位）。"
         ]
       },
       {
@@ -2586,27 +2609,81 @@
             "evidence": "画面确认"
           },
           {
-            "name": "Gain",
+            "name": "Level",
             "value": "7.9 dB / 7.9 dB（关联截图）",
             "direction": "既有视频整理记录为 7.9 dB / 14 dB；当前关联截图未支持该差异，需回原视频复核",
             "evidence": "画面确认"
           },
           {
-            "name": "Carrier mode",
-            "value": "Enhance",
-            "direction": "两路均启用以增加谐波内容",
+            "name": "Carrier source",
+            "value": "Modulator / Modulator",
+            "direction": "两路 Carrier 下拉菜单均显示 Modulator",
             "evidence": "画面确认"
           },
           {
-            "name": "Bandwidth",
-            "value": "18 kHz",
+            "name": "Enhance",
+            "value": "Enabled / Enabled",
+            "direction": "两路均启用；这是独立开关，不是 Carrier mode",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "Range",
+            "value": "20 Hz - 18 kHz / 20 Hz - 18 kHz",
             "direction": "两路共用",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "BW",
+            "value": "100% / 100%",
+            "direction": "两路共用",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "Gate",
+            "value": "-inf dB / -inf dB",
+            "direction": "两路共用",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "Sens.",
+            "value": "50.0% / 50.0%",
+            "direction": "两路共用",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "Fast",
+            "value": "Enabled / Enabled",
+            "direction": "两路均启用",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "Precise",
+            "value": "Enabled / Enabled",
+            "direction": "两路均启用",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "Depth",
+            "value": "120% / 105%",
+            "direction": "分别调整两路调制深度",
             "evidence": "画面确认"
           },
           {
             "name": "Attack",
             "value": "1 ms",
             "direction": "快速跟随",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "Release",
+            "value": "10 ms",
+            "direction": "两路共用",
+            "evidence": "画面确认"
+          },
+          {
+            "name": "Dry/Wet",
+            "value": "100% / 100%",
+            "direction": "两路共用",
             "evidence": "画面确认"
           },
           {
@@ -2662,11 +2739,11 @@
       "主要处理点：Serum合成器 / Ableton Vocoder / OTT多频段压缩器 / iZotope Trash 2 / Ozone Distortion / Soundtoys Little Radiator 1566A / NI Transient Master。",
       "源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
       "本条核心问题：视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、Ableton Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。",
-      "Vocoder双实例并联处理：关联截图确认两路 40 Bands、Level 7.9 dB、Enhance/Fast 与不同 Depth/Formant；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
+      "Vocoder双实例并联处理：关联截图确认两路 40 Bands、Level 7.9 dB、Carrier source Modulator、Enhance/Fast/Precise 启用与不同 Depth/Formant；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
       "OTT页面记录当前工程的三频段分界与动态数值；只作为当前截图参数记录，不外推为通用响度或安全范围。"
     ],
     "parameterLogic": [
-      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance、Fast，Depth 与 Formant 不同；带宽: 18kHz；攻击: 1ms；释放: 10ms；Formant: -15.8 / -8.40（界面未标单位）；既有整理待复核：8 / 40 Bands、7.9 dB / 14 dB，需回原视频复核；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。",
+      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；关联截图确认两路均为 40 Bands、Level 7.9 dB、Carrier source Modulator，Enhance、Fast、Precise 启用，Depth 与 Formant 不同；Range: 20Hz-18kHz；BW: 100%；Gate: -inf dB；Sens.: 50.0%；Attack: 1ms；Release: 10ms；Dry/Wet: 100%；Formant: -15.8 / -8.40（界面未标单位）；既有整理待复核：8 / 40 Bands、7.9 dB / 14 dB，需回原视频复核；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。",
       "证据边界：除 Ableton Vocoder 条目外，其余 legacy plugins 尚未逐条迁移为 effectUses；页面中的参数只作历史线索，不自动获得“画面确认”标签。",
       "未确认项：OTT 通用安全范围、Delay 5-30ms自然步进、RX 8.6通用阈值和颤音固定听感边界，当前证据均不支持外推。"
     ],
@@ -25029,7 +25106,7 @@
       "来源命名按画面和媒体项：DogPoopMetalScreech 不改写成普通吱叫玩具，Rubber Treat/Rubber Cover 不补品牌或结构。",
       "0.031、-98/-7 width、OTT 47/20/6、MTremolo 4.517/19.99 都是帧状态，不是推荐范围。",
       "静态 frame_001130 只记录 MTremolo 当前值；加速结论必须依赖该步骤附带的带声 motion。",
-      "任何 scream 练习以安全为前提；作者已提醒伤嗓风险，不推荐用力尖叫复刻。",
+      "嗓音采集以安全为前提；作者已提醒伤嗓风险，不推荐用力尖叫复刻。",
       "YouTube 发布混音的 LUFS、true peak 与低频比例不构成游戏资产或总线目标。"
     ],
     "chainFocus": [
@@ -26928,7 +27005,7 @@
     "tips": [
       "先按柔性、机械、摩擦、薄片、环境、共振和脆性等物理行为建立素材池，再决定游戏事件角色。",
       "素材名称描述来源，cast、impact、sustain、release 等描述功能；在没有场景对位前不要把两者混写。",
-      "对普通/反向纸与玻璃先做时间终点对齐练习，reverse 的具体实现由自己的工程选择，不冒充视频事实。",
+      "本片未公开普通/反向纸与玻璃的时间终点对齐方法；reverse 的具体实现由自己的工程决定，不能冒充视频事实。",
       "把持续源与短手势分开打印，并为每次处理保留 dry 和中间 render，便于回退与重组。",
       "设备名即使可见，也不能替代 A/B、参数与音频证据；空缺优于从 Insert 列表或相邻教程补写因果和听感。",
       "没有本地完整音频时不评价最终结果、频谱、动态、空间、层间比例或设计成败。"
@@ -31837,7 +31914,7 @@
 
       gridEl.innerHTML = list.map((record) => {
         const category = categoryById[record.category];
-        return '<article class="card ' + (record.id === state.activeId ? 'active' : '') + '" data-id="' + record.id + '">' +
+        return '<a class="card ' + (record.id === state.activeId ? 'active' : '') + '" data-id="' + record.id + '" href="#video=' + encodeURIComponent(record.id) + '">' +
           '<div class="thumb-wrap">' +
             '<img src="' + thumbnail(record) + '" alt="' + escapeAttr(record.title) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.style.display=\'none\'">' +
             '<span class="cat-badge">' + escapeHtml(category.label) + '</span>' +
@@ -31847,7 +31924,7 @@
             '<div class="card-meta"><span>' + escapeHtml(record.source) + '</span><span>' + record.steps.length + ' 步骤</span><span>' + record.plugins.length + ' 处理点</span><span>更新 ' + escapeHtml(record.updatedAt || record.addedAt || "") + '</span></div>' +
             '<p class="card-summary">' + escapeHtml(record.summary) + '</p>' +
           '</div>' +
-        '</article>';
+        '</a>';
       }).join("");
     }
 
@@ -31859,12 +31936,19 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    function focusReaderHeading() {
+      const heading = detailEl.querySelector(".detail-title");
+      if (!heading) return;
+      requestAnimationFrame(() => heading.focus({ preventScroll: true }));
+    }
+
     function showReader() {
       state.view = "reader";
       document.body.classList.add("reader-open");
       libraryViewEl.hidden = true;
       readerViewEl.hidden = false;
       window.scrollTo({ top: 0, behavior: "smooth" });
+      focusReaderHeading();
     }
 
     function writeHashRoute(values, replace = false) {
@@ -32007,10 +32091,24 @@
           : "";
       }
 
+      function step(value) {
+        const source = record(value);
+        if (SfxKnowledgeModel.isGeneratedStepScaffolding(source.detail)) return null;
+        const projected = {
+          ...source,
+          name: text(source.name),
+          detail: text(source.detail),
+          params: facts(source.params)
+        };
+        const motion = record(source.motion);
+        if (!projected.name && !projected.detail && !projected.params.length && !text(source.imageKey) && !text(motion.src)) return null;
+        return projected;
+      }
+
       function project(value) {
         const source = record(value);
         return {
-          steps: array(source.steps),
+          steps: array(source.steps).map(step).filter(Boolean),
           plugins: array(source.plugins),
           chainFacts: facts(source.chainFocus),
           decisionFacts: facts([...array(source.parameterLogic), ...array(source.tips)]),
@@ -32153,12 +32251,12 @@
       const keywordHtml = detailData.keywords.slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
 
       detailEl.innerHTML =
-        '<div class="detail-cover"><img src="' + thumbnail(record, "hqdefault") + '" alt="' + escapeAttr(record.title) + '" loading="lazy" decoding="async" onerror="this.style.display=\'none\'"></div>' +
         '<div class="detail-body">' +
-          '<h2 class="detail-title">' + escapeHtml(record.title) + '</h2>' +
+          '<h2 class="detail-title" tabindex="-1">' + escapeHtml(record.title) + '</h2>' +
           '<div class="card-meta"><span>' + escapeHtml(category?.label || "未分类") + '</span><span>' + escapeHtml(record.source) + '</span><span>收录 ' + escapeHtml(record.addedAt || "") + '</span><span>更新 ' + escapeHtml(record.updatedAt || record.addedAt || "") + '</span></div>' +
           '<div class="section"><h3>设计目标</h3><p class="detail-summary">' + escapeHtml(cleanedText(record.summary)) + '</p></div>' +
           '<div class="section"><h3>设计思路</h3>' + ideasHtml + '</div>' +
+          '<div class="detail-cover"><img src="' + thumbnail(record, "hqdefault") + '" alt="' + escapeAttr(record.title) + '" loading="lazy" decoding="async" onerror="this.style.display=\'none\'"></div>' +
           '<div class="section"><h3>素材与分层</h3><div class="chips">' + materialHtml + '</div></div>' +
           '<div class="section"><h3>完整制作流程</h3>' + stepHtml + '</div>' +
           '<div class="section"><h3>完整效果链</h3>' + chainHtml + '</div>' +
@@ -32202,7 +32300,7 @@
 
       detailEl.innerHTML =
         '<div class="detail-body effect-detail">' +
-          '<h2 class="detail-title">' + escapeHtml(canonicalEffectName(use.name, pluginReferenceCatalog)) + '</h2>' +
+          '<h2 class="detail-title" tabindex="-1">' + escapeHtml(canonicalEffectName(use.name, pluginReferenceCatalog)) + '</h2>' +
           '<div class="card-meta"><span>' + escapeHtml(use.category || "未分类") + '</span><span>' + escapeHtml(use.vendor || "厂商未记录") + '</span></div>' +
           '<p class="detail-summary">' + escapeHtml(use.purpose || "用途未展示") + '</p>' +
           (sourceRecord ? '<button class="open-video" type="button" data-open-video="' + escapeAttr(sourceRecord.id) + '">查看完整视频案例</button>' : '') +
@@ -32307,6 +32405,7 @@
     gridEl.addEventListener("click", (event) => {
       const card = event.target.closest(".card");
       if (!card) return;
+      event.preventDefault();
       state.returnMode = "videos";
       openVideoDetail(card.dataset.id, true);
     });

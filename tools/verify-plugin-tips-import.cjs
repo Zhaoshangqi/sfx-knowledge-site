@@ -437,7 +437,10 @@ function validateSiteMemoryRecord(record, memoryBlocks) {
   const listSections = [
     ["### Materials / Layer Sources", arrayOrEmpty(record.materials)],
     ["### Effect-Chain Reasoning", arrayOrEmpty(record.chainFocus)],
-    ["### Parameter Logic", arrayOrEmpty(record.parameterLogic)]
+    [
+      "### Key Decisions and Evidence Boundaries",
+      [...arrayOrEmpty(record.parameterLogic), ...arrayOrEmpty(record.tips)]
+    ]
   ];
   for (const [heading, items] of listSections) {
     const lines = sectionLines(block, heading, `site-video-memory.md block for ${label}`);

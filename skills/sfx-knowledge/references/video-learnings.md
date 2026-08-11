@@ -559,14 +559,14 @@ These entries were generated from the standalone HTML knowledge base so every an
   - 分析源音材料质量: 检查音频波形质量，区分good source、not as good source和very good source三个等级，评估立体声声道清晰度和噪声水平，优质源素材能承受更多效果处理。
   - 使用Serum生成基础音色: 在Serum中配置Sub低频层、Noise噪声层、OSC A (Monster 6)和OSC B (Trilobyte 2)振荡器，调整波表位置、八度数(OCT)、细调(FIN)和混合(BLEND)参数。
   - 应用SampHold采样保持滤波器: 在Serum的滤波器模块中选择SampHold预设，调整CUTOFF、RES、DRIVE、PAN、MIX五个参数来创建采样保持效果，产生独特的步进式频率调制和'颗粒感'音色。
-  - 配置双Vocoder实例并联处理: 关联截图确认两个Ableton Vocoder实例均为40 Bands、Level 7.9 dB，并启用Enhance与Fast；两路Depth与Formant不同。既有8 / 40 Bands与7.9 dB / 14 dB记录需回原视频复核。
-  - 调整Vocoder核心参数: 关联截图记录40 Bands、18kHz带宽、Stereo Depth 120% / 105%与Formant -15.8 / -8.40（界面未标单位）；这些数值只属于当前工程。
+  - 配置双Vocoder实例并联处理: 关联截图确认两个 Ableton Vocoder 实例的 Carrier source 均为 Modulator，并分别启用 Enhance、Fast 与 Precise；两路均为 40 Bands、Level 7.9 dB，Depth 与 Formant 设置不同。既有 8 / 40 Bands 与 7.9 dB / 14 dB 记录需回原视频复核。
+  - 调整Vocoder核心参数: 关联截图记录 Range 20.0 Hz 至 18.0 kHz、BW 100%、Gate -inf dB、Sens. 50.0%、Attack 1 ms、Release 10 ms、Dry/Wet 100%，以及 Depth 120% / 105% 与 Formant -15.8 / -8.40（界面未标 Formant 单位）；这些数值只属于当前工程。
   - 应用OTT多频段动态处理: 使用OTT动态均衡器将音频分为三频段独立处理：高频(2.50kHz)增益+5.4~+14.6dB、中频+2.7~+11.9dB、低频(88.3Hz)增益+8.8~+14.5dB，输出8.4~10.3dB，攻击13.5ms，释放282ms，Soft Knee。
   - 集成iZotope磁带饱和失真: 在Trash 2或Ozone的Distortion模块中应用Tape Sat.预设，设置频率330Hz、Q值2.0~3.0，在中低频点增加谐波内容和温暖感而不掩盖高频细节。
   - 应用Little Radiator前级放大: 使用Soundtoys Little Radiator 1566A前级话筒放大器插件模拟模拟硬件的温暖感，调整NOISE噪声、BIAS偏置、HEAT温暖度(-15到+15)和MIX干湿比参数，比Decapitator更温和透明。
 - Plugin and processing notes:
   - Serum合成器: 生成基础合成音色，Sub+Noise+OSC A/B四层音源，SampHold滤波器产生颗粒感
-  - Ableton Vocoder: 双实例并联调制音色；关联截图确认两路均为 40 Bands，既有 8 / 40 记录需回原视频复核
+  - Ableton Vocoder: 双实例并联调制音色；Carrier source 为 Modulator，Enhance 是独立启用项，Range 为 20.0 Hz 至 18.0 kHz，BW 为 100%，输出控件标作 Level；既有 8 / 40 Bands 与 14 dB 记录需回原视频复核
   - OTT多频段压缩器: 三频段独立动态控制，平衡音频频率响应
   - iZotope Trash 2 / Ozone Distortion: 磁带饱和失真，在330Hz增加谐波和温暖感
   - Soundtoys Little Radiator 1566A: 模拟前级放大器，比Decapitator更温和的过载特性
@@ -574,7 +574,7 @@ These entries were generated from the standalone HTML knowledge base so every an
   - iZotope RX De-click: 前期音频修复，自动检测并修复点击/杂音，允许后期更激进处理
   - Delay延迟效果器: 配合SampHold创建节奏化步进空间效果
 - Design principles learned:
-  - Vocoder双实例并联处理：关联截图确认两路均为40 Bands、7.9 dB，并使用Enhance与Fast；较少/较多频段的听感差异属于一般解释，既有8 / 40记录需回原视频复核
+  - Vocoder双实例并联处理：关联截图确认两路均为 40 Bands、Level 7.9 dB，Carrier source 为 Modulator，并启用 Enhance、Fast 与 Precise；较少/较多频段的听感差异属于一般解释，既有 8 / 40 记录需回原视频复核
   - OTT页面记录当前工程的三频段分界、增益、攻击与释放数值；这些读数只属于该截图和素材，不能解释为游戏音效的通用安全范围
   - SampHold采样保持滤波器产生步进式频率调制和'颗粒感'音色，是创建异质感电子游戏音效的关键Serum滤波器预设
   - 效果链顺序实验：先压缩后失真产生温暖感，先失真后压缩产生激进感——两种顺序截然不同
@@ -1263,9 +1263,9 @@ These entries were generated from the standalone HTML knowledge base so every an
 - Design principles learned:
   - 标题、来源标签和功能职责分开。Dark Magic 是发布语境，Cloth/Glass 是来源，cast/impact/tail 是后续场景功能，三者不能互相替代证据。
   - 先按物理行为扩充 palette：柔性、机械、摩擦、薄片、环境、共振和脆性材料提供不同入口；Layer 9 保留 unresolved。
-  - 持续源与瞬态源分开打印。Coffee Machine、Crickets、Door、Singing Bowl 可先做长变体，Cloth、Paper、Glass 可先做短 gesture；这是迁移练习，不是作者轨道角色。
+  - 分析边界：持续源与瞬态源在时态上不同；Coffee Machine、Crickets、Door、Singing Bowl 可以形成长变体，Cloth、Paper、Glass 可以形成短 gesture，但这不是作者已公开的轨道角色。
   - 反向素材先服务动作方向与时间终点。先把能量终点对齐视觉帧，再决定自己的音色处理，不把视频未公开的方法写成配方。
-  - 每个源只设一个实验目标：scale、motion、tone、attack 或 tail；输出弱/中/强三版并做 matched-loudness A/B。
+  - 证据边界：本片未提供各来源的处理强度对比或 matched-loudness A/B，不补写为作者流程。
   - 设备名即使可读，也不等于作用与因果已被证明；参数和 A/B 证据缺失时留空，不从相邻记录借用链路结论。
   - palette 建好后再写视觉事件表。cast、movement、impact、sustain、release、tail 只能作为自己的 transfer hypothesis，并需由玩家信息职责验证。
   - 完整交付还需要 dry/intermediate render、fade、mono、响度、true peak、loop/variation、导出、中间件和游戏内遮蔽检查；本片没有提供这些结果。

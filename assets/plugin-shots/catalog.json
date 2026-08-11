@@ -135,7 +135,7 @@
     },
     {
       "slug": "fabfilter-pro-q",
-      "title": "FabFilter Pro-Q",
+      "title": "FabFilter Pro-Q 4（当前继任版本参考）",
       "source": "https://www.fabfilter.com/products/pro-q-4-equalizer-plug-in",
       "aliases": [
         "FabFilter Pro-Q 3",
@@ -144,7 +144,7 @@
       ],
       "preview": "assets/plugin-shots/preview/fabfilter-pro-q.webp",
       "full": "assets/plugin-shots/full/fabfilter-pro-q.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
+      "match": "当前官方继任版本参考；视频内 Pro-Q 3 的界面与参数以步骤证据为准"
     },
     {
       "slug": "fabfilter-pro-r",

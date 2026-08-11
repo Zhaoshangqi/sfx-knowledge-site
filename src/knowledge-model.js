@@ -26,6 +26,28 @@
     /A\/B：旁路本步骤，听它是否(?:增加了清晰角色，而不是|只)增加响度[。！？；.!?;]*$/
   ];
 
+  var generatedFactPatterns = [
+    /分析推断练习[:：]/,
+    /迁移练习(?:假设)?[:：]?/,
+    /(?:^|[。；;]\s*)练习[:：]/,
+    /^每次只改一个维度并输出弱\/中\/强三版/,
+    /^复用检查：把本条链路抽象成源素材选择、第一层处理、二次采样、最终混音四个阶段[。！？；.!?;]?$/,
+    /^画面同步检查：/,
+    /^没有明确数值的插件页必须标注为/,
+    /^每条链最后做旁路检查：/,
+    /^(?:频段|空间|运动|动态)判断：/,
+    /^(?:动态\/失真类|空间\/延迟类|音高\/合成\/采样类|滤波\/光谱类|调制类)处理/,
+    /^第一步参数优先级：[\s\S]+这通常决定整条链后面的尺度、速度或素材质量[。！？；.!?;]?$/,
+    /^第一颗处理点的判断：[\s\S]+先验证它是否真的改善了源素材，再继续下一级[。！？；.!?;]?$/,
+    /^调参时一次只改变[\s\S]+(?:打印|输出)弱[、\/]中[、\/]强三版/,
+    /^至少导出[\s\S]+三种/,
+    /^保留无[\s\S]+三个阶段性打印/
+  ];
+
+  function isGeneratedStepScaffolding(value) {
+    return typeof value === 'string' && /本条的主要链路可以按[\s\S]*视频证据[:：]/.test(value);
+  }
+
   function stripGeneratedWrapper(value, marker) {
     var match = marker.exec(value);
     if (!match) return value;
@@ -42,6 +64,12 @@
 
   function stripCourseScaffolding(value) {
     var result = value == null ? '' : String(value).trim();
+    if (isGeneratedStepScaffolding(result)) return '';
+    if (generatedFactPatterns.some(function (pattern) { return pattern.test(result); })) return '';
+    var generatedChainIndex = result.indexOf('本条的主要链路可以按');
+    if (generatedChainIndex !== -1) {
+      return result.slice(0, generatedChainIndex).trim();
+    }
     result = result.replace(/\s*视频证据[:：][\s\S]*$/, '').trim();
     result = stripGeneratedWrapper(result, /字幕\/画面线索[:：]/);
     result = stripGeneratedWrapper(result, /可确认的数值\/范围[:：]/);
@@ -115,8 +143,8 @@
   }
 
   function inferEvidence(text) {
-    var value = cleanText(text);
-    var labels = ['画面确认', '作者口述', '分析推断', '视频未展示'];
+    var value = cleanText(text).replace(/(?:尚待|仍待|有待|尚未|无法|不能|不可|需|待|未)画面确认/g, '');
+    var labels = ['画面确认', '作者口述', '音频可辨', '分析推断', '视频未展示'];
     var matches = [];
     for (var i = 0; i < labels.length; i += 1) {
       if (value.indexOf(labels[i]) !== -1) matches.push(labels[i]);
@@ -289,6 +317,7 @@
     effectSlug: effectSlug,
     groupEffectUses: groupEffectUses,
     inferEvidence: inferEvidence,
+    isGeneratedStepScaffolding: isGeneratedStepScaffolding,
     searchableRecordText: searchableRecordText,
     stripCourseScaffolding: stripCourseScaffolding,
     uniqueFacts: uniqueFacts

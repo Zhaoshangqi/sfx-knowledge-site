@@ -55,6 +55,15 @@ function plainValue(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function records() {
+  const prefix = '    const records = ';
+  const start = indexHtml.indexOf(prefix);
+  const end = indexHtml.indexOf('    const imageManifest', start);
+  assert.notEqual(start, -1, 'missing records JSON');
+  assert.notEqual(end, -1, 'missing records JSON boundary');
+  return JSON.parse(indexHtml.slice(start + prefix.length, end).trim().replace(/;$/, ''));
+}
+
 test('loads the shared knowledge model before the inline application data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const modelScript = indexHtml.indexOf(modelTag);
@@ -164,6 +173,14 @@ test('tablet effect rows collapse and the reader return control handles keyboard
   assert.match(indexHtml, /backToLibraryEl\.addEventListener\("keydown", \(event\) => \{[\s\S]*?\["Enter", " "\]\.includes\(event\.key\)[\s\S]*?event\.preventDefault\(\);[\s\S]*?returnToLibrary\(\);/);
 });
 
+test('video cards are keyboard links and move focus into the reader', () => {
+  assert.match(indexHtml, /return '<a class="card [\s\S]*?href="#video=' \+ encodeURIComponent\(record\.id\)/);
+  assert.match(indexHtml, /gridEl\.addEventListener\("click", \(event\) => \{[\s\S]*?event\.preventDefault\(\);[\s\S]*?openVideoDetail\(card\.dataset\.id, true\);/);
+  assert.match(indexHtml, /<h2 class="detail-title" tabindex="-1">/);
+  assert.match(indexHtml, /function focusReaderHeading\(\) \{[\s\S]*?\.focus\(\{ preventScroll: true \}\)/);
+  assert.match(indexHtml, /function showReader\(\) \{[\s\S]*?focusReaderHeading\(\);/);
+});
+
 test('searches video records through the shared factual model only', () => {
   const searchableSource = indexHtml.match(/function searchable\(record\) \{([\s\S]*?)\n    \}/)?.[1] || '';
 
@@ -197,6 +214,35 @@ test('uses conservative shared cleaners for factual detail arrays', () => {
   });
   assert.deepEqual(plainValue(detailData.effectUse({ plugins: [null, { name: 'Valid' }] }, { sourcePluginIndexes: [-1, 0, 1, 2, '1'] }).sourcePluginIndexes), [0, 1]);
   assert.deepEqual(plainValue(detailData.effectUse({}, { parameters: [null, {}, 'malformed'] }).parameters), []);
+
+  const stepProjection = plainValue(detailData.project({
+    steps: [{
+      order: 1,
+      name: '自动模板',
+      detail: '通用说明。本条的主要链路可以按 EQ -> Reverb 来读。视频证据：raw transcript',
+      params: ['角色：自动模板'],
+      imageKey: 'generated-image'
+    }, {
+      order: 2,
+      name: '保留步骤',
+      detail: '画面确认：作者先做减法 EQ。',
+      params: ['分析推断练习：旁路并记录。', '2558.9 Hz，只属于当前帧。'],
+      imageKey: 'factual-image'
+    }]
+  })).steps;
+  assert.deepEqual(stepProjection, [{
+    order: 2,
+    name: '保留步骤',
+    detail: '画面确认：作者先做减法 EQ。',
+    params: ['2558.9 Hz，只属于当前帧。'],
+    imageKey: 'factual-image'
+  }]);
+
+  const productionProjection = records().map((record) => detailData.project(record));
+  assert.doesNotMatch(
+    JSON.stringify(productionProjection),
+    /分析推断练习|迁移练习|弱\/中\/强三版|本条的主要链路可以按|视频证据：/
+  );
 });
 
 test('renders a dry-goods archive with effect links and sources at the end', () => {
@@ -216,4 +262,11 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
   const detailClick = indexHtml.match(/detailEl\.addEventListener\("click", \(event\) => \{([\s\S]*?)\n    \}\);/)?.[1] || '';
   assert.ok(detailClick.indexOf('[data-effect-id]') < detailClick.indexOf('[data-effect-shot]'));
   assert.match(detailClick, /openEffectDetail\(effectButton\.dataset\.effectId, true\)/);
+
+  const titlePosition = detailSource.indexOf('<h2 class="detail-title"');
+  const goalPosition = detailSource.indexOf('<h3>设计目标</h3>');
+  const ideasPosition = detailSource.indexOf('<h3>设计思路</h3>');
+  const coverPosition = detailSource.indexOf('<div class="detail-cover">');
+  const materialsPosition = detailSource.indexOf('<h3>素材与分层</h3>');
+  assert.ok(titlePosition < goalPosition && goalPosition < ideasPosition && ideasPosition < coverPosition && coverPosition < materialsPosition);
 });

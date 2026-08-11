@@ -31,6 +31,7 @@ test("maintenance rules require effectUses instead of practiceChecklist", () => 
 
 test("the repository skill retrieves effect evidence rather than practice tasks", () => {
   const skill = read("skills/sfx-knowledge/SKILL.md");
+  const learnings = read("skills/sfx-knowledge/references/video-learnings.md");
 
   assert.match(skill, /structured effect uses/);
   assert.match(skill, /omit exercises and course tasks/);
@@ -39,6 +40,7 @@ test("the repository skill retrieves effect evidence rather than practice tasks"
     /retain every evidenced production decision, parameter, route, automation move, limitation, and failed attempt/
   );
   assert.doesNotMatch(skill, /practice tasks/);
+  assert.doesNotMatch(learnings, /迁移练习|输出弱\/中\/强三版|分析推断练习/);
 });
 
 test("the enrichment tool no longer generates practice fields or course suffixes", () => {

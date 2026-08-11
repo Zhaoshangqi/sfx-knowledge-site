@@ -40,6 +40,12 @@ test("exports dry goods and structured effect uses without practice sections", (
         "A/B：旁路本步骤，听它是否只增加响度。",
         "具体数值未完整显示：用耳朵确认速度、频点、湿度或攻击是否服务画面。"
       ]
+    }, {
+      order: 2,
+      name: "自动课程模板步骤",
+      detail: "通用教程。本条的主要链路可以按 EQ -> Reverb 来读。视频证据：raw transcript",
+      params: ["角色：自动课程模板步骤"],
+      imageKey: "generated-template-image"
     }],
     plugins: [{
       name: "Vocoder",
@@ -62,6 +68,10 @@ test("exports dry goods and structured effect uses without practice sections", (
     parameterLogic: [
       "Bands 8 / 40。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。",
       "Pro-Q 3 参数逻辑：字幕/画面线索：raw transcript fragment"
+    ],
+    tips: [
+      "这些数值只属于当前素材，不可外推为通用阈值。",
+      "练习：导出三版并比较。"
     ],
     practiceChecklist: ["不应进入导出"],
     keywords: ["Vocoder"],
@@ -104,6 +114,9 @@ test("exports dry goods and structured effect uses without practice sections", (
   assert.match(output, /1\. \*\*调制\*\*: 保留瞬态。/);
   assert.match(output, /\*\*Vocoder\*\*: 建立双路调制。/);
   assert.match(output, /效果链事实。/);
+  assert.match(output, /### Key Decisions and Evidence Boundaries/);
+  assert.match(output, /这些数值只属于当前素材，不可外推为通用阈值。/);
+  assert.doesNotMatch(output, /自动课程模板步骤|generated-template-image/);
   assert.doesNotMatch(
     output,
     /Practice Checklist|不应进入导出|弱\/中\/强三版|3 个强度版本|迁移练习假设|练习|复习|视频证据|字幕\/画面线索|可确认的数值\/范围|A\/B：旁路本步骤|具体数值未完整显示/
@@ -146,6 +159,7 @@ test("exports dry goods and structured effect uses without practice sections", (
   const productionMemory = fs.readFileSync(memoryPath, "utf8");
   assert.doesNotMatch(
     productionMemory,
-    /### Practice Checklist|复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习|复习|字幕\/画面线索|可确认的数值\/范围|A\/B：旁路本步骤|具体数值未完整显示/
+    /### Practice Checklist|复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习|复习|字幕\/画面线索|可确认的数值\/范围|A\/B：旁路本步骤|具体数值未完整显示|本条的主要链路可以按|复用检查：|第一步参数优先级：|第一颗处理点的判断：/
   );
+  assert.match(productionMemory, /OTT截图记录的输出与各频段增益只属于当前工程/);
 });
