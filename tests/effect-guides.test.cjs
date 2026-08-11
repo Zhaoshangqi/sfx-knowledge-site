@@ -109,6 +109,11 @@ test('attaches the API to the browser global', () => {
   vm.runInNewContext(source, context);
 
   assert.ok(context.SfxEffectGuides);
+  assert.deepEqual(Object.keys(context.SfxEffectGuides), ['all', 'guideFor']);
   assert.equal(context.SfxEffectGuides.all().length, 27);
+  assert.equal(
+    context.SfxEffectGuides.guideFor('  FABFILTER   PRO-Q 3  ').canonicalName,
+    'FabFilter Pro-Q 3'
+  );
   assert.ok(Object.isFrozen(context.SfxEffectGuides));
 });
