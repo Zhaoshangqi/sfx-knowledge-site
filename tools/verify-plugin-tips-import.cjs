@@ -1,5 +1,9 @@
 const fs = require("fs");
 const path = require("path");
+const {
+  stripCourseScaffolding,
+  uniqueFacts
+} = require("../src/knowledge-model.js");
 
 const baselineCount = 62;
 const repoRoot = path.resolve(__dirname, "..");
@@ -25,9 +29,9 @@ const requiredArrays = [
   "plugins",
   "materials",
   "chainFocus",
-  "parameterLogic",
-  "practiceChecklist"
+  "parameterLogic"
 ];
+const courseTailPattern = /复刻时只调一个核心旋钮|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版/;
 
 const failures = [];
 let playlist = [];
@@ -101,6 +105,61 @@ function isNonemptyString(value) {
 
 function arrayOrEmpty(value) {
   return Array.isArray(value) ? value : [];
+}
+
+function objectOrEmpty(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function fact(value) {
+  const cleaned = stripCourseScaffolding(value == null ? "" : value);
+  const courseTailIndex = cleaned.search(courseTailPattern);
+  return courseTailIndex === -1
+    ? cleaned
+    : cleaned.slice(0, courseTailIndex).replace(/[，、；;:\s]+$/u, "").trim();
+}
+
+function facts(items) {
+  return uniqueFacts(uniqueFacts(arrayOrEmpty(items)).map(fact));
+}
+
+function effectLines(effect) {
+  effect = objectOrEmpty(effect);
+  const name = fact(effect.name) || "Effect";
+  const vendor = fact(effect.vendor);
+  const id = fact(effect.id);
+  const lines = [
+    `- **${name}**${vendor ? ` (${vendor})` : ""}: ${fact(effect.purpose)}`,
+    id ? `  - Effect use ID: \`${id}\`` : "",
+    fact(effect.category) ? `  - Category: ${fact(effect.category)}` : "",
+    fact(effect.target) ? `  - Target: ${fact(effect.target)}` : "",
+    fact(effect.chainPosition) ? `  - Chain position: ${fact(effect.chainPosition)}` : ""
+  ];
+
+  arrayOrEmpty(effect.parameters).forEach((parameter) => {
+    parameter = objectOrEmpty(parameter);
+    const name = fact(parameter.name) || "Parameter";
+    const value = fact(parameter.value);
+    const direction = fact(parameter.direction);
+    const evidence = fact(parameter.evidence);
+    if (!value && !direction) return;
+    lines.push(`  - ${name}: ${value}${direction ? `${value ? "; " : ""}${direction}` : ""}${evidence ? ` [${evidence}]` : ""}`);
+  });
+
+  [
+    ["Result", effect.result],
+    ["Interactions", effect.interactions],
+    ["Limits", effect.limitations]
+  ].forEach(([label, value]) => {
+    const cleaned = fact(value);
+    if (cleaned) lines.push(`  - ${label}: ${cleaned}`);
+  });
+
+  const screenshotKey = fact(effect.screenshotKey);
+  if (screenshotKey) lines.push(`  - Evidence image key: \`${screenshotKey}\``);
+  const evidence = facts(effect.evidence);
+  if (evidence.length) lines.push(`  - Evidence: ${evidence.join("; ")}`);
+  return lines.filter(Boolean);
 }
 
 function playlistItemId(item) {
@@ -346,7 +405,7 @@ function validateSiteMemoryRecord(record, memoryBlocks) {
     [
       `- Source: \`${record.url}\``,
       `- Creator: ${record.source || "Unknown"}`,
-      `- Summary: ${record.summary || ""}`
+      `- Summary: ${fact(record.summary)}`
     ],
     `site-video-memory.md block for ${label}`
   );
@@ -354,7 +413,7 @@ function validateSiteMemoryRecord(record, memoryBlocks) {
   const coreIdeaLines = sectionLines(block, "### Core Ideas", `site-video-memory.md block for ${label}`);
   requireLines(
     coreIdeaLines,
-    arrayOrEmpty(record.coreIdeas).map((idea) => `- ${String(idea).trim()}`),
+    facts(record.coreIdeas).map((idea) => `- ${idea}`),
     `site-video-memory.md Core Ideas for ${label}`
   );
 
@@ -365,7 +424,12 @@ function validateSiteMemoryRecord(record, memoryBlocks) {
       fail(`Record ${label} step ${index + 1} must have a nonempty name and detail`);
       return;
     }
-    expectedSteps.push(`${step.order}. **${step.name}**: ${step.detail}`);
+    expectedSteps.push(`${fact(step.order)}. **${fact(step.name)}**: ${fact(step.detail)}`);
+    requireLines(
+      stepLines,
+      facts(step.params).map((param) => `   - ${param}`),
+      `site-video-memory.md step parameters for ${label}`
+    );
   });
   requireLines(stepLines, expectedSteps, `site-video-memory.md Step / Event Map for ${label}`);
 
@@ -380,32 +444,57 @@ function validateSiteMemoryRecord(record, memoryBlocks) {
       fail(`Record ${label} plugin ${index + 1} must have a nonempty name and purpose`);
       return;
     }
-    expectedPlugins.push(`- **${plugin.name}**: ${plugin.purpose}`);
+    expectedPlugins.push(`- **${fact(plugin.name)}**: ${fact(plugin.purpose)}`);
+    requireLines(
+      pluginLines,
+      facts(plugin.settings).map((setting) => `  - ${setting}`),
+      `site-video-memory.md plugin settings for ${label}`
+    );
   });
   requireLines(pluginLines, expectedPlugins, `site-video-memory.md plugins for ${label}`);
 
   const listSections = [
     ["### Materials / Layer Sources", arrayOrEmpty(record.materials)],
     ["### Effect-Chain Reasoning", arrayOrEmpty(record.chainFocus)],
-    ["### Parameter Logic", arrayOrEmpty(record.parameterLogic)],
-    ["### Practice Checklist", arrayOrEmpty(record.practiceChecklist)]
+    ["### Parameter Logic", arrayOrEmpty(record.parameterLogic)]
   ];
-  let practiceLines = [];
   for (const [heading, items] of listSections) {
     const lines = sectionLines(block, heading, `site-video-memory.md block for ${label}`);
-    if (heading === "### Practice Checklist") practiceLines = lines;
     requireLines(
       lines,
-      items.map((item) => `- ${String(item).trim()}`),
+      facts(items).map((item) => `- ${item}`),
       `site-video-memory.md ${heading.slice(4)} for ${label}`
     );
   }
 
   requireLines(
-    practiceLines,
-    [`- Use when: ${arrayOrEmpty(record.keywords).join("; ")}`],
+    block.lines,
+    [`- Use when: ${facts(record.keywords).join("; ")}`],
     `site-video-memory.md Use when for ${label}`
   );
+}
+
+function validateStructuredEffectUses(record, memoryBlocks) {
+  const effects = arrayOrEmpty(record && record.effectUses).filter((effect) => (
+    effect && typeof effect === "object" && !Array.isArray(effect)
+  ));
+  if (effects.length === 0) return;
+
+  const label = fact(record.videoId);
+  const matches = memoryBlocks.filter((block) => block.heading.startsWith(`## ${label} - `));
+  if (matches.length !== 1) return;
+  const lines = sectionLines(
+    matches[0],
+    "### Structured Effect Uses",
+    `site-video-memory.md block for ${label}`
+  );
+  effects.forEach((effect) => {
+    requireLines(
+      lines,
+      effectLines(effect),
+      `site-video-memory.md structured effects for ${label}`
+    );
+  });
 }
 
 function validateRequiredRecord(record, item, learningBlocks, memoryBlocks) {
@@ -562,6 +651,7 @@ if (uniqueVideoIds.size !== videoIds.length) {
 validateCategories();
 const memory = readText(memoryPath, "site-video-memory.md");
 const memoryBlocks = validateSiteMemory(memory);
+records.forEach((record) => validateStructuredEffectUses(record, memoryBlocks));
 
 if (completed !== null) {
   const expectedRecordCount = baselineCount + completed;
