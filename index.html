@@ -31834,6 +31834,49 @@
         "gate", "expander", "convolver", "均衡", "均衡器", "滤波", "滤波器", "压缩", "压缩器", "限制器",
         "削波器", "瞬态", "混响", "延迟", "回声", "合唱", "镶边", "颤音", "声码器", "失真", "饱和"
       ]);
+      const genericProfileNames = new Set([
+        ...genericEffectAliases,
+        "transient shaper", "frequency shifter", "pitch shifter", "grain delay", "phase rotation",
+        "dynamic eq", "multiband compressor", "loudness metering", "stereo imager"
+      ]);
+      const genericIdentityTokens = new Set([
+        ...genericEffectAliases,
+        "algorithmic", "analog", "bit", "bitcrusher", "convolution", "crusher", "de", "denoiser",
+        "esser", "exciter", "formant", "grain", "granular", "harmonic", "linear", "loudness",
+        "meter", "metering", "mono", "multiband", "noise", "phase", "rack", "repair", "ring",
+        "saturation", "spectral", "synth", "tape", "tonal", "tube", "valve", "vintage", "wave"
+      ]);
+      const identityStopWords = new Set([
+        ...aliasStopWords,
+        "ableton", "ni", "sonnox", "soundtheory", "glitchmachines", "unfiltered", "sonic", "academy",
+        "blue", "cat", "sixth", "sample", "twisted", "tools", "uvi", "vst"
+      ]);
+      const curatedCanonicalNamePairs = [
+        ["Love", "Dawesome Love"],
+        ["Wave Shifter", "Minimal Audio Wave Shifter"],
+        ["Serum sampler", "Xfer Serum"],
+        ["Serum合成器", "Xfer Serum"]
+      ];
+      const rejectedVideoImageKeys = new Set([
+        "deep-HsFlJ_UJyxs-01-aa4f8dfdbc",
+        "deep-26TcO5_3pxo-02-5dc4c18e58",
+        "deep-6oJUotZGz0k-03-08cc14832b",
+        "deep-Pvkfc32V8Mo-03-6d71ed3339",
+        "deep-TNnLxeWVjM0-02-0f3566ccda",
+        "deep-Ub5ozlVecII-01-110472ae08",
+        "deep-uh9yIziU8Pk-01-22bccc94c6",
+        "f9OrpDtedSI-plastic-tube-tonal-chain",
+        "img_819bcbfe031b239f",
+        "img_ec02e77a2eac06d9",
+        "img_f9466a775baa4fe1"
+      ]);
+      const blockedProfileNames = new Set([
+        "cockos reaplugs",
+        "randomizer",
+        "sound particles",
+        "wwise",
+        "xfer ott"
+      ]);
       const technicalDetailPattern = /[+-]?\d+(?:\.\d+)?\s*(?:khz|hz|ms|dbfs|db|bpm)\b|[+-]?\d+(?:\.\d+)?\s*%|\b(?:hz|khz|ms|db|dbfs|bpm|bands?|mix|wet|dry|attack|release|ratio|feedback|frequency|drive|depth|rate|width|threshold|parameter|crossover|lfo)s?\b|参数|数值|旋钮|阈值|频率值|毫秒/i;
 
       function array(value) {
@@ -31857,52 +31900,157 @@
           .trim();
       }
 
+      function isCompositeEffectName(value) {
+        const raw = String(value || "");
+        return /(?:\/|\+|->|→|&|,|，|、|\||;|；)/.test(raw)
+          || /\b(?:and|or)\b/i.test(raw)
+          || /(?:以及|或者|和|与)/.test(raw);
+      }
+
+      function compact(value) {
+        return normalize(value).replace(/\s+/g, "");
+      }
+
+      function productCore(value) {
+        return normalize(value).split(" ").filter((token) => (
+          token
+          && !identityStopWords.has(token)
+          && !/^vst\d*$/.test(token)
+        )).join(" ");
+      }
+
+      function isGenericIdentity(value) {
+        const normalized = normalize(value);
+        return genericProfileNames.has(normalized) || genericProfileNames.has(productCore(value));
+      }
+
+      function isBareGenericIdentity(value) {
+        const normalized = normalize(value);
+        if (genericProfileNames.has(normalized)) return true;
+        const tokens = normalized.split(" ").filter(Boolean);
+        return tokens.length > 0 && tokens.every((token) => genericIdentityTokens.has(token) || /^\d+$/.test(token));
+      }
+
+      function sameProductIdentity(name, candidate) {
+        const normalizedName = normalize(name);
+        const normalizedCandidate = normalize(candidate);
+        if (!normalizedName || !normalizedCandidate) return false;
+        if (normalizedName === normalizedCandidate || compact(name) === compact(candidate)) return true;
+        if (isGenericIdentity(name) || isGenericIdentity(candidate)) return false;
+        const nameCore = productCore(name).replace(/\s+/g, "");
+        const candidateCore = productCore(candidate).replace(/\s+/g, "");
+        return nameCore.length >= 5 && nameCore === candidateCore;
+      }
+
+      function versionSignature(value) {
+        return normalize(value).match(/\d+/g) || [];
+      }
+
+      function sameProductVersion(name, referenceTitle) {
+        const nameVersion = versionSignature(name);
+        const referenceVersion = versionSignature(referenceTitle);
+        return nameVersion.join(".") === referenceVersion.join(".");
+      }
+
       function referenceCandidates(name, catalog) {
+        if (isCompositeEffectName(name)) return [];
         const pluginName = normalize(name);
         const matches = [];
         array(catalog).forEach((reference) => {
-          let bestAlias = "";
+          if (!sameProductVersion(name, reference?.title)) return;
+          let bestScore = 0;
           [reference?.title, ...array(reference?.aliases)].forEach((alias) => {
             const normalizedAlias = normalize(alias);
             if (!normalizedAlias) return;
-            if (pluginName === normalizedAlias || pluginName.includes(normalizedAlias) || normalizedAlias.includes(pluginName)) {
-              if (normalizedAlias.length > bestAlias.length) bestAlias = normalizedAlias;
-            }
+            if (isGenericIdentity(name) && normalize(reference?.title) !== pluginName) return;
+            if (!sameProductIdentity(name, alias)) return;
+            const score = pluginName === normalizedAlias ? 300 : compact(name) === compact(alias) ? 200 : 100;
+            bestScore = Math.max(bestScore, score + normalizedAlias.length);
           });
-          if (bestAlias) matches.push({ reference, alias: bestAlias, score: bestAlias.length });
+          if (bestScore) matches.push({ reference, score: bestScore });
         });
         matches.sort((a, b) => b.score - a.score || String(a.reference.title || "").localeCompare(String(b.reference.title || "")));
-        return matches.slice(0, 4).map((match) => match.reference);
+        return matches.map((match) => match.reference);
       }
 
-      function expandAlias(value) {
-        const variants = new Set();
-        String(value || "").split(/\s*(?:\/|\+|->| x\d+)\s*/i).forEach((part) => {
-          const normalized = normalize(part);
-          if (!normalized) return;
-          variants.add(normalized);
-          const tokens = normalized.split(" ");
-          for (let index = 1; index < tokens.length; index += 1) {
-            variants.add(tokens.slice(index).join(" "));
-          }
-          tokens.forEach((token) => {
-            if ((token.length >= 4 || token === "eq" || token === "rx") && !aliasStopWords.has(token) && !/^\d+$/.test(token)) {
-              variants.add(token);
-            }
-          });
-        });
-        return [...variants].filter((variant) => variant.length >= 2 && !aliasStopWords.has(variant));
-      }
-
-      function effectAliases(name, catalog) {
+      function effectAliases(name, catalog, allowGeneric = false) {
         const values = [name];
+        const allowedGenericAliases = new Set();
+        curatedCanonicalNamePairs.forEach(([alias, canonical]) => {
+          if (normalize(canonical) !== normalize(name)) return;
+          values.push(alias);
+          allowedGenericAliases.add(normalize(alias));
+          allowedGenericAliases.add(productCore(alias));
+        });
         referenceCandidates(name, catalog).forEach((reference) => {
           values.push(reference.title, ...array(reference.aliases));
         });
-        return [...new Set(values.flatMap(expandAlias))].sort((a, b) => b.length - a.length);
+        const aliases = new Set();
+        values.forEach((value) => {
+          [normalize(value), productCore(value)].forEach((alias) => {
+            const aliasCompact = alias.replace(/\s+/g, "");
+            if (!alias || aliasCompact.length < 4) return;
+            if (!allowGeneric && isBareGenericIdentity(alias) && !allowedGenericAliases.has(alias)) return;
+            aliases.add(alias);
+          });
+        });
+        return [...aliases].sort((a, b) => b.length - a.length);
+      }
+
+      function stepTitleContainsAlias(stepName, alias) {
+        const titleTokens = normalize(stepName).split(" ").filter(Boolean);
+        const aliasTokens = normalize(alias).split(" ").filter(Boolean);
+        if (!titleTokens.length || !aliasTokens.length) return false;
+        const aliasCompact = aliasTokens.join("");
+        for (let start = 0; start < titleTokens.length; start += 1) {
+          let candidate = "";
+          for (let end = start; end < titleTokens.length; end += 1) {
+            candidate += titleTokens[end];
+            if (candidate === aliasCompact) return true;
+            if (candidate.length >= aliasCompact.length) break;
+          }
+        }
+        return false;
+      }
+
+      function aliasesMatchStep(aliases, stepName) {
+        if (!stepName) return false;
+        return array(aliases).some((alias) => stepTitleContainsAlias(stepName, alias));
+      }
+
+      function createIdentityContext(identityNames, catalog) {
+        const names = array(identityNames);
+        const aliasesByName = new Map(names.map((name) => [normalize(name), effectAliases(name, catalog)]));
+        const matchingNamesByTitle = new Map();
+        return {
+          aliasesFor(name) {
+            return aliasesByName.get(normalize(name)) || [];
+          },
+          matchingNames(stepName) {
+            const key = normalize(stepName);
+            if (!matchingNamesByTitle.has(key)) {
+              const matching = names.filter((name) => (
+                aliasesMatchStep(aliasesByName.get(normalize(name)), stepName)
+              ));
+              matchingNamesByTitle.set(key, matching);
+            }
+            return matchingNamesByTitle.get(key);
+          }
+        };
+      }
+
+      function stepTitleMatchesEffect(profileName, stepName, catalog, allowGeneric = false, identityContext = null) {
+        const aliases = allowGeneric
+          ? effectAliases(profileName, catalog, true)
+          : identityContext?.aliasesFor(profileName) || effectAliases(profileName, catalog);
+        if (!aliasesMatchStep(aliases, stepName)) return false;
+        if (allowGeneric || !identityContext) return true;
+        const matchingNames = identityContext.matchingNames(stepName);
+        return matchingNames.length === 1 && normalize(matchingNames[0]) === normalize(profileName);
       }
 
       function assetForKey(key, manifest) {
+        if (rejectedVideoImageKeys.has(key)) return null;
         const asset = key && manifest && manifest[key];
         if (!asset || (!asset.preview && !asset.full)) return null;
         return {
@@ -31934,27 +32082,24 @@
         };
       }
 
-      function explicitVisual(use, records, manifest) {
+      function explicitVisual(use, profileName, records, catalog, manifest, identityContext) {
         if (!assetForKey(use?.screenshotKey, manifest)) return null;
         const record = sourceRecordFor(use, records);
         const step = array(record?.steps).find((candidate) => candidate?.imageKey === use.screenshotKey) || null;
+        if (!step || !stepTitleMatchesEffect(profileName, step.name, catalog, false, identityContext)) return null;
         return stepVisual(use, step, record, manifest);
       }
 
-      function matchedStepVisual(use, profileName, records, catalog, manifest) {
+      function matchedStepVisual(use, profileName, records, catalog, manifest, identityContext) {
         const record = sourceRecordFor(use, records);
         if (!record) return null;
-        const aliases = effectAliases(profileName, catalog);
+        const aliases = identityContext?.aliasesFor(profileName) || effectAliases(profileName, catalog);
+        if (!aliases.length) return null;
         let best = null;
         array(record.steps).forEach((step, index) => {
           if (!assetForKey(step?.imageKey, manifest)) return;
-          const factualDetail = SfxKnowledgeModel.stripCourseScaffolding(step?.detail);
-          const nameHaystack = " " + normalize(step?.name) + " ";
-          const detailHaystack = " " + normalize(factualDetail) + " ";
-          const alias = aliases.find((candidate) => (
-            nameHaystack.includes(" " + candidate + " ")
-            || (!genericEffectAliases.has(candidate) && detailHaystack.includes(" " + candidate + " "))
-          ));
+          if (!stepTitleMatchesEffect(profileName, step?.name, catalog, false, identityContext)) return;
+          const alias = aliases.find((candidate) => stepTitleContainsAlias(step?.name, candidate));
           if (!alias) return;
           const score = alias.length * 100 - index;
           if (!best || score > best.score) best = { step, score };
@@ -31963,7 +32108,9 @@
       }
 
       function officialVisuals(profileName, catalog, useId) {
-        return referenceCandidates(profileName, catalog).map((reference) => {
+        const matches = referenceCandidates(profileName, catalog);
+        if (matches.length !== 1) return [];
+        return matches.map((reference) => {
           if (!reference?.preview && !reference?.full) return null;
           return {
             kind: "official",
@@ -32026,9 +32173,53 @@
         });
       }
 
-      function buildProfile(name, uses, records, catalog, manifest, preferredUseId = "") {
+      function strictCanonicalName(name, catalog) {
+        const raw = text(name);
+        const curated = curatedCanonicalNamePairs.find(([alias]) => normalize(alias) === normalize(raw));
+        if (curated) return curated[1];
+        const matches = referenceCandidates(raw, catalog);
+        return matches.length === 1 ? text(matches[0]?.title) || raw : raw;
+      }
+
+      function groupStrictUses(uses, catalog) {
+        const groups = new Map();
+        array(uses).forEach((use) => {
+          const name = strictCanonicalName(use?.name, catalog);
+          const key = normalize(name);
+          if (!key) return;
+          if (!groups.has(key)) groups.set(key, { name, uses: [] });
+          groups.get(key).uses.push(use);
+        });
+        return [...groups.values()].sort((a, b) => a.name.localeCompare(b.name, "zh-CN", {
+          numeric: true,
+          sensitivity: "base"
+        }));
+      }
+
+      let strictIndexCache = null;
+
+      function strictIndexFor(uses, catalog) {
+        if (strictIndexCache?.uses === uses && strictIndexCache?.catalog === catalog) return strictIndexCache.value;
+        const groups = groupStrictUses(uses, catalog);
+        const identityNames = groups.map((group) => group.name).filter((name) => !isCompositeEffectName(name));
+        const value = {
+          groups,
+          identityContext: createIdentityContext(identityNames, catalog)
+        };
+        strictIndexCache = { uses, catalog, value };
+        return value;
+      }
+
+      function buildProfile(name, uses, records, catalog, manifest, preferredUseId = "", identityContext = null) {
         const ordered = orderedUses(uses, preferredUseId);
-        if (!name || name === "未确认插件链" || !ordered.length) return null;
+        if (
+          !name
+          || name === "未确认插件链"
+          || isCompositeEffectName(name)
+          || isBareGenericIdentity(name)
+          || blockedProfileNames.has(normalize(name))
+          || !ordered.length
+        ) return null;
         const visuals = [];
         const seenVisuals = new Set();
         function addVisual(visual) {
@@ -32038,8 +32229,8 @@
           seenVisuals.add(key);
           visuals.push(visual);
         }
-        ordered.forEach((use) => addVisual(explicitVisual(use, records, manifest)));
-        ordered.forEach((use) => addVisual(matchedStepVisual(use, name, records, catalog, manifest)));
+        ordered.forEach((use) => addVisual(explicitVisual(use, name, records, catalog, manifest, identityContext)));
+        ordered.forEach((use) => addVisual(matchedStepVisual(use, name, records, catalog, manifest, identityContext)));
         officialVisuals(name, catalog, ordered[0]?.id).forEach(addVisual);
         if (!visuals.length) return null;
 
@@ -32060,20 +32251,48 @@
         };
       }
 
+      function keepUniquelyOwnedVideoVisuals(profiles) {
+        const ownersByAsset = new Map();
+        profiles.forEach((profile) => {
+          profile.visuals.filter((visual) => visual.kind === "video").forEach((visual) => {
+            const key = visual.full || visual.preview;
+            if (!key) return;
+            if (!ownersByAsset.has(key)) ownersByAsset.set(key, new Set());
+            ownersByAsset.get(key).add(normalize(profile.name));
+          });
+        });
+        return profiles.map((profile) => {
+          const visuals = profile.visuals.filter((visual) => {
+            if (visual.kind !== "video") return true;
+            const key = visual.full || visual.preview;
+            return key && ownersByAsset.get(key)?.size === 1;
+          });
+          return visuals.length ? { ...profile, visuals } : null;
+        }).filter(Boolean);
+      }
+
+      let strictProfilesCache = null;
+
       function profiles(uses, records, catalog, manifest) {
-        return SfxKnowledgeModel.groupEffectUses(array(uses), catalog).map((group) => (
-          buildProfile(group.name, group.uses, records, catalog, manifest)
-        )).filter(Boolean);
+        if (
+          strictProfilesCache?.uses === uses
+          && strictProfilesCache?.records === records
+          && strictProfilesCache?.catalog === catalog
+          && strictProfilesCache?.manifest === manifest
+        ) return strictProfilesCache.value;
+        const index = strictIndexFor(uses, catalog);
+        const value = keepUniquelyOwnedVideoVisuals(index.groups.map((group) => (
+          buildProfile(group.name, group.uses, records, catalog, manifest, "", index.identityContext)
+        )).filter(Boolean));
+        strictProfilesCache = { uses, records, catalog, manifest, value };
+        return value;
       }
 
       function profileForUse(use, uses, records, catalog, manifest) {
         if (!use) return null;
-        const name = SfxKnowledgeModel.canonicalEffectName(use.name, catalog);
+        const name = strictCanonicalName(use.name, catalog);
         const key = normalize(name);
-        const matchingUses = array(uses).filter((candidate) => (
-          normalize(SfxKnowledgeModel.canonicalEffectName(candidate?.name, catalog)) === key
-        ));
-        return buildProfile(name, matchingUses, records, catalog, manifest, use.id);
+        return profiles(uses, records, catalog, manifest).find((profile) => normalize(profile.name) === key) || null;
       }
 
       return { outcomeText, profileForUse, profiles, purposeText, referenceCandidates, suitableText };
@@ -32167,29 +32386,33 @@
       return sortedRecords(list);
     }
 
-    function effectSearchable(use) {
+    function effectProfileSearchable(profile) {
       return [
-        use.name,
-        canonicalEffectName(use.name, pluginReferenceCatalog),
-        EffectIndexData.referenceCandidates(use.name, pluginReferenceCatalog).flatMap((reference) => [reference.title, ...(reference.aliases || [])]),
-        use.category,
-        use.target,
-        use.purpose,
-        use.result,
-        use.limitations,
-        use.sourceTitle,
-        use.source,
-        use.sourceKeywords
-      ].flat().join(" ").toLowerCase();
+        profile.name,
+        profile.category,
+        profile.suitable,
+        profile.purpose,
+        profile.outcome,
+        profile.uses?.map((use) => [
+          use.name,
+          use.target,
+          use.purpose,
+          use.result,
+          use.sourceTitle,
+          use.source,
+          use.sourceKeywords
+        ])
+      ].flat(2).join(" ").toLowerCase();
     }
 
     function filteredEffectUses() {
-      const query = state.query.trim().toLowerCase();
-      return effectUses.filter((use) => {
-        const sourceMatch = state.source === "all" || use.source === state.source;
-        const queryMatch = !query || effectSearchable(use).includes(query);
-        return sourceMatch && queryMatch;
-      });
+      return state.source === "all"
+        ? effectUses
+        : effectUses.filter((use) => use.source === state.source);
+    }
+
+    function effectProfileMatchesSource(profile) {
+      return state.source === "all" || profile.uses.some((use) => use.source === state.source);
     }
 
     function renderEvidenceLabels(labels) {
@@ -32225,7 +32448,11 @@
 
     function renderEffectLibrary() {
       const list = filteredEffectUses();
-      const profiles = EffectIndexData.profiles(list, records, pluginReferenceCatalog, imageManifest);
+      const allProfiles = EffectIndexData.profiles(effectUses, records, pluginReferenceCatalog, imageManifest);
+      const query = state.query.trim().toLowerCase();
+      const profiles = allProfiles
+        .filter((profile) => effectProfileMatchesSource(profile))
+        .filter((profile) => !query || effectProfileSearchable(profile).includes(query));
       effectCountEl.textContent = "当前显示 " + profiles.length + " 个效果器档案 / " + list.length + " 条视频用法";
 
       if (!profiles.length) {

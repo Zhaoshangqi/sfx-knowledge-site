@@ -9,9 +9,10 @@ them into canonical effect profiles at render time. Each public profile aggregat
 matching source uses, derives concise non-parameter copy, and selects no more than
 three verified screenshots in this order:
 
-1. The screenshot explicitly linked by the effect use.
-2. A source-video step whose title or factual description names the effect.
-3. A cataloged official product image.
+1. A screenshot explicitly linked by the effect use whose source-step title names
+   the same single product.
+2. A source-video step whose title identifies one and only one matching product.
+3. A cataloged official image for the exact product and product version.
 
 Profiles without a reliable screenshot remain available in their source video but
 are omitted from the public effect index.
@@ -25,6 +26,12 @@ tests, Python tests, and Playwright browser validation.
 - [x] Prefer verified video screenshots and use official images as fallback.
 - [x] Limit each profile gallery to three deduplicated images.
 - [x] Reject matches found only in generated chain scaffolding.
+- [x] Reject chain labels and names that contain multiple processors.
+- [x] Reject bare effect-type names when they do not identify a concrete product.
+- [x] Never infer screenshot identity from prose descriptions or effect parameters.
+- [x] Require exact product identity for official fallback images.
+- [x] Keep product versions isolated and globally assign each video asset to at most one profile.
+- [x] Apply search and source filters after global screenshot ownership is fixed.
 - [x] Prevent generic effect terms from claiming product-specific screenshots.
 - [x] Omit uncertain profiles that have no reliable screenshot.
 - [x] Replace the dense effect rows with responsive screenshot cards.
@@ -48,9 +55,10 @@ tests, Python tests, and Playwright browser validation.
 
 ## Acceptance Snapshot
 
-- 256 screenshot-backed public effect profiles.
-- 202 profiles led by verified video-operation screenshots.
-- 54 profiles led by checked official interface images.
+- 66 screenshot-backed public effect profiles with one product name each.
+- 27 profiles led by verified video-operation screenshots.
+- 39 profiles led by checked exact-product official interface images.
+- 0 composite effect names and 0 duplicated video-screenshot ownership.
 - 0 broken images after eager loading.
 - 0 parameter-unit leaks in public application summaries.
 - 82 of 82 video records retained by the portable-kit verification.
