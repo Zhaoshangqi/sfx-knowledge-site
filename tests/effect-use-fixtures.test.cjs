@@ -15,6 +15,15 @@ function records() {
   return JSON.parse(indexHtml.slice(start + prefix.length, end).trim().replace(/;$/, ''));
 }
 
+function imageManifest() {
+  const prefix = '    const imageManifest = ';
+  const start = indexHtml.indexOf(prefix);
+  const end = indexHtml.indexOf('    const pluginReferenceCatalog', start);
+  assert.notEqual(start, -1, 'missing image manifest JSON');
+  assert.notEqual(end, -1, 'missing image manifest JSON boundary');
+  return JSON.parse(indexHtml.slice(start + prefix.length, end).trim().replace(/;$/, ''));
+}
+
 function recordById(id) {
   const record = records().find((item) => item.id === id);
   assert.ok(record, `missing record ${id}`);
@@ -23,6 +32,18 @@ function recordById(id) {
 
 function assertUniqueIds(uses) {
   assert.equal(new Set(uses.map((use) => use.id)).size, uses.length, 'effect use IDs must be unique');
+}
+
+function assertScreenshotAsset(record, effectUse) {
+  const step = record.steps[effectUse.stepIndex];
+  assert.ok(step, `${effectUse.id} references a missing step`);
+  assert.equal(step.imageKey, effectUse.screenshotKey);
+
+  const manifestEntry = imageManifest()[effectUse.screenshotKey];
+  assert.ok(manifestEntry, `${effectUse.id} references a missing manifest entry`);
+  for (const assetPath of [manifestEntry.preview, manifestEntry.full]) {
+    assert.ok(fs.existsSync(path.join(__dirname, '..', assetPath)), `${effectUse.id} asset is missing: ${assetPath}`);
+  }
 }
 
 test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row', () => {
@@ -39,6 +60,7 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
     parameters: [
       { name: 'Bands', value: '8 / 40', direction: '8 段更粗糙，40 段更平滑', evidence: '画面确认' },
       { name: 'Gain', value: '7.9 dB / 14 dB', direction: '分别平衡两路调制输出', evidence: '画面确认' },
+      { name: 'Carrier mode', value: 'Enhance', direction: '两路均启用以增加谐波内容', evidence: '画面确认' },
       { name: 'Bandwidth', value: '18 kHz', direction: '两路共用', evidence: '画面确认' },
       { name: 'Attack', value: '1 ms', direction: '快速跟随', evidence: '画面确认' },
       { name: 'Formant', value: '-15.8 / -8.40 dB', direction: '分别调整两路音色', evidence: '画面确认' }
@@ -59,6 +81,7 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
   assert.ok(explicit.parameters.length);
   assert.ok(explicit.evidence.length);
   assert.ok(explicit.limitations);
+  assertScreenshotAsset(record, explicit);
 
   const uses = SfxKnowledgeModel.buildEffectUses([record]);
   const normalized = uses.find((use) => use.id === expected.id);
@@ -101,6 +124,7 @@ test('upy3d1em exposes the Polyverse Manipulator use and replaces its legacy row
   assert.ok(explicit.parameters.length);
   assert.ok(explicit.evidence.length);
   assert.ok(explicit.limitations);
+  assertScreenshotAsset(record, explicit);
 
   const uses = SfxKnowledgeModel.buildEffectUses([record]);
   const normalized = uses.find((use) => use.id === expected.id);
@@ -141,6 +165,7 @@ test('yt-f9OrpDtedSI exposes H3000 Factory without replacing the composite plast
   assert.ok(explicit.parameters.length);
   assert.ok(explicit.evidence.length);
   assert.ok(explicit.limitations);
+  assertScreenshotAsset(record, explicit);
 
   const uses = SfxKnowledgeModel.buildEffectUses([record]);
   const normalized = uses.find((use) => use.id === expected.id);
