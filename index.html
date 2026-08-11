@@ -2356,20 +2356,21 @@
           "带宽: 18kHz",
           "攻击: 1ms",
           "释放: 10ms",
-          "Formant: -15.8dB/-8.40dB"
+          "Formant: -15.8 / -8.40（界面未标单位）"
         ],
         "imageKey": "img_d43e4e82e77fb756"
       },
       {
         "order": 5,
         "name": "调整Vocoder核心参数",
-        "detail": "设置Vocoder的载波模式为Enhance，配置频段数40、带宽18kHz、Mono深度分别为120%和105%，启用快速检测模式(Fast)，微调Formant参数至-15.8/-8.40dB。",
+        "detail": "设置Vocoder的载波模式为Enhance，配置频段数40、带宽18kHz、Stereo Depth 120% / 105%，启用快速检测模式(Fast)，微调Formant参数至-15.8 / -8.40（界面未标单位）。",
         "params": [
           "模式: Enhance",
           "频段: 40",
           "带宽: 18kHz",
-          "深度: 120%/105%",
-          "检测: Fast"
+          "Stereo Depth: 120% / 105%",
+          "检测: Fast",
+          "Formant: -15.8 / -8.40（界面未标单位）"
         ],
         "imageKey": "img_826066613016e075"
       },
@@ -2500,7 +2501,7 @@
         "settings": [
           "关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier mode Enhance、Fast；Depth 与 Formant 不同。",
           "既有整理待复核：8 / 40 Bands 与 7.9 dB / 14 dB；需回原视频复核。",
-          "Bandwidth: 18kHz；Attack: 1ms；Release: 10ms；Formant: -15.8/-8.40dB。"
+          "Bandwidth: 18kHz；Attack: 1ms；Release: 10ms；Formant: -15.8 / -8.40（界面未标单位）。"
         ]
       },
       {
@@ -2610,7 +2611,7 @@
           },
           {
             "name": "Formant",
-            "value": "-15.8 / -8.40 dB",
+            "value": "-15.8 / -8.40（界面未标单位）",
             "direction": "分别调整两路音色",
             "evidence": "画面确认"
           }
@@ -2641,7 +2642,7 @@
       "RX De-click灵敏度8.6对游戏音效通常足够，过高会移除有意义的瞬态",
       "效果链顺序实验：先压缩后失真与先失真后压缩产生截然不同音色，前者温暖，后者激进",
       "颤音自动化幅度0.5-2Hz不会明显改变音高，>5Hz创建明显调制效果",
-      "Formant参数微调(-15到0dB)能改变Vocoder音色特性而不需重建整个效果链",
+      "Formant参数微调能改变Vocoder音色特性而不需重建整个效果链；关联截图中的 -15.8 / -8.40 界面未标单位。",
       "在Master轨应用Transient Master能获得比单个轨道更整体的瞬态控制效果"
     ],
     "keywords": [
@@ -2665,7 +2666,7 @@
       "OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围"
     ],
     "parameterLogic": [
-      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance、Fast，Depth 与 Formant 不同；带宽: 18kHz；攻击: 1ms；释放: 10ms；Formant: -15.8/-8.40dB；既有整理待复核：8 / 40 Bands、7.9 dB / 14 dB，需回原视频复核；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance、Fast，Depth 与 Formant 不同；带宽: 18kHz；攻击: 1ms；释放: 10ms；Formant: -15.8 / -8.40（界面未标单位）；既有整理待复核：8 / 40 Bands、7.9 dB / 14 dB，需回原视频复核；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
       "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
       "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
       "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",

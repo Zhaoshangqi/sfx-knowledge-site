@@ -63,7 +63,7 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
       { name: 'Carrier mode', value: 'Enhance', direction: '两路均启用以增加谐波内容', evidence: '画面确认' },
       { name: 'Bandwidth', value: '18 kHz', direction: '两路共用', evidence: '画面确认' },
       { name: 'Attack', value: '1 ms', direction: '快速跟随', evidence: '画面确认' },
-      { name: 'Formant', value: '-15.8 / -8.40 dB', direction: '分别调整两路音色', evidence: '画面确认' }
+      { name: 'Formant', value: '-15.8 / -8.40（界面未标单位）', direction: '分别调整两路音色', evidence: '画面确认' }
     ],
     result: '双路通过不同 Formant 和 Depth 提供互补调制细节；既有笔记记录的 8 / 40 Bands 对比需回原视频复核。',
     interactions: '后级 OTT 再平衡高、中、低频能量；Vocoder 本身先决定颗粒密度和调制身份。',
@@ -103,6 +103,11 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
   for (const value of disputedStrings) {
     assert.match(value, /既有整理待复核|需回原视频复核|一般规律/);
   }
+  assert.ok(!visibleStrings.some((value) => value.includes('Mono深度')));
+  assert.ok(!visibleStrings.some((value) => /Formant[^，。;；]*dB/.test(value)));
+  const formantParameter = explicit.parameters.find((parameter) => parameter.name === 'Formant');
+  assert.ok(formantParameter);
+  assert.doesNotMatch(formantParameter.value, /dB/);
 
   const vocoderStep = record.steps[3];
   assert.match(vocoderStep.detail, /关联截图确认两路均为 40 Bands、7\.9 dB/);
@@ -111,6 +116,11 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
   assert.ok(vocoderStep.params.includes('关联截图 Bands: 40 / 40'));
   assert.ok(vocoderStep.params.includes('关联截图 Level: 7.9 dB / 7.9 dB'));
   assert.ok(vocoderStep.params.includes('既有整理待复核: 8 / 40 Bands, 7.9 dB / 14 dB'));
+
+  const vocoderCoreStep = record.steps[4];
+  assert.match(vocoderCoreStep.detail, /Stereo Depth 120% \/ 105%/);
+  assert.ok(vocoderCoreStep.params.includes('Stereo Depth: 120% / 105%'));
+  assert.ok(vocoderCoreStep.params.includes('Formant: -15.8 / -8.40（界面未标单位）'));
 
   const vocoderPlugin = record.plugins.find((plugin) => plugin.name === 'iZotope Vocoder');
   assert.ok(vocoderPlugin);
