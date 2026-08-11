@@ -2348,10 +2348,11 @@
       {
         "order": 4,
         "name": "配置双Vocoder实例并联处理",
-        "detail": "在混音链中串联两个Vocoder效果器实例，左实例设置8频段(7.9dB增益)产生粗糙感，右实例设置40频段(14dB增益)产生平滑感，两者均采用Enhance载波模式、Fast响应速度。",
+        "detail": "关联截图确认两路均为 40 Bands、7.9 dB，并均启用 Enhance 载波模式和 Fast 响应；两路有不同 Depth 与 Formant，以形成互补调制。较少频段通常更粗糙、较多频段通常更平滑是一般规律；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。",
         "params": [
-          "左实例: 8频段, 7.9dB",
-          "右实例: 40频段, 14dB",
+          "关联截图 Bands: 40 / 40",
+          "关联截图 Level: 7.9 dB / 7.9 dB",
+          "既有整理待复核: 8 / 40 Bands, 7.9 dB / 14 dB",
           "带宽: 18kHz",
           "攻击: 1ms",
           "释放: 10ms",
@@ -2472,7 +2473,7 @@
       }
     ],
     "coreIdeas": [
-      "Vocoder双实例并联处理：8频段(粗糙感)与40频段(平滑感)的左右组合，两者均使用Enhance载波模式+18kHz带宽，创建更丰富的谐波层次",
+      "Vocoder双实例并联处理：关联截图确认两路均为 40 Bands、Level 7.9 dB，均使用 Enhance 与 Fast，且 Depth/Formant 不同；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
       "OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围",
       "SampHold采样保持滤波器产生步进式频率调制和'颗粒感'音色，是创建异质感电子游戏音效的关键Serum滤波器预设",
       "效果链顺序实验：先压缩后失真产生温暖感，先失真后压缩产生激进感——两种顺序截然不同",
@@ -2495,13 +2496,11 @@
       },
       {
         "name": "iZotope Vocoder",
-        "purpose": "双实例并联调制音色，8频段+40频段组合创建复杂谐波结构",
+        "purpose": "双实例并联调制音色。关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance/Fast，Depth 与 Formant 不同；既有整理待复核的 8 / 40 Bands 与 7.9 dB / 14 dB 需回原视频复核。",
         "settings": [
-          "实例1: 8频段, 7.9dB, Enhance",
-          "实例2: 40频段, 14dB, Enhance",
-          "带宽: 18kHz",
-          "攻击: 1ms",
-          "Formant: -15.8/-8.40dB"
+          "关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier mode Enhance、Fast；Depth 与 Formant 不同。",
+          "既有整理待复核：8 / 40 Bands 与 7.9 dB / 14 dB；需回原视频复核。",
+          "Bandwidth: 18kHz；Attack: 1ms；Release: 10ms；Formant: -15.8/-8.40dB。"
         ]
       },
       {
@@ -2634,7 +2633,7 @@
     ],
     "materials": [],
     "tips": [
-      "Vocoder频段数影响调制细节：8频段产生粗糙感，40频段产生平滑感，可根据需要并联两者同时使用",
+      "Vocoder频段数影响调制细节：较少频段通常更粗糙，较多频段通常更平滑，这是一般规律；关联截图只确认两路 40 Bands，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
       "OTT的三频段输出增益应匹配整体混音电平，8.4-10.3dB输出范围是游戏音效的安全值",
       "SampHold滤波器与延迟级联时，延迟时间5-30ms能创建自然步进感而不产生明显回声",
       "Vocoder的Enhance模式相比基础Vocoder模式提供更多谐波内容，适合需要更多能量的游戏音效",
@@ -2662,11 +2661,11 @@
       "主要处理点：Serum合成器 / iZotope Vocoder / OTT多频段压缩器 / iZotope Trash 2 / Ozone Distortion / Soundtoys Little Radiator 1566A / NI Transient Master。学习时给每颗插件标注“清理、塑形、运动、空间、动态、响度或导出”之一。",
       "源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。",
       "本条核心问题：视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、iZotope Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。",
-      "Vocoder双实例并联处理：8频段(粗糙感)与40频段(平滑感)的左右组合，两者均使用Enhance载波模式+18kHz带宽，创建更丰富的谐波层次",
+      "Vocoder双实例并联处理：关联截图确认两路 40 Bands、Level 7.9 dB、Enhance/Fast 与不同 Depth/Formant；较少频段更粗糙、较多频段更平滑是一般规律，既有整理待复核的 8 / 40 与 7.9 dB / 14 dB 需回原视频复核。",
       "OTT多频段动态均衡通过独立处理三个频段(高2.5kHz/中/低88.3Hz)来平衡能量，输出8.4-10.3dB是游戏音效安全范围"
     ],
     "parameterLogic": [
-      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；实例1: 8频段, 7.9dB, Enhance；实例2: 40频段, 14dB, Enhance；带宽: 18kHz；攻击: 1ms；Formant: -15.8/-8.40dB；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
+      "记录到的参数线索：OSC A: Monster 6；OSC B: Trilobyte 2；SampHold Filter: CUTOFF/RES/DRIVE/PAN/MIX；关联截图确认两路均为 40 Bands、Level 7.9 dB、Enhance、Fast，Depth 与 Formant 不同；带宽: 18kHz；攻击: 1ms；释放: 10ms；Formant: -15.8/-8.40dB；既有整理待复核：8 / 40 Bands、7.9 dB / 14 dB，需回原视频复核；High: 2.50kHz, +5.4~+14.6dB；Low: 88.3Hz, +8.8~+14.5dB。复刻时不要机械抄数值，先听这些参数改变的是攻击、频段、空间、运动还是响度。",
       "动态/失真类处理先听瞬态是否更有力，再听 sustain 是否被压扁；调参顺序优先 Drive/Threshold，再看 Attack/Release 和 Mix。",
       "空间/延迟类处理要避开攻击瞬间，优先把湿声放在尾部或单独层；先调 decay/feedback，再调 wet 与高低切。",
       "音高/合成/采样类处理先明确它补的是瞬态、运动、tonal、texture 还是 tail；随机化只放在需要生命感的层。",

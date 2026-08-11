@@ -83,6 +83,40 @@ test('d8ed0db4 exposes the dual iZotope Vocoder use and replaces its legacy row'
   assert.ok(explicit.limitations);
   assertScreenshotAsset(record, explicit);
 
+  const visibleStrings = [];
+  function collectVisibleStrings(value) {
+    if (typeof value === 'string') {
+      visibleStrings.push(value);
+      return;
+    }
+    if (Array.isArray(value)) {
+      value.forEach(collectVisibleStrings);
+      return;
+    }
+    if (value && typeof value === 'object') {
+      Object.values(value).forEach(collectVisibleStrings);
+    }
+  }
+  [record.steps, record.coreIdeas, record.plugins, record.tips, record.chainFocus, record.parameterLogic].forEach(collectVisibleStrings);
+  const disputedStrings = visibleStrings.filter((value) => /8频段|14dB|8 \/ 40|7\.9 dB \/ 14 dB/.test(value));
+  assert.ok(disputedStrings.length, 'expected the visible record text to retain qualified historical notes');
+  for (const value of disputedStrings) {
+    assert.match(value, /既有整理待复核|需回原视频复核|一般规律/);
+  }
+
+  const vocoderStep = record.steps[3];
+  assert.match(vocoderStep.detail, /关联截图确认两路均为 40 Bands、7\.9 dB/);
+  assert.match(vocoderStep.detail, /Enhance.*Fast/);
+  assert.match(vocoderStep.detail, /不同 Depth.*Formant/);
+  assert.ok(vocoderStep.params.includes('关联截图 Bands: 40 / 40'));
+  assert.ok(vocoderStep.params.includes('关联截图 Level: 7.9 dB / 7.9 dB'));
+  assert.ok(vocoderStep.params.includes('既有整理待复核: 8 / 40 Bands, 7.9 dB / 14 dB'));
+
+  const vocoderPlugin = record.plugins.find((plugin) => plugin.name === 'iZotope Vocoder');
+  assert.ok(vocoderPlugin);
+  assert.ok(vocoderPlugin.settings.includes('关联截图：两路均为 40 Bands、Level 7.9 dB，Carrier mode Enhance、Fast；Depth 与 Formant 不同。'));
+  assert.ok(vocoderPlugin.settings.includes('既有整理待复核：8 / 40 Bands 与 7.9 dB / 14 dB；需回原视频复核。'));
+
   const uses = SfxKnowledgeModel.buildEffectUses([record]);
   const normalized = uses.find((use) => use.id === expected.id);
   assert.ok(normalized);
