@@ -136,6 +136,16 @@ test("the enrichment tool no longer generates practice fields or course suffixes
     [existingPlugin]
   );
 
+  const abletonVocoderPlugins = enrichment.detectPlugins(
+    emptyRecord,
+    "I opened Ableton Vocoder and set Bands 40."
+  );
+  assert.equal(abletonVocoderPlugins.length, 1);
+  assert.equal(abletonVocoderPlugins[0].name, "Ableton Vocoder");
+  assert.match(abletonVocoderPlugins[0].purpose, /需画面确认/);
+  assert.deepEqual(enrichment.detectPlugins(emptyRecord, "I used a vocoder on this layer."), []);
+  assert.deepEqual(enrichment.detectPlugins(emptyRecord, "I opened iZotope Vocoder."), []);
+
   const explicitPlugins = enrichment.detectPlugins(
     emptyRecord,
     "At 01:20 I opened Little AlterBoy. Formant -4 semitones and Mix 40%."
@@ -213,6 +223,53 @@ test("the enrichment tool no longer generates practice fields or course suffixes
   assert.deepEqual(explicitResult.record.steps, []);
   assert.equal(explicitResult.record.plugins[0].name, "Little AlterBoy");
   assert.doesNotMatch(JSON.stringify(explicitResult.record), /EQ \/ modulation|A\/B|旁路/);
+
+  const historicalChainFocus = ["人工链路：保留原始结构。", "人工链路：尾音单独控制。"];
+  const historicalParameterLogic = ["人工参数：Mix 由画面确认。"];
+  const historicalRecord = {
+    ...emptyRecord,
+    chainFocus: historicalChainFocus,
+    parameterLogic: historicalParameterLogic
+  };
+  const historicalNoEvidenceResult = enrichment.enrichRecord(historicalRecord, {
+    transcript: falsePositiveTranscript
+  });
+  assert.strictEqual(historicalNoEvidenceResult.record, historicalRecord);
+  assert.strictEqual(historicalNoEvidenceResult.record.chainFocus, historicalChainFocus);
+  assert.strictEqual(historicalNoEvidenceResult.record.parameterLogic, historicalParameterLogic);
+
+  const appendedHistoryResult = enrichment.enrichRecord(historicalRecord, {
+    transcript: "I opened Little AlterBoy. Formant -4 semitones."
+  });
+  const newChainFact = explicitResult.record.chainFocus[0];
+  const newParameterFact = explicitResult.record.parameterLogic[0];
+  assert.deepEqual(appendedHistoryResult.record.chainFocus, [
+    ...historicalChainFocus,
+    newChainFact
+  ]);
+  assert.deepEqual(appendedHistoryResult.record.parameterLogic, [
+    ...historicalParameterLogic,
+    newParameterFact
+  ]);
+  assert.deepEqual(historicalRecord.chainFocus, historicalChainFocus);
+  assert.deepEqual(historicalRecord.parameterLogic, historicalParameterLogic);
+
+  const duplicateChainFocus = [
+    historicalChainFocus[0],
+    newChainFact.replace("1. ", "1.  "),
+    historicalChainFocus[1]
+  ];
+  const duplicateParameterLogic = [historicalParameterLogic[0], `  ${newParameterFact}  `];
+  const deduplicatedHistoryResult = enrichment.enrichRecord(
+    {
+      ...historicalRecord,
+      chainFocus: duplicateChainFocus,
+      parameterLogic: duplicateParameterLogic
+    },
+    { transcript: "I opened Little AlterBoy. Formant -4 semitones." }
+  );
+  assert.deepEqual(deduplicatedHistoryResult.record.chainFocus, duplicateChainFocus);
+  assert.deepEqual(deduplicatedHistoryResult.record.parameterLogic, duplicateParameterLogic);
 
   const legacyPractice = ["历史字段保持原样"];
   const mergeOptions = { steps: [], plugins, learning };

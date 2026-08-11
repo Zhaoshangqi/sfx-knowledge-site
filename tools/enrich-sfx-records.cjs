@@ -25,7 +25,7 @@ const pluginCatalog = [
   { name: "Disperser", mention: /\bdisperser\b/i },
   { name: "Zynaptiq Unfilter", mention: /\bzynaptiq\s+unfilter\b/i },
   { name: "iZotope RX", mention: /\bizotope\s+rx\b/i },
-  { name: "iZotope Vocoder", mention: /\bizotope\s+vocoder\b/i },
+  { name: "Ableton Vocoder", mention: /\bableton(?:\s+live)?\s+vocoder\b/i },
   { name: "Polyverse Manipulator", mention: /\bpolyverse\s+manipulator\b/i },
   { name: "H3000 Factory", mention: /\b(?:eventide\s+)?h3000(?:\s+factory)?\b/i }
 ];
@@ -146,6 +146,25 @@ function uniqueStrings(values) {
   });
 }
 
+function appendUniqueFacts(existingFacts, newFacts) {
+  const result = Array.isArray(existingFacts) ? existingFacts.slice() : [];
+  const seen = new Set(
+    result
+      .filter((value) => typeof value === "string" && value.trim())
+      .map((value) => value.replace(/\s+/g, " ").trim())
+  );
+
+  for (const value of Array.isArray(newFacts) ? newFacts : []) {
+    if (typeof value !== "string" || !value.trim()) continue;
+    const key = value.replace(/\s+/g, " ").trim();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(value);
+  }
+
+  return result;
+}
+
 function detectPlugins(record, transcript) {
   const existingPlugins = Array.isArray(record?.plugins) ? record.plugins : [];
   const plugins = existingPlugins.map((plugin) => {
@@ -214,6 +233,15 @@ function mergeEnrichedRecord(record, { steps, plugins, learning } = {}) {
     Object.entries(learning && typeof learning === "object" && !Array.isArray(learning) ? learning : {})
       .filter(([key]) => key !== "practiceChecklist")
   );
+  const mergedLearning = {
+    ...factualLearning,
+    ...(Array.isArray(factualLearning.chainFocus)
+      ? { chainFocus: appendUniqueFacts(safeRecord.chainFocus, factualLearning.chainFocus) }
+      : {}),
+    ...(Array.isArray(factualLearning.parameterLogic)
+      ? { parameterLogic: appendUniqueFacts(safeRecord.parameterLogic, factualLearning.parameterLogic) }
+      : {})
+  };
 
   return {
     ...safeRecord,
@@ -221,7 +249,7 @@ function mergeEnrichedRecord(record, { steps, plugins, learning } = {}) {
     updateNote: `${today} 自动返工：仅补充字幕明确提及的产品名和待画面确认的定位线索；未取得证据的内容保持不变。`,
     ...(Array.isArray(steps) ? { steps } : {}),
     ...(Array.isArray(plugins) ? { plugins } : {}),
-    ...factualLearning
+    ...mergedLearning
   };
 }
 
