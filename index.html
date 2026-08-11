@@ -2577,18 +2577,18 @@
         "category": "音高与频率",
         "target": "Serum 合成音色的双路调制层",
         "chainPosition": "SampHold 之后、OTT 多频段动态之前；两个 Vocoder 实例并行组合",
-        "purpose": "用较少频段制造粗糙颗粒，用较多频段保留平滑连续度，再把两种质感组合成复杂谐波层。",
+        "purpose": "用双实例并联建立复合谐波层；较少频段通常更粗糙，较多频段通常更平滑，但本条关联截图只确认两路均为 40 Bands，具体 8 / 40 变体需回原视频复核。",
         "parameters": [
           {
             "name": "Bands",
-            "value": "8 / 40",
-            "direction": "8 段更粗糙，40 段更平滑",
+            "value": "40 / 40（关联截图）",
+            "direction": "既有视频整理记录为 8 / 40；当前关联截图未支持该差异，需回原视频复核",
             "evidence": "画面确认"
           },
           {
             "name": "Gain",
-            "value": "7.9 dB / 14 dB",
-            "direction": "分别平衡两路调制输出",
+            "value": "7.9 dB / 7.9 dB（关联截图）",
+            "direction": "既有视频整理记录为 7.9 dB / 14 dB；当前关联截图未支持该差异，需回原视频复核",
             "evidence": "画面确认"
           },
           {
@@ -2616,9 +2616,9 @@
             "evidence": "画面确认"
           }
         ],
-        "result": "两路分别提供粗糙与平滑的调制细节，组合后得到更丰富的谐波层次。",
+        "result": "双路通过不同 Formant 和 Depth 提供互补调制细节；既有笔记记录的 8 / 40 Bands 对比需回原视频复核。",
         "interactions": "后级 OTT 再平衡高、中、低频能量；Vocoder 本身先决定颗粒密度和调制身份。",
-        "limitations": "这些数值只属于视频当前 Serum 素材与双路增益关系，不作为其他素材的通用预设。",
+        "limitations": "关联截图只确认两路均为 40 Bands、7.9 dB；既有视频整理中的 8 / 40 与 7.9 dB / 14 dB 未由该帧支持，复核前不得作为画面确认值或通用预设。",
         "timestamp": "",
         "stepIndex": 3,
         "screenshotKey": "img_d43e4e82e77fb756",
@@ -2627,6 +2627,7 @@
         ],
         "evidence": [
           "画面确认",
+          "视频未展示",
           "分析推断"
         ]
       }
