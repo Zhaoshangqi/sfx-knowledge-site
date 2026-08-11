@@ -4,6 +4,10 @@ const {
   stripCourseScaffolding,
   uniqueFacts
 } = require("../src/knowledge-model.js");
+const {
+  renderEffectUse,
+  renderRecord
+} = require("./export-site-memory.cjs");
 
 const baselineCount = 62;
 const repoRoot = path.resolve(__dirname, "..");
@@ -31,7 +35,12 @@ const requiredArrays = [
   "chainFocus",
   "parameterLogic"
 ];
-const courseTailPattern = /复刻时只调一个核心旋钮|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版/;
+const courseTailPattern = /复刻时只调一个核心旋钮|复刻时只动一个核心参数并渲染 3 个强度版本|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版|练习优先/;
+const practiceFactPattern = /迁移练习假设|分析推断练习|此分类是练习假设|后续迁移练习|复刻验收/;
+const forbiddenMemoryPatterns = [
+  ["Practice Checklist section", /^### Practice Checklist$/m],
+  ["practice content", /复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习/]
+];
 
 const failures = [];
 let playlist = [];
@@ -107,12 +116,14 @@ function arrayOrEmpty(value) {
   return Array.isArray(value) ? value : [];
 }
 
-function objectOrEmpty(value) {
-  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
-}
-
 function fact(value) {
-  const cleaned = stripCourseScaffolding(value == null ? "" : value);
+  const scalar = typeof value === "string"
+    ? value
+    : typeof value === "number" && Number.isFinite(value)
+      ? String(value)
+      : "";
+  const cleaned = stripCourseScaffolding(scalar.replace(/\s+/g, " ").trim());
+  if (practiceFactPattern.test(cleaned)) return "";
   const courseTailIndex = cleaned.search(courseTailPattern);
   return courseTailIndex === -1
     ? cleaned
@@ -120,46 +131,16 @@ function fact(value) {
 }
 
 function facts(items) {
-  return uniqueFacts(uniqueFacts(arrayOrEmpty(items)).map(fact));
+  return uniqueFacts(arrayOrEmpty(items).map(fact));
 }
 
 function effectLines(effect) {
-  effect = objectOrEmpty(effect);
-  const name = fact(effect.name) || "Effect";
-  const vendor = fact(effect.vendor);
-  const id = fact(effect.id);
-  const lines = [
-    `- **${name}**${vendor ? ` (${vendor})` : ""}: ${fact(effect.purpose)}`,
-    id ? `  - Effect use ID: \`${id}\`` : "",
-    fact(effect.category) ? `  - Category: ${fact(effect.category)}` : "",
-    fact(effect.target) ? `  - Target: ${fact(effect.target)}` : "",
-    fact(effect.chainPosition) ? `  - Chain position: ${fact(effect.chainPosition)}` : ""
-  ];
+  return renderEffectUse(effect).split("\n").filter(Boolean);
+}
 
-  arrayOrEmpty(effect.parameters).forEach((parameter) => {
-    parameter = objectOrEmpty(parameter);
-    const name = fact(parameter.name) || "Parameter";
-    const value = fact(parameter.value);
-    const direction = fact(parameter.direction);
-    const evidence = fact(parameter.evidence);
-    if (!value && !direction) return;
-    lines.push(`  - ${name}: ${value}${direction ? `${value ? "; " : ""}${direction}` : ""}${evidence ? ` [${evidence}]` : ""}`);
-  });
-
-  [
-    ["Result", effect.result],
-    ["Interactions", effect.interactions],
-    ["Limits", effect.limitations]
-  ].forEach(([label, value]) => {
-    const cleaned = fact(value);
-    if (cleaned) lines.push(`  - ${label}: ${cleaned}`);
-  });
-
-  const screenshotKey = fact(effect.screenshotKey);
-  if (screenshotKey) lines.push(`  - Evidence image key: \`${screenshotKey}\``);
-  const evidence = facts(effect.evidence);
-  if (evidence.length) lines.push(`  - Evidence: ${evidence.join("; ")}`);
-  return lines.filter(Boolean);
+function normalizedBlock(value) {
+  const text = Array.isArray(value) ? value.join("\n") : String(value || "");
+  return text.replace(/\r\n/g, "\n").trimEnd();
 }
 
 function playlistItemId(item) {
@@ -576,6 +557,10 @@ function validateRequiredRecord(record, item, learningBlocks, memoryBlocks) {
 }
 
 function validateSiteMemory(memory) {
+  forbiddenMemoryPatterns.forEach(([label, pattern]) => {
+    if (pattern.test(memory)) fail(`site-video-memory.md contains forbidden ${label}`);
+  });
+
   const countMatches = [...memory.matchAll(/^Records:[ \t]*(\d+)[ \t]*$/gm)];
   if (countMatches.length !== 1) {
     fail(`site-video-memory.md must contain exactly one Records line; found ${countMatches.length}`);
@@ -606,9 +591,31 @@ function validateSiteMemory(memory) {
   if (mismatchIndex !== -1) {
     fail(
       `site-video-memory.md heading IDs/order mismatch at position ${mismatchIndex + 1}; ` +
-        `expected ${recordIds[mismatchIndex]}, found ${headingIds[mismatchIndex] || "<missing>"}`
+      `expected ${recordIds[mismatchIndex]}, found ${headingIds[mismatchIndex] || "<missing>"}`
     );
   }
+
+  records.forEach((record, index) => {
+    const block = memoryBlocks[index];
+    if (!block) return;
+    const expected = normalizedBlock(renderRecord(record));
+    const actual = normalizedBlock(block.lines);
+    if (actual === expected) return;
+
+    const expectedLines = expected.split("\n");
+    const actualLines = actual.split("\n");
+    const lineCount = Math.max(expectedLines.length, actualLines.length);
+    let difference = 0;
+    while (difference < lineCount && expectedLines[difference] === actualLines[difference]) {
+      difference += 1;
+    }
+    fail(
+      `site-video-memory.md block for ${fact(record && record.videoId) || index + 1} ` +
+        `does not exactly match exporter projection at line ${difference + 1}; ` +
+        `expected ${JSON.stringify(expectedLines[difference] || "<end>")}, ` +
+        `found ${JSON.stringify(actualLines[difference] || "<end>")}`
+    );
+  });
   return memoryBlocks;
 }
 

@@ -42,8 +42,14 @@ test("exports dry goods and structured effect uses without practice sections", (
       purpose: "建立双路调制。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。",
       settings: ["Bands 8 / 40"]
     }],
-    materials: ["每次只改一个维度并输出弱/中/强三版，做 matched-loudness A/B。"],
-    chainFocus: ["EQ -> Vocoder。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。"],
+    materials: [
+      "每次只改一个维度并输出弱/中/强三版，做 matched-loudness A/B。",
+      "复刻时只动一个核心参数并渲染 3 个强度版本，避免同时改太多导致无法判断贡献。"
+    ],
+    chainFocus: [
+      "EQ -> Vocoder。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。",
+      "迁移练习假设：这条课程任务不应进入干货导出。"
+    ],
     parameterLogic: ["Bands 8 / 40。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。"],
     practiceChecklist: ["不应进入导出"],
     keywords: ["Vocoder"],
@@ -55,18 +61,78 @@ test("exports dry goods and structured effect uses without practice sections", (
       target: "合成层",
       chainPosition: "EQ 之后",
       purpose: "改变调制细节",
-      parameters: [{ name: "Bands", value: "8 / 40", evidence: "画面确认" }],
+      parameters: [
+        {
+          name: "Bands",
+          value: "8 / 40",
+          direction: "更多频段更平滑",
+          evidence: "画面确认"
+        },
+        { name: "Mix", direction: "向下收干湿比", evidence: "作者口述" }
+      ],
+      result: "瞬态更清楚",
+      interactions: "与前级 EQ 联动",
       limitations: "只属于当前素材",
-      evidence: ["画面确认"]
+      screenshotKey: "video-a-vocoder",
+      evidence: ["画面确认", "作者口述"]
     }]
   });
 
   assert.match(output, /### Structured Effect Uses/);
   assert.match(output, /Effect use ID: `video-a:vocoder:1`/);
   assert.match(output, /\*\*Vocoder\*\*/);
-  assert.match(output, /Bands: 8 \/ 40 \[画面确认\]/);
+  assert.match(output, /Bands: 8 \/ 40; 更多频段更平滑 \[画面确认\]/);
+  assert.match(output, /Mix: 向下收干湿比 \[作者口述\]/);
+  assert.match(output, /Result: 瞬态更清楚/);
+  assert.match(output, /Interactions: 与前级 EQ 联动/);
+  assert.match(output, /Limits: 只属于当前素材/);
+  assert.match(output, /Evidence image key: `video-a-vocoder`/);
+  assert.match(output, /Evidence: 画面确认; 作者口述/);
   assert.match(output, /Bands 8 \/ 40。/);
   assert.match(output, /1\. \*\*调制\*\*: 保留瞬态。/);
   assert.match(output, /\*\*Vocoder\*\*: 建立双路调制。/);
-  assert.doesNotMatch(output, /Practice Checklist|不应进入导出|弱\/中\/强三版/);
+  assert.doesNotMatch(
+    output,
+    /Practice Checklist|不应进入导出|弱\/中\/强三版|3 个强度版本|迁移练习假设|练习/
+  );
+
+  const malformed = renderRecord({
+    videoId: "video-b\n### injected-video-section",
+    title: { bad: true },
+    url: ["https://example.com/bad"],
+    source: true,
+    category: "test",
+    secondaryCategories: { bad: true },
+    summary: "摘要\n### injected-summary-section",
+    coreIdeas: [{ bad: true }, ["nested"], "可保留事实\n### injected-core-section"],
+    steps: [
+      null,
+      [],
+      {
+        order: 1,
+        name: { bad: true },
+        detail: "步骤事实\n### injected-step-section",
+        params: [{ bad: true }, ["nested"], "参数事实"]
+      }
+    ],
+    plugins: [{ name: "Plugin", purpose: { bad: true }, settings: [{ bad: true }, "设置事实"] }],
+    materials: { bad: true },
+    chainFocus: [{ bad: true }],
+    parameterLogic: [false],
+    keywords: [{ bad: true }, "keyword\n### injected-keyword-section"],
+    effectUses: [{
+      name: { bad: true },
+      parameters: [{ name: { bad: true }, value: { bad: true }, direction: ["nested"] }],
+      evidence: { bad: true }
+    }]
+  });
+  assert.doesNotMatch(malformed, /\[object Object\]|undefined|nested/);
+  assert.doesNotMatch(malformed, /^### injected-/m);
+  assert.doesNotMatch(malformed, /^\. \*\*\*\*: /m);
+
+  const productionMemory = fs.readFileSync(memoryPath, "utf8");
+  assert.doesNotMatch(
+    productionMemory,
+    /### Practice Checklist|复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习/
+  );
 });

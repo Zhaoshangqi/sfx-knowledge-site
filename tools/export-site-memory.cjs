@@ -8,7 +8,8 @@ const {
 const repoRoot = path.resolve(__dirname, "..");
 const indexPath = path.join(repoRoot, "index.html");
 const outputPath = path.join(repoRoot, "skills", "sfx-knowledge", "references", "site-video-memory.md");
-const courseTailPattern = /复刻时只调一个核心旋钮|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版/;
+const courseTailPattern = /复刻时只调一个核心旋钮|复刻时只动一个核心参数并渲染 3 个强度版本|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版|练习优先/;
+const practiceFactPattern = /迁移练习假设|分析推断练习|此分类是练习假设|后续迁移练习|复刻验收/;
 
 function readRecords() {
   const html = fs.readFileSync(indexPath, "utf8");
@@ -26,7 +27,13 @@ function objectOrEmpty(value) {
 }
 
 function fact(value) {
-  const cleaned = stripCourseScaffolding(value == null ? "" : value);
+  const scalar = typeof value === "string"
+    ? value
+    : typeof value === "number" && Number.isFinite(value)
+      ? String(value)
+      : "";
+  const cleaned = stripCourseScaffolding(scalar.replace(/\s+/g, " ").trim());
+  if (practiceFactPattern.test(cleaned)) return "";
   const courseTailIndex = cleaned.search(courseTailPattern);
   return courseTailIndex === -1
     ? cleaned
@@ -34,7 +41,7 @@ function fact(value) {
 }
 
 function facts(items) {
-  return uniqueFacts(uniqueFacts(arrayOrEmpty(items)).map(fact));
+  return uniqueFacts(arrayOrEmpty(items).map(fact));
 }
 
 function list(items, indent = "") {
@@ -100,22 +107,29 @@ function renderRecord(input) {
     "### Step / Event Map"
   ];
 
-  arrayOrEmpty(record.steps).forEach((step) => {
+  arrayOrEmpty(record.steps).forEach((step, index) => {
     step = objectOrEmpty(step);
-    lines.push(`${fact(step.order)}. **${fact(step.name)}**: ${fact(step.detail)}`);
-    if (arrayOrEmpty(step.params).length) lines.push(list(step.params, "   "));
+    const detail = fact(step.detail);
+    const params = list(step.params, "   ");
     const imageKey = fact(step.imageKey);
-    if (imageKey) lines.push(`   - Evidence image key: \`${imageKey}\``);
     const motion = objectOrEmpty(step.motion);
     const motionSource = fact(motion.src);
+    if (!detail && !params && !imageKey && !motionSource) return;
+    lines.push(`${fact(step.order) || index + 1}. **${fact(step.name) || "Step"}**: ${detail}`);
+    if (params) lines.push(params);
+    if (imageKey) lines.push(`   - Evidence image key: \`${imageKey}\``);
     if (motionSource) lines.push(`   - Motion reference: \`${motionSource}\``);
   });
 
   lines.push("", "### Plugin and Processing Notes");
   arrayOrEmpty(record.plugins).forEach((plugin) => {
     plugin = objectOrEmpty(plugin);
-    lines.push(`- **${fact(plugin.name)}**: ${fact(plugin.purpose)}`);
-    if (arrayOrEmpty(plugin.settings).length) lines.push(list(plugin.settings, "  "));
+    const name = fact(plugin.name);
+    const purpose = fact(plugin.purpose);
+    const settings = list(plugin.settings, "  ");
+    if (!name && !purpose && !settings) return;
+    lines.push(`- **${name || "Plugin"}**: ${purpose}`);
+    if (settings) lines.push(settings);
   });
 
   const effectUses = arrayOrEmpty(record.effectUses).filter((effect) => effect && typeof effect === "object" && !Array.isArray(effect));
