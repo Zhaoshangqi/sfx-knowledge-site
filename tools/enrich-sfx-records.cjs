@@ -7,18 +7,6 @@ const siteRoot = path.resolve(__dirname, "..");
 const runRoot = path.resolve(siteRoot, "..", "runs");
 const indexPath = path.join(siteRoot, "index.html");
 const today = "2026-05-16";
-const forceAuto = process.argv.includes("--force-auto");
-
-const html = fs.readFileSync(indexPath, "utf8");
-const recordsMatch = html.match(/const records = ([\s\S]*?);\r?\n\r?\n\s*const imageManifest/);
-const manifestMatch = html.match(/const imageManifest = ([\s\S]*?);\r?\n\s*const categoryById/);
-
-if (!recordsMatch || !manifestMatch) {
-  throw new Error("Could not locate records or imageManifest in index.html");
-}
-
-const records = JSON.parse(recordsMatch[1]);
-const imageManifest = JSON.parse(manifestMatch[1]);
 
 const pluginCatalog = [
   ["Snap Heap", /snap\s*heap|snap\s*peep|snap\s*heat/i, "模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。"],
@@ -175,7 +163,7 @@ function evenlyPick(items, count) {
   return [...new Set(picked)];
 }
 
-function ensureImage(src, key) {
+function ensureImage(src, key, imageManifest) {
   const fullRel = `assets/shots/full/${key}.webp`;
   const previewRel = `assets/shots/preview/${key}.webp`;
   const fullPath = path.join(siteRoot, fullRel);
@@ -226,6 +214,19 @@ function extractNumbers(context) {
   return [...new Set(matches.map((item) => item.trim()).filter(Boolean))].slice(0, 5);
 }
 
+function normalizeSettingFact(value) {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/[\s。．.!！?？;；,，:：、…]+$/u, "").trim();
+}
+
+function joinSettingFacts(settings, limit = Infinity) {
+  return (Array.isArray(settings) ? settings : [])
+    .slice(0, limit)
+    .map(normalizeSettingFact)
+    .filter(Boolean)
+    .join("；");
+}
+
 function detectPlugins(record, transcript) {
   const noisySetting = /hey there my name|sound designer over|penguin grenad|fairly commonly used plug-in suites/i;
   const fromExisting = new Map((record.plugins || []).map((plugin) => [plugin.name, {
@@ -262,7 +263,7 @@ function detectPlugins(record, transcript) {
       settings: [
         "视频未显示具体数值：先在干声和处理声之间做响度匹配 A/B。",
         "参数顺序：速度/音高 -> EQ 清理 -> 调制运动 -> 空间/动态 -> 导出。",
-        "每次只调一个主要参数，记录听感变化。"
+        "参数页未显示时，只记录可确认的处理角色与调节方向；具体数值保持未知。"
       ]
     });
   }
@@ -338,7 +339,7 @@ function enrichLearning(record, plugins, transcript) {
   const print = "复杂链路要多次打印中间结果：干声、第一次处理、调制变体、最终混音都保留，方便回退和二次采样。";
   const visual = "参数跟画面动作绑定：运动速度、滤波开合、pitch ramp、尾音长度都应该回答画面正在发生什么。";
   const parameter = plugins.slice(0, 8).map((plugin) => {
-    const settings = plugin.settings.slice(0, 2).join("；");
+    const settings = joinSettingFacts(plugin.settings, 2);
     return `${plugin.name} 参数逻辑：${settings || "视频未显示具体数值"}`;
   });
   const nums = extractNumbers(transcript).slice(0, 8);
@@ -370,7 +371,44 @@ function enrichLearning(record, plugins, transcript) {
   };
 }
 
-function enrichRecord(record) {
+function mergeEnrichedRecord(record, { steps, plugins, learning } = {}) {
+  const safeRecord = record && typeof record === "object" ? record : {};
+  const safeSteps = Array.isArray(steps) ? steps : [];
+  const safePlugins = Array.isArray(plugins) ? plugins : [];
+  const factualLearning = Object.fromEntries(
+    Object.entries(learning && typeof learning === "object" ? learning : {})
+      .filter(([key]) => key !== "practiceChecklist")
+  );
+  const pluginNames = safePlugins.map((plugin) => plugin.name);
+
+  return {
+    ...safeRecord,
+    updatedAt: today,
+    updateNote: `${today} 返工：补充完整效果链顺序、插件用途、参数证据、调节方向和高清步骤截图；未展示具体数值的内容保持未知。`,
+    steps: safeSteps,
+    plugins: safePlugins,
+    coreIdeas: [
+      ...(Array.isArray(safeRecord.coreIdeas) ? safeRecord.coreIdeas : []),
+      `这条效果链的处理顺序为：${pluginNames.slice(0, 6).join(" -> ")}；每一步都要确认它改变的是素材身份、运动、频谱、空间、动态还是响度。`,
+      "声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。"
+    ].filter(Boolean).slice(0, 8),
+    tips: [
+      ...(Array.isArray(safeRecord.tips) ? safeRecord.tips : []),
+      "干声和处理声先做响度匹配，再逐个 bypass 插件确认贡献。",
+      "截图里的轨道顺序比单个 preset 更重要：先看层的角色，再看插件。"
+    ].filter(Boolean).slice(0, 10),
+    keywords: [...new Set([
+      ...(Array.isArray(safeRecord.keywords) ? safeRecord.keywords : []),
+      "deep_rework",
+      "effect_chain",
+      "parameter_logic",
+      "step_screenshots"
+    ])],
+    ...factualLearning
+  };
+}
+
+function enrichRecord(record, { forceAuto = false, imageManifest = {} } = {}) {
   const shots = (record.steps || []).filter((step) => step.imageKey).length;
   const settings = (record.plugins || []).reduce((sum, plugin) => sum + ((plugin.settings || []).length), 0);
   const wasAutoEnriched = (record.keywords || []).includes("deep_rework");
@@ -387,7 +425,7 @@ function enrichRecord(record) {
   pickedFrames.forEach((frame, index) => {
     const hash = crypto.createHash("sha1").update(`${record.videoId}:${frame}:${index}`).digest("hex").slice(0, 10);
     const key = `deep-${sanitizeId(record.videoId)}-${String(index + 1).padStart(2, "0")}-${hash}`;
-    ensureImage(frame, key);
+    ensureImage(frame, key, imageManifest);
     imageKeys.push(key);
   });
 
@@ -396,76 +434,75 @@ function enrichRecord(record) {
   const plugins = detectPlugins(record, transcript);
   const steps = buildSteps(record, transcript, imageKeys, plugins);
   const learning = enrichLearning(record, plugins, transcript);
-  const pluginNames = plugins.map((plugin) => plugin.name);
-
-  const enriched = {
-    ...record,
-    updatedAt: today,
-    updateNote: `${today} 返工：补充完整效果链顺序、插件用途、参数证据、调节方向和高清步骤截图；未展示具体数值的内容保持未知。`,
-    steps,
-    plugins,
-    coreIdeas: [
-      ...(record.coreIdeas || []),
-      `这条效果链的处理顺序为：${pluginNames.slice(0, 6).join(" -> ")}；每一步都要确认它改变的是素材身份、运动、频谱、空间、动态还是响度。`,
-      "声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。"
-    ].filter(Boolean).slice(0, 8),
-    tips: [
-      ...(record.tips || []),
-      "干声和处理声先做响度匹配，再逐个 bypass 插件确认贡献。",
-      "截图里的轨道顺序比单个 preset 更重要：先看层的角色，再看插件。"
-    ].filter(Boolean).slice(0, 10),
-    keywords: [...new Set([...(record.keywords || []), "deep_rework", "effect_chain", "parameter_logic", "step_screenshots"])],
-    ...learning
-  };
+  const enriched = mergeEnrichedRecord(record, { steps, plugins, learning });
 
   return { record: enriched, changed: true, generated: imageKeys.length };
 }
 
-let changed = 0;
-let generated = 0;
-const enrichedRecords = records.map((record) => {
-  const result = enrichRecord(record);
-  if (result.changed) changed += 1;
-  generated += result.generated;
-  return result.record;
-});
+function runEnrichment() {
+  const forceAuto = process.argv.includes("--force-auto");
+  const html = fs.readFileSync(indexPath, "utf8");
+  const recordsMatch = html.match(/const records = ([\s\S]*?);\r?\n\r?\n\s*const imageManifest/);
+  const manifestMatch = html.match(/const imageManifest = ([\s\S]*?);\r?\n\s*const categoryById/);
 
-for (const record of enrichedRecords) {
-  for (const step of record.steps || []) {
-    const key = step.imageKey;
-    if (!key || imageManifest[key]) continue;
-    const candidates = [".webp", ".jpg", ".png"].map((ext) => ({
-      previewRel: `assets/shots/preview/${key}${ext}`,
-      fullRel: `assets/shots/full/${key}${ext}`
-    }));
-    const found = candidates.find((candidate) =>
-      fs.existsSync(path.join(siteRoot, candidate.previewRel)) &&
-      fs.existsSync(path.join(siteRoot, candidate.fullRel))
-    );
-    if (found) imageManifest[key] = { preview: found.previewRel, full: found.fullRel };
+  if (!recordsMatch || !manifestMatch) {
+    throw new Error("Could not locate records or imageManifest in index.html");
   }
+
+  const records = JSON.parse(recordsMatch[1]);
+  const imageManifest = JSON.parse(manifestMatch[1]);
+  let changed = 0;
+  let generated = 0;
+  const enrichedRecords = records.map((record) => {
+    const result = enrichRecord(record, { forceAuto, imageManifest });
+    if (result.changed) changed += 1;
+    generated += result.generated;
+    return result.record;
+  });
+
+  for (const record of enrichedRecords) {
+    for (const step of record.steps || []) {
+      const key = step.imageKey;
+      if (!key || imageManifest[key]) continue;
+      const candidates = [".webp", ".jpg", ".png"].map((ext) => ({
+        previewRel: `assets/shots/preview/${key}${ext}`,
+        fullRel: `assets/shots/full/${key}${ext}`
+      }));
+      const found = candidates.find((candidate) =>
+        fs.existsSync(path.join(siteRoot, candidate.previewRel)) &&
+        fs.existsSync(path.join(siteRoot, candidate.fullRel))
+      );
+      if (found) imageManifest[key] = { preview: found.previewRel, full: found.fullRel };
+    }
+  }
+
+  const nextRecords = JSON.stringify(enrichedRecords, null, 2);
+  const nextManifest = JSON.stringify(imageManifest, null, 2);
+  const nextHtml = html.replace(recordsMatch[1], nextRecords).replace(manifestMatch[1], nextManifest);
+  fs.writeFileSync(indexPath, nextHtml, "utf8");
+
+  const report = enrichedRecords.map((record) => {
+    const shots = (record.steps || []).filter((step) => step.imageKey).length;
+    const settings = (record.plugins || []).reduce((sum, plugin) => sum + ((plugin.settings || []).length), 0);
+    return {
+      videoId: record.videoId,
+      title: record.title,
+      steps: record.steps.length,
+      shots,
+      plugins: record.plugins.length,
+      settings,
+      chainFocus: (record.chainFocus || []).length,
+      parameterLogic: (record.parameterLogic || []).length
+    };
+  });
+
+  const reportPath = path.join(siteRoot, "tools", "rework-report.json");
+  fs.writeFileSync(reportPath, JSON.stringify({ changed, generated, total: enrichedRecords.length, report }, null, 2), "utf8");
+  console.log(JSON.stringify({ changed, generated, total: enrichedRecords.length, reportPath }, null, 2));
 }
 
-const nextRecords = JSON.stringify(enrichedRecords, null, 2);
-const nextManifest = JSON.stringify(imageManifest, null, 2);
-let nextHtml = html.replace(recordsMatch[1], nextRecords).replace(manifestMatch[1], nextManifest);
-fs.writeFileSync(indexPath, nextHtml, "utf8");
+if (require.main === module) {
+  runEnrichment();
+}
 
-const report = enrichedRecords.map((record) => {
-  const shots = (record.steps || []).filter((step) => step.imageKey).length;
-  const settings = (record.plugins || []).reduce((sum, plugin) => sum + ((plugin.settings || []).length), 0);
-  return {
-    videoId: record.videoId,
-    title: record.title,
-    steps: record.steps.length,
-    shots,
-    plugins: record.plugins.length,
-    settings,
-    chainFocus: (record.chainFocus || []).length,
-    parameterLogic: (record.parameterLogic || []).length
-  };
-});
-
-const reportPath = path.join(siteRoot, "tools", "rework-report.json");
-fs.writeFileSync(reportPath, JSON.stringify({ changed, generated, total: enrichedRecords.length, report }, null, 2), "utf8");
-console.log(JSON.stringify({ changed, generated, total: enrichedRecords.length, reportPath }, null, 2));
+module.exports = { enrichLearning, mergeEnrichedRecord, runEnrichment };

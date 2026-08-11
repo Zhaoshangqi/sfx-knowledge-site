@@ -49,17 +49,95 @@ test("the enrichment tool no longer generates practice fields or course suffixes
     /A\/B 练习/,
     /复刻时/,
     /按效果链学习/,
-    /教程式拆解/
+    /教程式拆解/,
+    /每次只调一个主要参数，记录听感变化/
   ].forEach((pattern) => assert.doesNotMatch(source, pattern));
 
-  assert.ok(
-    source.includes("`${index + 1}. ${plugin.name}：${plugin.purpose}`"),
-    "chain entries should contain only order, plugin name, and purpose"
-  );
-  assert.match(source, /settings \|\| "视频未显示具体数值"/);
-  assert.match(source, /return \{\s*chainFocus: chainFocus\.slice\(0, 12\),\s*parameterLogic: parameterLogic\.slice\(0, 10\),?\s*\};/);
   assert.match(
     source,
-    /补充完整效果链顺序、插件用途、参数证据、调节方向和高清步骤截图；未展示具体数值的内容保持未知。/
+    /参数页未显示时，只记录可确认的处理角色与调节方向；具体数值保持未知。/
   );
+
+  const indexPath = path.resolve(__dirname, "..", "index.html");
+  const modulePath = require.resolve("../tools/enrich-sfx-records.cjs");
+  const mtimeBeforeImport = fs.statSync(indexPath).mtimeMs;
+  const originalReadFileSync = fs.readFileSync;
+  const originalWriteFileSync = fs.writeFileSync;
+  const writes = [];
+  let indexReads = 0;
+  let enrichment;
+  let importError;
+
+  delete require.cache[modulePath];
+  fs.readFileSync = function guardedRead(file, ...args) {
+    if (typeof file === "string" && path.resolve(file) === indexPath) {
+      indexReads += 1;
+      throw new Error("requiring enrichment must not read index.html");
+    }
+    return originalReadFileSync.call(this, file, ...args);
+  };
+  fs.writeFileSync = function guardedWrite(file, ...args) {
+    writes.push(typeof file === "string" ? path.resolve(file) : String(file));
+    throw new Error("requiring enrichment must not write files");
+  };
+
+  try {
+    enrichment = require(modulePath);
+  } catch (error) {
+    importError = error;
+  } finally {
+    fs.readFileSync = originalReadFileSync;
+    fs.writeFileSync = originalWriteFileSync;
+  }
+
+  assert.equal(fs.statSync(indexPath).mtimeMs, mtimeBeforeImport);
+  assert.equal(indexReads, 0, "requiring the module must not read index.html");
+  assert.deepEqual(writes, [], "requiring the module must not write any files");
+  assert.ifError(importError);
+  assert.equal(typeof enrichment.enrichLearning, "function");
+  assert.equal(typeof enrichment.mergeEnrichedRecord, "function");
+
+  const plugins = [
+    {
+      name: "Vocoder",
+      purpose: "建立双路调制。",
+      settings: ["  Bands 40。  ", " Level 7.9 dB；； "]
+    },
+    {
+      name: "No Values",
+      purpose: "保留证据边界。",
+      settings: ["   ", "；；"]
+    }
+  ];
+  const learning = enrichment.enrichLearning(
+    { category: "scifi", materials: ["合成层"] },
+    plugins,
+    ""
+  );
+
+  assert.ok(learning.chainFocus.includes("1. Vocoder：建立双路调制。"));
+  assert.ok(learning.parameterLogic.includes("Vocoder 参数逻辑：Bands 40；Level 7.9 dB"));
+  assert.ok(learning.parameterLogic.includes("No Values 参数逻辑：视频未显示具体数值"));
+  assert.doesNotMatch(JSON.stringify(learning), /(?:。|\.|；|;)\s*；/);
+  assert.equal(Object.prototype.hasOwnProperty.call(learning, "practiceChecklist"), false);
+
+  const legacyPractice = ["历史字段保持原样"];
+  const mergeOptions = { steps: [], plugins, learning };
+  const legacyMerged = enrichment.mergeEnrichedRecord(
+    {
+      title: "旧记录",
+      coreIdeas: [],
+      tips: [],
+      keywords: [],
+      practiceChecklist: legacyPractice
+    },
+    mergeOptions
+  );
+  const freshMerged = enrichment.mergeEnrichedRecord(
+    { title: "新记录", coreIdeas: [], tips: [], keywords: [] },
+    mergeOptions
+  );
+
+  assert.strictEqual(legacyMerged.practiceChecklist, legacyPractice);
+  assert.equal(Object.prototype.hasOwnProperty.call(freshMerged, "practiceChecklist"), false);
 });
