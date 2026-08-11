@@ -16,12 +16,16 @@ const entries = generated.entries.map((entry) => ({
   match: entry.match
 }));
 
-const catalogJs = `const pluginReferenceCatalog = ${JSON.stringify(entries, null, 2)};\n\n    `;
+const eol = html.includes("\r\n") ? "\r\n" : "\n";
+const catalogJson = JSON.stringify(entries, null, 2).replace(/\n/g, eol);
+const catalogJs = `const pluginReferenceCatalog = ${catalogJson};${eol}${eol}    `;
+const existingCatalogPattern = /const pluginReferenceCatalog = [\s\S]*?;\r?\n\r?\n\s*const categoryById = /;
+const categoryAfterObjectPattern = /};\r?\n\r?\n\s*const categoryById = /;
 let next = html;
-if (/const pluginReferenceCatalog = [\s\S]*?;\n\n\s*const categoryById = /.test(next)) {
-  next = next.replace(/const pluginReferenceCatalog = [\s\S]*?;\n\n\s*const categoryById = /, `${catalogJs}const categoryById = `);
+if (existingCatalogPattern.test(next)) {
+  next = next.replace(existingCatalogPattern, `${catalogJs}const categoryById = `);
 } else {
-  next = next.replace(/};\n\n\s*const categoryById = /, `};\n\n    ${catalogJs}const categoryById = `);
+  next = next.replace(categoryAfterObjectPattern, `};${eol}${eol}    ${catalogJs}const categoryById = `);
 }
 
 if (next === html) {

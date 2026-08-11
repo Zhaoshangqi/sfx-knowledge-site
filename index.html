@@ -31105,16 +31105,6 @@
     "match": "官方参考截图，已按插件名与厂商页面核对"
   },
   {
-    "title": "Kilohearts Triad",
-    "source": "https://kilohearts.com/products/triad",
-    "aliases": [
-      "Kilohearts Triad"
-    ],
-    "preview": "assets/plugin-shots/preview/kilohearts-triad.webp",
-    "full": "assets/plugin-shots/full/kilohearts-triad.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
     "title": "Xfer Serum 2",
     "source": "https://xferrecords.com/products/serum-2",
     "aliases": [
@@ -31379,26 +31369,6 @@
     "match": "官方参考截图，已按插件名与厂商页面核对"
   },
   {
-    "title": "Native Instruments Supercharger GT",
-    "source": "https://www.native-instruments.com/en/products/komplete/effects/supercharger-gt/",
-    "aliases": [
-      "Supercharger GT"
-    ],
-    "preview": "assets/plugin-shots/preview/native-supercharger-gt.webp",
-    "full": "assets/plugin-shots/full/native-supercharger-gt.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
-    "title": "Native Instruments Transient Master",
-    "source": "https://www.native-instruments.com/en/products/komplete/effects/transient-master/",
-    "aliases": [
-      "NI Transient Master"
-    ],
-    "preview": "assets/plugin-shots/preview/native-transient-master.webp",
-    "full": "assets/plugin-shots/full/native-transient-master.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
     "title": "Sound Particles",
     "source": "https://soundparticles.com/products/sound-particles",
     "aliases": [
@@ -31406,16 +31376,6 @@
     ],
     "preview": "assets/plugin-shots/preview/sound-particles.webp",
     "full": "assets/plugin-shots/full/sound-particles.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
-    "title": "BOOM Library Whoosh Machine",
-    "source": "https://www.boomlibrary.com/sound-effects/whoosh-machine/",
-    "aliases": [
-      "Whoosh Machine"
-    ],
-    "preview": "assets/plugin-shots/preview/boom-whoosh-machine.webp",
-    "full": "assets/plugin-shots/full/boom-whoosh-machine.webp",
     "match": "官方参考截图，已按插件名与厂商页面核对"
   },
   {
@@ -31448,16 +31408,6 @@
     ],
     "preview": "assets/plugin-shots/preview/minimal-rift.webp",
     "full": "assets/plugin-shots/full/minimal-rift.webp",
-    "match": "官方参考截图，已按插件名与厂商页面核对"
-  },
-  {
-    "title": "Minimal Audio Rift Feedback Lite",
-    "source": "https://www.minimal.audio/products/rift-feedback-lite",
-    "aliases": [
-      "Rift Feedback Lite"
-    ],
-    "preview": "assets/plugin-shots/preview/minimal-rift-feedback-lite.webp",
-    "full": "assets/plugin-shots/full/minimal-rift-feedback-lite.webp",
     "match": "官方参考截图，已按插件名与厂商页面核对"
   },
   {
@@ -31960,6 +31910,7 @@
     }
 
     function applyHashRoute() {
+      const returningFromReader = state.view === "reader";
       const route = DualIndexNavigation.routeDecision(window.location.hash, {
         effect: (id) => effectUses.some((use) => use.id === id),
         video: (id) => records.some((record) => record.id === id)
@@ -31978,6 +31929,7 @@
       }
       showLibrary();
       render();
+      if (returningFromReader) focusLibraryModeTab();
     }
 
     function imageAsset(kind, key) {

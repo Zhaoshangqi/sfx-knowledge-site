@@ -21,9 +21,14 @@ const blockedCaptureSlugs = new Set([
   "minimal-morph-eq",
   "native-reaktor-6",
   "native-skanner-xt",
-  "wwise"
+  "wwise",
+  "kilohearts-triad",
+  "native-supercharger-gt",
+  "native-transient-master",
+  "boom-whoosh-machine",
+  "minimal-rift-feedback-lite"
 ]);
-const errorPagePattern = /Access Denied|403 ERROR|ERR_CONNECTION|无法访问此网站|正在进行安全验证|Cloudflare[\s\S]{0,200}(?:security|verification|验证)/i;
+const errorPagePattern = /Access Denied|403 ERROR|403 Forbidden|404 ERROR|404 Not Found|Page not found|ERR_CONNECTION|ERR_NAME_NOT_RESOLVED|Just a moment|无法访问此网站|正在进行安全验证|Cloudflare[\s\S]{0,200}(?:security|verification|验证)/i;
 
 const entries = [
   ["soundtoys-decapitator", "Soundtoys Decapitator", "https://www.soundtoys.com/product/decapitator/", ["Soundtoys Decapitator", "Decapitator"]],
@@ -56,7 +61,6 @@ const entries = [
   ["kilohearts-convolver", "Kilohearts Convolver", "https://kilohearts.com/products/convolver", ["Kilohearts Convolver", "Snap Heap convolver"]],
   ["kilohearts-ensemble", "Kilohearts Ensemble", "https://kilohearts.com/products/ensemble", ["Kilohearts Ensemble"]],
   ["kilohearts-pitch-shifter", "Kilohearts Pitch Shifter", "https://kilohearts.com/products/pitch_shifter", ["Kilohearts pitch shifter"]],
-  ["kilohearts-triad", "Kilohearts Triad", "https://kilohearts.com/products/triad", ["Kilohearts Triad"]],
 
   ["xfer-serum-2", "Xfer Serum 2", "https://xferrecords.com/products/serum-2", ["Serum 2", "Xfer Serum 2", "Serum", "Serum合成器"]],
   ["xfer-ott", "Xfer OTT", "https://xferrecords.com/freeware", ["OTT", "OTT-style compression", "OTT多频段压缩器"]],
@@ -88,17 +92,13 @@ const entries = [
   ["melda-mratio", "Melda MRatio", "https://www.meldaproduction.com/MRatio", ["MRatio"]],
   ["melda-mlimitermb", "Melda MLimiterMB", "https://www.meldaproduction.com/MLimiterMB", ["MLimiterMB"]],
 
-  ["native-supercharger-gt", "Native Instruments Supercharger GT", "https://www.native-instruments.com/en/products/komplete/effects/supercharger-gt/", ["Supercharger GT"]],
-  ["native-transient-master", "Native Instruments Transient Master", "https://www.native-instruments.com/en/products/komplete/effects/transient-master/", ["NI Transient Master"]],
 
   ["tonsturm-traveler", "Tonsturm Traveler", "https://tonsturm.com/product/traveler", ["Tonsturm Traveler", "Traveler"]],
   ["sound-particles", "Sound Particles", "https://soundparticles.com/products/sound-particles", ["Sound Particles"]],
-  ["boom-whoosh-machine", "BOOM Library Whoosh Machine", "https://www.boomlibrary.com/sound-effects/whoosh-machine/", ["Whoosh Machine"]],
   ["glitchmachines-cataract", "Glitchmachines Cataract", "https://glitchmachines.com/products/cataract/", ["Glitchmachines Cataract", "Cataract"]],
   ["unfiltered-indent-2", "Unfiltered Audio Indent 2", "https://www.plugin-alliance.com/en/products/unfiltered_audio_indent_2.html", ["Unfiltered Audio Indent 2", "Indent 2"]],
 
   ["minimal-rift", "Minimal Audio Rift", "https://www.minimal.audio/products/rift", ["Rift"]],
-  ["minimal-rift-feedback-lite", "Minimal Audio Rift Feedback Lite", "https://www.minimal.audio/products/rift-feedback-lite", ["Rift Feedback Lite"]],
   ["vital", "Vital", "https://vital.audio/", ["Vital"]],
   ["reveal-spire", "Reveal Sound Spire", "https://reveal-sound.com/plug-ins/spire", ["Spire"]],
 
@@ -131,7 +131,7 @@ function capture(entry) {
   const [slug, title, source] = entry;
   if (blockedCaptureSlugs.has(slug)) throw new Error(`${title}: known error-page capture is blocked`);
   const raw = path.join(rawDir, `${slug}.png`);
-  if (fs.existsSync(raw) && fs.statSync(raw).size > 20000) return raw;
+  const cached = fs.existsSync(raw) && fs.statSync(raw).size > 20000;
   const probe = run(chrome, [
     "--headless=new",
     "--disable-gpu",
@@ -146,6 +146,7 @@ function capture(entry) {
   if (probe.status !== 0 || errorPagePattern.test(probeOutput)) {
     throw new Error(`${title}: official page probe returned an error or access gate`);
   }
+  if (cached) return raw;
   const result = run(chrome, [
     "--headless=new",
     "--disable-gpu",
