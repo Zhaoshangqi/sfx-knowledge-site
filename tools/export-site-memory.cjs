@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const {
-  isGeneratedStepScaffolding,
   stripCourseScaffolding,
   uniqueFacts
 } = require("../src/knowledge-model.js");
@@ -9,8 +8,6 @@ const {
 const repoRoot = path.resolve(__dirname, "..");
 const indexPath = path.join(repoRoot, "index.html");
 const outputPath = path.join(repoRoot, "skills", "sfx-knowledge", "references", "site-video-memory.md");
-const courseTailPattern = /复习(?:这条)?时先看每一步负责的声音角色，再看插件名称|复刻时只调一个核心旋钮|复刻时只动一个核心参数并渲染 3 个强度版本|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版|练习优先/;
-const practiceFactPattern = /迁移练习假设|分析推断练习|此分类是练习假设|后续迁移练习|复刻验收/;
 
 function readRecords() {
   const html = fs.readFileSync(indexPath, "utf8");
@@ -34,11 +31,7 @@ function fact(value) {
       ? String(value)
       : "";
   const cleaned = stripCourseScaffolding(scalar.replace(/\s+/g, " ").trim());
-  if (practiceFactPattern.test(cleaned)) return "";
-  const courseTailIndex = cleaned.search(courseTailPattern);
-  return courseTailIndex === -1
-    ? cleaned
-    : cleaned.slice(0, courseTailIndex).replace(/[，、；;:\s]+$/u, "").trim();
+  return cleaned;
 }
 
 function facts(items) {
@@ -110,14 +103,13 @@ function renderRecord(input) {
 
   arrayOrEmpty(record.steps).forEach((step, index) => {
     step = objectOrEmpty(step);
-    if (isGeneratedStepScaffolding(step.detail)) return;
     const detail = fact(step.detail);
     const params = list(step.params, "   ");
     const imageKey = fact(step.imageKey);
     const motion = objectOrEmpty(step.motion);
     const motionSource = fact(motion.src);
     if (!detail && !params && !imageKey && !motionSource) return;
-    lines.push(`${fact(step.order) || index + 1}. **${fact(step.name) || "Step"}**: ${detail}`);
+    lines.push(`${fact(step.order) || index + 1}. **${fact(step.name) || "Step"}**:${detail ? ` ${detail}` : ""}`);
     if (params) lines.push(params);
     if (imageKey) lines.push(`   - Evidence image key: \`${imageKey}\``);
     if (motionSource) lines.push(`   - Motion reference: \`${motionSource}\``);

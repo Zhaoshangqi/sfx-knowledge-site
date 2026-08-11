@@ -638,30 +638,6 @@
       "match": "官方参考截图，已按插件名与厂商页面核对"
     },
     {
-      "slug": "native-reaktor-6",
-      "title": "Native Instruments Reaktor 6",
-      "source": "https://www.native-instruments.com/en/products/komplete/synths/reaktor-6/",
-      "aliases": [
-        "Reaktor 6"
-      ],
-      "preview": "assets/plugin-shots/preview/native-reaktor-6.webp",
-      "full": "assets/plugin-shots/full/native-reaktor-6.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
-      "slug": "native-skanner-xt",
-      "title": "Native Instruments Skanner XT",
-      "source": "https://www.native-instruments.com/en/products/komplete/synths/skanner-xt/",
-      "aliases": [
-        "Skanner XT",
-        "SkannerXT",
-        "Skanner"
-      ],
-      "preview": "assets/plugin-shots/preview/native-skanner-xt.webp",
-      "full": "assets/plugin-shots/full/native-skanner-xt.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
       "slug": "native-supercharger-gt",
       "title": "Native Instruments Supercharger GT",
       "source": "https://www.native-instruments.com/en/products/komplete/effects/supercharger-gt/",
@@ -752,17 +728,6 @@
       "match": "官方参考截图，已按插件名与厂商页面核对"
     },
     {
-      "slug": "minimal-morph-eq",
-      "title": "Minimal Audio Morph EQ",
-      "source": "https://www.minimal.audio/products/morph-eq",
-      "aliases": [
-        "Morph EQ"
-      ],
-      "preview": "assets/plugin-shots/preview/minimal-morph-eq.webp",
-      "full": "assets/plugin-shots/full/minimal-morph-eq.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
       "slug": "vital",
       "title": "Vital",
       "source": "https://vital.audio/",
@@ -784,17 +749,6 @@
       ],
       "preview": "assets/plugin-shots/preview/cockos-reaplugs.webp",
       "full": "assets/plugin-shots/full/cockos-reaplugs.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
-      "slug": "wwise",
-      "title": "Audiokinetic Wwise",
-      "source": "https://www.audiokinetic.com/en/wwise/overview/",
-      "aliases": [
-        "Wwise"
-      ],
-      "preview": "assets/plugin-shots/preview/wwise.webp",
-      "full": "assets/plugin-shots/full/wwise.webp",
       "match": "官方参考截图，已按插件名与厂商页面核对"
     },
     {
@@ -852,17 +806,6 @@
       ],
       "preview": "assets/plugin-shots/preview/paulxstretch.webp",
       "full": "assets/plugin-shots/full/paulxstretch.webp",
-      "match": "官方参考截图，已按插件名与厂商页面核对"
-    },
-    {
-      "slug": "soundhack-pitch-delay",
-      "title": "SoundHack Pitch Delay",
-      "source": "https://www.soundhack.com/freeware/",
-      "aliases": [
-        "SoundHack Pitch Delay"
-      ],
-      "preview": "assets/plugin-shots/preview/soundhack-pitch-delay.webp",
-      "full": "assets/plugin-shots/full/soundhack-pitch-delay.webp",
       "match": "官方参考截图，已按插件名与厂商页面核对"
     },
     {

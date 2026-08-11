@@ -10,6 +10,20 @@ const catalogPath = path.join(root, "assets", "plugin-shots", "catalog.json");
 
 const chrome = process.env.CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const ffmpeg = process.env.FFMPEG_PATH || "ffmpeg";
+const blockedCaptureSlugs = new Set([
+  "izotope-stutter-edit-2",
+  "izotope-rx",
+  "izotope-ozone",
+  "izotope-trash",
+  "izotope-vocalsynth",
+  "ableton-vocoder",
+  "soundhack-pitch-delay",
+  "minimal-morph-eq",
+  "native-reaktor-6",
+  "native-skanner-xt",
+  "wwise"
+]);
+const errorPagePattern = /Access Denied|403 ERROR|ERR_CONNECTION|无法访问此网站|正在进行安全验证|Cloudflare[\s\S]{0,200}(?:security|verification|验证)/i;
 
 const entries = [
   ["soundtoys-decapitator", "Soundtoys Decapitator", "https://www.soundtoys.com/product/decapitator/", ["Soundtoys Decapitator", "Decapitator"]],
@@ -74,8 +88,6 @@ const entries = [
   ["melda-mratio", "Melda MRatio", "https://www.meldaproduction.com/MRatio", ["MRatio"]],
   ["melda-mlimitermb", "Melda MLimiterMB", "https://www.meldaproduction.com/MLimiterMB", ["MLimiterMB"]],
 
-  ["native-reaktor-6", "Native Instruments Reaktor 6", "https://www.native-instruments.com/en/products/komplete/synths/reaktor-6/", ["Reaktor 6"]],
-  ["native-skanner-xt", "Native Instruments Skanner XT", "https://www.native-instruments.com/en/products/komplete/synths/skanner-xt/", ["Skanner XT", "SkannerXT", "Skanner"]],
   ["native-supercharger-gt", "Native Instruments Supercharger GT", "https://www.native-instruments.com/en/products/komplete/effects/supercharger-gt/", ["Supercharger GT"]],
   ["native-transient-master", "Native Instruments Transient Master", "https://www.native-instruments.com/en/products/komplete/effects/transient-master/", ["NI Transient Master"]],
 
@@ -87,18 +99,15 @@ const entries = [
 
   ["minimal-rift", "Minimal Audio Rift", "https://www.minimal.audio/products/rift", ["Rift"]],
   ["minimal-rift-feedback-lite", "Minimal Audio Rift Feedback Lite", "https://www.minimal.audio/products/rift-feedback-lite", ["Rift Feedback Lite"]],
-  ["minimal-morph-eq", "Minimal Audio Morph EQ", "https://www.minimal.audio/products/morph-eq", ["Morph EQ"]],
   ["vital", "Vital", "https://vital.audio/", ["Vital"]],
   ["reveal-spire", "Reveal Sound Spire", "https://reveal-sound.com/plug-ins/spire", ["Spire"]],
 
   ["cockos-reaplugs", "Cockos ReaPlugs", "https://www.reaper.fm/reaplugs/", ["Cockos ReaPitch", "ReaPitch", "ReaEQ"]],
-  ["wwise", "Audiokinetic Wwise", "https://www.audiokinetic.com/en/wwise/overview/", ["Wwise"]],
   ["serato-pitchntime", "Serato Pitch 'n Time Pro", "https://serato.com/pitchntime-pro", ["Serato Pitch 'n Time Pro"]],
   ["blue-cat-chorus", "Blue Cat Chorus", "https://www.bluecataudio.com/Products/Product_Chorus/", ["Blue Cat Chorus"]],
   ["brainworx-bx-subsynth", "Brainworx bx_subsynth", "https://www.plugin-alliance.com/en/products/bx_subsynth.html", ["Brainworx Bx_Subsynth", "bx_subsynth"]],
   ["sixth-sample-deelay", "Sixth Sample Deelay", "https://sixthsample.com/deelay/", ["Deelay"]],
   ["paulxstretch", "PaulXStretch", "https://sonosaurus.com/paulxstretch/", ["PaulXStretch", "PaulStretch"]],
-  ["soundhack-pitch-delay", "SoundHack Pitch Delay", "https://www.soundhack.com/freeware/", ["SoundHack Pitch Delay"]],
   ["sonic-academy-kick-3", "Sonic Academy Kick 3", "https://www.sonicacademy.com/products/kick-3", ["Kick 3"]],
   ["slate-infinity-bass", "Slate Digital Infinity Bass", "https://slatedigital.com/infinity-bass/", ["Slate Infinity Bass"]],
   ["twisted-tools-s-layer", "Twisted Tools S-Layer", "https://twistedtools.com/shop/reaktor/s-layer/", ["S-Layer", "Reaktor 6 S-Layer"]]
@@ -120,8 +129,23 @@ function run(command, args, options = {}) {
 
 function capture(entry) {
   const [slug, title, source] = entry;
+  if (blockedCaptureSlugs.has(slug)) throw new Error(`${title}: known error-page capture is blocked`);
   const raw = path.join(rawDir, `${slug}.png`);
   if (fs.existsSync(raw) && fs.statSync(raw).size > 20000) return raw;
+  const probe = run(chrome, [
+    "--headless=new",
+    "--disable-gpu",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--ignore-certificate-errors",
+    `--user-data-dir=${path.join(root, `.chrome-plugin-probe-${slug}`)}`,
+    "--dump-dom",
+    source
+  ], { timeout: 30000 });
+  const probeOutput = `${probe.stdout || ""}\n${probe.stderr || ""}`;
+  if (probe.status !== 0 || errorPagePattern.test(probeOutput)) {
+    throw new Error(`${title}: official page probe returned an error or access gate`);
+  }
   const result = run(chrome, [
     "--headless=new",
     "--disable-gpu",

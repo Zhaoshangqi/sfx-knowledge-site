@@ -168,9 +168,11 @@ test('effect rows open independent uses and can return to a video', () => {
 
 test('tablet effect rows collapse and the reader return control handles keyboard activation', () => {
   assert.match(indexHtml, /@media \(max-width: 820px\) \{[\s\S]*?\.effect-use-row \{\s*grid-template-columns: 1fr;/);
-  assert.match(indexHtml, /function returnToLibrary\(\) \{[\s\S]*?writeHashRoute\(\{ view: state\.mode \}, true\);[\s\S]*?render\(\);/);
+  assert.match(indexHtml, /function focusLibraryModeTab\(\) \{[\s\S]*?requestAnimationFrame[\s\S]*?\.focus\(\{ preventScroll: true \}\)/);
+  assert.match(indexHtml, /function returnToLibrary\(\) \{[\s\S]*?writeHashRoute\(\{ view: state\.mode \}, true\);[\s\S]*?render\(\);[\s\S]*?focusLibraryModeTab\(\);/);
   assert.match(indexHtml, /backToLibraryEl\.addEventListener\("click", returnToLibrary\)/);
   assert.match(indexHtml, /backToLibraryEl\.addEventListener\("keydown", \(event\) => \{[\s\S]*?\["Enter", " "\]\.includes\(event\.key\)[\s\S]*?event\.preventDefault\(\);[\s\S]*?returnToLibrary\(\);/);
+  assert.match(indexHtml, /if \(event\.key === "Escape" && state\.view === "reader"\) \{\s*returnToLibrary\(\);\s*\}/);
 });
 
 test('video cards are keyboard links and move focus into the reader', () => {
@@ -220,7 +222,7 @@ test('uses conservative shared cleaners for factual detail arrays', () => {
       order: 1,
       name: '自动模板',
       detail: '通用说明。本条的主要链路可以按 EQ -> Reverb 来读。视频证据：raw transcript',
-      params: ['角色：自动模板'],
+      params: ['角色：自动模板', '链路参考：EQ -> Reverb'],
       imageKey: 'generated-image'
     }, {
       order: 2,
@@ -231,6 +233,12 @@ test('uses conservative shared cleaners for factual detail arrays', () => {
     }]
   })).steps;
   assert.deepEqual(stepProjection, [{
+    order: 1,
+    name: '自动模板',
+    detail: '',
+    params: ['角色：自动模板', '链路参考：EQ -> Reverb'],
+    imageKey: 'generated-image'
+  }, {
     order: 2,
     name: '保留步骤',
     detail: '画面确认：作者先做减法 EQ。',
@@ -239,9 +247,14 @@ test('uses conservative shared cleaners for factual detail arrays', () => {
   }]);
 
   const productionProjection = records().map((record) => detailData.project(record));
+  assert.equal(
+    productionProjection.reduce((total, record) => total + record.steps.length, 0),
+    records().reduce((total, record) => total + record.steps.length, 0),
+    'dry-goods projection must not delete complete video steps'
+  );
   assert.doesNotMatch(
     JSON.stringify(productionProjection),
-    /分析推断练习|迁移练习|弱\/中\/强三版|本条的主要链路可以按|视频证据：/
+    /分析推断练习|迁移练习|练习优先使用|此分类是练习假设|弱\/中\/强三版|本条的主要链路可以按|视频证据：/
   );
 });
 

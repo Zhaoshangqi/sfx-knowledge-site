@@ -193,14 +193,14 @@ test('upy3d1em exposes the Polyverse Manipulator use and replaces its legacy row
       { name: 'Formant', value: '-4.41', direction: '向下改变共振峰', evidence: '画面确认' },
       { name: 'Dry/Wet', value: '63%', direction: '保留干声主体', evidence: '画面确认' }
     ],
-    result: '获得非自然的大型怪异感，但不会只剩刺耳的高频共振或明显插件音色。',
+    result: '作者口述：100% wet 会锁到刺耳高频共振；回到 63% 后保留原始 boom 主体，同时获得新的 pitch/formant 身份。',
     interactions: '与 Shade 的开关、playback rate 和 pitch 变化一起用于批量打印可挑选的身份变体。',
-    limitations: '视频明确指出 100% wet 会锁到刺耳高频共振；63% 只适用于当前 boom，不应机械照抄。',
+    limitations: '作者口述：100% wet 会锁到刺耳高频共振；画面确认当前值为 63%。该数值只适用于当前 boom，不应机械照抄。',
     timestamp: '',
     stepIndex: 13,
     screenshotKey: 'noah-boom-manipulator-pitch-formant',
     replacesPluginIndexes: [11],
-    evidence: ['画面确认']
+    evidence: ['画面确认', '作者口述']
   };
   const explicit = record.effectUses.find((use) => use.id === expected.id);
 

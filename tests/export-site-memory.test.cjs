@@ -13,8 +13,10 @@ const memoryPath = path.join(
 );
 const memoryMtimeBeforeImport = fs.statSync(memoryPath).mtimeMs;
 const { renderRecord } = require("../tools/export-site-memory.cjs");
+const exportSource = fs.readFileSync(path.join(__dirname, "..", "tools", "export-site-memory.cjs"), "utf8");
 
 test("exports dry goods and structured effect uses without practice sections", () => {
+  assert.doesNotMatch(exportSource, /courseTailPattern|practiceFactPattern/);
   assert.equal(typeof renderRecord, "function", "importing must expose renderRecord without exporting production memory");
   assert.equal(
     fs.statSync(memoryPath).mtimeMs,
@@ -116,7 +118,9 @@ test("exports dry goods and structured effect uses without practice sections", (
   assert.match(output, /效果链事实。/);
   assert.match(output, /### Key Decisions and Evidence Boundaries/);
   assert.match(output, /这些数值只属于当前素材，不可外推为通用阈值。/);
-  assert.doesNotMatch(output, /自动课程模板步骤|generated-template-image/);
+  assert.match(output, /2\. \*\*自动课程模板步骤\*\*/);
+  assert.match(output, /Evidence image key: `generated-template-image`/);
+  assert.doesNotMatch(output, /本条的主要链路可以按|raw transcript/);
   assert.doesNotMatch(
     output,
     /Practice Checklist|不应进入导出|弱\/中\/强三版|3 个强度版本|迁移练习假设|练习|复习|视频证据|字幕\/画面线索|可确认的数值\/范围|A\/B：旁路本步骤|具体数值未完整显示/

@@ -35,8 +35,6 @@ const requiredArrays = [
   "chainFocus",
   "parameterLogic"
 ];
-const courseTailPattern = /复习(?:这条)?时先看每一步负责的声音角色，再看插件名称|复刻时只调一个核心旋钮|复刻时只动一个核心参数并渲染 3 个强度版本|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版|练习优先/;
-const practiceFactPattern = /迁移练习假设|分析推断练习|此分类是练习假设|后续迁移练习|复刻验收/;
 const forbiddenMemoryPatterns = [
   ["Practice Checklist section", /^### Practice Checklist$/m],
   ["practice content", /复习|复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习/]
@@ -123,11 +121,7 @@ function fact(value) {
       ? String(value)
       : "";
   const cleaned = stripCourseScaffolding(scalar.replace(/\s+/g, " ").trim());
-  if (practiceFactPattern.test(cleaned)) return "";
-  const courseTailIndex = cleaned.search(courseTailPattern);
-  return courseTailIndex === -1
-    ? cleaned
-    : cleaned.slice(0, courseTailIndex).replace(/[，、；;:\s]+$/u, "").trim();
+  return cleaned;
 }
 
 function facts(items) {

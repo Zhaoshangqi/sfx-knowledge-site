@@ -1302,11 +1302,11 @@ Records: 82
   - Pitch: 1.44; 向上改变音高身份 [画面确认]
   - Formant: -4.41; 向下改变共振峰 [画面确认]
   - Dry/Wet: 63%; 保留干声主体 [画面确认]
-  - Result: 获得非自然的大型怪异感，但不会只剩刺耳的高频共振或明显插件音色。
+  - Result: 作者口述：100% wet 会锁到刺耳高频共振；回到 63% 后保留原始 boom 主体，同时获得新的 pitch/formant 身份。
   - Interactions: 与 Shade 的开关、playback rate 和 pitch 变化一起用于批量打印可挑选的身份变体。
-  - Limits: 视频明确指出 100% wet 会锁到刺耳高频共振；63% 只适用于当前 boom，不应机械照抄。
+  - Limits: 作者口述：100% wet 会锁到刺耳高频共振；画面确认当前值为 63%。该数值只适用于当前 boom，不应机械照抄。
   - Evidence image key: `noah-boom-manipulator-pitch-formant`
-  - Evidence: 画面确认
+  - Evidence: 画面确认; 作者口述
 
 ### Materials / Layer Sources
 - CTDS2 HIT EXPLOSION Hard Rock.wav
@@ -1358,27 +1358,48 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **普通野外录音当生态底料**:
+   - 角色：普通野外录音当生态底料
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-6xUsp9K61Nc-01-be7d7cc220`
+2. **播放率拉慢改变物种尺度**:
+   - 角色：播放率拉慢改变物种尺度
+   - 链路参考：EQ
+   - 可见/字幕数值：0.4
+   - Evidence image key: `deep-6xUsp9K61Nc-02-6cdc598ed8`
+3. **EQ 先清掉现实录音瑕疵**:
+   - 角色：EQ 先清掉现实录音瑕疵
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-6xUsp9K61Nc-03-5b9bec0639`
 4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。
    - 角色：清理现实瑕疵
    - 链路参考：Little AlterBoy / pitch-formant
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-04-b41ee73d1c`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。
    - 角色：分层建立景深
    - 链路参考：Playback rate / item rate
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-05-4022c08cff`
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。
    - 角色：加入缓慢运动
    - 链路参考：EQ
    - 可见/字幕数值：0.4
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-06-593d33f023`
+7. **控制频谱密度**:
+   - 角色：控制频谱密度
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-6xUsp9K61Nc-07-22c740db97`
+8. **做循环和变体**:
+   - 角色：做循环和变体
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-6xUsp9K61Nc-08-fed4fab196`
+9. **空间与距离**:
+   - 角色：空间与距离
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-6xUsp9K61Nc-09-6454f3a9af`
 10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。
    - 角色：响度和动态
    - 链路参考：EQ
    - 可见/字幕数值：0.4
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-6xUsp9K61Nc-10-fa5c4863d0`
 
 ### Plugin and Processing Notes
@@ -1434,21 +1455,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **从 whoosh 预设建立运动骨架**:
+   - 角色：从 whoosh 预设建立运动骨架
+   - 链路参考：Wave Warper 2
+   - Evidence image key: `deep--pmOXv31j6s-01-a5fe0cb335`
+2. **替换模块音频而不是只调预设**:
+   - 角色：替换模块音频而不是只调预设
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep--pmOXv31j6s-02-62a309825c`
 3. **XY/radius 做丝滑体积和速度变化**: 用反向、item rate、LFO gain、滤波或 pitch ramp 做施法手势，让声音跟画面运动同步。
    - 角色：XY/radius 做丝滑体积和速度变化
    - 链路参考：Wave Warper 2
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-03-c242aa8fdc`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep--pmOXv31j6s-04-9a28afce9e`
 5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。
    - 角色：增加随机运动
    - 链路参考：Wave Warper 2
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-05-86a4740006`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep--pmOXv31j6s-06-d1e1ec8a9f`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Wave Warper 2
+   - Evidence image key: `deep--pmOXv31j6s-07-c367572b5f`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep--pmOXv31j6s-08-fd6342f75c`
 9. **整理频段和动态**: 用 EQ、多段动态、upward expansion 或 limiter 把过度处理后的生命力找回来，避免全程一块糊。
    - 角色：整理频段和动态
    - 链路参考：Wave Warper 2
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep--pmOXv31j6s-09-c755a51a58`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep--pmOXv31j6s-10-dc6f5393b7`
 
 ### Plugin and Processing Notes
 - **Wave Warper 2**: 核心动态处理器，用预设运动和自定义源素材生成丝滑 whoosh。
@@ -1496,6 +1542,10 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **气泡录音提供液体起点**:
+   - 角色：气泡录音提供液体起点
+   - 链路参考：Manipulator
+   - Evidence image key: `deep-ZjRnoIezCnA-01-d96087e3f9`
 2. **Manipulator 强化谐波和低端**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。
    - 角色：Manipulator 强化谐波和低端
    - 链路参考：Crystallizer
@@ -1504,6 +1554,10 @@ Records: 82
    - 角色：Crystallizer 加结晶尾巴
    - 链路参考：Transmutator
    - Evidence image key: `deep-ZjRnoIezCnA-03-9ff6865784`
+4. **清理现实瑕疵**:
+   - 角色：清理现实瑕疵
+   - 链路参考：Manipulator
+   - Evidence image key: `deep-ZjRnoIezCnA-04-2438d6e165`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。
    - 角色：分层建立景深
    - 链路参考：Crystallizer
@@ -1512,6 +1566,10 @@ Records: 82
    - 角色：加入缓慢运动
    - 链路参考：Transmutator
    - Evidence image key: `deep-ZjRnoIezCnA-06-8e0fb75b6d`
+7. **控制频谱密度**:
+   - 角色：控制频谱密度
+   - 链路参考：Manipulator
+   - Evidence image key: `deep-ZjRnoIezCnA-07-e69e133f19`
 8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。
    - 角色：做循环和变体
    - 链路参考：Crystallizer
@@ -1520,6 +1578,10 @@ Records: 82
    - 角色：空间与距离
    - 链路参考：Transmutator
    - Evidence image key: `deep-ZjRnoIezCnA-09-2758dc8432`
+10. **响度和动态**:
+   - 角色：响度和动态
+   - 链路参考：Manipulator
+   - Evidence image key: `deep-ZjRnoIezCnA-10-01c2cbf735`
 
 ### Plugin and Processing Notes
 - **Manipulator**: 放大气泡的谐波、低频和怪异身份。
@@ -1573,6 +1635,14 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **狗低吼提供真实喉咙纹理**:
+   - 角色：狗低吼提供真实喉咙纹理
+   - 链路参考：Manipulator
+   - Evidence image key: `deep-ruFsZPu3qO0-01-b52a857305`
+2. **Manipulator 调整谐波和粗糙度**:
+   - 角色：Manipulator 调整谐波和粗糙度
+   - 链路参考：Pitch shifting / item pitch
+   - Evidence image key: `deep-ruFsZPu3qO0-02-792f8a1aef`
 3. **再 pitch down 放大体型**: 去掉不需要的现实噪声，剪出有表情的片段；差的剪辑会让后续处理显得像插件演示。
    - 角色：再 pitch down 放大体型
    - 链路参考：Little AlterBoy / pitch-formant
@@ -1589,6 +1659,14 @@ Records: 82
    - 角色：叠加材质细节
    - 链路参考：Little AlterBoy / pitch-formant
    - Evidence image key: `deep-ruFsZPu3qO0-06-52a5f5ebb3`
+7. **空间和身体感**:
+   - 角色：空间和身体感
+   - 链路参考：Manipulator
+   - Evidence image key: `deep-ruFsZPu3qO0-07-1075bbfb09`
+8. **动态和清晰度**:
+   - 角色：动态和清晰度
+   - 链路参考：Pitch shifting / item pitch
+   - Evidence image key: `deep-ruFsZPu3qO0-08-3946ebd5a7`
 9. **做变体和表情库**: 渲染 alert、attack、pain、idle、death 或 effort 变体，游戏里不要只有一个大叫。
    - 角色：做变体和表情库
    - 链路参考：Little AlterBoy / pitch-formant
@@ -1646,6 +1724,10 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **用 drone 或普通音频喂插件**:
+   - 角色：用 drone 或普通音频喂插件
+   - 链路参考：iZotope Stutter Edit 2
+   - Evidence image key: `deep-vU0EZlUoW7g-01-a8dc2789e6`
 2. **Stutter Edit 2 现场触发预设**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。
    - 角色：Stutter Edit 2 现场触发预设
    - 链路参考：iZotope Stutter Edit 2
@@ -1666,6 +1748,10 @@ Records: 82
    - 角色：加入电子运动
    - 链路参考：iZotope Stutter Edit 2
    - Evidence image key: `deep-vU0EZlUoW7g-06-695bbdcdfc`
+7. **处理空间和距离**:
+   - 角色：处理空间和距离
+   - 链路参考：iZotope Stutter Edit 2
+   - Evidence image key: `deep-vU0EZlUoW7g-07-cd4ef2f8dd`
 8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。
    - 角色：频段分配
    - 链路参考：iZotope Stutter Edit 2
@@ -1724,18 +1810,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **空气感呼吸做上层**:
+   - 角色：空气感呼吸做上层
+   - 链路参考：Kilohearts Phase Plant / Faceplant
+   - Evidence image key: `deep-6MMXjU4mH3w-01-d93718f111`
+2. **低层 growl 下移并扩宽**:
+   - 角色：低层 growl 下移并扩宽
+   - 链路参考：Ensemble / Reverser / Reverb
+   - Evidence image key: `deep-6MMXjU4mH3w-02-db8921293e`
+3. **长尾 creature growl 进第三粒子层**:
+   - 角色：长尾 creature growl 进第三粒子层
+   - 链路参考：Phase Plant
+   - Evidence image key: `deep-6MMXjU4mH3w-03-02123e46d6`
+4. **清理现实瑕疵**:
+   - 角色：清理现实瑕疵
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-6MMXjU4mH3w-04-598626f4e1`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。
    - 角色：分层建立景深
    - 链路参考：Pro-R / reverb
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-05-8ffc97b719`
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。
    - 角色：加入缓慢运动
    - 链路参考：Disperser / phase rotation
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-6MMXjU4mH3w-06-64604c2ad0`
+7. **控制频谱密度**:
+   - 角色：控制频谱密度
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-6MMXjU4mH3w-07-57f4c937fe`
+8. **做循环和变体**:
+   - 角色：做循环和变体
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-6MMXjU4mH3w-08-0ec2881f5c`
+9. **空间与距离**:
+   - 角色：空间与距离
+   - 链路参考：Kilohearts Phase Plant / Faceplant
+   - Evidence image key: `deep-6MMXjU4mH3w-09-6d1c82f27b`
+10. **响度和动态**:
+   - 角色：响度和动态
+   - 链路参考：Ensemble / Reverser / Reverb
+   - Evidence image key: `deep-6MMXjU4mH3w-10-6c034dbcb6`
 
 ### Plugin and Processing Notes
 - **Kilohearts Phase Plant / Faceplant**: 承载多层 granular source 并统一空间处理。
@@ -1805,31 +1919,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **Love 产生 ping-pong 运动**:
+   - 角色：Love 产生 ping-pong 运动
+   - 链路参考：Love
+   - Evidence image key: `deep-HsFlJ_UJyxs-01-aa4f8dfdbc`
 2. **Snap Heap bounce/dual delay 扩展回声**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。
    - 角色：Snap Heap bounce/dual delay 扩展回声
    - 链路参考：Snap Heap
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-02-5bcb60c43c`
 3. **清理点击和 crackle**: 用 playback rate、stretch、reverse 或 granular 改变自然素材的体型和速度，普通录音会变成陌生生态。
    - 角色：清理点击和 crackle
    - 链路参考：De-click / de-crackle
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-03-7c85e1b38a`
+4. **清理现实瑕疵**:
+   - 角色：清理现实瑕疵
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-HsFlJ_UJyxs-04-7cd08b45db`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。
    - 角色：分层建立景深
    - 链路参考：Love
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-05-5d894bfee1`
+6. **加入缓慢运动**:
+   - 角色：加入缓慢运动
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-HsFlJ_UJyxs-06-45a8b20ddd`
+7. **控制频谱密度**:
+   - 角色：控制频谱密度
+   - 链路参考：De-click / de-crackle
+   - Evidence image key: `deep-HsFlJ_UJyxs-07-040cf27ad7`
 8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。
    - 角色：做循环和变体
    - 链路参考：EchoBoy / short delay
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-08-3189c43fba`
 9. **空间与距离**: reverb/early reflections 用来交代空间尺寸，远景层可宽，关键近景细节保持清楚。
    - 角色：空间与距离
    - 链路参考：Love
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-HsFlJ_UJyxs-09-635e3925a8`
+10. **响度和动态**:
+   - 角色：响度和动态
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-HsFlJ_UJyxs-10-bc346666f5`
 
 ### Plugin and Processing Notes
 - **Love**: 提供 ping-pong delay 和颗粒化空间运动。
@@ -1886,12 +2015,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **复用 shimmer patch 作为基础乐器**:
+   - 角色：复用 shimmer patch 作为基础乐器
+   - 链路参考：Faceplant granular shimmer patch
+   - Evidence image key: `deep-qB23qR9KMGY-01-b8550f4d70`
+2. **酒杯尾音跳过 transient**:
+   - 角色：酒杯尾音跳过 transient
+   - 链路参考：Transient shaper
+   - Evidence image key: `deep-qB23qR9KMGY-02-59d5d3f52f`
+3. **Lane 3 直通绕开部分处理**:
+   - 角色：Lane 3 直通绕开部分处理
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-qB23qR9KMGY-03-0eb1b14d99`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-qB23qR9KMGY-04-796c584295`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-qB23qR9KMGY-05-836cea4c17`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Faceplant granular shimmer patch
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-qB23qR9KMGY-06-fd4c447bea`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Transient shaper
+   - Evidence image key: `deep-qB23qR9KMGY-07-dec48ecee9`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-qB23qR9KMGY-08-238bfa135d`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-qB23qR9KMGY-09-ad8bc1149c`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-qB23qR9KMGY-10-f3610fe946`
 
 ### Plugin and Processing Notes
 - **Faceplant granular shimmer patch**: 复用 Day 12 的粒化 shimmer 结构生成平静魔法氛围。
@@ -1946,12 +2109,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **同一 rifle source 拆多层**:
+   - 角色：同一 rifle source 拆多层
+   - 链路参考：Beat Slammer
+   - Evidence image key: `deep-8-DGPoItgcE-01-51d7f9b152`
+2. **低冲击用尾巴增强和 slam**:
+   - 角色：低冲击用尾巴增强和 slam
+   - 链路参考：Deja Vu / Cymatics Memory / Sub Filter
+   - Evidence image key: `deep-8-DGPoItgcE-02-b79e973177`
+3. **闷击层用 Deja Vu/Memory/Sub Filter**:
+   - 角色：闷击层用 Deja Vu/Memory/Sub Filter
+   - 链路参考：Cryogen / SoundSpot Glitch / Manipulator
+   - Evidence image key: `deep-8-DGPoItgcE-03-eb51679700`
+4. **建立攻击速度**:
+   - 角色：建立攻击速度
+   - 链路参考：Ozone EQ / Inflator / limiter
+   - Evidence image key: `deep-8-DGPoItgcE-04-23744c5756`
+5. **塑造主体重量**:
+   - 角色：塑造主体重量
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-8-DGPoItgcE-05-d897b33874`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。
    - 角色：加入纹理破裂
    - 链路参考：Pro-L 2 / limiter
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-8-DGPoItgcE-06-201b61f64f`
+7. **制造运动和预备感**:
+   - 角色：制造运动和预备感
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-8-DGPoItgcE-07-e0e1bb8284`
+8. **控制空间与尾音**:
+   - 角色：控制空间与尾音
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-8-DGPoItgcE-08-b4a37b76c7`
+9. **频段让位和动态整理**:
+   - 角色：频段让位和动态整理
+   - 链路参考：Beat Slammer
+   - Evidence image key: `deep-8-DGPoItgcE-09-a2d372191e`
+10. **渲染变体并挑选**:
+   - 角色：渲染变体并挑选
+   - 链路参考：Deja Vu / Cymatics Memory / Sub Filter
+   - Evidence image key: `deep-8-DGPoItgcE-10-0bc3d53510`
 
 ### Plugin and Processing Notes
 - **Beat Slammer**: 增强低冲击尾巴和重量。
@@ -2020,10 +2217,18 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **两个 granular 模块形成 shimmer 主体**:
+   - 角色：两个 granular 模块形成 shimmer 主体
+   - 链路参考：Faceplant granular modules
+   - Evidence image key: `deep-TNnLxeWVjM0-01-84b4b45674`
 2. **Randomizer 控制 grain position**: 优先找金属、玻璃、水、布、火、机械或声学共振；真实随机性会让魔法比纯合成更有生命。
    - 角色：Randomizer 控制 grain position
    - 链路参考：Randomizer
    - Evidence image key: `deep-TNnLxeWVjM0-02-0f3566ccda`
+3. **第二 randomizer 控制动态层级**:
+   - 角色：第二 randomizer 控制动态层级
+   - 链路参考：Ensemble / Reverb / Filter
+   - Evidence image key: `deep-TNnLxeWVjM0-03-8acc2ef8a3`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。
    - 角色：做 tonal/resonant 层
    - 链路参考：Pro-R / reverb
@@ -2032,10 +2237,22 @@ Records: 82
    - 角色：增加随机运动
    - 链路参考：Faceplant granular modules
    - Evidence image key: `deep-TNnLxeWVjM0-05-9cb53c8664`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Randomizer
+   - Evidence image key: `deep-TNnLxeWVjM0-06-77a2b11945`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Ensemble / Reverb / Filter
+   - Evidence image key: `deep-TNnLxeWVjM0-07-e29b883885`
 8. **设计尾音和空间**: 尾音承担规模、神秘感和材质延续；攻击段保持干净，reverb/delay 在后半段展开。
    - 角色：设计尾音和空间
    - 链路参考：Pro-R / reverb
    - Evidence image key: `deep-TNnLxeWVjM0-08-877cda5d52`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Faceplant granular modules
+   - Evidence image key: `deep-TNnLxeWVjM0-09-d6037f764d`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。
    - 角色：组合成完整施法句子
    - 链路参考：Randomizer
@@ -2097,10 +2314,18 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **noise 当声带原料**:
+   - 角色：noise 当声带原料
+   - 链路参考：Faceplant
+   - Evidence image key: `deep-nRPOnY3a8YU-01-381f723bff`
 2. **fast randomizer 做碎语动态**: 至少拆 input click、mechanical motion、energy/body、detail、tail/loop；交互音效要让玩家知道发生了什么。
    - 角色：fast randomizer 做碎语动态
    - 链路参考：Randomizer / LFO
    - Evidence image key: `deep-nRPOnY3a8YU-02-da393e73f3`
+3. **resonator/formant 赋予口腔感**:
+   - 角色：resonator/formant 赋予口腔感
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-nRPOnY3a8YU-03-aa456f578b`
 4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。
    - 角色：建立瞬态和触感
    - 链路参考：Faceplant
@@ -2113,10 +2338,18 @@ Records: 82
    - 角色：加入电子运动
    - 链路参考：Little AlterBoy / pitch-formant
    - Evidence image key: `deep-nRPOnY3a8YU-06-fcf22ada87`
+7. **处理空间和距离**:
+   - 角色：处理空间和距离
+   - 链路参考：Faceplant
+   - Evidence image key: `deep-nRPOnY3a8YU-07-5345b447b4`
 8. **频段分配**: 低频负责重量，中频负责可读性，高频负责科技细节；每层用 EQ 留出位置。
    - 角色：频段分配
    - 链路参考：Randomizer / LFO
    - Evidence image key: `deep-nRPOnY3a8YU-08-b133b0bf68`
+9. **渲染随机变体**:
+   - 角色：渲染随机变体
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-nRPOnY3a8YU-09-803b3694e4`
 10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。
    - 角色：总线和峰值控制
    - 链路参考：Faceplant
@@ -2172,11 +2405,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **快速 envelope 塑心跳包络**:
+   - 角色：快速 envelope 塑心跳包络
+   - 链路参考：Faceplant envelope/noise
+   - Evidence image key: `deep-upBjw_iHT7E-01-a9215f70b4`
+2. **Lane 1 做低频身体**:
+   - 角色：Lane 1 做低频身体
+   - 链路参考：Pitch shifter + LFO
+   - Evidence image key: `deep-upBjw_iHT7E-02-fb6aa85b7d`
+3. **Lane 2 用 LFO 推 pitch shifter**:
+   - 角色：Lane 2 用 LFO 推 pitch shifter
+   - 链路参考：Resonator / Reverb / Phaser
+   - Evidence image key: `deep-upBjw_iHT7E-03-3292cd96b0`
+4. **音高和共振峰塑形**:
+   - 角色：音高和共振峰塑形
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-upBjw_iHT7E-04-c3f9a3e41a`
+5. **建立发声包络**:
+   - 角色：建立发声包络
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-upBjw_iHT7E-05-53979a547a`
 6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。
    - 角色：叠加材质细节
    - 链路参考：Disperser / phase rotation
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-upBjw_iHT7E-06-75152adadf`
+7. **空间和身体感**:
+   - 角色：空间和身体感
+   - 链路参考：Faceplant envelope/noise
+   - Evidence image key: `deep-upBjw_iHT7E-07-4174020a27`
+8. **动态和清晰度**:
+   - 角色：动态和清晰度
+   - 链路参考：Pitch shifter + LFO
+   - Evidence image key: `deep-upBjw_iHT7E-08-339a6f5264`
+9. **做变体和表情库**:
+   - 角色：做变体和表情库
+   - 链路参考：Resonator / Reverb / Phaser
+   - Evidence image key: `deep-upBjw_iHT7E-09-5ebe84d907`
+10. **总线微调**:
+   - 角色：总线微调
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-upBjw_iHT7E-10-f29a7dfd45`
 
 ### Plugin and Processing Notes
 - **Faceplant envelope/noise**: 生成基础心跳脉冲。
@@ -2237,25 +2505,47 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **复用 rocky texture 做传送门碎片**:
+   - 角色：复用 rocky texture 做传送门碎片
+   - 链路参考：EQ
+   - 可见/字幕数值：0.5
+   - Evidence image key: `deep-dxWLnuPUGTE-01-3f8f7b159d`
+2. **免费 glitch 素材拉慢到 0.5**:
+   - 角色：免费 glitch 素材拉慢到 0.5
+   - 链路参考：Blue Cat Chorus
+   - Evidence image key: `deep-dxWLnuPUGTE-02-65f59fae7c`
+3. **glow 层 pitch down 后加 Chorus**:
+   - 角色：glow 层 pitch down 后加 Chorus
+   - 链路参考：Pitch shifting
+   - Evidence image key: `deep-dxWLnuPUGTE-03-639b3a968c`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。
    - 角色：做 tonal/resonant 层
    - 链路参考：Pro-Q 3 / EQ
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-04-b9abde8e66`
 5. **增加随机运动**: 用 Snap Heap、Phase Plant、Tremolator、FilterFreak 或随机 LFO 让音高、滤波、音量、grain 长度发生变化。
    - 角色：增加随机运动
    - 链路参考：Little AlterBoy / pitch-formant
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-05-018ffcfdbf`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Playback rate / item rate
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-06-1eb9963826`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：EQ
+   - 可见/字幕数值：0.5
+   - Evidence image key: `deep-dxWLnuPUGTE-07-f0c573f65f`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Blue Cat Chorus
+   - Evidence image key: `deep-dxWLnuPUGTE-08-b65068d9ab`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Pitch shifting
+   - Evidence image key: `deep-dxWLnuPUGTE-09-b30f4a0c45`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。
    - 角色：组合成完整施法句子
    - 链路参考：Pro-Q 3 / EQ
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-dxWLnuPUGTE-10-1fce29ef0e`
 
 ### Plugin and Processing Notes
@@ -2315,12 +2605,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **kick/metal impact 做主 hit**:
+   - 角色：kick/metal impact 做主 hit
+   - 链路参考：Spectral Plugins Spacer
+   - Evidence image key: `deep-z_-lgxCj_Do-01-ce4cc30d6a`
+2. **Spacer 和 grain delay 做节奏压力**:
+   - 角色：Spacer 和 grain delay 做节奏压力
+   - 链路参考：Grain delay
+   - Evidence image key: `deep-z_-lgxCj_Do-02-3ecb9485e7`
+3. **低金属层和 sub impact 补体积**:
+   - 角色：低金属层和 sub impact 补体积
+   - 链路参考：Crystallizer / de-crackle
+   - Evidence image key: `deep-z_-lgxCj_Do-03-3f82f8e361`
+4. **建立攻击速度**:
+   - 角色：建立攻击速度
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-z_-lgxCj_Do-04-fbacce70d6`
+5. **塑造主体重量**:
+   - 角色：塑造主体重量
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-z_-lgxCj_Do-05-d8b7100e1b`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。
    - 角色：加入纹理破裂
    - 链路参考：EchoBoy / short delay
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-z_-lgxCj_Do-06-200538e3b6`
+7. **制造运动和预备感**:
+   - 角色：制造运动和预备感
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-z_-lgxCj_Do-07-aed6455108`
+8. **控制空间与尾音**:
+   - 角色：控制空间与尾音
+   - 链路参考：Spectral Plugins Spacer
+   - Evidence image key: `deep-z_-lgxCj_Do-08-28665b26ca`
+9. **频段让位和动态整理**:
+   - 角色：频段让位和动态整理
+   - 链路参考：Grain delay
+   - Evidence image key: `deep-z_-lgxCj_Do-09-03af8c88e0`
+10. **渲染变体并挑选**:
+   - 角色：渲染变体并挑选
+   - 链路参考：Crystallizer / de-crackle
+   - Evidence image key: `deep-z_-lgxCj_Do-10-322033b3ed`
 
 ### Plugin and Processing Notes
 - **Spectral Plugins Spacer**: 处理主 hit 的空间/频谱压力。
@@ -2385,20 +2709,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **纸板刮擦提供干燥摩擦**:
+   - 角色：纸板刮擦提供干燥摩擦
+   - 链路参考：Morph EQ
+   - Evidence image key: `deep-Vlhaimjv1Jw-01-9588532a2c`
+2. **Morph EQ Twin Peaks 做共振运动**:
+   - 角色：Morph EQ Twin Peaks 做共振运动
+   - 链路参考：Love
+   - Evidence image key: `deep-Vlhaimjv1Jw-02-1d1b995df5`
+3. **Love swarm granular 加群体颗粒**:
+   - 角色：Love swarm granular 加群体颗粒
+   - 链路参考：Rift Feedback Lite
+   - Evidence image key: `deep-Vlhaimjv1Jw-03-207e173f97`
 4. **清理现实瑕疵**: 低速/拉伸会放大噪声、雨声、风噪和共振，先用 EQ/去噪切掉不需要的现实线索。
    - 角色：清理现实瑕疵
    - 链路参考：Transmutator
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-04-b6221364a0`
 5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。
    - 角色：分层建立景深
    - 链路参考：Pro-Q 3 / EQ
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-05-1bb1811ae0`
+6. **加入缓慢运动**:
+   - 角色：加入缓慢运动
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-Vlhaimjv1Jw-06-a5e8bcd114`
+7. **控制频谱密度**:
+   - 角色：控制频谱密度
+   - 链路参考：Morph EQ
+   - Evidence image key: `deep-Vlhaimjv1Jw-07-a4a71242ee`
+8. **做循环和变体**:
+   - 角色：做循环和变体
+   - 链路参考：Love
+   - Evidence image key: `deep-Vlhaimjv1Jw-08-16958ed755`
+9. **空间与距离**:
+   - 角色：空间与距离
+   - 链路参考：Rift Feedback Lite
+   - Evidence image key: `deep-Vlhaimjv1Jw-09-4e13b8b4ca`
 10. **响度和动态**: 环境声不应持续顶满，保留轻微起伏和远近层级，给后续混音留余地。
    - 角色：响度和动态
    - 链路参考：Transmutator
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-Vlhaimjv1Jw-10-010b51a1b1`
 
 ### Plugin and Processing Notes
@@ -2461,30 +2810,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **从 Sound Effects Pro 9000 取原始输出**:
+   - 角色：从 Sound Effects Pro 9000 取原始输出
+   - 链路参考：Faceplant sampler
+   - Evidence image key: `deep-FlZ8V453BfA-01-e6b6b24cdd`
+2. **所有 gain 绑定 envelope**:
+   - 角色：所有 gain 绑定 envelope
+   - 链路参考：Randomizer
+   - Evidence image key: `deep-FlZ8V453BfA-02-a62e062828`
 3. **Randomizer 控制 pitch 和 sample offset**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。
    - 角色：Randomizer 控制 pitch 和 sample offset
    - 链路参考：Chorus / Compression / Flanger / Transient Shaper
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-03-0ed5ac4764`
 4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。
    - 角色：建立攻击速度
    - 链路参考：Little AlterBoy / pitch-formant
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-04-36d631676f`
+5. **塑造主体重量**:
+   - 角色：塑造主体重量
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-FlZ8V453BfA-05-cfec0581d0`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。
    - 角色：加入纹理破裂
    - 链路参考：Compressor / clipper
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-06-0c65df70e4`
+7. **制造运动和预备感**:
+   - 角色：制造运动和预备感
+   - 链路参考：Faceplant sampler
+   - Evidence image key: `deep-FlZ8V453BfA-07-e17524a7fd`
+8. **控制空间与尾音**:
+   - 角色：控制空间与尾音
+   - 链路参考：Randomizer
+   - Evidence image key: `deep-FlZ8V453BfA-08-aad56dabb9`
 9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。
    - 角色：频段让位和动态整理
    - 链路参考：Chorus / Compression / Flanger / Transient Shaper
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-09-701e39d195`
 10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。
    - 角色：渲染变体并挑选
    - 链路参考：Little AlterBoy / pitch-formant
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-FlZ8V453BfA-10-d210ec5130`
 
 ### Plugin and Processing Notes
@@ -2546,30 +2910,45 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **小刀素材先切片分轨**:
+   - 角色：小刀素材先切片分轨
+   - 链路参考：Manipulator
+   - Evidence image key: `deep-M0cOtthAje0-01-8a991320c9`
+2. **Reaper parallel containers 放三组 Manipulator**:
+   - 角色：Reaper parallel containers 放三组 Manipulator
+   - 链路参考：Stereo/space processor
+   - Evidence image key: `deep-M0cOtthAje0-02-03d5c3eaea`
 3. **整体 pitch down 建立巨剑尺度**: 先用 EQ、去噪或 item fade 清理不需要的 rumble、hiss 和剪辑边缘，后面失真/压缩才不会把瑕疵放大。
    - 角色：整体 pitch down 建立巨剑尺度
    - 链路参考：Pro-R / reverb
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-03-332b989085`
 4. **建立攻击速度**: 用瞬态、剪辑起点、clipper 或短包络让 hit 的第一下更明确；力道通常来自攻击速度，不是只堆低频。
    - 角色：建立攻击速度
    - 链路参考：Playback rate / item rate
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-04-2f8a35a524`
+5. **塑造主体重量**:
+   - 角色：塑造主体重量
+   - 链路参考：Manipulator
+   - Evidence image key: `deep-M0cOtthAje0-05-3bf4513f90`
 6. **加入纹理破裂**: 在主体上方放 crack、metal、debris、electric 或 granular texture，让冲击有材质信息和可辨识边缘。
    - 角色：加入纹理破裂
    - 链路参考：Stereo/space processor
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-06-bce5ed5aa7`
+7. **制造运动和预备感**:
+   - 角色：制造运动和预备感
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-M0cOtthAje0-07-993533df70`
+8. **控制空间与尾音**:
+   - 角色：控制空间与尾音
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-M0cOtthAje0-08-aec562aae7`
 9. **频段让位和动态整理**: 用 EQ、多段动态或 sidechain 让各层露出来，尤其避免 200-500 Hz 和 2-5 kHz 同时堆积。
    - 角色：频段让位和动态整理
    - 链路参考：Manipulator
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-09-a3d4e2cac5`
 10. **渲染变体并挑选**: 把中间处理打印出来，挑最有态度的瞬间再二次加工；不要只保留一条插件链里的实时输出。
    - 角色：渲染变体并挑选
    - 链路参考：Stereo/space processor
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-M0cOtthAje0-10-31602d17c9`
 
 ### Plugin and Processing Notes
@@ -2625,13 +3004,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **长水声拉伸成 ambience**:
+   - 角色：长水声拉伸成 ambience
+   - 链路参考：Blackhole
+   - Evidence image key: `deep-26TcO5_3pxo-01-7952c1d70e`
+2. **EQ 和 Blackhole 统一水下空间**:
+   - 角色：EQ 和 Blackhole 统一水下空间
+   - 链路参考：Phase / OTT / Transient Shaper
+   - Evidence image key: `deep-26TcO5_3pxo-02-5dc4c18e58`
+3. **小泡泡剪成 UI select**:
+   - 角色：小泡泡剪成 UI select
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-26TcO5_3pxo-03-caa1c2b6c4`
+4. **清理现实瑕疵**:
+   - 角色：清理现实瑕疵
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-26TcO5_3pxo-04-5d30d88dce`
+5. **分层建立景深**:
+   - 角色：分层建立景深
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-26TcO5_3pxo-05-4aba4e0551`
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。
    - 角色：加入缓慢运动
    - 链路参考：Disperser / phase rotation
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-26TcO5_3pxo-06-d62d75f1f8`
+7. **控制频谱密度**:
+   - 角色：控制频谱密度
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-26TcO5_3pxo-07-0647745aef`
+8. **做循环和变体**:
+   - 角色：做循环和变体
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-26TcO5_3pxo-08-adf885d256`
+9. **空间与距离**:
+   - 角色：空间与距离
+   - 链路参考：Blackhole
+   - Evidence image key: `deep-26TcO5_3pxo-09-aa73140f2e`
+10. **响度和动态**:
+   - 角色：响度和动态
+   - 链路参考：Phase / OTT / Transient Shaper
+   - Evidence image key: `deep-26TcO5_3pxo-10-23d8d97603`
 
 ### Plugin and Processing Notes
 - **Blackhole**: 把水层放进统一、宽阔的空间。
@@ -2700,12 +3112,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **日常布料当魔法源**:
+   - 角色：日常布料当魔法源
+   - 链路参考：Noise/Tonal separation processor
+   - Evidence image key: `deep-0orLvTF1vj8-01-cfe5c0fb74`
+2. **噪声/音调分离塑 tonal whoosh**:
+   - 角色：噪声/音调分离塑 tonal whoosh
+   - 链路参考：FilterFreak
+   - Evidence image key: `deep-0orLvTF1vj8-02-8eec9900f5`
+3. **FilterFreak 和 Wave Warper 做动作**:
+   - 角色：FilterFreak 和 Wave Warper 做动作
+   - 链路参考：Wave Warper
+   - Evidence image key: `deep-0orLvTF1vj8-03-183c78d391`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-0orLvTF1vj8-04-26946a6504`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Ravage / Ratio MB / MicroShift / OTT
+   - Evidence image key: `deep-0orLvTF1vj8-05-bb75f052b6`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-Q 3 / EQ
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-0orLvTF1vj8-06-620dd627a8`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Pro-MB / multiband dynamics
+   - Evidence image key: `deep-0orLvTF1vj8-07-40feaf6d56`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-0orLvTF1vj8-08-b1f81c1d3d`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Disperser / phase rotation
+   - Evidence image key: `deep-0orLvTF1vj8-09-fbe3b4d0f7`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-0orLvTF1vj8-10-4ccabc9d9f`
 
 ### Plugin and Processing Notes
 - **Noise/Tonal separation processor**: 减少噪声、保留 tonal 成分，得到魔法 whoosh 的音调身体。
@@ -2789,6 +3235,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **drone 和 glass ringing 铺魔法频谱**:
+   - 角色：drone 和 glass ringing 铺魔法频谱
+   - 链路参考：Crystallizer / Little Plate
+   - Evidence image key: `deep-WOl66EfI9EQ-01-c82fd3eb31`
+2. **Crystallizer/Little Plate 做 wet-only shimmer**:
+   - 角色：Crystallizer/Little Plate 做 wet-only shimmer
+   - 链路参考：Phaser
+   - Evidence image key: `deep-WOl66EfI9EQ-02-e56733f82a`
+3. **瓶子/水 plop 做生物身体**:
+   - 角色：瓶子/水 plop 做生物身体
+   - 链路参考：Ring Modulator / FilterFreak
+   - Evidence image key: `deep-WOl66EfI9EQ-03-a9d92eedac`
+4. **音高和共振峰塑形**:
+   - 角色：音高和共振峰塑形
+   - 链路参考：Soundtoys Effect Rack
+   - Evidence image key: `deep-WOl66EfI9EQ-04-27ab437b92`
+5. **建立发声包络**:
+   - 角色：建立发声包络
+   - 链路参考：FilterFreak
+   - Evidence image key: `deep-WOl66EfI9EQ-05-b07b9e142e`
+6. **叠加材质细节**:
+   - 角色：叠加材质细节
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-WOl66EfI9EQ-06-9a19f3c693`
+7. **空间和身体感**:
+   - 角色：空间和身体感
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-WOl66EfI9EQ-07-aaf8d48c22`
+8. **动态和清晰度**:
+   - 角色：动态和清晰度
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-WOl66EfI9EQ-08-7f95843eda`
+9. **做变体和表情库**:
+   - 角色：做变体和表情库
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-WOl66EfI9EQ-09-6a2dc0e0a4`
+10. **总线微调**:
+   - 角色：总线微调
+   - 链路参考：Disperser / phase rotation
+   - Evidence image key: `deep-WOl66EfI9EQ-10-066159f07f`
 
 ### Plugin and Processing Notes
 - **Crystallizer / Little Plate**: 生成玻璃化魔法 shimmer 和空间尾巴。
@@ -2866,12 +3352,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **先做 atmosphere 和脚步**:
+   - 角色：先做 atmosphere 和脚步
+   - 链路参考：Delay / Frequency Shifter
+   - Evidence image key: `deep-3yrKFdjORy0-01-cf652bb2a8`
+2. **casting 层用门吱声和 delay/frequency shifter**:
+   - 角色：casting 层用门吱声和 delay/frequency shifter
+   - 链路参考：Decapitator / Devil-Loc
+   - Evidence image key: `deep-3yrKFdjORy0-02-1d4f051796`
+3. **release 用反向 light switch**:
+   - 角色：release 用反向 light switch
+   - 链路参考：Chorus / Sidechain gain
+   - Evidence image key: `deep-3yrKFdjORy0-03-1dec419963`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-3yrKFdjORy0-04-e02bc0f9ca`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Soundtoys Effect Rack
+   - Evidence image key: `deep-3yrKFdjORy0-05-00e98c10fa`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Decapitator
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-3yrKFdjORy0-06-baee3b8c3c`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-3yrKFdjORy0-07-90849240de`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-3yrKFdjORy0-08-5ae9292238`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-3yrKFdjORy0-09-458e9bb89b`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Frequency shifter / ring mod
+   - Evidence image key: `deep-3yrKFdjORy0-10-3551108924`
 
 ### Plugin and Processing Notes
 - **Delay / Frequency Shifter**: 把门和开关转成施法/释放运动。
@@ -2956,24 +3476,46 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **Unity 脚步调用改成 Wwise**:
+   - 角色：Unity 脚步调用改成 Wwise
+   - 链路参考：Wwise Random Containers
+   - Evidence image key: `deep-g0lt1bjOMWw-01-54d67d2d81`
+2. **Wwise 按材质建 random containers**:
+   - 角色：Wwise 按材质建 random containers
+   - 链路参考：Wwise randomization
+   - Evidence image key: `deep-g0lt1bjOMWw-02-aa9c95bccc`
 3. **generic、sweetener、accessory 分层**: 不要一开始堆插件；先用少量层做出动作轮廓，再决定哪里缺运动、重量或空间。
    - 角色：generic、sweetener、accessory 分层
    - 链路参考：Unity + Audiokinetic integration
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-03-8b13920354`
+4. **建立可复用处理链**:
+   - 角色：建立可复用处理链
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-g0lt1bjOMWw-04-6ac1e3dd61`
 5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。
    - 角色：打印中间结果
    - 链路参考：Little AlterBoy / pitch-formant
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-05-d03635778b`
+6. **做变体和命名**:
+   - 角色：做变体和命名
+   - 链路参考：Wwise Random Containers
+   - Evidence image key: `deep-g0lt1bjOMWw-06-a79bfe3017`
+7. **整理总线**:
+   - 角色：整理总线
+   - 链路参考：Wwise randomization
+   - Evidence image key: `deep-g0lt1bjOMWw-07-ebe2d0f433`
+8. **复盘失败点**:
+   - 角色：复盘失败点
+   - 链路参考：Unity + Audiokinetic integration
+   - Evidence image key: `deep-g0lt1bjOMWw-08-10a6ff3f15`
 9. **准备游戏落地**: 需要互动时，把 start、loop、stop、tail、random layer 和 RTPC 可能性拆开。
    - 角色：准备游戏落地
    - 链路参考：EchoBoy / short delay
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-g0lt1bjOMWw-09-856ced8a33`
+10. **归档知识**:
+   - 角色：归档知识
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-g0lt1bjOMWw-10-ab59c55a1b`
 
 ### Plugin and Processing Notes
 - **Wwise Random Containers**: 按材质和层级随机播放脚步素材。
@@ -3118,6 +3660,10 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **先按游戏需求录全水素材**:
+   - 角色：先按游戏需求录全水素材
+   - 链路参考：Glitchmachines Cataract
+   - Evidence image key: `deep-Pvkfc32V8Mo-01-8c50b52ae9`
 2. **movement 声音最适合再设计**: 用真实录音做 bed，保留空气、随机性和距离；环境声可信度通常来自真实不规则性。
    - 角色：movement 声音最适合再设计
    - 链路参考：Soundtoys processors
@@ -3130,10 +3676,18 @@ Records: 82
    - 角色：清理现实瑕疵
    - 链路参考：Glitchmachines Cataract
    - Evidence image key: `deep-Pvkfc32V8Mo-04-80ab81e423`
+5. **分层建立景深**:
+   - 角色：分层建立景深
+   - 链路参考：Soundtoys processors
+   - Evidence image key: `deep-Pvkfc32V8Mo-05-e900f25de0`
 6. **加入缓慢运动**: 用滤波、音量、pan、LFO 或随机触发制造空气流动，但不要让循环点太明显。
    - 角色：加入缓慢运动
    - 链路参考：Soundtoys Effect Rack
    - Evidence image key: `deep-Pvkfc32V8Mo-06-2b9f1b1c8b`
+7. **控制频谱密度**:
+   - 角色：控制频谱密度
+   - 链路参考：Glitchmachines Cataract
+   - Evidence image key: `deep-Pvkfc32V8Mo-07-8cf9027953`
 8. **做循环和变体**: 测试 loop point、交叉淡化和随机片段；游戏环境声要能长时间听不露馅。
    - 角色：做循环和变体
    - 链路参考：Soundtoys processors
@@ -3480,19 +4034,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **先理解源素材**:
+   - 角色：先理解源素材
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-gLldwkc-0Vs-01-157a2e3f4d`
+2. **无处理排节奏**:
+   - 角色：无处理排节奏
+   - 链路参考：OTT-style compression
+   - Evidence image key: `deep-gLldwkc-0Vs-02-c03fb1c235`
+3. **构建吼叫主体**:
+   - 角色：构建吼叫主体
+   - 链路参考：Basement / RoboVoice
+   - Evidence image key: `deep-gLldwkc-0Vs-03-0c4109d316`
+4. **音高和共振峰塑形**:
+   - 角色：音高和共振峰塑形
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-gLldwkc-0Vs-04-240489aaef`
+5. **建立发声包络**:
+   - 角色：建立发声包络
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-gLldwkc-0Vs-05-9c945a7774`
 6. **叠加材质细节**: 加入 saliva、cloth、bone、metal、electric 或 noise texture，让声音有嘴、皮肤或机械结构。
    - 角色：叠加材质细节
    - 链路参考：Transient Shaper
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-gLldwkc-0Vs-06-3980de3fc9`
+7. **空间和身体感**:
+   - 角色：空间和身体感
+   - 链路参考：Compressor / clipper
+   - Evidence image key: `deep-gLldwkc-0Vs-07-234418eab0`
+8. **动态和清晰度**:
+   - 角色：动态和清晰度
+   - 链路参考：Frequency shifter / ring mod
+   - Evidence image key: `deep-gLldwkc-0Vs-08-4efea0e4c5`
+9. **做变体和表情库**:
+   - 角色：做变体和表情库
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-gLldwkc-0Vs-09-01efb47ce9`
+10. **总线微调**:
+   - 角色：总线微调
+   - 链路参考：OTT-style compression
+   - Evidence image key: `deep-gLldwkc-0Vs-10-8feb7d7ecd`
+11. **命名和落地**:
+   - 角色：命名和落地
+   - 链路参考：Basement / RoboVoice
 12. **复盘设计逻辑**: 记录哪些素材负责生物性，哪些负责风格化，哪些负责可读动作。
    - 角色：复盘设计逻辑
    - 链路参考：Tremolator
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
+13. **定义生物体型和情绪**:
+   - 角色：定义生物体型和情绪
+   - 链路参考：EchoBoy / short delay
+14. **选择声源角色**:
+   - 角色：选择声源角色
+   - 链路参考：Transient Shaper
 
 ### Plugin and Processing Notes
 - **Snap Heap**: 对 creature 层做电感、颤动和运动调制。
@@ -3563,17 +4156,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **加载 S-Layer**:
+   - 角色：加载 S-Layer
+   - 链路参考：Reaktor 6 S-Layer
+   - Evidence image key: `deep-Ub5ozlVecII-01-110472ae08`
+2. **设置随机范围**:
+   - 角色：设置随机范围
+   - 链路参考：Reverb / Soft Clipper / Compressor
+   - Evidence image key: `deep-Ub5ozlVecII-02-4531f395ec`
+3. **录制随机演奏**:
+   - 角色：录制随机演奏
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-Ub5ozlVecII-03-5d466cc0c0`
+4. **建立可复用处理链**:
+   - 角色：建立可复用处理链
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-Ub5ozlVecII-04-cd4db23875`
+5. **打印中间结果**:
+   - 角色：打印中间结果
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-Ub5ozlVecII-05-da1eb05ec6`
 6. **做变体和命名**: 按用途、强度、情绪或交互状态导出变体，避免后期只剩一个大文件。
    - 角色：做变体和命名
    - 链路参考：Compressor / clipper
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ub5ozlVecII-06-6c21396f6c`
+7. **整理总线**:
+   - 角色：整理总线
+   - 链路参考：Reaktor 6 S-Layer
+   - Evidence image key: `deep-Ub5ozlVecII-07-698ac46bad`
+8. **复盘失败点**:
+   - 角色：复盘失败点
+   - 链路参考：Reverb / Soft Clipper / Compressor
+   - Evidence image key: `deep-Ub5ozlVecII-08-e30d3ac9e0`
+9. **准备游戏落地**:
+   - 角色：准备游戏落地
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-Ub5ozlVecII-09-f2d6ee89b4`
+10. **归档知识**:
+   - 角色：归档知识
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-Ub5ozlVecII-10-fe2263a20b`
+11. **确定工作目标**:
+   - 角色：确定工作目标
+   - 链路参考：Little AlterBoy / pitch-formant
 12. **建立素材池**: 把源素材按 transient、body、texture、tail、loop、UI feedback 分组，后面才知道每个处理要服务什么。
    - 角色：建立素材池
    - 链路参考：Compressor / clipper
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
+13. **先做最小可听版本**:
+   - 角色：先做最小可听版本
+   - 链路参考：Reaktor 6 S-Layer
+14. **建立可复用处理链**:
+   - 角色：建立可复用处理链
+   - 链路参考：Reverb / Soft Clipper / Compressor
 
 ### Plugin and Processing Notes
 - **Reaktor 6 S-Layer**: 样本随机化和演奏式变体生成。
@@ -3635,6 +4269,62 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **在家录怪物源**:
+   - 角色：在家录怪物源
+   - 链路参考：Shade / Transgressor / Soothe / Sonic Maximizer
+   - Evidence image key: `deep-Iz4rtBgqLlg-01-fb93ae89a7`
+2. **先破坏再整理**:
+   - 角色：先破坏再整理
+   - 链路参考：Enforcer / MRatioMB
+   - Evidence image key: `deep-Iz4rtBgqLlg-02-4b68e497c0`
+3. **从素材池重建角色**:
+   - 角色：从素材池重建角色
+   - 链路参考：MOCoder / Pro-Q 3 / FilterFreak
+   - Evidence image key: `deep-Iz4rtBgqLlg-03-72a5706299`
+4. **音高和共振峰塑形**:
+   - 角色：音高和共振峰塑形
+   - 链路参考：FilterFreak
+   - Evidence image key: `deep-Iz4rtBgqLlg-04-8ca42811e3`
+5. **建立发声包络**:
+   - 角色：建立发声包络
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-Iz4rtBgqLlg-05-7c06735d1f`
+6. **叠加材质细节**:
+   - 角色：叠加材质细节
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-Iz4rtBgqLlg-06-85ead1b5e5`
+7. **空间和身体感**:
+   - 角色：空间和身体感
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-Iz4rtBgqLlg-07-a17669ea92`
+8. **动态和清晰度**:
+   - 角色：动态和清晰度
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-Iz4rtBgqLlg-08-4258b716a4`
+9. **做变体和表情库**:
+   - 角色：做变体和表情库
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-Iz4rtBgqLlg-09-1a2e4388db`
+10. **总线微调**:
+   - 角色：总线微调
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-Iz4rtBgqLlg-10-213b688eda`
+11. **命名和落地**:
+   - 角色：命名和落地
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-Iz4rtBgqLlg-11-a118af2d28`
+12. **复盘设计逻辑**:
+   - 角色：复盘设计逻辑
+   - 链路参考：Compressor / clipper
+   - Evidence image key: `deep-Iz4rtBgqLlg-12-3bc7a4e3b5`
+13. **定义生物体型和情绪**:
+   - 角色：定义生物体型和情绪
+   - 链路参考：Unfilter / restoration
+   - Evidence image key: `deep-Iz4rtBgqLlg-13-d0552a49fb`
+14. **选择声源角色**:
+   - 角色：选择声源角色
+   - 链路参考：Shade / Transgressor / Soothe / Sonic Maximizer
+   - Evidence image key: `deep-Iz4rtBgqLlg-14-cb7cc2c355`
 
 ### Plugin and Processing Notes
 - **Shade / Transgressor / Soothe / Sonic Maximizer**: 对家录素材做音色破坏、瞬态控制和刺耳频段整理。
@@ -3713,6 +4403,62 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **按画面角色建组**:
+   - 角色：按画面角色建组
+   - 链路参考：Phase Plant / Faceplant granular
+   - Evidence image key: `deep-kFxuNtkv4CU-01-27aa30c7df`
+2. **素材库和现场源结合**:
+   - 角色：素材库和现场源结合
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-kFxuNtkv4CU-02-42d826e147`
+3. **箭矢系统化处理**:
+   - 角色：箭矢系统化处理
+   - 链路参考：Soundtoys Effect Rack / Tremolator / FilterFreak
+   - Evidence image key: `deep-kFxuNtkv4CU-03-e5ead1b8bf`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：FabFilter Pro-Q 3 / Pro-MB / Pro-L 2
+   - Evidence image key: `deep-kFxuNtkv4CU-04-df17230027`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Phase Plant
+   - Evidence image key: `deep-kFxuNtkv4CU-05-6359e0b4c1`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Soundtoys Effect Rack
+   - Evidence image key: `deep-kFxuNtkv4CU-06-081f833c7e`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：FilterFreak
+   - Evidence image key: `deep-kFxuNtkv4CU-07-a64280e2ec`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-kFxuNtkv4CU-08-fb58dda2e3`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-kFxuNtkv4CU-09-e4be66bb9f`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-kFxuNtkv4CU-10-e8e06321c0`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-kFxuNtkv4CU-11-906596fefa`
+12. **复盘参数逻辑**:
+   - 角色：复盘参数逻辑
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-kFxuNtkv4CU-12-f336778d7e`
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Disperser / phase rotation
+   - Evidence image key: `deep-kFxuNtkv4CU-13-f50b64d54d`
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-kFxuNtkv4CU-14-c26e3b68a5`
 
 ### Plugin and Processing Notes
 - **Phase Plant / Faceplant granular**: 把长处理文件粒化，random LFO 控制 pitch、grain length 和 playhead。
@@ -3807,18 +4553,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **拆出火法事件**:
+   - 角色：拆出火法事件
+   - 链路参考：Decapitator
+   - Evidence image key: `deep-ii9vXwAxFSI-01-fe332e4540`
+2. **选择火源素材**:
+   - 角色：选择火源素材
+   - 链路参考：FabFilter Volcano 3
+   - Evidence image key: `deep-ii9vXwAxFSI-02-5a8108cb96`
+3. **饱和和包络滤波**:
+   - 角色：饱和和包络滤波
+   - 链路参考：Snap Heap transient shaper
+   - Evidence image key: `deep-ii9vXwAxFSI-03-92ac7063ce`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。
    - 角色：做 tonal/resonant 层
    - 链路参考：Tonsturm Traveler / Tremolator / Ensemble
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-04-81a7bf2683`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-ii9vXwAxFSI-05-86cb2a39a9`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-ii9vXwAxFSI-06-143ff202ca`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-ii9vXwAxFSI-07-761e7b6c60`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Pro-MB / multiband dynamics
+   - Evidence image key: `deep-ii9vXwAxFSI-08-985fdf2732`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-ii9vXwAxFSI-09-df477e024f`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。
    - 角色：组合成完整施法句子
    - 链路参考：Convolver / convolution
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ii9vXwAxFSI-10-fbaa914861`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Disperser / phase rotation
+12. **复盘参数逻辑**:
+   - 角色：复盘参数逻辑
+   - 链路参考：Transient Shaper
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Compressor / clipper
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Playback rate / item rate
 
 ### Plugin and Processing Notes
 - **Decapitator**: 给火焰和纸/沙素材增加热感、粗糙度和密度。
@@ -3904,6 +4690,62 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **先做源素材**:
+   - 角色：先做源素材
+   - 链路参考：Kilohearts pitch shifter / filter / gain
+   - Evidence image key: `deep-cLhevQYlvlI-01-1bd69bf7d5`
+2. **Phase Doppler rack**:
+   - 角色：Phase Doppler rack
+   - 链路参考：Supercharger GT / Diablo Lite
+   - Evidence image key: `deep-cLhevQYlvlI-02-65567b0e20`
+3. **Impact rack**:
+   - 角色：Impact rack
+   - 链路参考：Kilohearts Transient Shaper / Ensemble / Space Modulator
+   - Evidence image key: `deep-cLhevQYlvlI-03-8082bb224f`
+4. **建立瞬态和触感**:
+   - 角色：建立瞬态和触感
+   - 链路参考：Short feedback delays
+   - Evidence image key: `deep-cLhevQYlvlI-04-0d64287710`
+5. **做机械/材质主体**:
+   - 角色：做机械/材质主体
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-cLhevQYlvlI-05-bc2a5da7ac`
+6. **加入电子运动**:
+   - 角色：加入电子运动
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-cLhevQYlvlI-06-11f9688aec`
+7. **处理空间和距离**:
+   - 角色：处理空间和距离
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-cLhevQYlvlI-07-65721ac8ee`
+8. **频段分配**:
+   - 角色：频段分配
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-cLhevQYlvlI-08-18d9913a21`
+9. **渲染随机变体**:
+   - 角色：渲染随机变体
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-cLhevQYlvlI-09-8e31cdcbb7`
+10. **总线和峰值控制**:
+   - 角色：总线和峰值控制
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-cLhevQYlvlI-10-08bc9f2556`
+11. **交互实现思路**:
+   - 角色：交互实现思路
+   - 链路参考：Disperser / phase rotation
+   - Evidence image key: `deep-cLhevQYlvlI-11-7f39b8deb2`
+12. **复盘可复用规则**:
+   - 角色：复盘可复用规则
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-cLhevQYlvlI-12-632a956057`
+13. **锁定科技功能**:
+   - 角色：锁定科技功能
+   - 链路参考：Compressor / clipper
+   - Evidence image key: `deep-cLhevQYlvlI-13-f1b0bef2ab`
+14. **拆成反馈层**:
+   - 角色：拆成反馈层
+   - 链路参考：Frequency shifter / ring mod
+   - Evidence image key: `deep-cLhevQYlvlI-14-9c533393ce`
 
 ### Plugin and Processing Notes
 - **Kilohearts pitch shifter / filter / gain**: 构建 Phase Doppler rack，输入音量调制 pitch/filter 运动。
@@ -3993,6 +4835,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **Reaper 预听处理架**:
+   - 角色：Reaper 预听处理架
+   - 链路参考：Reaper routing / Media Explorer
+   - Evidence image key: `deep-Ze9enZLKA2I-01-19398345fd`
+2. **source drawer**:
+   - 角色：source drawer
+   - 链路参考：EQ / Distortion / Compressor / Flanger
+   - Evidence image key: `deep-Ze9enZLKA2I-02-d3506a15a6`
+3. **瞬态 cast**:
+   - 角色：瞬态 cast
+   - 链路参考：Transient Shaper / Limiter
+   - Evidence image key: `deep-Ze9enZLKA2I-03-bd5a9e6f1f`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-Ze9enZLKA2I-04-71fbf6892e`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-Ze9enZLKA2I-05-08eaaaab44`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-Ze9enZLKA2I-06-67f6523f05`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-Ze9enZLKA2I-07-8c546d9b55`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-Ze9enZLKA2I-08-cb0f8e6c9a`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-Ze9enZLKA2I-09-8ca072b547`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Compressor / clipper
+   - Evidence image key: `deep-Ze9enZLKA2I-10-23b4b9ec89`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Frequency shifter / ring mod
+12. **复盘参数逻辑**:
+   - 角色：复盘参数逻辑
+   - 链路参考：Reaper routing / Media Explorer
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：EQ / Distortion / Compressor / Flanger
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Transient Shaper / Limiter
 
 ### Plugin and Processing Notes
 - **Reaper routing / Media Explorer**: 把预听素材送进处理链，快速听 processed source。
@@ -4071,6 +4965,62 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **从感觉找源**:
+   - 角色：从感觉找源
+   - 链路参考：Multipass
+   - Evidence image key: `deep-BPuxpbey-Ks-01-087a6a8ae1`
+2. **快速试错和重采样**:
+   - 角色：快速试错和重采样
+   - 链路参考：PaulXStretch
+   - Evidence image key: `deep-BPuxpbey-Ks-02-c3ef617368`
+3. **烟雾身体层**:
+   - 角色：烟雾身体层
+   - 链路参考：Tremolo / Vibrato / Ensemble / All-pass
+   - Evidence image key: `deep-BPuxpbey-Ks-03-72acede8bc`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Convolver / delay / saturation / EQ
+   - Evidence image key: `deep-BPuxpbey-Ks-04-fee094abdc`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-BPuxpbey-Ks-05-ea3a2baf15`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-BPuxpbey-Ks-06-e2b05a6482`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-BPuxpbey-Ks-07-4ec5efec7a`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-BPuxpbey-Ks-08-2f9b1b5f18`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-BPuxpbey-Ks-09-aa8890a922`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-BPuxpbey-Ks-10-6582d32f0c`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Convolver / convolution
+   - Evidence image key: `deep-BPuxpbey-Ks-11-5c6f964b3d`
+12. **复盘参数逻辑**:
+   - 角色：复盘参数逻辑
+   - 链路参考：Disperser / phase rotation
+   - Evidence image key: `deep-BPuxpbey-Ks-12-dcfe65a977`
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-BPuxpbey-Ks-13-52bf0e41e6`
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Compressor / clipper
+   - Evidence image key: `deep-BPuxpbey-Ks-14-b98d38dbcd`
 
 ### Plugin and Processing Notes
 - **Multipass**: 快速试 preset、微调 macro、做运动和动态。
@@ -4161,19 +5111,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **buildup 层**:
+   - 角色：buildup 层
+   - 链路参考：Transient Shaper / Polyverse Wider
+   - Evidence image key: `deep-ahbdvI6nLgA-01-f0abf1e29a`
+2. **punch/cast 层**:
+   - 角色：punch/cast 层
+   - 链路参考：Convolver / Ensemble
+   - Evidence image key: `deep-ahbdvI6nLgA-02-2b4824703d`
+3. **sparkle 和 whistle**:
+   - 角色：sparkle 和 whistle
+   - 链路参考：PaulStretch
+   - Evidence image key: `deep-ahbdvI6nLgA-03-a40611b129`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Saturation / compression / EQ
+   - Evidence image key: `deep-ahbdvI6nLgA-04-51a69992d7`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Multipass
+   - Evidence image key: `deep-ahbdvI6nLgA-05-93742c42d0`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-Q 3 / EQ
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-ahbdvI6nLgA-06-c184de755c`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-ahbdvI6nLgA-07-0d36091991`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-ahbdvI6nLgA-08-d6f798867d`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Convolver / convolution
+   - Evidence image key: `deep-ahbdvI6nLgA-09-b7f8adce83`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-ahbdvI6nLgA-10-e053c55fbe`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Compressor / clipper
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。
    - 角色：复盘参数逻辑
    - 链路参考：Playback rate / item rate
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Transient Shaper / Polyverse Wider
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Convolver / Ensemble
 
 ### Plugin and Processing Notes
 - **Transient Shaper / Polyverse Wider**: punch 层塑形与轻微加宽。
@@ -4256,19 +5245,59 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **能量脉冲池**:
+   - 角色：能量脉冲池
+   - 链路参考：Multiband/rack processing
+   - Evidence image key: `deep-xWtyeqmjPKk-01-14e3a84abc`
+2. **多段/宏控制**:
+   - 角色：多段/宏控制
+   - 链路参考：EQ / filter automation
+   - Evidence image key: `deep-xWtyeqmjPKk-02-8b4d4e22fd`
+3. **瞬态与尾巴分离**:
+   - 角色：瞬态与尾巴分离
+   - 链路参考：Render/print workflow
+   - Evidence image key: `deep-xWtyeqmjPKk-03-83777f74e9`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。
    - 角色：做 tonal/resonant 层
    - 链路参考：Snap Heap
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-04-ab58c10542`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Multipass
+   - Evidence image key: `deep-xWtyeqmjPKk-05-45e9fad59a`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Phase Plant
+   - 可见/字幕数值：1 ratio
+   - Evidence image key: `deep-xWtyeqmjPKk-06-ef94e30452`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Soundtoys Effect Rack
+   - Evidence image key: `deep-xWtyeqmjPKk-07-1d9a09f301`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：FilterFreak
+   - Evidence image key: `deep-xWtyeqmjPKk-08-f76050351b`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-xWtyeqmjPKk-09-c2b9adb403`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。
    - 角色：组合成完整施法句子
    - 链路参考：Saturn 2
-   - 可见/字幕数值：2
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-xWtyeqmjPKk-10-f0c43144c6`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Pro-Q 3 / EQ
+12. **复盘参数逻辑**:
+   - 角色：复盘参数逻辑
+   - 链路参考：Pro-MB / multiband dynamics
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Pro-L 2 / limiter
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Pro-R / reverb
 
 ### Plugin and Processing Notes
 - **Multiband/rack processing**: 从画面可见的多段效果 rack 和曲线推断其用于能量频段运动；具体插件参数未逐项确认。
@@ -4356,19 +5385,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **金属 goblet 魔法化**:
+   - 角色：金属 goblet 魔法化
+   - 链路参考：Valhalla FreqEcho / Crystallizer / Shimmer
+   - Evidence image key: `deep-wA5afo1P6tE-01-fb0dcc2f4d`
+2. **Serum sampler 演奏源**:
+   - 角色：Serum sampler 演奏源
+   - 链路参考：Serum sampler
+   - Evidence image key: `deep-wA5afo1P6tE-02-467d2c1892`
+3. **firework 做爆裂**:
+   - 角色：firework 做爆裂
+   - 链路参考：SoundHack Pitch Delay
+   - Evidence image key: `deep-wA5afo1P6tE-03-40f7acd079`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：OTT / Devil-Loc / Frequency Shifter
+   - Evidence image key: `deep-wA5afo1P6tE-04-45d36cb8b9`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Serum 2
+   - Evidence image key: `deep-wA5afo1P6tE-05-f298590089`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-L 2 / limiter
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-wA5afo1P6tE-06-5f31e11e5b`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-wA5afo1P6tE-07-4a0dd50583`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-wA5afo1P6tE-08-a67f597ec1`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-wA5afo1P6tE-09-6b856dd8df`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Compressor / clipper
+   - Evidence image key: `deep-wA5afo1P6tE-10-ee0cb37b10`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Frequency shifter / ring mod
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。
    - 角色：复盘参数逻辑
    - 链路参考：Playback rate / item rate
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Valhalla FreqEcho / Crystallizer / Shimmer
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Serum sampler
 
 ### Plugin and Processing Notes
 - **Valhalla FreqEcho / Crystallizer / Shimmer**: 给金属源增加魔法亮度、频移和空间尾巴。
@@ -4444,6 +5512,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **避开黑魔法套路**:
+   - 角色：避开黑魔法套路
+   - 链路参考：Named processing chains
+   - Evidence image key: `deep-uP135z2QBTM-01-9f44e628f9`
+2. **建立源池**:
+   - 角色：建立源池
+   - 链路参考：Doppler / high-pass / modulation
+   - Evidence image key: `deep-uP135z2QBTM-02-4eea19fe4c`
+3. **命名处理链**:
+   - 角色：命名处理链
+   - 链路参考：Render/bounce workflow
+   - Evidence image key: `deep-uP135z2QBTM-03-97d059e2a5`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-uP135z2QBTM-04-cba91ba4f9`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Disperser / phase rotation
+   - Evidence image key: `deep-uP135z2QBTM-05-8ddcbf6187`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-uP135z2QBTM-06-28d2c46b58`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-uP135z2QBTM-07-54f07782c6`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Named processing chains
+   - Evidence image key: `deep-uP135z2QBTM-08-c9a56e10f5`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Doppler / high-pass / modulation
+   - Evidence image key: `deep-uP135z2QBTM-09-12828f9c5c`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Render/bounce workflow
+   - Evidence image key: `deep-uP135z2QBTM-10-8435a2745e`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Pro-R / reverb
+12. **复盘参数逻辑**:
+   - 角色：复盘参数逻辑
+   - 链路参考：Disperser / phase rotation
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Transient Shaper
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Playback rate / item rate
 
 ### Plugin and Processing Notes
 - **Named processing chains**: 用命名链快速创造 impact、sweep、gut、balloon 和 grumble 方向。
@@ -4510,6 +5630,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **限制素材范围**:
+   - 角色：限制素材范围
+   - 链路参考：Pitch/time stretching
+   - Evidence image key: `deep-fpazzwJnMdM-01-aa21a53aa3`
+2. **三种同画面方案**:
+   - 角色：三种同画面方案
+   - 链路参考：Parallel compression
+   - Evidence image key: `deep-fpazzwJnMdM-02-1d9968c96c`
+3. **选让耳朵有反应的源**:
+   - 角色：选让耳朵有反应的源
+   - 链路参考：Reverb / width
+   - Evidence image key: `deep-fpazzwJnMdM-03-cfe7c70f16`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Soundtoys Effect Rack
+   - Evidence image key: `deep-fpazzwJnMdM-04-41edc0f0b1`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Tremolator
+   - Evidence image key: `deep-fpazzwJnMdM-05-dc4b660c30`
+6. **把素材打印成调色板**:
+   - 角色：把素材打印成调色板
+   - 链路参考：Decapitator
+   - Evidence image key: `deep-fpazzwJnMdM-06-c29dd4e0a2`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-fpazzwJnMdM-07-eb10cc671a`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-fpazzwJnMdM-08-a64307ec8b`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-fpazzwJnMdM-09-8ffff878f5`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-fpazzwJnMdM-10-aeea02810c`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Little AlterBoy / pitch-formant
+12. **复盘参数逻辑**:
+   - 角色：复盘参数逻辑
+   - 链路参考：Transient Shaper
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Compressor / clipper
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Playback rate / item rate
 
 ### Plugin and Processing Notes
 - **Pitch/time stretching**: 改变 Raw Magic 素材规模和动作速度。
@@ -4590,29 +5762,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **只用库和免费工具**:
+   - 角色：只用库和免费工具
+   - 链路参考：Reaper EQ/Distortion/Compressor
+   - Evidence image key: `deep-TOdyCTjzHLE-01-16d0312a93`
+2. **冰法瞬态**:
+   - 角色：冰法瞬态
+   - 链路参考：Kilohearts Distortion
+   - Evidence image key: `deep-TOdyCTjzHLE-02-07e7257e2e`
+3. **movement bus**:
+   - 角色：movement bus
+   - 链路参考：Transient Shaper / Compressor / Limiter
+   - Evidence image key: `deep-TOdyCTjzHLE-03-7cd3a415ba`
 4. **做 tonal/resonant 层**: 用 bowed、ring、granular、frequency shift 或 formant 生成可识别的音高中心，避免只剩噪声。
    - 角色：做 tonal/resonant 层
    - 链路参考：Pro-Q 3 / EQ
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-04-9960fc8683`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-TOdyCTjzHLE-05-8ce8857b06`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Transient Shaper
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-06-17e60e1abc`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Compressor / clipper
+   - Evidence image key: `deep-TOdyCTjzHLE-07-70d532ace7`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-TOdyCTjzHLE-08-28b3daa868`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Reaper EQ/Distortion/Compressor
+   - Evidence image key: `deep-TOdyCTjzHLE-09-6d804b0f10`
 10. **组合成完整施法句子**: 按 anticipation、gesture、impact、release、tail 排列，让听感像一个动作，而不是一串漂亮素材。
    - 角色：组合成完整施法句子
    - 链路参考：Kilohearts Distortion
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-TOdyCTjzHLE-10-be95adb8a5`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Transient Shaper / Compressor / Limiter
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。
    - 角色：复盘参数逻辑
    - 链路参考：Pro-Q 3 / EQ
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Pro-L 2 / limiter
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Transient Shaper
 
 ### Plugin and Processing Notes
 - **Reaper EQ/Distortion/Compressor**: movement bus 的基础音色塑形。
@@ -4689,17 +5890,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **电源不只用电**:
+   - 角色：电源不只用电
+   - 链路参考：Melda/Snap patch audio follower
+   - Evidence image key: `deep-RdVQYDBTB48-01-dbd47227c4`
+2. **通用电链**:
+   - 角色：通用电链
+   - 链路参考：Multipass / Transient Shaper / Ambassador / Exciter
+   - Evidence image key: `deep-RdVQYDBTB48-02-202eec65d2`
+3. **audio follower 触发电感**:
+   - 角色：audio follower 触发电感
+   - 链路参考：Tonsturm Traveler
+   - Evidence image key: `deep-RdVQYDBTB48-03-4c121a7c7a`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Snap Heap convolver/reverb
+   - Evidence image key: `deep-RdVQYDBTB48-04-036b7175ce`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-RdVQYDBTB48-05-88bb97068b`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Multipass
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-RdVQYDBTB48-06-11da9c751d`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-RdVQYDBTB48-07-507154906c`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Pro-MB / multiband dynamics
+   - Evidence image key: `deep-RdVQYDBTB48-08-e151339b60`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-RdVQYDBTB48-09-8a6756d45b`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-RdVQYDBTB48-10-237a554473`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Little AlterBoy / pitch-formant
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。
    - 角色：复盘参数逻辑
    - 链路参考：Convolver / convolution
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Transient Shaper
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Tremolator
 
 ### Plugin and Processing Notes
 - **Melda/Snap patch audio follower**: 控制 filter table/shaper table 产生 zippy attack。
@@ -4789,17 +6031,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **反转金属 lead-in**:
+   - 角色：反转金属 lead-in
+   - 链路参考：Kilohearts Multipass
+   - Evidence image key: `deep-Ipbfcr-DFTI-01-ed15b9ab43`
+2. **旋转亮层**:
+   - 角色：旋转亮层
+   - 链路参考：Slate Infinity Bass
+   - Evidence image key: `deep-Ipbfcr-DFTI-02-74f2af6901`
+3. **冲击和低频**:
+   - 角色：冲击和低频
+   - 链路参考：Eventide Crystals
+   - Evidence image key: `deep-Ipbfcr-DFTI-03-9f1b8047de`
+4. **做 tonal/resonant 层**:
+   - 角色：做 tonal/resonant 层
+   - 链路参考：Ozone Maximizer
+   - Evidence image key: `deep-Ipbfcr-DFTI-04-4ae06f061f`
+5. **增加随机运动**:
+   - 角色：增加随机运动
+   - 链路参考：Multipass
+   - Evidence image key: `deep-Ipbfcr-DFTI-05-410caa5b1a`
 6. **把素材打印成调色板**: 先生成很多 processed variants，再从里面挑可用片段；魔法声音常靠二次采样得到意外性。
    - 角色：把素材打印成调色板
    - 链路参考：Pro-R / reverb
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-Ipbfcr-DFTI-06-ec582c561b`
+7. **做冲击或释放点**:
+   - 角色：做冲击或释放点
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-Ipbfcr-DFTI-07-9d6c10461d`
+8. **设计尾音和空间**:
+   - 角色：设计尾音和空间
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-Ipbfcr-DFTI-08-1e8025c169`
+9. **整理频段和动态**:
+   - 角色：整理频段和动态
+   - 链路参考：Kilohearts Multipass
+   - Evidence image key: `deep-Ipbfcr-DFTI-09-4a1f569b00`
+10. **组合成完整施法句子**:
+   - 角色：组合成完整施法句子
+   - 链路参考：Slate Infinity Bass
+   - Evidence image key: `deep-Ipbfcr-DFTI-10-e828504b36`
+11. **总线微整和响度**:
+   - 角色：总线微整和响度
+   - 链路参考：Eventide Crystals
 12. **复盘参数逻辑**: 记录哪些参数控制运动、哪些控制材质、哪些控制攻击；下一次只替换源素材和调制速度即可复用。
    - 角色：复盘参数逻辑
    - 链路参考：Ozone Maximizer
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
+13. **确定魔法语气**:
+   - 角色：确定魔法语气
+   - 链路参考：Multipass
+14. **挑选真实纹理源**:
+   - 角色：挑选真实纹理源
+   - 链路参考：Pro-R / reverb
 
 ### Plugin and Processing Notes
 - **Kilohearts Multipass**: 对 ball bearing 旋转声做低/中/高分频运动。
@@ -4869,16 +6152,58 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **理解库定位**:
+   - 角色：理解库定位
+   - 链路参考：FilterFreak / UberMod
+   - Evidence image key: `deep-hfZnCFgt3TI-01-cf782ec2f9`
+2. **用 DSP rack 测试**:
+   - 角色：用 DSP rack 测试
+   - 链路参考：PitchMonster
+   - Evidence image key: `deep-hfZnCFgt3TI-02-d8099a6028`
+3. **材料范围**:
+   - 角色：材料范围
+   - 链路参考：Transient/punch processors
+   - Evidence image key: `deep-hfZnCFgt3TI-03-d212fbc627`
 4. **建立可复用处理链**: 把 EQ、调制、失真、空间、动态和限制拆成可 bypass 的阶段，逐段听贡献。
    - 角色：建立可复用处理链
    - 链路参考：FilterFreak
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-04-e10c7e58d1`
+5. **打印中间结果**:
+   - 角色：打印中间结果
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-hfZnCFgt3TI-05-3f11d7d15e`
+6. **做变体和命名**:
+   - 角色：做变体和命名
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-hfZnCFgt3TI-06-4f53f09b5c`
+7. **整理总线**:
+   - 角色：整理总线
+   - 链路参考：FilterFreak / UberMod
+   - Evidence image key: `deep-hfZnCFgt3TI-07-ca68d483a1`
+8. **复盘失败点**:
+   - 角色：复盘失败点
+   - 链路参考：PitchMonster
+   - Evidence image key: `deep-hfZnCFgt3TI-08-2d54e470ca`
+9. **准备游戏落地**:
+   - 角色：准备游戏落地
+   - 链路参考：Transient/punch processors
+   - Evidence image key: `deep-hfZnCFgt3TI-09-368cf7edb7`
 10. **归档知识**: 把插件顺序、关键参数、源素材角色和适用场景写成 preset note，后续直接调用。
    - 角色：归档知识
    - 链路参考：FilterFreak
-   - 动态：先保留瞬态，再用 limiter/clipper 抓峰。
    - Evidence image key: `deep-hfZnCFgt3TI-10-3695ea17f3`
+11. **确定工作目标**:
+   - 角色：确定工作目标
+   - 链路参考：Little AlterBoy / pitch-formant
+12. **建立素材池**:
+   - 角色：建立素材池
+   - 链路参考：Transient Shaper
+13. **先做最小可听版本**:
+   - 角色：先做最小可听版本
+   - 链路参考：FilterFreak / UberMod
+14. **建立可复用处理链**:
+   - 角色：建立可复用处理链
+   - 链路参考：PitchMonster
 
 ### Plugin and Processing Notes
 - **FilterFreak / UberMod**: 快速测试滤波、节奏和空间调制潜力。
@@ -4948,18 +6273,62 @@ Records: 82
 - 切片重排能把慢节奏素材改造成更密、更稳定的 pulse，不一定要重新找素材。
 
 ### Step / Event Map
+1. **先确认游戏里的信息职责**:
+   - 角色：先确认游戏里的信息职责
+   - 链路参考：Serato Pitch 'n Time Pro
+   - Evidence image key: `deep-M1KBLV0Zz6I-01-c8bfb42f60`
+2. **把游戏声音还原成 Pro Tools 结构**:
+   - 角色：把游戏声音还原成 Pro Tools 结构
+   - 链路参考：Soundtoys FilterFreak 2
+   - Evidence image key: `deep-M1KBLV0Zz6I-02-b01ce8cd81`
+3. **用 varispeed 做起停 ramp**:
+   - 角色：用 varispeed 做起停 ramp
+   - 链路参考：FabFilter Pro-Q 3
+   - Evidence image key: `deep-M1KBLV0Zz6I-03-ba3227bbb4`
+4. **建立瞬态和触感**:
+   - 角色：建立瞬态和触感
+   - 链路参考：Soundtoys PhaseMistress
+   - Evidence image key: `deep-M1KBLV0Zz6I-04-369bef2471`
+5. **做机械/材质主体**:
+   - 角色：做机械/材质主体
+   - 链路参考：Spring Reverb / Little Spring 类混响
+   - Evidence image key: `deep-M1KBLV0Zz6I-05-f6433f4429`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。
    - 角色：加入电子运动
    - 链路参考：Soundtoys Decapitator
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-06-4b4373739e`
+7. **处理空间和距离**:
+   - 角色：处理空间和距离
+   - 链路参考：FabFilter Pro-MB / Multiband Compressor
+   - Evidence image key: `deep-M1KBLV0Zz6I-07-16425e7087`
+8. **频段分配**:
+   - 角色：频段分配
+   - 链路参考：Waves L3 Multimaximizer
+   - Evidence image key: `deep-M1KBLV0Zz6I-08-44d164b271`
+9. **渲染随机变体**:
+   - 角色：渲染随机变体
+   - 链路参考：Soundtoys Effect Rack
+   - Evidence image key: `deep-M1KBLV0Zz6I-09-e98d6b3d7c`
+10. **总线和峰值控制**:
+   - 角色：总线和峰值控制
+   - 链路参考：FilterFreak
+   - Evidence image key: `deep-M1KBLV0Zz6I-10-ca31c8a6ff`
+11. **交互实现思路**:
+   - 角色：交互实现思路
+   - 链路参考：Decapitator
+   - Evidence image key: `deep-M1KBLV0Zz6I-11-ead2495b18`
 12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。
    - 角色：复盘可复用规则
    - 链路参考：Pro-Q 3 / EQ
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-M1KBLV0Zz6I-12-56df566b24`
+13. **锁定科技功能**:
+   - 角色：锁定科技功能
+   - 链路参考：Pro-MB / multiband dynamics
+   - Evidence image key: `deep-M1KBLV0Zz6I-13-3ba0db3dc8`
+14. **拆成反馈层**:
+   - 角色：拆成反馈层
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-M1KBLV0Zz6I-14-de939fa29d`
 
 ### Plugin and Processing Notes
 - **Serato Pitch 'n Time Pro**: 用于 AudioSuite 式的起停变速/变调处理。画面中可见 Range 2x、Algorithm Harmonic、Pitch 区域选择 Varispeed，用来把合成后的 start/stop 做成加速或减速 ramp。
@@ -5054,22 +6423,62 @@ Records: 82
 - 团队素材库里的 building blocks 很有价值；录音素材切好入库后，可以在不同角色和技能中复用。
 
 ### Step / Event Map
+1. **先听 Alive 与 Dead 的游戏语境**:
+   - 角色：先听 Alive 与 Dead 的游戏语境
+   - 链路参考：Soundtoys Crystallizer
+   - Evidence image key: `deep-iyAwO9g_rAQ-01-98be637524`
+2. **把技能拆成完整事件序列**:
+   - 角色：把技能拆成完整事件序列
+   - 链路参考：Cockos ReaPitch
+   - Evidence image key: `deep-iyAwO9g_rAQ-02-09d84849aa`
+3. **Spawn 与 Loop 分开负责出现和持续**:
+   - 角色：Spawn 与 Loop 分开负责出现和持续
+   - 链路参考：Eventide SP2016 Reverb
+   - Evidence image key: `deep-iyAwO9g_rAQ-03-85f2563180`
 4. **建立瞬态和触感**: 点击、开关、扣动、装备都需要短瞬态；用 transient shaper、clipper 或短 envelope 保证第一下可感知。
    - 角色：建立瞬态和触感
    - 链路参考：FabFilter Pro-Q 3
    - Evidence image key: `deep-iyAwO9g_rAQ-04-c2753bbd2a`
+5. **做机械/材质主体**:
+   - 角色：做机械/材质主体
+   - 链路参考：Waves S1 Imager Stereo
+   - Evidence image key: `deep-iyAwO9g_rAQ-05-d71efc1d7e`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。
    - 角色：加入电子运动
    - 链路参考：REAPER Parent / Folder Routing
    - Evidence image key: `deep-iyAwO9g_rAQ-06-6b98624a97`
+7. **处理空间和距离**:
+   - 角色：处理空间和距离
+   - 链路参考：Soundtoys Effect Rack
+   - Evidence image key: `deep-iyAwO9g_rAQ-07-224c359191`
+8. **频段分配**:
+   - 角色：频段分配
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-iyAwO9g_rAQ-08-3ec902187d`
+9. **渲染随机变体**:
+   - 角色：渲染随机变体
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-iyAwO9g_rAQ-09-15413689cc`
 10. **总线和峰值控制**: 限制器只抓过峰，多段动态控制刺耳和低频拖尾；不要把 UI 或武器瞬态压没。
    - 角色：总线和峰值控制
    - 链路参考：EchoBoy / short delay
    - Evidence image key: `deep-iyAwO9g_rAQ-10-e6cd8f1aea`
+11. **交互实现思路**:
+   - 角色：交互实现思路
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-iyAwO9g_rAQ-11-9aff7c8bbb`
 12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。
    - 角色：复盘可复用规则
    - 链路参考：Soundtoys Crystallizer
    - Evidence image key: `deep-iyAwO9g_rAQ-12-005181d77b`
+13. **锁定科技功能**:
+   - 角色：锁定科技功能
+   - 链路参考：Cockos ReaPitch
+   - Evidence image key: `deep-iyAwO9g_rAQ-13-84b915becf`
+14. **拆成反馈层**:
+   - 角色：拆成反馈层
+   - 链路参考：Eventide SP2016 Reverb
+   - Evidence image key: `deep-iyAwO9g_rAQ-14-ab8edb384e`
 
 ### Plugin and Processing Notes
 - **Soundtoys Crystallizer**: Dead 版本的核心颗粒/暗色处理。画面中可见 Granular Echo Synthesizer，预设名类似 Metallicah，Pitch 约 -50 cents、Splice 约 127.3 ms、Delay 约 7.4 ms，用来制造 flutter、不协和和幽灵感。
@@ -5378,6 +6787,62 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **高频用 Serum 粒子做随机 glitch impact**:
+   - 角色：高频用 Serum 粒子做随机 glitch impact
+   - 链路参考：Serum 2
+   - Evidence image key: `deep-uh9yIziU8Pk-01-22bccc94c6`
+2. **Tonal 层用 Phase Plant 反向 impact + resonator**:
+   - 角色：Tonal 层用 Phase Plant 反向 impact + resonator
+   - 链路参考：Phase Plant
+   - Evidence image key: `deep-uh9yIziU8Pk-02-633b0e1b3d`
+3. **用 Radiator / limiter 把 tonal scream 做脏**:
+   - 角色：用 Radiator / limiter 把 tonal scream 做脏
+   - 链路参考：Little Radiator
+   - Evidence image key: `deep-uh9yIziU8Pk-03-0ed20ec516`
+4. **建立可复用处理链**:
+   - 角色：建立可复用处理链
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-uh9yIziU8Pk-04-a03e3e35f2`
+5. **打印中间结果**:
+   - 角色：打印中间结果
+   - 链路参考：MRatio
+   - Evidence image key: `deep-uh9yIziU8Pk-05-c2b9e7d833`
+6. **做变体和命名**:
+   - 角色：做变体和命名
+   - 链路参考：FilterFreak / Decapitator
+   - Evidence image key: `deep-uh9yIziU8Pk-06-ec7f4962b2`
+7. **整理总线**:
+   - 角色：整理总线
+   - 链路参考：Trash / Codec
+   - Evidence image key: `deep-uh9yIziU8Pk-07-e1aad1318d`
+8. **复盘失败点**:
+   - 角色：复盘失败点
+   - 链路参考：Skanner / RX De-click / Killer Stereo / Little AlterBoy
+   - Evidence image key: `deep-uh9yIziU8Pk-08-387f6ce86a`
+9. **准备游戏落地**:
+   - 角色：准备游戏落地
+   - 链路参考：FilterFreak
+   - Evidence image key: `deep-uh9yIziU8Pk-09-fe9edd5b3d`
+10. **归档知识**:
+   - 角色：归档知识
+   - 链路参考：Decapitator
+   - Evidence image key: `deep-uh9yIziU8Pk-10-56e6019fe9`
+11. **确定工作目标**:
+   - 角色：确定工作目标
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-uh9yIziU8Pk-11-339b74a8f0`
+12. **建立素材池**:
+   - 角色：建立素材池
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-uh9yIziU8Pk-12-8cc3c3f990`
+13. **先做最小可听版本**:
+   - 角色：先做最小可听版本
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-uh9yIziU8Pk-13-2f2e9a6145`
+14. **建立可复用处理链**:
+   - 角色：建立可复用处理链
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-uh9yIziU8Pk-14-1268d63c4a`
 
 ### Plugin and Processing Notes
 - **Serum 2**: 高频 granular impact、持续 texture 和随机 scan 变化。
@@ -5599,6 +7064,62 @@ Records: 82
 - 声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。
 
 ### Step / Event Map
+1. **素材库按爆炸组件找，不只搜 explosion**:
+   - 角色：素材库按爆炸组件找，不只搜 explosion
+   - 链路参考：Transient Shaper
+   - Evidence image key: `deep-cHWeJHlXb54-01-ba8501314f`
+2. **先决定真实还是风格化，再分组规划**:
+   - 角色：先决定真实还是风格化，再分组规划
+   - 链路参考：Saturation / Distortion
+   - Evidence image key: `deep-cHWeJHlXb54-02-395d573c7d`
+3. **Sweetener 只给叙事重点加，不给每个爆炸都加**:
+   - 角色：Sweetener 只给叙事重点加，不给每个爆炸都加
+   - 链路参考：EQ / Filtering
+   - Evidence image key: `deep-cHWeJHlXb54-03-5ddcea4824`
+4. **建立攻击速度**:
+   - 角色：建立攻击速度
+   - 链路参考：Sidechain / Ducking
+   - Evidence image key: `deep-cHWeJHlXb54-04-14677cc69f`
+5. **塑造主体重量**:
+   - 角色：塑造主体重量
+   - 链路参考：Small speaker check
+   - Evidence image key: `deep-cHWeJHlXb54-05-ca298f7765`
+6. **加入纹理破裂**:
+   - 角色：加入纹理破裂
+   - 链路参考：Decapitator
+   - Evidence image key: `deep-cHWeJHlXb54-06-5fb54031cc`
+7. **制造运动和预备感**:
+   - 角色：制造运动和预备感
+   - 链路参考：Pro-Q 3 / EQ
+   - Evidence image key: `deep-cHWeJHlXb54-07-f2024aae32`
+8. **控制空间与尾音**:
+   - 角色：控制空间与尾音
+   - 链路参考：Pro-MB / multiband dynamics
+   - Evidence image key: `deep-cHWeJHlXb54-08-4923258d32`
+9. **频段让位和动态整理**:
+   - 角色：频段让位和动态整理
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-cHWeJHlXb54-09-59fa534815`
+10. **渲染变体并挑选**:
+   - 角色：渲染变体并挑选
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-cHWeJHlXb54-10-8cc2b3a80c`
+11. **总线响度和峰值**:
+   - 角色：总线响度和峰值
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-cHWeJHlXb54-11-fb56eeaf0a`
+12. **复盘可复用链路**:
+   - 角色：复盘可复用链路
+   - 链路参考：Convolver / convolution
+   - Evidence image key: `deep-cHWeJHlXb54-12-48d7f83b7a`
+13. **锁定冲击角色**:
+   - 角色：锁定冲击角色
+   - 链路参考：Compressor / clipper
+   - Evidence image key: `deep-cHWeJHlXb54-13-1b81a10fa2`
+14. **拆分源素材层**:
+   - 角色：拆分源素材层
+   - 链路参考：Frequency shifter / ring mod
+   - Evidence image key: `deep-cHWeJHlXb54-14-ee11d349d9`
 
 ### Plugin and Processing Notes
 - **Transient Shaper**: 控制近/远、攻击性和冲击清晰度。远距离可减少 attack，近距离可强调 punch。
@@ -5683,6 +7204,62 @@ Records: 82
 - 这条要按效果链学习：Kick 3 -> Phase Plant -> Disperser -> Chorus / Frequency Shifter -> Mace -> Soothe，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。
 
 ### Step / Event Map
+1. **Kick 3 做 impulse 瞬态素材**:
+   - 角色：Kick 3 做 impulse 瞬态素材
+   - 链路参考：Kick 3
+   - Evidence image key: `deep-6oJUotZGz0k-01-601c3fa147`
+2. **Phase Plant 做 trills 和扫描音**:
+   - 角色：Phase Plant 做 trills 和扫描音
+   - 链路参考：Phase Plant
+   - Evidence image key: `deep-6oJUotZGz0k-02-a398a091f5`
+3. **Telemetry 用 FM、随机 pitch 和 Disperser 圆滑化**:
+   - 角色：Telemetry 用 FM、随机 pitch 和 Disperser 圆滑化
+   - 链路参考：Disperser
+   - Evidence image key: `deep-6oJUotZGz0k-03-08cc14832b`
+4. **建立瞬态和触感**:
+   - 角色：建立瞬态和触感
+   - 链路参考：Chorus / Frequency Shifter
+   - Evidence image key: `deep-6oJUotZGz0k-04-60a37d04ce`
+5. **做机械/材质主体**:
+   - 角色：做机械/材质主体
+   - 链路参考：Mace
+   - Evidence image key: `deep-6oJUotZGz0k-05-4841d1840f`
+6. **加入电子运动**:
+   - 角色：加入电子运动
+   - 链路参考：Soothe
+   - Evidence image key: `deep-6oJUotZGz0k-06-8eed08e529`
+7. **处理空间和距离**:
+   - 角色：处理空间和距离
+   - 链路参考：iZotope RX De-click / De-crackle
+   - Evidence image key: `deep-6oJUotZGz0k-07-3602dd95b6`
+8. **频段分配**:
+   - 角色：频段分配
+   - 链路参考：Vital
+   - Evidence image key: `deep-6oJUotZGz0k-08-63408eb89f`
+9. **渲染随机变体**:
+   - 角色：渲染随机变体
+   - 链路参考：GRM Shift
+   - Evidence image key: `deep-6oJUotZGz0k-09-6051d901bf`
+10. **总线和峰值控制**:
+   - 角色：总线和峰值控制
+   - 链路参考：S-Layer
+   - Evidence image key: `deep-6oJUotZGz0k-10-4a2cfcd373`
+11. **交互实现思路**:
+   - 角色：交互实现思路
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-6oJUotZGz0k-11-99da69040c`
+12. **复盘可复用规则**:
+   - 角色：复盘可复用规则
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-6oJUotZGz0k-12-50311b1430`
+13. **锁定科技功能**:
+   - 角色：锁定科技功能
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-6oJUotZGz0k-13-3503512a72`
+14. **拆成反馈层**:
+   - 角色：拆成反馈层
+   - 链路参考：Little AlterBoy / pitch-formant
+   - Evidence image key: `deep-6oJUotZGz0k-14-898cd264b0`
 
 ### Plugin and Processing Notes
 - **Kick 3**: 生成 UI impulse / click 的基础瞬态。
@@ -5798,18 +7375,62 @@ Records: 82
 - 这条要按效果链学习：SkannerXT -> Zynaptiq Unveil -> Zynaptiq Unfilter -> FabFilter Saturn 2 -> Kilohearts Triad -> OTT，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。
 
 ### Step / Event Map
+1. **用 SkannerXT SFX preset 做可表演 morph**:
+   - 角色：用 SkannerXT SFX preset 做可表演 morph
+   - 链路参考：SkannerXT
+   - Evidence image key: `deep-h1uYic59pf0-01-89824e447f`
+2. **Unveil + Unfilter 清理 preset 自带空间**:
+   - 角色：Unveil + Unfilter 清理 preset 自带空间
+   - 链路参考：Zynaptiq Unveil
+   - Evidence image key: `deep-h1uYic59pf0-02-627395f80d`
+3. **Saturn 2 Mega Smudge 做多段粘稠运动**:
+   - 角色：Saturn 2 Mega Smudge 做多段粘稠运动
+   - 链路参考：Zynaptiq Unfilter
+   - Evidence image key: `deep-h1uYic59pf0-03-aafec69b81`
+4. **建立瞬态和触感**:
+   - 角色：建立瞬态和触感
+   - 链路参考：FabFilter Saturn 2
+   - Evidence image key: `deep-h1uYic59pf0-04-f722e69420`
+5. **做机械/材质主体**:
+   - 角色：做机械/材质主体
+   - 链路参考：Kilohearts Triad
+   - Evidence image key: `deep-h1uYic59pf0-05-98ca3cbdcf`
 6. **加入电子运动**: 用 pitch、filter、ring mod、vocoder、FM、grain 或 tremolo 让科技层随画面运动而不是静止铺底。
    - 角色：加入电子运动
    - 链路参考：OTT
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-06-9cbfdd3abd`
+7. **处理空间和距离**:
+   - 角色：处理空间和距离
+   - 链路参考：Tonsturm Traveler
+   - Evidence image key: `deep-h1uYic59pf0-07-a72589709f`
+8. **频段分配**:
+   - 角色：频段分配
+   - 链路参考：FabFilter Pro-L
+   - Evidence image key: `deep-h1uYic59pf0-08-177d17b309`
+9. **渲染随机变体**:
+   - 角色：渲染随机变体
+   - 链路参考：Polyverse Manipulator
+   - Evidence image key: `deep-h1uYic59pf0-09-01294c59d6`
+10. **总线和峰值控制**:
+   - 角色：总线和峰值控制
+   - 链路参考：UVI Shade
+   - Evidence image key: `deep-h1uYic59pf0-10-024e030df3`
+11. **交互实现思路**:
+   - 角色：交互实现思路
+   - 链路参考：Saturn 2
+   - Evidence image key: `deep-h1uYic59pf0-11-622b9f5607`
 12. **复盘可复用规则**: 记录源素材角色、调制速度、滤波范围和最终响度，后续做同类科技声音能快速套用。
    - 角色：复盘可复用规则
    - 链路参考：Pro-MB / multiband dynamics
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
-   - 空间：攻击段少湿声，尾音段再展开，避免削弱 punch。
    - Evidence image key: `deep-h1uYic59pf0-12-64871e794c`
+13. **锁定科技功能**:
+   - 角色：锁定科技功能
+   - 链路参考：Pro-R / reverb
+   - Evidence image key: `deep-h1uYic59pf0-13-c5dc01bac8`
+14. **拆成反馈层**:
+   - 角色：拆成反馈层
+   - 链路参考：EchoBoy / short delay
+   - Evidence image key: `deep-h1uYic59pf0-14-0cd24c22ea`
 
 ### Plugin and Processing Notes
 - **SkannerXT**: 用 SFX preset 和 Preset Morpher 生成可表演的长变形素材。
@@ -5915,6 +7536,62 @@ Records: 82
 - 这条要按效果链学习：Phase Plant -> OTT -> Saturation / Clipper -> Flanger / Ripple Phaser / Tremolo -> Polyverse Manipulator -> Frequency Shifter，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。
 
 ### Step / Event Map
+1. **录制非枪械来源，先建立材料清单**:
+   - 角色：录制非枪械来源，先建立材料清单
+   - 链路参考：Phase Plant
+   - Evidence image key: `deep-EQw3BCxIRPk-01-2f6a7d587b`
+2. **先堆出 general tonal source**:
+   - 角色：先堆出 general tonal source
+   - 链路参考：OTT
+   - Evidence image key: `deep-EQw3BCxIRPk-02-56100c9a8d`
+3. **Reload Foley 用小物件分层**:
+   - 角色：Reload Foley 用小物件分层
+   - 链路参考：Saturation / Clipper
+   - Evidence image key: `deep-EQw3BCxIRPk-03-bb11109afb`
+4. **建立攻击速度**:
+   - 角色：建立攻击速度
+   - 链路参考：Flanger / Ripple Phaser / Tremolo
+   - Evidence image key: `deep-EQw3BCxIRPk-04-b7e133d739`
+5. **塑造主体重量**:
+   - 角色：塑造主体重量
+   - 链路参考：Polyverse Manipulator
+   - Evidence image key: `deep-EQw3BCxIRPk-05-c988552084`
+6. **加入纹理破裂**:
+   - 角色：加入纹理破裂
+   - 链路参考：Frequency Shifter
+   - Evidence image key: `deep-EQw3BCxIRPk-06-5416572175`
+7. **制造运动和预备感**:
+   - 角色：制造运动和预备感
+   - 链路参考：FabFilter Saturn / Saturn 2
+   - Evidence image key: `deep-EQw3BCxIRPk-07-0432b47a27`
+8. **控制空间与尾音**:
+   - 角色：控制空间与尾音
+   - 链路参考：Rift
+   - Evidence image key: `deep-EQw3BCxIRPk-08-eca3384a77`
+9. **频段让位和动态整理**:
+   - 角色：频段让位和动态整理
+   - 链路参考：MRatio / Fresh Air
+   - Evidence image key: `deep-EQw3BCxIRPk-09-ad210b04f3`
+10. **渲染变体并挑选**:
+   - 角色：渲染变体并挑选
+   - 链路参考：Convolution Reverb
+   - Evidence image key: `deep-EQw3BCxIRPk-10-864dd6229d`
+11. **总线响度和峰值**:
+   - 角色：总线响度和峰值
+   - 链路参考：Disperser
+   - Evidence image key: `deep-EQw3BCxIRPk-11-388fc1f7a7`
+12. **复盘可复用链路**:
+   - 角色：复盘可复用链路
+   - 链路参考：FabFilter Pro-Q 3 / Bloom / Transient Shaper
+   - Evidence image key: `deep-EQw3BCxIRPk-12-b3ae548757`
+13. **锁定冲击角色**:
+   - 角色：锁定冲击角色
+   - 链路参考：Snap Heap
+   - Evidence image key: `deep-EQw3BCxIRPk-13-3f57a79e37`
+14. **拆分源素材层**:
+   - 角色：拆分源素材层
+   - 链路参考：Serum 2
+   - Evidence image key: `deep-EQw3BCxIRPk-14-b130c550db`
 
 ### Plugin and Processing Notes
 - **Phase Plant**: 用于 Arc Machine 甜味层和 metal taps sample-length power-up。
@@ -6030,16 +7707,62 @@ Records: 82
 - 这条要按效果链学习：REAPER -> Whoosh Machine -> Sound Particles -> Disperser -> Chorus -> Multiband Distortion，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。
 
 ### Step / Event Map
+1. **先做 spotting 和三幕结构**:
+   - 角色：先做 spotting 和三幕结构
+   - 链路参考：REAPER
+   - Evidence image key: `deep-2VQTuApNrPA-01-180d004422`
+2. **40 分钟做 color palette，并录成长文件**:
+   - 角色：40 分钟做 color palette，并录成长文件
+   - 链路参考：Whoosh Machine
+   - Evidence image key: `deep-2VQTuApNrPA-02-e00370d0c4`
+3. **Whoosh / impact / forcefield 各自先有颜色**:
+   - 角色：Whoosh / impact / forcefield 各自先有颜色
+   - 链路参考：Sound Particles
+   - Evidence image key: `deep-2VQTuApNrPA-03-b27d5cdebd`
+4. **建立可复用处理链**:
+   - 角色：建立可复用处理链
+   - 链路参考：Disperser
+   - Evidence image key: `deep-2VQTuApNrPA-04-1ece8f8516`
 5. **打印中间结果**: 复杂设计要多次 render/print，保留干声、阶段性处理和最终版，方便回退和二次采样。
    - 角色：打印中间结果
    - 链路参考：Chorus
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-05-d4390ee9a4`
+6. **做变体和命名**:
+   - 角色：做变体和命名
+   - 链路参考：Multiband Distortion
+   - Evidence image key: `deep-2VQTuApNrPA-06-13282993be`
+7. **整理总线**:
+   - 角色：整理总线
+   - 链路参考：Serum
+   - Evidence image key: `deep-2VQTuApNrPA-07-4b7008d15a`
+8. **复盘失败点**:
+   - 角色：复盘失败点
+   - 链路参考：Serum 2
+   - Evidence image key: `deep-2VQTuApNrPA-08-9dba9023ef`
+9. **准备游戏落地**:
+   - 角色：准备游戏落地
+   - 链路参考：Pro-MB / multiband dynamics
+   - Evidence image key: `deep-2VQTuApNrPA-09-5ae3085027`
+10. **归档知识**:
+   - 角色：归档知识
+   - 链路参考：Pro-L 2 / limiter
+   - Evidence image key: `deep-2VQTuApNrPA-10-c5da4a6042`
 11. **确定工作目标**: 先把这条视频当成可复用流程看：它解决的是素材组织、插件链、调色板、实现还是混音问题。
    - 角色：确定工作目标
    - 链路参考：Disperser / phase rotation
-   - 速度/方向：rate、stretch、reverse 会同时改变音高、包络和体型。
    - Evidence image key: `deep-2VQTuApNrPA-11-cef1a0ddb6`
+12. **建立素材池**:
+   - 角色：建立素材池
+   - 链路参考：Playback rate / item rate
+   - Evidence image key: `deep-2VQTuApNrPA-12-6df16a3908`
+13. **先做最小可听版本**:
+   - 角色：先做最小可听版本
+   - 链路参考：REAPER
+   - Evidence image key: `deep-2VQTuApNrPA-13-9712f86f53`
+14. **建立可复用处理链**:
+   - 角色：建立可复用处理链
+   - 链路参考：Whoosh Machine
+   - Evidence image key: `deep-2VQTuApNrPA-14-7b7390593b`
 
 ### Plugin and Processing Notes
 - **REAPER**: 作为 palette 录制、快速 editorial 和 VCA session 准备的核心 DAW。
@@ -7166,7 +8889,7 @@ Records: 82
 1. **核对完整自录素材池**: 作者说明比赛限制为只用自己录制的素材。画面事实：frame_000056 同屏展示弦乐器、碗、衣物、橡胶件、球/玩具、管件与 REAPER 工程；这能证明来源多样，不能证明每件物体都进入最终 cue。
    - 标题中的 dog toys 不能覆盖 household objects、human performance、cloth/leather、metal、air 与 water 等来源。
    - Rubber Treat、Rubber Cover 等可见标签可按原名记录，但不补品牌、型号、材料配方或发声结构。
-   - 作者提醒 scream 表演可能伤嗓
+   - 作者提醒 scream 表演可能伤嗓；应优先使用非发声物、低压力口腔动作或受控表演，不把危险发声当建议。
    - Evidence image key: `ir8d3PUj5JU-recorded-source-palette`
 2. **用视觉参考限定体型与方向**: 作者把 Monster Hunter: World 中最喜欢的 final boss 作为体型与外观参考。画面事实：frame_000231 只显示一张蓝白带翼异星龙参考图和工程上下文；记录到作品与 final-boss 层级即可。
    - 不得从单帧补写角色名、种族、技能、官方设定或声音来源。
@@ -8169,6 +9892,7 @@ Records: 82
 
 ### Key Decisions and Evidence Boundaries
 - 先选源而不是先选插件：每个素材只指定一个实验目标，限定为 scale、motion、tone、attack 或 tail。
+- 时态边界：Coffee Machine、Crickets、Door、Singing Bowl 可形成长变体；Cloth、Paper、Glass 可形成短 gesture，但这不是作者已公开的轨道角色。
 - 反向层先调时间：把能量终点对齐同一视觉帧，再决定自己的 pitch、filter 或空间处理，不引用视频未公开的方法。
 - 未知 Layer 9 不参与参数教学；任何身份和处理推断都等待新证据。
 - 最后才写事件图：cast、movement、impact、sustain、release 与 tail 必须由目标场景和玩家信息需求决定。

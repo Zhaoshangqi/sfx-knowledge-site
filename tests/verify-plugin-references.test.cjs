@@ -42,13 +42,22 @@ test("known error-page captures are excluded from generated reference catalogs",
     "izotope-ozone",
     "izotope-trash",
     "izotope-vocalsynth",
-    "ableton-vocoder"
+    "ableton-vocoder",
+    "soundhack-pitch-delay",
+    "minimal-morph-eq",
+    "native-reaktor-6",
+    "native-skanner-xt",
+    "wwise"
   ];
 
   for (const slug of blockedSlugs) {
     assert.doesNotMatch(source, new RegExp(`\\["${slug}"`));
     assert.ok(!assetCatalog.entries.some((entry) => entry.slug === slug), `${slug} remains in catalog.json`);
   }
+
+  ["--dump-dom", "Access Denied", "403 ERROR", "ERR_CONNECTION", "Cloudflare"].forEach((marker) => {
+    assert.ok(source.includes(marker), `missing fresh-capture error marker ${marker}`);
+  });
 });
 
 test("generated plugin catalog is the canonical inline catalog", () => {
