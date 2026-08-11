@@ -10,7 +10,7 @@ Use this skill as the decision guide for game sound-design work. Prefer it toget
 - `local-sfx-library` when selecting source assets.
 - `reaper-plugin-library` when choosing installed plugins.
 
-Load `references/video-learnings.md` when the user asks to design a sound inspired by prior analyzed videos, asks what has been learned, or asks for a game-SFX workflow. Load `references/site-video-memory.md` when exact website-module steps, screenshots, visible parameters, plugin roles, effect-chain reasoning, or practice tasks are needed. Load `references/sfx-knowledge.md` when the user needs the larger historical knowledge base, detailed plugin settings, troubleshooting tables, export targets, or older video-derived notes.
+Load `references/video-learnings.md` when the user asks to design a sound inspired by prior analyzed videos, asks what has been learned, or asks for a game-SFX workflow. Load `references/site-video-memory.md` when exact website-module steps, screenshots, visible parameters, plugin roles, structured effect uses, effect-chain reasoning, or evidence boundaries are needed. Load `references/sfx-knowledge.md` when the user needs the larger historical knowledge base, detailed plugin settings, troubleshooting tables, export targets, or older video-derived notes.
 
 ## Video Learning Rule
 
@@ -19,9 +19,10 @@ After every analyzed tutorial/reference video:
 1. Require full visual evidence at readable resolution; subtitles may locate moments but cannot be the only source. Skip the video if visuals cannot be obtained.
 2. Extract reusable production principles, not just a summary.
 3. Record concrete layer roles, plugin chains, visible parameters, routing, automation, middleware behavior, and why each choice works.
-4. Add a new entry to `references/video-learnings.md` using the established format.
-5. When working in the website repository, update the video's independent module and regenerate `references/site-video-memory.md` with `node tools/export-site-memory.cjs`.
-6. When later designing SFX, actively retrieve relevant entries and combine them with the general principles below.
+4. Treat the output as a complete reference archive: omit exercises and course tasks, but retain every evidenced production decision, parameter, route, automation move, limitation, and failed attempt.
+5. Add a new entry to `references/video-learnings.md` using the established format.
+6. When working in the website repository, update the video's independent module and regenerate `references/site-video-memory.md` with `node tools/export-site-memory.cjs`.
+7. When later designing SFX, actively retrieve relevant entries and combine them with the general principles below.
 
 ## Core Principles
 

@@ -61,7 +61,7 @@ node .\tools\extract-video-context.cjs VIDEO_ID
 ```text
 id, title, videoId, url, source, category, secondaryCategories,
 addedAt, updatedAt, updateNote, summary, coreIdeas, steps, plugins,
-materials, keywords, tips, chainFocus, parameterLogic, practiceChecklist
+materials, keywords, tips, chainFocus, parameterLogic, effectUses（可选）
 ```
 
 步骤图同时准备：
@@ -85,7 +85,7 @@ skills/sfx-knowledge/references/video-learnings.md
 node .\tools\export-site-memory.cjs
 ```
 
-生成文件 `skills/sfx-knowledge/references/site-video-memory.md` 不手工修改。它用于防止网站已有模块漏进 Skill，也保留每条模块的参数逻辑和练习清单。
+生成文件 `skills/sfx-knowledge/references/site-video-memory.md` 不手工修改。它用于防止网站已有模块漏进 Skill，并保留每条模块的参数逻辑、结构化效果器用法和证据边界。
 
 ## 6. 验证与发布
 

@@ -242,7 +242,7 @@ function detectPlugins(record, transcript) {
         context ? `字幕/画面线索：${context}` : "视频未显示完整参数页：按插件承担的角色做 A/B 微调。",
         nums.length ? `可确认的数值/范围：${nums.join("；")}` : "具体数值未完整显示：重点听运动速度、频段位置、湿度和瞬态变化。",
         `参数逻辑：${purpose}`,
-        "复刻时只动一个核心参数并渲染 3 个强度版本，避免同时改太多导致无法判断贡献。"
+        "参数证据不足时，只记录已显示数值和调节方向，其他值保持未知。"
       ];
       if (fromExisting.has(name)) {
         const current = fromExisting.get(name);
@@ -331,7 +331,7 @@ function buildSteps(record, transcript, imageKeys, plugins) {
 
 function enrichLearning(record, plugins, transcript) {
   const chain = plugins.slice(0, 8).map((plugin, index) =>
-    `${index + 1}. ${plugin.name}：${plugin.purpose} 复习时先听它改变的是素材身份、频谱、运动、空间、动态还是响度，再决定是否保留。`
+    `${index + 1}. ${plugin.name}：${plugin.purpose}`
   );
   const sourceRole = `源素材角色：${(record.materials || []).slice(0, 4).join(" / ") || record.category}。先给每层贴上 transient、body、texture、motion、tail、loop 或 feedback 标签。`;
   const order = `效果链顺序：${plugins.slice(0, 6).map((plugin) => plugin.name).join(" -> ")}。不要跳到总线处理，先保证每一层的角色和动作清楚。`;
@@ -339,7 +339,7 @@ function enrichLearning(record, plugins, transcript) {
   const visual = "参数跟画面动作绑定：运动速度、滤波开合、pitch ramp、尾音长度都应该回答画面正在发生什么。";
   const parameter = plugins.slice(0, 8).map((plugin) => {
     const settings = plugin.settings.slice(0, 2).join("；");
-    return `${plugin.name} 参数逻辑：${settings}。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。`;
+    return `${plugin.name} 参数逻辑：${settings || "视频未显示具体数值"}`;
   });
   const nums = extractNumbers(transcript).slice(0, 8);
   if (nums.length) parameter.unshift(`字幕中出现的数值线索：${nums.join("；")}。这些数值只当起点，最终按素材长度、画面速度和响度匹配微调。`);
@@ -366,17 +366,7 @@ function enrichLearning(record, plugins, transcript) {
 
   return {
     chainFocus: chainFocus.slice(0, 12),
-    parameterLogic: parameterLogic.slice(0, 10),
-    practiceChecklist: [
-      `复刻 ${record.title}：先做 30 秒 dry version，再按网页步骤逐段打开处理链。`,
-      "拆链练习：每一步只开一个处理，写下它改变了 transient、body、texture、motion、tail 中的哪一项。",
-      `插件练习：从 ${plugins[0]?.name || "EQ"} 开始，只动一个核心参数，导出弱/中/强三版。`,
-      "截图复盘：点击每一步高清图，对照插件/轨道状态写一句“这一页在解决什么问题”。",
-      "响度匹配：所有 A/B 比较先拉到接近响度，避免把更响误听成更好。",
-      "失败记录：如果结果变糊，优先检查低中频堆积、湿声太早、限制器过量或层角色重复。",
-      "变体练习：把最终链路打印成 5 个随机起点/不同强度版本，挑 2 个可用变体。",
-      "归档：保存源素材、处理后 stem、插件链顺序和关键参数方向，后续同类音效直接调用。"
-    ]
+    parameterLogic: parameterLogic.slice(0, 10)
   };
 }
 
@@ -411,17 +401,17 @@ function enrichRecord(record) {
   const enriched = {
     ...record,
     updatedAt: today,
-    updateNote: `${today} 返工：补为教程式拆解，重点增加效果链顺序、插件用途、参数调试逻辑、A/B 练习和高清步骤截图；未展示具体数值的参数已按“调参方向”标注。`,
+    updateNote: `${today} 返工：补充完整效果链顺序、插件用途、参数证据、调节方向和高清步骤截图；未展示具体数值的内容保持未知。`,
     steps,
     plugins,
     coreIdeas: [
       ...(record.coreIdeas || []),
-      `这条要按效果链学习：${pluginNames.slice(0, 6).join(" -> ")}，每一步都要问它在改变素材身份、运动、频谱、空间、动态还是响度。`,
+      `这条效果链的处理顺序为：${pluginNames.slice(0, 6).join(" -> ")}；每一步都要确认它改变的是素材身份、运动、频谱、空间、动态还是响度。`,
       "声音设计不是堆插件，而是把素材角色、画面动作和参数运动一一对应。"
     ].filter(Boolean).slice(0, 8),
     tips: [
       ...(record.tips || []),
-      "复刻时先做干声/处理声响度匹配，再逐个 bypass 插件。",
+      "干声和处理声先做响度匹配，再逐个 bypass 插件确认贡献。",
       "截图里的轨道顺序比单个 preset 更重要：先看层的角色，再看插件。"
     ].filter(Boolean).slice(0, 10),
     keywords: [...new Set([...(record.keywords || []), "deep_rework", "effect_chain", "parameter_logic", "step_screenshots"])],
