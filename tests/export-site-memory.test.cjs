@@ -48,7 +48,8 @@ test("exports dry goods and structured effect uses without practice sections", (
     ],
     chainFocus: [
       "EQ -> Vocoder。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。",
-      "迁移练习假设：这条课程任务不应进入干货导出。"
+      "迁移练习假设：这条课程任务不应进入干货导出。",
+      "效果链事实。复习这条时先看每一步负责的声音角色，再看插件名称。"
     ],
     parameterLogic: ["Bands 8 / 40。复刻时只调一个核心旋钮，渲染弱/中/强三版并响度匹配比较。"],
     practiceChecklist: ["不应进入导出"],
@@ -91,9 +92,10 @@ test("exports dry goods and structured effect uses without practice sections", (
   assert.match(output, /Bands 8 \/ 40。/);
   assert.match(output, /1\. \*\*调制\*\*: 保留瞬态。/);
   assert.match(output, /\*\*Vocoder\*\*: 建立双路调制。/);
+  assert.match(output, /效果链事实。/);
   assert.doesNotMatch(
     output,
-    /Practice Checklist|不应进入导出|弱\/中\/强三版|3 个强度版本|迁移练习假设|练习/
+    /Practice Checklist|不应进入导出|弱\/中\/强三版|3 个强度版本|迁移练习假设|练习|复习/
   );
 
   const malformed = renderRecord({
@@ -133,6 +135,6 @@ test("exports dry goods and structured effect uses without practice sections", (
   const productionMemory = fs.readFileSync(memoryPath, "utf8");
   assert.doesNotMatch(
     productionMemory,
-    /### Practice Checklist|复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习/
+    /### Practice Checklist|复刻时只调一个核心旋钮|复刻时只动一个核心参数|弱\/中\/强三版|3 个强度版本|练习|复习/
   );
 });

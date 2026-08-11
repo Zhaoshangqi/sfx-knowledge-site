@@ -8,7 +8,7 @@ const {
 const repoRoot = path.resolve(__dirname, "..");
 const indexPath = path.join(repoRoot, "index.html");
 const outputPath = path.join(repoRoot, "skills", "sfx-knowledge", "references", "site-video-memory.md");
-const courseTailPattern = /复刻时只调一个核心旋钮|复刻时只动一个核心参数并渲染 3 个强度版本|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版|练习优先/;
+const courseTailPattern = /复习(?:这条)?时先看每一步负责的声音角色，再看插件名称|复刻时只调一个核心旋钮|复刻时只动一个核心参数并渲染 3 个强度版本|每次只改一个维度并输出弱\/中\/强三版|弱\/中\/强三版|练习优先/;
 const practiceFactPattern = /迁移练习假设|分析推断练习|此分类是练习假设|后续迁移练习|复刻验收/;
 
 function readRecords() {

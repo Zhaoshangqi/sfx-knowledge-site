@@ -454,7 +454,7 @@ Records: 82
 ### Materials / Layer Sources
 
 ### Effect-Chain Reasoning
-- 效果链阅读顺序：素材录制与采集 -> 瞬态参数调整 -> 构建效果链路由 -> 滤波器参数调整 -> 混响处理 -> 失真与动态处理。复习这条时先看每一步负责的声音角色，再看插件名称。
+- 效果链阅读顺序：素材录制与采集 -> 瞬态参数调整 -> 构建效果链路由 -> 滤波器参数调整 -> 混响处理 -> 失真与动态处理。
 - 主要处理点：FilterFreak / Valhalla Supermassive / Decapitator / Deelay / Doppler Dome / Transient Shaper。
 - 源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。
 - 本条核心问题：完整的游戏音效设计教程，展示如何为《Arcane》创建沉重的近战金属撞击音效。使用 Reaper、Ableton Live 以及 Valhalla、FilterFreak、Decapitator 等专业插件进行音效合成、效果链设计和参数自动...
@@ -591,7 +591,7 @@ Records: 82
 ### Materials / Layer Sources
 
 ### Effect-Chain Reasoning
-- 效果链阅读顺序：选择音效库素材 -> 在DAW中导入并分层处理 -> 时间拉伸与速率调整 -> 增益与音量调整 -> 应用合成器进行音色塑造 -> 应用效果器链。复习这条时先看每一步负责的声音角色，再看插件名称。
+- 效果链阅读顺序：选择音效库素材 -> 在DAW中导入并分层处理 -> 时间拉伸与速率调整 -> 增益与音量调整 -> 应用合成器进行音色塑造 -> 应用效果器链。
 - 主要处理点：Serum合成器 / Native Instruments Skanner XT / Soundtoys Superplate / Soundtoys Crystallizer / Soundtoys Devil-Loc / iZotope Ozone 11 EQ。
 - 源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。
 - 本条核心问题：视频展示如何使用Rock The Speakerbox Professional Sound FX中的Overkill音效库创建逼真的恐怖/暴力游戏音效。讲师演示了多个专业DAW和插件（Serum、Audition、After Effect...
@@ -766,7 +766,7 @@ Records: 82
 ### Materials / Layer Sources
 
 ### Effect-Chain Reasoning
-- 效果链阅读顺序：分析源音材料质量 -> 使用Serum生成基础音色 -> 应用SampHold采样保持滤波器 -> 配置双Vocoder实例并联处理 -> 调整Vocoder核心参数 -> 应用OTT多频段动态处理。复习这条时先看每一步负责的声音角色，再看插件名称。
+- 效果链阅读顺序：分析源音材料质量 -> 使用Serum生成基础音色 -> 应用SampHold采样保持滤波器 -> 配置双Vocoder实例并联处理 -> 调整Vocoder核心参数 -> 应用OTT多频段动态处理。
 - 主要处理点：Serum合成器 / iZotope Vocoder / OTT多频段压缩器 / iZotope Trash 2 / Ozone Distortion / Soundtoys Little Radiator 1566A / NI Transient Master。
 - 源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。
 - 本条核心问题：视频深入分析了Destiny 2游戏音效设计工作流，重点演示了如何使用Serum合成器、iZotope Vocoder、OTT动态均衡器等插件链来塑造复杂的游戏音效。制作过程包括合成音源处理、音频效果堆叠、波形优化和最终混音。
@@ -872,7 +872,7 @@ Records: 82
 ### Materials / Layer Sources
 
 ### Effect-Chain Reasoning
-- 效果链阅读顺序：音效结构规划（A/B双段） -> A段第一层：点击能量层 -> A段第二层：低频颤动层 -> A段中间：运动音效层 -> A段末尾：粗粒质感层（EQ切除） -> B段：自录瓷砖素材。复习这条时先看每一步负责的声音角色，再看插件名称。
+- 效果链阅读顺序：音效结构规划（A/B双段） -> A段第一层：点击能量层 -> A段第二层：低频颤动层 -> A段中间：运动音效层 -> A段末尾：粗粒质感层（EQ切除） -> B段：自录瓷砖素材。
 - 主要处理点：Doppler插件 / Phase Mistress（Soundtoys） / Stereo Imager / EQ均衡器 / Reverb混响。
 - 源素材角色：源素材。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。
 - 本条核心问题：Riot Games音效设计师Nathan讲解Valorant Veto特工Interceptor（拦截器）装备激活音效的完整制作过程。通过Reaper DAW展示了双段式结构（A段激活+B段就绪）的设计思路，使用Doppler、Phase...
@@ -991,7 +991,7 @@ Records: 82
 - power amp hum
 
 ### Effect-Chain Reasoning
-- 效果链阅读顺序：按功能拆分装备音效层 -> 制作即时反馈 bleep -> 叠加护臂与手部 foley -> 设计屏幕弹出与 CRT 质感 -> 加入细微能量点缀 -> 净化并推远点缀层。复习这条时先看每一步负责的声音角色，再看插件名称。
+- 效果链阅读顺序：按功能拆分装备音效层 -> 制作即时反馈 bleep -> 叠加护臂与手部 foley -> 设计屏幕弹出与 CRT 质感 -> 加入细微能量点缀 -> 净化并推远点缀层。
 - 主要处理点：FabFilter Pro-Q 3 / ReaEQ / Waves Z-Noise / KHS Reverb / Waves S1 Stereo Imager / ReaPitch / Soundtoys Crystallizer。
 - 源素材角色：Valorant Tejo rockets equip gameplay capture。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。
 - 本条核心问题：Valorant 音效设计师 Nathan 在 REAPER 中拆解 Tejo 火箭装备音效。他把 equip 拆成即时反馈 bleep、手套/护臂 foley、屏幕弹出、细微能量点缀、持续 loop 和选择提示音，再通过 EQ、降噪、混响...
@@ -9434,7 +9434,7 @@ Records: 82
 - Mechanical metal hit
 
 ### Effect-Chain Reasoning
-- 效果链阅读顺序：先把机器兽拆成身体动作层 -> Clawstrider Vox 分成低吼和高频伺服尖叫 -> EchoBoy 3ms + Little AlterBoy 做机器人齿边 -> MAutoPitch 强制统一机器声带音高 -> Convolver 给声带加扬声器和金属腔体 -> 火焰先重失真再 bounce 成可切片素材。复习这条时先看每一步负责的声音角色，再看插件名称。
+- 效果链阅读顺序：先把机器兽拆成身体动作层 -> Clawstrider Vox 分成低吼和高频伺服尖叫 -> EchoBoy 3ms + Little AlterBoy 做机器人齿边 -> MAutoPitch 强制统一机器声带音高 -> Convolver 给声带加扬声器和金属腔体 -> 火焰先重失真再 bounce 成可切片素材。
 - 主要处理点：Soundtoys EchoBoy / Soundtoys Little AlterBoy / Melda MAutoPitch / Convolver / Kilohearts Multipass / Spin Tracer。
 - 源素材角色：Machina robot library。先判断它承担 transient、body、texture、tail、loop 还是 UI feedback，再决定处理顺序。
 - 本条核心问题：这条视频用 Rock the Speakerbox 的 Machina 库重做 Horizon 风格机器兽，不是简单堆机器人素材，而是按 Clawstrider / Leaplasher 的身体动作、脚步、声带、火焰和电击攻击拆成独立行为层...
