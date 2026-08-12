@@ -49,7 +49,7 @@
     var hasTrack = Boolean(track && Array.isArray(track.cues) && track.cues.length);
     var reviewStatus = hasTrack && track.reviewStatus === 'reviewed' ? 'reviewed' : 'draft';
     var statusText = !hasTrack
-      ? '暂无本站中文字幕'
+      ? '中文字幕整理中'
       : reviewStatus === 'reviewed'
         ? '本站中文字幕 · 已校对'
         : '本站中文字幕 · 字幕草稿';

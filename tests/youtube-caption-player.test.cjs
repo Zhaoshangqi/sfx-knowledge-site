@@ -213,7 +213,7 @@ test('render returns a cover-first shell with escaped content and no iframe', ()
 test('render keeps videos playable while showing an explicit missing subtitle state', () => {
   const html = playerApi.render({ videoId: 'gPgKeCVN8Ek', title: 'No track' }, null, 'https://i.ytimg.com/vi/gPgKeCVN8Ek/hqdefault.jpg');
 
-  assert.match(html, /暂无本站中文字幕/);
+  assert.match(html, /中文字幕整理中/);
   assert.match(html, /data-subtitle-toggle[^>]*disabled/);
   assert.match(html, /data-player-cover/);
   assert.doesNotMatch(html, /data-cue-index=/);
