@@ -80,13 +80,26 @@ function plainValue(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function records() {
-  const prefix = '    const records = ';
+function inlineLiteral(name, nextName) {
+  const prefix = `    const ${name} = `;
   const start = indexHtml.indexOf(prefix);
-  const end = indexHtml.indexOf('    const imageManifest', start);
-  assert.notEqual(start, -1, 'missing records JSON');
-  assert.notEqual(end, -1, 'missing records JSON boundary');
-  return JSON.parse(indexHtml.slice(start + prefix.length, end).trim().replace(/;$/, ''));
+  const end = indexHtml.indexOf(`    const ${nextName}`, start);
+  assert.notEqual(start, -1, `missing ${name}`);
+  assert.notEqual(end, -1, `missing ${name} boundary`);
+  const source = indexHtml.slice(start + prefix.length, end).trim().replace(/;$/, '');
+  return vm.runInNewContext(`(${source})`);
+}
+
+function records() {
+  return inlineLiteral('records', 'imageManifest');
+}
+
+function imageManifest() {
+  return inlineLiteral('imageManifest', 'pluginReferenceCatalog');
+}
+
+function pluginReferenceCatalog() {
+  return inlineLiteral('pluginReferenceCatalog', 'categoryById');
 }
 
 test('loads the shared knowledge model and effect guides before the inline application data', () => {
@@ -434,6 +447,56 @@ test('complete guides publish only evidence-led copy with the evidence video fir
   assert.deepEqual(profile.visuals.map((visual) => visual.useId), ['use-3', 'use-1', 'use-2']);
   assert.ok(profile.visuals.every((visual) => visual.kind === 'video'));
   assert.doesNotMatch(JSON.stringify(profile), /parameterValues|parameters/);
+});
+
+test('publishes only the 27 curated profiles with their evidence screenshots', () => {
+  const siteRecords = records();
+  const uses = SfxKnowledgeModel.buildEffectUses(siteRecords);
+  const profiles = plainValue(loadEffectIndexData(SfxEffectGuides).profiles(
+    uses,
+    siteRecords,
+    pluginReferenceCatalog(),
+    imageManifest()
+  ));
+  const guides = SfxEffectGuides.all();
+  const names = profiles.map((profile) => profile.name);
+  const guideEvidenceUseIds = guides.map((guide) => guide.evidenceUseId);
+
+  assert.equal(siteRecords.length, 82);
+  assert.equal(profiles.length, 27);
+  assert.deepEqual(
+    new Set(names),
+    new Set(guides.map((guide) => guide.canonicalName))
+  );
+  assert.equal(new Set(names).size, profiles.length);
+  assert.equal(guideEvidenceUseIds.length, 27);
+  assert.equal(new Set(guideEvidenceUseIds).size, 27);
+
+  profiles.forEach((profile) => {
+    const guide = SfxEffectGuides.guideFor(profile.name);
+    assert.ok(guide, profile.name);
+    assert.equal(profile.evidenceUseId, guide.evidenceUseId);
+    assert.equal(profile.input, guide.input);
+    assert.equal(profile.action, guide.action);
+    assert.equal(profile.result, guide.result);
+    assert.equal(profile.uses.filter((use) => use.id === profile.evidenceUseId).length, 1);
+    assert.ok(profile.visuals.some((visual) => visual.kind === 'video'), `${profile.name} video screenshot`);
+    assert.equal(
+      profile.visuals.every((visual) => visual.kind === 'official'),
+      false,
+      `${profile.name} official-only gallery`
+    );
+    assert.ok(profile.visuals.some((visual) => (
+      visual.kind === 'video' && visual.useId === profile.evidenceUseId
+    )), `${profile.name} evidence screenshot`);
+  });
+
+  const videoVisuals = profiles.flatMap((profile) => (
+    profile.visuals.filter((visual) => visual.kind === 'video')
+  ));
+  const videoAssetKeys = videoVisuals.map((visual) => visual.full || visual.preview);
+  videoAssetKeys.forEach((key, index) => assert.ok(key, `missing video asset key ${index}`));
+  assert.equal(new Set(videoAssetKeys).size, videoVisuals.length);
 });
 
 test('effect profiles ignore screenshots matched only by generated chain scaffolding', () => {
