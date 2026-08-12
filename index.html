@@ -32426,8 +32426,10 @@
     const state = {
       mode: "videos",
       category: "all",
-      query: "",
-      source: "all",
+      videoQuery: "",
+      videoSource: "all",
+      effectQuery: "",
+      effectSource: "all",
       effectGoal: "all",
       sort: "updatedDesc",
       activeId: "",
@@ -32533,8 +32535,8 @@
 
     function clearEffectFilters() {
       state.effectGoal = "all";
-      state.query = "";
-      state.source = "all";
+      state.effectQuery = "";
+      state.effectSource = "all";
       searchEl.value = "";
       sourceEl.value = "all";
     }
@@ -32564,10 +32566,10 @@
     }
 
     function filteredRecords() {
-      const query = state.query.trim().toLowerCase();
+      const query = state.videoQuery.trim().toLowerCase();
       const list = records.filter((record) => {
         const categoryMatch = state.category === "all" || record.category === state.category || record.secondaryCategories.includes(state.category);
-        const sourceMatch = state.source === "all" || record.source === state.source;
+        const sourceMatch = state.videoSource === "all" || record.source === state.videoSource;
         const queryMatch = !query || searchable(record).includes(query);
         return categoryMatch && sourceMatch && queryMatch;
       });
@@ -32585,13 +32587,13 @@
     }
 
     function filteredEffectUses() {
-      return state.source === "all"
+      return state.effectSource === "all"
         ? effectUses
-        : effectUses.filter((use) => use.source === state.source);
+        : effectUses.filter((use) => use.source === state.effectSource);
     }
 
     function effectProfileMatchesSource(profile) {
-      return state.source === "all" || profile.uses.some((use) => use.source === state.source);
+      return state.effectSource === "all" || profile.uses.some((use) => use.source === state.effectSource);
     }
 
     function renderEvidenceLabels(labels) {
@@ -32626,6 +32628,8 @@
       effectLibraryEl.hidden = state.mode !== "effects";
       sortEl.hidden = state.mode !== "videos";
       toolbarEl.classList.toggle("effects-mode", state.mode === "effects");
+      searchEl.value = state.mode === "effects" ? state.effectQuery : state.videoQuery;
+      sourceEl.value = state.mode === "effects" ? state.effectSource : state.videoSource;
       searchEl.placeholder = state.mode === "effects"
         ? "搜索效果器、输入素材、处理动作或来源..."
         : "搜索视频、设计目标、效果器或素材...";
@@ -32647,7 +32651,7 @@
       const goalProfiles = sourceProfiles.filter((profile) => (
         state.effectGoal === "all" || SfxEffectLearningPaths.matches(profile.name, state.effectGoal)
       ));
-      const query = state.query.trim();
+      const query = state.effectQuery.trim();
       const normalizedQuery = query.toLowerCase();
       const profiles = goalProfiles
         .filter((profile) => !query || effectProfileSearchable(profile).includes(normalizedQuery));
@@ -33335,13 +33339,15 @@
     });
 
     searchEl.addEventListener("input", (event) => {
-      state.query = event.target.value;
+      if (state.mode === "effects") state.effectQuery = event.target.value;
+      else state.videoQuery = event.target.value;
       window.clearTimeout(searchRenderTimer);
       searchRenderTimer = window.setTimeout(render, 120);
     });
 
     sourceEl.addEventListener("change", (event) => {
-      state.source = event.target.value;
+      if (state.mode === "effects") state.effectSource = event.target.value;
+      else state.videoSource = event.target.value;
       state.activeId = "";
       state.activeEffectId = "";
       render();

@@ -152,4 +152,3 @@ Confirm that no media, cookies, credentials, local absolute paths, `.work` files
 - [ ] **Step 5: Commit and push**
 
 Commit the verified implementation to `feature/video-knowledge-dual-index` and push it to the existing Pull Request.
-

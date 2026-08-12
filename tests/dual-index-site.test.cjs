@@ -195,13 +195,18 @@ test('provides a minimal effect index toolbar and render target', () => {
   assert.doesNotMatch(indexHtml, /id="effectEvidenceFilter"/);
 });
 
-test('keeps an independent effect goal state and DOM reference across navigation', () => {
+test('keeps independent video and effect filter state across navigation', () => {
   const stateSource = indexHtml.match(/const state = \{([\s\S]*?)\n    \};/)?.[1] || '';
   const domSource = indexHtml.slice(indexHtml.indexOf('const tabsEl'), indexHtml.indexOf('let searchRenderTimer'));
   const activateSource = sourceSlice('function activateLibraryMode(mode, syncHash = true) {', 'viewSwitchEl.addEventListener("click"');
   const returnSource = sourceSlice('function returnToLibrary() {', 'function focusLibraryModeTab() {');
 
   assert.match(stateSource, /effectGoal: "all"/);
+  assert.match(stateSource, /videoQuery: ""/);
+  assert.match(stateSource, /videoSource: "all"/);
+  assert.match(stateSource, /effectQuery: ""/);
+  assert.match(stateSource, /effectSource: "all"/);
+  assert.doesNotMatch(stateSource, /^\s*(?:query|source):/m);
   assert.match(domSource, /const effectGoalsEl = document\.getElementById\("effectGoals"\);/);
   assert.doesNotMatch(activateSource, /effectGoal\s*=/);
   assert.doesNotMatch(returnSource, /effectGoal\s*=/);
@@ -353,12 +358,19 @@ test('mode switching toggles toolbar layout and sort visibility in both directio
     tabIndex: 0
   }));
   const context = {
-    state: { mode: 'effects' },
+    state: {
+      mode: 'effects',
+      videoQuery: 'impact video',
+      videoSource: 'Video Channel',
+      effectQuery: 'transient',
+      effectSource: 'Effect Channel'
+    },
     viewSwitchEl: { querySelectorAll() { return buttons; } },
     videoLibraryEl: { hidden: false },
     effectLibraryEl: { hidden: true },
     sortEl: { hidden: false },
-    searchEl: { placeholder: '' },
+    searchEl: { placeholder: '', value: '' },
+    sourceEl: { value: '' },
     toolbarEl: {
       classList: {
         toggle(name, active) { active ? classNames.add(name) : classNames.delete(name); }
@@ -376,6 +388,8 @@ test('mode switching toggles toolbar layout and sort visibility in both directio
   assert.equal(context.sortEl.hidden, true);
   assert.equal(context.videoLibraryEl.hidden, true);
   assert.equal(context.effectLibraryEl.hidden, false);
+  assert.equal(context.searchEl.value, 'transient');
+  assert.equal(context.sourceEl.value, 'Effect Channel');
 
   context.state.mode = 'videos';
   renderModeSwitch();
@@ -383,6 +397,60 @@ test('mode switching toggles toolbar layout and sort visibility in both directio
   assert.equal(context.sortEl.hidden, false);
   assert.equal(context.videoLibraryEl.hidden, false);
   assert.equal(context.effectLibraryEl.hidden, true);
+  assert.equal(context.searchEl.value, 'impact video');
+  assert.equal(context.sourceEl.value, 'Video Channel');
+});
+
+test('search and source controls update only the active library filters', () => {
+  const context = {
+    state: {
+      mode: 'videos',
+      videoQuery: '',
+      videoSource: 'all',
+      effectQuery: 'existing effect',
+      effectSource: 'Effect Channel',
+      activeId: 'video-1',
+      activeEffectId: 'effect-1'
+    },
+    searchRenderTimer: 0,
+    renderCalls: 0,
+    window: {
+      clearTimeout() {},
+      setTimeout(callback) {
+        callback();
+        return 1;
+      }
+    }
+  };
+  context.render = () => { context.renderCalls += 1; };
+  const searchHandler = loadNamedFunction(
+    `function searchHandler(event) {${listenerBody('searchEl', 'input')}\n}`,
+    'searchHandler',
+    context
+  );
+  const sourceHandler = loadNamedFunction(
+    `function sourceHandler(event) {${listenerBody('sourceEl', 'change')}\n}`,
+    'sourceHandler',
+    context
+  );
+
+  searchHandler({ target: { value: 'new video query' } });
+  sourceHandler({ target: { value: 'Video Channel' } });
+  assert.equal(context.state.videoQuery, 'new video query');
+  assert.equal(context.state.videoSource, 'Video Channel');
+  assert.equal(context.state.effectQuery, 'existing effect');
+  assert.equal(context.state.effectSource, 'Effect Channel');
+
+  context.state.mode = 'effects';
+  searchHandler({ target: { value: 'new effect query' } });
+  sourceHandler({ target: { value: 'Another Effect Channel' } });
+  assert.equal(context.state.videoQuery, 'new video query');
+  assert.equal(context.state.videoSource, 'Video Channel');
+  assert.equal(context.state.effectQuery, 'new effect query');
+  assert.equal(context.state.effectSource, 'Another Effect Channel');
+  assert.equal(context.state.activeId, '');
+  assert.equal(context.state.activeEffectId, '');
+  assert.equal(context.renderCalls, 4);
 });
 
 test('builds and renders screenshot-backed effect profiles', () => {
@@ -432,7 +500,7 @@ test('effect source filtering hides global profiles without recalculating screen
   assert.doesNotMatch(renderer, /EffectIndexData\.profiles\(list,/);
   assert.match(renderer, /const sourceProfiles = allProfiles[\s\S]*?effectProfileMatchesSource\(profile\)/);
   assert.match(renderer, /const goalProfiles = sourceProfiles[\s\S]*?const profiles = goalProfiles/);
-  assert.match(sourceMatcher, /profile\.uses\.some\(\(use\) => use\.source === state\.source\)/);
+  assert.match(sourceMatcher, /profile\.uses\.some\(\(use\) => use\.source === state\.effectSource\)/);
   assert.ok(renderer.indexOf('EffectIndexData.profiles(effectUses') < renderer.indexOf('effectProfileMatchesSource(profile)'));
 });
 
@@ -613,7 +681,7 @@ test('renders ordered goal counts and combines source, goal, and query filters',
   }));
   const context = {
     SfxEffectLearningPaths,
-    state: { source: '来源 A', effectGoal: 'cleanup-control', query: 'resonance' },
+    state: { effectSource: '来源 A', effectGoal: 'cleanup-control', effectQuery: 'resonance' },
     effectUses: Array.from({ length: 99 }, (_, index) => ({ id: `raw-use-${index}` })),
     records: [],
     pluginReferenceCatalog: [],
@@ -657,7 +725,7 @@ test('renders ordered goal counts and combines source, goal, and query filters',
   assert.doesNotMatch(context.effectListEl.innerHTML, /NI Transient Master|Soundtoys Crystallizer|Waves Enigma/);
 
   context.state.effectGoal = 'invalid-goal';
-  context.state.query = '';
+  context.state.effectQuery = '';
   renderEffectLibrary();
   assert.equal(context.state.effectGoal, 'all');
   assert.equal(context.effectCountEl.textContent, '当前显示 3 / 3 个效果器档案');
@@ -684,7 +752,7 @@ test('renders result-first cards and explains supporting-only matches', () => {
   };
   const context = {
     SfxEffectLearningPaths,
-    state: { source: 'all', effectGoal: 'all', query: 'dragon' },
+    state: { effectSource: 'all', effectGoal: 'all', effectQuery: 'dragon' },
     effectUses: [],
     records: [],
     pluginReferenceCatalog: [],
@@ -710,7 +778,7 @@ test('renders result-first cards and explains supporting-only matches', () => {
   assert.match(markup, /class="effect-profile-match"[\s\S]*?<strong>搜索命中<\/strong>[\s\S]*?<mark class="search-hit">Dragon<\/mark> spell design/);
   assert.doesNotMatch(markup, /legacy suitable|legacy purpose|legacy outcome|Frequency 2 kHz|参数/);
 
-  context.state.query = 'focused';
+  context.state.effectQuery = 'focused';
   renderEffectLibrary();
   assert.match(context.effectListEl.innerHTML, /Cleaner <mark class="search-hit">focused<\/mark> tone/);
   assert.doesNotMatch(context.effectListEl.innerHTML, /effect-profile-match|搜索命中/);
@@ -725,8 +793,10 @@ test('goal and reset buttons update only effect filters and rerender', () => {
       category: 'weapons',
       sort: 'titleAsc',
       effectGoal: 'impact-density',
-      query: 'punch',
-      source: '来源 A'
+      videoQuery: 'weapon breakdown',
+      videoSource: 'Video Channel',
+      effectQuery: 'punch',
+      effectSource: '来源 A'
     },
     searchEl: { value: 'punch' },
     sourceEl: { value: '来源 A' }
@@ -738,8 +808,10 @@ test('goal and reset buttons update only effect filters and rerender', () => {
     category: 'weapons',
     sort: 'titleAsc',
     effectGoal: 'all',
-    query: '',
-    source: 'all'
+    videoQuery: 'weapon breakdown',
+    videoSource: 'Video Channel',
+    effectQuery: '',
+    effectSource: 'all'
   });
   assert.equal(helperContext.searchEl.value, '');
   assert.equal(helperContext.sourceEl.value, 'all');
