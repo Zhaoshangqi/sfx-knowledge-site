@@ -166,6 +166,13 @@ test('removes course-oriented shell copy', () => {
   assert.doesNotMatch(indexHtml, /学习时间：最新优先/);
 });
 
+test('hero introduction uses the approved effect index vocabulary', () => {
+  const heroSection = indexHtml.match(/<section class="hero">([\s\S]*?)<\/section>/)?.[1] || '';
+  const heroIntro = heroSection.match(/<p>([^<]*)<\/p>/)?.[1] || '';
+
+  assert.equal(heroIntro, '通过视频案例拆解声音设计思路，并快速查清效果器的输入素材、处理动作和听感变化。');
+});
+
 test('builds and renders screenshot-backed effect profiles', () => {
   [
     'SfxKnowledgeModel.buildEffectUses(records)',
