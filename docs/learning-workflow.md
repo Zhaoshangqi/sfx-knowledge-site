@@ -73,6 +73,37 @@ materials, keywords, tips, chainFocus, parameterLogic, effectUses（可选）
 
 动图使用 H.264 MP4，默认静止、点击播放；只截参数动作或处理对比所需的短片段。
 
+### 准备网站自有中文字幕
+
+播放器继续使用 YouTube 视频源，字幕显示、时间同步和全文跳转由网站控制，不依赖 YouTube 官方翻译。字幕准备只获取公开 VTT 文本，不下载媒体：
+
+```powershell
+yt-dlp --skip-download --write-auto-subs --sub-langs "zh-Hans,en-orig" --sub-format vtt -o ".work/subtitles/%(id)s.%(ext)s" "https://www.youtube.com/watch?v=VIDEO_ID"
+```
+
+把中文 VTT 转成经过校验的站点轨道 JSON：
+
+```powershell
+node .\tools\build-site-subtitles.cjs `
+  --video-id VIDEO_ID `
+  --input .work\subtitles\VIDEO_ID.zh-Hans.vtt `
+  --language zh-CN `
+  --source site-owned-from-public-captions `
+  --review-status draft `
+  --updated-at YYYY-MM-DD `
+  --output .work\subtitles\VIDEO_ID.track.json
+```
+
+转换器会清除 WebVTT 标签、滚动重复、空白及纯音乐提示，并拒绝畸形时间轴。随后逐条核对中英文 VTT、原视频口述和现有视频记录，修正插件名、产品名与声音设计术语，再把轨道加入 `src/video-subtitles.js`。
+
+字幕状态只有三种：
+
+- `missing`：站内暂无字幕，视频仍可播放。
+- `draft`：时间轴已可用，但术语或表述仍待人工核对。
+- `reviewed`：时间轴、术语和正文已人工核对。
+
+自动字幕和机器翻译不得直接标为 `reviewed`。`.work/subtitles/`、原始 VTT、原视频、音轨、Cookie 与登录态都不得提交；Git 只保存经过整理的站点字幕文本、代码和测试。
+
 ## 5. 写入 Skill 记忆
 
 先把本条视频的可复用知识追加到：
@@ -93,6 +124,10 @@ node .\tools\export-site-memory.cjs
 
 ```powershell
 node .\tools\verify-portable-kit.cjs
+node --test .\tests\build-site-subtitles.test.cjs .\tests\video-subtitles.test.cjs .\tests\youtube-caption-player.test.cjs
+node --check .\src\video-subtitles.js
+node --check .\src\youtube-caption-player.js
+node --check .\tools\build-site-subtitles.cjs
 node --check .\tools\export-site-memory.cjs
 node --check .\tools\extract-video-context.cjs
 .\.venv\Scripts\python.exe -m py_compile .\tools\prepare-sfx-video.py

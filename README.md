@@ -38,6 +38,17 @@ node .\tools\verify-portable-kit.cjs
 
 脚本只准备本机分析材料，输出到被 Git 忽略的 `.work/runs/`。字幕只能辅助定位，不能代替逐帧视觉分析；如果拿不到视频画面，停止该条分析，不生成字幕凑数模块。
 
+## 准备网站中文字幕
+
+详情页使用 YouTube 播放器，但中文字幕由网站自己的 `src/video-subtitles.js` 提供，不调用 YouTube 的运行时翻译。只下载公开字幕文本，并把临时文件留在 `.work/subtitles/`：
+
+```powershell
+yt-dlp --skip-download --write-auto-subs --sub-langs "zh-Hans,en-orig" --sub-format vtt -o ".work/subtitles/%(id)s.%(ext)s" "YOUTUBE_URL"
+node .\tools\build-site-subtitles.cjs --video-id VIDEO_ID --input .work\subtitles\VIDEO_ID.zh-Hans.vtt --language zh-CN --source site-owned-from-public-captions --review-status draft --updated-at YYYY-MM-DD --output .work\subtitles\VIDEO_ID.track.json
+```
+
+转换结果需核对时间轴、插件名和术语，再加入 `src/video-subtitles.js`。未经人工核对保持 `draft`；核对完成后才能改为 `reviewed`。没有字幕轨的视频明确显示“暂无本站中文字幕”，仍可正常播放。
+
 ## 更新记忆与发布
 
 网站记录更新后重新导出 Skill 的网站镜像记忆并检查：

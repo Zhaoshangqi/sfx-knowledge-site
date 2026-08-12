@@ -33,8 +33,8 @@ function browserApiWithTracks(rawTracks) {
     'utf8'
   );
   const injected = source.replace(
-    'var rawTracks = [];',
-    'var rawTracks = ' + JSON.stringify(rawTracks) + ';'
+    /\/\* TRACK_DATA_START \*\/[\s\S]*?\/\* TRACK_DATA_END \*\//,
+    '/* TRACK_DATA_START */\n  var rawTracks = ' + JSON.stringify(rawTracks) + ';\n  /* TRACK_DATA_END */'
   );
   const context = {};
   vm.runInNewContext(injected, context);
@@ -271,6 +271,42 @@ test('rejects invalid and duplicate raw tracks during initialization', () => {
     validTrack,
     { ...validTrack, videoId: ' video-a ' }
   ]), /Duplicate subtitle track for videoId: video-a/);
+});
+
+test('publishes the real Xl5u91oQv-k Chinese draft as site-owned cues', () => {
+  const track = SfxVideoSubtitles.trackFor('Xl5u91oQv-k');
+
+  assert.ok(track);
+  assert.equal(track.language, 'zh-CN');
+  assert.equal(track.source, 'site-owned-from-public-captions');
+  assert.equal(track.reviewStatus, 'draft');
+  assert.equal(track.updatedAt, '2026-08-12');
+  assert.ok(track.cues.length >= 20);
+  assert.ok(track.cues[0].start >= 40 && track.cues[0].start < 41);
+  assert.ok(track.cues.at(-1).end >= 382);
+  assert.ok(Object.isFrozen(track));
+  assert.ok(Object.isFrozen(track.cues));
+  track.cues.forEach((cue, index) => {
+    assert.ok(Object.isFrozen(cue));
+    assert.ok(cue.end > cue.start);
+    if (index > 0) assert.ok(cue.start >= track.cues[index - 1].end);
+  });
+
+  const text = track.cues.map((cue) => cue.text).join(' ');
+  ['Stepwise Morph', 'Serum', 'Analog 4088', 'PWM', 'GRM Reson', '瞬态塑形', '采样保持速率', 'FFT Size'].forEach((term) => {
+    assert.match(text, new RegExp(term, 'i'), 'missing corrected term: ' + term);
+  });
+  assert.doesNotMatch(text, /F50|\[音乐]|\[掌声]|机器翻译/);
+  assert.equal(SfxVideoSubtitles.statusFor('Xl5u91oQv-k').status, 'draft');
+  assert.deepEqual(SfxVideoSubtitles.coverageFor([
+    { videoId: 'Xl5u91oQv-k' },
+    { videoId: 'missing-video' }
+  ]), {
+    total: 2,
+    reviewed: 0,
+    draft: 1,
+    missing: 1
+  });
 });
 
 test('attaches the same frozen API contract to the browser global', () => {

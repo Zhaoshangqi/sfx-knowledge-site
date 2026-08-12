@@ -145,21 +145,29 @@ function listenerBody(elementName, eventName) {
   return match[1];
 }
 
-test('loads the shared knowledge model, effect guides, and learning paths before the inline application data', () => {
+test('loads shared knowledge, subtitle, and player modules before the inline application data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const learningPathsTag = indexHtml.match(/<script src="src\/effect-learning-paths\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const subtitlesTag = indexHtml.match(/<script src="src\/video-subtitles\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const playerTag = indexHtml.match(/<script src="src\/youtube-caption-player\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const modelScript = indexHtml.indexOf(modelTag);
   const guideScript = indexHtml.indexOf(guideTag);
   const learningPathsScript = indexHtml.indexOf(learningPathsTag);
+  const subtitlesScript = indexHtml.indexOf(subtitlesTag);
+  const playerScript = indexHtml.indexOf(playerTag);
   const inlineCategories = indexHtml.indexOf('const categories = [');
 
   assert.ok(modelTag, 'knowledge model script must be cache-versioned');
   assert.ok(guideTag, 'effect guide script must be cache-versioned');
   assert.ok(learningPathsTag, 'effect learning paths script must be cache-versioned');
+  assert.ok(subtitlesTag, 'video subtitle script must be cache-versioned');
+  assert.ok(playerTag, 'YouTube caption player script must be cache-versioned');
   assert.ok(modelScript < guideScript, 'effect guides must load after the knowledge model');
   assert.ok(guideScript < learningPathsScript, 'effect learning paths must load after effect guides');
-  assert.ok(learningPathsScript < inlineCategories, 'effect learning paths must load before inline application data');
+  assert.ok(learningPathsScript < subtitlesScript, 'subtitle data must load after the effect modules');
+  assert.ok(subtitlesScript < playerScript, 'player must load after subtitle data');
+  assert.ok(playerScript < inlineCategories, 'player must load before inline application data');
 });
 
 test('exposes accessible video and effect index modes', () => {
@@ -2204,9 +2212,9 @@ test('uses conservative shared cleaners for factual detail arrays', () => {
   );
 });
 
-test('renders a dry-goods archive with effect links and sources at the end', () => {
+test('renders a dry-goods archive with an embedded player, effect links, and sources at the end', () => {
   const detailSource = indexHtml.match(/function renderDetail\(\) \{([\s\S]*?)\n    \}\n\n    function renderEffectDetail/)?.[1] || '';
-  const requiredHeadings = ['设计目标', '设计思路', '素材与分层', '完整制作流程', '完整效果链', '效果器用法', '关键决策与证据边界', '来源与关键词'];
+  const requiredHeadings = ['设计目标', '设计思路', '原视频与中文字幕', '素材与分层', '完整制作流程', '完整效果链', '效果器用法', '关键决策与证据边界', '来源与关键词'];
   const positions = requiredHeadings.map((heading) => detailSource.indexOf('<h3>' + heading + '</h3>'));
 
   assert.ok(positions.every((position) => position !== -1));
@@ -2215,6 +2223,10 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
   assert.doesNotMatch(detailSource, /practiceChecklist|练习复盘|<span>学习/);
   assert.match(detailSource, /const chainHtml = detailData\.chainFacts/);
   assert.match(detailSource, /const decisionHtml = detailData\.decisionFacts/);
+  assert.match(detailSource, /SfxVideoSubtitles\.trackFor\(record\.videoId\)/);
+  assert.match(detailSource, /SfxYouTubeCaptionPlayer\.render\(record, subtitleTrack, thumbnail\(record, "hqdefault"\)\)/);
+  assert.match(detailSource, /SfxYouTubeCaptionPlayer\.mount\(playerRoot, \{/);
+  assert.match(detailSource, /subtitles: SfxVideoSubtitles/);
   assert.doesNotMatch(detailSource, /decisionFacts.*updateNote/);
   const effectSummarySource = indexHtml.match(/function renderEffectUseSummary\(record, use\) \{([\s\S]*?)\n    \}\n\n    function renderDetail/)?.[1] || '';
   assert.match(effectSummarySource, /EffectIndexData\.profileForUse/);
@@ -2232,9 +2244,22 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
   const titlePosition = detailSource.indexOf('<h2 class="detail-title"');
   const goalPosition = detailSource.indexOf('<h3>设计目标</h3>');
   const ideasPosition = detailSource.indexOf('<h3>设计思路</h3>');
-  const coverPosition = detailSource.indexOf('<div class="detail-cover">');
+  const playerPosition = detailSource.indexOf('<h3>原视频与中文字幕</h3>');
   const materialsPosition = detailSource.indexOf('<h3>素材与分层</h3>');
-  assert.ok(titlePosition < goalPosition && goalPosition < ideasPosition && ideasPosition < coverPosition && coverPosition < materialsPosition);
+  assert.ok(titlePosition < goalPosition && goalPosition < ideasPosition && ideasPosition < playerPosition && playerPosition < materialsPosition);
+});
+
+test('destroys the active YouTube player across reader and library route changes', () => {
+  const lifecycleSource = sourceSlice('let searchRenderTimer = 0;', 'function focusReaderHeading() {');
+  const videoOpenSource = sourceSlice('function openVideoDetail(recordId, syncHash = false) {', 'function openEffectDetail(effectId, syncHash = false) {');
+  const effectOpenSource = sourceSlice('function openEffectDetail(effectId, syncHash = false) {', 'function applyHashRoute() {');
+  const showLibrarySource = sourceSlice('function showLibrary() {', 'function focusReaderHeading() {');
+
+  assert.match(lifecycleSource, /let activeVideoPlayer = null;/);
+  assert.match(lifecycleSource, /function destroyActiveVideoPlayer\(\) \{[\s\S]*?activeVideoPlayer\.destroy\(\);[\s\S]*?activeVideoPlayer = null;/);
+  assert.match(videoOpenSource, /destroyActiveVideoPlayer\(\);/);
+  assert.match(effectOpenSource, /destroyActiveVideoPlayer\(\);/);
+  assert.match(showLibrarySource, /destroyActiveVideoPlayer\(\);/);
 });
 
 test('effect detail is an image-led application guide without parameter information', () => {

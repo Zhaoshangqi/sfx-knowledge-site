@@ -622,22 +622,243 @@
       font-size: 15px;
       line-height: 1.75;
     }
-    .detail-cover {
-      aspect-ratio: 16 / 9;
-      background: #e4e1d9;
-    }
-    .reader-detail .detail-cover {
+    .video-player-section {
       max-width: 980px;
-      margin-top: 26px;
+    }
+    .video-player {
+      width: 100%;
+      max-width: 980px;
+      color: var(--ink);
+    }
+    .video-player-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
       overflow: hidden;
       border-radius: 8px;
+      background: #101315;
     }
-    .detail-cover img {
+    .video-player-target,
+    .video-player-target iframe {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
+      border: 0;
+    }
+    .video-player-cover {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: #101315;
+      cursor: pointer;
+    }
+    .video-player-cover[hidden] { display: none; }
+    .video-player-cover img {
       display: block;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
+    .video-player-cover:focus-visible,
+    .video-icon-button:focus-visible,
+    .video-transcript-cue:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .video-player-cover:disabled { cursor: progress; }
+    .video-player-cover:disabled img { opacity: 0.7; }
+    .video-player-cover-fallback {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+    }
+    .video-player-play {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: grid;
+      width: 64px;
+      height: 48px;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--red);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+    }
+    .video-player-error {
+      position: absolute;
+      inset: auto 12px 12px;
+      z-index: 3;
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 6px;
+      color: #fff;
+      background: rgba(22, 24, 25, 0.92);
+      font-size: 13px;
+    }
+    .video-caption-overlay { display: none; }
+    .video-caption-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 54px;
+      border-bottom: 1px solid var(--line);
+    }
+    .video-caption-status {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      line-height: 1.35;
+    }
+    .video-caption-status strong { font-size: 13px; }
+    .video-caption-status small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .video-caption-controls {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 6px;
+    }
+    .video-icon-button {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .video-icon-button:hover { border-color: var(--ink); }
+    .video-icon-button[aria-pressed="false"] { color: var(--muted); }
+    .video-icon-button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .video-caption-line {
+      min-height: 3.4em;
+      margin: 0;
+      padding: 12px 0;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+    .video-transcript {
+      max-height: 360px;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--line);
+      overflow-y: auto;
+      list-style: none;
+      overscroll-behavior: contain;
+    }
+    .video-transcript-item { border-bottom: 1px solid var(--line); }
+    .video-transcript-cue {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 62px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 11px 8px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+    .video-transcript-cue:hover { background: rgba(15, 139, 141, 0.07); }
+    .video-transcript-cue[aria-current="true"] {
+      color: #fff;
+      background: var(--teal);
+    }
+    .video-transcript-time {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .video-transcript-cue[aria-current="true"] .video-transcript-time { color: #fff; }
+    .video-transcript-text {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .video-transcript-empty {
+      margin: 0;
+      padding: 14px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .video-player:fullscreen {
+      display: grid;
+      max-width: none;
+      height: 100%;
+      grid-template-rows: minmax(0, 1fr) auto;
+      overflow: hidden;
+      color: #fff;
+      background: #090b0c;
+    }
+    .video-player:fullscreen .video-player-stage {
+      height: 100%;
+      min-height: 0;
+      aspect-ratio: auto;
+      border-radius: 0;
+    }
+    .video-player:fullscreen .video-caption-overlay {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 7%;
+      z-index: 4;
+      display: block;
+      margin: 0;
+      padding: 8px 12px;
+      color: #fff;
+      background: rgba(9, 11, 12, 0.72);
+      text-align: center;
+      font-size: 20px;
+      line-height: 1.5;
+      font-weight: 800;
+      pointer-events: none;
+    }
+    .video-player:fullscreen .video-caption-header {
+      padding: 0 14px;
+      border-color: rgba(255, 255, 255, 0.16);
+      background: #101315;
+    }
+    .video-player:fullscreen .video-caption-status small { color: rgba(255, 255, 255, 0.7); }
+    .video-player:fullscreen .video-icon-button {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.28);
+      background: #161819;
+    }
+    .video-player:fullscreen .video-caption-line {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    .video-player:fullscreen .video-transcript,
+    .video-player:fullscreen .video-transcript-empty { display: none; }
     .detail-body {
       padding: 16px;
     }
@@ -1097,6 +1318,7 @@
       .toolbar.effects-mode { grid-template-columns: minmax(200px, 1fr) minmax(140px, 1fr); }
       .reader-detail .step { grid-template-columns: 1fr; }
       .reader-detail .detail-body { padding-inline: 16px; }
+      .video-player-section { max-width: none; }
       .effect-detail-grid { grid-template-columns: 1fr; gap: 28px; }
       .effect-more-cases .effect-case-list { grid-template-columns: 1fr; }
     }
@@ -1143,6 +1365,19 @@
       .effect-profile-card { grid-template-columns: 1fr; }
       .effect-profile-shot { height: auto; min-height: 0; }
       .reader-detail .detail-title { font-size: 32px; }
+      .video-caption-header { gap: 10px; }
+      .video-caption-line { font-size: 14px; }
+      .video-transcript { max-height: 280px; }
+      .video-transcript-cue {
+        grid-template-columns: 50px minmax(0, 1fr);
+        padding: 10px 4px;
+      }
+      .video-player:fullscreen .video-caption-overlay {
+        left: 4%;
+        right: 4%;
+        bottom: 5%;
+        font-size: 16px;
+      }
       .effect-detail .detail-title { font-size: 32px; }
       .effect-case-copy { flex-direction: column; }
     }
@@ -1309,6 +1544,8 @@
   <script src="src/knowledge-model.js?v=20260811-dry-goods-7"></script>
   <script src="src/effect-guides.js?v=20260811-evidence-led-1"></script>
   <script src="src/effect-learning-paths.js?v=20260812-learning-paths-1"></script>
+  <script src="src/video-subtitles.js?v=20260812-site-subtitles-1"></script>
+  <script src="src/youtube-caption-player.js?v=20260812-caption-player-1"></script>
   <script>
     const categories = [
   {
@@ -32466,6 +32703,7 @@
     const lightboxCaptionEl = document.getElementById("lightboxCaption");
     const lightboxCloseEl = document.getElementById("lightboxClose");
     let searchRenderTimer = 0;
+    let activeVideoPlayer = null;
 
     sourceEl.innerHTML += sources.map((source) => "<option value=\"" + escapeAttr(source) + "\">" + escapeHtml(source) + "</option>").join("");
 
@@ -32726,7 +32964,14 @@
       }).join("");
     }
 
+    function destroyActiveVideoPlayer() {
+      if (!activeVideoPlayer) return;
+      activeVideoPlayer.destroy();
+      activeVideoPlayer = null;
+    }
+
     function showLibrary() {
+      destroyActiveVideoPlayer();
       state.view = "library";
       document.body.classList.remove("reader-open");
       libraryViewEl.hidden = false;
@@ -32772,6 +33017,7 @@
     }
 
     function openVideoDetail(recordId, syncHash = false) {
+      destroyActiveVideoPlayer();
       const record = records.find((item) => item.id === recordId);
       readerHintEl.textContent = "完整案例阅读";
       state.activeEffectId = "";
@@ -32792,6 +33038,7 @@
     }
 
     function openEffectDetail(effectId, syncHash = false) {
+      destroyActiveVideoPlayer();
       const use = effectUses.find((item) => item.id === effectId);
       readerHintEl.textContent = "效果器实际用法";
       state.activeId = "";
@@ -33045,6 +33292,8 @@
       const effectHtml = VideoDetailData.array(effectUses).filter((use) => use && use.sourceRecordId === record.id).map((use) => renderEffectUseSummary(record, use)).join("");
       const decisionHtml = detailData.decisionFacts.map((fact) => '<div class="tip">' + escapeHtml(fact) + '</div>').join("");
       const keywordHtml = detailData.keywords.slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
+      const subtitleTrack = SfxVideoSubtitles.trackFor(record.videoId);
+      const playerHtml = SfxYouTubeCaptionPlayer.render(record, subtitleTrack, thumbnail(record, "hqdefault"));
 
       detailEl.innerHTML =
         '<div class="detail-body">' +
@@ -33052,7 +33301,7 @@
           '<div class="card-meta"><span>' + escapeHtml(category?.label || "未分类") + '</span><span>' + escapeHtml(record.source) + '</span><span>收录 ' + escapeHtml(record.addedAt || "") + '</span><span>更新 ' + escapeHtml(record.updatedAt || record.addedAt || "") + '</span></div>' +
           '<div class="section"><h3>设计目标</h3><p class="detail-summary">' + escapeHtml(cleanedText(record.summary)) + '</p></div>' +
           '<div class="section"><h3>设计思路</h3>' + ideasHtml + '</div>' +
-          '<div class="detail-cover"><img src="' + thumbnail(record, "hqdefault") + '" alt="' + escapeAttr(record.title) + '" loading="lazy" decoding="async" onerror="this.style.display=\'none\'"></div>' +
+          '<div class="section video-player-section"><h3>原视频与中文字幕</h3>' + playerHtml + '</div>' +
           '<div class="section"><h3>素材与分层</h3><div class="chips">' + materialHtml + '</div></div>' +
           '<div class="section"><h3>完整制作流程</h3>' + stepHtml + '</div>' +
           '<div class="section"><h3>完整效果链</h3>' + chainHtml + '</div>' +
@@ -33061,6 +33310,13 @@
           '<div class="section"><h3>来源与关键词</h3><div class="learning-point"><strong>' + escapeHtml(record.source) + '</strong><div>' + escapeHtml(record.url) + '</div></div><div class="chips">' + keywordHtml + '</div><a class="open-video" href="' + escapeAttr(record.url) + '" target="_blank" rel="noopener">打开原视频</a></div>' +
         '</div>';
       loadDetailPreviews();
+      const playerRoot = detailEl.querySelector('[data-youtube-caption-player]');
+      if (playerRoot) {
+        activeVideoPlayer = SfxYouTubeCaptionPlayer.mount(playerRoot, {
+          track: subtitleTrack,
+          subtitles: SfxVideoSubtitles
+        });
+      }
     }
 
     function renderEffectDetail(effectId) {

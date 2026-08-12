@@ -42,7 +42,8 @@ test("video cards scan compactly while full detail keeps its dry-goods order", (
   assert.match(readerTitleRule, /font-size: 48px;/);
   assert.doesNotMatch(readerTitleRule, /clamp\(|vw/);
   assert.match(css, /\.reader-detail \.section \{[\s\S]*?margin-top: 26px;/);
-  assert.match(css, /\.reader-detail \.detail-cover \{[\s\S]*?margin-top: 26px;/);
+  assert.match(css, /\.video-player-section \{[\s\S]*?max-width: 980px;/);
+  assert.match(css, /\.video-player-stage \{[\s\S]*?aspect-ratio: 16 \/ 9;/);
   assert.match(mobileRules, /\.reader-detail \.detail-title \{ font-size: 32px; \}/);
 });
 
