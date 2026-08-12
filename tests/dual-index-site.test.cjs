@@ -185,13 +185,47 @@ test('compact shell exposes useful runtime-derived header statistics', () => {
   assert.match(indexHtml, /videoCountStatEl\.textContent = records\.length \+ " 个视频";/);
   assert.match(
     indexHtml,
-    /effectCountStatEl\.textContent = EffectIndexData\.profiles\(effectUses, records, pluginReferenceCatalog, imageManifest\)\.length \+ " 个效果器";/
-  );
-  assert.match(
-    indexHtml,
     /categoryCountStatEl\.textContent = categories\.filter\(\(category\) => category\.id !== "all"\)\.length \+ " 个分类";/
   );
   assert.doesNotMatch(indexHtml, /(?:82 个视频|27 个效果器|6 个分类)/);
+});
+
+test('updates the exact effect statistic from strict published profiles', () => {
+  const source = sourceSlice('function updateEffectCountStat() {', 'function renderModeSwitch() {');
+  const context = {
+    effectCountStatEl: { textContent: '0 个效果器' },
+    effectUses: [],
+    records: [],
+    pluginReferenceCatalog: [],
+    imageManifest: {},
+    profileCalls: 0,
+    EffectIndexData: {
+      profiles() {
+        context.profileCalls += 1;
+        return Array.from({ length: 9 });
+      }
+    }
+  };
+  const updateEffectCountStat = loadNamedFunction(source, 'updateEffectCountStat', context);
+
+  updateEffectCountStat();
+
+  assert.equal(context.effectCountStatEl.textContent, '9 个效果器');
+  assert.equal(context.profileCalls, 1);
+});
+
+test('applies the initial route before scheduling the deferred effect statistic', () => {
+  const startup = indexHtml.slice(indexHtml.indexOf('    window.addEventListener("hashchange"'), indexHtml.indexOf('  </script>', indexHtml.indexOf('    window.addEventListener("hashchange"')));
+
+  assert.ok(startup.indexOf('applyHashRoute();') < startup.indexOf('scheduleEffectCountStat();'));
+  assert.match(startup, /function scheduleEffectCountStat\(\)/);
+  assert.match(startup, /typeof requestIdleCallback === "function"/);
+  assert.match(startup, /requestIdleCallback\(updateEffectCountStat\)/);
+  assert.match(startup, /setTimeout\(updateEffectCountStat, 0\)/);
+  assert.doesNotMatch(
+    startup.slice(0, startup.indexOf('applyHashRoute();')),
+    /EffectIndexData\.profiles\(/
+  );
 });
 
 test('compact hero and library section heads use the approved copy', () => {
@@ -256,19 +290,57 @@ test('shell CSS is compact and responsive without viewport-scaled hero text', ()
 
   assert.match(css, /\.control-band \{/);
   assert.match(css, /\.control-inner \{[\s\S]*?grid-template-columns: auto minmax\(0, 1fr\)/);
-  assert.match(css, /\.toolbar \{[\s\S]*?grid-template-columns: minmax\([^;]+\) [^;]+ [^;]+;/);
+  assert.match(css, /\.toolbar\.effects-mode \{[\s\S]*?grid-template-columns:/);
   assert.doesNotMatch(heroRule, /gradient|linear-gradient|radial-gradient/);
   assert.doesNotMatch(heroHeadingRule, /vw|clamp\(/);
   assert.match(heroHeadingRule, /font-size: \d+px/);
   assert.match(tabletRules, /\.control-inner \{ grid-template-columns: 1fr; \}/);
-  assert.match(
-    tabletRules,
-    /\.toolbar \{ grid-template-columns: minmax\(200px, 1fr\) minmax\(140px, 174px\) minmax\(150px, 190px\); \}/
-  );
+  assert.match(tabletRules, /\.toolbar\.effects-mode \{[^}]*grid-template-columns:/);
   assert.match(mobileRules, /\.view-switch \{ width: 100%; \}/);
-  assert.match(mobileRules, /\.toolbar \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); \}/);
   assert.match(mobileRules, /\.search \{ grid-column: 1 \/ -1; \}/);
+  assert.match(mobileRules, /\.toolbar\.effects-mode #sourceFilter \{ grid-column: 1 \/ -1; \}/);
   assert.match(mobileRules, /\.tabs,\s*\.goal-tabs \{[\s\S]*?flex-wrap: nowrap;[\s\S]*?overflow-x: auto;/);
+});
+
+test('mode switching toggles toolbar layout and sort visibility in both directions', () => {
+  const classNames = new Set();
+  const buttons = ['videos', 'effects'].map((mode) => ({
+    dataset: { mode },
+    classList: { toggle(name, active) { active ? this.names.add(name) : this.names.delete(name); }, names: new Set() },
+    setAttribute(name, value) { this[name] = value; },
+    tabIndex: 0
+  }));
+  const context = {
+    state: { mode: 'effects' },
+    viewSwitchEl: { querySelectorAll() { return buttons; } },
+    videoLibraryEl: { hidden: false },
+    effectLibraryEl: { hidden: true },
+    sortEl: { hidden: false },
+    searchEl: { placeholder: '' },
+    toolbarEl: {
+      classList: {
+        toggle(name, active) { active ? classNames.add(name) : classNames.delete(name); }
+      }
+    }
+  };
+  const renderModeSwitch = loadNamedFunction(
+    sourceSlice('function renderModeSwitch() {', 'function renderEffectLibrary() {'),
+    'renderModeSwitch',
+    context
+  );
+
+  renderModeSwitch();
+  assert.equal(classNames.has('effects-mode'), true);
+  assert.equal(context.sortEl.hidden, true);
+  assert.equal(context.videoLibraryEl.hidden, true);
+  assert.equal(context.effectLibraryEl.hidden, false);
+
+  context.state.mode = 'videos';
+  renderModeSwitch();
+  assert.equal(classNames.has('effects-mode'), false);
+  assert.equal(context.sortEl.hidden, false);
+  assert.equal(context.videoLibraryEl.hidden, false);
+  assert.equal(context.effectLibraryEl.hidden, true);
 });
 
 test('builds and renders screenshot-backed effect profiles', () => {

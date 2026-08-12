@@ -133,6 +133,9 @@
       min-width: 0;
       margin: 0;
     }
+    .toolbar.effects-mode {
+      grid-template-columns: minmax(240px, 1fr) minmax(174px, 0.6fr);
+    }
     .search,
     .select {
       min-width: 0;
@@ -1003,6 +1006,7 @@
       .control-inner { grid-template-columns: 1fr; }
       .view-switch { width: fit-content; }
       .toolbar { grid-template-columns: minmax(200px, 1fr) minmax(140px, 174px) minmax(150px, 190px); }
+      .toolbar.effects-mode { grid-template-columns: minmax(200px, 1fr) minmax(140px, 1fr); }
       .reader-detail .step { grid-template-columns: 1fr; }
       .reader-detail .detail-body { padding-inline: 16px; }
       .effect-detail-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -1030,7 +1034,9 @@
       .control-band { padding: 10px 14px; }
       .view-switch { width: 100%; }
       .toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .toolbar.effects-mode { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .search { grid-column: 1 / -1; }
+      .toolbar.effects-mode #sourceFilter { grid-column: 1 / -1; }
       .select { width: 100%; }
       .tabs,
       .goal-tabs {
@@ -32342,6 +32348,7 @@
     const videoCountStatEl = document.getElementById("videoCountStat");
     const effectCountStatEl = document.getElementById("effectCountStat");
     const categoryCountStatEl = document.getElementById("categoryCountStat");
+    const toolbarEl = document.querySelector(".toolbar");
     const gridEl = document.getElementById("grid");
     const detailEl = document.getElementById("detail");
     const libraryViewEl = document.getElementById("libraryView");
@@ -32459,6 +32466,11 @@
       return { sourceRecord, sourceStep };
     }
 
+    function updateEffectCountStat() {
+      const profiles = EffectIndexData.profiles(effectUses, records, pluginReferenceCatalog, imageManifest);
+      effectCountStatEl.textContent = profiles.length + " 个效果器";
+    }
+
     function renderModeSwitch() {
       viewSwitchEl.querySelectorAll("[data-mode]").forEach((button) => {
         const selected = button.dataset.mode === state.mode;
@@ -32469,6 +32481,7 @@
       videoLibraryEl.hidden = state.mode !== "videos";
       effectLibraryEl.hidden = state.mode !== "effects";
       sortEl.hidden = state.mode !== "videos";
+      toolbarEl.classList.toggle("effects-mode", state.mode === "effects");
       searchEl.placeholder = state.mode === "effects"
         ? "搜索效果器、输入素材、处理动作或来源..."
         : "搜索视频、设计目标、效果器或素材...";
@@ -33141,10 +33154,18 @@
 
     window.addEventListener("hashchange", applyHashRoute);
 
+    function scheduleEffectCountStat() {
+      if (typeof requestIdleCallback === "function") {
+        requestIdleCallback(updateEffectCountStat);
+      } else {
+        setTimeout(updateEffectCountStat, 0);
+      }
+    }
+
     videoCountStatEl.textContent = records.length + " 个视频";
-    effectCountStatEl.textContent = EffectIndexData.profiles(effectUses, records, pluginReferenceCatalog, imageManifest).length + " 个效果器";
     categoryCountStatEl.textContent = categories.filter((category) => category.id !== "all").length + " 个分类";
     applyHashRoute();
+    scheduleEffectCountStat();
   </script>
   <script>
 if (window.loadDetailPreviews) window.loadDetailPreviews();
