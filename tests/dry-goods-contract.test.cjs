@@ -7,6 +7,45 @@ function read(relativePath) {
   return fs.readFileSync(path.resolve(__dirname, "..", relativePath), "utf8");
 }
 
+function sourceSlice(source, startMarker, endMarker) {
+  const start = source.indexOf(startMarker);
+  const end = source.indexOf(endMarker, start);
+  assert.notEqual(start, -1, `missing ${startMarker}`);
+  assert.notEqual(end, -1, `missing ${endMarker} boundary`);
+  return source.slice(start, end);
+}
+
+test("video cards scan compactly while full detail keeps its dry-goods order", () => {
+  const html = read("index.html");
+  const css = html.match(/<style>([\s\S]*?)<\/style>/)?.[1] || "";
+  const gridRenderer = sourceSlice(html, "    function renderGrid() {", "    function showLibrary() {");
+  const detailRenderer = sourceSlice(html, "    function renderDetail() {", "    function renderEffectDetail(effectId) {");
+  const readerTitleRule = css.match(/\.reader-detail \.detail-title \{([\s\S]*?)\n    \}/)?.[1] || "";
+  const mobileRules = css.match(/@media \(max-width: 640px\) \{([\s\S]*?)\n    \}/)?.[1] || "";
+
+  assert.match(gridRenderer, /<h2 class="card-title">/);
+  assert.match(gridRenderer, /escapeHtml\(record\.source\)/);
+  assert.match(gridRenderer, /record\.steps\.length \+ ' 步 · ' \+ record\.plugins\.length \+ ' 处理点'/);
+  assert.match(gridRenderer, /<p class="card-summary">' \+ escapeHtml\(record\.summary\)/);
+  assert.doesNotMatch(gridRenderer, /更新 |updatedAt|addedAt|record\.steps\.length \+ ' 步骤'/);
+  assert.match(css, /\.card-summary \{[\s\S]*?-webkit-line-clamp: 2;/);
+
+  const headings = ["设计目标", "设计思路", "素材与分层", "完整制作流程", "完整效果链", "效果器用法", "关键决策与证据边界", "来源与关键词"];
+  let previousIndex = -1;
+  headings.forEach((heading) => {
+    const index = detailRenderer.indexOf(`<h3>${heading}</h3>`);
+    assert.ok(index > previousIndex, `${heading} must preserve detail order`);
+    previousIndex = index;
+  });
+  assert.match(detailRenderer, /<span>更新 ' \+ escapeHtml\(record\.updatedAt \|\| record\.addedAt \|\| ""\)/);
+
+  assert.match(readerTitleRule, /font-size: 48px;/);
+  assert.doesNotMatch(readerTitleRule, /clamp\(|vw/);
+  assert.match(css, /\.reader-detail \.section \{[\s\S]*?margin-top: 26px;/);
+  assert.match(css, /\.reader-detail \.detail-cover \{[\s\S]*?margin-top: 26px;/);
+  assert.match(mobileRules, /\.reader-detail \.detail-title \{ font-size: 32px; \}/);
+});
+
 test("maintenance rules require effectUses instead of practiceChecklist", () => {
   const agents = read("AGENTS.md");
   const workflow = read("docs/learning-workflow.md");

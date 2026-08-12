@@ -1793,24 +1793,28 @@ test('all public effect render surfaces use only the three evidence fields', () 
   });
   ['输入素材', '处理动作', '听感变化'].forEach((label) => {
     assert.ok(renderSources.videoSummary.includes(label), `videoSummary missing ${label}`);
+  });
+  ['能得到什么', '适合什么输入', '怎么处理', '证据截图', '看图重点'].forEach((label) => {
     assert.ok(renderSources.detail.includes(label), `detail missing ${label}`);
   });
   assert.doesNotMatch(renderSources.card, /一句话结论|适合用在|主要作用|能带来什么|输入素材|听感变化/);
   assert.doesNotMatch(renderSources.videoSummary, /一句话结论|适合用在|主要作用|能带来什么|听感结果/);
-  assert.doesNotMatch(renderSources.detail, /一句话结论|适合用在|主要作用|能带来什么|听感结果/);
+  assert.doesNotMatch(renderSources.detail, /一句话结论|适合用在|主要作用|输入素材|听感变化|听感结果/);
 
   assert.match(renderSources.videoSummary, /if \(!profile\) return "";/);
   assert.doesNotMatch(renderSources.videoSummary, /const purpose|<strong>适合：<\/strong>|<strong>听感：<\/strong>/);
   assert.match(renderSources.videoSummary, /effect-summary-shot/);
   assert.match(renderSources.videoSummary, /data-effect-id/);
 
-  assert.equal((renderSources.detail.match(/class="effect-quick-guide"/g) || []).length, 1);
-  assert.equal((renderSources.detail.match(/class="effect-guide-item"/g) || []).length, 3);
   assert.doesNotMatch(renderSources.detail, /cautionHtml|effect-caution/);
-  assert.match(renderSources.detail, /profile\.visuals\.slice\(0, 3\)/);
+  assert.match(renderSources.detail, /const primaryVisual = profile\.visuals\[0\]/);
+  assert.match(renderSources.detail, /profile\.visuals\.slice\(1\)[\s\S]*?visual\?\.kind === "video"[\s\S]*?visual\.stepName/);
+  assert.match(renderSources.detail, /escapeHtml\(visual\.stepName\)/);
+  assert.match(renderSources.detail, /effect-result-lead/);
+  assert.match(renderSources.detail, /effect-evidence-panel/);
   assert.match(renderSources.detail, /effect-case-shot/);
   assert.match(renderSources.detail, /data-open-video/);
-  assert.ok(renderSources.detail.includes('视频案例'));
+  assert.ok(renderSources.detail.includes('更多视频案例'));
 });
 
 test('video-detail effect summaries omit unpublished profiles and render approved guidance', () => {
@@ -1853,7 +1857,7 @@ test('video-detail effect summaries omit unpublished profiles and render approve
   assert.doesNotMatch(markup, /适合：|听感：|一句话结论|适合用在|主要作用|能带来什么|听感结果/);
 });
 
-test('effect detail renders one three-item guide with the linked video gallery', () => {
+test('effect detail renders result-led copy and trusted video evidence only', () => {
   const detailEl = { innerHTML: '' };
   const profile = {
     id: 'use-1',
@@ -1861,21 +1865,58 @@ test('effect detail renders one three-item guide with the linked video gallery',
     input: '单薄的测试输入素材',
     action: '重塑起音并收紧持续段',
     result: '起音更集中，尾部更短',
-    visuals: [{
-      kind: 'video',
-      useId: 'use-1',
-      preview: 'preview.webp',
-      full: 'full.webp',
-      caption: '测试效果器视频截图',
-      sourceRecordId: 'video-1',
-      sourceTitle: '支撑视频案例',
-      stepOrder: 2,
-      timestamp: '00:12'
-    }]
+    suitable: '旧适用字段不得出现',
+    purpose: '旧作用字段不得出现',
+    parameters: ['Threshold -12 dB 不得出现'],
+    visuals: [
+      {
+        kind: 'video',
+        useId: 'use-1',
+        preview: 'primary-preview.webp',
+        full: 'primary-full.webp',
+        caption: '主证据截图',
+        sourceRecordId: 'video-1',
+        sourceTitle: '主证据视频',
+        stepOrder: 2,
+        timestamp: '00:12',
+        stepName: '主证据步骤原文'
+      },
+      {
+        kind: 'video',
+        useId: 'use-2',
+        preview: 'additional-preview.webp',
+        full: 'additional-full.webp',
+        caption: '额外视频截图',
+        sourceRecordId: 'video-2',
+        sourceTitle: '额外支撑视频',
+        stepOrder: 5,
+        timestamp: '01:08',
+        stepName: '额外案例步骤原文'
+      },
+      {
+        kind: 'official',
+        preview: 'official-preview.webp',
+        full: 'official-full.webp',
+        caption: '官方参考图不得混入',
+        sourceTitle: '官方来源不得混入',
+        stepName: '官方参考步骤不得混入'
+      },
+      {
+        kind: 'video',
+        preview: 'blank-step-preview.webp',
+        full: 'blank-step-full.webp',
+        caption: '空步骤视频不得混入',
+        sourceRecordId: 'video-3',
+        sourceTitle: '空步骤视频',
+        stepOrder: 7,
+        timestamp: '02:00',
+        stepName: '   '
+      }
+    ]
   };
   const context = {
     effectUses: [{ id: 'use-1' }],
-    records: [{ id: 'video-1' }],
+    records: [{ id: 'video-1' }, { id: 'video-2' }, { id: 'video-3' }],
     pluginReferenceCatalog: [],
     imageManifest: {},
     detailEl,
@@ -1890,14 +1931,24 @@ test('effect detail renders one three-item guide with the linked video gallery',
   );
   renderEffectDetail('use-1');
 
-  ['输入素材', profile.input, '处理动作', profile.action, '听感变化', profile.result].forEach((text) => {
+  ['能得到什么', profile.result, '适合什么输入', profile.input, '怎么处理', profile.action, '证据截图'].forEach((text) => {
     assert.ok(detailEl.innerHTML.includes(text), `detail missing ${text}`);
   });
-  assert.equal((detailEl.innerHTML.match(/class="effect-quick-guide"/g) || []).length, 1);
-  assert.equal((detailEl.innerHTML.match(/class="effect-guide-item"/g) || []).length, 3);
+  assert.ok(detailEl.innerHTML.indexOf('能得到什么') < detailEl.innerHTML.indexOf('适合什么输入'));
+  assert.ok(detailEl.innerHTML.indexOf('适合什么输入') < detailEl.innerHTML.indexOf('怎么处理'));
+  assert.match(detailEl.innerHTML, /<h3>证据截图<\/h3>[\s\S]*?primary-preview\.webp/);
+  assert.match(detailEl.innerHTML, /看图重点<\/strong><span>主证据步骤原文<\/span>/);
+  assert.match(detailEl.innerHTML, /<h3>更多视频案例<\/h3>[\s\S]*?additional-preview\.webp/);
+  assert.match(detailEl.innerHTML, /看图重点<\/strong><span>额外案例步骤原文<\/span>/);
+  assert.match(detailEl.innerHTML, /主证据视频[\s\S]*?步骤 2 · 00:12/);
+  assert.match(detailEl.innerHTML, /额外支撑视频[\s\S]*?步骤 5 · 01:08/);
   assert.match(detailEl.innerHTML, /class="effect-case-shot"/);
   assert.match(detailEl.innerHTML, /data-open-video="video-1"/);
-  assert.doesNotMatch(detailEl.innerHTML, /一句话结论|适合用在|主要作用|能带来什么|听感结果|注意：/);
+  assert.match(detailEl.innerHTML, /data-open-video="video-2"/);
+  assert.doesNotMatch(detailEl.innerHTML, /official-preview|官方参考图不得混入|官方来源不得混入|官方参考步骤不得混入/);
+  assert.doesNotMatch(detailEl.innerHTML, /blank-step-preview|空步骤视频不得混入|空步骤视频/);
+  assert.doesNotMatch(detailEl.innerHTML, /旧适用字段不得出现|旧作用字段不得出现|Threshold -12 dB|参数/);
+  assert.doesNotMatch(detailEl.innerHTML, /<h3>(?:一句话结论|适合用在|主要作用|输入素材|听感变化|听感结果)<\/h3>|注意：/);
 });
 
 test('effect cards use stable responsive grids and the reader return control handles keyboard activation', () => {
@@ -1921,6 +1972,26 @@ test('effect cards use stable responsive grids and the reader return control han
   assert.match(indexHtml, /backToLibraryEl\.addEventListener\("click", returnToLibrary\)/);
   assert.match(indexHtml, /backToLibraryEl\.addEventListener\("keydown", \(event\) => \{[\s\S]*?\["Enter", " "\]\.includes\(event\.key\)[\s\S]*?event\.preventDefault\(\);[\s\S]*?returnToLibrary\(\);/);
   assert.match(indexHtml, /if \(event\.key === "Escape" && state\.view === "reader"\) \{\s*returnToLibrary\(\);\s*\}/);
+});
+
+test('effect detail uses a fixed two-column evidence layout with a one-column tablet fallback', () => {
+  const css = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+  const titleRule = css.match(/\.effect-detail \.detail-title \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const gridRule = css.match(/\.effect-detail-grid \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const shotRule = css.match(/\.effect-case-shot \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const shotImageRule = css.match(/\.effect-case-shot img \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const tabletRules = css.match(/@media \(max-width: 980px\) \{([\s\S]*?)\n    \}/)?.[1] || '';
+
+  assert.match(titleRule, /font-size: 42px;/);
+  assert.doesNotMatch(titleRule, /clamp\(|vw/);
+  assert.match(gridRule, /grid-template-columns: minmax\(260px, 0\.78fr\) minmax\(420px, 1\.22fr\);/);
+  assert.match(shotRule, /width: 100%;/);
+  assert.match(shotRule, /max-width: 100%;/);
+  assert.match(shotRule, /aspect-ratio: 16 \/ 9;/);
+  assert.match(shotImageRule, /height: 100%;/);
+  assert.match(shotImageRule, /object-fit: contain;/);
+  assert.match(tabletRules, /\.effect-detail-grid \{ grid-template-columns: 1fr; gap: 28px; \}/);
+  assert.match(tabletRules, /\.effect-more-cases \.effect-case-list \{ grid-template-columns: 1fr; \}/);
 });
 
 test('video cards are keyboard links and move focus into the reader', () => {
@@ -2042,13 +2113,17 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
 test('effect detail is an image-led application guide without parameter information', () => {
   const effectDetailSource = indexHtml.match(/function renderEffectDetail\(effectId\) \{([\s\S]*?)\n    \}\n\n    function openLightbox/)?.[1] || '';
 
-  ['输入素材', '处理动作', '听感变化', '视频案例'].forEach((heading) => {
+  ['能得到什么', '适合什么输入', '怎么处理', '证据截图', '看图重点', '更多视频案例'].forEach((heading) => {
     assert.ok(effectDetailSource.includes(heading), `missing ${heading}`);
   });
   assert.match(effectDetailSource, /EffectIndexData\.profileForUse/);
-  assert.match(effectDetailSource, /profile\.visuals\.slice\(0, 3\)/);
+  assert.match(effectDetailSource, /const primaryVisual = profile\.visuals\[0\]/);
+  assert.match(effectDetailSource, /profile\.visuals\.slice\(1\)/);
+  assert.match(effectDetailSource, /visual\?\.kind === "video"/);
+  assert.match(effectDetailSource, /String\(visual\.stepName \|\| ""\)\.trim\(\)/);
+  assert.match(effectDetailSource, /escapeHtml\(visual\.stepName\)/);
   assert.match(effectDetailSource, /effect-case-shot/);
   assert.match(effectDetailSource, /data-open-video/);
-  assert.doesNotMatch(effectDetailSource, /profile\.(?:suitable|purpose|outcome|limitation)|一句话结论|适合用在|主要作用|能带来什么|听感结果/);
+  assert.doesNotMatch(effectDetailSource, /profile\.(?:suitable|purpose|outcome|limitation)|一句话结论|适合用在|主要作用|输入素材|听感变化|听感结果/);
   assert.doesNotMatch(effectDetailSource, /parameterHtml|parameters|参数与调节方向|链路位置|厂商未记录|renderEvidenceLabels/);
 });
