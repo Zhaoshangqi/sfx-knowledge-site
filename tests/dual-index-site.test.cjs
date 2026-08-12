@@ -170,11 +170,105 @@ test('removes course-oriented shell copy', () => {
   assert.doesNotMatch(indexHtml, /学习时间：最新优先/);
 });
 
-test('hero introduction uses the approved effect index vocabulary', () => {
+test('hero introduction uses the approved learning-reference copy', () => {
   const heroSection = indexHtml.match(/<section class="hero">([\s\S]*?)<\/section>/)?.[1] || '';
   const heroIntro = heroSection.match(/<p>([^<]*)<\/p>/)?.[1] || '';
 
-  assert.equal(heroIntro, '通过视频案例拆解声音设计思路，并快速查清效果器的输入素材、处理动作和听感变化。');
+  assert.equal(heroIntro, '从完整视频案例理解设计思路，并按声音目标查清效果器的输入、处理动作和听感结果。');
+});
+
+test('compact shell exposes useful runtime-derived header statistics', () => {
+  ['videoCountStat', 'effectCountStat', 'categoryCountStat'].forEach((id) => {
+    assert.match(indexHtml, new RegExp(`id="${id}"`));
+  });
+
+  assert.match(indexHtml, /videoCountStatEl\.textContent = records\.length \+ " 个视频";/);
+  assert.match(
+    indexHtml,
+    /effectCountStatEl\.textContent = EffectIndexData\.profiles\(effectUses, records, pluginReferenceCatalog, imageManifest\)\.length \+ " 个效果器";/
+  );
+  assert.match(
+    indexHtml,
+    /categoryCountStatEl\.textContent = categories\.filter\(\(category\) => category\.id !== "all"\)\.length \+ " 个分类";/
+  );
+  assert.doesNotMatch(indexHtml, /(?:82 个视频|27 个效果器|6 个分类)/);
+});
+
+test('compact hero and library section heads use the approved copy', () => {
+  const heroSection = indexHtml.match(/<section class="hero">([\s\S]*?)<\/section>/)?.[1] || '';
+  const brandSubline = indexHtml.match(/<div class="brand-text">[\s\S]*?<span>([^<]*)<\/span>/)?.[1] || '';
+  const videoPanel = indexHtml.match(/<section id="videoLibrary"[\s\S]*?<\/section>/)?.[0] || '';
+  const effectPanel = indexHtml.match(/<section id="effectLibrary"[\s\S]*?<\/section>/)?.[0] || '';
+
+  assert.match(heroSection, /<h1>音效知识库<\/h1>/);
+  assert.equal(brandSubline, '设计思路、素材分层和效果器实用方法');
+  assert.match(videoPanel, /<p class="section-eyebrow">完整案例<\/p>[\s\S]*?<h2 id="videosModeLabel">视频案例<\/h2>/);
+  assert.match(videoPanel, /<p>按声音类型浏览完整制作过程与关键决策。<\/p>/);
+  assert.match(effectPanel, /<p class="section-eyebrow">效果器档案<\/p>[\s\S]*?<h2 id="effectsModeLabel">按设计目标找效果器<\/h2>/);
+  assert.match(effectPanel, /<p>只收录能核对输入、处理动作、听感结果和截图的用法。<\/p>/);
+});
+
+test('view controls live in a full-width control band outside the hero', () => {
+  const heroStart = indexHtml.indexOf('<section class="hero">');
+  const heroEnd = indexHtml.indexOf('</section>', heroStart);
+  const heroMarkup = indexHtml.slice(heroStart, heroEnd + '</section>'.length);
+  const shellAfterHero = indexHtml.slice(heroEnd + '</section>'.length, indexHtml.indexOf('<main id="appMain">'));
+
+  assert.doesNotMatch(heroMarkup, /id="viewSwitch"|class="toolbar"/);
+  assert.match(
+    shellAfterHero,
+    /^\s*<section class="control-band">\s*<div class="control-inner">[\s\S]*?id="viewSwitch"[\s\S]*?class="toolbar"[\s\S]*?<\/div>\s*<\/section>\s*$/
+  );
+});
+
+test('search and library navigation expose visible structure and labels', () => {
+  const searchLabel = indexHtml.match(/<label\b[^>]*for="search"[^>]*>搜索知识库<\/label>/)?.[0] || '';
+  const videoPanel = indexHtml.match(/<section id="videoLibrary"[\s\S]*?<\/section>/)?.[0] || '';
+  const effectPanel = indexHtml.match(/<section id="effectLibrary"[\s\S]*?<\/section>/)?.[0] || '';
+
+  assert.match(searchLabel, /class="visually-hidden"/);
+  assert.match(videoPanel, /<h2 id="videosModeLabel">视频案例<\/h2>/);
+  assert.match(effectPanel, /<h2 id="effectsModeLabel">按设计目标找效果器<\/h2>/);
+  assert.match(
+    effectPanel,
+    /<nav class="goal-tabs" id="effectGoals" aria-label="效果器设计目标"><\/nav>\s*<div class="results-bar">/
+  );
+  assert.match(extractTagById('sourceFilter'), /aria-label="来源筛选"/);
+  assert.match(extractTagById('sortOrder'), /aria-label="排序方式"/);
+});
+
+test('card renderers use concise accessible names', () => {
+  const effectRenderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
+  const videoRenderer = sourceSlice('function renderGrid() {', 'function showLibrary() {');
+
+  assert.match(effectRenderer, /aria-label="查看效果器档案：' \+ escapeAttr\(profile\.name\) \+ '"/);
+  assert.match(videoRenderer, /aria-label="查看视频案例：' \+ escapeAttr\(record\.title\) \+ '"/);
+  assert.match(effectRenderer, /effect-profile-title/);
+  assert.match(videoRenderer, /card-title/);
+});
+
+test('shell CSS is compact and responsive without viewport-scaled hero text', () => {
+  const css = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+  const heroRule = css.match(/\.hero \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const heroHeadingRule = css.match(/\.hero h1 \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const tabletRules = css.match(/@media \(max-width: 980px\) \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const mobileRules = css.match(/@media \(max-width: 640px\) \{([\s\S]*?)\n    \}/)?.[1] || '';
+
+  assert.match(css, /\.control-band \{/);
+  assert.match(css, /\.control-inner \{[\s\S]*?grid-template-columns: auto minmax\(0, 1fr\)/);
+  assert.match(css, /\.toolbar \{[\s\S]*?grid-template-columns: minmax\([^;]+\) [^;]+ [^;]+;/);
+  assert.doesNotMatch(heroRule, /gradient|linear-gradient|radial-gradient/);
+  assert.doesNotMatch(heroHeadingRule, /vw|clamp\(/);
+  assert.match(heroHeadingRule, /font-size: \d+px/);
+  assert.match(tabletRules, /\.control-inner \{ grid-template-columns: 1fr; \}/);
+  assert.match(
+    tabletRules,
+    /\.toolbar \{ grid-template-columns: minmax\(200px, 1fr\) minmax\(140px, 174px\) minmax\(150px, 190px\); \}/
+  );
+  assert.match(mobileRules, /\.view-switch \{ width: 100%; \}/);
+  assert.match(mobileRules, /\.toolbar \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); \}/);
+  assert.match(mobileRules, /\.search \{ grid-column: 1 \/ -1; \}/);
+  assert.match(mobileRules, /\.tabs,\s*\.goal-tabs \{[\s\S]*?flex-wrap: nowrap;[\s\S]*?overflow-x: auto;/);
 });
 
 test('builds and renders screenshot-backed effect profiles', () => {
