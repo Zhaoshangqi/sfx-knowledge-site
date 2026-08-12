@@ -35,6 +35,41 @@
 
 - 增加“全部、清理与控制、冲击与密度、运动与节奏、音高与音色、空间与尾部、颗粒与变形”七个学习目标入口。
 - 目标标签只承担导航，不增加新结论。每个效果器由独立的人工映射表归类，映射必须覆盖且只能引用已发布的 27 个规范名称。
+
+#### 权威学习目标映射
+
+下表是效果器学习目标分类的唯一权威清单。规范名称和目标 ID 必须按表中内容精确匹配；每行目标 ID 的顺序同样属于契约。
+
+| 规范名称 | 目标 ID |
+| --- | --- |
+| Dawesome Love | `granular-transform` |
+| FabFilter Pro-MB | `cleanup-control`, `impact-density` |
+| FabFilter Pro-Q 3 | `cleanup-control`, `pitch-tone` |
+| FabFilter Saturn 2 | `impact-density`, `granular-transform` |
+| iZotope RX De-click | `cleanup-control` |
+| iZotope Stutter Edit 2 | `motion-rhythm`, `granular-transform` |
+| Kilohearts Phase Plant | `pitch-tone`, `motion-rhythm` |
+| Kilohearts Snap Heap | `space-tail`, `motion-rhythm` |
+| Melda MAutoPitch | `pitch-tone` |
+| MeldaProduction MTremolo | `motion-rhythm`, `space-tail` |
+| Minimal Audio Wave Shifter | `pitch-tone`, `motion-rhythm` |
+| Morph EQ | `pitch-tone`, `motion-rhythm` |
+| NI Transient Master | `impact-density`, `cleanup-control` |
+| Oeksound Soothe2 | `cleanup-control`, `impact-density` |
+| Polyverse Manipulator | `pitch-tone`, `impact-density` |
+| Sonic Academy Kick 3 | `impact-density` |
+| Soundtheory Gullfoss | `cleanup-control` |
+| Soundtoys Crystallizer | `granular-transform`, `space-tail` |
+| Soundtoys Decapitator | `impact-density` |
+| Soundtoys FilterFreak | `motion-rhythm`, `pitch-tone` |
+| Soundtoys PhaseMistress | `motion-rhythm`, `space-tail` |
+| Stepwise Morph | `pitch-tone`, `granular-transform` |
+| Unfiltered Audio Indent 2 | `cleanup-control`, `impact-density` |
+| UVI Shade | `motion-rhythm`, `space-tail` |
+| Valhalla FreqEcho | `space-tail`, `pitch-tone` |
+| Waves Enigma | `motion-rhythm`, `space-tail` |
+| Waves Z-Noise | `cleanup-control` |
+
 - 列表改为紧凑的图文档案行。先显示“听感结果”，再显示“适用输入”和“处理动作”。
 - 搜索命中的可见文字高亮，帮助读者理解为什么得到该结果。
 - 无结果时提供清空筛选的明确操作。
@@ -79,4 +114,3 @@
 - 不增加固定参数、预设值和通用插件百科文案。
 - 不重新分析、下载或发布原始 YouTube 音视频。
 - 不改变 GitHub Pages 的纯静态部署方式。
-

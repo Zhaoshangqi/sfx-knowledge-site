@@ -7,6 +7,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const modulePath = path.join(__dirname, '..', 'src', 'effect-learning-paths.js');
+const moduleSource = fs.readFileSync(modulePath, 'utf8');
 const SfxEffectGuides = require('../src/effect-guides.js');
 const SfxEffectLearningPaths = fs.existsSync(modulePath) ? require(modulePath) : null;
 
@@ -55,6 +56,16 @@ function learningPaths() {
   return SfxEffectLearningPaths;
 }
 
+function normalizedName(value) {
+  return String(value).normalize('NFKC').replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+function internalMappingKeys(source) {
+  const match = source.match(/var goalsByName = Object\.freeze\((\{[\s\S]*?\n  \})\);/);
+  assert.ok(match, 'goalsByName must remain a statically inspectable object literal');
+  return Object.keys(vm.runInNewContext(`(${match[1]})`));
+}
+
 test('publishes exactly seven ordered goals with unique IDs', () => {
   const api = learningPaths();
   const goals = api.goals();
@@ -91,6 +102,16 @@ test('maps exactly the same 27 canonical names published by effect guides', () =
   assert.deepEqual(mappingNames, publishedNames);
 });
 
+test('contains no missing or extra internal mapping names', () => {
+  const publishedNames = SfxEffectGuides.all()
+    .map((guide) => normalizedName(guide.canonicalName))
+    .sort();
+  const internalNames = internalMappingKeys(moduleSource).sort();
+
+  assert.equal(internalNames.length, 27);
+  assert.deepEqual(internalNames, publishedNames);
+});
+
 test('assigns every published guide one or two known non-all goals without duplicates', () => {
   const api = learningPaths();
   const knownGoalIds = new Set(api.goals().map((goal) => goal.id));
@@ -122,9 +143,9 @@ test('fails closed for unknown names and unknown goal IDs', () => {
   assert.equal(api.matches('Unknown Effect', 'all'), true);
 });
 
-test('normalizes names with NFKC, case folding, and outer whitespace trimming', () => {
+test('normalizes names with NFKC, case folding, repeated internal whitespace, and trimming', () => {
   const api = learningPaths();
-  const normalizedVariant = '  ｆａｂｆｉｌｔｅｒ ｐｒｏ－ｑ ３  ';
+  const normalizedVariant = '  ＦａｂＦｉｌｔｅｒ   Ｐｒｏ－Ｑ ３  ';
 
   assert.deepEqual(api.goalsFor(normalizedVariant), ['cleanup-control', 'pitch-tone']);
   assert.equal(api.matches(normalizedVariant, 'pitch-tone'), true);
@@ -132,10 +153,9 @@ test('normalizes names with NFKC, case folding, and outer whitespace trimming', 
 
 test('attaches the UMD API to the browser global', () => {
   assert.ok(fs.existsSync(modulePath), 'effect learning paths module must exist');
-  const source = fs.readFileSync(modulePath, 'utf8');
   const context = {};
 
-  vm.runInNewContext(source, context);
+  vm.runInNewContext(moduleSource, context);
 
   assert.ok(context.SfxEffectLearningPaths);
   assert.deepEqual(Object.keys(context.SfxEffectLearningPaths), ['goals', 'goalsFor', 'matches']);
