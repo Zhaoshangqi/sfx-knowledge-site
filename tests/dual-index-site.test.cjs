@@ -7,6 +7,7 @@ const vm = require('node:vm');
 const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const SfxKnowledgeModel = require('../src/knowledge-model.js');
 const SfxEffectGuides = require('../src/effect-guides.js');
+const SfxEffectLearningPaths = require('../src/effect-learning-paths.js');
 
 function extractTagById(id) {
   const match = indexHtml.match(new RegExp(`<[^>]+\\bid="${id}"(?=\\s|>)[^>]*>`, 'i'));
@@ -115,6 +116,35 @@ function loadNamedFunction(source, name, context = {}) {
   return context[name];
 }
 
+function loadEffectFilterHelpers(context = {}) {
+  const source = sourceSlice('function escapeHtml(value) {', 'function thumbnail(record, quality = "hqdefault") {');
+  vm.runInNewContext(
+    `${source}\nthis.normalizedEffectGoal = normalizedEffectGoal;\nthis.highlightSearchText = highlightSearchText;\nthis.effectProfileSupportingValues = effectProfileSupportingValues;\nthis.effectProfileMatchHint = effectProfileMatchHint;\nthis.clearEffectFilters = clearEffectFilters;`,
+    context
+  );
+  return context;
+}
+
+function loadEffectLibraryRenderer(context) {
+  const source = [
+    sourceSlice('function escapeHtml(value) {', 'function thumbnail(record, quality = "hqdefault") {'),
+    sourceSlice('function effectProfileSearchable(profile) {', 'function filteredEffectUses() {'),
+    sourceSlice('function effectProfileMatchesSource(profile) {', 'function renderEvidenceLabels(labels) {'),
+    sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {'),
+    'this.renderEffectLibrary = renderEffectLibrary;'
+  ].join('\n');
+  vm.runInNewContext(source, context);
+  return context.renderEffectLibrary;
+}
+
+function listenerBody(elementName, eventName) {
+  const match = indexHtml.match(new RegExp(
+    `${elementName}\\.addEventListener\\("${eventName}", \\(event\\) => \\{([\\s\\S]*?)\\n    \\}\\);`
+  ));
+  assert.ok(match, `missing ${eventName} listener for ${elementName}`);
+  return match[1];
+}
+
 test('loads the shared knowledge model, effect guides, and learning paths before the inline application data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
@@ -158,11 +188,23 @@ test('exposes accessible video and effect index modes', () => {
 });
 
 test('provides a minimal effect index toolbar and render target', () => {
-  ['search', 'sourceFilter', 'effectResultCount', 'effectList'].forEach((id) => {
+  ['search', 'sourceFilter', 'effectGoals', 'effectResultCount', 'effectList'].forEach((id) => {
     assert.match(indexHtml, new RegExp(`id="${id}"`));
   });
   assert.doesNotMatch(indexHtml, /id="effectCategoryFilter"/);
   assert.doesNotMatch(indexHtml, /id="effectEvidenceFilter"/);
+});
+
+test('keeps an independent effect goal state and DOM reference across navigation', () => {
+  const stateSource = indexHtml.match(/const state = \{([\s\S]*?)\n    \};/)?.[1] || '';
+  const domSource = indexHtml.slice(indexHtml.indexOf('const tabsEl'), indexHtml.indexOf('let searchRenderTimer'));
+  const activateSource = sourceSlice('function activateLibraryMode(mode, syncHash = true) {', 'viewSwitchEl.addEventListener("click"');
+  const returnSource = sourceSlice('function returnToLibrary() {', 'function focusLibraryModeTab() {');
+
+  assert.match(stateSource, /effectGoal: "all"/);
+  assert.match(domSource, /const effectGoalsEl = document\.getElementById\("effectGoals"\);/);
+  assert.doesNotMatch(activateSource, /effectGoal\s*=/);
+  assert.doesNotMatch(returnSource, /effectGoal\s*=/);
 });
 
 test('removes course-oriented shell copy', () => {
@@ -362,20 +404,21 @@ test('builds and renders screenshot-backed effect profiles', () => {
 
 test('effect search filters strict profiles without changing screenshot ownership', () => {
   const useFilter = indexHtml.match(/function filteredEffectUses\(\) \{([\s\S]*?)\n    \}/)?.[1] || '';
-  const searchableSource = sourceSlice('function effectProfileSearchable(profile) {', 'function filteredEffectUses() {');
+  const searchableSource = sourceSlice('function escapeHtml(value) {', 'function filteredEffectUses() {');
   const renderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
 
   assert.doesNotMatch(useFilter, /state\.query|effectSearchable/);
   assert.match(renderer, /const allProfiles = EffectIndexData\.profiles\(effectUses, records, pluginReferenceCatalog, imageManifest\)/);
   assert.match(renderer, /const sourceProfiles = allProfiles[\s\S]*?effectProfileMatchesSource\(profile\)/);
-  assert.match(renderer, /const profiles = sourceProfiles[\s\S]*?\.filter\(\(profile\) => !query/);
+  assert.match(renderer, /const goalProfiles = sourceProfiles[\s\S]*?SfxEffectLearningPaths\.matches\(profile\.name, state\.effectGoal\)/);
+  assert.match(renderer, /const profiles = goalProfiles[\s\S]*?\.filter\(\(profile\) => !query/);
   assert.match(renderer, /effectProfileSearchable\(profile\)/);
   assert.ok(renderer.indexOf('EffectIndexData.profiles') < renderer.indexOf('effectProfileSearchable(profile)'));
 
   ['profile.name', 'profile.input', 'profile.action', 'profile.result'].forEach((field) => {
     assert.ok(searchableSource.includes(field), `missing ${field}`);
   });
-  ['use.name', 'use.target', 'use.purpose', 'use.result', 'use.sourceTitle', 'use.source', 'use.sourceKeywords'].forEach((field) => {
+  ['use?.target', 'use?.purpose', 'use?.result', 'use?.sourceTitle', 'use?.source', 'use?.sourceKeywords'].forEach((field) => {
     assert.ok(searchableSource.includes(field), `missing supporting case text ${field}`);
   });
   assert.doesNotMatch(searchableSource, /profile\.(?:suitable|purpose|outcome)/);
@@ -388,15 +431,22 @@ test('effect source filtering hides global profiles without recalculating screen
   assert.match(renderer, /EffectIndexData\.profiles\(effectUses, records, pluginReferenceCatalog, imageManifest\)/);
   assert.doesNotMatch(renderer, /EffectIndexData\.profiles\(list,/);
   assert.match(renderer, /const sourceProfiles = allProfiles[\s\S]*?effectProfileMatchesSource\(profile\)/);
-  assert.match(renderer, /const profiles = sourceProfiles/);
+  assert.match(renderer, /const goalProfiles = sourceProfiles[\s\S]*?const profiles = goalProfiles/);
   assert.match(sourceMatcher, /profile\.uses\.some\(\(use\) => use\.source === state\.source\)/);
   assert.ok(renderer.indexOf('EffectIndexData.profiles(effectUses') < renderer.indexOf('effectProfileMatchesSource(profile)'));
 });
 
 test('effect profile search uses evidence fields and supporting case text', () => {
+  const helperContext = loadEffectFilterHelpers({
+    SfxEffectLearningPaths,
+    state: { effectGoal: 'all', query: '', source: 'all' },
+    searchEl: { value: '' },
+    sourceEl: { value: 'all' }
+  });
   const searchable = loadNamedFunction(
     sourceSlice('function effectProfileSearchable(profile) {', 'function filteredEffectUses() {'),
-    'effectProfileSearchable'
+    'effectProfileSearchable',
+    helperContext
   );
   const searchableText = searchable({
     name: '测试效果器',
@@ -414,7 +464,8 @@ test('effect profile search uses evidence fields and supporting case text', () =
       result: '案例结果文本',
       sourceTitle: '支撑视频标题',
       source: '支撑视频来源',
-      sourceKeywords: ['支撑关键词']
+      sourceKeywords: ['支撑关键词'],
+      parameters: ['参数不得进入搜索']
     }]
   });
 
@@ -433,15 +484,68 @@ test('effect profile search uses evidence fields and supporting case text', () =
   ['旧适用字段', '旧作用字段', '旧结果字段'].forEach((value) => {
     assert.ok(!searchableText.includes(value), `legacy profile text leaked: ${value}`);
   });
+  assert.ok(!searchableText.includes('参数不得进入搜索'));
 });
 
-test('effect library counts published profiles after source and query filters', () => {
+test('normalizes invalid effect goals and safely highlights literal search text', () => {
+  const context = loadEffectFilterHelpers({
+    SfxEffectLearningPaths,
+    state: { effectGoal: 'all', query: '', source: 'all' },
+    searchEl: { value: '' },
+    sourceEl: { value: 'all' }
+  });
+
+  assert.equal(context.normalizedEffectGoal('cleanup-control'), 'cleanup-control');
+  assert.equal(context.normalizedEffectGoal('missing-goal'), 'all');
+  assert.equal(context.normalizedEffectGoal(''), 'all');
+  assert.equal(context.highlightSearchText('Bright transient BRIGHT', 'bright'), '<mark class="search-hit">Bright</mark> transient <mark class="search-hit">BRIGHT</mark>');
+  assert.equal(context.highlightSearchText('No literal match', 'absent'), 'No literal match');
+  assert.equal(context.highlightSearchText('Use [a-z]+ literally', '[a-z]+'), 'Use <mark class="search-hit">[a-z]+</mark> literally');
+  assert.equal(
+    context.highlightSearchText('<img onerror=1> & safe', '<IMG ONERROR=1>'),
+    '<mark class="search-hit">&lt;img onerror=1&gt;</mark> &amp; safe'
+  );
+  assert.equal(context.highlightSearchText('<b>plain</b>', '  '), '&lt;b&gt;plain&lt;/b&gt;');
+});
+
+test('explains supporting-only search matches without duplicating visible matches', () => {
+  const context = loadEffectFilterHelpers({
+    SfxEffectLearningPaths,
+    state: { effectGoal: 'all', query: '', source: 'all' },
+    searchEl: { value: '' },
+    sourceEl: { value: 'all' }
+  });
+  const profile = {
+    name: 'Visible Effect',
+    input: 'Clean input',
+    action: 'Shape the attack',
+    result: 'Focused result',
+    uses: [{
+      sourceTitle: 'Granular texture walkthrough',
+      source: 'Creator Channel',
+      sourceKeywords: ['sound design'],
+      target: 'Layered source',
+      purpose: 'Create movement',
+      result: 'Wide tail'
+    }]
+  };
+
+  assert.equal(context.effectProfileMatchHint(profile, 'texture'), 'Granular texture walkthrough');
+  assert.equal(context.effectProfileMatchHint(profile, 'focused'), '');
+  assert.equal(context.effectProfileMatchHint(profile, ''), '');
+  assert.equal(context.effectProfileMatchHint({
+    ...profile,
+    uses: [{ sourceTitle: '', source: '', sourceKeywords: [], target: '', purpose: 'Attack 设置为 12 ms' }]
+  }, '12 ms'), '');
+});
+
+test('renders ordered goal counts and combines source, goal, and query filters', () => {
   const modeSource = sourceSlice('function renderModeSwitch() {', 'function renderEffectLibrary() {');
   const renderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
   assert.match(modeSource, /\? "搜索效果器、输入素材、处理动作或来源\.\.\."/);
   assert.doesNotMatch(modeSource, /搜索效果器、适用素材、作用或来源/);
-  assert.match(renderer, /没有找到同时具备明确视频用法和准确截图的效果器档案。/);
-  assert.doesNotMatch(renderer, /没有找到同时匹配内容和截图的效果器档案。/);
+  assert.match(renderer, /SfxEffectLearningPaths\.goals\(\)/);
+  assert.match(renderer, /SfxEffectLearningPaths\.matches\(profile\.name, goal\.id\)/);
   assert.match(
     renderer,
     /effectCountEl\.textContent = "当前显示 " \+ profiles\.length \+ " \/ " \+ sourceProfiles\.length \+ " 个效果器档案";/
@@ -449,27 +553,35 @@ test('effect library counts published profiles after source and query filters', 
   assert.doesNotMatch(renderer, /filteredEffectUses\(\)|list\.length|条视频用法/);
   assert.equal((renderer.match(/EffectIndexData\.profiles\(/g) || []).length, 1);
 
-  const profiles = Array.from({ length: 27 }, (_, index) => ({
-    id: `effect-${index + 1}`,
-    name: `效果器 ${index + 1}`,
+  const profiles = [
+    { id: 'pro-q', name: 'FabFilter Pro-Q 3', action: '控制共振', result: 'Resonance becomes focused' },
+    { id: 'transient', name: 'NI Transient Master', action: '收紧起音', result: 'Punch becomes denser' },
+    { id: 'crystallizer', name: 'Soundtoys Crystallizer', action: '切分尾部', result: 'Tail becomes granular' },
+    { id: 'enigma', name: 'Waves Enigma', action: '调制滤波', result: 'Motion becomes rhythmic' }
+  ].map((profile, index) => ({
+    ...profile,
     input: `输入素材 ${index + 1}`,
-    action: index === 0 ? '颗粒搜索动作' : `处理动作 ${index + 1}`,
-    result: `听感变化 ${index + 1}`,
     sourceCount: 1,
     useCount: 1,
-    uses: [{ source: index < 2 ? '来源 A' : '来源 B', sourceTitle: `视频 ${index + 1}` }],
-    visuals: [{ kind: 'video', preview: `preview-${index + 1}.webp` }]
+    uses: [{ source: index < 3 ? '来源 A' : '来源 B', sourceTitle: `视频 ${index + 1}` }],
+    visuals: [{ kind: 'video', preview: `preview-${index + 1}.webp` }],
+    suitable: '不得出现的旧适用字段',
+    purpose: '不得出现的旧作用字段',
+    outcome: '不得出现的旧结果字段',
+    parameters: ['不得出现的参数']
   }));
   const context = {
-    state: { source: 'all', query: '' },
+    SfxEffectLearningPaths,
+    state: { source: '来源 A', effectGoal: 'cleanup-control', query: 'resonance' },
     effectUses: Array.from({ length: 99 }, (_, index) => ({ id: `raw-use-${index}` })),
     records: [],
     pluginReferenceCatalog: [],
     imageManifest: {},
+    effectGoalsEl: { innerHTML: '' },
     effectCountEl: { textContent: '' },
     effectListEl: { innerHTML: '' },
-    escapeAttr: (value) => String(value),
-    escapeHtml: (value) => String(value),
+    searchEl: { value: 'resonance' },
+    sourceEl: { value: '来源 A' },
     profileBuildCalls: 0,
     rawUseProjectionCalls: 0
   };
@@ -483,23 +595,155 @@ test('effect library counts published profiles after source and query filters', 
     context.rawUseProjectionCalls += 1;
     return context.effectUses;
   };
-  const runtimeSource = [
-    sourceSlice('function effectProfileSearchable(profile) {', 'function filteredEffectUses() {'),
-    sourceSlice('function effectProfileMatchesSource(profile) {', 'function renderEvidenceLabels(labels) {'),
-    renderer,
-    'this.renderEffectLibrary = renderEffectLibrary;'
-  ].join('\n');
-  vm.runInNewContext(runtimeSource, context);
+  const renderEffectLibrary = loadEffectLibraryRenderer(context);
 
-  context.renderEffectLibrary();
-  assert.equal(context.effectCountEl.textContent, '当前显示 27 / 27 个效果器档案');
+  renderEffectLibrary();
+  assert.equal(context.effectCountEl.textContent, '当前显示 1 / 3 个效果器档案');
+  assert.deepEqual(
+    Array.from(context.effectGoalsEl.innerHTML.matchAll(/<button[\s\S]*?<\/button>/g), (match) => match[0]),
+    [
+      '<button class="goal-tab" type="button" data-effect-goal="all" aria-pressed="false">全部<span>3</span></button>',
+      '<button class="goal-tab active" type="button" data-effect-goal="cleanup-control" aria-pressed="true">清理与控制<span>2</span></button>',
+      '<button class="goal-tab" type="button" data-effect-goal="impact-density" aria-pressed="false">冲击与密度<span>1</span></button>',
+      '<button class="goal-tab" type="button" data-effect-goal="motion-rhythm" aria-pressed="false">运动与节奏<span>0</span></button>',
+      '<button class="goal-tab" type="button" data-effect-goal="pitch-tone" aria-pressed="false">音高与音色<span>1</span></button>',
+      '<button class="goal-tab" type="button" data-effect-goal="space-tail" aria-pressed="false">空间与尾部<span>1</span></button>',
+      '<button class="goal-tab" type="button" data-effect-goal="granular-transform" aria-pressed="false">颗粒与变形<span>1</span></button>'
+    ]
+  );
+  assert.match(context.effectListEl.innerHTML, /FabFilter Pro-Q 3/);
+  assert.match(context.effectListEl.innerHTML, /<mark class="search-hit">Resonance<\/mark>/);
+  assert.doesNotMatch(context.effectListEl.innerHTML, /NI Transient Master|Soundtoys Crystallizer|Waves Enigma/);
 
-  context.state.source = '来源 A';
-  context.state.query = '颗粒搜索动作';
-  context.renderEffectLibrary();
-  assert.equal(context.effectCountEl.textContent, '当前显示 1 / 2 个效果器档案');
+  context.state.effectGoal = 'invalid-goal';
+  context.state.query = '';
+  renderEffectLibrary();
+  assert.equal(context.state.effectGoal, 'all');
+  assert.equal(context.effectCountEl.textContent, '当前显示 3 / 3 个效果器档案');
+  assert.match(context.effectGoalsEl.innerHTML, /class="goal-tab active"[^>]*data-effect-goal="all"[^>]*aria-pressed="true"/);
   assert.equal(context.profileBuildCalls, 2, 'build the globally owned profile set once per render');
   assert.equal(context.rawUseProjectionCalls, 0, 'published counters must not project hidden raw uses');
+});
+
+test('renders result-first cards and explains supporting-only matches', () => {
+  const profile = {
+    id: 'pro-q',
+    name: 'FabFilter Pro-Q 3',
+    input: 'Harsh resonance',
+    action: 'Cut narrow bands',
+    result: 'Cleaner focused tone',
+    sourceCount: 1,
+    useCount: 2,
+    uses: [{ source: '来源 A', sourceTitle: 'Dragon spell design' }],
+    visuals: [{ kind: 'video', preview: 'preview.webp' }],
+    suitable: 'legacy suitable',
+    purpose: 'legacy purpose',
+    outcome: 'legacy outcome',
+    parameters: ['Frequency 2 kHz']
+  };
+  const context = {
+    SfxEffectLearningPaths,
+    state: { source: 'all', effectGoal: 'all', query: 'dragon' },
+    effectUses: [],
+    records: [],
+    pluginReferenceCatalog: [],
+    imageManifest: {},
+    effectGoalsEl: { innerHTML: '' },
+    effectCountEl: { textContent: '' },
+    effectListEl: { innerHTML: '' },
+    searchEl: { value: 'dragon' },
+    sourceEl: { value: 'all' },
+    EffectIndexData: { profiles: () => [profile] }
+  };
+  const renderEffectLibrary = loadEffectLibraryRenderer(context);
+
+  renderEffectLibrary();
+  const markup = context.effectListEl.innerHTML;
+  const resultIndex = markup.indexOf('听感结果');
+  const inputIndex = markup.indexOf('适用输入');
+  const actionIndex = markup.indexOf('处理动作');
+  assert.ok(resultIndex > 0 && resultIndex < inputIndex && inputIndex < actionIndex);
+  [profile.name, profile.result, profile.input, profile.action].forEach((value) => {
+    assert.ok(markup.includes(value), `missing visible guide value ${value}`);
+  });
+  assert.match(markup, /class="effect-profile-match"[\s\S]*?<strong>搜索命中<\/strong>[\s\S]*?<mark class="search-hit">Dragon<\/mark> spell design/);
+  assert.doesNotMatch(markup, /legacy suitable|legacy purpose|legacy outcome|Frequency 2 kHz|参数/);
+
+  context.state.query = 'focused';
+  renderEffectLibrary();
+  assert.match(context.effectListEl.innerHTML, /Cleaner <mark class="search-hit">focused<\/mark> tone/);
+  assert.doesNotMatch(context.effectListEl.innerHTML, /effect-profile-match|搜索命中/);
+});
+
+test('goal and reset buttons update only effect filters and rerender', () => {
+  const helperContext = loadEffectFilterHelpers({
+    SfxEffectLearningPaths,
+    state: {
+      mode: 'effects',
+      returnMode: 'effects',
+      category: 'weapons',
+      sort: 'titleAsc',
+      effectGoal: 'impact-density',
+      query: 'punch',
+      source: '来源 A'
+    },
+    searchEl: { value: 'punch' },
+    sourceEl: { value: '来源 A' }
+  });
+  helperContext.clearEffectFilters();
+  assert.deepEqual(plainValue(helperContext.state), {
+    mode: 'effects',
+    returnMode: 'effects',
+    category: 'weapons',
+    sort: 'titleAsc',
+    effectGoal: 'all',
+    query: '',
+    source: 'all'
+  });
+  assert.equal(helperContext.searchEl.value, '');
+  assert.equal(helperContext.sourceEl.value, 'all');
+
+  const goalContext = {
+    state: { effectGoal: 'all' },
+    normalizedEffectGoal: (value) => value,
+    renders: 0
+  };
+  goalContext.renderEffectLibrary = () => { goalContext.renders += 1; };
+  const goalHandler = loadNamedFunction(
+    `function goalHandler(event) {${listenerBody('effectGoalsEl', 'click')}\n}`,
+    'goalHandler',
+    goalContext
+  );
+  const goalButton = { dataset: { effectGoal: 'space-tail' } };
+  goalHandler({ target: { closest: () => goalButton } });
+  assert.equal(goalContext.state.effectGoal, 'space-tail');
+  assert.equal(goalContext.renders, 1);
+
+  const resetContext = {
+    resets: 0,
+    renders: 0,
+    state: { returnMode: 'videos' },
+    openEffectDetail() { throw new Error('reset must not open a detail route'); }
+  };
+  resetContext.clearEffectFilters = () => { resetContext.resets += 1; };
+  resetContext.renderEffectLibrary = () => { resetContext.renders += 1; };
+  const resetHandler = loadNamedFunction(
+    `function resetHandler(event) {${listenerBody('effectListEl', 'click')}\n}`,
+    'resetHandler',
+    resetContext
+  );
+  const resetButton = { dataset: {} };
+  resetHandler({ target: { closest(selector) { return selector === '[data-reset-effects]' ? resetButton : null; } } });
+  assert.equal(resetContext.resets, 1);
+  assert.equal(resetContext.renders, 1);
+  assert.equal(resetContext.state.returnMode, 'videos');
+});
+
+test('empty effect results provide concise copy and a real reset button', () => {
+  const renderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
+  assert.match(renderer, /没有找到符合当前目标和筛选条件的效果器档案。/);
+  assert.match(renderer, /<button type="button" data-reset-effects>清空筛选<\/button>/);
+  assert.doesNotMatch(renderer, /没有找到同时具备明确视频用法和准确截图的效果器档案。/);
 });
 
 test('missing guides hide profiles even when an exact official image is available', () => {
@@ -783,6 +1027,23 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   assert.equal(new Set(names).size, profiles.length);
   assert.equal(guideEvidenceUseIds.length, 27);
   assert.equal(new Set(guideEvidenceUseIds).size, 27);
+  assert.deepEqual(
+    SfxEffectLearningPaths.goals().map((goal) => ({
+      id: goal.id,
+      count: goal.id === 'all'
+        ? profiles.length
+        : profiles.filter((profile) => SfxEffectLearningPaths.matches(profile.name, goal.id)).length
+    })),
+    [
+      { id: 'all', count: 27 },
+      { id: 'cleanup-control', count: 8 },
+      { id: 'impact-density', count: 8 },
+      { id: 'motion-rhythm', count: 10 },
+      { id: 'pitch-tone', count: 9 },
+      { id: 'space-tail', count: 7 },
+      { id: 'granular-transform', count: 5 }
+    ]
+  );
 
   profiles.forEach((profile) => {
     const guide = SfxEffectGuides.guideFor(profile.name);
@@ -1454,7 +1715,7 @@ test('supports stable video and effect hash routes', () => {
 });
 
 test('effect profile cards open aggregated uses and can return to a video', () => {
-  ['effect-profile-card', 'data-effect-id', 'data-open-video', '查看完整视频案例', '输入素材', '处理动作', '听感变化'].forEach((source) => {
+  ['effect-profile-card', 'data-effect-id', 'data-open-video', '查看完整视频案例'].forEach((source) => {
     assert.ok(indexHtml.includes(source), `missing ${source}`);
   });
   assert.match(indexHtml, /function openEffectDetail\(effectId, syncHash = false\) \{[\s\S]*?const use = effectUses\.find\(\(item\) => item\.id === effectId\);[\s\S]*?if \(!use\) \{\s+state\.activeEffectId = "";/);
@@ -1477,20 +1738,25 @@ test('all public effect render surfaces use only the three evidence fields', () 
     detail: sourceSlice('function renderEffectDetail(effectId) {', 'function openLightbox(src, caption) {')
   };
   const approvedFields = ['input', 'action', 'result'];
-  const approvedLabels = ['输入素材', '处理动作', '听感变化'];
   const legacyProfileFields = /profile\.(?:suitable|purpose|outcome|limitation)/;
-  const legacyLabels = /一句话结论|适合用在|主要作用|能带来什么|听感结果/;
 
   Object.entries(renderSources).forEach(([surface, source]) => {
     approvedFields.forEach((field) => {
       assert.match(source, new RegExp(`profile\\.${field}`), `${surface} missing profile.${field}`);
     });
-    approvedLabels.forEach((label) => {
-      assert.ok(source.includes(label), `${surface} missing ${label}`);
-    });
     assert.doesNotMatch(source, legacyProfileFields, `${surface} uses a legacy profile field`);
-    assert.doesNotMatch(source, legacyLabels, `${surface} uses a legacy label`);
   });
+
+  ['听感结果', '适用输入', '处理动作'].forEach((label) => {
+    assert.ok(renderSources.card.includes(label), `card missing ${label}`);
+  });
+  ['输入素材', '处理动作', '听感变化'].forEach((label) => {
+    assert.ok(renderSources.videoSummary.includes(label), `videoSummary missing ${label}`);
+    assert.ok(renderSources.detail.includes(label), `detail missing ${label}`);
+  });
+  assert.doesNotMatch(renderSources.card, /一句话结论|适合用在|主要作用|能带来什么|输入素材|听感变化/);
+  assert.doesNotMatch(renderSources.videoSummary, /一句话结论|适合用在|主要作用|能带来什么|听感结果/);
+  assert.doesNotMatch(renderSources.detail, /一句话结论|适合用在|主要作用|能带来什么|听感结果/);
 
   assert.match(renderSources.videoSummary, /if \(!profile\) return "";/);
   assert.doesNotMatch(renderSources.videoSummary, /const purpose|<strong>适合：<\/strong>|<strong>听感：<\/strong>/);
@@ -1594,8 +1860,20 @@ test('effect detail renders one three-item guide with the linked video gallery',
 });
 
 test('effect cards use stable responsive grids and the reader return control handles keyboard activation', () => {
-  assert.match(indexHtml, /\.effect-list \{[\s\S]*?grid-template-columns: repeat\(auto-fill, minmax\(280px, 1fr\)\)/);
-  assert.match(indexHtml, /@media \(max-width: 640px\) \{[\s\S]*?\.effect-list \{ grid-template-columns: 1fr; \}/);
+  const css = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+  const cardRule = css.match(/\.effect-profile-card \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const factRules = css.slice(css.indexOf('.effect-profile-result'), css.indexOf('.grid {'));
+  const tabletRules = css.match(/@media \(max-width: 820px\) \{([\s\S]*?)\n    \}/)?.[1] || '';
+  const mobileRules = css.match(/@media \(max-width: 640px\) \{([\s\S]*?)\n    \}/)?.[1] || '';
+
+  assert.match(css, /\.effect-list \{[\s\S]*?grid-template-columns: repeat\(auto-fill, minmax\(500px, 1fr\)\)/);
+  assert.doesNotMatch(css, /\.effect-list \{[\s\S]*?minmax\(280px, 1fr\)/);
+  assert.match(cardRule, /display: grid;/);
+  assert.match(cardRule, /grid-template-columns: minmax\(180px, 220px\) minmax\(0, 1fr\);/);
+  assert.match(tabletRules, /\.effect-list \{ grid-template-columns: 1fr; \}/);
+  assert.match(mobileRules, /\.effect-profile-card \{ grid-template-columns: 1fr; \}/);
+  assert.doesNotMatch(factRules, /-webkit-line-clamp|text-overflow|overflow:\s*hidden/);
+  assert.match(css, /mark\.search-hit \{[\s\S]*?background: #[0-9a-fA-F]{6};[\s\S]*?color: #[0-9a-fA-F]{6};[\s\S]*?padding: 0;/);
   assert.match(indexHtml, /function focusLibraryModeTab\(\) \{[\s\S]*?requestAnimationFrame[\s\S]*?\.focus\(\{ preventScroll: true \}\)/);
   assert.match(indexHtml, /function returnToLibrary\(\) \{[\s\S]*?writeHashRoute\(\{ view: state\.mode \}, true\);[\s\S]*?render\(\);[\s\S]*?focusLibraryModeTab\(\);/);
   assert.match(indexHtml, /function applyHashRoute\(\) \{[\s\S]*?const returningFromReader = state\.view === "reader";[\s\S]*?showLibrary\(\);\s*render\(\);\s*if \(returningFromReader\) focusLibraryModeTab\(\);/);
