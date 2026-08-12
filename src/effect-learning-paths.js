@@ -66,9 +66,11 @@
   }
 
   function matches(canonicalName, goalId) {
+    var mappedGoalIds = goalsFor(canonicalName);
+    if (mappedGoalIds.length === 0) return false;
     if (goalId === 'all') return true;
     if (knownGoalIds.indexOf(goalId) === -1) return false;
-    return goalsFor(canonicalName).indexOf(goalId) !== -1;
+    return mappedGoalIds.indexOf(goalId) !== -1;
   }
 
   return Object.freeze({

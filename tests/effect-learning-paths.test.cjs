@@ -140,7 +140,8 @@ test('fails closed for unknown names and unknown goal IDs', () => {
   assert.equal(api.matches('__proto__', 'cleanup-control'), false);
   assert.equal(api.matches('FabFilter Pro-Q 3', 'unknown-goal'), false);
   assert.equal(api.matches('Unknown Effect', 'unknown-goal'), false);
-  assert.equal(api.matches('Unknown Effect', 'all'), true);
+  assert.equal(api.matches('Unknown Effect', 'all'), false);
+  assert.equal(api.matches('FabFilter Pro-Q 3', 'all'), true);
 });
 
 test('normalizes names with NFKC, case folding, repeated internal whitespace, and trimming', () => {
