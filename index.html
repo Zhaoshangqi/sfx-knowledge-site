@@ -32468,19 +32468,15 @@
     }
 
     function effectProfileSupportingValues(profile) {
-      const generatedValue = /^(?:未(?:记录|说明|提供|知|标注)|待补充|自动生成|暂无|无)$/i;
+      const generatedValue = /^(?:未(?:记录|说明|提供|标注)(?:的)?(?:输入|内容|信息|数据|目标|用途|结果|来源|关键词|素材|动作|听感)*|未知(?:输入|内容|信息|数据|目标|用途|结果|来源|关键词|素材|动作|听感)*|待补充(?:输入|内容|信息|数据|目标|用途|结果|来源|关键词|素材|动作|听感)*|自动生成(?:输入|内容|信息|数据|目标|用途|结果|来源|关键词|素材|动作|听感)*|暂无(?:输入|内容|信息|数据|目标|用途|结果|来源|关键词|素材|动作|听感)*|无)$/i;
       const parameterInstruction = /(?:参数|设置为|设为|调到|调至|数值|\b(?:attack|release|threshold|ratio|mix)\b|\d+(?:\.\d+)?\s*(?:db|hz|khz|ms|%|x)\b)/i;
       const uses = Array.isArray(profile?.uses) ? profile.uses : [];
       const values = [];
       for (const use of uses) {
-        const safeValues = [use?.sourceTitle, use?.source]
-          .concat(Array.isArray(use?.sourceKeywords) ? use.sourceKeywords : [use?.sourceKeywords]);
-        const descriptiveValues = [use?.target, use?.purpose, use?.result];
-        for (const value of safeValues) {
-          const text = String(value ?? "").trim();
-          if (text && !generatedValue.test(text)) values.push(text);
-        }
-        for (const value of descriptiveValues) {
+        const candidates = [use?.sourceTitle, use?.source]
+          .concat(Array.isArray(use?.sourceKeywords) ? use.sourceKeywords : [use?.sourceKeywords])
+          .concat([use?.target, use?.purpose, use?.result]);
+        for (const value of candidates) {
           const text = String(value ?? "").trim();
           if (text && !generatedValue.test(text) && !parameterInstruction.test(text)) values.push(text);
         }

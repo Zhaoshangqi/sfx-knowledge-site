@@ -539,6 +539,47 @@ test('explains supporting-only search matches without duplicating visible matche
   }, '12 ms'), '');
 });
 
+test('filters parameter instructions and extended placeholders from every supporting field', () => {
+  const context = loadEffectFilterHelpers({
+    SfxEffectLearningPaths,
+    state: { effectGoal: 'all', query: '', source: 'all' },
+    searchEl: { value: '' },
+    sourceEl: { value: 'all' }
+  });
+  const profile = {
+    name: 'Visible Effect',
+    input: 'Clean input',
+    action: 'Shape the sound',
+    result: 'Focused result',
+    uses: [{
+      sourceTitle: 'Attack 设置为 12 ms',
+      source: 'Sound Design Archive',
+      sourceKeywords: ['Threshold 6 dB', 'granular texture', '未记录输入'],
+      target: '',
+      purpose: '',
+      result: ''
+    }]
+  };
+  const searchable = loadNamedFunction(
+    sourceSlice('function effectProfileSearchable(profile) {', 'function filteredEffectUses() {'),
+    'effectProfileSearchable',
+    context
+  );
+
+  assert.deepEqual(
+    plainValue(context.effectProfileSupportingValues(profile)),
+    ['Sound Design Archive', 'granular texture']
+  );
+  ['12 ms', '6 dB', '未记录输入'].forEach((query) => {
+    assert.equal(context.effectProfileMatchHint(profile, query), '', query);
+    assert.ok(!searchable(profile).includes(query.toLowerCase()), query);
+  });
+  assert.equal(context.effectProfileMatchHint(profile, 'archive'), 'Sound Design Archive');
+  assert.equal(context.effectProfileMatchHint(profile, 'granular'), 'granular texture');
+  assert.ok(searchable(profile).includes('sound design archive'));
+  assert.ok(searchable(profile).includes('granular texture'));
+});
+
 test('renders ordered goal counts and combines source, goal, and query filters', () => {
   const modeSource = sourceSlice('function renderModeSwitch() {', 'function renderEffectLibrary() {');
   const renderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
