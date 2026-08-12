@@ -33067,20 +33067,28 @@
         detailEl.innerHTML = '<div class="empty">这个条目还没有可核对的效果器截图，因此暂不生成独立档案。</div>';
         return;
       }
-      const primaryVisual = profile.visuals[0];
-      if (!primaryVisual || primaryVisual.kind !== "video" || !String(primaryVisual.stepName || "").trim()) {
+      const visuals = Array.isArray(profile.visuals) ? profile.visuals : [];
+      const isTrustedVideoVisual = (visual) => (
+        visual?.kind === "video" &&
+        Boolean(String(visual.preview || "").trim()) &&
+        Boolean(String(visual.full || "").trim()) &&
+        Boolean(String(visual.caption || "").trim()) &&
+        Boolean(String(visual.sourceTitle || "").trim()) &&
+        Boolean(String(visual.stepName || "").trim())
+      );
+      const primaryVisual = visuals[0];
+      if (!isTrustedVideoVisual(primaryVisual)) {
         detailEl.innerHTML = '<div class="empty">这个条目还没有可核对的视频操作截图，因此暂不生成独立档案。</div>';
         return;
       }
-      const additionalVisuals = profile.visuals.slice(1).filter((visual) => (
-        visual?.kind === "video" && String(visual.stepName || "").trim()
-      ));
+      const additionalVisuals = visuals.slice(1).filter(isTrustedVideoVisual);
       const renderEffectCase = (visual) => {
         const sourceRecord = visual.sourceRecordId
           ? records.find((record) => record.id === visual.sourceRecordId)
           : null;
+        const hasStepOrder = visual.stepOrder !== "" && visual.stepOrder !== null && visual.stepOrder !== undefined;
         const location = [
-          visual.stepOrder !== "" ? "步骤 " + visual.stepOrder : "视频操作画面",
+          hasStepOrder ? "步骤 " + visual.stepOrder : "视频操作画面",
           visual.timestamp
         ].filter(Boolean).join(" · ");
         const action = sourceRecord

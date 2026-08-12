@@ -1807,8 +1807,10 @@ test('all public effect render surfaces use only the three evidence fields', () 
   assert.match(renderSources.videoSummary, /data-effect-id/);
 
   assert.doesNotMatch(renderSources.detail, /cautionHtml|effect-caution/);
-  assert.match(renderSources.detail, /const primaryVisual = profile\.visuals\[0\]/);
-  assert.match(renderSources.detail, /profile\.visuals\.slice\(1\)[\s\S]*?visual\?\.kind === "video"[\s\S]*?visual\.stepName/);
+  assert.match(renderSources.detail, /const visuals = Array\.isArray\(profile\.visuals\) \? profile\.visuals : \[\]/);
+  assert.match(renderSources.detail, /const primaryVisual = visuals\[0\]/);
+  assert.match(renderSources.detail, /visuals\.slice\(1\)\.filter\(isTrustedVideoVisual\)/);
+  assert.match(renderSources.detail, /visual\?\.kind === "video"[\s\S]*?visual\.preview[\s\S]*?visual\.full[\s\S]*?visual\.caption[\s\S]*?visual\.sourceTitle[\s\S]*?visual\.stepName/);
   assert.match(renderSources.detail, /escapeHtml\(visual\.stepName\)/);
   assert.match(renderSources.detail, /effect-result-lead/);
   assert.match(renderSources.detail, /effect-evidence-panel/);
@@ -1949,6 +1951,58 @@ test('effect detail renders result-led copy and trusted video evidence only', ()
   assert.doesNotMatch(detailEl.innerHTML, /blank-step-preview|空步骤视频不得混入|空步骤视频/);
   assert.doesNotMatch(detailEl.innerHTML, /旧适用字段不得出现|旧作用字段不得出现|Threshold -12 dB|参数/);
   assert.doesNotMatch(detailEl.innerHTML, /<h3>(?:一句话结论|适合用在|主要作用|输入素材|听感变化|听感结果)<\/h3>|注意：/);
+});
+
+test('effect detail fails closed when visual metadata is missing or malformed', () => {
+  const detailEl = { innerHTML: '' };
+  let profile = {
+    id: 'use-1',
+    name: 'Malformed Effect',
+    input: 'Test input',
+    action: 'Test action',
+    result: 'Test result'
+  };
+  const context = {
+    effectUses: [{ id: 'use-1' }],
+    records: [{ id: 'video-1' }],
+    pluginReferenceCatalog: [],
+    imageManifest: {},
+    detailEl,
+    EffectIndexData: { profileForUse() { return profile; } },
+    escapeHtml(value) { return String(value); },
+    escapeAttr(value) { return String(value); }
+  };
+  const renderEffectDetail = loadNamedFunction(
+    sourceSlice('function renderEffectDetail(effectId) {', 'function openLightbox(src, caption) {'),
+    'renderEffectDetail',
+    context
+  );
+
+  assert.doesNotThrow(() => renderEffectDetail('use-1'));
+  assert.match(detailEl.innerHTML, /还没有可核对的视频操作截图/);
+
+  profile = {
+    ...profile,
+    visuals: [{
+      kind: 'video',
+      preview: 'primary-preview.webp',
+      full: 'primary-full.webp',
+      caption: 'Primary evidence',
+      sourceRecordId: 'video-1',
+      sourceTitle: 'Primary source',
+      stepName: 'Primary step'
+    }, {
+      kind: 'video',
+      preview: 'missing-full.webp',
+      caption: 'Incomplete supporting evidence',
+      sourceRecordId: 'video-1',
+      sourceTitle: 'Incomplete source',
+      stepName: 'Incomplete step'
+    }]
+  };
+  renderEffectDetail('use-1');
+  assert.match(detailEl.innerHTML, /primary-preview\.webp/);
+  assert.doesNotMatch(detailEl.innerHTML, /missing-full|Incomplete supporting evidence|Incomplete source|Incomplete step|undefined/);
 });
 
 test('effect cards use stable responsive grids and the reader return control handles keyboard activation', () => {
@@ -2117,8 +2171,9 @@ test('effect detail is an image-led application guide without parameter informat
     assert.ok(effectDetailSource.includes(heading), `missing ${heading}`);
   });
   assert.match(effectDetailSource, /EffectIndexData\.profileForUse/);
-  assert.match(effectDetailSource, /const primaryVisual = profile\.visuals\[0\]/);
-  assert.match(effectDetailSource, /profile\.visuals\.slice\(1\)/);
+  assert.match(effectDetailSource, /const visuals = Array\.isArray\(profile\.visuals\) \? profile\.visuals : \[\]/);
+  assert.match(effectDetailSource, /const primaryVisual = visuals\[0\]/);
+  assert.match(effectDetailSource, /visuals\.slice\(1\)/);
   assert.match(effectDetailSource, /visual\?\.kind === "video"/);
   assert.match(effectDetailSource, /String\(visual\.stepName \|\| ""\)\.trim\(\)/);
   assert.match(effectDetailSource, /escapeHtml\(visual\.stepName\)/);
