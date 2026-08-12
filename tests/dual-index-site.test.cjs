@@ -451,12 +451,14 @@ test('complete guides publish only evidence-led copy with the evidence video fir
 
 test('publishes only the 27 curated profiles with their evidence screenshots', () => {
   const siteRecords = records();
+  const siteManifest = imageManifest();
+  const siteRecordsById = new Map(siteRecords.map((record) => [record.id, record]));
   const uses = SfxKnowledgeModel.buildEffectUses(siteRecords);
   const profiles = plainValue(loadEffectIndexData(SfxEffectGuides).profiles(
     uses,
     siteRecords,
     pluginReferenceCatalog(),
-    imageManifest()
+    siteManifest
   ));
   const guides = SfxEffectGuides.all();
   const names = profiles.map((profile) => profile.name);
@@ -480,15 +482,27 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
     assert.equal(profile.action, guide.action);
     assert.equal(profile.result, guide.result);
     assert.equal(profile.uses.filter((use) => use.id === profile.evidenceUseId).length, 1);
-    assert.ok(profile.visuals.some((visual) => visual.kind === 'video'), `${profile.name} video screenshot`);
-    assert.equal(
-      profile.visuals.every((visual) => visual.kind === 'official'),
-      false,
-      `${profile.name} official-only gallery`
-    );
-    assert.ok(profile.visuals.some((visual) => (
+    const evidenceUse = profile.uses.find((use) => use.id === profile.evidenceUseId);
+    assert.ok(evidenceUse, `${profile.name} evidence use`);
+    const evidenceVisual = profile.visuals.find((visual) => (
       visual.kind === 'video' && visual.useId === profile.evidenceUseId
-    )), `${profile.name} evidence screenshot`);
+    ));
+    assert.ok(evidenceVisual, `${profile.name} evidence screenshot`);
+    assert.equal(evidenceVisual.sourceRecordId, evidenceUse.sourceRecordId, `${profile.name} evidence source record`);
+
+    const sourceRecord = siteRecordsById.get(evidenceUse.sourceRecordId);
+    assert.ok(sourceRecord, `${profile.name} source record`);
+    assert.ok(evidenceVisual.imageKey, `${profile.name} evidence image key`);
+    assert.ok(Array.isArray(sourceRecord.steps) && sourceRecord.steps.some((step) => (
+      step.imageKey === evidenceVisual.imageKey
+      && step.order === evidenceVisual.stepOrder
+      && step.name === evidenceVisual.stepName
+    )), `${profile.name} evidence source step`);
+
+    const manifestAsset = siteManifest[evidenceVisual.imageKey];
+    assert.ok(manifestAsset, `${profile.name} manifest asset`);
+    assert.equal(evidenceVisual.preview, manifestAsset.preview || manifestAsset.full, `${profile.name} evidence preview`);
+    assert.equal(evidenceVisual.full, manifestAsset.full || manifestAsset.preview, `${profile.name} evidence full image`);
   });
 
   const videoVisuals = profiles.flatMap((profile) => (
