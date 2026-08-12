@@ -6,6 +6,7 @@ const vm = require('node:vm');
 
 const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 const SfxKnowledgeModel = require('../src/knowledge-model.js');
+const SfxEffectGuides = require('../src/effect-guides.js');
 
 function extractTagById(id) {
   const match = indexHtml.match(new RegExp(`<[^>]+\\bid="${id}"(?=\\s|>)[^>]*>`, 'i'));
@@ -51,13 +52,26 @@ function loadVideoDetailData() {
   return context.VideoDetailData;
 }
 
-function loadEffectIndexData() {
+const permissiveEffectGuides = {
+  guideFor(name, uses) {
+    const evidenceUse = uses && uses[0];
+    return evidenceUse ? {
+      canonicalName: name,
+      evidenceUseId: evidenceUse.id,
+      input: '明确的输入素材',
+      action: '明确的处理动作',
+      result: '明确的听感变化'
+    } : null;
+  }
+};
+
+function loadEffectIndexData(effectGuides = permissiveEffectGuides) {
   const start = indexHtml.indexOf('    const EffectIndexData = (() => {');
   const end = indexHtml.indexOf('    })();', start);
   assert.notEqual(start, -1, 'missing EffectIndexData helpers');
   assert.notEqual(end, -1, 'unterminated EffectIndexData helpers');
   const source = indexHtml.slice(start, end + '    })();'.length) + '\nthis.EffectIndexData = EffectIndexData;';
-  const context = { SfxKnowledgeModel };
+  const context = { SfxKnowledgeModel, SfxEffectGuides: effectGuides };
   vm.runInNewContext(source, context);
   return context.EffectIndexData;
 }
@@ -75,13 +89,17 @@ function records() {
   return JSON.parse(indexHtml.slice(start + prefix.length, end).trim().replace(/;$/, ''));
 }
 
-test('loads the shared knowledge model before the inline application data', () => {
+test('loads the shared knowledge model and effect guides before the inline application data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const modelScript = indexHtml.indexOf(modelTag);
+  const guideScript = indexHtml.indexOf(guideTag);
   const inlineCategories = indexHtml.indexOf('const categories = [');
 
   assert.ok(modelTag, 'knowledge model script must be cache-versioned');
-  assert.ok(modelScript < inlineCategories);
+  assert.ok(guideTag, 'effect guide script must be cache-versioned');
+  assert.ok(modelScript < guideScript, 'effect guides must load after the knowledge model');
+  assert.ok(guideScript < inlineCategories, 'effect guides must load before inline application data');
 });
 
 test('exposes accessible video and effect index modes', () => {
@@ -161,34 +179,150 @@ test('effect source filtering hides global profiles without recalculating screen
   assert.ok(renderer.indexOf('EffectIndexData.profiles(effectUses') < renderer.indexOf('effectProfileMatchesSource(profile)'));
 });
 
-test('effect profiles prefer video screenshots, stay concise, and cap galleries', () => {
-  const effectIndexData = loadEffectIndexData();
-  const manifest = {
-    shot1: { preview: 'shot1-preview.webp', full: 'shot1-full.webp' },
-    shot2: { preview: 'shot2-preview.webp', full: 'shot2-full.webp' },
-    shot3: { preview: 'shot3-preview.webp', full: 'shot3-full.webp' },
-    shot4: { preview: 'shot4-preview.webp', full: 'shot4-full.webp' }
-  };
-  const testRecords = [1, 2, 3, 4].map((number) => ({
-    id: `record-${number}`,
-    title: `Video ${number}`,
-    url: `https://example.com/${number}`,
-    steps: [{ order: number, name: `Test Effect case ${number}`, detail: 'Visible Test Effect interface.', imageKey: `shot${number}` }]
-  }));
-  const uses = testRecords.map((record, index) => ({
-    id: `use-${index + 1}`,
+test('missing guides hide profiles even when an exact official image is available', () => {
+  const effectIndexData = loadEffectIndexData({ guideFor() { return null; } });
+  const use = {
+    id: 'use-1',
     name: 'Test Effect',
     category: 'dynamic',
-    target: index === 0 ? 'impact and weapon layers' : '',
-    purpose: 'Make the hit clearer and more controlled.',
-    result: index === 0 ? 'A clearer and more controlled hit.' : '',
-    limitations: '',
-    screenshotKey: '',
-    sourceRecordId: record.id,
-    sourceTitle: record.title,
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1'
+  };
+  const catalog = [{
+    title: 'Test Effect',
+    aliases: ['Test Effect'],
+    preview: 'official-preview.webp',
+    full: 'official-full.webp'
+  }];
+
+  assert.equal(effectIndexData.profileForUse(use, [use], [], catalog, {}), null);
+});
+
+test('effect profiles require guide input, action, and result', async (t) => {
+  const use = {
+    id: 'use-1',
+    name: 'Test Effect',
+    category: 'dynamic',
+    screenshotKey: 'test-shot',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1'
+  };
+  const testRecords = [{
+    id: 'record-1',
+    title: 'Video 1',
+    steps: [{ order: 1, name: 'Test Effect shaping', imageKey: 'test-shot' }]
+  }];
+  const manifest = { 'test-shot': { preview: 'test-preview.webp', full: 'test-full.webp' } };
+  const completeGuide = {
+    canonicalName: 'Test Effect',
+    evidenceUseId: 'use-1',
+    input: '单薄的测试冲击素材',
+    action: '重塑起音并收紧持续段',
+    result: '起音更集中，尾部更短'
+  };
+
+  for (const field of ['input', 'action', 'result']) {
+    await t.test(`missing ${field}`, () => {
+      const guide = { ...completeGuide };
+      delete guide[field];
+      const effectIndexData = loadEffectIndexData({ guideFor() { return guide; } });
+
+      assert.equal(effectIndexData.profileForUse(use, [use], testRecords, [], manifest), null);
+    });
+  }
+});
+
+test('effect profiles require the guide evidence use to exist in the grouped uses', () => {
+  const effectIndexData = loadEffectIndexData({
+    guideFor() {
+      return {
+        canonicalName: 'Test Effect',
+        evidenceUseId: 'missing-use',
+        input: '单薄的测试冲击素材',
+        action: '重塑起音并收紧持续段',
+        result: '起音更集中，尾部更短'
+      };
+    }
+  });
+  const use = {
+    id: 'use-1',
+    name: 'Test Effect',
+    screenshotKey: 'test-shot',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1'
+  };
+  const testRecords = [{
+    id: 'record-1',
+    title: 'Video 1',
+    steps: [{ order: 1, name: 'Test Effect shaping', imageKey: 'test-shot' }]
+  }];
+  const manifest = { 'test-shot': { preview: 'test-preview.webp', full: 'test-full.webp' } };
+
+  assert.equal(effectIndexData.profileForUse(use, [use], testRecords, [], manifest), null);
+});
+
+test('official-only profiles stay hidden without a strict evidence video screenshot', () => {
+  const effectIndexData = loadEffectIndexData({
+    guideFor() {
+      return {
+        canonicalName: 'Test Effect',
+        evidenceUseId: 'use-1',
+        input: '单薄的测试冲击素材',
+        action: '重塑起音并收紧持续段',
+        result: '起音更集中，尾部更短'
+      };
+    }
+  });
+  const use = {
+    id: 'use-1',
+    name: 'Test Effect',
+    category: 'dynamic',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1'
+  };
+  const catalog = [{
+    title: 'Test Effect',
+    aliases: ['Test Effect'],
+    preview: 'official-preview.webp',
+    full: 'official-full.webp'
+  }];
+
+  assert.equal(effectIndexData.profileForUse(use, [use], [], catalog, {}), null);
+});
+
+test('complete guides publish only evidence-led copy with the evidence video first', () => {
+  const guides = {
+    guideFor() {
+      return {
+        canonicalName: 'Test Effect',
+        evidenceUseId: 'use-1',
+        input: '单薄的测试冲击素材',
+        action: '重塑起音并收紧持续段',
+        result: '起音更集中，尾部更短'
+      };
+    }
+  };
+  const effectIndexData = loadEffectIndexData(guides);
+  const uses = [1, 2, 3].map((number) => ({
+    id: `use-${number}`,
+    name: 'Test Effect',
+    category: 'dynamic',
+    screenshotKey: `shot-${number}`,
+    sourceRecordId: `record-${number}`,
+    sourceTitle: `Video ${number}`,
     source: 'Test',
     legacy: false
   }));
+  const testRecords = [1, 2, 3].map((number) => ({
+    id: `record-${number}`,
+    title: `Video ${number}`,
+    url: `https://example.com/${number}`,
+    steps: [{ order: number, name: `Test Effect case ${number}`, imageKey: `shot-${number}` }]
+  }));
+  const manifest = Object.fromEntries([1, 2, 3].map((number) => [
+    `shot-${number}`,
+    { preview: `shot-${number}-preview.webp`, full: `shot-${number}-full.webp` }
+  ]));
   const catalog = [{
     title: 'Test Effect',
     aliases: ['Test Effect'],
@@ -197,41 +331,22 @@ test('effect profiles prefer video screenshots, stay concise, and cap galleries'
     source: 'https://example.com/official'
   }];
 
-  const profile = plainValue(effectIndexData.profileForUse(uses[0], uses, testRecords, catalog, manifest));
+  const profile = plainValue(effectIndexData.profileForUse(uses[2], uses, testRecords, catalog, manifest));
 
-  assert.equal(profile.name, 'Test Effect');
-  assert.equal(profile.suitable, 'impact and weapon layers');
-  assert.equal(profile.purpose, 'Make the hit clearer and more controlled.');
-  assert.equal(profile.outcome, 'A clearer and more controlled hit.');
+  assert.equal(profile.id, guides.guideFor().evidenceUseId);
+  assert.equal(profile.evidenceUseId, guides.guideFor().evidenceUseId);
+  assert.equal(profile.input, guides.guideFor().input);
+  assert.equal(profile.action, guides.guideFor().action);
+  assert.equal(profile.result, guides.guideFor().result);
+  ['suitable', 'purpose', 'outcome', 'limitation'].forEach((field) => {
+    assert.equal(Object.prototype.hasOwnProperty.call(profile, field), false, field);
+  });
+  assert.equal(profile.visuals[0].kind, 'video');
+  assert.equal(profile.visuals[0].useId, profile.evidenceUseId);
   assert.equal(profile.visuals.length, 3);
+  assert.deepEqual(profile.visuals.map((visual) => visual.useId), ['use-1', 'use-2', 'use-3']);
   assert.ok(profile.visuals.every((visual) => visual.kind === 'video'));
-  assert.equal(profile.visuals[0].preview, 'shot1-preview.webp');
   assert.doesNotMatch(JSON.stringify(profile), /parameterValues|parameters/);
-});
-
-test('effect profiles replace technical control notes with a plain application summary', () => {
-  const effectIndexData = loadEffectIndexData();
-  const use = {
-    id: 'technical-use',
-    name: 'Kilohearts Transient Shaper',
-    category: '动态与响度',
-    target: '',
-    purpose: '在330Hz增加谐波和温暖感。',
-    result: '',
-    limitations: '-0.13Hz 负速率会产生幽灵漂移感。',
-    screenshotKey: 'technical-shot',
-    sourceRecordId: 'record-1',
-    sourceTitle: 'Video 1',
-    legacy: false
-  };
-  const records = [{ id: 'record-1', title: 'Video 1', steps: [{ order: 1, name: 'Kilohearts Transient Shaper', imageKey: 'technical-shot' }] }];
-  const manifest = { 'technical-shot': { preview: 'technical-preview.webp', full: 'technical-full.webp' } };
-
-  const profile = plainValue(effectIndexData.profileForUse(use, [use], records, [], manifest));
-
-  assert.equal(profile.purpose, '重塑攻击、持续段与整体动态');
-  assert.equal(profile.limitation, '');
-  assert.doesNotMatch(profile.purpose, /330|Hz|参数|阈值/i);
 });
 
 test('effect profiles ignore screenshots matched only by generated chain scaffolding', () => {
@@ -507,10 +622,7 @@ test('one inferred video screenshot cannot belong to two effect identities', () 
   };
 
   const profiles = plainValue(effectIndexData.profiles(uses, records, catalog, manifest));
-  assert.equal(profiles.some((profile) => profile.name === 'Serum sampler'), false);
-  const serumProfile = profiles.find((profile) => profile.name === 'Xfer Serum 2');
-  assert.ok(serumProfile);
-  assert.deepEqual(serumProfile.visuals.map((visual) => visual.kind), ['official']);
+  assert.deepEqual(profiles, []);
 });
 
 test('one video asset cannot belong to two products through different step titles', () => {
@@ -546,11 +658,10 @@ test('one video asset cannot belong to two products through different step title
   };
 
   const profiles = plainValue(effectIndexData.profiles(uses, records, catalog, manifest));
-  assert.equal(profiles.length, 2);
-  profiles.forEach((profile) => assert.deepEqual(profile.visuals.map((visual) => visual.kind), ['official']));
+  assert.deepEqual(profiles, []);
 });
 
-test('official fallbacks require one exact product identity', () => {
+test('official-only profiles stay hidden even for one exact product identity', () => {
   const effectIndexData = loadEffectIndexData();
   const catalog = [
     {
@@ -581,9 +692,7 @@ test('official fallbacks require one exact product identity', () => {
     sourceTitle: 'Video 2'
   };
 
-  const phaseProfile = plainValue(effectIndexData.profileForUse(phaseUse, [phaseUse], [], catalog, {}));
-  assert.equal(phaseProfile.visuals.length, 1);
-  assert.equal(phaseProfile.visuals[0].stepName, 'Soundtoys PhaseMistress');
+  assert.equal(effectIndexData.profileForUse(phaseUse, [phaseUse], [], catalog, {}), null);
   assert.equal(effectIndexData.profileForUse(genericUse, [genericUse], [], catalog, {}), null);
 });
 

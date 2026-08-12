@@ -1136,6 +1136,7 @@
   </div>
 
   <script src="src/knowledge-model.js?v=20260811-dry-goods-7"></script>
+  <script src="src/effect-guides.js?v=20260811-evidence-led-1"></script>
   <script>
     const categories = [
   {
@@ -31765,62 +31766,6 @@
       return { parseHashRouteHash, routeDecision, routeWriteIntent, serializeHashRoute, tabNavigation };
     })();
     const EffectIndexData = (() => {
-      const fallbackRules = [
-        {
-          pattern: /\b(?:eq|equalizer|filter|gullfoss|soothe|unfilter)\b|均衡|滤波|频谱|共振/i,
-          suitable: "频段失衡、浑浊、刺耳或需要重新塑色的素材",
-          purpose: "整理频谱关系并明确音色重心",
-          outcome: "频段更清楚，主体更容易被听见"
-        },
-        {
-          pattern: /transient|compress|limiter|clipper|expander|loudness|gain|ott|squash|动态|瞬态|压缩|限制|响度|削峰/i,
-          suitable: "起音不清楚、动态不稳或峰值过大的素材",
-          purpose: "重塑攻击、持续段与整体动态",
-          outcome: "起音更明确，力度和峰值更稳定"
-        },
-        {
-          pattern: /saturat|distort|drive|decapitator|devil.?loc|trash|crush|exciter|失真|饱和|过载|谐波/i,
-          suitable: "需要增加密度、重量或侵略感的素材",
-          purpose: "增加谐波并强化材质存在感",
-          outcome: "声音更厚、更密，也更有冲击力"
-        },
-        {
-          pattern: /pitch|formant|vocoder|frequency\s*shift|harmoni|alterboy|manipulator|音高|共振峰|声码|频移/i,
-          suitable: "需要改变体型、音高身份或角色感的素材",
-          purpose: "改变音高、共振峰或频率身份",
-          outcome: "体型与角色感发生明显变化"
-        },
-        {
-          pattern: /phaser|flanger|chorus|tremolo|doppler|ensemble|motion|imager|wider|声像|调制|相位|镶边|合唱|颤音|多普勒/i,
-          suitable: "持续音、尾音和需要节奏或方向变化的素材",
-          purpose: "制造周期、宽度或方向运动",
-          outcome: "声音产生更清楚的运动和空间变化"
-        },
-        {
-          pattern: /reverb|delay|echo|convol|granular|crystallizer|space|room|plate|混响|延迟|回声|卷积|颗粒|空间/i,
-          suitable: "需要距离、深度、尾音或时间层次的素材",
-          purpose: "建立空间尺度并延展声音尾部",
-          outcome: "距离、深度和尾音层次更明确"
-        },
-        {
-          pattern: /\brx\b|de[- ]?(?:click|clip|noise|crackle)|repair|noise|unveil|修复|去噪|去点击|去削波/i,
-          suitable: "带有噪声、点击、削波或多余空间的录音",
-          purpose: "清理瑕疵并恢复可用细节",
-          outcome: "杂质减少，主体细节更清楚"
-        },
-        {
-          pattern: /automation|script|routing|rtpc|wwise|middleware|container|路由|自动化|脚本|中间件/i,
-          suitable: "需要随时间、距离或游戏状态变化的声音",
-          purpose: "控制处理链、路由与运行时变化",
-          outcome: "声音变化更可控，也更贴合游戏状态"
-        },
-        {
-          pattern: /synth|serum|phase\s*plant|reaktor|sampler|wavetable|oscillator|合成|采样器|振荡器/i,
-          suitable: "需要重新合成、扩展或生成新音色的素材",
-          purpose: "从源素材或振荡器重新建立音色",
-          outcome: "得到更鲜明、可继续加工的声音身份"
-        }
-      ];
       const aliasStopWords = new Set([
         "audio", "digital", "labs", "lab", "sound", "sounds", "plugin", "plugins", "effect", "effects",
         "processor", "processing", "studio", "stereo", "native", "instruments", "production", "productions",
@@ -31877,8 +31822,6 @@
         "wwise",
         "xfer ott"
       ]);
-      const technicalDetailPattern = /[+-]?\d+(?:\.\d+)?\s*(?:khz|hz|ms|dbfs|db|bpm)\b|[+-]?\d+(?:\.\d+)?\s*%|\b(?:hz|khz|ms|db|dbfs|bpm|bands?|mix|wet|dry|attack|release|ratio|feedback|frequency|drive|depth|rate|width|threshold|parameter|crossover|lfo)s?\b|参数|数值|旋钮|阈值|频率值|毫秒/i;
-
       function array(value) {
         return Array.isArray(value) ? value : [];
       }
@@ -32129,38 +32072,6 @@
         }).filter(Boolean);
       }
 
-      function ruleFor(use) {
-        const value = [use?.name, use?.category, use?.purpose, use?.target, use?.result].map(text).join(" ");
-        return fallbackRules.find((rule) => rule.pattern.test(value)) || {
-          suitable: "需要进一步塑形、分层或强化身份的声音素材",
-          purpose: "完成这一处理点承担的声音角色",
-          outcome: "声音角色更清楚，也更容易放进完整效果链"
-        };
-      }
-
-      function conciseCopy(value, fallback, maxLength = 72) {
-        const cleaned = text(value).replace(/^(?:作者口述与画面确认|作者口述|画面确认|画面事实|分析归纳|分析建议)[:：]\s*/i, "");
-        if (!cleaned || cleaned.length > maxLength || technicalDetailPattern.test(cleaned)) return fallback;
-        const firstSentence = cleaned.split(/[。；;]/)[0].trim();
-        if (!firstSentence || firstSentence.length > maxLength || technicalDetailPattern.test(firstSentence)) return fallback;
-        return firstSentence;
-      }
-
-      function suitableText(use) {
-        const fallback = ruleFor(use).suitable;
-        return conciseCopy(use?.target, fallback, 56);
-      }
-
-      function purposeText(use) {
-        const fallback = ruleFor(use).purpose;
-        return conciseCopy(use?.purpose, fallback);
-      }
-
-      function outcomeText(use) {
-        const fallback = ruleFor(use).outcome;
-        return conciseCopy(use?.result, fallback, 64);
-      }
-
       function orderedUses(uses, preferredUseId) {
         return [...array(uses)].sort((a, b) => {
           const preferred = Number(b?.id === preferredUseId) - Number(a?.id === preferredUseId);
@@ -32220,6 +32131,35 @@
           || blockedProfileNames.has(normalize(name))
           || !ordered.length
         ) return null;
+        const guide = SfxEffectGuides.guideFor(name, ordered);
+        if (
+          !guide
+          || !text(guide.evidenceUseId)
+          || !text(guide.input)
+          || !text(guide.action)
+          || !text(guide.result)
+        ) return null;
+
+        const evidenceUse = ordered.find((use) => use?.id === guide.evidenceUseId);
+        if (!evidenceUse) return null;
+
+        const primaryVisual = explicitVisual(
+          evidenceUse,
+          name,
+          records,
+          catalog,
+          manifest,
+          identityContext
+        ) || matchedStepVisual(
+          evidenceUse,
+          name,
+          records,
+          catalog,
+          manifest,
+          identityContext
+        );
+        if (!primaryVisual) return null;
+
         const visuals = [];
         const seenVisuals = new Set();
         function addVisual(visual) {
@@ -32229,24 +32169,27 @@
           seenVisuals.add(key);
           visuals.push(visual);
         }
-        ordered.forEach((use) => addVisual(explicitVisual(use, name, records, catalog, manifest, identityContext)));
-        ordered.forEach((use) => addVisual(matchedStepVisual(use, name, records, catalog, manifest, identityContext)));
-        officialVisuals(name, catalog, ordered[0]?.id).forEach(addVisual);
-        if (!visuals.length) return null;
+        addVisual(primaryVisual);
+        ordered.filter((use) => use !== evidenceUse).forEach((use) => {
+          addVisual(
+            explicitVisual(use, name, records, catalog, manifest, identityContext)
+            || matchedStepVisual(use, name, records, catalog, manifest, identityContext)
+          );
+        });
+        officialVisuals(name, catalog, guide.evidenceUseId).forEach(addVisual);
 
-        const copyUse = ordered.find((use) => text(use?.target) || text(use?.result)) || ordered.find((use) => !use?.legacy) || ordered[0];
         const sourceCount = new Set(ordered.map((use) => use?.sourceRecordId).filter(Boolean)).size;
         return {
-          id: preferredUseId || visuals.find((visual) => visual.useId)?.useId || ordered[0].id,
+          id: guide.evidenceUseId,
+          evidenceUseId: guide.evidenceUseId,
           name,
           uses: ordered,
           useCount: ordered.length,
           sourceCount,
           category: ordered.find((use) => use?.category && use.category !== "未分类")?.category || ordered[0]?.category || "综合处理",
-          suitable: suitableText(copyUse),
-          purpose: purposeText(copyUse),
-          outcome: outcomeText(copyUse),
-          limitation: conciseCopy(ordered.find((use) => text(use?.limitations))?.limitations, "", 64),
+          input: guide.input,
+          action: guide.action,
+          result: guide.result,
           visuals
         };
       }
@@ -32267,7 +32210,11 @@
             const key = visual.full || visual.preview;
             return key && ownersByAsset.get(key)?.size === 1;
           });
-          return visuals.length ? { ...profile, visuals } : null;
+          const hasEvidenceVisual = visuals.some((visual) => (
+            visual.kind === "video" && visual.useId === profile.evidenceUseId
+          ));
+          if (!hasEvidenceVisual) return null;
+          return { ...profile, visuals };
         }).filter(Boolean);
       }
 
@@ -32295,7 +32242,7 @@
         return profiles(uses, records, catalog, manifest).find((profile) => normalize(profile.name) === key) || null;
       }
 
-      return { outcomeText, profileForUse, profiles, purposeText, referenceCandidates, suitableText };
+      return { profileForUse, profiles, referenceCandidates };
     })();
     const state = {
       mode: "videos",
