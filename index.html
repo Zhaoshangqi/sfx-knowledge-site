@@ -32121,7 +32121,7 @@
         return value;
       }
 
-      function buildProfile(name, uses, records, catalog, manifest, preferredUseId = "", identityContext = null) {
+      function buildProfile(name, uses, records, catalog, manifest, preferredUseId = "", identityContext = null, evidenceUseIdCounts = new Map()) {
         const ordered = orderedUses(uses, preferredUseId);
         if (
           !name
@@ -32139,6 +32139,7 @@
           || !text(guide.action)
           || !text(guide.result)
         ) return null;
+        if (evidenceUseIdCounts.get(guide.evidenceUseId) !== 1) return null;
 
         const evidenceUse = ordered.find((use) => use?.id === guide.evidenceUseId);
         if (!evidenceUse) return null;
@@ -32227,9 +32228,15 @@
           && strictProfilesCache?.catalog === catalog
           && strictProfilesCache?.manifest === manifest
         ) return strictProfilesCache.value;
+        const evidenceUseIdCounts = new Map();
+        array(uses).forEach((use) => {
+          const id = use?.id;
+          if (id === undefined || id === null) return;
+          evidenceUseIdCounts.set(id, (evidenceUseIdCounts.get(id) || 0) + 1);
+        });
         const index = strictIndexFor(uses, catalog);
         const value = keepUniquelyOwnedVideoVisuals(index.groups.map((group) => (
-          buildProfile(group.name, group.uses, records, catalog, manifest, "", index.identityContext)
+          buildProfile(group.name, group.uses, records, catalog, manifest, "", index.identityContext, evidenceUseIdCounts)
         )).filter(Boolean));
         strictProfilesCache = { uses, records, catalog, manifest, value };
         return value;

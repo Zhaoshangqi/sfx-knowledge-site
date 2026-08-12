@@ -185,9 +185,16 @@ test('missing guides hide profiles even when an exact official image is availabl
     id: 'use-1',
     name: 'Test Effect',
     category: 'dynamic',
+    screenshotKey: 'test-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1'
   };
+  const testRecords = [{
+    id: 'record-1',
+    title: 'Video 1',
+    steps: [{ order: 1, name: 'Test Effect shaping', imageKey: 'test-shot' }]
+  }];
+  const manifest = { 'test-shot': { preview: 'test-preview.webp', full: 'test-full.webp' } };
   const catalog = [{
     title: 'Test Effect',
     aliases: ['Test Effect'],
@@ -195,7 +202,7 @@ test('missing guides hide profiles even when an exact official image is availabl
     full: 'official-full.webp'
   }];
 
-  assert.equal(effectIndexData.profileForUse(use, [use], [], catalog, {}), null);
+  assert.equal(effectIndexData.profileForUse(use, [use], testRecords, catalog, manifest), null);
 });
 
 test('effect profiles require guide input, action, and result', async (t) => {
@@ -261,6 +268,86 @@ test('effect profiles require the guide evidence use to exist in the grouped use
   assert.equal(effectIndexData.profileForUse(use, [use], testRecords, [], manifest), null);
 });
 
+test('duplicate evidence use ids in one canonical group fail closed', () => {
+  const effectIndexData = loadEffectIndexData({
+    guideFor() {
+      return {
+        canonicalName: 'Test Effect',
+        evidenceUseId: 'shared-use',
+        input: '单薄的测试冲击素材',
+        action: '重塑起音并收紧持续段',
+        result: '起音更集中，尾部更短'
+      };
+    }
+  });
+  const uses = [1, 2].map((number) => ({
+    id: 'shared-use',
+    name: 'Test Effect',
+    screenshotKey: `test-shot-${number}`,
+    sourceRecordId: `record-${number}`,
+    sourceTitle: `Video ${number}`
+  }));
+  const testRecords = [1, 2].map((number) => ({
+    id: `record-${number}`,
+    title: `Video ${number}`,
+    steps: [{ order: number, name: `Test Effect shaping ${number}`, imageKey: `test-shot-${number}` }]
+  }));
+  const manifest = Object.fromEntries([1, 2].map((number) => [
+    `test-shot-${number}`,
+    { preview: `test-${number}-preview.webp`, full: `test-${number}-full.webp` }
+  ]));
+
+  assert.equal(effectIndexData.profileForUse(uses[0], uses, testRecords, [], manifest), null);
+});
+
+test('duplicate evidence use ids across canonical groups hide both profiles', () => {
+  const effectIndexData = loadEffectIndexData({
+    guideFor(name) {
+      return {
+        canonicalName: name,
+        evidenceUseId: 'shared-use',
+        input: '单薄的测试冲击素材',
+        action: '重塑起音并收紧持续段',
+        result: '起音更集中，尾部更短'
+      };
+    }
+  });
+  const uses = [
+    {
+      id: 'shared-use',
+      name: 'Alpha FX',
+      screenshotKey: 'alpha-shot',
+      sourceRecordId: 'record-alpha',
+      sourceTitle: 'Alpha Video'
+    },
+    {
+      id: 'shared-use',
+      name: 'Beta FX',
+      screenshotKey: 'beta-shot',
+      sourceRecordId: 'record-beta',
+      sourceTitle: 'Beta Video'
+    }
+  ];
+  const testRecords = [
+    {
+      id: 'record-alpha',
+      title: 'Alpha Video',
+      steps: [{ order: 1, name: 'Alpha FX shaping', imageKey: 'alpha-shot' }]
+    },
+    {
+      id: 'record-beta',
+      title: 'Beta Video',
+      steps: [{ order: 1, name: 'Beta FX shaping', imageKey: 'beta-shot' }]
+    }
+  ];
+  const manifest = {
+    'alpha-shot': { preview: 'alpha-preview.webp', full: 'alpha-full.webp' },
+    'beta-shot': { preview: 'beta-preview.webp', full: 'beta-full.webp' }
+  };
+
+  assert.deepEqual(plainValue(effectIndexData.profiles(uses, testRecords, [], manifest)), []);
+});
+
 test('official-only profiles stay hidden without a strict evidence video screenshot', () => {
   const effectIndexData = loadEffectIndexData({
     guideFor() {
@@ -295,7 +382,7 @@ test('complete guides publish only evidence-led copy with the evidence video fir
     guideFor() {
       return {
         canonicalName: 'Test Effect',
-        evidenceUseId: 'use-1',
+        evidenceUseId: 'use-3',
         input: '单薄的测试冲击素材',
         action: '重塑起音并收紧持续段',
         result: '起音更集中，尾部更短'
@@ -331,7 +418,7 @@ test('complete guides publish only evidence-led copy with the evidence video fir
     source: 'https://example.com/official'
   }];
 
-  const profile = plainValue(effectIndexData.profileForUse(uses[2], uses, testRecords, catalog, manifest));
+  const profile = plainValue(effectIndexData.profileForUse(uses[0], uses, testRecords, catalog, manifest));
 
   assert.equal(profile.id, guides.guideFor().evidenceUseId);
   assert.equal(profile.evidenceUseId, guides.guideFor().evidenceUseId);
@@ -344,7 +431,7 @@ test('complete guides publish only evidence-led copy with the evidence video fir
   assert.equal(profile.visuals[0].kind, 'video');
   assert.equal(profile.visuals[0].useId, profile.evidenceUseId);
   assert.equal(profile.visuals.length, 3);
-  assert.deepEqual(profile.visuals.map((visual) => visual.useId), ['use-1', 'use-2', 'use-3']);
+  assert.deepEqual(profile.visuals.map((visual) => visual.useId), ['use-3', 'use-1', 'use-2']);
   assert.ok(profile.visuals.every((visual) => visual.kind === 'video'));
   assert.doesNotMatch(JSON.stringify(profile), /parameterValues|parameters/);
 });
