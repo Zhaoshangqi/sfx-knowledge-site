@@ -115,17 +115,21 @@ function loadNamedFunction(source, name, context = {}) {
   return context[name];
 }
 
-test('loads the shared knowledge model and effect guides before the inline application data', () => {
+test('loads the shared knowledge model, effect guides, and learning paths before the inline application data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const learningPathsTag = indexHtml.match(/<script src="src\/effect-learning-paths\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const modelScript = indexHtml.indexOf(modelTag);
   const guideScript = indexHtml.indexOf(guideTag);
+  const learningPathsScript = indexHtml.indexOf(learningPathsTag);
   const inlineCategories = indexHtml.indexOf('const categories = [');
 
   assert.ok(modelTag, 'knowledge model script must be cache-versioned');
   assert.ok(guideTag, 'effect guide script must be cache-versioned');
+  assert.ok(learningPathsTag, 'effect learning paths script must be cache-versioned');
   assert.ok(modelScript < guideScript, 'effect guides must load after the knowledge model');
-  assert.ok(guideScript < inlineCategories, 'effect guides must load before inline application data');
+  assert.ok(guideScript < learningPathsScript, 'effect learning paths must load after effect guides');
+  assert.ok(learningPathsScript < inlineCategories, 'effect learning paths must load before inline application data');
 });
 
 test('exposes accessible video and effect index modes', () => {
