@@ -2038,6 +2038,7 @@ test('effect detail uses a fixed two-column evidence layout with a one-column ta
 
   assert.match(titleRule, /font-size: 42px;/);
   assert.doesNotMatch(titleRule, /clamp\(|vw/);
+  assert.match(css, /\.detail-title:focus \{\s*outline: none;\s*\}/);
   assert.match(gridRule, /grid-template-columns: minmax\(260px, 0\.78fr\) minmax\(420px, 1\.22fr\);/);
   assert.match(shotRule, /width: 100%;/);
   assert.match(shotRule, /max-width: 100%;/);
