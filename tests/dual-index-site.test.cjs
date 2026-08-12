@@ -102,6 +102,19 @@ function pluginReferenceCatalog() {
   return inlineLiteral('pluginReferenceCatalog', 'categoryById');
 }
 
+function sourceSlice(startMarker, endMarker) {
+  const start = indexHtml.indexOf(`    ${startMarker}`);
+  const end = indexHtml.indexOf(`    ${endMarker}`, start);
+  assert.notEqual(start, -1, `missing ${startMarker}`);
+  assert.notEqual(end, -1, `missing ${endMarker} boundary`);
+  return indexHtml.slice(start, end);
+}
+
+function loadNamedFunction(source, name, context = {}) {
+  vm.runInNewContext(`${source}\nthis.${name} = ${name};`, context);
+  return context[name];
+}
+
 test('loads the shared knowledge model and effect guides before the inline application data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
@@ -172,24 +185,144 @@ test('builds and renders screenshot-backed effect profiles', () => {
 
 test('effect search filters strict profiles without changing screenshot ownership', () => {
   const useFilter = indexHtml.match(/function filteredEffectUses\(\) \{([\s\S]*?)\n    \}/)?.[1] || '';
-  const renderer = indexHtml.match(/function renderEffectLibrary\(\) \{([\s\S]*?)\r?\n    \}\r?\n\r?\n    function renderTabs/)?.[1] || '';
+  const searchableSource = sourceSlice('function effectProfileSearchable(profile) {', 'function filteredEffectUses() {');
+  const renderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
 
   assert.doesNotMatch(useFilter, /state\.query|effectSearchable/);
   assert.match(renderer, /const allProfiles = EffectIndexData\.profiles\(effectUses, records, pluginReferenceCatalog, imageManifest\)/);
-  assert.match(renderer, /const profiles = allProfiles[\s\S]*?\.filter\(\(profile\) => !query/);
+  assert.match(renderer, /const sourceProfiles = allProfiles[\s\S]*?effectProfileMatchesSource\(profile\)/);
+  assert.match(renderer, /const profiles = sourceProfiles[\s\S]*?\.filter\(\(profile\) => !query/);
   assert.match(renderer, /effectProfileSearchable\(profile\)/);
   assert.ok(renderer.indexOf('EffectIndexData.profiles') < renderer.indexOf('effectProfileSearchable(profile)'));
+
+  ['profile.name', 'profile.input', 'profile.action', 'profile.result'].forEach((field) => {
+    assert.ok(searchableSource.includes(field), `missing ${field}`);
+  });
+  ['use.name', 'use.target', 'use.purpose', 'use.result', 'use.sourceTitle', 'use.source', 'use.sourceKeywords'].forEach((field) => {
+    assert.ok(searchableSource.includes(field), `missing supporting case text ${field}`);
+  });
+  assert.doesNotMatch(searchableSource, /profile\.(?:suitable|purpose|outcome)/);
 });
 
 test('effect source filtering hides global profiles without recalculating screenshot ownership', () => {
-  const renderer = indexHtml.match(/function renderEffectLibrary\(\) \{([\s\S]*?)\r?\n    \}\r?\n\r?\n    function renderTabs/)?.[1] || '';
+  const renderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
   const sourceMatcher = indexHtml.match(/function effectProfileMatchesSource\(profile\) \{([\s\S]*?)\r?\n    \}/)?.[1] || '';
 
   assert.match(renderer, /EffectIndexData\.profiles\(effectUses, records, pluginReferenceCatalog, imageManifest\)/);
   assert.doesNotMatch(renderer, /EffectIndexData\.profiles\(list,/);
-  assert.match(renderer, /effectProfileMatchesSource\(profile\)/);
+  assert.match(renderer, /const sourceProfiles = allProfiles[\s\S]*?effectProfileMatchesSource\(profile\)/);
+  assert.match(renderer, /const profiles = sourceProfiles/);
   assert.match(sourceMatcher, /profile\.uses\.some\(\(use\) => use\.source === state\.source\)/);
   assert.ok(renderer.indexOf('EffectIndexData.profiles(effectUses') < renderer.indexOf('effectProfileMatchesSource(profile)'));
+});
+
+test('effect profile search uses evidence fields and supporting case text', () => {
+  const searchable = loadNamedFunction(
+    sourceSlice('function effectProfileSearchable(profile) {', 'function filteredEffectUses() {'),
+    'effectProfileSearchable'
+  );
+  const searchableText = searchable({
+    name: '测试效果器',
+    category: '动态',
+    input: '单薄输入素材',
+    action: '切片并扩散',
+    result: '形成漂移纹理',
+    suitable: '旧适用字段',
+    purpose: '旧作用字段',
+    outcome: '旧结果字段',
+    uses: [{
+      name: '案例效果器名',
+      target: '案例处理对象',
+      purpose: '案例用途文本',
+      result: '案例结果文本',
+      sourceTitle: '支撑视频标题',
+      source: '支撑视频来源',
+      sourceKeywords: ['支撑关键词']
+    }]
+  });
+
+  [
+    '测试效果器',
+    '单薄输入素材',
+    '切片并扩散',
+    '形成漂移纹理',
+    '案例处理对象',
+    '案例用途文本',
+    '案例结果文本',
+    '支撑视频标题',
+    '支撑视频来源',
+    '支撑关键词'
+  ].forEach((value) => assert.ok(searchableText.includes(value.toLowerCase()), `missing ${value}`));
+  ['旧适用字段', '旧作用字段', '旧结果字段'].forEach((value) => {
+    assert.ok(!searchableText.includes(value), `legacy profile text leaked: ${value}`);
+  });
+});
+
+test('effect library counts published profiles after source and query filters', () => {
+  const modeSource = sourceSlice('function renderModeSwitch() {', 'function renderEffectLibrary() {');
+  const renderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
+  assert.match(modeSource, /\? "搜索效果器、输入素材、处理动作或来源\.\.\."/);
+  assert.doesNotMatch(modeSource, /搜索效果器、适用素材、作用或来源/);
+  assert.match(renderer, /没有找到同时具备明确视频用法和准确截图的效果器档案。/);
+  assert.doesNotMatch(renderer, /没有找到同时匹配内容和截图的效果器档案。/);
+  assert.match(
+    renderer,
+    /effectCountEl\.textContent = "当前显示 " \+ profiles\.length \+ " \/ " \+ sourceProfiles\.length \+ " 个效果器档案";/
+  );
+  assert.doesNotMatch(renderer, /filteredEffectUses\(\)|list\.length|条视频用法/);
+  assert.equal((renderer.match(/EffectIndexData\.profiles\(/g) || []).length, 1);
+
+  const profiles = Array.from({ length: 27 }, (_, index) => ({
+    id: `effect-${index + 1}`,
+    name: `效果器 ${index + 1}`,
+    input: `输入素材 ${index + 1}`,
+    action: index === 0 ? '颗粒搜索动作' : `处理动作 ${index + 1}`,
+    result: `听感变化 ${index + 1}`,
+    sourceCount: 1,
+    useCount: 1,
+    uses: [{ source: index < 2 ? '来源 A' : '来源 B', sourceTitle: `视频 ${index + 1}` }],
+    visuals: [{ kind: 'video', preview: `preview-${index + 1}.webp` }]
+  }));
+  const context = {
+    state: { source: 'all', query: '' },
+    effectUses: Array.from({ length: 99 }, (_, index) => ({ id: `raw-use-${index}` })),
+    records: [],
+    pluginReferenceCatalog: [],
+    imageManifest: {},
+    effectCountEl: { textContent: '' },
+    effectListEl: { innerHTML: '' },
+    escapeAttr: (value) => String(value),
+    escapeHtml: (value) => String(value),
+    profileBuildCalls: 0,
+    rawUseProjectionCalls: 0
+  };
+  context.EffectIndexData = {
+    profiles() {
+      context.profileBuildCalls += 1;
+      return profiles;
+    }
+  };
+  context.filteredEffectUses = () => {
+    context.rawUseProjectionCalls += 1;
+    return context.effectUses;
+  };
+  const runtimeSource = [
+    sourceSlice('function effectProfileSearchable(profile) {', 'function filteredEffectUses() {'),
+    sourceSlice('function effectProfileMatchesSource(profile) {', 'function renderEvidenceLabels(labels) {'),
+    renderer,
+    'this.renderEffectLibrary = renderEffectLibrary;'
+  ].join('\n');
+  vm.runInNewContext(runtimeSource, context);
+
+  context.renderEffectLibrary();
+  assert.equal(context.effectCountEl.textContent, '当前显示 27 / 27 个效果器档案');
+
+  context.state.source = '来源 A';
+  context.state.query = '颗粒搜索动作';
+  context.renderEffectLibrary();
+  assert.equal(context.effectCountEl.textContent, '当前显示 1 / 2 个效果器档案');
+  assert.equal(context.profileBuildCalls, 2, 'build the globally owned profile set once per render');
+  assert.equal(context.rawUseProjectionCalls, 0, 'published counters must not project hidden raw uses');
 });
 
 test('missing guides hide profiles even when an exact official image is available', () => {
@@ -1144,17 +1277,143 @@ test('supports stable video and effect hash routes', () => {
 });
 
 test('effect profile cards open aggregated uses and can return to a video', () => {
-  ['effect-profile-card', 'data-effect-id', 'data-open-video', '查看完整视频案例', '适合用在', '主要作用', '听感结果'].forEach((source) => {
+  ['effect-profile-card', 'data-effect-id', 'data-open-video', '查看完整视频案例', '输入素材', '处理动作', '听感变化'].forEach((source) => {
     assert.ok(indexHtml.includes(source), `missing ${source}`);
   });
   assert.match(indexHtml, /function openEffectDetail\(effectId, syncHash = false\) \{[\s\S]*?const use = effectUses\.find\(\(item\) => item\.id === effectId\);[\s\S]*?if \(!use\) \{\s+state\.activeEffectId = "";/);
-  const libraryRenderer = indexHtml.match(/function renderEffectLibrary\(\) \{([\s\S]*?)\n    \}\n\n    function renderTabs/)?.[1] || '';
+  const libraryRenderer = sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {');
   assert.doesNotMatch(libraryRenderer, /effectParameterSummary|renderEvidenceLabels|effect-use-row|厂商|参数|链路位置/);
+  ['effect-profile-shot', 'effect-profile-title', 'profile.sourceCount', 'profile.useCount'].forEach((source) => {
+    assert.ok(libraryRenderer.includes(source), `card behavior lost ${source}`);
+  });
   const navigation = loadDualIndexNavigation();
   assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'ArrowLeft')), { mode: 'effects', focusMode: 'effects' });
   assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'ArrowRight')), { mode: 'effects', focusMode: 'effects' });
   assert.deepEqual(plainValue(navigation.tabNavigation('videos', 'End')), { mode: 'effects', focusMode: 'effects' });
   assert.deepEqual(plainValue(navigation.tabNavigation('effects', 'Home')), { mode: 'videos', focusMode: 'videos' });
+});
+
+test('all public effect render surfaces use only the three evidence fields', () => {
+  const renderSources = {
+    card: sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {'),
+    videoSummary: sourceSlice('function renderEffectUseSummary(record, use) {', 'function renderDetail() {'),
+    detail: sourceSlice('function renderEffectDetail(effectId) {', 'function openLightbox(src, caption) {')
+  };
+  const approvedFields = ['input', 'action', 'result'];
+  const approvedLabels = ['输入素材', '处理动作', '听感变化'];
+  const legacyProfileFields = /profile\.(?:suitable|purpose|outcome|limitation)/;
+  const legacyLabels = /一句话结论|适合用在|主要作用|能带来什么|听感结果/;
+
+  Object.entries(renderSources).forEach(([surface, source]) => {
+    approvedFields.forEach((field) => {
+      assert.match(source, new RegExp(`profile\\.${field}`), `${surface} missing profile.${field}`);
+    });
+    approvedLabels.forEach((label) => {
+      assert.ok(source.includes(label), `${surface} missing ${label}`);
+    });
+    assert.doesNotMatch(source, legacyProfileFields, `${surface} uses a legacy profile field`);
+    assert.doesNotMatch(source, legacyLabels, `${surface} uses a legacy label`);
+  });
+
+  assert.match(renderSources.videoSummary, /if \(!profile\) return "";/);
+  assert.doesNotMatch(renderSources.videoSummary, /const purpose|<strong>适合：<\/strong>|<strong>听感：<\/strong>/);
+  assert.match(renderSources.videoSummary, /effect-summary-shot/);
+  assert.match(renderSources.videoSummary, /data-effect-id/);
+
+  assert.equal((renderSources.detail.match(/class="effect-quick-guide"/g) || []).length, 1);
+  assert.equal((renderSources.detail.match(/class="effect-guide-item"/g) || []).length, 3);
+  assert.doesNotMatch(renderSources.detail, /cautionHtml|effect-caution/);
+  assert.match(renderSources.detail, /profile\.visuals\.slice\(0, 3\)/);
+  assert.match(renderSources.detail, /effect-case-shot/);
+  assert.match(renderSources.detail, /data-open-video/);
+  assert.ok(renderSources.detail.includes('视频案例'));
+});
+
+test('video-detail effect summaries omit unpublished profiles and render approved guidance', () => {
+  const context = {
+    effectUses: [],
+    records: [],
+    pluginReferenceCatalog: [],
+    imageManifest: {},
+    escapeAttr: (value) => String(value),
+    escapeHtml: (value) => String(value),
+    EffectIndexData: { profileForUse: () => null }
+  };
+  const renderEffectUseSummary = loadNamedFunction(
+    sourceSlice('function renderEffectUseSummary(record, use) {', 'function renderDetail() {'),
+    'renderEffectUseSummary',
+    context
+  );
+  const use = { id: 'use-1' };
+  assert.equal(renderEffectUseSummary({}, use), '');
+
+  context.EffectIndexData.profileForUse = () => ({
+    id: 'use-1',
+    name: '测试效果器',
+    input: '单薄的测试输入素材',
+    action: '重塑起音并收紧持续段',
+    result: '起音更集中，尾部更短',
+    visuals: [{
+      useId: 'use-1',
+      preview: 'preview.webp',
+      full: 'full.webp',
+      caption: '测试效果器视频截图'
+    }]
+  });
+  const markup = renderEffectUseSummary({}, use);
+  ['输入素材', '单薄的测试输入素材', '处理动作', '重塑起音并收紧持续段', '听感变化', '起音更集中，尾部更短'].forEach((text) => {
+    assert.ok(markup.includes(text), `summary missing ${text}`);
+  });
+  assert.match(markup, /class="effect-summary-shot"/);
+  assert.match(markup, /data-effect-id="use-1"/);
+  assert.doesNotMatch(markup, /适合：|听感：|一句话结论|适合用在|主要作用|能带来什么|听感结果/);
+});
+
+test('effect detail renders one three-item guide with the linked video gallery', () => {
+  const detailEl = { innerHTML: '' };
+  const profile = {
+    id: 'use-1',
+    name: '测试效果器',
+    input: '单薄的测试输入素材',
+    action: '重塑起音并收紧持续段',
+    result: '起音更集中，尾部更短',
+    visuals: [{
+      kind: 'video',
+      useId: 'use-1',
+      preview: 'preview.webp',
+      full: 'full.webp',
+      caption: '测试效果器视频截图',
+      sourceRecordId: 'video-1',
+      sourceTitle: '支撑视频案例',
+      stepOrder: 2,
+      timestamp: '00:12'
+    }]
+  };
+  const context = {
+    effectUses: [{ id: 'use-1' }],
+    records: [{ id: 'video-1' }],
+    pluginReferenceCatalog: [],
+    imageManifest: {},
+    detailEl,
+    escapeAttr: (value) => String(value),
+    escapeHtml: (value) => String(value),
+    EffectIndexData: { profileForUse: () => profile }
+  };
+  const renderEffectDetail = loadNamedFunction(
+    sourceSlice('function renderEffectDetail(effectId) {', 'function openLightbox(src, caption) {'),
+    'renderEffectDetail',
+    context
+  );
+  renderEffectDetail('use-1');
+
+  ['输入素材', profile.input, '处理动作', profile.action, '听感变化', profile.result].forEach((text) => {
+    assert.ok(detailEl.innerHTML.includes(text), `detail missing ${text}`);
+  });
+  assert.equal((detailEl.innerHTML.match(/class="effect-quick-guide"/g) || []).length, 1);
+  assert.equal((detailEl.innerHTML.match(/class="effect-guide-item"/g) || []).length, 3);
+  assert.match(detailEl.innerHTML, /class="effect-case-shot"/);
+  assert.match(detailEl.innerHTML, /data-open-video="video-1"/);
+  assert.doesNotMatch(detailEl.innerHTML, /一句话结论|适合用在|主要作用|能带来什么|听感结果|注意：/);
 });
 
 test('effect cards use stable responsive grids and the reader return control handles keyboard activation', () => {
@@ -1265,8 +1524,10 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
   assert.doesNotMatch(detailSource, /decisionFacts.*updateNote/);
   const effectSummarySource = indexHtml.match(/function renderEffectUseSummary\(record, use\) \{([\s\S]*?)\n    \}\n\n    function renderDetail/)?.[1] || '';
   assert.match(effectSummarySource, /EffectIndexData\.profileForUse/);
-  assert.match(effectSummarySource, /const purpose = profile\.purpose;/);
-  assert.doesNotMatch(effectSummarySource, /use\.purpose/);
+  ['profile.input', 'profile.action', 'profile.result'].forEach((field) => {
+    assert.ok(effectSummarySource.includes(field), `missing ${field}`);
+  });
+  assert.doesNotMatch(effectSummarySource, /profile\.(?:suitable|purpose|outcome|limitation)|const purpose/);
   assert.match(effectSummarySource, /data-effect-id/);
   assert.match(effectSummarySource, /effect-summary-shot/);
   assert.doesNotMatch(effectSummarySource, /parameters|parameterHtml|renderEvidenceLabels|链路位置|参数/);
@@ -1285,11 +1546,13 @@ test('renders a dry-goods archive with effect links and sources at the end', () 
 test('effect detail is an image-led application guide without parameter information', () => {
   const effectDetailSource = indexHtml.match(/function renderEffectDetail\(effectId\) \{([\s\S]*?)\n    \}\n\n    function openLightbox/)?.[1] || '';
 
-  ['一句话结论', '适合用在', '能带来什么', '视频案例'].forEach((heading) => {
+  ['输入素材', '处理动作', '听感变化', '视频案例'].forEach((heading) => {
     assert.ok(effectDetailSource.includes(heading), `missing ${heading}`);
   });
   assert.match(effectDetailSource, /EffectIndexData\.profileForUse/);
   assert.match(effectDetailSource, /profile\.visuals\.slice\(0, 3\)/);
   assert.match(effectDetailSource, /effect-case-shot/);
+  assert.match(effectDetailSource, /data-open-video/);
+  assert.doesNotMatch(effectDetailSource, /profile\.(?:suitable|purpose|outcome|limitation)|一句话结论|适合用在|主要作用|能带来什么|听感结果/);
   assert.doesNotMatch(effectDetailSource, /parameterHtml|parameters|参数与调节方向|链路位置|厂商未记录|renderEvidenceLabels/);
 });

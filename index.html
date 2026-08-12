@@ -32344,9 +32344,9 @@
       return [
         profile.name,
         profile.category,
-        profile.suitable,
-        profile.purpose,
-        profile.outcome,
+        profile.input,
+        profile.action,
+        profile.result,
         profile.uses?.map((use) => [
           use.name,
           use.target,
@@ -32396,21 +32396,20 @@
       effectLibraryEl.hidden = state.mode !== "effects";
       sortEl.hidden = state.mode !== "videos";
       searchEl.placeholder = state.mode === "effects"
-        ? "搜索效果器、适用素材、作用或来源..."
+        ? "搜索效果器、输入素材、处理动作或来源..."
         : "搜索视频、设计目标、效果器或素材...";
     }
 
     function renderEffectLibrary() {
-      const list = filteredEffectUses();
       const allProfiles = EffectIndexData.profiles(effectUses, records, pluginReferenceCatalog, imageManifest);
+      const sourceProfiles = allProfiles.filter((profile) => effectProfileMatchesSource(profile));
       const query = state.query.trim().toLowerCase();
-      const profiles = allProfiles
-        .filter((profile) => effectProfileMatchesSource(profile))
+      const profiles = sourceProfiles
         .filter((profile) => !query || effectProfileSearchable(profile).includes(query));
-      effectCountEl.textContent = "当前显示 " + profiles.length + " 个效果器档案 / " + list.length + " 条视频用法";
+      effectCountEl.textContent = "当前显示 " + profiles.length + " / " + sourceProfiles.length + " 个效果器档案";
 
       if (!profiles.length) {
-        effectListEl.innerHTML = '<div class="empty">没有找到同时匹配内容和截图的效果器档案。</div>';
+        effectListEl.innerHTML = '<div class="empty">没有找到同时具备明确视频用法和准确截图的效果器档案。</div>';
         return;
       }
 
@@ -32421,9 +32420,9 @@
           '<span class="effect-profile-shot"><img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(profile.name + " 效果器截图") + '" loading="lazy" decoding="async"><span class="effect-profile-shot-kind">' + visualLabel + '</span></span>' +
           '<span class="effect-profile-body"><strong class="effect-profile-title">' + escapeHtml(profile.name) + '</strong>' +
             '<span class="effect-profile-facts">' +
-              '<span class="effect-profile-fact"><strong>适合用在</strong><span>' + escapeHtml(profile.suitable) + '</span></span>' +
-              '<span class="effect-profile-fact"><strong>主要作用</strong><span>' + escapeHtml(profile.purpose) + '</span></span>' +
-              '<span class="effect-profile-fact"><strong>听感结果</strong><span>' + escapeHtml(profile.outcome) + '</span></span>' +
+              '<span class="effect-profile-fact"><strong>输入素材</strong><span>' + escapeHtml(profile.input) + '</span></span>' +
+              '<span class="effect-profile-fact"><strong>处理动作</strong><span>' + escapeHtml(profile.action) + '</span></span>' +
+              '<span class="effect-profile-fact"><strong>听感变化</strong><span>' + escapeHtml(profile.result) + '</span></span>' +
             '</span>' +
             '<span class="effect-profile-meta">' + profile.sourceCount + ' 个视频案例 · ' + profile.useCount + ' 条用法</span>' +
           '</span>' +
@@ -32747,7 +32746,6 @@
       const profile = EffectIndexData.profileForUse(use, effectUses, records, pluginReferenceCatalog, imageManifest);
       if (!profile) return "";
       const visual = profile.visuals.find((candidate) => candidate.useId === use.id) || profile.visuals[0];
-      const purpose = profile.purpose;
       return '<div class="effect-use-summary">' +
         '<button class="effect-summary-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大效果器截图：' + escapeAttr(profile.name) + '">' +
           '<img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(profile.name + " 效果器截图") + '" loading="lazy" decoding="async">' +
@@ -32755,8 +32753,8 @@
         '<div class="effect-summary-copy">' +
           '<div class="effect-use-summary-header"><strong class="effect-use-summary-title">' + escapeHtml(profile.name) + '</strong>' +
             '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '">查看适用方式</button></div>' +
-          '<p class="effect-use-summary-purpose">' + escapeHtml(purpose) + '</p>' +
-          '<p class="effect-use-summary-meta"><strong>适合：</strong>' + escapeHtml(profile.suitable) + '<br><strong>听感：</strong>' + escapeHtml(profile.outcome) + '</p>' +
+          '<p class="effect-use-summary-purpose"><strong>输入素材</strong><br>' + escapeHtml(profile.input) + '</p>' +
+          '<p class="effect-use-summary-meta"><strong>处理动作</strong><br>' + escapeHtml(profile.action) + '<br><strong>听感变化</strong><br>' + escapeHtml(profile.result) + '</p>' +
         '</div>' +
       '</div>';
     }
@@ -32841,22 +32839,16 @@
           '<div class="effect-case-copy"><div class="effect-case-source"><strong>' + escapeHtml(visual.sourceTitle) + '</strong><span>' + escapeHtml(location) + '</span></div>' + action + '</div>' +
         '</div>';
       }).join("");
-      const cautionHtml = profile.limitation
-        ? '<p class="effect-caution"><strong>注意：</strong>' + escapeHtml(profile.limitation) + '</p>'
-        : '';
-
       detailEl.innerHTML =
         '<div class="detail-body effect-detail">' +
           '<div class="effect-detail-grid">' +
             '<div class="effect-detail-copy">' +
-              '<span class="effect-detail-kicker">一句话结论</span>' +
               '<h2 class="detail-title" tabindex="-1">' + escapeHtml(profile.name) + '</h2>' +
-              '<p class="detail-summary">' + escapeHtml(profile.purpose) + '</p>' +
               '<div class="effect-quick-guide">' +
-                '<div class="effect-guide-item"><h3>适合用在</h3><p>' + escapeHtml(profile.suitable) + '</p></div>' +
-                '<div class="effect-guide-item"><h3>能带来什么</h3><p>' + escapeHtml(profile.outcome) + '</p></div>' +
+                '<div class="effect-guide-item"><h3>输入素材</h3><p>' + escapeHtml(profile.input) + '</p></div>' +
+                '<div class="effect-guide-item"><h3>处理动作</h3><p>' + escapeHtml(profile.action) + '</p></div>' +
+                '<div class="effect-guide-item"><h3>听感变化</h3><p>' + escapeHtml(profile.result) + '</p></div>' +
               '</div>' +
-              cautionHtml +
             '</div>' +
             '<div class="effect-case-panel"><h3>视频案例</h3><div class="effect-case-list">' + caseHtml + '</div></div>' +
           '</div>' +
