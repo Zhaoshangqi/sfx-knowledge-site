@@ -108,8 +108,18 @@ test('normalizes track, no-speech, and missing catalog statuses and coverage', (
   const api = browserApiWithCatalog([
     trackEntry('draft-video'),
     trackEntry('reviewed-video', { reviewStatus: 'reviewed' }),
-    { videoId: 'silent-video', contentStatus: 'no-speech' },
-    { videoId: 'pending-video', contentStatus: 'missing' }
+    {
+      videoId: 'silent-video',
+      contentStatus: 'no-speech',
+      updatedAt: '2026-08-12',
+      auditNote: 'Full-duration human listening confirmed no speech.'
+    },
+    {
+      videoId: 'pending-video',
+      contentStatus: 'missing',
+      updatedAt: '2026-08-13',
+      reason: 'Human full-duration listening is still required.'
+    }
   ]);
 
   assert.deepEqual(plain(api.statusFor('draft-video')), {
@@ -159,6 +169,40 @@ test('normalizes track, no-speech, and missing catalog statuses and coverage', (
   assert.ok(Object.isFrozen(coverage));
 });
 
+test('preserves validated evidence for missing and no-speech catalog entries', () => {
+  const api = browserApiWithCatalog([
+    {
+      videoId: 'pending-video',
+      contentStatus: 'missing',
+      updatedAt: '2026-08-13',
+      reason: '  Human listening is still required.  '
+    },
+    {
+      videoId: 'silent-video',
+      contentStatus: 'no-speech',
+      updatedAt: '2026-08-12',
+      auditNote: '  Full-duration human listening confirmed no speech.  ',
+      reason: '  No intelligible speech was heard.  '
+    }
+  ]);
+
+  assert.deepEqual(plain(api.entryFor('pending-video')), {
+    videoId: 'pending-video',
+    contentStatus: 'missing',
+    updatedAt: '2026-08-13',
+    reason: 'Human listening is still required.'
+  });
+  assert.deepEqual(plain(api.entryFor('silent-video')), {
+    videoId: 'silent-video',
+    contentStatus: 'no-speech',
+    updatedAt: '2026-08-12',
+    auditNote: 'Full-duration human listening confirmed no speech.',
+    reason: 'No intelligible speech was heard.'
+  });
+  assert.ok(Object.isFrozen(api.entryFor('pending-video')));
+  assert.ok(Object.isFrozen(api.entryFor('silent-video')));
+});
+
 test('returns frozen empty coverage for malformed record input', () => {
   [undefined, null, {}, 'records'].forEach((records) => {
     const coverage = SfxVideoSubtitles.coverageFor(records);
@@ -178,6 +222,12 @@ test('returns frozen empty coverage for malformed record input', () => {
 test('rejects malformed catalog entries and unsafe subtitle asset paths', () => {
   const invalidCatalogs = [
     [{ videoId: 'video-a', contentStatus: 'unknown' }],
+    [{ videoId: 'pending-video', contentStatus: 'missing', updatedAt: '2026-08-13' }],
+    [{ videoId: 'pending-video', contentStatus: 'missing', updatedAt: '2026-02-30', reason: 'Evidence' }],
+    [{ videoId: 'pending-video', contentStatus: 'missing', updatedAt: '2026-08-13', reason: '  ' }],
+    [{ videoId: 'silent-video', contentStatus: 'no-speech', updatedAt: '2026-08-13' }],
+    [{ videoId: 'silent-video', contentStatus: 'no-speech', updatedAt: 'not-a-date', auditNote: 'Evidence' }],
+    [{ videoId: 'silent-video', contentStatus: 'no-speech', updatedAt: '2026-08-13', auditNote: '  ' }],
     [trackEntry('video-a', { asset: '../video-a.json' })],
     [trackEntry('video-a', { asset: '/assets/subtitles/video-a.json' })],
     [trackEntry('video-a', { asset: 'assets\\subtitles\\video-a.json' })],
@@ -258,8 +308,18 @@ test('deeply freezes loaded tracks and cues after strict validation', async () =
 
 test('does not fetch no-speech, missing, unknown, or invalid video ids', async () => {
   const api = browserApiWithCatalog([
-    { videoId: 'silent-video', contentStatus: 'no-speech' },
-    { videoId: 'pending-video', contentStatus: 'missing' }
+    {
+      videoId: 'silent-video',
+      contentStatus: 'no-speech',
+      updatedAt: '2026-08-12',
+      auditNote: 'Full-duration human listening confirmed no speech.'
+    },
+    {
+      videoId: 'pending-video',
+      contentStatus: 'missing',
+      updatedAt: '2026-08-13',
+      reason: 'Human full-duration listening is still required.'
+    }
   ]);
   let fetchCalls = 0;
   const fetchTrack = () => {

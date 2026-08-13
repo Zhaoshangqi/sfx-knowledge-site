@@ -394,7 +394,7 @@ test('a catalog track entry renders a cover-first loading shell without cue text
   assert.doesNotMatch(html, /<script>alert/i);
 });
 
-test('render keeps one caption overlay in the stage and one live region outside it', () => {
+test('render keeps timed captions live while only the brief status is an atomic live region', () => {
   const html = playerApi.render({ videoId: 'Xl5u91oQv-k', title: 'Tracked video' }, entry);
   const stage = extractBalancedDiv(html, '<div class="video-player-stage">');
   const outsideStage = stage.before + stage.after;
@@ -405,6 +405,10 @@ test('render keeps one caption overlay in the stage and one live region outside 
   assert.equal((outsideStage.match(/data-caption-line\b/g) || []).length, 1);
   assert.match(outsideStage, /data-caption-line[^>]*aria-live="polite"/);
   assert.match(outsideStage, /data-caption-line[^>]*aria-atomic="true"/);
+  assert.match(outsideStage, /data-subtitle-live-status[^>]*role="status"/);
+  assert.match(outsideStage, /data-subtitle-live-status[^>]*aria-live="polite"/);
+  assert.match(outsideStage, /data-subtitle-live-status[^>]*aria-atomic="true"/);
+  assert.doesNotMatch(outsideStage, /data-transcript-container[^>]*aria-live/);
 });
 
 test('render reserves a stable transcript container while async hydration is pending', () => {
@@ -454,6 +458,29 @@ test('missing catalog entries stay playable and render a truthful unavailable st
   assert.doesNotMatch(html, /video-transcript-cue/);
   assert.doesNotMatch(html, /data-transcript-container/);
   assert.doesNotMatch(html, /data-cue-index=/);
+  assert.doesNotMatch(html, /data-subtitle-evidence/);
+});
+
+test('missing catalog evidence renders its reason and audit date as escaped text', () => {
+  const missingEntry = {
+    videoId: 'gPgKeCVN8Ek',
+    contentStatus: 'missing',
+    updatedAt: '2026-08-13',
+    reason: 'Human listening required <img src=x onerror="alert(1)">.'
+  };
+  const html = playerApi.render(
+    { videoId: 'gPgKeCVN8Ek', title: 'Evidence state' },
+    missingEntry,
+    'https://i.ytimg.com/vi/gPgKeCVN8Ek/hqdefault.jpg'
+  );
+
+  assert.match(html, /data-subtitle-status="missing"/);
+  assert.match(html, /data-subtitle-evidence/);
+  assert.match(html, /证据更新：2026-08-13/);
+  assert.match(html, /Human listening required &lt;img src=x onerror=&quot;alert\(1\)&quot;&gt;\./);
+  assert.doesNotMatch(html, /<img src=x/);
+  assert.match(html, /data-player-cover/);
+  assert.match(html, /data-fullscreen-toggle/);
 });
 
 test('loadApi shares one in-flight YouTube API request per window', async () => {

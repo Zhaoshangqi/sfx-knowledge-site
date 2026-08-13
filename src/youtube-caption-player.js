@@ -88,8 +88,18 @@
     var statusHint = subtitleStatus === 'loading'
       ? '正在加载字幕，视频可先播放'
       : '视频仍可正常播放';
+    var evidenceReason = subtitleStatus === 'missing' && entry && typeof entry.reason === 'string'
+      ? entry.reason.trim()
+      : '';
+    var evidenceUpdatedAt = subtitleStatus === 'missing' && entry && typeof entry.updatedAt === 'string'
+      ? entry.updatedAt.trim()
+      : '';
+    var evidencePanel = evidenceReason && evidenceUpdatedAt
+      ? '<p class="video-caption-evidence" data-subtitle-evidence><strong>证据更新：' +
+          escapeHtml(evidenceUpdatedAt) + '</strong><span>' + escapeHtml(evidenceReason) + '</span></p>'
+      : '';
     var transcriptPanel = subtitleStatus === 'loading'
-      ? '<div class="video-transcript-container" data-transcript-container aria-live="polite">' +
+      ? '<div class="video-transcript-container" data-transcript-container>' +
           '<p class="video-transcript-loading" data-transcript-loading>本站中文字幕加载中…</p>' +
         '</div>'
       : '';
@@ -110,7 +120,7 @@
         '<p class="video-player-error" data-player-error role="status" hidden></p>' +
       '</div>' +
       '<div class="video-caption-header">' +
-        '<span class="video-caption-status"><strong data-subtitle-status-text>' + statusText +
+        '<span class="video-caption-status" data-subtitle-live-status role="status" aria-live="polite" aria-atomic="true"><strong data-subtitle-status-text>' + statusText +
           '</strong><small data-subtitle-status-hint>' + statusHint + '</small></span>' +
         '<span class="video-caption-controls">' +
           '<button type="button" class="video-icon-button" data-subtitle-toggle aria-label="显示或隐藏本站中文字幕" title="字幕"' +
@@ -118,6 +128,7 @@
           '<button type="button" class="video-icon-button" data-fullscreen-toggle aria-label="切换网页全屏" title="全屏"><span aria-hidden="true">□</span></button>' +
         '</span>' +
       '</div>' +
+      evidencePanel +
       '<p class="video-caption-line" data-caption-line aria-live="polite" aria-atomic="true"></p>' +
       transcriptPanel +
     '</section>';

@@ -762,6 +762,18 @@
     return typeof value === 'string' ? value.trim() : '';
   }
 
+  function isRealDate(value) {
+    var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (!match) return false;
+    var year = Number(match[1]);
+    var month = Number(match[2]);
+    var day = Number(match[3]);
+    var date = new Date(Date.UTC(year, month - 1, day));
+    return date.getUTCFullYear() === year &&
+      date.getUTCMonth() === month - 1 &&
+      date.getUTCDate() === day;
+  }
+
   function isSafeCatalogVideoId(videoId) {
     return /^[A-Za-z0-9_-]+$/.test(videoId);
   }
@@ -779,10 +791,25 @@
     }
 
     if (contentStatus !== 'track') {
-      return Object.freeze({
+      var evidenceUpdatedAt = normalizeRequiredText(rawEntry.updatedAt);
+      var auditNote = normalizeRequiredText(rawEntry.auditNote);
+      var reason = normalizeRequiredText(rawEntry.reason);
+      if (!isRealDate(evidenceUpdatedAt) ||
+          (contentStatus === 'missing' && !reason) ||
+          (contentStatus === 'no-speech' && !auditNote && !reason) ||
+          (Object.prototype.hasOwnProperty.call(rawEntry, 'auditNote') && !auditNote) ||
+          (Object.prototype.hasOwnProperty.call(rawEntry, 'reason') && !reason)) {
+        return null;
+      }
+
+      var evidenceEntry = {
         videoId: videoId,
-        contentStatus: contentStatus
-      });
+        contentStatus: contentStatus,
+        updatedAt: evidenceUpdatedAt
+      };
+      if (auditNote) evidenceEntry.auditNote = auditNote;
+      if (reason) evidenceEntry.reason = reason;
+      return Object.freeze(evidenceEntry);
     }
 
     var language = normalizeRequiredText(rawEntry.language);

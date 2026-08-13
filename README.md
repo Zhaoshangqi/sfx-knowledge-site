@@ -40,7 +40,7 @@ node .\tools\verify-portable-kit.cjs
   "reviewStatus": "draft",
   "updatedAt": "2026-08-12",
   "cues": [
-    { "start": 0.0, "end": 2.4, "text": "中文字幕" }
+    { "start": 40.559, "end": 48.709, "text": "这次介绍几个不太复杂的小技巧。" }
   ]
 }
 ```
