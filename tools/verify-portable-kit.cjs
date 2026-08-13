@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 const { spawnSync } = require("child_process");
+const { validateTrack } = require("./batch-site-subtitles.cjs");
 
 const root = path.resolve(__dirname, "..");
 const expectedSiteRecords = 82;
@@ -58,6 +59,20 @@ if (ids.length !== expectedSiteRecords || siteIdSet.size !== expectedSiteRecords
 
 const subtitleModulePath = path.join(root, "src", "video-subtitles.js");
 const subtitleRoot = path.join(root, "assets", "subtitles");
+let subtitleRootIsDirectory = false;
+try {
+  const subtitleRootStat = fs.lstatSync(subtitleRoot);
+  if (subtitleRootStat.isSymbolicLink()) {
+    failures.push("assets/subtitles root is a symlink or junction");
+  } else if (!subtitleRootStat.isDirectory()) {
+    failures.push("assets/subtitles is not a directory");
+  } else {
+    subtitleRootIsDirectory = true;
+  }
+} catch (error) {
+  if (error.code === "ENOENT") failures.push("missing assets/subtitles directory");
+  else failures.push(`unable to inspect assets/subtitles root: ${error.message}`);
+}
 const subtitleModule = fs.existsSync(subtitleModulePath)
   ? fs.readFileSync(subtitleModulePath, "utf8")
   : "";
@@ -109,8 +124,9 @@ for (const [index, entry] of subtitleCatalog.entries()) {
     continue;
   }
   referencedSubtitleJson.add(expectedAsset);
+  if (!subtitleRootIsDirectory) continue;
   const assetPath = path.resolve(root, ...expectedAsset.split("/"));
-  if (!fs.existsSync(assetPath) || !fs.statSync(assetPath).isFile()) {
+  if (!fs.existsSync(assetPath) || !fs.lstatSync(assetPath).isFile()) {
     failures.push(`missing subtitle asset ${expectedAsset}`);
     continue;
   }
@@ -123,8 +139,13 @@ for (const [index, entry] of subtitleCatalog.entries()) {
       continue;
     }
     const track = JSON.parse(fs.readFileSync(assetPath, "utf8"));
-    if (!track || track.videoId !== entry.videoId) {
-      failures.push(`subtitle asset videoId mismatch: ${expectedAsset}`);
+    validateTrack(track, expectedAsset);
+    const metadataFields = ["videoId", "language", "source", "reviewStatus", "updatedAt"];
+    const mismatches = metadataFields.filter((field) => track[field] !== entry[field]);
+    if (mismatches.length) {
+      failures.push(
+        `subtitle asset metadata mismatch for ${expectedAsset}: ${mismatches.join(", ")}`
+      );
     }
   } catch (error) {
     failures.push(`invalid subtitle asset ${expectedAsset}: ${error.message}`);
@@ -175,9 +196,7 @@ function inspectSubtitleBoundary(directory) {
   }
 }
 
-if (!fs.existsSync(subtitleRoot) || !fs.statSync(subtitleRoot).isDirectory()) {
-  failures.push("missing assets/subtitles directory");
-} else {
+if (subtitleRootIsDirectory) {
   inspectSubtitleBoundary(subtitleRoot);
 }
 
@@ -190,6 +209,7 @@ if (tracked.error || tracked.status !== 0) {
   failures.push(`unable to inspect tracked portable-kit files: ${tracked.error ? tracked.error.message : tracked.stderr.trim()}`);
 } else {
   const trackedPaths = tracked.stdout.split("\0").filter(Boolean);
+  const trackedPathSet = new Set(trackedPaths);
   for (const trackedPath of trackedPaths) {
     if (trackedPath === ".work" || trackedPath.startsWith(".work/")) {
       failures.push(`tracked file under .work: ${trackedPath}`);
@@ -197,6 +217,11 @@ if (tracked.error || tracked.status !== 0) {
     if (trackedPath.startsWith("assets/subtitles/") &&
         mediaExtensions.has(path.extname(trackedPath).toLowerCase())) {
       failures.push(`tracked media file under assets/subtitles: ${trackedPath}`);
+    }
+  }
+  for (const referenced of referencedSubtitleJson) {
+    if (!trackedPathSet.has(referenced)) {
+      failures.push(`referenced subtitle JSON is not tracked: ${referenced}`);
     }
   }
 }

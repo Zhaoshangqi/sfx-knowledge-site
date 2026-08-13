@@ -13,10 +13,13 @@ const {
   buildCatalog,
   writeCatalog,
   fetchPublic,
+  validateTrack,
   runCli
 } = require('../tools/batch-site-subtitles.cjs');
 
 const verifierPath = path.join(__dirname, '..', 'tools', 'verify-portable-kit.cjs');
+const batchToolPath = path.join(__dirname, '..', 'tools', 'batch-site-subtitles.cjs');
+const buildToolPath = path.join(__dirname, '..', 'tools', 'build-site-subtitles.cjs');
 
 function temporaryDirectory(t) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'sfx-batch-subtitles-'));
@@ -128,6 +131,11 @@ function argumentAfter(args, name) {
   return args[index + 1];
 }
 
+function stagedCaptionPath(args, videoIdValue, language) {
+  const output = argumentAfter(args, '--output');
+  return path.join(path.dirname(output), videoIdValue + '.' + language + '.vtt');
+}
+
 function writeFixtureFile(root, relative, content = '') {
   const filename = path.join(root, ...relative.split('/'));
   fs.mkdirSync(path.dirname(filename), { recursive: true });
@@ -135,7 +143,7 @@ function writeFixtureFile(root, relative, content = '') {
   return filename;
 }
 
-function portableVerifierFixture(t, siteRecords, catalog) {
+function portableVerifierFixture(t, siteRecords, catalog, options = {}) {
   const root = temporaryDirectory(t);
   const placeholders = [
     'AGENTS.md',
@@ -147,8 +155,6 @@ function portableVerifierFixture(t, siteRecords, catalog) {
     'tools/prepare-sfx-video.py',
     'tools/extract-video-context.cjs',
     'tools/export-site-memory.cjs',
-    'tools/build-site-subtitles.cjs',
-    'tools/batch-site-subtitles.cjs',
     'tools/install-sfx-skill.ps1'
   ];
   placeholders.forEach((relative) => writeFixtureFile(root, relative));
@@ -178,9 +184,19 @@ function portableVerifierFixture(t, siteRecords, catalog) {
   );
   writeFixtureFile(root, 'tools/data/subtitle-status-overrides.json', '{}\n');
   writeFixtureFile(root, '.gitignore', '.venv/\n.work/\ncookies*.txt\n.env\n');
-  fs.mkdirSync(path.join(root, 'assets', 'subtitles'), { recursive: true });
+  const subtitleRoot = path.join(root, 'assets', 'subtitles');
+  fs.mkdirSync(subtitleRoot, { recursive: true });
+  Object.entries(options.subtitleTracks || {}).forEach(([filename, subtitleTrack]) => {
+    writeFixtureFile(
+      root,
+      'assets/subtitles/' + filename,
+      JSON.stringify(subtitleTrack, null, 2) + '\n'
+    );
+  });
   const fixtureVerifier = path.join(root, 'tools', 'verify-portable-kit.cjs');
   fs.copyFileSync(verifierPath, fixtureVerifier);
+  fs.copyFileSync(batchToolPath, path.join(root, 'tools', 'batch-site-subtitles.cjs'));
+  fs.copyFileSync(buildToolPath, path.join(root, 'tools', 'build-site-subtitles.cjs'));
 
   const git = spawnSync('git', ['init', '--quiet'], {
     cwd: root,
@@ -188,7 +204,47 @@ function portableVerifierFixture(t, siteRecords, catalog) {
     windowsHide: true
   });
   assert.equal(git.status, 0, git.stderr);
-  return { root, verifierPath: fixtureVerifier };
+  if (options.trackedSubtitleFiles && options.trackedSubtitleFiles.length) {
+    const add = spawnSync('git', [
+      'add',
+      '--',
+      ...options.trackedSubtitleFiles.map((filename) => 'assets/subtitles/' + filename)
+    ], {
+      cwd: root,
+      encoding: 'utf8',
+      windowsHide: true
+    });
+    assert.equal(add.status, 0, add.stderr);
+  }
+  return { root, subtitleRoot, verifierPath: fixtureVerifier };
+}
+
+function runPortableVerifier(fixture) {
+  return spawnSync(process.execPath, [fixture.verifierPath], {
+    cwd: fixture.root,
+    encoding: 'utf8',
+    windowsHide: true
+  });
+}
+
+function catalogForRecords(siteRecords) {
+  return siteRecords.map((record) => ({
+    videoId: record.videoId,
+    contentStatus: 'missing'
+  }));
+}
+
+function trackCatalogEntry(subtitleTrack, overrides = {}) {
+  return {
+    videoId: subtitleTrack.videoId,
+    language: subtitleTrack.language,
+    source: subtitleTrack.source,
+    reviewStatus: subtitleTrack.reviewStatus,
+    updatedAt: subtitleTrack.updatedAt,
+    contentStatus: 'track',
+    asset: 'assets/subtitles/' + subtitleTrack.videoId + '.json',
+    ...overrides
+  };
 }
 
 test('extractRecords parses all 82 records in source order', () => {
@@ -215,11 +271,7 @@ test('portable verifier rejects 82 records when only 81 have valid video IDs', (
   }));
   const fixture = portableVerifierFixture(t, siteRecords, catalog);
 
-  const result = spawnSync(process.execPath, [fixture.verifierPath], {
-    cwd: fixture.root,
-    encoding: 'utf8',
-    windowsHide: true
-  });
+  const result = runPortableVerifier(fixture);
 
   assert.equal(result.status, 1, result.stdout + result.stderr);
   const report = JSON.parse(result.stdout);
@@ -228,6 +280,90 @@ test('portable verifier rejects 82 records when only 81 have valid video IDs', (
   assert.equal(report.subtitleCatalogCoverage, '81/82');
   assert.ok(report.failures.some((failure) => /invalid.*videoId.*index 81/i.test(failure)));
   assert.ok(report.failures.some((failure) => /expected 82 valid unique video IDs/i.test(failure)));
+});
+
+test('validateTrack and buildCatalog reject non-Chinese or lookalike track metadata', () => {
+  const id = videoId(0);
+  const invalidTracks = [
+    track(id, { language: 'en-US' }),
+    track(id, { source: 'site-owned-from-public-captions-copy' })
+  ];
+
+  invalidTracks.forEach((subtitleTrack) => {
+    assert.throws(
+      () => validateTrack(subtitleTrack, id + '.json'),
+      /invalid subtitle track/i
+    );
+    assert.throws(() => buildCatalog({
+      records: records(1),
+      tracks: [{ filename: id + '.json', track: subtitleTrack }],
+      overrides: {}
+    }), /invalid subtitle track/i);
+  });
+});
+
+test('portable verifier rejects track metadata that differs from the catalog', (t) => {
+  const siteRecords = records(82);
+  const subtitleTrack = track(siteRecords[0].videoId);
+  const catalog = catalogForRecords(siteRecords);
+  catalog[0] = trackCatalogEntry(subtitleTrack, { updatedAt: '2026-08-12' });
+  const filename = subtitleTrack.videoId + '.json';
+  const fixture = portableVerifierFixture(t, siteRecords, catalog, {
+    subtitleTracks: { [filename]: subtitleTrack },
+    trackedSubtitleFiles: [filename]
+  });
+
+  const result = runPortableVerifier(fixture);
+
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  const report = JSON.parse(result.stdout);
+  assert.ok(report.failures.some((failure) => (
+    /subtitle asset metadata mismatch/i.test(failure) && /updatedAt/.test(failure)
+  )));
+});
+
+test('portable verifier rejects a referenced subtitle JSON missing from git ls-files', (t) => {
+  const siteRecords = records(82);
+  const subtitleTrack = track(siteRecords[0].videoId);
+  const catalog = catalogForRecords(siteRecords);
+  catalog[0] = trackCatalogEntry(subtitleTrack);
+  const filename = subtitleTrack.videoId + '.json';
+  const fixture = portableVerifierFixture(t, siteRecords, catalog, {
+    subtitleTracks: { [filename]: subtitleTrack }
+  });
+
+  const result = runPortableVerifier(fixture);
+
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  const report = JSON.parse(result.stdout);
+  assert.ok(report.failures.some((failure) => /referenced subtitle JSON is not tracked/i.test(failure)));
+});
+
+test('portable verifier rejects assets/subtitles when the root is a symlink or junction', (t) => {
+  const siteRecords = records(82);
+  const fixture = portableVerifierFixture(t, siteRecords, catalogForRecords(siteRecords));
+  const linkedTarget = path.join(fixture.root, 'linked-subtitles');
+  fs.rmdirSync(fixture.subtitleRoot);
+  fs.mkdirSync(linkedTarget);
+  try {
+    fs.symlinkSync(
+      linkedTarget,
+      fixture.subtitleRoot,
+      process.platform === 'win32' ? 'junction' : 'dir'
+    );
+  } catch (error) {
+    if (error.code === 'EPERM' || error.code === 'EACCES' || error.code === 'ENOTSUP') {
+      t.skip('OS forbids directory symlink creation');
+      return;
+    }
+    throw error;
+  }
+
+  const result = runPortableVerifier(fixture);
+
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  const report = JSON.parse(result.stdout);
+  assert.ok(report.failures.some((failure) => /assets\/subtitles.*symlink|junction/i.test(failure)));
 });
 
 test('buildCatalog emits exactly one ordered entry per site record and exact coverage counts', (t) => {
@@ -680,10 +816,10 @@ test('fetchPublic uses canonical URLs, skips complete videos, and inventories pa
     const url = new URL(args.at(-1));
     const id = url.searchParams.get('v');
     if (id === partialId) {
-      fs.writeFileSync(path.join(workRoot, id + '.zh-Hans.vtt'), vtt(), 'utf8');
+      fs.writeFileSync(stagedCaptionPath(args, id, 'zh-Hans'), vtt(), 'utf8');
       return { status: 0, stdout: '', stderr: '' };
     }
-    fs.writeFileSync(path.join(workRoot, id + '.en-orig.vtt'), vtt(), 'utf8');
+    fs.writeFileSync(stagedCaptionPath(args, id, 'en-orig'), vtt(), 'utf8');
     return {
       status: 0,
       stdout: '',
@@ -700,6 +836,7 @@ test('fetchPublic uses canonical URLs, skips complete videos, and inventories pa
   ]);
   calls.forEach(({ command, args, options }) => {
     assert.equal(command, 'yt-dlp');
+    assert.equal(args[0], '--ignore-config');
     assert.equal(options.shell, false);
     assert.ok(args.includes('--skip-download'));
     assert.ok(args.includes('--write-auto-subs'));
@@ -712,23 +849,134 @@ test('fetchPublic uses canonical URLs, skips complete videos, and inventories pa
     assert.ok(Number(argumentAfter(args, '--retries')) > 0);
     assert.match(argumentAfter(args, '--retry-sleep'), /exp/i);
     assert.equal(args.some((argument) => /cookie|login/i.test(argument)), false);
+    const prohibitedFlags = [
+      '--cookies',
+      '--cookies-from-browser',
+      '--username',
+      '--password',
+      '--twofactor',
+      '--netrc',
+      '--format',
+      '-f',
+      '--extract-audio',
+      '--write-thumbnail',
+      '--write-all-thumbnails'
+    ];
+    assert.deepEqual(args.filter((argument) => prohibitedFlags.includes(argument)), []);
+    const output = argumentAfter(args, '--output');
+    assert.equal(path.dirname(output), options.cwd);
+    assert.ok(path.dirname(output).startsWith(workRoot + path.sep));
+    assert.notEqual(path.dirname(output), workRoot);
   });
+  assert.equal(new Set(calls.map((call) => path.dirname(argumentAfter(call.args, '--output')))).size, 2);
 
   assert.equal(inventory.total, 3);
   assert.equal(inventory.attempted, 2);
   assert.equal(inventory.skipped, 1);
   assert.deepEqual(inventory.summary, {
-    'zh-Hans': { found: 2, missing: 0, failed: 1 },
-    'en-orig': { found: 2, missing: 1, failed: 0 }
+    'zh-Hans': { valid: 2, missing: 0, invalid: 0, failed: 1 },
+    'en-orig': { valid: 2, missing: 1, invalid: 0, failed: 0 }
   });
   assert.equal(inventory.videos[1].languages['en-orig'].status, 'missing');
   assert.equal(inventory.videos[1].languages['en-orig'].reason, 'not-produced');
   assert.equal(inventory.videos[2].languages['zh-Hans'].status, 'failed');
   assert.equal(inventory.videos[2].languages['zh-Hans'].reason, 'http-429');
+  assert.equal(fs.readFileSync(path.join(workRoot, partialId + '.zh-Hans.vtt'), 'utf8'), vtt());
+  assert.equal(fs.readFileSync(path.join(workRoot, failedId + '.en-orig.vtt'), 'utf8'), vtt());
+  assert.deepEqual(
+    fs.readdirSync(workRoot).filter((entry) => entry.startsWith('.subtitle-fetch-')),
+    []
+  );
   assert.deepEqual(
     JSON.parse(fs.readFileSync(path.join(workRoot, 'public-caption-inventory.json'), 'utf8')),
     inventory
   );
+});
+
+test('fetchPublic validates cached and staged VTT before atomic promotion', (t) => {
+  const directory = temporaryDirectory(t);
+  const workRoot = path.join(directory, 'work');
+  fs.mkdirSync(workRoot);
+  const siteRecords = records(4);
+  const replaceId = siteRecords[0].videoId;
+  const preserveId = siteRecords[1].videoId;
+  const invalidUtf8Id = siteRecords[2].videoId;
+  const stagedOnlyId = siteRecords[3].videoId;
+  const truncated = 'WEBVTT\n\n00:00:01.000 -->';
+  const html = '<html>rate limited</html>\n';
+  const invalidUtf8 = Buffer.from([0xff, 0xfe, 0x00]);
+  const musicOnly = vtt('[Music]');
+  const neighboringEvidence = path.join(workRoot, '.subtitle-fetch-evidence');
+  fs.mkdirSync(neighboringEvidence);
+  fs.writeFileSync(path.join(neighboringEvidence, 'keep.txt'), 'keep\n', 'utf8');
+
+  fs.writeFileSync(path.join(workRoot, replaceId + '.zh-Hans.vtt'), truncated, 'utf8');
+  fs.writeFileSync(path.join(workRoot, preserveId + '.zh-Hans.vtt'), html, 'utf8');
+  fs.writeFileSync(path.join(workRoot, invalidUtf8Id + '.zh-Hans.vtt'), invalidUtf8);
+  siteRecords.forEach((record) => {
+    fs.writeFileSync(path.join(workRoot, record.videoId + '.en-orig.vtt'), vtt('English'), 'utf8');
+  });
+
+  const runner = (command, args) => {
+    const id = new URL(args.at(-1)).searchParams.get('v');
+    if (id === replaceId) {
+      fs.writeFileSync(stagedCaptionPath(args, id, 'zh-Hans'), vtt('Replacement'), 'utf8');
+      fs.writeFileSync(stagedCaptionPath(args, id, 'en-orig'), vtt('Changed English'), 'utf8');
+    } else if (id === preserveId) {
+      fs.writeFileSync(stagedCaptionPath(args, id, 'zh-Hans'), musicOnly, 'utf8');
+    } else if (id === stagedOnlyId) {
+      fs.writeFileSync(stagedCaptionPath(args, id, 'zh-Hans'), html, 'utf8');
+    }
+    return { status: 0, stdout: '', stderr: '' };
+  };
+
+  const inventory = fetchPublic({ records: siteRecords, workRoot, runner });
+
+  assert.equal(
+    fs.readFileSync(path.join(workRoot, replaceId + '.zh-Hans.vtt'), 'utf8'),
+    vtt('Replacement')
+  );
+  assert.equal(fs.readFileSync(path.join(workRoot, preserveId + '.zh-Hans.vtt'), 'utf8'), html);
+  assert.deepEqual(fs.readFileSync(path.join(workRoot, invalidUtf8Id + '.zh-Hans.vtt')), invalidUtf8);
+  assert.equal(fs.existsSync(path.join(workRoot, stagedOnlyId + '.zh-Hans.vtt')), false);
+  assert.equal(
+    fs.readFileSync(path.join(workRoot, replaceId + '.en-orig.vtt'), 'utf8'),
+    vtt('English')
+  );
+
+  const replacement = inventory.videos[0].languages['zh-Hans'];
+  assert.equal(replacement.status, 'valid');
+  assert.equal(replacement.cacheStatus, 'invalid');
+  assert.equal(replacement.stagedStatus, 'valid');
+  assert.equal(replacement.promoted, true);
+
+  const preserved = inventory.videos[1].languages['zh-Hans'];
+  assert.equal(preserved.status, 'invalid');
+  assert.equal(preserved.reason, 'invalid-webvtt');
+  assert.equal(preserved.cacheStatus, 'invalid');
+  assert.equal(preserved.stagedStatus, 'invalid');
+
+  const invalidEncoding = inventory.videos[2].languages['zh-Hans'];
+  assert.equal(invalidEncoding.status, 'invalid');
+  assert.equal(invalidEncoding.reason, 'invalid-utf8');
+  assert.equal(invalidEncoding.stagedStatus, 'missing');
+
+  const rejectedStage = inventory.videos[3].languages['zh-Hans'];
+  assert.equal(rejectedStage.status, 'invalid');
+  assert.equal(rejectedStage.reason, 'invalid-webvtt');
+  assert.equal(rejectedStage.cacheStatus, 'missing');
+  assert.equal(rejectedStage.stagedStatus, 'invalid');
+  assert.deepEqual(inventory.summary, {
+    'zh-Hans': { valid: 1, missing: 0, invalid: 3, failed: 0 },
+    'en-orig': { valid: 4, missing: 0, invalid: 0, failed: 0 }
+  });
+  assert.deepEqual(
+    fs.readdirSync(workRoot).filter((entry) => (
+      entry.startsWith('.subtitle-fetch-') && entry !== '.subtitle-fetch-evidence'
+    )),
+    []
+  );
+  assert.equal(fs.readFileSync(path.join(neighboringEvidence, 'keep.txt'), 'utf8'), 'keep\n');
 });
 
 test('fetchPublic never invokes yt-dlp for zero URLs', (t) => {
@@ -761,8 +1009,8 @@ test('fetchPublic records thrown runner errors instead of losing the inventory',
   });
 
   assert.deepEqual(inventory.summary, {
-    'zh-Hans': { found: 0, missing: 0, failed: 1 },
-    'en-orig': { found: 0, missing: 0, failed: 1 }
+    'zh-Hans': { valid: 0, missing: 0, invalid: 0, failed: 1 },
+    'en-orig': { valid: 0, missing: 0, invalid: 0, failed: 1 }
   });
   assert.equal(
     fs.existsSync(path.join(directory, 'public-caption-inventory.json')),

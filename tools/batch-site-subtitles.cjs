@@ -3,16 +3,17 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
+const { TextDecoder } = require('node:util');
 const { parseVtt, buildTrack } = require('./build-site-subtitles.cjs');
 
 const VIDEO_ID_PATTERN = /^[A-Za-z0-9_-]{11}$/;
-const LANGUAGE_PATTERN = /^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
-const SOURCE_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CATALOG_START = '/* SUBTITLE_CATALOG_START */';
 const CATALOG_END = '/* SUBTITLE_CATALOG_END */';
 const INVENTORY_FILENAME = 'public-caption-inventory.json';
 const PUBLIC_SOURCE = 'site-owned-from-public-captions';
 const LOCAL_SOURCE = 'site-owned-from-local-transcription';
+const TRACK_LANGUAGE = 'zh-CN';
+const TRACK_SOURCES = new Set([PUBLIC_SOURCE, LOCAL_SOURCE]);
 const LANGUAGES = ['zh-Hans', 'en-orig'];
 let temporarySequence = 0;
 
@@ -290,8 +291,8 @@ function validateTrack(rawTrack, filename) {
     'cues'
   ])) throw invalid();
   if (!VIDEO_ID_PATTERN.test(rawTrack.videoId) ||
-      !LANGUAGE_PATTERN.test(rawTrack.language || '') ||
-      !SOURCE_PATTERN.test(rawTrack.source || '') ||
+      rawTrack.language !== TRACK_LANGUAGE ||
+      !TRACK_SOURCES.has(rawTrack.source) ||
       (rawTrack.reviewStatus !== 'draft' && rawTrack.reviewStatus !== 'reviewed') ||
       !isRealDate(rawTrack.updatedAt) ||
       !Array.isArray(rawTrack.cues) || rawTrack.cues.length === 0) {
@@ -381,8 +382,8 @@ function validateOverrides(rawOverrides) {
 }
 
 function sourceKind(source) {
-  if (source === PUBLIC_SOURCE || source.includes('public-caption')) return 'public';
-  if (source === LOCAL_SOURCE || source.includes('local-transcription')) return 'local';
+  if (source === PUBLIC_SOURCE) return 'public';
+  if (source === LOCAL_SOURCE) return 'local';
   throw new Error('Invalid subtitle track source classification: ' + source);
 }
 
@@ -546,12 +547,78 @@ function captionPath(workRoot, videoId, language) {
   return path.join(workRoot, videoId + '.' + language + '.vtt');
 }
 
-function captionExists(fsImpl, workRoot, videoId, language) {
+function inspectCaptionFile(fsImpl, workRoot, videoId, language) {
   const filename = captionPath(workRoot, videoId, language);
-  if (!fsImpl.existsSync(filename)) return false;
-  assertPathWithinRoot(fsImpl, workRoot, filename, 'fetch work', true);
-  const stat = fsImpl.statSync(filename);
-  return stat.isFile() && stat.size > 0;
+  let stat;
+  try {
+    stat = fsImpl.lstatSync(filename);
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      return { status: 'missing', reason: 'not-present' };
+    }
+    return { status: 'invalid', reason: 'unreadable-caption' };
+  }
+  if (stat.isSymbolicLink() || !stat.isFile()) {
+    return { status: 'invalid', reason: 'invalid-caption-file' };
+  }
+
+  try {
+    assertPathWithinRoot(fsImpl, workRoot, filename, 'fetch work', true);
+  } catch (error) {
+    return { status: 'invalid', reason: 'unsafe-caption-path' };
+  }
+
+  let content;
+  try {
+    content = fsImpl.readFileSync(filename);
+  } catch (error) {
+    return { status: 'invalid', reason: 'unreadable-caption' };
+  }
+
+  let text;
+  try {
+    text = new TextDecoder('utf-8', { fatal: true }).decode(content);
+  } catch (error) {
+    return { status: 'invalid', reason: 'invalid-utf8' };
+  }
+
+  try {
+    buildTrack({
+      videoId,
+      language: language === 'zh-Hans' ? TRACK_LANGUAGE : 'en-US',
+      source: PUBLIC_SOURCE,
+      reviewStatus: 'draft',
+      updatedAt: '2000-01-01',
+      cues: parseVtt(text)
+    });
+  } catch (error) {
+    return { status: 'invalid', reason: 'invalid-webvtt' };
+  }
+  return { status: 'valid', reason: 'validated-webvtt', content };
+}
+
+function removeOwnedStagingDirectory(fsImpl, workRoot, stagingRoot) {
+  const resolvedWorkRoot = path.resolve(workRoot);
+  const resolvedStagingRoot = path.resolve(stagingRoot);
+  if (!isWithin(resolvedWorkRoot, resolvedStagingRoot) ||
+      resolvedStagingRoot === resolvedWorkRoot) {
+    throw new Error('Owned staging directory is outside fetch work root');
+  }
+
+  let stat;
+  try {
+    stat = fsImpl.lstatSync(resolvedStagingRoot);
+  } catch (error) {
+    if (error && error.code === 'ENOENT') return;
+    throw error;
+  }
+  if (stat.isSymbolicLink() || !stat.isDirectory()) {
+    fsImpl.rmSync(resolvedStagingRoot, { force: true });
+    return;
+  }
+
+  assertPathWithinRoot(fsImpl, resolvedWorkRoot, resolvedStagingRoot, 'fetch work', true);
+  fsImpl.rmSync(resolvedStagingRoot, { recursive: true, force: true });
 }
 
 function runnerFailureText(result) {
@@ -602,18 +669,32 @@ function fetchPublic(options) {
   let skipped = 0;
 
   records.forEach((record) => {
-    const complete = LANGUAGES.every((language) => (
-      captionExists(fsImpl, workRoot, record.videoId, language)
-    ));
+    const cache = Object.fromEntries(LANGUAGES.map((language) => [
+      language,
+      inspectCaptionFile(fsImpl, workRoot, record.videoId, language)
+    ]));
+    const complete = LANGUAGES.every((language) => cache[language].status === 'valid');
     if (complete) {
       skipped += 1;
-      results.set(record.videoId, null);
+      results.set(record.videoId, {
+        attempted: false,
+        result: null,
+        cache,
+        staged: null,
+        final: cache,
+        promoted: Object.create(null),
+        promotionErrors: Object.create(null)
+      });
       return;
     }
 
     attempted += 1;
     const url = 'https://www.youtube.com/watch?v=' + record.videoId;
+    const stagingRoot = fsImpl.mkdtempSync(
+      path.join(workRoot, '.subtitle-fetch-' + record.videoId + '-')
+    );
     const args = [
+      '--ignore-config',
       '--skip-download',
       '--write-auto-subs',
       '--sub-langs', 'zh-Hans,en-orig',
@@ -625,48 +706,124 @@ function fetchPublic(options) {
       '--retries', '5',
       '--extractor-retries', '5',
       '--retry-sleep', 'http:exp=1:20',
-      '--output', path.join(workRoot, '%(id)s.%(ext)s'),
+      '--output', path.join(stagingRoot, '%(id)s.%(ext)s'),
       url
     ];
     let result;
+    const staged = Object.create(null);
+    const final = Object.create(null);
+    const promoted = Object.create(null);
+    const promotionErrors = Object.create(null);
     try {
-      result = runner('yt-dlp', args, {
-        cwd: workRoot,
-        encoding: 'utf8',
-        shell: false,
-        windowsHide: true
+      try {
+        result = runner('yt-dlp', args, {
+          cwd: stagingRoot,
+          encoding: 'utf8',
+          shell: false,
+          windowsHide: true
+        });
+      } catch (error) {
+        result = { status: null, stdout: '', stderr: '', error };
+      }
+      if (!result) result = { status: null, error: new Error('Runner returned no result') };
+
+      LANGUAGES.forEach((language) => {
+        staged[language] = inspectCaptionFile(
+          fsImpl,
+          stagingRoot,
+          record.videoId,
+          language
+        );
+        if (cache[language].status === 'valid' || staged[language].status !== 'valid') return;
+        try {
+          atomicWriteFile({
+            fsImpl,
+            root: workRoot,
+            target: captionPath(workRoot, record.videoId, language),
+            content: staged[language].content,
+            force: true,
+            label: 'fetch work'
+          });
+          promoted[language] = true;
+        } catch (error) {
+          promotionErrors[language] = error;
+        }
       });
-    } catch (error) {
-      result = { status: null, stdout: '', stderr: '', error };
+
+      LANGUAGES.forEach((language) => {
+        final[language] = inspectCaptionFile(fsImpl, workRoot, record.videoId, language);
+      });
+    } finally {
+      removeOwnedStagingDirectory(fsImpl, workRoot, stagingRoot);
     }
-    results.set(record.videoId, result || { status: null, error: new Error('Runner returned no result') });
+    results.set(record.videoId, {
+      attempted: true,
+      result,
+      cache,
+      staged,
+      final,
+      promoted,
+      promotionErrors
+    });
   });
 
   const summary = {
-    'zh-Hans': { found: 0, missing: 0, failed: 0 },
-    'en-orig': { found: 0, missing: 0, failed: 0 }
+    'zh-Hans': { valid: 0, missing: 0, invalid: 0, failed: 0 },
+    'en-orig': { valid: 0, missing: 0, invalid: 0, failed: 0 }
   };
   const videos = records.map((record) => {
-    const result = results.get(record.videoId);
+    const attempt = results.get(record.videoId);
     const languages = {};
     LANGUAGES.forEach((language) => {
       const filename = record.videoId + '.' + language + '.vtt';
       let status;
-      if (captionExists(fsImpl, workRoot, record.videoId, language)) status = 'found';
-      else if (result && languageFailed(result, language)) status = 'failed';
-      else status = 'missing';
+      let reason;
+      const finalState = attempt.final[language];
+      const stagedState = attempt.staged && attempt.staged[language];
+      const failed = attempt.attempted && languageFailed(attempt.result, language);
+      if (finalState.status === 'valid') {
+        status = 'valid';
+        reason = finalState.reason;
+      } else if (finalState.status === 'invalid') {
+        status = 'invalid';
+        reason = finalState.reason;
+      } else if (stagedState && stagedState.status === 'invalid') {
+        status = 'invalid';
+        reason = stagedState.reason;
+      } else if (attempt.promotionErrors[language]) {
+        status = 'failed';
+        reason = 'promotion-error';
+      } else if (failed) {
+        status = 'failed';
+        reason = languageFailureReason(attempt.result, language);
+      } else {
+        status = 'missing';
+        reason = 'not-produced';
+      }
       summary[language][status] += 1;
-      languages[language] = { status, file: filename };
-      if (status === 'failed') {
-        languages[language].reason = languageFailureReason(result, language);
-      } else if (status === 'missing') {
-        languages[language].reason = 'not-produced';
+      languages[language] = {
+        status,
+        file: filename,
+        reason,
+        cacheStatus: attempt.cache[language].status,
+        cacheReason: attempt.cache[language].reason
+      };
+      if (stagedState) {
+        languages[language].stagedStatus = stagedState.status;
+        languages[language].stagedReason = stagedState.reason;
+      }
+      if (attempt.promoted[language]) languages[language].promoted = true;
+      if (failed && status !== 'failed') {
+        languages[language].attemptReason = languageFailureReason(attempt.result, language);
+      }
+      if (attempt.promotionErrors[language]) {
+        languages[language].promotionReason = 'promotion-error';
       }
     });
     return {
       videoId: record.videoId,
       url: 'https://www.youtube.com/watch?v=' + record.videoId,
-      attempted: result !== null,
+      attempted: attempt.attempted,
       languages
     };
   });
@@ -887,5 +1044,6 @@ module.exports = {
   buildCatalog,
   writeCatalog,
   fetchPublic,
+  validateTrack,
   runCli
 };
