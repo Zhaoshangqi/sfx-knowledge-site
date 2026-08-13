@@ -18,7 +18,8 @@ const ROLLING_GAP_SECONDS = 0.2;
 const MIN_ROLLING_OVERLAP = 4;
 const MIN_ROLLING_OVERLAP_RATIO = 0.4;
 const MAX_MERGED_SECONDS = 8;
-const MAX_MERGED_TEXT_LENGTH = 80;
+const MAX_DISPLAY_TEXT_LENGTH = 48;
+const MAX_MERGED_TEXT_LENGTH = MAX_DISPLAY_TEXT_LENGTH;
 
 function malformedTimestamp(value) {
   return new Error('Malformed WebVTT timestamp: ' + String(value));
@@ -148,6 +149,55 @@ function joinCueText(left, right) {
   return left + ' ' + right;
 }
 
+function codePointLength(text) {
+  return Array.from(text).length;
+}
+
+function splitTextForDisplay(text) {
+  const remaining = Array.from(text);
+  const parts = [];
+  const minimumBoundary = Math.floor(MAX_DISPLAY_TEXT_LENGTH * 0.6);
+
+  while (remaining.length > MAX_DISPLAY_TEXT_LENGTH) {
+    let cut = MAX_DISPLAY_TEXT_LENGTH;
+    for (let index = MAX_DISPLAY_TEXT_LENGTH; index >= minimumBoundary; index -= 1) {
+      if (/[\s，。！？；：、,.!?;:]/u.test(remaining[index - 1])) {
+        cut = index;
+        break;
+      }
+    }
+
+    const part = remaining.splice(0, cut).join('').trim();
+    if (part) parts.push(part);
+    while (remaining[0] && /\s/u.test(remaining[0])) remaining.shift();
+  }
+
+  const tail = remaining.join('').trim();
+  if (tail) parts.push(tail);
+  return parts;
+}
+
+function splitCueForDisplay(cue) {
+  const parts = splitTextForDisplay(cue.text);
+  if (parts.length <= 1) return [cue];
+
+  const weights = parts.map(codePointLength);
+  const totalWeight = weights.reduce((sum, value) => sum + value, 0);
+  const duration = cue.end - cue.start;
+  let consumedWeight = 0;
+
+  return parts.map((text, index) => {
+    const start = index === 0
+      ? cue.start
+      : cue.start + (duration * consumedWeight / totalWeight);
+    consumedWeight += weights[index];
+    const end = index === parts.length - 1
+      ? cue.end
+      : cue.start + (duration * consumedWeight / totalWeight);
+    return { start, end, text };
+  });
+}
+
 function compactCues(cues) {
   if (!Array.isArray(cues)) throw new TypeError('cues must be an array');
 
@@ -203,8 +253,9 @@ function compactCues(cues) {
     if (end > cue.start) nonoverlapping.push({ start: cue.start, end, text: cue.text });
   });
 
+  const displayCues = nonoverlapping.flatMap(splitCueForDisplay);
   const merged = [];
-  nonoverlapping.forEach((cue) => {
+  displayCues.forEach((cue) => {
     const previous = merged[merged.length - 1];
     const previousIsShort = previous && previous.end - previous.start < SHORT_CUE_SECONDS;
     const cueIsShort = cue.end - cue.start < SHORT_CUE_SECONDS;
@@ -213,7 +264,7 @@ function compactCues(cues) {
     const mergedText = previous ? joinCueText(previous.text, cue.text) : cue.text;
     const staysReadable = previous &&
       cue.end - previous.start <= MAX_MERGED_SECONDS &&
-      mergedText.length <= MAX_MERGED_TEXT_LENGTH;
+      codePointLength(mergedText) <= MAX_MERGED_TEXT_LENGTH;
 
     if (previous && gap <= ADJACENT_GAP_SECONDS &&
         (previousIsShort || cueIsShort) && staysReadable) {
@@ -231,7 +282,7 @@ function compactCues(cues) {
     if (last.end - last.start < SHORT_CUE_SECONDS &&
         last.start - previous.end <= ADJACENT_GAP_SECONDS &&
         last.end - previous.start <= MAX_MERGED_SECONDS &&
-        mergedText.length <= MAX_MERGED_TEXT_LENGTH) {
+        codePointLength(mergedText) <= MAX_MERGED_TEXT_LENGTH) {
       previous.end = last.end;
       previous.text = mergedText;
       merged.pop();

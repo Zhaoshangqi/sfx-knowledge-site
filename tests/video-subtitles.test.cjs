@@ -289,6 +289,7 @@ test('publishes the real Xl5u91oQv-k Chinese draft as site-owned cues', () => {
   track.cues.forEach((cue, index) => {
     assert.ok(Object.isFrozen(cue));
     assert.ok(cue.end > cue.start);
+    assert.ok(Array.from(cue.text).length <= 48);
     if (index > 0) assert.ok(cue.start >= track.cues[index - 1].end);
   });
 

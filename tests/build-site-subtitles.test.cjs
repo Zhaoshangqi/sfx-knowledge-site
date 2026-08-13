@@ -273,6 +273,40 @@ test('compactCues merges unreadably short adjacent fragments', () => {
   assert.deepEqual(cues, [{ start: 0, end: 3, text: '这 是一句 完整字幕。' }]);
 });
 
+test('compactCues splits overlong cues without breaking Unicode text or timing', () => {
+  const sourceText = '字'.repeat(47) + '😀' + '后'.repeat(12);
+  const normalize = (value) => value.replace(/\s+/gu, '');
+  const cues = compactCues([{
+    start: 10,
+    end: 22.5,
+    text: sourceText
+  }]);
+
+  assert.ok(Array.from(sourceText).length > 48);
+  assert.ok(cues.length > 1);
+  assert.equal(cues[0].start, 10);
+  assert.equal(cues.at(-1).end, 22.5);
+  cues.forEach((cue, index) => {
+    assert.ok(Array.from(cue.text).length <= 48);
+    assert.ok(cue.end > cue.start);
+    if (index > 0) {
+      assert.equal(cue.start, cues[index - 1].end);
+      assert.ok(cue.start >= cues[index - 1].end);
+    }
+  });
+  assert.ok(cues.some((cue) => cue.text.includes('😀')));
+  assert.equal(normalize(cues.map((cue) => cue.text).join('')), normalize(sourceText));
+});
+
+test('compactCues prefers a late punctuation boundary when splitting display text', () => {
+  const sourceText = '前'.repeat(30) + '，' + '中'.repeat(17) + '后'.repeat(10);
+  const cues = compactCues([{ start: 0, end: 12, text: sourceText }]);
+
+  assert.equal(cues.length, 2);
+  assert.equal(cues[0].text, '前'.repeat(30) + '，');
+  assert.equal(cues.map((cue) => cue.text).join(''), sourceText);
+});
+
 test('compactCues caps merged duration and text length for dense short runs', () => {
   const cues = compactCues(Array.from({ length: 30 }, (_, index) => ({
     start: index * 0.5,
@@ -283,7 +317,7 @@ test('compactCues caps merged duration and text length for dense short runs', ()
   assert.ok(cues.length > 1);
   cues.forEach((cue) => {
     assert.ok(cue.end - cue.start <= 8);
-    assert.ok(cue.text.length <= 80);
+    assert.ok(Array.from(cue.text).length <= 48);
   });
 });
 
