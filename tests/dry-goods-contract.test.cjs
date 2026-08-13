@@ -85,18 +85,24 @@ function cssMedia(source, query) {
   return block;
 }
 
-function cssDeclarations(block) {
+function cssDeclarationEntries(block) {
   return block.body
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .split(";")
-    .reduce((declarations, entry) => {
+    .flatMap((entry) => {
       const separator = entry.indexOf(":");
-      if (separator === -1) return declarations;
-      const property = entry.slice(0, separator).trim();
+      if (separator === -1) return [];
+      const property = entry.slice(0, separator).trim().toLowerCase();
       const value = entry.slice(separator + 1).trim();
-      if (property) declarations[property] = value;
-      return declarations;
-    }, {});
+      return property ? [{ property, value }] : [];
+    });
+}
+
+function cssDeclarations(block) {
+  return cssDeclarationEntries(block).reduce((declarations, { property, value }) => {
+    declarations[property] = value;
+    return declarations;
+  }, {});
 }
 
 function assertCssDeclarations(block, expected) {
@@ -107,29 +113,34 @@ function assertCssDeclarations(block, expected) {
   return declarations;
 }
 
+const APPROVED_CAPTION_OVERLAY_DECLARATIONS = {
+  display: "block",
+  position: "absolute",
+  left: "50%",
+  bottom: "clamp(56px, 10%, 84px)",
+  "z-index": "4",
+  width: "max-content",
+  "max-width": "86%",
+  margin: "0",
+  padding: "6px 10px",
+  "border-radius": "4px",
+  color: "#fff",
+  background: "rgba(9, 11, 12, 0.76)",
+  transform: "translateX(-50%)",
+  "text-align": "center",
+  "overflow-wrap": "anywhere",
+  "text-shadow": "0 1px 2px rgba(0, 0, 0, 0.75)",
+  "font-size": "16px",
+  "line-height": "1.45",
+  "font-weight": "800",
+  "pointer-events": "none"
+};
+
 function assertApprovedCaptionOverlay(source) {
-  return assertCssDeclarations(cssRule(source, ".video-caption-overlay"), {
-    display: "block",
-    position: "absolute",
-    left: "50%",
-    bottom: "clamp(56px, 10%, 84px)",
-    "z-index": "4",
-    width: "max-content",
-    "max-width": "86%",
-    margin: "0",
-    padding: "6px 10px",
-    "border-radius": "4px",
-    color: "#fff",
-    background: "rgba(9, 11, 12, 0.76)",
-    transform: "translateX(-50%)",
-    "text-align": "center",
-    "overflow-wrap": "anywhere",
-    "text-shadow": "0 1px 2px rgba(0, 0, 0, 0.75)",
-    "font-size": "16px",
-    "line-height": "1.45",
-    "font-weight": "800",
-    "pointer-events": "none"
-  });
+  return assertCssDeclarations(
+    cssRule(source, ".video-caption-overlay"),
+    APPROVED_CAPTION_OVERLAY_DECLARATIONS
+  );
 }
 
 function allCssRules(source) {
@@ -138,21 +149,43 @@ function allCssRules(source) {
   );
 }
 
-function directCssSelectors(source, predicate) {
-  return [...new Set(cssBlocks(source)
-    .filter((block) => !block.prelude.startsWith("@"))
-    .flatMap(cssSelectors)
-    .filter(predicate))];
+const BASE_OVERLAY_SELECTOR = ".video-caption-overlay";
+const EMPTY_OVERLAY_SELECTOR = ".video-caption-overlay:empty";
+const HIDDEN_OVERLAY_SELECTOR = ".subtitles-hidden .video-caption-overlay";
+const FULLSCREEN_OVERLAY_SELECTOR = ".video-player:fullscreen .video-caption-overlay";
+const APPROVED_VISUAL_OVERLAY_SELECTORS = new Set([
+  BASE_OVERLAY_SELECTOR,
+  EMPTY_OVERLAY_SELECTOR,
+  HIDDEN_OVERLAY_SELECTOR,
+  FULLSCREEN_OVERLAY_SELECTOR
+]);
+const BASE_OVERLAY_PROPERTIES = new Set(Object.keys(APPROVED_CAPTION_OVERLAY_DECLARATIONS));
+const HIDDEN_OVERLAY_PROPERTIES = new Set(["display"]);
+const FULLSCREEN_OVERLAY_PROPERTIES = new Set(["bottom", "max-width", "padding", "font-size"]);
+const RESPONSIVE_OVERLAY_PROPERTIES = new Set(["bottom", "max-width", "font-size"]);
+const TOP_LEVEL_OVERLAY_PROPERTIES = new Map([
+  [BASE_OVERLAY_SELECTOR, BASE_OVERLAY_PROPERTIES],
+  [EMPTY_OVERLAY_SELECTOR, HIDDEN_OVERLAY_PROPERTIES],
+  [HIDDEN_OVERLAY_SELECTOR, HIDDEN_OVERLAY_PROPERTIES],
+  [FULLSCREEN_OVERLAY_SELECTOR, FULLSCREEN_OVERLAY_PROPERTIES]
+]);
+const RESPONSIVE_OVERLAY_SELECTOR_PROPERTIES = new Map([
+  [BASE_OVERLAY_SELECTOR, RESPONSIVE_OVERLAY_PROPERTIES],
+  [FULLSCREEN_OVERLAY_SELECTOR, RESPONSIVE_OVERLAY_PROPERTIES]
+]);
+const APPROVED_OVERLAY_MEDIA_SCOPES = new Map([
+  ["@media (max-width: 640px)", RESPONSIVE_OVERLAY_SELECTOR_PROPERTIES],
+  ["@media (orientation: landscape) and (max-height: 520px)", RESPONSIVE_OVERLAY_SELECTOR_PROPERTIES]
+]);
+
+function selectorContainsVisualOverlay(selector) {
+  return /\.video-caption-overlay(?![-\w])/.test(selector);
 }
 
-function visualOverlaySelectors(source) {
-  return directCssSelectors(source, (selector) => selector.includes(".video-caption-overlay"));
-}
-
-function visualOverlayScopes(source) {
-  return [source, ...cssBlocks(source)
-    .filter((block) => block.prelude.startsWith("@media") && visualOverlaySelectors(block.body).length > 0)
-    .map((block) => block.body)];
+function visualOverlayBlocks(source) {
+  return cssBlocks(source).filter((block) =>
+    !block.prelude.startsWith("@") && cssSelectors(block).some(selectorContainsVisualOverlay)
+  );
 }
 
 function normalizedCssValue(value) {
@@ -161,38 +194,91 @@ function normalizedCssValue(value) {
     : value.replace(/\s*!important\s*$/i, "").trim().toLowerCase();
 }
 
-function assertVisualOverlayNonClipping(source) {
-  const selectors = visualOverlaySelectors(source);
-  assert.ok(selectors.length > 0, "missing visual caption overlay rule");
-
-  selectors.forEach((selector) => {
-    const declarations = cssDeclarations(cssRule(source, selector));
-    ["overflow", "overflow-x", "overflow-y"].forEach((property) => {
-      const value = normalizedCssValue(declarations[property]);
-      const clipsText = value?.split(/\s+/).some((token) => token === "hidden" || token === "clip") || false;
-      assert.equal(clipsText, false, `${selector} must not hide or clip overflow with ${property}`);
-    });
-    const maxHeight = normalizedCssValue(declarations["max-height"]);
-    assert.ok(
-      maxHeight === undefined || maxHeight === "none",
-      `${selector} must leave max-height unconstrained`
-    );
-    assert.equal(declarations.clip, undefined, `${selector} must not set clip`);
-    assert.equal(declarations["clip-path"], undefined, `${selector} must not set clip-path`);
-    assert.notEqual(
-      normalizedCssValue(declarations["white-space"]),
-      "nowrap",
-      `${selector} must allow subtitle wrapping`
-    );
-    assert.equal(declarations["-webkit-line-clamp"], undefined, `${selector} must not clamp lines`);
-    const textOverflow = normalizedCssValue(declarations["text-overflow"]);
-    assert.equal(
-      textOverflow?.split(/\s+/).includes("ellipsis") || false,
-      false,
-      `${selector} must not ellipsize text`
-    );
-    assert.equal(declarations.height, undefined, `${selector} must not use a fixed height`);
+function assertVisualOverlayBlockNonClipping(block) {
+  cssDeclarationEntries(block).forEach(({ property, value }) => {
+    const normalizedValue = normalizedCssValue(value);
+    if (["overflow", "overflow-x", "overflow-y"].includes(property)) {
+      const clipsText = normalizedValue?.split(/\s+/)
+        .some((token) => token === "hidden" || token === "clip") || false;
+      assert.equal(clipsText, false, `${block.prelude} must not hide or clip overflow with ${property}`);
+    }
+    if (property === "max-height") {
+      assert.equal(normalizedValue, "none", `${block.prelude} must leave max-height unconstrained`);
+    }
+    assert.notEqual(property, "clip", `${block.prelude} must not set clip`);
+    assert.notEqual(property, "clip-path", `${block.prelude} must not set clip-path`);
+    if (property === "white-space") {
+      assert.notEqual(normalizedValue, "nowrap", `${block.prelude} must allow subtitle wrapping`);
+    }
+    assert.notEqual(property, "-webkit-line-clamp", `${block.prelude} must not clamp lines`);
+    if (property === "text-overflow") {
+      const ellipsizesText = normalizedValue?.split(/\s+/).includes("ellipsis") || false;
+      assert.equal(ellipsizesText, false, `${block.prelude} must not ellipsize text`);
+    }
+    assert.notEqual(property, "height", `${block.prelude} must not use a fixed height`);
   });
+}
+
+function assertVisualOverlayNonClipping(source) {
+  const blocks = visualOverlayBlocks(source);
+  assert.ok(blocks.length > 0, "missing visual caption overlay rule");
+  blocks.forEach(assertVisualOverlayBlockNonClipping);
+}
+
+function visualOverlayScopeProfiles(source) {
+  const scopes = [{
+    name: "top-level",
+    source,
+    selectorProperties: TOP_LEVEL_OVERLAY_PROPERTIES
+  }];
+
+  cssBlocks(source)
+    .filter((block) => block.prelude.startsWith("@") && visualOverlayBlocks(block.body).length > 0)
+    .forEach((block) => {
+      const selectorProperties = APPROVED_OVERLAY_MEDIA_SCOPES.get(block.prelude);
+      assert.ok(selectorProperties, `unapproved visual caption overlay scope ${block.prelude}`);
+      scopes.push({ name: block.prelude, source: block.body, selectorProperties });
+    });
+
+  return scopes;
+}
+
+function assertVisualOverlayScope(scope) {
+  visualOverlayBlocks(scope.source).forEach((block) => {
+    const selectors = cssSelectors(block).filter(selectorContainsVisualOverlay);
+    selectors.forEach((selector) => {
+      assert.ok(
+        APPROVED_VISUAL_OVERLAY_SELECTORS.has(selector) && scope.selectorProperties.has(selector),
+        `unapproved visual caption overlay selector ${selector} in ${scope.name}`
+      );
+    });
+
+    const entries = cssDeclarationEntries(block);
+    entries.forEach(({ value }) => {
+      assert.doesNotMatch(value, /!\s*important\b/i, `${block.prelude} must not use !important`);
+    });
+    assertVisualOverlayBlockNonClipping(block);
+
+    selectors.forEach((selector) => {
+      const allowedProperties = scope.selectorProperties.get(selector);
+      const contract = scope.name === "top-level" && selector === BASE_OVERLAY_SELECTOR
+        ? "approved base properties"
+        : "approved modifier properties";
+      entries.forEach(({ property, value }) => {
+        assert.ok(
+          allowedProperties.has(property),
+          `${selector} may only set ${contract}; found ${property}`
+        );
+        if (selector === EMPTY_OVERLAY_SELECTOR || selector === HIDDEN_OVERLAY_SELECTOR) {
+          assert.equal(normalizedCssValue(value), "none", `${selector} must set display: none`);
+        }
+      });
+    });
+  });
+}
+
+function assertVisualOverlayCascade(source) {
+  visualOverlayScopeProfiles(source).forEach(assertVisualOverlayScope);
 }
 
 test("CSS rule lookup applies every exact selector match in source order", () => {
@@ -252,6 +338,84 @@ test("visual caption overlay guard rejects effective clipping declarations", () 
       ),
       error
     );
+  });
+  assert.throws(
+    () => assertVisualOverlayCascade([
+      ".video-caption-overlay { overflow: hidden; }",
+      ".video-caption-overlay { overflow: visible; }",
+      css
+    ].join("\n")),
+    /must not hide or clip overflow/
+  );
+});
+
+test("visual caption overlay guard rejects competing selectors", () => {
+  const css = inlineCss(read("index.html"));
+
+  assert.throws(
+    () => assertVisualOverlayCascade(
+      `${css}\n.video-player-stage .video-caption-overlay { left: 0; }`
+    ),
+    /unapproved visual caption overlay selector/
+  );
+});
+
+test("visual caption overlay guard rejects important declarations before later safe values", () => {
+  const css = inlineCss(read("index.html"));
+  const mutations = [
+    `.video-caption-overlay { left: 0 !important; }\n${css}`,
+    [
+      ".video-caption-overlay { overflow: hidden !important; }",
+      ".video-caption-overlay { overflow: visible; }",
+      css
+    ].join("\n")
+  ];
+
+  mutations.forEach((mutation) => {
+    assert.throws(
+      () => assertVisualOverlayCascade(mutation),
+      /must not use !important/
+    );
+  });
+});
+
+test("visual caption overlay modifiers reject extra properties and hidden-state values", () => {
+  const css = inlineCss(read("index.html"));
+  const mutations = [
+    [`${css}\n.video-caption-overlay { top: 0; }`, /may only set approved base properties/],
+    [[
+      `${css}\n.video-caption-overlay:empty,`,
+      ".subtitles-hidden .video-caption-overlay { display: none; left: 0; }"
+    ].join("\n"), /may only set/],
+    [[
+      `${css}\n.video-caption-overlay:empty,`,
+      ".subtitles-hidden .video-caption-overlay { display: block; }"
+    ].join("\n"), /must set display: none/],
+    [[
+      css,
+      ".video-player:fullscreen .video-caption-overlay { left: 0; }"
+    ].join("\n"), /may only set/],
+    [[
+      css,
+      "@media (max-width: 640px) { .video-caption-overlay { padding: 0; } }"
+    ].join("\n"), /may only set/],
+    [[
+      css,
+      "@media (max-width: 640px) {",
+      "  .video-player:fullscreen .video-caption-overlay { padding: 0; }",
+      "}"
+    ].join("\n"), /may only set/],
+    [[
+      css,
+      "@media (orientation: landscape) and (max-height: 520px) {",
+      "  .video-caption-overlay,",
+      "  .video-player:fullscreen .video-caption-overlay { padding: 0; }",
+      "}"
+    ].join("\n"), /may only set/]
+  ];
+
+  mutations.forEach(([source, error]) => {
+    assert.throws(() => assertVisualOverlayCascade(source), error);
   });
 });
 
@@ -394,7 +558,7 @@ test("caption and disclosure surfaces do not truncate subtitle text", () => {
     /(^|\s)\.video-transcript(?![-\w])/.test(selector)
   ));
 
-  visualOverlayScopes(css).forEach(assertVisualOverlayNonClipping);
+  assertVisualOverlayCascade(css);
   assert.ok(transcriptRules.length > 0);
   transcriptRules.forEach((block) => {
     const declarations = cssDeclarations(block);
