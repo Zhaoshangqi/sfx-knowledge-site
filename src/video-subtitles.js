@@ -715,7 +715,7 @@
       "videoId": "yYUB55kMMV8",
       "contentStatus": "missing",
       "updatedAt": "2026-08-13",
-      "reason": "Canonical no-cookie yt-dlp media download failed twice; the approved standalone retry timed out connecting to googlevideo.com after 10 retries. No media, transcription, or listening evidence was available, so no subtitle or no-speech claim is made."
+      "reason": "Full-duration local large-v3 review covered 219.475s: 0 accepted and 4 rejected high-no-speech-probability segments ('I don't know.' 73.80-76.62, 0.895270/-0.711734; 'Thank you.' 106.34-106.76, 0.820779/-0.640043; 'Thank you.' 139.40-142.20, 0.854361/-0.904348; 'you' 203.66-203.94, 0.776901/-0.979033), with 14/15 energy-VAD windows triggered. No usable human listening review is available, so no subtitle or no-speech claim is made."
     },
     {
       "videoId": "cJ75ykkqV64",
