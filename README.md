@@ -75,13 +75,13 @@ node .\tools\batch-site-subtitles.cjs catalog --index .\index.html --tracks .\as
 CUDA 路径要求 `torch.cuda.is_available()` 为真，并且 `large-v3` 已在 Whisper 缓存中；工具会拒绝隐式下载模型：
 
 ```powershell
-python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cuda --work-dir .\.work\subtitles VIDEO_ID
+.\.venv\Scripts\python.exe .\tools\transcribe-missing-subtitles.py --model large-v3 --device cuda --work-dir .\.work\subtitles VIDEO_ID
 ```
 
 没有可用 CUDA 时，使用 CPU fallback；同样要求 `large-v3` 已缓存：
 
 ```powershell
-python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cpu --work-dir .\.work\subtitles VIDEO_ID
+.\.venv\Scripts\python.exe .\tools\transcribe-missing-subtitles.py --model large-v3 --device cpu --work-dir .\.work\subtitles VIDEO_ID
 ```
 
 该工具只在 `.work` 写入 candidate/review 证据。Whisper candidate 是英文，状态为待翻译审校，不能直接进入 `assets/subtitles/`；完成中文翻译、时间轴和术语人工审校后，才可创建 `zh-CN` 轨道，并将来源标为 `site-owned-from-local-transcription`。
@@ -98,11 +98,11 @@ python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cpu --w
 node --check src\video-subtitles.js
 node --check src\youtube-caption-player.js
 node --check tools\batch-site-subtitles.cjs
-python -m py_compile tools\transcribe-missing-subtitles.py
+.\.venv\Scripts\python.exe -m py_compile tools\transcribe-missing-subtitles.py
 node tools\verify-portable-kit.cjs
 git diff --check
 node --test tests\*.test.cjs
-python -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
 在此 Node/Windows 环境中，Node 全量测试使用 `node --test tests\*.test.cjs`，不要写成 `node --test tests`。
