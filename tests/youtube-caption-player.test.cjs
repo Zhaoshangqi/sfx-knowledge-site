@@ -181,6 +181,44 @@ async function flushPromises() {
   await Promise.resolve();
 }
 
+function extractBalancedDiv(html, openingTag) {
+  const start = html.indexOf(openingTag);
+  assert.ok(start >= 0, `missing div opening: ${openingTag}`);
+
+  const divTagPattern = /<\/?div\b[^>]*>/gi;
+  divTagPattern.lastIndex = start;
+  const firstTag = divTagPattern.exec(html);
+  assert.equal(firstTag?.index, start, `expected div opening: ${openingTag}`);
+  assert.doesNotMatch(firstTag[0], /^<\/div/i);
+
+  let depth = 1;
+  let tag;
+  while ((tag = divTagPattern.exec(html))) {
+    if (/^<div\b/i.test(tag[0])) depth += 1;
+    else depth -= 1;
+
+    if (depth === 0) {
+      return {
+        before: html.slice(0, start),
+        element: html.slice(start, divTagPattern.lastIndex),
+        after: html.slice(divTagPattern.lastIndex)
+      };
+    }
+  }
+
+  throw new Error(`unclosed div: ${openingTag}`);
+}
+
+test('extractBalancedDiv excludes a sibling after a nested target', () => {
+  const html = '<section><div class="stage"><div class="nested"></div></div>' +
+    '<p data-caption-overlay></p></section>';
+  const stage = extractBalancedDiv(html, '<div class="stage">');
+
+  assert.equal(stage.element, '<div class="stage"><div class="nested"></div></div>');
+  assert.doesNotMatch(stage.element, /data-caption-overlay/);
+  assert.match(stage.after, /data-caption-overlay/);
+});
+
 test('publishes the expected UMD API', () => {
   assert.ok(playerApi, 'YouTube caption player module must exist');
   assert.deepEqual(Object.keys(playerApi), ['render', 'mount', 'loadApi']);
@@ -212,18 +250,15 @@ test('render returns a cover-first shell with escaped content and no iframe', ()
 
 test('render keeps one caption overlay in the stage and one live region outside it', () => {
   const html = playerApi.render({ videoId: 'Xl5u91oQv-k', title: 'Tracked video' }, track);
-  const stageStart = html.indexOf('<div class="video-player-stage">');
-  const stageEnd = html.indexOf('<div class="video-caption-header">', stageStart);
-  const stageHtml = html.slice(stageStart, stageEnd);
+  const stage = extractBalancedDiv(html, '<div class="video-player-stage">');
+  const outsideStage = stage.before + stage.after;
 
-  assert.ok(stageStart >= 0);
-  assert.ok(stageEnd > stageStart);
-  assert.equal((html.match(/data-caption-overlay\b/g) || []).length, 1);
-  assert.match(stageHtml, /data-caption-overlay/);
-  assert.doesNotMatch(stageHtml, /data-caption-line/);
-  assert.equal((html.match(/data-caption-line\b/g) || []).length, 1);
-  assert.ok(html.indexOf('data-caption-line') > stageEnd);
-  assert.match(html, /data-caption-line[^>]*aria-live="polite"/);
+  assert.equal((stage.element.match(/data-caption-overlay\b/g) || []).length, 1);
+  assert.doesNotMatch(stage.element, /data-caption-line/);
+  assert.doesNotMatch(outsideStage, /data-caption-overlay/);
+  assert.equal((outsideStage.match(/data-caption-line\b/g) || []).length, 1);
+  assert.match(outsideStage, /data-caption-line[^>]*aria-live="polite"/);
+  assert.match(outsideStage, /data-caption-line[^>]*aria-atomic="true"/);
 });
 
 test('render collapses the full transcript behind a native disclosure', () => {
