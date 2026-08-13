@@ -66,11 +66,16 @@ function cssSelectors(block) {
 
 function cssRule(source, selector) {
   const normalizedSelector = normalizeCssPrelude(selector);
-  const block = cssBlocks(source).find((candidate) =>
+  const blocks = cssBlocks(source).filter((candidate) =>
     !candidate.prelude.startsWith("@") && cssSelectors(candidate).includes(normalizedSelector)
   );
-  assert.ok(block, `missing CSS rule ${selector}`);
-  return block;
+  assert.ok(blocks.length > 0, `missing CSS rule ${selector}`);
+  return {
+    prelude: blocks[0].prelude,
+    body: blocks.map((block) => block.body).join(";\n"),
+    start: blocks[0].start,
+    end: blocks[blocks.length - 1].end
+  };
 }
 
 function cssMedia(source, query) {
@@ -102,17 +107,8 @@ function assertCssDeclarations(block, expected) {
   return declarations;
 }
 
-function allCssRules(source) {
-  return cssBlocks(source).flatMap((block) =>
-    block.prelude.startsWith("@") ? allCssRules(block.body) : [block]
-  );
-}
-
-test("site captions use a centered text-only overlay inside the video stage", () => {
-  const css = inlineCss(read("index.html"));
-  const overlay = cssRule(css, ".video-caption-overlay");
-
-  assertCssDeclarations(overlay, {
+function assertApprovedCaptionOverlay(source) {
+  return assertCssDeclarations(cssRule(source, ".video-caption-overlay"), {
     display: "block",
     position: "absolute",
     left: "50%",
@@ -134,6 +130,135 @@ test("site captions use a centered text-only overlay inside the video stage", ()
     "font-weight": "800",
     "pointer-events": "none"
   });
+}
+
+function allCssRules(source) {
+  return cssBlocks(source).flatMap((block) =>
+    block.prelude.startsWith("@") ? allCssRules(block.body) : [block]
+  );
+}
+
+function directCssSelectors(source, predicate) {
+  return [...new Set(cssBlocks(source)
+    .filter((block) => !block.prelude.startsWith("@"))
+    .flatMap(cssSelectors)
+    .filter(predicate))];
+}
+
+function visualOverlaySelectors(source) {
+  return directCssSelectors(source, (selector) => selector.includes(".video-caption-overlay"));
+}
+
+function visualOverlayScopes(source) {
+  return [source, ...cssBlocks(source)
+    .filter((block) => block.prelude.startsWith("@media") && visualOverlaySelectors(block.body).length > 0)
+    .map((block) => block.body)];
+}
+
+function normalizedCssValue(value) {
+  return value === undefined
+    ? undefined
+    : value.replace(/\s*!important\s*$/i, "").trim().toLowerCase();
+}
+
+function assertVisualOverlayNonClipping(source) {
+  const selectors = visualOverlaySelectors(source);
+  assert.ok(selectors.length > 0, "missing visual caption overlay rule");
+
+  selectors.forEach((selector) => {
+    const declarations = cssDeclarations(cssRule(source, selector));
+    ["overflow", "overflow-x", "overflow-y"].forEach((property) => {
+      const value = normalizedCssValue(declarations[property]);
+      const clipsText = value?.split(/\s+/).some((token) => token === "hidden" || token === "clip") || false;
+      assert.equal(clipsText, false, `${selector} must not hide or clip overflow with ${property}`);
+    });
+    const maxHeight = normalizedCssValue(declarations["max-height"]);
+    assert.ok(
+      maxHeight === undefined || maxHeight === "none",
+      `${selector} must leave max-height unconstrained`
+    );
+    assert.equal(declarations.clip, undefined, `${selector} must not set clip`);
+    assert.equal(declarations["clip-path"], undefined, `${selector} must not set clip-path`);
+    assert.notEqual(
+      normalizedCssValue(declarations["white-space"]),
+      "nowrap",
+      `${selector} must allow subtitle wrapping`
+    );
+    assert.equal(declarations["-webkit-line-clamp"], undefined, `${selector} must not clamp lines`);
+    const textOverflow = normalizedCssValue(declarations["text-overflow"]);
+    assert.equal(
+      textOverflow?.split(/\s+/).includes("ellipsis") || false,
+      false,
+      `${selector} must not ellipsize text`
+    );
+    assert.equal(declarations.height, undefined, `${selector} must not use a fixed height`);
+  });
+}
+
+test("CSS rule lookup applies every exact selector match in source order", () => {
+  const rule = cssRule(
+    ".demo { left: 50%; display: block; } .demo { left: 0; }",
+    ".demo"
+  );
+
+  assert.deepEqual(cssDeclarations(rule), { left: "0", display: "block" });
+});
+
+test("CSS rule lookup keeps media declarations in their own effective scope", () => {
+  const css = [
+    ".demo { left: 50%; }",
+    "@media (max-width: 640px) {",
+    "  .demo { left: 25%; display: block; }",
+    "  .demo { left: 0; }",
+    "}"
+  ].join("\n");
+  const media = cssMedia(css, "(max-width: 640px)");
+
+  assert.deepEqual(cssDeclarations(cssRule(css, ".demo")), { left: "50%" });
+  assert.deepEqual(cssDeclarations(cssRule(media.body, ".demo")), {
+    left: "0",
+    display: "block"
+  });
+});
+
+test("approved caption overlay contract catches a late positional override", () => {
+  const css = inlineCss(read("index.html"));
+
+  assert.throws(
+    () => assertApprovedCaptionOverlay(`${css}\n.video-caption-overlay { left: 0; }`),
+    /must set left: 50%/
+  );
+});
+
+test("visual caption overlay guard rejects effective clipping declarations", () => {
+  const css = inlineCss(read("index.html"));
+  const mutations = [
+    ["overflow: hidden; max-height: 1px;", /must not hide or clip overflow/],
+    ["overflow-x: clip;", /must not hide or clip overflow/],
+    ["overflow-y: hidden;", /must not hide or clip overflow/],
+    ["max-height: 1px;", /must leave max-height unconstrained/],
+    ["clip: rect(0 0 0 0);", /must not set clip/],
+    ["clip-path: inset(50%);", /must not set clip-path/],
+    ["white-space: nowrap;", /must allow subtitle wrapping/],
+    ["height: 1px;", /must not use a fixed height/],
+    ["-webkit-line-clamp: 2;", /must not clamp lines/],
+    ["text-overflow: ellipsis;", /must not ellipsize text/]
+  ];
+
+  mutations.forEach(([declarations, error]) => {
+    assert.throws(
+      () => assertVisualOverlayNonClipping(
+        `${css}\n.video-caption-overlay { ${declarations} }`
+      ),
+      error
+    );
+  });
+});
+
+test("site captions use a centered text-only overlay inside the video stage", () => {
+  const css = inlineCss(read("index.html"));
+
+  assertApprovedCaptionOverlay(css);
 });
 
 test("empty captions and CC-off state hide the overlay while the live region stays assistive-only", () => {
@@ -263,15 +388,15 @@ test("short landscape layouts override both normal and fullscreen caption offset
 
 test("caption and disclosure surfaces do not truncate subtitle text", () => {
   const css = inlineCss(read("index.html"));
-  const relevantRules = allCssRules(css).filter((block) => cssSelectors(block).some((selector) =>
-    selector.includes(".video-caption-overlay") ||
+  const transcriptRules = allCssRules(css).filter((block) => cssSelectors(block).some((selector) =>
     selector.includes(".video-transcript-disclosure") ||
     selector.includes(".video-transcript-empty") ||
     /(^|\s)\.video-transcript(?![-\w])/.test(selector)
   ));
 
-  assert.ok(relevantRules.length > 0);
-  relevantRules.forEach((block) => {
+  visualOverlayScopes(css).forEach(assertVisualOverlayNonClipping);
+  assert.ok(transcriptRules.length > 0);
+  transcriptRules.forEach((block) => {
     const declarations = cssDeclarations(block);
     assert.equal(declarations["-webkit-line-clamp"], undefined, `${block.prelude} must not clamp lines`);
     assert.notEqual(declarations["text-overflow"], "ellipsis", `${block.prelude} must not ellipsize text`);
