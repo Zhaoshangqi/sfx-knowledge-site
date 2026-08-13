@@ -1,5 +1,7 @@
 const fs = require("fs");
 const path = require("path");
+const vm = require("vm");
+const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
 const required = [
@@ -8,6 +10,7 @@ const required = [
   "README.md",
   "docs/learning-workflow.md",
   "requirements.txt",
+  "src/video-subtitles.js",
   "skills/sfx-knowledge/SKILL.md",
   "skills/sfx-knowledge/references/sfx-knowledge.md",
   "skills/sfx-knowledge/references/video-learnings.md",
@@ -15,6 +18,9 @@ const required = [
   "tools/prepare-sfx-video.py",
   "tools/extract-video-context.cjs",
   "tools/export-site-memory.cjs",
+  "tools/build-site-subtitles.cjs",
+  "tools/batch-site-subtitles.cjs",
+  "tools/data/subtitle-status-overrides.json",
   "tools/install-sfx-skill.ps1",
 ];
 
@@ -28,7 +34,151 @@ const match = html.match(/const records = ([\s\S]*?);\r?\n\r?\n\s*const imageMan
 if (!match) failures.push("index.html records block not found");
 const records = match ? JSON.parse(match[1]) : [];
 const ids = records.map((record) => record.videoId).filter(Boolean);
+if (records.length !== 82) failures.push(`expected 82 site records, found ${records.length}`);
 if (new Set(ids).size !== ids.length) failures.push("duplicate videoId found in records");
+
+const subtitleModulePath = path.join(root, "src", "video-subtitles.js");
+const subtitleRoot = path.join(root, "assets", "subtitles");
+const subtitleModule = fs.existsSync(subtitleModulePath)
+  ? fs.readFileSync(subtitleModulePath, "utf8")
+  : "";
+const catalogPattern = /\/\* SUBTITLE_CATALOG_START \*\/\s*var rawCatalog\s*=\s*([\s\S]*?);\s*\/\* SUBTITLE_CATALOG_END \*\//g;
+const catalogMatches = [...subtitleModule.matchAll(catalogPattern)];
+let subtitleCatalog = [];
+
+if (catalogMatches.length !== 1) {
+  failures.push("subtitle catalog marker block not found exactly once");
+} else {
+  const expression = catalogMatches[0][1];
+  try {
+    try {
+      subtitleCatalog = JSON.parse(expression);
+    } catch (jsonError) {
+      subtitleCatalog = vm.runInNewContext(`(${expression})`, Object.create(null), {
+        timeout: 100,
+        contextCodeGeneration: { strings: false, wasm: false },
+      });
+    }
+    if (!Array.isArray(subtitleCatalog)) throw new Error("catalog is not an array");
+  } catch (error) {
+    failures.push(`invalid subtitle catalog: ${error.message}`);
+    subtitleCatalog = [];
+  }
+}
+
+const catalogIds = [];
+const referencedSubtitleJson = new Set();
+for (const [index, entry] of subtitleCatalog.entries()) {
+  if (!entry || typeof entry !== "object" || Array.isArray(entry) ||
+      !/^[A-Za-z0-9_-]{11}$/.test(entry.videoId || "") ||
+      !["track", "no-speech", "missing"].includes(entry.contentStatus)) {
+    failures.push(`invalid subtitle catalog entry at index ${index}`);
+    continue;
+  }
+
+  catalogIds.push(entry.videoId);
+  if (entry.contentStatus !== "track") {
+    if (Object.prototype.hasOwnProperty.call(entry, "asset")) {
+      failures.push(`non-track subtitle entry has asset: ${entry.videoId}`);
+    }
+    continue;
+  }
+
+  const expectedAsset = `assets/subtitles/${entry.videoId}.json`;
+  if (entry.asset !== expectedAsset) {
+    failures.push(`invalid subtitle asset for ${entry.videoId}: ${String(entry.asset)}`);
+    continue;
+  }
+  referencedSubtitleJson.add(expectedAsset);
+  const assetPath = path.resolve(root, ...expectedAsset.split("/"));
+  if (!fs.existsSync(assetPath) || !fs.statSync(assetPath).isFile()) {
+    failures.push(`missing subtitle asset ${expectedAsset}`);
+    continue;
+  }
+  try {
+    const realSubtitleRoot = fs.realpathSync.native(subtitleRoot);
+    const realAssetPath = fs.realpathSync.native(assetPath);
+    const relativeAsset = path.relative(realSubtitleRoot, realAssetPath);
+    if (relativeAsset === ".." || relativeAsset.startsWith(`..${path.sep}`) || path.isAbsolute(relativeAsset)) {
+      failures.push(`subtitle asset escapes assets/subtitles: ${expectedAsset}`);
+      continue;
+    }
+    const track = JSON.parse(fs.readFileSync(assetPath, "utf8"));
+    if (!track || track.videoId !== entry.videoId) {
+      failures.push(`subtitle asset videoId mismatch: ${expectedAsset}`);
+    }
+  } catch (error) {
+    failures.push(`invalid subtitle asset ${expectedAsset}: ${error.message}`);
+  }
+}
+
+if (new Set(catalogIds).size !== catalogIds.length) {
+  failures.push("duplicate videoId found in subtitle catalog");
+}
+const siteIdSet = new Set(ids);
+const catalogIdSet = new Set(catalogIds);
+const missingCatalogIds = ids.filter((id) => !catalogIdSet.has(id));
+const orphanCatalogIds = [...catalogIdSet].filter((id) => !siteIdSet.has(id));
+if (subtitleCatalog.length !== ids.length || missingCatalogIds.length || orphanCatalogIds.length) {
+  failures.push(
+    `subtitle catalog coverage ${catalogIdSet.size}/${ids.length}; ` +
+    `missing: ${missingCatalogIds.join(", ") || "none"}; ` +
+    `orphan: ${orphanCatalogIds.join(", ") || "none"}`
+  );
+}
+
+const mediaExtensions = new Set([
+  ".aac", ".aiff", ".avi", ".flac", ".m4a", ".mka", ".mkv", ".mov",
+  ".mp3", ".mp4", ".mpeg", ".mpg", ".ogg", ".opus", ".wav", ".webm",
+]);
+
+function portablePath(filename) {
+  return path.relative(root, filename).split(path.sep).join("/");
+}
+
+function inspectSubtitleBoundary(directory) {
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const full = path.join(directory, entry.name);
+    const relative = portablePath(full);
+    if (entry.isSymbolicLink()) {
+      failures.push(`symlink under assets/subtitles: ${relative}`);
+    } else if (entry.isDirectory()) {
+      inspectSubtitleBoundary(full);
+    } else {
+      const extension = path.extname(entry.name).toLowerCase();
+      if (mediaExtensions.has(extension)) failures.push(`media file under assets/subtitles: ${relative}`);
+      if (extension === ".json" && !referencedSubtitleJson.has(relative)) {
+        failures.push(`unreferenced subtitle JSON: ${relative}`);
+      }
+    }
+  }
+}
+
+if (!fs.existsSync(subtitleRoot) || !fs.statSync(subtitleRoot).isDirectory()) {
+  failures.push("missing assets/subtitles directory");
+} else {
+  inspectSubtitleBoundary(subtitleRoot);
+}
+
+const tracked = spawnSync("git", ["ls-files", "-z", "--", ".work", "assets/subtitles"], {
+  cwd: root,
+  encoding: "utf8",
+  windowsHide: true,
+});
+if (tracked.error || tracked.status !== 0) {
+  failures.push(`unable to inspect tracked portable-kit files: ${tracked.error ? tracked.error.message : tracked.stderr.trim()}`);
+} else {
+  const trackedPaths = tracked.stdout.split("\0").filter(Boolean);
+  for (const trackedPath of trackedPaths) {
+    if (trackedPath === ".work" || trackedPath.startsWith(".work/")) {
+      failures.push(`tracked file under .work: ${trackedPath}`);
+    }
+    if (trackedPath.startsWith("assets/subtitles/") &&
+        mediaExtensions.has(path.extname(trackedPath).toLowerCase())) {
+      failures.push(`tracked media file under assets/subtitles: ${trackedPath}`);
+    }
+  }
+}
 
 const siteMemoryPath = path.join(root, "skills", "sfx-knowledge", "references", "site-video-memory.md");
 const siteMemory = fs.existsSync(siteMemoryPath) ? fs.readFileSync(siteMemoryPath, "utf8") : "";
@@ -70,6 +220,8 @@ const report = {
   ok: failures.length === 0,
   records: records.length,
   uniqueVideoIds: new Set(ids).size,
+  subtitleCatalogCoverage: `${catalogIdSet.size}/${ids.length}`,
+  subtitleAssets: referencedSubtitleJson.size,
   siteMemoryCoverage: `${ids.length - missingMemory.length}/${ids.length}`,
   siteMemoryBytes: Buffer.byteLength(siteMemory),
   failures,
