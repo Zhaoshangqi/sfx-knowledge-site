@@ -107,12 +107,17 @@ function atomicWriteFile(options) {
     path.dirname(target),
     '.' + path.basename(target) + '.' + process.pid + '.' + temporarySequence + '.tmp'
   );
+  let ownsTemporary = false;
 
   try {
     fsImpl.writeFileSync(temporary, options.content, { encoding: 'utf8', flag: 'wx' });
+    ownsTemporary = true;
     fsImpl.renameSync(temporary, target);
+    ownsTemporary = false;
   } finally {
-    if (fsImpl.existsSync(temporary)) fsImpl.rmSync(temporary, { force: true });
+    if (ownsTemporary && fsImpl.existsSync(temporary)) {
+      fsImpl.rmSync(temporary, { force: true });
+    }
   }
   return target;
 }

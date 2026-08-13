@@ -4,6 +4,8 @@ const vm = require("vm");
 const { spawnSync } = require("child_process");
 
 const root = path.resolve(__dirname, "..");
+const expectedSiteRecords = 82;
+const youtubeVideoIdPattern = /^[A-Za-z0-9_-]{11}$/;
 const required = [
   "index.html",
   "AGENTS.md",
@@ -33,9 +35,26 @@ const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const match = html.match(/const records = ([\s\S]*?);\r?\n\r?\n\s*const imageManifest/);
 if (!match) failures.push("index.html records block not found");
 const records = match ? JSON.parse(match[1]) : [];
-const ids = records.map((record) => record.videoId).filter(Boolean);
-if (records.length !== 82) failures.push(`expected 82 site records, found ${records.length}`);
-if (new Set(ids).size !== ids.length) failures.push("duplicate videoId found in records");
+if (records.length !== expectedSiteRecords) {
+  failures.push(`expected ${expectedSiteRecords} site records, found ${records.length}`);
+}
+const ids = [];
+for (const [index, record] of records.entries()) {
+  const videoId = record && typeof record === "object" ? record.videoId : undefined;
+  if (typeof videoId !== "string" || !youtubeVideoIdPattern.test(videoId)) {
+    failures.push(`invalid site record videoId at index ${index}`);
+  } else {
+    ids.push(videoId);
+  }
+}
+const siteIdSet = new Set(ids);
+if (siteIdSet.size !== ids.length) failures.push("duplicate videoId found in records");
+if (ids.length !== expectedSiteRecords || siteIdSet.size !== expectedSiteRecords) {
+  failures.push(
+    `expected ${expectedSiteRecords} valid unique video IDs, ` +
+    `found ${ids.length} valid and ${siteIdSet.size} unique`
+  );
+}
 
 const subtitleModulePath = path.join(root, "src", "video-subtitles.js");
 const subtitleRoot = path.join(root, "assets", "subtitles");
@@ -115,13 +134,15 @@ for (const [index, entry] of subtitleCatalog.entries()) {
 if (new Set(catalogIds).size !== catalogIds.length) {
   failures.push("duplicate videoId found in subtitle catalog");
 }
-const siteIdSet = new Set(ids);
 const catalogIdSet = new Set(catalogIds);
-const missingCatalogIds = ids.filter((id) => !catalogIdSet.has(id));
+const missingCatalogIds = [...siteIdSet].filter((id) => !catalogIdSet.has(id));
 const orphanCatalogIds = [...catalogIdSet].filter((id) => !siteIdSet.has(id));
-if (subtitleCatalog.length !== ids.length || missingCatalogIds.length || orphanCatalogIds.length) {
+if (subtitleCatalog.length !== expectedSiteRecords ||
+    catalogIdSet.size !== expectedSiteRecords ||
+    siteIdSet.size !== expectedSiteRecords ||
+    missingCatalogIds.length || orphanCatalogIds.length) {
   failures.push(
-    `subtitle catalog coverage ${catalogIdSet.size}/${ids.length}; ` +
+    `subtitle catalog coverage ${catalogIdSet.size}/${expectedSiteRecords}; ` +
     `missing: ${missingCatalogIds.join(", ") || "none"}; ` +
     `orphan: ${orphanCatalogIds.join(", ") || "none"}`
   );
@@ -182,7 +203,7 @@ if (tracked.error || tracked.status !== 0) {
 
 const siteMemoryPath = path.join(root, "skills", "sfx-knowledge", "references", "site-video-memory.md");
 const siteMemory = fs.existsSync(siteMemoryPath) ? fs.readFileSync(siteMemoryPath, "utf8") : "";
-const missingMemory = ids.filter((id) => !siteMemory.includes(`## ${id} - `));
+const missingMemory = [...siteIdSet].filter((id) => !siteMemory.includes(`## ${id} - `));
 if (missingMemory.length) failures.push(`site memory missing ${missingMemory.length} video ids: ${missingMemory.join(", ")}`);
 
 const skill = fs.readFileSync(path.join(root, "skills", "sfx-knowledge", "SKILL.md"), "utf8");
@@ -219,10 +240,10 @@ walk(root);
 const report = {
   ok: failures.length === 0,
   records: records.length,
-  uniqueVideoIds: new Set(ids).size,
-  subtitleCatalogCoverage: `${catalogIdSet.size}/${ids.length}`,
+  uniqueVideoIds: siteIdSet.size,
+  subtitleCatalogCoverage: `${catalogIdSet.size}/${expectedSiteRecords}`,
   subtitleAssets: referencedSubtitleJson.size,
-  siteMemoryCoverage: `${ids.length - missingMemory.length}/${ids.length}`,
+  siteMemoryCoverage: `${siteIdSet.size - missingMemory.length}/${expectedSiteRecords}`,
   siteMemoryBytes: Buffer.byteLength(siteMemory),
   failures,
 };

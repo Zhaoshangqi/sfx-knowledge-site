@@ -5,6 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const { spawnSync } = require('node:child_process');
 
 const {
   extractRecords,
@@ -14,6 +15,8 @@ const {
   fetchPublic,
   runCli
 } = require('../tools/batch-site-subtitles.cjs');
+
+const verifierPath = path.join(__dirname, '..', 'tools', 'verify-portable-kit.cjs');
 
 function temporaryDirectory(t) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'sfx-batch-subtitles-'));
@@ -102,6 +105,69 @@ function argumentAfter(args, name) {
   return args[index + 1];
 }
 
+function writeFixtureFile(root, relative, content = '') {
+  const filename = path.join(root, ...relative.split('/'));
+  fs.mkdirSync(path.dirname(filename), { recursive: true });
+  fs.writeFileSync(filename, content, 'utf8');
+  return filename;
+}
+
+function portableVerifierFixture(t, siteRecords, catalog) {
+  const root = temporaryDirectory(t);
+  const placeholders = [
+    'AGENTS.md',
+    'README.md',
+    'docs/learning-workflow.md',
+    'requirements.txt',
+    'skills/sfx-knowledge/references/sfx-knowledge.md',
+    'skills/sfx-knowledge/references/video-learnings.md',
+    'tools/prepare-sfx-video.py',
+    'tools/extract-video-context.cjs',
+    'tools/export-site-memory.cjs',
+    'tools/build-site-subtitles.cjs',
+    'tools/batch-site-subtitles.cjs',
+    'tools/install-sfx-skill.ps1'
+  ];
+  placeholders.forEach((relative) => writeFixtureFile(root, relative));
+  writeFixtureFile(root, 'index.html', indexHtml(siteRecords));
+  writeFixtureFile(root, 'src/video-subtitles.js', [
+    '/* SUBTITLE_CATALOG_START */',
+    'var rawCatalog = ' + JSON.stringify(catalog, null, 2) + ';',
+    '/* SUBTITLE_CATALOG_END */',
+    ''
+  ].join('\n'));
+  writeFixtureFile(root, 'skills/sfx-knowledge/SKILL.md', [
+    '---',
+    'name: sfx-knowledge',
+    'description: Portable verifier fixture',
+    '---',
+    '',
+    'Uses site-video-memory.md.',
+    ''
+  ].join('\n'));
+  const validIds = siteRecords
+    .map((record) => record.videoId)
+    .filter((id) => typeof id === 'string' && /^[A-Za-z0-9_-]{11}$/.test(id));
+  writeFixtureFile(
+    root,
+    'skills/sfx-knowledge/references/site-video-memory.md',
+    validIds.map((id) => '## ' + id + ' - Fixture').join('\n') + '\n'
+  );
+  writeFixtureFile(root, 'tools/data/subtitle-status-overrides.json', '{}\n');
+  writeFixtureFile(root, '.gitignore', '.venv/\n.work/\ncookies*.txt\n.env\n');
+  fs.mkdirSync(path.join(root, 'assets', 'subtitles'), { recursive: true });
+  const fixtureVerifier = path.join(root, 'tools', 'verify-portable-kit.cjs');
+  fs.copyFileSync(verifierPath, fixtureVerifier);
+
+  const git = spawnSync('git', ['init', '--quiet'], {
+    cwd: root,
+    encoding: 'utf8',
+    windowsHide: true
+  });
+  assert.equal(git.status, 0, git.stderr);
+  return { root, verifierPath: fixtureVerifier };
+}
+
 test('extractRecords parses all 82 records in source order', () => {
   const expected = records(82);
   const actual = extractRecords(indexHtml(expected));
@@ -115,6 +181,30 @@ test('extractRecords rejects duplicate record video IDs', () => {
   duplicated[1].videoId = duplicated[0].videoId;
 
   assert.throws(() => extractRecords(indexHtml(duplicated)), /duplicate.*videoId/i);
+});
+
+test('portable verifier rejects 82 records when only 81 have valid video IDs', (t) => {
+  const siteRecords = records(82);
+  delete siteRecords[81].videoId;
+  const catalog = siteRecords.slice(0, 81).map((record) => ({
+    videoId: record.videoId,
+    contentStatus: 'missing'
+  }));
+  const fixture = portableVerifierFixture(t, siteRecords, catalog);
+
+  const result = spawnSync(process.execPath, [fixture.verifierPath], {
+    cwd: fixture.root,
+    encoding: 'utf8',
+    windowsHide: true
+  });
+
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  const report = JSON.parse(result.stdout);
+  assert.equal(report.records, 82);
+  assert.equal(report.uniqueVideoIds, 81);
+  assert.equal(report.subtitleCatalogCoverage, '81/82');
+  assert.ok(report.failures.some((failure) => /invalid.*videoId.*index 81/i.test(failure)));
+  assert.ok(report.failures.some((failure) => /expected 82 valid unique video IDs/i.test(failure)));
 });
 
 test('buildCatalog emits exactly one ordered entry per site record and exact coverage counts', (t) => {
@@ -354,6 +444,46 @@ test('importVtt writes a temporary sibling and atomically renames it', (t) => {
   assert.notEqual(rename.from, outputPath);
   assert.ok(events.some((event) => event.operation === 'write' && event.filename === rename.from));
   assert.equal(fs.existsSync(rename.from), false);
+});
+
+test('importVtt preserves an unowned colliding temp and the target when exclusive create fails', (t) => {
+  const directory = temporaryDirectory(t);
+  const inputRoot = path.join(directory, 'input');
+  const outputRoot = path.join(directory, 'output');
+  fs.mkdirSync(inputRoot);
+  fs.mkdirSync(outputRoot);
+  const id = videoId(0);
+  const inputPath = path.join(inputRoot, id + '.zh-Hans.vtt');
+  const outputPath = path.join(outputRoot, id + '.json');
+  fs.writeFileSync(inputPath, vtt(), 'utf8');
+  fs.writeFileSync(outputPath, 'previous target\n', 'utf8');
+  let collisionPath = null;
+  const collisionFs = Object.create(fs);
+  collisionFs.writeFileSync = function (filename, content, options) {
+    if (options && options.flag === 'wx') {
+      collisionPath = filename;
+      fs.writeFileSync(filename, 'foreign temp\n', 'utf8');
+    }
+    return fs.writeFileSync(filename, content, options);
+  };
+
+  assert.throws(() => importVtt({
+    inputRoot,
+    outputRoot,
+    inputPath,
+    videoId: id,
+    language: 'zh-CN',
+    source: 'site-owned-from-public-captions',
+    reviewStatus: 'draft',
+    updatedAt: '2026-08-13',
+    force: true,
+    fsImpl: collisionFs
+  }), (error) => error && error.code === 'EEXIST');
+
+  assert.ok(collisionPath);
+  assert.equal(fs.existsSync(collisionPath), true);
+  assert.equal(fs.readFileSync(collisionPath, 'utf8'), 'foreign temp\n');
+  assert.equal(fs.readFileSync(outputPath, 'utf8'), 'previous target\n');
 });
 
 test('importVtt rejects traversal, symlink escapes, and filename identity mismatches', (t) => {
