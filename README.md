@@ -75,7 +75,7 @@ python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cuda --
 
 ## 安全边界
 
-绝不提交 `.work`、媒体、原始 VTT、review/candidate 证据、Cookie、登录态、token、API key、模型 checkpoint 或本机绝对路径。只提交已审校的站内 JSON 字幕、catalog、工具、测试和面向维护者的文档。
+绝不提交 `.work`、媒体、原始 VTT、review/candidate 证据、Cookie、登录态、token、API key、模型 checkpoint 或本机绝对路径。可提交经过结构和来源校验的站内 JSON 字幕，`reviewStatus` 可为 `draft` 或 `reviewed`，以及 catalog、工具、测试和面向维护者的文档。
 
 ## 全量命令
 
