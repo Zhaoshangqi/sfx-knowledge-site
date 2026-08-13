@@ -156,7 +156,7 @@ function codePointLength(text) {
 function splitTextForDisplay(text) {
   const remaining = Array.from(text);
   const parts = [];
-  const minimumBoundary = Math.floor(MAX_DISPLAY_TEXT_LENGTH * 0.6);
+  const minimumBoundary = Math.ceil(MAX_DISPLAY_TEXT_LENGTH * 0.6);
 
   while (remaining.length > MAX_DISPLAY_TEXT_LENGTH) {
     let cut = MAX_DISPLAY_TEXT_LENGTH;
@@ -184,18 +184,28 @@ function splitCueForDisplay(cue) {
   const weights = parts.map(codePointLength);
   const totalWeight = weights.reduce((sum, value) => sum + value, 0);
   const duration = cue.end - cue.start;
+  const boundaries = [cue.start];
   let consumedWeight = 0;
 
-  return parts.map((text, index) => {
-    const start = index === 0
-      ? cue.start
-      : cue.start + (duration * consumedWeight / totalWeight);
-    consumedWeight += weights[index];
-    const end = index === parts.length - 1
-      ? cue.end
-      : cue.start + (duration * consumedWeight / totalWeight);
-    return { start, end, text };
+  weights.slice(0, -1).forEach((weight) => {
+    consumedWeight += weight;
+    boundaries.push(cue.start + (duration * (consumedWeight / totalWeight)));
   });
+  boundaries.push(cue.end);
+
+  const splitCues = parts.map((text, index) => ({
+    start: boundaries[index],
+    end: boundaries[index + 1],
+    text
+  }));
+  if (splitCues.some((part) => (
+    !Number.isFinite(part.start) ||
+    !Number.isFinite(part.end) ||
+    part.end <= part.start
+  ))) {
+    throw new Error('Cannot split cue into positive-duration display cues: insufficient floating-point precision');
+  }
+  return splitCues;
 }
 
 function compactCues(cues) {

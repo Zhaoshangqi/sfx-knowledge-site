@@ -298,12 +298,41 @@ test('compactCues splits overlong cues without breaking Unicode text or timing',
   assert.equal(normalize(cues.map((cue) => cue.text).join('')), normalize(sourceText));
 });
 
+test('compactCues rejects display splits without representable positive durations', () => {
+  assert.throws(
+    () => compactCues([{
+      start: 1,
+      end: 1 + Number.EPSILON,
+      text: 'x'.repeat(100)
+    }]),
+    /Cannot split cue into positive-duration display cues/
+  );
+});
+
 test('compactCues prefers a late punctuation boundary when splitting display text', () => {
   const sourceText = '前'.repeat(30) + '，' + '中'.repeat(17) + '后'.repeat(10);
   const cues = compactCues([{ start: 0, end: 12, text: sourceText }]);
 
   assert.equal(cues.length, 2);
   assert.equal(cues[0].text, '前'.repeat(30) + '，');
+  assert.equal(cues.map((cue) => cue.text).join(''), sourceText);
+});
+
+test('compactCues ignores a punctuation boundary at code point 28', () => {
+  const sourceText = '前'.repeat(27) + '，' + '后'.repeat(30);
+  const cues = compactCues([{ start: 0, end: 12, text: sourceText }]);
+
+  assert.equal(Array.from(cues[0].text).length, 48);
+  assert.equal(cues[0].text, Array.from(sourceText).slice(0, 48).join(''));
+  assert.equal(cues.map((cue) => cue.text).join(''), sourceText);
+});
+
+test('compactCues accepts a punctuation boundary at code point 29', () => {
+  const sourceText = '前'.repeat(28) + '，' + '后'.repeat(29);
+  const cues = compactCues([{ start: 0, end: 12, text: sourceText }]);
+
+  assert.equal(Array.from(cues[0].text).length, 29);
+  assert.equal(cues[0].text, '前'.repeat(28) + '，');
   assert.equal(cues.map((cue) => cue.text).join(''), sourceText);
 });
 
