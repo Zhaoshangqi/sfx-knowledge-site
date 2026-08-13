@@ -1,51 +1,32 @@
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) {
-    module.exports = factory();
+    module.exports = factory(root);
   } else {
-    root.SfxVideoSubtitles = factory();
+    root.SfxVideoSubtitles = factory(root);
   }
-}(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+}(typeof globalThis !== 'undefined' ? globalThis : this, function (root) {
   'use strict';
 
-  /* TRACK_DATA_START */
-  var rawTracks = [{
+  /* SUBTITLE_CATALOG_START */
+  var rawCatalog = [{
     videoId: 'Xl5u91oQv-k',
     language: 'zh-CN',
     source: 'site-owned-from-public-captions',
     reviewStatus: 'draft',
     updatedAt: '2026-08-12',
-    cues: [
-      { start: 40.559, end: 48.709, text: '这次介绍几个不太复杂的小技巧。' },
-      { start: 48.719, end: 57.43, text: '但我主要想强调 Stepwise Morph 这款插件有多好用。' },
-      { start: 57.44, end: 67.07, text: 'Stepwise Morph 是免费的，搜索一下就能找到；Stepwise 还提供很多免费插件。' },
-      { start: 67.08, end: 74.35, text: 'Morph 非常有意思，可以彻底改变一个声音。' },
-      { start: 74.36, end: 80.149, text: '首先来看这个声音是怎么做出来的。' },
-      { start: 80.159, end: 88.87, text: '我先演示一下：末端加了限制器，也降低了一些增益，因为这条链会变得很响。' },
-      { start: 88.88, end: 98.87, text: '关掉其他插件后，基础声源其实只是 Serum 里的 Analog 4088。' },
-      { start: 98.88, end: 110.35, text: 'Analog 4088 波表升高几个八度时更尖脆，降低几个八度时则更厚。' },
-      { start: 110.36, end: 120.51, text: '这里主要用脉冲宽度调制，也就是 PWM，让扫描位置在波形上左右移动。' },
-      { start: 120.52, end: 129.51, text: '滤波器只增加一点音色特色；我还用了多段压缩器。' },
-      { start: 129.52, end: 139.55, text: '多段压缩主要是为了增加质感和延续感，得到更持续的纹理声。' },
-      { start: 139.56, end: 150.91, text: '启用 GRM Reson 后，声音开始出现共振特质，再配合一些瞬态塑形。' },
-      { start: 150.92, end: 165.91, text: '接着继续堆叠更多 GRM Reson，并在后面回收一些增益。' },
-      { start: 165.92, end: 184.81, text: '这里很适合做变化：任选一个共振器，改变 Resonance 就能得到不同结果。' },
-      { start: 207.72, end: 218.47, text: '这些设置很好玩；在任何一个共振器阶段，都可以改变 Resonance 和采样保持速率。' },
-      { start: 218.48, end: 230.51, text: '接着打开同一个音色，仍然使用 Serum，再串联这些共振器。' },
-      { start: 230.519, end: 240.95, text: '然后在共振器后加入 Stepwise Morph，并把它启用。' },
-      { start: 240.959, end: 255.18, text: '默认曲线接近直线；加入多个控制点并上下移动，就会得到很有科幻感的频谱纹理。' },
-      { start: 263.96, end: 280.31, text: '改变 FFT Size 也会明显改变结果。' },
-      { start: 280.32, end: 282.71, text: '现在把 FFT Size 调得更高一些。' },
-      { start: 294.8, end: 300.44, text: '哪怕只是轻微移动其中一个控制点，声音也会发生很大的变化。' },
-      { start: 348.12, end: 353.25, text: '关掉 Morph 后，声音会完全不同。' },
-      { start: 376.8, end: 382.199, text: 'Stepwise Morph 真的很适合拿来探索不同变化。' }
-    ]
+    contentStatus: 'track',
+    asset: 'assets/subtitles/Xl5u91oQv-k.json'
   }];
-  /* TRACK_DATA_END */
+  /* SUBTITLE_CATALOG_END */
 
   var statuses = Object.freeze({
     missing: Object.freeze({
       status: 'missing',
       label: '中文字幕整理中'
+    }),
+    noSpeech: Object.freeze({
+      status: 'no-speech',
+      label: '无语音，无需字幕'
     }),
     draft: Object.freeze({
       status: 'draft',
@@ -57,6 +38,7 @@
     })
   });
   var normalizedCueCache = typeof WeakMap === 'function' ? new WeakMap() : null;
+  var trackPromiseCache = Object.create(null);
 
   function isFiniteNonNegative(value) {
     return typeof value === 'number' && Number.isFinite(value) && value >= 0;
@@ -68,6 +50,55 @@
 
   function normalizeRequiredText(value) {
     return typeof value === 'string' ? value.trim() : '';
+  }
+
+  function isSafeCatalogVideoId(videoId) {
+    return /^[A-Za-z0-9_-]+$/.test(videoId);
+  }
+
+  function normalizeCatalogEntry(rawEntry) {
+    if (!rawEntry || typeof rawEntry !== 'object' || Array.isArray(rawEntry)) return null;
+
+    var videoId = normalizeVideoId(rawEntry.videoId);
+    var contentStatus = rawEntry.contentStatus;
+    if (!videoId || !isSafeCatalogVideoId(videoId) ||
+        (contentStatus !== 'track' &&
+         contentStatus !== 'no-speech' &&
+         contentStatus !== 'missing')) {
+      return null;
+    }
+
+    if (contentStatus !== 'track') {
+      return Object.freeze({
+        videoId: videoId,
+        contentStatus: contentStatus
+      });
+    }
+
+    var language = normalizeRequiredText(rawEntry.language);
+    var source = normalizeRequiredText(rawEntry.source);
+    var reviewStatus = rawEntry.reviewStatus;
+    var updatedAt = normalizeRequiredText(rawEntry.updatedAt);
+    var asset = normalizeRequiredText(rawEntry.asset);
+    var expectedAsset = 'assets/subtitles/' + videoId + '.json';
+
+    if (!language ||
+        !source ||
+        (reviewStatus !== 'draft' && reviewStatus !== 'reviewed') ||
+        !updatedAt ||
+        asset !== expectedAsset) {
+      return null;
+    }
+
+    return Object.freeze({
+      videoId: videoId,
+      language: language,
+      source: source,
+      reviewStatus: reviewStatus,
+      updatedAt: updatedAt,
+      contentStatus: contentStatus,
+      asset: asset
+    });
   }
 
   function normalizeCues(rawCues) {
@@ -130,23 +161,103 @@
     return track;
   }
 
-  var tracksByVideoId = Object.create(null);
-  rawTracks.forEach(function (rawTrack, index) {
-    var track = normalizeTrack(rawTrack);
-    if (!track) throw new Error('Invalid subtitle track at index ' + index);
-    if (Object.prototype.hasOwnProperty.call(tracksByVideoId, track.videoId)) {
-      throw new Error('Duplicate subtitle track for videoId: ' + track.videoId);
+  var catalogByVideoId = Object.create(null);
+  rawCatalog.forEach(function (rawEntry, index) {
+    var entry = normalizeCatalogEntry(rawEntry);
+    if (!entry) throw new Error('Invalid subtitle catalog entry at index ' + index);
+    if (Object.prototype.hasOwnProperty.call(catalogByVideoId, entry.videoId)) {
+      throw new Error('Duplicate subtitle catalog entry for videoId: ' + entry.videoId);
     }
-    tracksByVideoId[track.videoId] = track;
+    catalogByVideoId[entry.videoId] = entry;
   });
-  Object.freeze(tracksByVideoId);
+  Object.freeze(catalogByVideoId);
 
-  function trackFor(videoId) {
+  function entryFor(videoId) {
     var normalizedId = normalizeVideoId(videoId);
-    if (!normalizedId || !Object.prototype.hasOwnProperty.call(tracksByVideoId, normalizedId)) {
+    if (!normalizedId || !Object.prototype.hasOwnProperty.call(catalogByVideoId, normalizedId)) {
       return null;
     }
-    return tracksByVideoId[normalizedId];
+    return catalogByVideoId[normalizedId];
+  }
+
+  function fetchFor(options) {
+    if (options &&
+        typeof options === 'object' &&
+        Object.prototype.hasOwnProperty.call(options, 'fetch')) {
+      return typeof options.fetch === 'function' ? options.fetch : null;
+    }
+    return root && typeof root.fetch === 'function' ? root.fetch : null;
+  }
+
+  function trackMatchesEntry(track, entry) {
+    return track.videoId === entry.videoId &&
+      track.language === entry.language &&
+      track.source === entry.source &&
+      track.reviewStatus === entry.reviewStatus &&
+      track.updatedAt === entry.updatedAt;
+  }
+
+  function loadTrack(videoId, options) {
+    var entry = entryFor(videoId);
+    if (!entry || entry.contentStatus !== 'track') return Promise.resolve(null);
+
+    var normalizedId = entry.videoId;
+    if (Object.prototype.hasOwnProperty.call(trackPromiseCache, normalizedId)) {
+      return trackPromiseCache[normalizedId];
+    }
+
+    var fetchImpl = fetchFor(options);
+    var fetchResult;
+    if (!fetchImpl) {
+      fetchResult = Promise.reject(
+        new Error('No fetch implementation available for subtitle track: ' + normalizedId)
+      );
+    } else {
+      try {
+        fetchResult = fetchImpl.call(root, entry.asset);
+      } catch (error) {
+        fetchResult = Promise.reject(error);
+      }
+    }
+
+    var request = Promise.resolve(fetchResult)
+      .then(function (response) {
+        if (!response || response.ok !== true) {
+          var status = response && typeof response.status !== 'undefined'
+            ? String(response.status)
+            : 'unknown';
+          var statusText = response ? normalizeRequiredText(response.statusText) : '';
+          throw new Error(
+            'Failed to load subtitle track ' + normalizedId + ': HTTP ' +
+            status + (statusText ? ' ' + statusText : '')
+          );
+        }
+        if (typeof response.json !== 'function') {
+          throw new Error('Invalid subtitle response for videoId: ' + normalizedId);
+        }
+        return response.json();
+      })
+      .then(function (rawTrack) {
+        var track = normalizeTrack(rawTrack);
+        if (!track) throw new Error('Invalid subtitle track for videoId: ' + normalizedId);
+        if (!trackMatchesEntry(track, entry)) {
+          throw new Error('Subtitle track metadata does not match catalog entry: ' + normalizedId);
+        }
+        return track;
+      });
+
+    var cachedPromise = request.catch(function (error) {
+      if (trackPromiseCache[normalizedId] === cachedPromise) {
+        delete trackPromiseCache[normalizedId];
+      }
+      throw error;
+    });
+    trackPromiseCache[normalizedId] = cachedPromise;
+    return cachedPromise;
+  }
+
+  function clearTrackCache() {
+    trackPromiseCache = Object.create(null);
   }
 
   function cueAt(track, seconds) {
@@ -165,7 +276,7 @@
         Array.isArray(track.cues) &&
         Object.isFrozen(track.cues) &&
         track.cues.every(function (cue) { return Object.isFrozen(cue); });
-      if (cues && immutableInput && normalizedCueCache) normalizedCueCache.set(track, cues);
+      if (immutableInput && normalizedCueCache) normalizedCueCache.set(track, cues);
     }
 
     var low = 0;
@@ -198,12 +309,21 @@
   }
 
   function statusFor(videoId) {
-    var track = trackFor(videoId);
-    return track ? statuses[track.reviewStatus] : statuses.missing;
+    var entry = entryFor(videoId);
+    if (!entry || entry.contentStatus === 'missing') return statuses.missing;
+    if (entry.contentStatus === 'no-speech') return statuses.noSpeech;
+    return statuses[entry.reviewStatus];
   }
 
   function coverageFor(records) {
-    var counts = { total: 0, reviewed: 0, draft: 0, missing: 0 };
+    var counts = {
+      total: 0,
+      tracks: 0,
+      reviewed: 0,
+      draft: 0,
+      noSpeech: 0,
+      missing: 0
+    };
     if (!Array.isArray(records)) return Object.freeze(counts);
 
     var seen = Object.create(null);
@@ -215,14 +335,25 @@
 
       seen[videoId] = true;
       counts.total += 1;
-      counts[statusFor(videoId).status] += 1;
+
+      var entry = entryFor(videoId);
+      if (entry && entry.contentStatus === 'track') {
+        counts.tracks += 1;
+        counts[entry.reviewStatus] += 1;
+      } else if (entry && entry.contentStatus === 'no-speech') {
+        counts.noSpeech += 1;
+      } else {
+        counts.missing += 1;
+      }
     });
 
     return Object.freeze(counts);
   }
 
   return Object.freeze({
-    trackFor: trackFor,
+    entryFor: entryFor,
+    loadTrack: loadTrack,
+    clearTrackCache: clearTrackCache,
     cueAt: cueAt,
     formatTime: formatTime,
     statusFor: statusFor,
