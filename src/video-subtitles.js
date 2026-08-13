@@ -8,15 +8,718 @@
   'use strict';
 
   /* SUBTITLE_CATALOG_START */
-  var rawCatalog = [{
-    videoId: 'Xl5u91oQv-k',
-    language: 'zh-CN',
-    source: 'site-owned-from-public-captions',
-    reviewStatus: 'draft',
-    updatedAt: '2026-08-12',
-    contentStatus: 'track',
-    asset: 'assets/subtitles/Xl5u91oQv-k.json'
-  }];
+  var rawCatalog = [
+    {
+      "videoId": "T-Txp62Xp7E",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/T-Txp62Xp7E.json"
+    },
+    {
+      "videoId": "ChlEY5CCv-A",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/ChlEY5CCv-A.json"
+    },
+    {
+      "videoId": "1uFMVg7TrGU",
+      "contentStatus": "missing",
+      "reason": "no-subtitle-track-or-approved-override"
+    },
+    {
+      "videoId": "-vxdSIdNAw4",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/-vxdSIdNAw4.json"
+    },
+    {
+      "videoId": "zxfbE0exXKk",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/zxfbE0exXKk.json"
+    },
+    {
+      "videoId": "Ns8e5612fUw",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Ns8e5612fUw.json"
+    },
+    {
+      "videoId": "jVifbszcv2c",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/jVifbszcv2c.json"
+    },
+    {
+      "videoId": "tj5Sn_rZhnk",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/tj5Sn_rZhnk.json"
+    },
+    {
+      "videoId": "6xUsp9K61Nc",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/6xUsp9K61Nc.json"
+    },
+    {
+      "videoId": "-pmOXv31j6s",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/-pmOXv31j6s.json"
+    },
+    {
+      "videoId": "ZjRnoIezCnA",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/ZjRnoIezCnA.json"
+    },
+    {
+      "videoId": "ruFsZPu3qO0",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/ruFsZPu3qO0.json"
+    },
+    {
+      "videoId": "vU0EZlUoW7g",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/vU0EZlUoW7g.json"
+    },
+    {
+      "videoId": "6MMXjU4mH3w",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/6MMXjU4mH3w.json"
+    },
+    {
+      "videoId": "HsFlJ_UJyxs",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/HsFlJ_UJyxs.json"
+    },
+    {
+      "videoId": "qB23qR9KMGY",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/qB23qR9KMGY.json"
+    },
+    {
+      "videoId": "8-DGPoItgcE",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/8-DGPoItgcE.json"
+    },
+    {
+      "videoId": "TNnLxeWVjM0",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/TNnLxeWVjM0.json"
+    },
+    {
+      "videoId": "nRPOnY3a8YU",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/nRPOnY3a8YU.json"
+    },
+    {
+      "videoId": "upBjw_iHT7E",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/upBjw_iHT7E.json"
+    },
+    {
+      "videoId": "dxWLnuPUGTE",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/dxWLnuPUGTE.json"
+    },
+    {
+      "videoId": "z_-lgxCj_Do",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/z_-lgxCj_Do.json"
+    },
+    {
+      "videoId": "Vlhaimjv1Jw",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Vlhaimjv1Jw.json"
+    },
+    {
+      "videoId": "FlZ8V453BfA",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/FlZ8V453BfA.json"
+    },
+    {
+      "videoId": "M0cOtthAje0",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/M0cOtthAje0.json"
+    },
+    {
+      "videoId": "26TcO5_3pxo",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/26TcO5_3pxo.json"
+    },
+    {
+      "videoId": "0orLvTF1vj8",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/0orLvTF1vj8.json"
+    },
+    {
+      "videoId": "WOl66EfI9EQ",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/WOl66EfI9EQ.json"
+    },
+    {
+      "videoId": "3yrKFdjORy0",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/3yrKFdjORy0.json"
+    },
+    {
+      "videoId": "g0lt1bjOMWw",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/g0lt1bjOMWw.json"
+    },
+    {
+      "videoId": "D0qibJgxYHY",
+      "contentStatus": "missing",
+      "reason": "no-subtitle-track-or-approved-override"
+    },
+    {
+      "videoId": "Pvkfc32V8Mo",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Pvkfc32V8Mo.json"
+    },
+    {
+      "videoId": "dZsVzf2NWw0",
+      "contentStatus": "missing",
+      "reason": "no-subtitle-track-or-approved-override"
+    },
+    {
+      "videoId": "2L6qe8uRf0Y",
+      "contentStatus": "missing",
+      "reason": "no-subtitle-track-or-approved-override"
+    },
+    {
+      "videoId": "WdZ9DFDHaqI",
+      "contentStatus": "missing",
+      "reason": "no-subtitle-track-or-approved-override"
+    },
+    {
+      "videoId": "gLldwkc-0Vs",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/gLldwkc-0Vs.json"
+    },
+    {
+      "videoId": "Ub5ozlVecII",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Ub5ozlVecII.json"
+    },
+    {
+      "videoId": "Iz4rtBgqLlg",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Iz4rtBgqLlg.json"
+    },
+    {
+      "videoId": "kFxuNtkv4CU",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/kFxuNtkv4CU.json"
+    },
+    {
+      "videoId": "ii9vXwAxFSI",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/ii9vXwAxFSI.json"
+    },
+    {
+      "videoId": "cLhevQYlvlI",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/cLhevQYlvlI.json"
+    },
+    {
+      "videoId": "Ze9enZLKA2I",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Ze9enZLKA2I.json"
+    },
+    {
+      "videoId": "BPuxpbey-Ks",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/BPuxpbey-Ks.json"
+    },
+    {
+      "videoId": "ahbdvI6nLgA",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/ahbdvI6nLgA.json"
+    },
+    {
+      "videoId": "xWtyeqmjPKk",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/xWtyeqmjPKk.json"
+    },
+    {
+      "videoId": "wA5afo1P6tE",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/wA5afo1P6tE.json"
+    },
+    {
+      "videoId": "uP135z2QBTM",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/uP135z2QBTM.json"
+    },
+    {
+      "videoId": "fpazzwJnMdM",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/fpazzwJnMdM.json"
+    },
+    {
+      "videoId": "TOdyCTjzHLE",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/TOdyCTjzHLE.json"
+    },
+    {
+      "videoId": "RdVQYDBTB48",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/RdVQYDBTB48.json"
+    },
+    {
+      "videoId": "Ipbfcr-DFTI",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Ipbfcr-DFTI.json"
+    },
+    {
+      "videoId": "hfZnCFgt3TI",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/hfZnCFgt3TI.json"
+    },
+    {
+      "videoId": "M1KBLV0Zz6I",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/M1KBLV0Zz6I.json"
+    },
+    {
+      "videoId": "iyAwO9g_rAQ",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/iyAwO9g_rAQ.json"
+    },
+    {
+      "videoId": "aKkZZ-XeSqs",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/aKkZZ-XeSqs.json"
+    },
+    {
+      "videoId": "uh9yIziU8Pk",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/uh9yIziU8Pk.json"
+    },
+    {
+      "videoId": "YVto08ZB9Lk",
+      "contentStatus": "missing",
+      "reason": "no-subtitle-track-or-approved-override"
+    },
+    {
+      "videoId": "cHWeJHlXb54",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/cHWeJHlXb54.json"
+    },
+    {
+      "videoId": "6oJUotZGz0k",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/6oJUotZGz0k.json"
+    },
+    {
+      "videoId": "h1uYic59pf0",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/h1uYic59pf0.json"
+    },
+    {
+      "videoId": "EQw3BCxIRPk",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/EQw3BCxIRPk.json"
+    },
+    {
+      "videoId": "2VQTuApNrPA",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/2VQTuApNrPA.json"
+    },
+    {
+      "videoId": "Xl5u91oQv-k",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-12",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Xl5u91oQv-k.json"
+    },
+    {
+      "videoId": "kv0yNg1CPAk",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/kv0yNg1CPAk.json"
+    },
+    {
+      "videoId": "St6GD7CbdcM",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/St6GD7CbdcM.json"
+    },
+    {
+      "videoId": "eKCYZz98-N4",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/eKCYZz98-N4.json"
+    },
+    {
+      "videoId": "f9OrpDtedSI",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/f9OrpDtedSI.json"
+    },
+    {
+      "videoId": "2cTDQ_MetsE",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/2cTDQ_MetsE.json"
+    },
+    {
+      "videoId": "ceC_RDgx71s",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/ceC_RDgx71s.json"
+    },
+    {
+      "videoId": "fYqe17OJRNM",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/fYqe17OJRNM.json"
+    },
+    {
+      "videoId": "j4POSc1YeAo",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/j4POSc1YeAo.json"
+    },
+    {
+      "videoId": "C_5qPsn1GWY",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/C_5qPsn1GWY.json"
+    },
+    {
+      "videoId": "ir8d3PUj5JU",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/ir8d3PUj5JU.json"
+    },
+    {
+      "videoId": "E_wGGNkVcrw",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/E_wGGNkVcrw.json"
+    },
+    {
+      "videoId": "wWms0-ad6fw",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/wWms0-ad6fw.json"
+    },
+    {
+      "videoId": "xCorcGCP218",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/xCorcGCP218.json"
+    },
+    {
+      "videoId": "v1IGAnVJylY",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/v1IGAnVJylY.json"
+    },
+    {
+      "videoId": "LyNsYzCN5_A",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/LyNsYzCN5_A.json"
+    },
+    {
+      "videoId": "FuFfkk7dxcY",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/FuFfkk7dxcY.json"
+    },
+    {
+      "videoId": "NdGNqhV8cpM",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/NdGNqhV8cpM.json"
+    },
+    {
+      "videoId": "yYUB55kMMV8",
+      "contentStatus": "missing",
+      "reason": "no-subtitle-track-or-approved-override"
+    },
+    {
+      "videoId": "cJ75ykkqV64",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-13",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/cJ75ykkqV64.json"
+    }
+  ];
   /* SUBTITLE_CATALOG_END */
 
   var statuses = Object.freeze({
