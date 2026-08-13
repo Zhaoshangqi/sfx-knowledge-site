@@ -30,7 +30,8 @@
     {
       "videoId": "1uFMVg7TrGU",
       "contentStatus": "missing",
-      "reason": "no-subtitle-track-or-approved-override"
+      "updatedAt": "2026-08-13",
+      "reason": "Local large-v3 review covered 106.254s: 0 accepted/rejected segments and 7/8 energy-VAD windows triggered. Full-duration spectrogram inspection cannot replace listening, and this runtime cannot audition audio; human full-duration listening is required before any no-speech classification."
     },
     {
       "videoId": "-vxdSIdNAw4",
@@ -278,7 +279,8 @@
     {
       "videoId": "D0qibJgxYHY",
       "contentStatus": "missing",
-      "reason": "no-subtitle-track-or-approved-override"
+      "updatedAt": "2026-08-13",
+      "reason": "Local large-v3 review covered 31.440s: borderline candidate 'Thanks for watching!' at 24.880-27.840 (no-speech probability 0.581623) plus rejected 'Thank you.' at 30.000-31.400 (0.834060), with 2/3 VAD windows triggered. Neither phrase is accepted without human full-duration listening, which this runtime cannot perform."
     },
     {
       "videoId": "Pvkfc32V8Mo",
@@ -292,17 +294,20 @@
     {
       "videoId": "dZsVzf2NWw0",
       "contentStatus": "missing",
-      "reason": "no-subtitle-track-or-approved-override"
+      "updatedAt": "2026-08-13",
+      "reason": "Local large-v3 review covered 113.290s: 0 accepted segments; 'you' at 109.800-110.460 was rejected with no-speech probability 0.809188; 8/8 VAD windows triggered. Human full-duration listening is required because this runtime cannot audition the audio."
     },
     {
       "videoId": "2L6qe8uRf0Y",
       "contentStatus": "missing",
-      "reason": "no-subtitle-track-or-approved-override"
+      "updatedAt": "2026-08-13",
+      "reason": "Local large-v3 review covered 122.694s: 0 accepted segments; 'I'm sorry.' at 90.140-92.940 and 'you' at 120.000-120.520 were rejected with no-speech probabilities 0.780191 and 0.822617; 8/9 VAD windows triggered. Human full-duration listening is required because this runtime cannot audition the audio."
     },
     {
       "videoId": "WdZ9DFDHaqI",
       "contentStatus": "missing",
-      "reason": "no-subtitle-track-or-approved-override"
+      "updatedAt": "2026-08-13",
+      "reason": "Local large-v3 review covered 74.954s: 0 accepted/rejected segments while 5/5 energy-VAD windows triggered on the creature/SFX demo. Full-duration spectrogram inspection cannot prove no intelligible speech; human full-duration listening is required because this runtime cannot audition audio."
     },
     {
       "videoId": "gLldwkc-0Vs",
@@ -496,7 +501,8 @@
     {
       "videoId": "YVto08ZB9Lk",
       "contentStatus": "missing",
-      "reason": "no-subtitle-track-or-approved-override"
+      "updatedAt": "2026-08-13",
+      "reason": "Local large-v3 review covered 958.845s: 0 accepted and 25 rejected segments, mostly near-periodic 'Thank you.' hallucination candidates; 49/64 energy-VAD windows triggered. Full-duration spectrogram review supports repeated UI/SFX events but cannot replace listening, which this runtime cannot perform."
     },
     {
       "videoId": "cHWeJHlXb54",
@@ -708,7 +714,8 @@
     {
       "videoId": "yYUB55kMMV8",
       "contentStatus": "missing",
-      "reason": "no-subtitle-track-or-approved-override"
+      "updatedAt": "2026-08-13",
+      "reason": "Canonical no-cookie yt-dlp media download failed twice; the approved standalone retry timed out connecting to googlevideo.com after 10 retries. No media, transcription, or listening evidence was available, so no subtitle or no-speech claim is made."
     },
     {
       "videoId": "cJ75ykkqV64",

@@ -1,0 +1,4 @@
+openai-whisper==20250625
+imageio-ffmpeg==0.6.0
+
+# Torch and Torchaudio must be installed as a matching pair for the local CUDA runtime.
