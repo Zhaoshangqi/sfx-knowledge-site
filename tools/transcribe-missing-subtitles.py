@@ -19,6 +19,7 @@ import subprocess
 import sys
 import uuid
 import wave
+import warnings
 from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
@@ -822,6 +823,14 @@ def _rollback_failure(action: str, path: Path, error: Exception) -> RuntimeError
     return RuntimeError(f"rollback {action} failed for {path}: {type(error).__name__}: {error}")
 
 
+def _warn_committed_cleanup(path: Path, error: Exception) -> None:
+    warnings.warn(
+        f"committed evidence cleanup retained {path.name}: {type(error).__name__}",
+        RuntimeWarning,
+        stacklevel=3,
+    )
+
+
 def write_evidence(
     work_root: Path | str,
     video_id: str,
@@ -887,16 +896,34 @@ def write_evidence(
                 restored.add(target)
             except Exception as error:
                 rollback_failures.append(_rollback_failure("restore", backup, error))
+        for target in restored:
+            backup = backups[target]
+            if backup.exists():
+                try:
+                    remove_file(backup)
+                except Exception as error:
+                    rollback_failures.append(_rollback_failure("cleanup", backup, error))
         if rollback_failures:
             raise publish_error from ExceptionGroup("evidence rollback failures", rollback_failures)
         raise
     finally:
-        for temporary in staged.values():
-            if temporary.exists():
-                temporary.unlink()
-        for target, backup in backups.items():
-            if (committed or target in restored) and backup.exists():
-                remove_file(backup)
+        if committed:
+            for temporary in staged.values():
+                if temporary.exists():
+                    try:
+                        remove_file(temporary)
+                    except Exception as error:
+                        _warn_committed_cleanup(temporary, error)
+            for backup in backups.values():
+                if backup.exists():
+                    try:
+                        remove_file(backup)
+                    except Exception as error:
+                        _warn_committed_cleanup(backup, error)
+        else:
+            for temporary in staged.values():
+                if temporary.exists():
+                    temporary.unlink()
 
     outputs = {name: target for name, target, value in updates if value is not None}
     return outputs

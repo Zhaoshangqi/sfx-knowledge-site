@@ -8,6 +8,7 @@ import tempfile
 import types
 import unittest
 import wave
+import warnings
 from pathlib import Path
 from unittest import mock
 
@@ -809,6 +810,57 @@ class EvidenceAndBatchTest(ToolTestCase):
             )
             self.assertEqual(list(root.glob("*.tmp")), [])
             self.assertEqual(list(root.glob(f".{review_path.name}.*.bak")), [])
+
+    def test_committed_backup_cleanup_failure_warns_without_batch_failure(self):
+        write_evidence = self.require_api("write_evidence")
+        run_batch = self.require_api("run_batch")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir).resolve()
+            candidate_path = root / f"{FIXED_IDS[0]}.candidate.json"
+            review_path = root / f"{FIXED_IDS[0]}.review.json"
+            candidate_path.write_text('{"version": "old-candidate"}\n', encoding="utf-8")
+            review_path.write_text('{"version": "old-review"}\n', encoding="utf-8")
+            failures = []
+
+            def reject_backup_cleanup(path):
+                if Path(path).suffix == ".bak":
+                    raise OSError(f"injected locked backup: {path}")
+                os.unlink(path)
+
+            with warnings.catch_warnings(record=True) as captured:
+                warnings.simplefilter("always")
+                results = run_batch(
+                    [FIXED_IDS[0]],
+                    lambda _video_id: write_evidence(
+                        root,
+                        FIXED_IDS[0],
+                        candidate={"version": "new-candidate"},
+                        review={"version": "new-review"},
+                        force=True,
+                        remove_file=reject_backup_cleanup,
+                    ),
+                    lambda video_id, error: failures.append((video_id, error)),
+                )
+
+            self.assertEqual(failures, [])
+            self.assertEqual(results, [{"candidate": candidate_path, "review": review_path}])
+            self.assertEqual(
+                json.loads(candidate_path.read_text(encoding="utf-8")),
+                {"version": "new-candidate"},
+            )
+            self.assertEqual(
+                json.loads(review_path.read_text(encoding="utf-8")),
+                {"version": "new-review"},
+            )
+            backups = sorted(root.glob("*.bak"))
+            self.assertEqual(len(backups), 2)
+            self.assertEqual(len(captured), 2)
+            for warning, backup in zip(captured, backups):
+                message = str(warning.message)
+                self.assertIs(warning.category, RuntimeWarning)
+                self.assertIn(backup.name, message)
+                self.assertNotIn(str(root), message)
+                self.assertNotIn(str(Path.home()), message)
 
     def test_force_review_only_publish_removes_a_stale_candidate(self):
         write_evidence = self.require_api("write_evidence")
