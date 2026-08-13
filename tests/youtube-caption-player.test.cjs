@@ -30,7 +30,8 @@ class FakeClassList {
 class FakeElement {
   constructor(dataset = {}) {
     this.dataset = { ...dataset };
-    this.textContent = '';
+    this._textContent = '';
+    this.textContentAssignments = 0;
     this.disabled = false;
     this.hidden = false;
     this.attributes = Object.create(null);
@@ -39,6 +40,19 @@ class FakeElement {
     this.scrollCalls = 0;
     this.focusCalls = 0;
     this.parentNode = null;
+  }
+
+  get textContent() {
+    return this._textContent;
+  }
+
+  set textContent(value) {
+    this._textContent = String(value);
+    this.textContentAssignments += 1;
+  }
+
+  resetTextContentAssignments() {
+    this.textContentAssignments = 0;
   }
 
   addEventListener(type, listener) {
@@ -405,6 +419,73 @@ test('playing polls every 200 ms and synchronizes both caption surfaces and tran
   runtime.runInterval();
   assert.equal(fixture.caption.textContent, '');
   assert.equal(fixture.cueButtons[1].getAttribute('aria-current'), null);
+  controller.destroy();
+});
+
+test('caption surfaces mutate only when the displayed text changes', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const controller = playerApi.mount(fixture.root, {
+    track,
+    subtitles,
+    document: runtime.document,
+    loadApi: () => Promise.resolve(runtime.YT),
+    setInterval: runtime.setInterval,
+    clearInterval: runtime.clearInterval
+  });
+
+  fixture.cover.dispatch('click');
+  await flushPromises();
+  const config = runtime.getPlayerConfig();
+  config.events.onReady();
+  fixture.caption.resetTextContentAssignments();
+  fixture.overlay.resetTextContentAssignments();
+
+  runtime.setCurrentTime(track.cues[0].start);
+  config.events.onStateChange({ data: 1 });
+  assert.equal(fixture.caption.textContent, track.cues[0].text);
+  assert.equal(fixture.overlay.textContent, track.cues[0].text);
+  assert.equal(fixture.caption.textContentAssignments, 1);
+  assert.equal(fixture.overlay.textContentAssignments, 1);
+
+  runtime.runInterval();
+  runtime.runInterval();
+  assert.equal(fixture.caption.textContentAssignments, 1);
+  assert.equal(fixture.overlay.textContentAssignments, 1);
+
+  runtime.setCurrentTime(track.cues[1].start);
+  runtime.runInterval();
+  assert.equal(fixture.caption.textContent, track.cues[1].text);
+  assert.equal(fixture.overlay.textContent, track.cues[1].text);
+  assert.equal(fixture.caption.textContentAssignments, 2);
+  assert.equal(fixture.overlay.textContentAssignments, 2);
+
+  runtime.runInterval();
+  assert.equal(fixture.caption.textContentAssignments, 2);
+  assert.equal(fixture.overlay.textContentAssignments, 2);
+
+  fixture.toggle.dispatch('click');
+  assert.equal(fixture.caption.textContent, '');
+  assert.equal(fixture.overlay.textContent, '');
+  assert.equal(fixture.caption.textContentAssignments, 3);
+  assert.equal(fixture.overlay.textContentAssignments, 3);
+
+  runtime.runInterval();
+  assert.equal(fixture.caption.textContentAssignments, 3);
+  assert.equal(fixture.overlay.textContentAssignments, 3);
+
+  fixture.toggle.dispatch('click');
+  assert.equal(fixture.caption.textContent, track.cues[1].text);
+  assert.equal(fixture.overlay.textContent, track.cues[1].text);
+  assert.equal(fixture.caption.textContentAssignments, 4);
+  assert.equal(fixture.overlay.textContentAssignments, 4);
+
+  runtime.setCurrentTime(track.cues[track.cues.length - 1].end + 1);
+  runtime.runInterval();
+  assert.equal(fixture.caption.textContent, '');
+  assert.equal(fixture.overlay.textContent, '');
+  assert.equal(fixture.caption.textContentAssignments, 5);
+  assert.equal(fixture.overlay.textContentAssignments, 5);
   controller.destroy();
 });
 

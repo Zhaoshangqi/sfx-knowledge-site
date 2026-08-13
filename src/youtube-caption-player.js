@@ -257,8 +257,8 @@
 
     function setCaption(text) {
       var value = subtitlesVisible ? text : '';
-      if (captionLine) captionLine.textContent = value;
-      if (captionOverlay) captionOverlay.textContent = value;
+      if (captionLine && captionLine.textContent !== value) captionLine.textContent = value;
+      if (captionOverlay && captionOverlay.textContent !== value) captionOverlay.textContent = value;
     }
 
     function setActiveCue(index) {
