@@ -94,9 +94,10 @@
     var evidenceUpdatedAt = subtitleStatus === 'missing' && entry && typeof entry.updatedAt === 'string'
       ? entry.updatedAt.trim()
       : '';
-    var evidencePanel = evidenceReason && evidenceUpdatedAt
-      ? '<p class="video-caption-evidence" data-subtitle-evidence><strong>证据更新：' +
-          escapeHtml(evidenceUpdatedAt) + '</strong><span>' + escapeHtml(evidenceReason) + '</span></p>'
+    var evidenceLabel = evidenceUpdatedAt ? '证据更新：' + evidenceUpdatedAt : '缺失原因';
+    var evidencePanel = evidenceReason
+      ? '<p class="video-caption-evidence" data-subtitle-evidence><strong>' +
+          escapeHtml(evidenceLabel) + '</strong><span>' + escapeHtml(evidenceReason) + '</span></p>'
       : '';
     var transcriptPanel = subtitleStatus === 'loading'
       ? '<div class="video-transcript-container" data-transcript-container>' +

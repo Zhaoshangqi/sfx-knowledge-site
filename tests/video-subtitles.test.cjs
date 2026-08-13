@@ -203,6 +203,22 @@ test('preserves validated evidence for missing and no-speech catalog entries', (
   assert.ok(Object.isFrozen(api.entryFor('silent-video')));
 });
 
+test('accepts an evidence-bearing generated missing placeholder without an audit date', () => {
+  const api = browserApiWithCatalog([
+    {
+      videoId: 'pending-video',
+      contentStatus: 'missing',
+      reason: 'no-subtitle-track-or-approved-override'
+    }
+  ]);
+
+  assert.deepEqual(plain(api.entryFor('pending-video')), {
+    videoId: 'pending-video',
+    contentStatus: 'missing',
+    reason: 'no-subtitle-track-or-approved-override'
+  });
+});
+
 test('returns frozen empty coverage for malformed record input', () => {
   [undefined, null, {}, 'records'].forEach((records) => {
     const coverage = SfxVideoSubtitles.coverageFor(records);

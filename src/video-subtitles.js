@@ -794,9 +794,11 @@
       var evidenceUpdatedAt = normalizeRequiredText(rawEntry.updatedAt);
       var auditNote = normalizeRequiredText(rawEntry.auditNote);
       var reason = normalizeRequiredText(rawEntry.reason);
-      if (!isRealDate(evidenceUpdatedAt) ||
+      var hasEvidenceUpdatedAt = Object.prototype.hasOwnProperty.call(rawEntry, 'updatedAt');
+      if ((hasEvidenceUpdatedAt && !isRealDate(evidenceUpdatedAt)) ||
           (contentStatus === 'missing' && !reason) ||
-          (contentStatus === 'no-speech' && !auditNote && !reason) ||
+          (contentStatus === 'no-speech' &&
+            (!isRealDate(evidenceUpdatedAt) || (!auditNote && !reason))) ||
           (Object.prototype.hasOwnProperty.call(rawEntry, 'auditNote') && !auditNote) ||
           (Object.prototype.hasOwnProperty.call(rawEntry, 'reason') && !reason)) {
         return null;
@@ -804,9 +806,9 @@
 
       var evidenceEntry = {
         videoId: videoId,
-        contentStatus: contentStatus,
-        updatedAt: evidenceUpdatedAt
+        contentStatus: contentStatus
       };
+      if (evidenceUpdatedAt) evidenceEntry.updatedAt = evidenceUpdatedAt;
       if (auditNote) evidenceEntry.auditNote = auditNote;
       if (reason) evidenceEntry.reason = reason;
       return Object.freeze(evidenceEntry);

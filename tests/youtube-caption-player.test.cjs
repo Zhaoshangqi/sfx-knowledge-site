@@ -483,6 +483,21 @@ test('missing catalog evidence renders its reason and audit date as escaped text
   assert.match(html, /data-fullscreen-toggle/);
 });
 
+test('missing catalog evidence remains visible before an audit date exists', () => {
+  const html = playerApi.render(
+    { videoId: 'gPgKeCVN8Ek', title: 'Generated missing state' },
+    {
+      videoId: 'gPgKeCVN8Ek',
+      contentStatus: 'missing',
+      reason: 'no-subtitle-track-or-approved-override'
+    }
+  );
+
+  assert.match(html, /data-subtitle-evidence/);
+  assert.match(html, />缺失原因</);
+  assert.match(html, /no-subtitle-track-or-approved-override/);
+});
+
 test('loadApi shares one in-flight YouTube API request per window', async () => {
   const scripts = [];
   const fakeWindow = {};
