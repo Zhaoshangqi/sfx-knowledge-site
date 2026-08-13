@@ -818,6 +818,10 @@ def _stage_json(root: Path, target: Path, value: Any) -> Path:
     return temporary
 
 
+def _rollback_failure(action: str, path: Path, error: Exception) -> RuntimeError:
+    return RuntimeError(f"rollback {action} failed for {path}: {type(error).__name__}: {error}")
+
+
 def write_evidence(
     work_root: Path | str,
     video_id: str,
@@ -826,6 +830,7 @@ def write_evidence(
     review: Mapping[str, Any],
     force: bool = False,
     replace_file: Callable[[Path, Path], Any] = os.replace,
+    remove_file: Callable[[Path], Any] = os.unlink,
 ) -> dict[str, Path]:
     root = _absolute_lexical(work_root)
     video_id = validate_video_id(video_id)
@@ -845,6 +850,8 @@ def write_evidence(
     staged: dict[Path, Path] = {}
     backups: dict[Path, Path] = {}
     published: set[Path] = set()
+    restored: set[Path] = set()
+    committed = False
     try:
         for _, target, value in updates:
             if value is not None:
@@ -860,21 +867,36 @@ def write_evidence(
             if value is not None:
                 replace_file(staged[target], target)
                 published.add(target)
-    except Exception:
+        committed = True
+    except Exception as publish_error:
+        rollback_failures = []
+        cleaned = set()
         for target in published:
-            if target.exists():
-                target.unlink()
+            try:
+                if target.exists():
+                    remove_file(target)
+                cleaned.add(target)
+            except Exception as error:
+                rollback_failures.append(_rollback_failure("cleanup", target, error))
         for target, backup in backups.items():
-            if backup.exists():
-                os.replace(backup, target)
+            if target in published and target not in cleaned:
+                continue
+            try:
+                if backup.exists():
+                    replace_file(backup, target)
+                restored.add(target)
+            except Exception as error:
+                rollback_failures.append(_rollback_failure("restore", backup, error))
+        if rollback_failures:
+            raise publish_error from ExceptionGroup("evidence rollback failures", rollback_failures)
         raise
     finally:
         for temporary in staged.values():
             if temporary.exists():
                 temporary.unlink()
-        for backup in backups.values():
-            if backup.exists():
-                backup.unlink()
+        for target, backup in backups.items():
+            if (committed or target in restored) and backup.exists():
+                remove_file(backup)
 
     outputs = {name: target for name, target, value in updates if value is not None}
     return outputs

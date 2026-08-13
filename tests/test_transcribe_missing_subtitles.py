@@ -759,6 +759,57 @@ class EvidenceAndBatchTest(ToolTestCase):
                 sorted((candidate_path.name, review_path.name)),
             )
 
+    def test_force_rollback_keeps_candidate_backup_when_cleanup_fails(self):
+        write_evidence = self.require_api("write_evidence")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir).resolve()
+            candidate_path = root / f"{FIXED_IDS[0]}.candidate.json"
+            review_path = root / f"{FIXED_IDS[0]}.review.json"
+            candidate_path.write_text('{"version": "old-candidate"}\n', encoding="utf-8")
+            review_path.write_text('{"version": "old-review"}\n', encoding="utf-8")
+
+            def fail_review_publish(source, target):
+                if Path(target) == review_path and Path(source).suffix != ".bak":
+                    raise OSError("injected review publish failure")
+                os.replace(source, target)
+
+            def reject_candidate_cleanup(path):
+                if Path(path) == candidate_path:
+                    raise OSError("injected candidate cleanup failure")
+                os.unlink(path)
+
+            with self.assertRaisesRegex(OSError, "injected review publish failure") as captured:
+                write_evidence(
+                    root,
+                    FIXED_IDS[0],
+                    candidate={"version": "new-candidate"},
+                    review={"version": "new-review"},
+                    force=True,
+                    replace_file=fail_review_publish,
+                    remove_file=reject_candidate_cleanup,
+                )
+
+            self.assertIsInstance(captured.exception.__cause__, ExceptionGroup)
+            rollback_error = captured.exception.__cause__.exceptions[0]
+            self.assertIn(str(candidate_path), str(rollback_error))
+            self.assertIn("injected candidate cleanup failure", str(rollback_error))
+            self.assertEqual(
+                json.loads(candidate_path.read_text(encoding="utf-8")),
+                {"version": "new-candidate"},
+            )
+            self.assertEqual(
+                json.loads(review_path.read_text(encoding="utf-8")),
+                {"version": "old-review"},
+            )
+            candidate_backups = list(root.glob(f".{candidate_path.name}.*.bak"))
+            self.assertEqual(len(candidate_backups), 1)
+            self.assertEqual(
+                json.loads(candidate_backups[0].read_text(encoding="utf-8")),
+                {"version": "old-candidate"},
+            )
+            self.assertEqual(list(root.glob("*.tmp")), [])
+            self.assertEqual(list(root.glob(f".{review_path.name}.*.bak")), [])
+
     def test_force_review_only_publish_removes_a_stale_candidate(self):
         write_evidence = self.require_api("write_evidence")
         with tempfile.TemporaryDirectory() as temp_dir:
