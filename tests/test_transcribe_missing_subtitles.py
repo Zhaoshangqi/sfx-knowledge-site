@@ -522,10 +522,9 @@ class WhisperAndClassificationTest(ToolTestCase):
         )
 
         self.assertEqual(candidate["language"], "en")
-        self.assertEqual(candidate["source"], "local-whisper-transcription-candidate")
+        self.assertEqual(candidate["source"], "site-owned-from-local-transcription")
         self.assertEqual(candidate["reviewStatus"], "needs-translation-review")
         self.assertNotEqual(candidate["language"], "zh-CN")
-        self.assertNotEqual(candidate["source"], "site-owned-from-local-transcription")
         self.assertEqual(candidate["segments"], accepted)
 
 

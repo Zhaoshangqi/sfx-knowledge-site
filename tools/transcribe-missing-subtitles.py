@@ -672,7 +672,7 @@ def build_candidate(
     return {
         "videoId": video_id,
         "language": "en",
-        "source": "local-whisper-transcription-candidate",
+        "source": "site-owned-from-local-transcription",
         "reviewStatus": "needs-translation-review",
         "model": {"name": model_name, "options": dict(options)},
         "segments": list(accepted),
