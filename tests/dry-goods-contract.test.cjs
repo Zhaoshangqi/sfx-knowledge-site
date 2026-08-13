@@ -15,6 +15,270 @@ function sourceSlice(source, startMarker, endMarker) {
   return source.slice(start, end);
 }
 
+function inlineCss(html) {
+  const match = html.match(/<style>([\s\S]*?)<\/style>/);
+  assert.ok(match, "missing inline stylesheet");
+  return match[1];
+}
+
+function normalizeCssPrelude(value) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function cssBlocks(source) {
+  const blocks = [];
+  let cursor = 0;
+
+  while (cursor < source.length) {
+    const open = source.indexOf("{", cursor);
+    if (open === -1) break;
+
+    const rawPrelude = source.slice(cursor, open);
+    const preludeOffset = rawPrelude.search(/\S/);
+    const prelude = normalizeCssPrelude(rawPrelude);
+    let depth = 1;
+    let close = open + 1;
+
+    while (close < source.length && depth > 0) {
+      if (source[close] === "{") depth += 1;
+      if (source[close] === "}") depth -= 1;
+      close += 1;
+    }
+
+    assert.equal(depth, 0, `unclosed CSS block ${prelude}`);
+    if (prelude) {
+      blocks.push({
+        prelude,
+        body: source.slice(open + 1, close - 1),
+        start: cursor + Math.max(preludeOffset, 0),
+        end: close
+      });
+    }
+    cursor = close;
+  }
+
+  return blocks;
+}
+
+function cssSelectors(block) {
+  return block.prelude.split(",").map(normalizeCssPrelude);
+}
+
+function cssRule(source, selector) {
+  const normalizedSelector = normalizeCssPrelude(selector);
+  const block = cssBlocks(source).find((candidate) =>
+    !candidate.prelude.startsWith("@") && cssSelectors(candidate).includes(normalizedSelector)
+  );
+  assert.ok(block, `missing CSS rule ${selector}`);
+  return block;
+}
+
+function cssMedia(source, query) {
+  const expectedPrelude = normalizeCssPrelude(`@media ${query}`);
+  const block = cssBlocks(source).find((candidate) => candidate.prelude === expectedPrelude);
+  assert.ok(block, `missing CSS media block ${query}`);
+  return block;
+}
+
+function cssDeclarations(block) {
+  return block.body
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .split(";")
+    .reduce((declarations, entry) => {
+      const separator = entry.indexOf(":");
+      if (separator === -1) return declarations;
+      const property = entry.slice(0, separator).trim();
+      const value = entry.slice(separator + 1).trim();
+      if (property) declarations[property] = value;
+      return declarations;
+    }, {});
+}
+
+function assertCssDeclarations(block, expected) {
+  const declarations = cssDeclarations(block);
+  Object.entries(expected).forEach(([property, value]) => {
+    assert.equal(declarations[property], value, `${block.prelude} must set ${property}: ${value}`);
+  });
+  return declarations;
+}
+
+function allCssRules(source) {
+  return cssBlocks(source).flatMap((block) =>
+    block.prelude.startsWith("@") ? allCssRules(block.body) : [block]
+  );
+}
+
+test("site captions use a centered text-only overlay inside the video stage", () => {
+  const css = inlineCss(read("index.html"));
+  const overlay = cssRule(css, ".video-caption-overlay");
+
+  assertCssDeclarations(overlay, {
+    display: "block",
+    position: "absolute",
+    left: "50%",
+    bottom: "clamp(56px, 10%, 84px)",
+    "z-index": "4",
+    width: "max-content",
+    "max-width": "86%",
+    margin: "0",
+    padding: "6px 10px",
+    "border-radius": "4px",
+    color: "#fff",
+    background: "rgba(9, 11, 12, 0.76)",
+    transform: "translateX(-50%)",
+    "text-align": "center",
+    "overflow-wrap": "anywhere",
+    "text-shadow": "0 1px 2px rgba(0, 0, 0, 0.75)",
+    "font-size": "16px",
+    "line-height": "1.45",
+    "font-weight": "800",
+    "pointer-events": "none"
+  });
+});
+
+test("empty captions and CC-off state hide the overlay while the live region stays assistive-only", () => {
+  const css = inlineCss(read("index.html"));
+  const hiddenOverlay = cssRule(css, ".video-caption-overlay:empty");
+  const captionLine = cssRule(css, ".video-caption-line");
+  const stage = cssRule(css, ".video-player-stage");
+
+  assert.deepEqual(cssSelectors(hiddenOverlay), [
+    ".video-caption-overlay:empty",
+    ".subtitles-hidden .video-caption-overlay"
+  ]);
+  assertCssDeclarations(hiddenOverlay, { display: "none" });
+  const liveRegionDeclarations = assertCssDeclarations(captionLine, {
+    position: "absolute",
+    width: "1px",
+    height: "1px",
+    margin: "-1px",
+    padding: "0",
+    overflow: "hidden",
+    "clip-path": "inset(50%)",
+    "white-space": "nowrap",
+    border: "0"
+  });
+  assert.equal(liveRegionDeclarations["min-height"], undefined);
+  assertCssDeclarations(stage, { "aspect-ratio": "16 / 9" });
+});
+
+test("the native transcript disclosure is a compact utility row", () => {
+  const css = inlineCss(read("index.html"));
+  const disclosure = cssRule(css, ".video-transcript-disclosure");
+  const summary = cssRule(css, ".video-transcript-disclosure > summary");
+  const openSummary = cssRule(css, ".video-transcript-disclosure[open] > summary");
+  const transcript = cssRule(css, ".video-transcript");
+
+  const disclosureDeclarations = assertCssDeclarations(disclosure, {
+    margin: "0",
+    "border-top": "1px solid var(--line)",
+    color: "var(--ink)",
+    background: "var(--panel)"
+  });
+  const summaryDeclarations = assertCssDeclarations(summary, {
+    padding: "8px 0",
+    color: "var(--muted)",
+    cursor: "pointer",
+    "font-size": "12px",
+    "line-height": "1.5",
+    "font-weight": "800"
+  });
+  assertCssDeclarations(openSummary, {
+    color: "var(--ink)",
+    "border-bottom": "1px solid var(--line)"
+  });
+  assertCssDeclarations(transcript, { "border-top": "0" });
+  assert.equal(disclosureDeclarations["border-radius"], undefined);
+  assert.equal(disclosureDeclarations["box-shadow"], undefined);
+  assert.equal(summaryDeclarations.display, undefined);
+  assert.equal(summaryDeclarations["list-style"], undefined);
+  assert.doesNotMatch(css, /summary::(?:-webkit-details-marker|marker)/);
+});
+
+test("fullscreen hides transcript utility rows", () => {
+  const css = inlineCss(read("index.html"));
+  const hiddenTranscript = cssRule(css, ".video-player:fullscreen .video-transcript-disclosure");
+
+  assert.deepEqual(cssSelectors(hiddenTranscript), [
+    ".video-player:fullscreen .video-transcript-disclosure",
+    ".video-player:fullscreen .video-transcript-empty"
+  ]);
+  assertCssDeclarations(hiddenTranscript, { display: "none" });
+});
+
+test("fullscreen captions retain the centered base surface", () => {
+  const css = inlineCss(read("index.html"));
+  const fullscreenOverlay = cssRule(css, ".video-player:fullscreen .video-caption-overlay");
+  const declarations = assertCssDeclarations(fullscreenOverlay, {
+    bottom: "clamp(72px, 8%, 112px)",
+    "max-width": "84%",
+    padding: "8px 12px",
+    "font-size": "20px"
+  });
+
+  ["position", "left", "right", "z-index", "display", "width", "transform", "text-align", "background"]
+    .forEach((property) => assert.equal(declarations[property], undefined, `fullscreen must inherit ${property}`));
+});
+
+test("narrow portrait layouts keep captions clear of player controls", () => {
+  const css = inlineCss(read("index.html"));
+  const mobile = cssMedia(css, "(max-width: 640px)");
+
+  assertCssDeclarations(cssRule(mobile.body, ".video-caption-overlay"), {
+    bottom: "clamp(44px, 12%, 64px)",
+    "max-width": "92%",
+    "font-size": "14px"
+  });
+  assertCssDeclarations(cssRule(mobile.body, ".video-player:fullscreen .video-caption-overlay"), {
+    bottom: "clamp(56px, 10%, 80px)",
+    "max-width": "92%",
+    "font-size": "16px"
+  });
+  assert.equal(
+    cssBlocks(mobile.body).some((block) => cssSelectors(block).includes(".video-caption-line")),
+    false,
+    "mobile CSS must not make the assistive live region visible"
+  );
+});
+
+test("short landscape layouts override both normal and fullscreen caption offsets", () => {
+  const css = inlineCss(read("index.html"));
+  const mobile = cssMedia(css, "(max-width: 640px)");
+  const landscape = cssMedia(css, "(orientation: landscape) and (max-height: 520px)");
+  const fullscreenOverlay = cssRule(css, ".video-player:fullscreen .video-caption-overlay");
+  const landscapeOverlay = cssRule(landscape.body, ".video-caption-overlay");
+
+  assert.ok(landscape.start > mobile.end, "short-landscape rules must follow mobile rules");
+  assert.ok(landscape.start > fullscreenOverlay.end, "short-landscape rules must follow fullscreen rules");
+  assert.deepEqual(cssSelectors(landscapeOverlay), [
+    ".video-caption-overlay",
+    ".video-player:fullscreen .video-caption-overlay"
+  ]);
+  assertCssDeclarations(landscapeOverlay, {
+    bottom: "clamp(48px, 12%, 72px)",
+    "max-width": "92%",
+    "font-size": "16px"
+  });
+});
+
+test("caption and disclosure surfaces do not truncate subtitle text", () => {
+  const css = inlineCss(read("index.html"));
+  const relevantRules = allCssRules(css).filter((block) => cssSelectors(block).some((selector) =>
+    selector.includes(".video-caption-overlay") ||
+    selector.includes(".video-transcript-disclosure") ||
+    selector.includes(".video-transcript-empty") ||
+    /(^|\s)\.video-transcript(?![-\w])/.test(selector)
+  ));
+
+  assert.ok(relevantRules.length > 0);
+  relevantRules.forEach((block) => {
+    const declarations = cssDeclarations(block);
+    assert.equal(declarations["-webkit-line-clamp"], undefined, `${block.prelude} must not clamp lines`);
+    assert.notEqual(declarations["text-overflow"], "ellipsis", `${block.prelude} must not ellipsize text`);
+    assert.equal(declarations.height, undefined, `${block.prelude} must not use a fixed height`);
+  });
+});
+
 test("video cards scan compactly while full detail keeps its dry-goods order", () => {
   const html = read("index.html");
   const css = html.match(/<style>([\s\S]*?)<\/style>/)?.[1] || "";
