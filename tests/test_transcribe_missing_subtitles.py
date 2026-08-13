@@ -184,6 +184,88 @@ class DownloadBoundaryTest(ToolTestCase):
         self.assertEqual(result, media)
         run_process.assert_not_called()
 
+    def test_force_rejects_external_media_symlink_before_running_downloader(self):
+        download_media = self.require_api("download_media")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir).resolve()
+            root = base / "work"
+            outside_media = base / f"{FIXED_IDS[0]}.m4a"
+            root.mkdir()
+            outside_media.write_bytes(b"outside-media")
+            media_link = root / f"{FIXED_IDS[0]}.m4a"
+            try:
+                media_link.symlink_to(outside_media)
+            except OSError as error:
+                self.skipTest(f"platform refused symlink creation: {error}")
+            run_process = mock.Mock(side_effect=AssertionError("runner must not be called"))
+            try:
+                with self.assertRaisesRegex(ValueError, "link|reparse"):
+                    download_media(
+                        FIXED_IDS[0],
+                        root,
+                        root / "ffmpeg.exe",
+                        {"PATH": "fixture"},
+                        force=True,
+                        run_process=run_process,
+                    )
+                run_process.assert_not_called()
+                self.assertEqual(outside_media.read_bytes(), b"outside-media")
+            finally:
+                if os.path.lexists(media_link):
+                    media_link.unlink()
+
+    @unittest.skipUnless(os.name == "nt", "requires a real Windows junction")
+    def test_force_rejects_external_media_reparse_before_running_downloader(self):
+        download_media = self.require_api("download_media")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir).resolve()
+            root = base / "work"
+            outside = base / "outside-media"
+            root.mkdir()
+            outside.mkdir()
+            marker = outside / "marker.txt"
+            marker.write_text("outside", encoding="utf-8")
+            media_link = root / f"{FIXED_IDS[0]}.m4a"
+            result = subprocess.run(
+                [
+                    os.environ.get("COMSPEC", "cmd.exe"),
+                    "/d",
+                    "/c",
+                    "mklink",
+                    "/J",
+                    str(media_link),
+                    str(outside),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            if result.returncode != 0:
+                self.skipTest(
+                    "Windows refused junction creation: "
+                    + (result.stderr or result.stdout).strip()
+                )
+            run_process = mock.Mock(
+                return_value=subprocess.CompletedProcess(
+                    [], 1, stdout="", stderr="runner must not be called"
+                )
+            )
+            try:
+                with self.assertRaisesRegex(ValueError, "link|reparse"):
+                    download_media(
+                        FIXED_IDS[0],
+                        root,
+                        root / "ffmpeg.exe",
+                        {"PATH": "fixture"},
+                        force=True,
+                        run_process=run_process,
+                    )
+                run_process.assert_not_called()
+                self.assertEqual(marker.read_text(encoding="utf-8"), "outside")
+            finally:
+                if os.path.lexists(media_link):
+                    os.rmdir(media_link)
+
 
 class PathBoundaryTest(ToolTestCase):
     def test_work_and_media_paths_reject_traversal_and_root_escape(self):
@@ -221,6 +303,49 @@ class PathBoundaryTest(ToolTestCase):
                     must_exist=True,
                     is_symlink=lambda path: Path(path) == candidate,
                 )
+
+    @unittest.skipUnless(os.name == "nt", "requires a real Windows junction")
+    def test_resolve_work_root_rejects_repository_work_junction_before_writing(self):
+        resolve_work_root = self.require_api("resolve_work_root")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            base = Path(temp_dir).resolve()
+            repo_root = base / "repo"
+            outside = base / "outside"
+            repo_root.mkdir()
+            outside.mkdir()
+            marker = outside / "marker.txt"
+            marker.write_text("outside", encoding="utf-8")
+            work_junction = repo_root / ".work"
+            result = subprocess.run(
+                [
+                    os.environ.get("COMSPEC", "cmd.exe"),
+                    "/d",
+                    "/c",
+                    "mklink",
+                    "/J",
+                    str(work_junction),
+                    str(outside),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            if result.returncode != 0:
+                self.skipTest(
+                    "Windows refused junction creation: "
+                    + (result.stderr or result.stdout).strip()
+                )
+            try:
+                with self.assertRaisesRegex(ValueError, "link|reparse"):
+                    resolve_work_root(repo_root, ".work/subtitles")
+                self.assertFalse(
+                    (outside / "subtitles").exists(),
+                    "resolve_work_root must reject the junction before mkdir",
+                )
+                self.assertEqual(marker.read_text(encoding="utf-8"), "outside")
+            finally:
+                if os.path.lexists(work_junction):
+                    os.rmdir(work_junction)
 
     def test_downloader_rejects_reported_media_outside_work_root(self):
         download_media = self.require_api("download_media")
@@ -571,6 +696,92 @@ class EvidenceAndBatchTest(ToolTestCase):
 
             self.assertEqual(json.loads(target.read_text(encoding="utf-8")), {"value": 3})
             self.assertEqual(list(root.glob("*.tmp")), [])
+
+    def test_existing_review_conflict_does_not_leave_an_orphan_candidate(self):
+        write_evidence = self.require_api("write_evidence")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir).resolve()
+            candidate_path = root / f"{FIXED_IDS[0]}.candidate.json"
+            review_path = root / f"{FIXED_IDS[0]}.review.json"
+            review_path.write_text('{"version": "old"}\n', encoding="utf-8")
+
+            with self.assertRaises(FileExistsError):
+                write_evidence(
+                    root,
+                    FIXED_IDS[0],
+                    candidate={"version": "new"},
+                    review={"version": "new"},
+                )
+
+            self.assertFalse(candidate_path.exists())
+            self.assertEqual(
+                json.loads(review_path.read_text(encoding="utf-8")),
+                {"version": "old"},
+            )
+
+    def test_force_publish_failure_restores_the_old_evidence_set(self):
+        write_evidence = self.require_api("write_evidence")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir).resolve()
+            candidate_path = root / f"{FIXED_IDS[0]}.candidate.json"
+            review_path = root / f"{FIXED_IDS[0]}.review.json"
+            candidate_path.write_text('{"version": "old-candidate"}\n', encoding="utf-8")
+            review_path.write_text('{"version": "old-review"}\n', encoding="utf-8")
+            failed = False
+
+            def fail_first_review_publish(source, target):
+                nonlocal failed
+                if Path(target) == review_path and not failed:
+                    failed = True
+                    raise OSError("injected review publish failure")
+                os.replace(source, target)
+
+            with self.assertRaisesRegex(OSError, "injected review publish failure"):
+                write_evidence(
+                    root,
+                    FIXED_IDS[0],
+                    candidate={"version": "new-candidate"},
+                    review={"version": "new-review"},
+                    force=True,
+                    replace_file=fail_first_review_publish,
+                )
+
+            self.assertEqual(
+                json.loads(candidate_path.read_text(encoding="utf-8")),
+                {"version": "old-candidate"},
+            )
+            self.assertEqual(
+                json.loads(review_path.read_text(encoding="utf-8")),
+                {"version": "old-review"},
+            )
+            self.assertEqual(
+                sorted(path.name for path in root.iterdir()),
+                sorted((candidate_path.name, review_path.name)),
+            )
+
+    def test_force_review_only_publish_removes_a_stale_candidate(self):
+        write_evidence = self.require_api("write_evidence")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir).resolve()
+            candidate_path = root / f"{FIXED_IDS[0]}.candidate.json"
+            review_path = root / f"{FIXED_IDS[0]}.review.json"
+            candidate_path.write_text('{"version": "stale"}\n', encoding="utf-8")
+            review_path.write_text('{"version": "old-review"}\n', encoding="utf-8")
+
+            outputs = write_evidence(
+                root,
+                FIXED_IDS[0],
+                candidate=None,
+                review={"outcome": "failure"},
+                force=True,
+            )
+
+            self.assertEqual(outputs, {"review": review_path})
+            self.assertFalse(candidate_path.exists())
+            self.assertEqual(
+                json.loads(review_path.read_text(encoding="utf-8")),
+                {"outcome": "failure"},
+            )
 
     def test_no_accepted_speech_writes_review_only_and_never_an_override(self):
         write_evidence = self.require_api("write_evidence")

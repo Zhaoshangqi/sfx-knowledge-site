@@ -14,6 +14,7 @@ import json
 import math
 import os
 import re
+import stat
 import subprocess
 import sys
 import uuid
@@ -71,6 +72,20 @@ def _is_within(root: Path, candidate: Path) -> bool:
         return False
 
 
+def is_link_or_reparse(path: Path | str) -> bool:
+    """Return whether a path entry is a symlink or a Windows reparse point."""
+
+    try:
+        path_stat = Path(path).lstat()
+    except FileNotFoundError:
+        return False
+    if stat.S_ISLNK(path_stat.st_mode):
+        return True
+    return os.name == "nt" and bool(
+        getattr(path_stat, "st_file_attributes", 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT
+    )
+
+
 def assert_safe_path(
     root: Path | str,
     candidate: Path | str,
@@ -80,12 +95,12 @@ def assert_safe_path(
 ) -> Path:
     """Reject lexical, resolved, and symlink escapes from an existing root."""
 
-    link_check = is_symlink or (lambda path: path.is_symlink())
+    link_check = is_symlink or is_link_or_reparse
     root_lexical = _absolute_lexical(root)
+    if link_check(root_lexical):
+        raise ValueError(f"work root may not be a link or reparse point: {root_lexical}")
     if not root_lexical.is_dir():
         raise ValueError(f"work root is not a directory: {root_lexical}")
-    if link_check(root_lexical):
-        raise ValueError(f"work root may not be a symlink: {root_lexical}")
 
     candidate_lexical = _absolute_lexical(candidate)
     if not _is_within(root_lexical, candidate_lexical):
@@ -96,7 +111,7 @@ def assert_safe_path(
     for part in relative_parts:
         cursor = cursor / part
         if link_check(cursor):
-            raise ValueError(f"symlink paths are not allowed in work root: {cursor}")
+            raise ValueError(f"link or reparse paths are not allowed in work root: {cursor}")
 
     if must_exist and not candidate_lexical.exists():
         raise ValueError(f"required work file does not exist: {candidate_lexical}")
@@ -112,10 +127,14 @@ def assert_safe_path(
 
 
 def resolve_work_root(repo_root: Path | str, value: Path | str) -> Path:
-    repo = Path(repo_root).resolve(strict=True)
+    repo = _absolute_lexical(repo_root)
+    if is_link_or_reparse(repo):
+        raise ValueError(f"repository root may not be a link or reparse point: {repo}")
+    if not repo.is_dir():
+        raise ValueError(f"repository root is not a directory: {repo}")
     allowed_root = repo / ".work"
-    if os.path.lexists(allowed_root) and allowed_root.is_symlink():
-        raise ValueError("repository .work path may not be a symlink")
+    if is_link_or_reparse(allowed_root):
+        raise ValueError("repository .work path may not be a link or reparse point")
     allowed_root.mkdir(parents=True, exist_ok=True)
 
     requested = Path(value)
@@ -217,7 +236,8 @@ def _is_media_name(video_id: str, path: Path) -> bool:
 
 def discover_downloaded_media(work_root: Path | str, video_id: str) -> Path:
     video_id = validate_video_id(video_id)
-    root = Path(work_root).resolve(strict=True)
+    root = _absolute_lexical(work_root)
+    assert_safe_path(root, root, must_exist=True)
     candidates = []
     for path in root.iterdir():
         if _is_media_name(video_id, path):
@@ -244,9 +264,11 @@ def download_media(
     run_process: Callable[..., subprocess.CompletedProcess[str]] = _default_run_process,
 ) -> Path:
     video_id = validate_video_id(video_id)
-    root = Path(work_root).resolve(strict=True)
+    root = _absolute_lexical(work_root)
     assert_safe_path(root, root, must_exist=True)
     existing = [path for path in root.iterdir() if _is_media_name(video_id, path)]
+    for path in existing:
+        assert_safe_path(root, path)
     if existing:
         if reuse_existing:
             return discover_downloaded_media(root, video_id)
@@ -308,7 +330,7 @@ def convert_media_to_wav(
     reuse_existing: bool = False,
     run_process: Callable[..., subprocess.CompletedProcess[str]] = _default_run_process,
 ) -> Path:
-    root = Path(work_root).resolve(strict=True)
+    root = _absolute_lexical(work_root)
     media = assert_safe_path(root, media_path, must_exist=True)
     video_id = validate_video_id(media.stem)
     target = assert_safe_path(root, root / f"{video_id}.mono-16k.wav")
@@ -681,8 +703,8 @@ def build_candidate(
 
 def source_media_evidence(media_path: Path | str) -> dict[str, Any]:
     media = Path(media_path)
-    if not media.is_file() or media.is_symlink():
-        raise ValueError("source media evidence requires a regular non-symlink file")
+    if is_link_or_reparse(media) or not media.is_file():
+        raise ValueError("source media evidence requires a regular non-link file")
     digest = hashlib.sha256()
     with media.open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
@@ -772,22 +794,28 @@ def atomic_write_json(
     *,
     force: bool = False,
 ) -> Path:
-    safe_root = Path(root).resolve(strict=True)
+    safe_root = _absolute_lexical(root)
+    assert_safe_path(safe_root, safe_root, must_exist=True)
     safe_target = assert_safe_path(safe_root, target)
     if safe_target.exists() and not force:
         raise FileExistsError(f"evidence already exists: {safe_target.name}")
-    temporary = safe_root / f".{safe_target.name}.{uuid.uuid4().hex}.tmp"
-    content = json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
+    temporary = _stage_json(safe_root, safe_target, value)
     try:
-        with temporary.open("x", encoding="utf-8", newline="\n") as stream:
-            stream.write(content)
-            stream.flush()
-            os.fsync(stream.fileno())
         _publish_temp_file(safe_root, temporary, safe_target, force)
     finally:
         if temporary.exists():
             temporary.unlink()
     return safe_target
+
+
+def _stage_json(root: Path, target: Path, value: Any) -> Path:
+    temporary = root / f".{target.name}.{uuid.uuid4().hex}.tmp"
+    content = json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
+    with temporary.open("x", encoding="utf-8", newline="\n") as stream:
+        stream.write(content)
+        stream.flush()
+        os.fsync(stream.fileno())
+    return temporary
 
 
 def write_evidence(
@@ -797,23 +825,58 @@ def write_evidence(
     candidate: Mapping[str, Any] | None,
     review: Mapping[str, Any],
     force: bool = False,
+    replace_file: Callable[[Path, Path], Any] = os.replace,
 ) -> dict[str, Path]:
-    root = Path(work_root).resolve(strict=True)
+    root = _absolute_lexical(work_root)
     video_id = validate_video_id(video_id)
-    outputs = {}
-    if candidate is not None:
-        outputs["candidate"] = atomic_write_json(
-            root,
-            root / f"{video_id}.candidate.json",
-            candidate,
-            force=force,
-        )
-    outputs["review"] = atomic_write_json(
-        root,
-        root / f"{video_id}.review.json",
-        review,
-        force=force,
-    )
+    assert_safe_path(root, root, must_exist=True)
+    candidate_target = assert_safe_path(root, root / f"{video_id}.candidate.json")
+    review_target = assert_safe_path(root, root / f"{video_id}.review.json")
+    updates: list[tuple[str, Path, Mapping[str, Any] | None]] = []
+    if candidate is not None or (force and candidate_target.exists()):
+        updates.append(("candidate", candidate_target, candidate))
+    updates.append(("review", review_target, review))
+
+    if not force:
+        conflicts = [target for _, target, value in updates if value is not None and target.exists()]
+        if conflicts:
+            raise FileExistsError(f"evidence already exists: {conflicts[0].name}")
+
+    staged: dict[Path, Path] = {}
+    backups: dict[Path, Path] = {}
+    published: set[Path] = set()
+    try:
+        for _, target, value in updates:
+            if value is not None:
+                staged[target] = _stage_json(root, target, value)
+
+        for _, target, _ in updates:
+            if target.exists():
+                backup = root / f".{target.name}.{uuid.uuid4().hex}.bak"
+                os.replace(target, backup)
+                backups[target] = backup
+
+        for _, target, value in updates:
+            if value is not None:
+                replace_file(staged[target], target)
+                published.add(target)
+    except Exception:
+        for target in published:
+            if target.exists():
+                target.unlink()
+        for target, backup in backups.items():
+            if backup.exists():
+                os.replace(backup, target)
+        raise
+    finally:
+        for temporary in staged.values():
+            if temporary.exists():
+                temporary.unlink()
+        for backup in backups.values():
+            if backup.exists():
+                backup.unlink()
+
+    outputs = {name: target for name, target, value in updates if value is not None}
     return outputs
 
 
