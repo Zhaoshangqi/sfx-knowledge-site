@@ -553,11 +553,42 @@ def load_whisper_model(
     if model_name != "large-v3":
         raise ValueError("this review pipeline is fixed to the cached large-v3 model")
     cache = Path(cache_root).expanduser().resolve()
-    return whisper_module.load_model(
-        model_name,
-        device=device,
-        download_root=str(cache),
+    checkpoint = cache / f"{model_name}.pt"
+    model_urls = getattr(whisper_module, "_MODELS", {})
+    alignment_heads = getattr(whisper_module, "_ALIGNMENT_HEADS", {})
+    model_url = model_urls.get(model_name) if isinstance(model_urls, Mapping) else None
+    expected_match = re.search(
+        r"/([0-9a-f]{64})/[^/?#]+(?:[?#].*)?$",
+        model_url if isinstance(model_url, str) else "",
     )
+    alignment = (
+        alignment_heads.get(model_name)
+        if isinstance(alignment_heads, Mapping)
+        else None
+    )
+    if expected_match is None or alignment is None:
+        raise RuntimeError("Whisper large-v3 cache metadata is unavailable")
+    if not checkpoint.is_file():
+        raise RuntimeError(
+            f"cached Whisper model is missing: {checkpoint}; refusing an implicit download"
+        )
+
+    digest = hashlib.sha256()
+    with checkpoint.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    if digest.hexdigest() != expected_match.group(1):
+        raise RuntimeError(
+            f"cached Whisper model checksum mismatch: {checkpoint}; "
+            "refusing an implicit download"
+        )
+
+    model = whisper_module.load_model(str(checkpoint), device=device)
+    set_alignment_heads = getattr(model, "set_alignment_heads", None)
+    if not callable(set_alignment_heads):
+        raise RuntimeError("loaded Whisper model cannot restore large-v3 alignment heads")
+    set_alignment_heads(alignment)
+    return model
 
 
 def _normalize_text(value: Any) -> str:
@@ -661,6 +692,10 @@ def classify_segments(
         if re.fullmatch(r"[\[(]?(?:music|applause|silence|sound effects?)[\])]?[.!]?", text, re.I):
             reasons.append("non-speech-marker")
 
+        vad_support = _vad_support(max(start, 0.0), max(end, 0.0), vad_windows)
+        if not vad_support["triggered"]:
+            reasons.append("no-vad-support")
+
         record = {
             "segmentId": segment.get("id", source_index),
             "start": round(max(start, 0.0), 3),
@@ -671,7 +706,7 @@ def classify_segments(
                 "compressionRatio": round(compression_ratio, 6) if math.isfinite(compression_ratio) else None,
                 "noSpeechProbability": round(no_speech_prob, 6),
             },
-            "vadSupport": _vad_support(max(start, 0.0), max(end, 0.0), vad_windows),
+            "vadSupport": vad_support,
             "words": _clean_words(segment.get("words")),
         }
         if reasons:

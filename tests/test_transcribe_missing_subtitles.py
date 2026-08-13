@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import json
 import os
 import struct
@@ -554,16 +555,31 @@ class WhisperAndClassificationTest(ToolTestCase):
     def test_loads_cached_large_v3_on_cuda_with_conservative_options(self):
         load_whisper_model = self.require_api("load_whisper_model")
         whisper_options = self.require_api("whisper_options")
-        fake_whisper = types.SimpleNamespace(load_model=mock.Mock(return_value="model"))
+        checkpoint = b"verified-large-v3-checkpoint"
+        digest = hashlib.sha256(checkpoint).hexdigest()
+        loaded_model = types.SimpleNamespace(set_alignment_heads=mock.Mock())
+        fake_whisper = types.SimpleNamespace(
+            _MODELS={
+                "large-v3": (
+                    "https://models.invalid/whisper/"
+                    f"{digest}/large-v3.pt"
+                )
+            },
+            _ALIGNMENT_HEADS={"large-v3": "verified-alignment-heads"},
+            load_model=mock.Mock(return_value=loaded_model),
+        )
         with tempfile.TemporaryDirectory() as temp_dir:
             cache_root = Path(temp_dir).resolve()
+            (cache_root / "large-v3.pt").write_bytes(checkpoint)
             model = load_whisper_model(fake_whisper, "large-v3", "cuda", cache_root)
 
-        self.assertEqual(model, "model")
+        self.assertIs(model, loaded_model)
         fake_whisper.load_model.assert_called_once_with(
-            "large-v3",
+            str(cache_root / "large-v3.pt"),
             device="cuda",
-            download_root=str(cache_root),
+        )
+        loaded_model.set_alignment_heads.assert_called_once_with(
+            "verified-alignment-heads"
         )
         options = whisper_options("cuda")
         self.assertEqual(options["language"], "en")
@@ -575,6 +591,29 @@ class WhisperAndClassificationTest(ToolTestCase):
         self.assertEqual(options["compression_ratio_threshold"], 2.4)
         self.assertEqual(options["hallucination_silence_threshold"], 2.0)
         self.assertIs(options["fp16"], True)
+
+    def test_rejects_corrupt_cached_model_before_whisper_can_download(self):
+        load_whisper_model = self.require_api("load_whisper_model")
+        expected_digest = hashlib.sha256(b"expected-checkpoint").hexdigest()
+        fake_whisper = types.SimpleNamespace(
+            _MODELS={
+                "large-v3": (
+                    "https://models.invalid/whisper/"
+                    f"{expected_digest}/large-v3.pt"
+                )
+            },
+            _ALIGNMENT_HEADS={"large-v3": "verified-alignment-heads"},
+            load_model=mock.Mock(return_value="unexpected-model"),
+        )
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            cache_root = Path(temp_dir).resolve()
+            (cache_root / "large-v3.pt").write_bytes(b"corrupt-checkpoint")
+
+            with self.assertRaisesRegex(RuntimeError, "checksum|implicit download"):
+                load_whisper_model(fake_whisper, "large-v3", "cpu", cache_root)
+
+        fake_whisper.load_model.assert_not_called()
 
     def test_rejects_empty_low_confidence_and_repetitive_hallucinations(self):
         classify_segments = self.require_api("classify_segments")
@@ -617,7 +656,10 @@ class WhisperAndClassificationTest(ToolTestCase):
                 "no_speech_prob": 0.1,
             },
         ]
-        accepted, rejected = classify_segments(segments, [], duration=10.0)
+        vad_windows = [
+            {"index": 0, "start": 0.0, "end": 10.0, "triggered": True}
+        ]
+        accepted, rejected = classify_segments(segments, vad_windows, duration=10.0)
 
         self.assertEqual(len(accepted), 1)
         self.assertEqual(accepted[0]["text"], "We layer the impact with metal.")
@@ -628,6 +670,37 @@ class WhisperAndClassificationTest(ToolTestCase):
         self.assertTrue(
             {"high-compression-ratio", "repetitive-text"}.intersection(reasons)
         )
+
+    def test_rejects_high_confidence_segment_without_vad_support(self):
+        classify_segments = self.require_api("classify_segments")
+        segments = [
+            {
+                "id": 0,
+                "start": 1.0,
+                "end": 2.5,
+                "text": "Layer the transient with a short metal hit.",
+                "avg_logprob": -0.2,
+                "compression_ratio": 1.1,
+                "no_speech_prob": 0.1,
+            }
+        ]
+        vad_windows = [
+            {"index": 0, "start": 0.0, "end": 10.0, "triggered": False}
+        ]
+
+        accepted, rejected = classify_segments(
+            segments,
+            vad_windows,
+            duration=10.0,
+        )
+
+        self.assertEqual(accepted, [])
+        self.assertEqual(len(rejected), 1)
+        self.assertEqual(
+            rejected[0]["vadSupport"],
+            {"triggered": False, "windowIndexes": []},
+        )
+        self.assertIn("no-vad-support", rejected[0]["reasons"])
 
     def test_candidate_stays_english_until_translation_review(self):
         build_candidate = self.require_api("build_candidate")
