@@ -793,6 +793,7 @@ test("fullscreen hides transcript utility rows", () => {
 
   assert.deepEqual(cssSelectors(hiddenTranscript), [
     ".video-player:fullscreen .video-transcript-disclosure",
+    ".video-player:fullscreen .video-transcript-container",
     ".video-player:fullscreen .video-transcript-empty"
   ]);
   assertCssDeclarations(hiddenTranscript, { display: "none" });
