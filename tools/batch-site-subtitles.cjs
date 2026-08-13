@@ -110,8 +110,24 @@ function atomicWriteFile(options) {
   let ownsTemporary = false;
 
   try {
-    fsImpl.writeFileSync(temporary, options.content, { encoding: 'utf8', flag: 'wx' });
+    const descriptor = fsImpl.openSync(temporary, 'wx');
     ownsTemporary = true;
+    let writeError = null;
+    let closeError = null;
+
+    try {
+      fsImpl.writeFileSync(descriptor, options.content, { encoding: 'utf8' });
+    } catch (error) {
+      writeError = error;
+    }
+    try {
+      fsImpl.closeSync(descriptor);
+    } catch (error) {
+      closeError = error;
+    }
+    if (writeError) throw writeError;
+    if (closeError) throw closeError;
+
     fsImpl.renameSync(temporary, target);
     ownsTemporary = false;
   } finally {

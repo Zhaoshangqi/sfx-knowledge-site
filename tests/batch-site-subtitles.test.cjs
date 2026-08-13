@@ -88,9 +88,32 @@ function moduleFixture() {
 
 function tracingFs(events) {
   const traced = Object.create(fs);
+  const descriptorPaths = new Map();
+  traced.openSync = function (filename, ...args) {
+    const resolved = path.resolve(filename);
+    const descriptor = fs.openSync(filename, ...args);
+    descriptorPaths.set(descriptor, resolved);
+    events.push({ operation: 'open', filename: resolved, descriptor });
+    return descriptor;
+  };
   traced.writeFileSync = function (filename, ...args) {
-    events.push({ operation: 'write', filename: path.resolve(filename) });
+    const resolved = typeof filename === 'number'
+      ? descriptorPaths.get(filename)
+      : path.resolve(filename);
+    events.push({ operation: 'write', filename: resolved });
     return fs.writeFileSync(filename, ...args);
+  };
+  traced.closeSync = function (descriptor) {
+    events.push({
+      operation: 'close',
+      filename: descriptorPaths.get(descriptor),
+      descriptor
+    });
+    try {
+      return fs.closeSync(descriptor);
+    } finally {
+      descriptorPaths.delete(descriptor);
+    }
   };
   traced.renameSync = function (from, to) {
     events.push({ operation: 'rename', from: path.resolve(from), to: path.resolve(to) });
@@ -459,12 +482,12 @@ test('importVtt preserves an unowned colliding temp and the target when exclusiv
   fs.writeFileSync(outputPath, 'previous target\n', 'utf8');
   let collisionPath = null;
   const collisionFs = Object.create(fs);
-  collisionFs.writeFileSync = function (filename, content, options) {
-    if (options && options.flag === 'wx') {
+  collisionFs.openSync = function (filename, flags, ...args) {
+    if (flags === 'wx') {
       collisionPath = filename;
       fs.writeFileSync(filename, 'foreign temp\n', 'utf8');
     }
-    return fs.writeFileSync(filename, content, options);
+    return fs.openSync(filename, flags, ...args);
   };
 
   assert.throws(() => importVtt({
@@ -483,6 +506,63 @@ test('importVtt preserves an unowned colliding temp and the target when exclusiv
   assert.ok(collisionPath);
   assert.equal(fs.existsSync(collisionPath), true);
   assert.equal(fs.readFileSync(collisionPath, 'utf8'), 'foreign temp\n');
+  assert.equal(fs.readFileSync(outputPath, 'utf8'), 'previous target\n');
+});
+
+test('importVtt removes an owned partial temp and closes its descriptor after ENOSPC', (t) => {
+  const directory = temporaryDirectory(t);
+  const inputRoot = path.join(directory, 'input');
+  const outputRoot = path.join(directory, 'output');
+  fs.mkdirSync(inputRoot);
+  fs.mkdirSync(outputRoot);
+  const id = videoId(0);
+  const inputPath = path.join(inputRoot, id + '.zh-Hans.vtt');
+  const outputPath = path.join(outputRoot, id + '.json');
+  fs.writeFileSync(inputPath, vtt(), 'utf8');
+  fs.writeFileSync(outputPath, 'previous target\n', 'utf8');
+  let temporaryPath = null;
+  let ownedDescriptor = null;
+  let closeCount = 0;
+  const failingFs = Object.create(fs);
+  failingFs.openSync = function (filename, flags, ...args) {
+    temporaryPath = filename;
+    ownedDescriptor = fs.openSync(filename, flags, ...args);
+    return ownedDescriptor;
+  };
+  failingFs.writeFileSync = function (filename, content, options) {
+    if (filename === ownedDescriptor) {
+      fs.writeSync(filename, 'partial subtitle JSON');
+      const error = new Error('No space left on device');
+      error.code = 'ENOSPC';
+      throw error;
+    }
+    return fs.writeFileSync(filename, content, options);
+  };
+  failingFs.closeSync = function (descriptor) {
+    closeCount += 1;
+    return fs.closeSync(descriptor);
+  };
+
+  assert.throws(() => importVtt({
+    inputRoot,
+    outputRoot,
+    inputPath,
+    videoId: id,
+    language: 'zh-CN',
+    source: 'site-owned-from-public-captions',
+    reviewStatus: 'draft',
+    updatedAt: '2026-08-13',
+    force: true,
+    fsImpl: failingFs
+  }), (error) => error && error.code === 'ENOSPC');
+
+  assert.ok(temporaryPath);
+  assert.equal(closeCount, 1);
+  assert.throws(
+    () => fs.fstatSync(ownedDescriptor),
+    (error) => error && error.code === 'EBADF'
+  );
+  assert.equal(fs.existsSync(temporaryPath), false);
   assert.equal(fs.readFileSync(outputPath, 'utf8'), 'previous target\n');
 });
 
