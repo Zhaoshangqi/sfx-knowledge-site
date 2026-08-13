@@ -39,46 +39,67 @@
     return minutes + ':' + String(remainder).padStart(2, '0');
   }
 
-  function render(record, track, thumbnailUrl) {
+  function validLoadedTrack(track, entry, videoId) {
+    if (!track || typeof track !== 'object' || Array.isArray(track) ||
+        !entry || entry.contentStatus !== 'track' ||
+        track.videoId !== videoId || track.videoId !== entry.videoId ||
+        track.language !== entry.language || track.source !== entry.source ||
+        track.reviewStatus !== entry.reviewStatus || track.updatedAt !== entry.updatedAt ||
+        (track.reviewStatus !== 'draft' && track.reviewStatus !== 'reviewed') ||
+        !Array.isArray(track.cues) || track.cues.length === 0) {
+      return false;
+    }
+
+    var previousEnd = -1;
+    for (var index = 0; index < track.cues.length; index += 1) {
+      var cue = track.cues[index];
+      if (!cue || typeof cue !== 'object' || Array.isArray(cue) ||
+          !Number.isFinite(cue.start) || cue.start < 0 ||
+          !Number.isFinite(cue.end) || cue.end <= cue.start ||
+          typeof cue.text !== 'string' || !cue.text.trim() ||
+          cue.start < previousEnd) {
+        return false;
+      }
+      previousEnd = cue.end;
+    }
+    return true;
+  }
+
+  function render(record, entry, thumbnailUrl) {
     var source = record && typeof record === 'object' ? record : {};
     var videoId = validVideoId(source.videoId) ? source.videoId : '';
     var title = typeof source.title === 'string' && source.title.trim()
       ? source.title.trim()
       : 'YouTube 视频';
     var imageUrl = safeImageUrl(thumbnailUrl);
-    var hasTrack = Boolean(track && Array.isArray(track.cues) && track.cues.length);
-    var reviewStatus = hasTrack && track.reviewStatus === 'reviewed' ? 'reviewed' : 'draft';
-    var statusText = !hasTrack
-      ? '中文字幕整理中'
-      : reviewStatus === 'reviewed'
-        ? '本站中文字幕 · 已校对'
-        : '本站中文字幕 · 字幕草稿';
-    var statusHint = !hasTrack
-      ? '视频仍可正常播放'
-      : reviewStatus === 'reviewed'
-        ? '术语与时间轴已校对'
-        : '已同步时间轴，术语仍在校对';
-    var transcript = hasTrack ? track.cues.map(function (cue, index) {
-      return '<li class="video-transcript-item">' +
-        '<button type="button" class="video-transcript-cue" data-cue-index="' + index +
-        '" data-cue-start="' + escapeHtml(cue.start) + '">' +
-        '<span class="video-transcript-time">' + escapeHtml(formatTime(cue.start)) + '</span>' +
-        '<span class="video-transcript-text">' + escapeHtml(cue.text) + '</span>' +
-        '</button></li>';
-    }).join('') : '';
-    var transcriptPanel = hasTrack
-      ? '<details class="video-transcript-disclosure">' +
-          '<summary>字幕全文</summary>' +
-          '<ol class="video-transcript" aria-label="中文字幕全文">' + transcript + '</ol>' +
-        '</details>'
-      : '<p class="video-transcript-empty">这条视频尚未整理本站字幕。</p>';
+    var contentStatus = entry && typeof entry === 'object' && !Array.isArray(entry)
+      ? entry.contentStatus
+      : 'missing';
+    var subtitleStatus = contentStatus === 'track'
+      ? 'loading'
+      : contentStatus === 'no-speech'
+        ? 'no-speech'
+        : 'missing';
+    var statusText = subtitleStatus === 'loading'
+      ? '本站中文字幕加载中'
+      : subtitleStatus === 'no-speech'
+        ? '本视频无口述内容'
+        : '暂无本站中文字幕';
+    var statusHint = subtitleStatus === 'loading'
+      ? '正在加载字幕，视频可先播放'
+      : '视频仍可正常播放';
+    var transcriptPanel = subtitleStatus === 'loading'
+      ? '<div class="video-transcript-container" data-transcript-container aria-live="polite">' +
+          '<p class="video-transcript-loading" data-transcript-loading>本站中文字幕加载中…</p>' +
+        '</div>'
+      : '';
     var image = imageUrl
       ? '<img src="' + escapeHtml(imageUrl) + '" alt="" loading="lazy" decoding="async">'
       : '<span class="video-player-cover-fallback" aria-hidden="true">YouTube</span>';
     var playerId = 'youtube-caption-player-' + escapeHtml(videoId || 'invalid') + '-' + (++playerSequence);
 
     return '<section class="video-player" data-youtube-caption-player data-video-id="' +
-      escapeHtml(videoId) + '" data-subtitle-status="' + (hasTrack ? reviewStatus : 'missing') + '">' +
+      escapeHtml(videoId) + '" data-subtitle-status="' + subtitleStatus + '">' +
       '<div class="video-player-stage">' +
         '<button type="button" class="video-player-cover" data-player-cover aria-label="播放 ' +
           escapeHtml(title) + '">' + image +
@@ -89,10 +110,11 @@
         '<p class="video-player-error" data-player-error role="status" hidden></p>' +
       '</div>' +
       '<div class="video-caption-header">' +
-        '<span class="video-caption-status"><strong>' + statusText + '</strong><small>' + statusHint + '</small></span>' +
+        '<span class="video-caption-status"><strong data-subtitle-status-text>' + statusText +
+          '</strong><small data-subtitle-status-hint>' + statusHint + '</small></span>' +
         '<span class="video-caption-controls">' +
           '<button type="button" class="video-icon-button" data-subtitle-toggle aria-label="显示或隐藏本站中文字幕" title="字幕"' +
-            (hasTrack ? '' : ' disabled') + '><span aria-hidden="true">CC</span></button>' +
+            ' disabled aria-pressed="false"><span aria-hidden="true">CC</span></button>' +
           '<button type="button" class="video-icon-button" data-fullscreen-toggle aria-label="切换网页全屏" title="全屏"><span aria-hidden="true">□</span></button>' +
         '</span>' +
       '</div>' +
@@ -205,7 +227,15 @@
       (typeof window !== 'undefined' ? window : null);
     var subtitleApi = settings.subtitles ||
       (typeof globalThis !== 'undefined' ? globalThis.SfxVideoSubtitles : null);
-    var track = settings.track && Array.isArray(settings.track.cues) ? settings.track : null;
+    var entry = settings.entry && typeof settings.entry === 'object' && !Array.isArray(settings.entry)
+      ? settings.entry
+      : null;
+    var loadTrackFunction = typeof settings.loadTrack === 'function'
+      ? settings.loadTrack
+      : subtitleApi && typeof subtitleApi.loadTrack === 'function'
+        ? function (requestedVideoId) { return subtitleApi.loadTrack(requestedVideoId); }
+        : null;
+    var track = null;
     var setIntervalFunction = settings.setInterval ||
       (typeof setInterval === 'function' ? setInterval : null);
     var clearIntervalFunction = settings.clearInterval ||
@@ -221,15 +251,21 @@
     var subtitleToggle = rootElement.querySelector('[data-subtitle-toggle]');
     var fullscreenToggle = rootElement.querySelector('[data-fullscreen-toggle]');
     var errorLine = rootElement.querySelector('[data-player-error]');
-    var cueButtons = Array.from(rootElement.querySelectorAll('[data-cue-index]'));
+    var subtitleStatusText = rootElement.querySelector('[data-subtitle-status-text]');
+    var subtitleStatusHint = rootElement.querySelector('[data-subtitle-status-hint]');
+    var transcriptContainer = rootElement.querySelector('[data-transcript-container]');
+    var cueButtons = [];
     var listeners = [];
+    var cueListeners = [];
     var player = null;
+    var playerReady = false;
     var activationPromise = null;
     var readyPromise = null;
     var resolveReady = null;
+    var trackLoadPromise = null;
     var intervalId = null;
     var destroyed = false;
-    var subtitlesVisible = Boolean(track);
+    var subtitlesVisible = false;
     var activeCueIndex = -1;
     var moveFocusIntoPlayer = false;
 
@@ -237,10 +273,17 @@
       throw new Error('player root is missing required YouTube data');
     }
 
-    function listen(element, type, handler) {
+    function listen(element, type, handler, bucket) {
       if (!element || typeof element.addEventListener !== 'function') return;
       element.addEventListener(type, handler);
-      listeners.push([element, type, handler]);
+      (bucket || listeners).push([element, type, handler]);
+    }
+
+    function removeListeners(bucket) {
+      bucket.forEach(function (entry) {
+        entry[0].removeEventListener(entry[1], entry[2]);
+      });
+      bucket.length = 0;
     }
 
     function showError(message) {
@@ -253,6 +296,151 @@
       if (!errorLine) return;
       errorLine.textContent = '';
       errorLine.hidden = true;
+    }
+
+    function setNodeText(element, value) {
+      if (element && element.textContent !== value) element.textContent = value;
+    }
+
+    function setSubtitleStatus(status, text, hint) {
+      if (rootElement.dataset) rootElement.dataset.subtitleStatus = status;
+      else if (typeof rootElement.setAttribute === 'function') {
+        rootElement.setAttribute('data-subtitle-status', status);
+      }
+      setNodeText(subtitleStatusText, text);
+      setNodeText(subtitleStatusHint, hint);
+    }
+
+    function updateSubtitleToggle(enabled, visible) {
+      if (!subtitleToggle) return;
+      subtitleToggle.disabled = !enabled;
+      subtitleToggle.setAttribute('aria-pressed', String(Boolean(enabled && visible)));
+    }
+
+    function cueTime(seconds) {
+      if (subtitleApi && typeof subtitleApi.formatTime === 'function') {
+        try { return subtitleApi.formatTime(seconds); } catch (error) {}
+      }
+      return formatTime(seconds);
+    }
+
+    function handleCueClick(button) {
+      var start = Number(button.dataset ? button.dataset.cueStart : null);
+      if (!Number.isFinite(start) || start < 0) return;
+      activate().then(function (activePlayer) {
+        if (destroyed || !activePlayer) return;
+        if (typeof activePlayer.seekTo === 'function') activePlayer.seekTo(start, true);
+        if (typeof activePlayer.playVideo === 'function') activePlayer.playVideo();
+        synchronize();
+      }).catch(function () {});
+    }
+
+    function clearTranscript() {
+      setActiveCue(-1);
+      removeListeners(cueListeners);
+      cueButtons = [];
+      if (transcriptContainer) transcriptContainer.textContent = '';
+    }
+
+    function createTranscript(loadedTrack) {
+      if (!documentObject || typeof documentObject.createElement !== 'function' || !transcriptContainer) {
+        throw new Error('player root is missing the subtitle transcript container');
+      }
+
+      var disclosure = documentObject.createElement('details');
+      disclosure.className = 'video-transcript-disclosure';
+      var summary = documentObject.createElement('summary');
+      summary.textContent = '字幕全文';
+      disclosure.appendChild(summary);
+
+      var transcript = documentObject.createElement('ol');
+      transcript.className = 'video-transcript';
+      transcript.setAttribute('aria-label', '中文字幕全文');
+      var nextButtons = [];
+
+      loadedTrack.cues.forEach(function (cue, index) {
+        var item = documentObject.createElement('li');
+        item.className = 'video-transcript-item';
+        var button = documentObject.createElement('button');
+        button.setAttribute('type', 'button');
+        button.className = 'video-transcript-cue';
+        if (button.dataset) {
+          button.dataset.cueIndex = String(index);
+          button.dataset.cueStart = String(cue.start);
+        } else {
+          button.setAttribute('data-cue-index', String(index));
+          button.setAttribute('data-cue-start', String(cue.start));
+        }
+
+        var time = documentObject.createElement('span');
+        time.className = 'video-transcript-time';
+        time.textContent = cueTime(cue.start);
+        var text = documentObject.createElement('span');
+        text.className = 'video-transcript-text';
+        text.textContent = cue.text;
+        button.appendChild(time);
+        button.appendChild(text);
+        item.appendChild(button);
+        transcript.appendChild(item);
+        nextButtons.push(button);
+      });
+
+      disclosure.appendChild(transcript);
+      clearTranscript();
+      transcriptContainer.appendChild(disclosure);
+      cueButtons = nextButtons;
+      cueButtons.forEach(function (button) {
+        listen(button, 'click', function () { handleCueClick(button); }, cueListeners);
+      });
+    }
+
+    function showSubtitleLoadError() {
+      track = null;
+      subtitlesVisible = false;
+      clearTranscript();
+      updateSubtitleToggle(false, false);
+      rootElement.classList.toggle('subtitles-hidden', false);
+      setCaption('');
+      setSubtitleStatus('error', '中文字幕加载失败，视频仍可正常播放。', '');
+    }
+
+    function hydrateTrack(loadedTrack) {
+      createTranscript(loadedTrack);
+      track = loadedTrack;
+      subtitlesVisible = true;
+      activeCueIndex = -1;
+      updateSubtitleToggle(true, true);
+      rootElement.classList.toggle('subtitles-hidden', false);
+      if (track.reviewStatus === 'reviewed') {
+        setSubtitleStatus('reviewed', '本站中文字幕 · 已校对', '术语与时间轴已校对');
+      } else {
+        setSubtitleStatus('draft', '本站中文字幕 · 字幕草稿', '已同步时间轴，术语仍在校对');
+      }
+      if (playerReady) synchronize();
+    }
+
+    function beginTrackLoad() {
+      if (!entry || entry.contentStatus !== 'track') return;
+
+      var request;
+      try {
+        if (!loadTrackFunction) throw new Error('subtitle track loader is unavailable');
+        request = loadTrackFunction(videoId);
+      } catch (error) {
+        request = Promise.reject(error);
+      }
+
+      trackLoadPromise = Promise.resolve(request)
+        .then(function (loadedTrack) {
+          if (destroyed) return;
+          if (!validLoadedTrack(loadedTrack, entry, videoId)) {
+            throw new Error('subtitle track failed validation');
+          }
+          hydrateTrack(loadedTrack);
+        })
+        .catch(function () {
+          if (!destroyed) showSubtitleLoadError();
+        });
     }
 
     function setCaption(text) {
@@ -284,7 +472,10 @@
       }
 
       var cue = subtitleApi.cueAt(track, player.getCurrentTime());
-      var index = cue ? track.cues.indexOf(cue) : -1;
+      var index = cue ? track.cues.findIndex(function (candidate) {
+        return candidate === cue ||
+          (candidate.start === cue.start && candidate.end === cue.end && candidate.text === cue.text);
+      }) : -1;
       setCaption(cue ? cue.text : '');
       setActiveCue(index);
     }
@@ -354,6 +545,7 @@
             onReady: function (event) {
               if (destroyed) return;
               if (event && event.target) player = event.target;
+              playerReady = true;
               suppressNativeCaptions();
               clearError();
               coverButton.removeAttribute('aria-busy');
@@ -428,23 +620,7 @@
     listen(fullscreenToggle, 'click', handleFullscreenToggle);
     listen(documentObject, 'fullscreenchange', updateFullscreenState);
 
-    cueButtons.forEach(function (button) {
-      listen(button, 'click', function () {
-        var start = Number(button.dataset.cueStart);
-        if (!Number.isFinite(start) || start < 0) return;
-        activate().then(function (activePlayer) {
-          if (destroyed || !activePlayer) return;
-          if (typeof activePlayer.seekTo === 'function') activePlayer.seekTo(start, true);
-          if (typeof activePlayer.playVideo === 'function') activePlayer.playVideo();
-          synchronize();
-        }).catch(function () {});
-      });
-    });
-
-    if (subtitleToggle) {
-      subtitleToggle.disabled = !track;
-      subtitleToggle.setAttribute('aria-pressed', String(subtitlesVisible));
-    }
+    updateSubtitleToggle(false, false);
     if (fullscreenToggle) {
       var fullscreenSupported = Boolean(documentObject &&
         documentObject.fullscreenEnabled !== false &&
@@ -454,21 +630,24 @@
       fullscreenToggle.setAttribute('aria-disabled', String(!fullscreenSupported));
     }
     updateFullscreenState();
+    beginTrackLoad();
 
     return Object.freeze({
       destroy: function () {
         if (destroyed) return;
         destroyed = true;
         stopPolling();
-        listeners.forEach(function (entry) {
-          entry[0].removeEventListener(entry[1], entry[2]);
-        });
-        listeners.length = 0;
+        removeListeners(cueListeners);
+        removeListeners(listeners);
         if (player && typeof player.destroy === 'function') player.destroy();
         player = null;
+        playerReady = false;
+        track = null;
+        cueButtons = [];
         resolveReady = null;
         readyPromise = null;
         activationPromise = null;
+        trackLoadPromise = null;
       }
     });
   }

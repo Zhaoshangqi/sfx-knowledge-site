@@ -10,7 +10,11 @@ const modulePath = path.join(__dirname, '..', 'src', 'youtube-caption-player.js'
 const moduleSource = fs.existsSync(modulePath) ? fs.readFileSync(modulePath, 'utf8') : '';
 const playerApi = fs.existsSync(modulePath) ? require(modulePath) : null;
 const subtitles = require('../src/video-subtitles.js');
-const track = subtitles.trackFor('Xl5u91oQv-k');
+const track = JSON.parse(fs.readFileSync(
+  path.join(__dirname, '..', 'assets', 'subtitles', 'Xl5u91oQv-k.json'),
+  'utf8'
+));
+const entry = subtitles.entryFor('Xl5u91oQv-k');
 
 class FakeClassList {
   constructor() {
@@ -28,14 +32,18 @@ class FakeClassList {
 }
 
 class FakeElement {
-  constructor(dataset = {}) {
+  constructor(dataset = {}, tagName = 'div') {
     this.dataset = { ...dataset };
+    this.tagName = String(tagName).toUpperCase();
     this._textContent = '';
     this.textContentAssignments = 0;
+    this.innerHTMLAssignments = 0;
     this.disabled = false;
     this.hidden = false;
     this.attributes = Object.create(null);
     this.classList = new FakeClassList();
+    this.className = '';
+    this.children = [];
     this.listeners = new Map();
     this.scrollCalls = 0;
     this.focusCalls = 0;
@@ -43,12 +51,25 @@ class FakeElement {
   }
 
   get textContent() {
-    return this._textContent;
+    return this._textContent + this.children.map((child) => child.textContent).join('');
   }
 
   set textContent(value) {
+    this.children.forEach((child) => { child.parentNode = null; });
+    this.children = [];
     this._textContent = String(value);
     this.textContentAssignments += 1;
+  }
+
+  set innerHTML(value) {
+    this.children.forEach((child) => { child.parentNode = null; });
+    this.children = [];
+    this._textContent = String(value);
+    this.innerHTMLAssignments += 1;
+  }
+
+  get innerHTML() {
+    return this._textContent;
   }
 
   resetTextContentAssignments() {
@@ -69,6 +90,10 @@ class FakeElement {
     Array.from(this.listeners.get(type) || []).forEach((listener) => listener(event));
   }
 
+  listenerCount(type) {
+    return this.listeners.get(type)?.size || 0;
+  }
+
   setAttribute(name, value) {
     this.attributes[name] = String(value);
   }
@@ -81,6 +106,45 @@ class FakeElement {
     delete this.attributes[name];
   }
 
+  appendChild(child) {
+    child.parentNode = this;
+    this.children.push(child);
+    return child;
+  }
+
+  removeChild(child) {
+    const index = this.children.indexOf(child);
+    if (index >= 0) this.children.splice(index, 1);
+    child.parentNode = null;
+    return child;
+  }
+
+  matches(selector) {
+    if (selector === '[data-cue-index]') {
+      return Object.prototype.hasOwnProperty.call(this.dataset, 'cueIndex');
+    }
+    if (selector.startsWith('.')) {
+      return this.className.split(/\s+/).includes(selector.slice(1));
+    }
+    return this.tagName.toLowerCase() === selector.toLowerCase();
+  }
+
+  querySelectorAll(selector) {
+    const matches = [];
+    const visit = (element) => {
+      element.children.forEach((child) => {
+        if (child.matches(selector)) matches.push(child);
+        visit(child);
+      });
+    };
+    visit(this);
+    return matches;
+  }
+
+  querySelector(selector) {
+    return this.querySelectorAll(selector)[0] || null;
+  }
+
   scrollIntoView() {
     this.scrollCalls += 1;
   }
@@ -90,8 +154,10 @@ class FakeElement {
   }
 }
 
-function buildFixture() {
-  const root = new FakeElement({ videoId: 'Xl5u91oQv-k' });
+function buildFixture(options = {}) {
+  const videoId = options.videoId || 'Xl5u91oQv-k';
+  const subtitleStatus = options.subtitleStatus || 'loading';
+  const root = new FakeElement({ videoId, subtitleStatus }, 'section');
   const cover = new FakeElement();
   const target = new FakeElement();
   const caption = new FakeElement();
@@ -99,10 +165,17 @@ function buildFixture() {
   const toggle = new FakeElement();
   const fullscreen = new FakeElement();
   const error = new FakeElement();
-  const cueButtons = track.cues.map((cue, index) => new FakeElement({
-    cueIndex: String(index),
-    cueStart: String(cue.start)
-  }));
+  const statusText = new FakeElement();
+  const statusHint = new FakeElement();
+  const transcript = options.includeTranscript === false ? null : new FakeElement();
+  if (transcript) {
+    const loadingLine = new FakeElement({}, 'p');
+    loadingLine.textContent = '本站中文字幕加载中…';
+    transcript.appendChild(loadingLine);
+  }
+  toggle.disabled = true;
+  toggle.setAttribute('aria-pressed', 'false');
+  error.hidden = true;
   const selectors = new Map([
     ['[data-player-cover]', cover],
     ['[data-player-target]', target],
@@ -110,18 +183,38 @@ function buildFixture() {
     ['[data-caption-overlay]', overlay],
     ['[data-subtitle-toggle]', toggle],
     ['[data-fullscreen-toggle]', fullscreen],
-    ['[data-player-error]', error]
+    ['[data-player-error]', error],
+    ['[data-subtitle-status-text]', statusText],
+    ['[data-subtitle-status-hint]', statusHint],
+    ['[data-transcript-container]', transcript]
   ]);
 
   root.querySelector = (selector) => selectors.get(selector) || null;
-  root.querySelectorAll = (selector) => selector === '[data-cue-index]' ? cueButtons : [];
+  root.querySelectorAll = (selector) => (
+    selector === '[data-cue-index]' && transcript ? transcript.querySelectorAll(selector) : []
+  );
   root.requestFullscreenCalls = 0;
   root.requestFullscreen = () => {
     root.requestFullscreenCalls += 1;
     return Promise.resolve();
   };
 
-  return { root, cover, target, caption, overlay, toggle, fullscreen, error, cueButtons };
+  return {
+    root,
+    cover,
+    target,
+    caption,
+    overlay,
+    toggle,
+    fullscreen,
+    error,
+    statusText,
+    statusHint,
+    transcript,
+    get cueButtons() {
+      return transcript ? transcript.querySelectorAll('[data-cue-index]') : [];
+    }
+  };
 }
 
 function buildRuntime() {
@@ -150,11 +243,17 @@ function buildRuntime() {
 
   const YT = { Player, PlayerState: { PLAYING: 1 } };
   const window = { location: { origin: 'https://sfx.test' } };
+  const createdElements = [];
   const document = {
     defaultView: window,
     activeElement: null,
     fullscreenElement: null,
     listeners: new Map(),
+    createElement(tagName) {
+      const element = new FakeElement({}, tagName);
+      createdElements.push(element);
+      return element;
+    },
     addEventListener(type, listener) { this.listeners.set(type, listener); },
     removeEventListener(type, listener) {
       if (this.listeners.get(type) === listener) this.listeners.delete(type);
@@ -172,6 +271,7 @@ function buildRuntime() {
     document,
     iframe,
     calls,
+    createdElements,
     setCurrentTime(value) { currentTime = value; },
     getPlayerConfig() { return playerConfig; },
     runInterval() { intervalCallback?.(); },
@@ -193,6 +293,31 @@ function buildRuntime() {
 async function flushPromises() {
   await Promise.resolve();
   await Promise.resolve();
+  await Promise.resolve();
+  await Promise.resolve();
+}
+
+function deferred() {
+  let resolve;
+  let reject;
+  const promise = new Promise((resolvePromise, rejectPromise) => {
+    resolve = resolvePromise;
+    reject = rejectPromise;
+  });
+  return { promise, resolve, reject };
+}
+
+function mountOptions(runtime, overrides = {}) {
+  return {
+    entry,
+    loadTrack: () => Promise.resolve(track),
+    subtitles,
+    document: runtime.document,
+    loadApi: () => Promise.resolve(runtime.YT),
+    setInterval: runtime.setInterval,
+    clearInterval: runtime.clearInterval,
+    ...overrides
+  };
 }
 
 function extractBalancedDiv(html, openingTag) {
@@ -244,18 +369,25 @@ test('publishes the expected UMD API', () => {
   assert.deepEqual(Array.from(Object.keys(context.SfxYouTubeCaptionPlayer)), ['render', 'mount', 'loadApi']);
 });
 
-test('render returns a cover-first shell with escaped content and no iframe', () => {
+test('a catalog track entry renders a cover-first loading shell without cue text', () => {
   const html = playerApi.render({
     videoId: 'Xl5u91oQv-k',
     title: '<script>alert(1)</script>'
-  }, track, 'javascript:alert(2)');
+  }, entry, 'javascript:alert(2)');
 
   assert.match(html, /data-youtube-caption-player/);
   assert.match(html, /data-player-cover/);
   assert.match(html, /data-player-target/);
-  assert.match(html, /本站中文字幕/);
-  assert.match(html, /字幕草稿/);
-  assert.match(html, /data-cue-index="0"/);
+  assert.match(html, /data-caption-overlay/);
+  assert.match(html, /data-caption-line/);
+  assert.match(html, /data-subtitle-toggle[^>]*disabled/);
+  assert.match(html, /data-fullscreen-toggle/);
+  assert.match(html, /data-subtitle-status="loading"/);
+  assert.match(html, /本站中文字幕加载中/);
+  assert.match(html, /data-transcript-container/);
+  assert.match(html, /video-transcript-loading/);
+  assert.doesNotMatch(html, /data-cue-index=/);
+  assert.equal(html.includes(track.cues[0].text), false);
   assert.match(html, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
   assert.doesNotMatch(html, /<iframe/i);
   assert.doesNotMatch(html, /javascript:/i);
@@ -263,7 +395,7 @@ test('render returns a cover-first shell with escaped content and no iframe', ()
 });
 
 test('render keeps one caption overlay in the stage and one live region outside it', () => {
-  const html = playerApi.render({ videoId: 'Xl5u91oQv-k', title: 'Tracked video' }, track);
+  const html = playerApi.render({ videoId: 'Xl5u91oQv-k', title: 'Tracked video' }, entry);
   const stage = extractBalancedDiv(html, '<div class="video-player-stage">');
   const outsideStage = stage.before + stage.after;
 
@@ -275,29 +407,52 @@ test('render keeps one caption overlay in the stage and one live region outside 
   assert.match(outsideStage, /data-caption-line[^>]*aria-atomic="true"/);
 });
 
-test('render collapses the full transcript behind a native disclosure', () => {
-  const html = playerApi.render({ videoId: 'Xl5u91oQv-k', title: 'Tracked video' }, track);
-  const disclosureStart = html.indexOf('<details class="video-transcript-disclosure">');
-  const disclosureEnd = html.indexOf('</details>', disclosureStart);
-  const disclosureHtml = html.slice(disclosureStart, disclosureEnd + '</details>'.length);
+test('render reserves a stable transcript container while async hydration is pending', () => {
+  const html = playerApi.render({ videoId: 'Xl5u91oQv-k', title: 'Tracked video' }, entry);
 
-  assert.ok(disclosureStart >= 0, 'tracked videos must render a transcript disclosure');
-  assert.ok(disclosureEnd > disclosureStart, 'the transcript disclosure must close');
-  assert.equal((html.match(/<details class="video-transcript-disclosure"(?:\s|>)/g) || []).length, 1);
-  assert.doesNotMatch(disclosureHtml.match(/^<details[^>]*>/)[0], /\sopen(?:\s|=|>)/);
-  assert.match(disclosureHtml, /<summary>字幕全文<\/summary>/);
-  assert.equal((disclosureHtml.match(/<ol class="video-transcript"(?:\s|>)/g) || []).length, 1);
-  assert.match(disclosureHtml, /data-cue-index="0"/);
-});
-
-test('render keeps videos playable while showing an explicit missing subtitle state', () => {
-  const html = playerApi.render({ videoId: 'gPgKeCVN8Ek', title: 'No track' }, null, 'https://i.ytimg.com/vi/gPgKeCVN8Ek/hqdefault.jpg');
-
-  assert.match(html, /中文字幕整理中/);
-  assert.match(html, /data-subtitle-toggle[^>]*disabled/);
-  assert.match(html, /data-player-cover/);
+  assert.equal((html.match(/data-transcript-container\b/g) || []).length, 1);
+  assert.match(html, /<p class="video-transcript-loading"[^>]*>[^<]*加载中/);
   assert.doesNotMatch(html, /video-transcript-disclosure/);
   assert.doesNotMatch(html, /video-transcript-cue/);
+  assert.doesNotMatch(html, /data-cue-index=/);
+});
+
+test('no-speech entries render the exact message without a transcript or loader affordance', () => {
+  const noSpeechEntry = { videoId: 'gPgKeCVN8Ek', contentStatus: 'no-speech' };
+  const html = playerApi.render(
+    { videoId: 'gPgKeCVN8Ek', title: 'Silent video' },
+    noSpeechEntry,
+    'https://i.ytimg.com/vi/gPgKeCVN8Ek/hqdefault.jpg'
+  );
+
+  assert.match(html, /data-subtitle-status="no-speech"/);
+  assert.match(html, />本视频无口述内容</);
+  assert.match(html, /data-subtitle-toggle[^>]*disabled/);
+  assert.match(html, /data-player-cover/);
+  assert.match(html, /data-player-target/);
+  assert.match(html, /data-caption-overlay/);
+  assert.match(html, /data-caption-line/);
+  assert.match(html, /data-fullscreen-toggle/);
+  assert.doesNotMatch(html, /video-transcript(?:-disclosure|-cue|" aria-label)/);
+  assert.doesNotMatch(html, /data-transcript-container/);
+  assert.doesNotMatch(html, /加载中/);
+});
+
+test('missing catalog entries stay playable and render a truthful unavailable state', () => {
+  const html = playerApi.render({ videoId: 'gPgKeCVN8Ek', title: 'No track' }, null, 'https://i.ytimg.com/vi/gPgKeCVN8Ek/hqdefault.jpg');
+
+  assert.match(html, /data-subtitle-status="missing"/);
+  assert.match(html, /暂无本站中文字幕/);
+  assert.doesNotMatch(html, /中文字幕整理中/);
+  assert.match(html, /data-subtitle-toggle[^>]*disabled/);
+  assert.match(html, /data-player-cover/);
+  assert.match(html, /data-player-target/);
+  assert.match(html, /data-caption-overlay/);
+  assert.match(html, /data-caption-line/);
+  assert.match(html, /data-fullscreen-toggle/);
+  assert.doesNotMatch(html, /video-transcript-disclosure/);
+  assert.doesNotMatch(html, /video-transcript-cue/);
+  assert.doesNotMatch(html, /data-transcript-container/);
   assert.doesNotMatch(html, /data-cue-index=/);
 });
 
@@ -354,28 +509,30 @@ test('loadApi removes a failed script and can retry cleanly', async () => {
   assert.equal(await second, fakeWindow.YT);
 });
 
-test('mount waits for cover activation and creates a configured inline player', async () => {
+test('mount starts subtitle loading immediately but waits for cover activation before YouTube', async () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
-  let loaderCalls = 0;
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi() {
-      loaderCalls += 1;
-      return Promise.resolve(runtime.YT);
+  let subtitleLoaderCalls = 0;
+  let apiLoaderCalls = 0;
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    loadTrack(videoId) {
+      subtitleLoaderCalls += 1;
+      assert.equal(videoId, 'Xl5u91oQv-k');
+      return Promise.resolve(track);
     },
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+    loadApi() {
+      apiLoaderCalls += 1;
+      return Promise.resolve(runtime.YT);
+    }
+  }));
 
-  assert.equal(loaderCalls, 0);
+  assert.equal(subtitleLoaderCalls, 1);
+  assert.equal(apiLoaderCalls, 0);
   assert.equal(runtime.getPlayerConfig(), null);
   fixture.cover.dispatch('click');
   await flushPromises();
 
-  assert.equal(loaderCalls, 1);
+  assert.equal(apiLoaderCalls, 1);
   const config = runtime.getPlayerConfig();
   assert.equal(config.videoId, 'Xl5u91oQv-k');
   assert.deepEqual(config.playerVars, {
@@ -389,18 +546,215 @@ test('mount waits for cover activation and creates a configured inline player', 
   controller.destroy();
 });
 
+test('successful async hydration builds transcript controls and synchronizes a ready player', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const trackRequest = deferred();
+  runtime.setCurrentTime(track.cues[1].start);
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    loadTrack: () => trackRequest.promise
+  }));
+
+  assert.equal(fixture.toggle.disabled, true);
+  assert.equal(fixture.toggle.getAttribute('aria-pressed'), 'false');
+  assert.equal(fixture.cueButtons.length, 0);
+  fixture.cover.dispatch('click');
+  await flushPromises();
+  runtime.getPlayerConfig().events.onReady();
+  assert.equal(fixture.caption.textContent, '');
+
+  trackRequest.resolve(track);
+  await flushPromises();
+
+  assert.equal(fixture.root.dataset.subtitleStatus, 'draft');
+  assert.equal(fixture.statusText.textContent, '本站中文字幕 · 字幕草稿');
+  assert.equal(fixture.statusHint.textContent, '已同步时间轴，术语仍在校对');
+  assert.equal(fixture.toggle.disabled, false);
+  assert.equal(fixture.toggle.getAttribute('aria-pressed'), 'true');
+  assert.equal(fixture.cueButtons.length, track.cues.length);
+  assert.equal(fixture.cueButtons[0].dataset.cueStart, String(track.cues[0].start));
+  assert.equal(fixture.cueButtons[0].querySelector('.video-transcript-time').textContent, '00:40');
+  assert.equal(fixture.cueButtons[0].querySelector('.video-transcript-text').textContent, track.cues[0].text);
+  assert.equal(fixture.transcript.innerHTMLAssignments, 0);
+  assert.equal(fixture.caption.textContent, track.cues[1].text);
+  assert.equal(fixture.overlay.textContent, track.cues[1].text);
+  assert.equal(fixture.cueButtons[1].getAttribute('aria-current'), 'true');
+  controller.destroy();
+});
+
+test('no-speech state never loads a track and keeps normal playback available', async () => {
+  const fixture = buildFixture({
+    videoId: 'gPgKeCVN8Ek',
+    subtitleStatus: 'no-speech',
+    includeTranscript: false
+  });
+  const runtime = buildRuntime();
+  let loaderCalls = 0;
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    entry: { videoId: 'gPgKeCVN8Ek', contentStatus: 'no-speech' },
+    loadTrack() {
+      loaderCalls += 1;
+      return Promise.resolve(track);
+    }
+  }));
+
+  assert.equal(loaderCalls, 0);
+  assert.equal(fixture.toggle.disabled, true);
+  assert.equal(fixture.cueButtons.length, 0);
+  fixture.cover.dispatch('click');
+  await flushPromises();
+  assert.equal(runtime.getPlayerConfig().videoId, 'gPgKeCVN8Ek');
+  runtime.getPlayerConfig().events.onReady();
+  assert.equal(fixture.cover.hidden, true);
+  controller.destroy();
+});
+
+test('missing catalog state never loads a track and keeps normal playback available', async () => {
+  const fixture = buildFixture({
+    videoId: 'gPgKeCVN8Ek',
+    subtitleStatus: 'missing',
+    includeTranscript: false
+  });
+  const runtime = buildRuntime();
+  let loaderCalls = 0;
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    entry: null,
+    loadTrack() {
+      loaderCalls += 1;
+      return Promise.resolve(track);
+    }
+  }));
+
+  assert.equal(loaderCalls, 0);
+  assert.equal(fixture.toggle.disabled, true);
+  assert.equal(fixture.cueButtons.length, 0);
+  fixture.cover.dispatch('click');
+  await flushPromises();
+  assert.equal(runtime.getPlayerConfig().videoId, 'gPgKeCVN8Ek');
+  runtime.getPlayerConfig().events.onReady();
+  assert.equal(fixture.cover.hidden, true);
+  controller.destroy();
+});
+
+test('subtitle load rejection shows an isolated error while playback and fullscreen remain usable', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    loadTrack: () => Promise.reject(new Error('subtitle network failure'))
+  }));
+
+  await flushPromises();
+  assert.equal(fixture.root.dataset.subtitleStatus, 'error');
+  assert.equal(fixture.statusText.textContent, '中文字幕加载失败，视频仍可正常播放。');
+  assert.equal(fixture.toggle.disabled, true);
+  assert.equal(fixture.cueButtons.length, 0);
+  assert.equal(fixture.error.hidden, true);
+  assert.equal(fixture.error.textContent, '');
+
+  fixture.fullscreen.dispatch('click');
+  assert.equal(fixture.root.requestFullscreenCalls, 1);
+  fixture.cover.dispatch('click');
+  await flushPromises();
+  runtime.getPlayerConfig().events.onReady();
+  assert.equal(fixture.cover.hidden, true);
+  assert.equal(fixture.error.hidden, true);
+  controller.destroy();
+});
+
+test('a synchronous subtitle loader throw is caught as a subtitle-only error', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    loadTrack() {
+      throw new Error('synchronous subtitle failure');
+    }
+  }));
+
+  await flushPromises();
+  assert.equal(fixture.root.dataset.subtitleStatus, 'error');
+  assert.equal(fixture.statusText.textContent, '中文字幕加载失败，视频仍可正常播放。');
+  assert.equal(fixture.error.hidden, true);
+  controller.destroy();
+});
+
+test('destroy ignores late subtitle resolution and rejection without mutations or listeners', async (t) => {
+  for (const outcome of ['resolve', 'reject']) {
+    await t.test(outcome, async () => {
+      const fixture = buildFixture();
+      const runtime = buildRuntime();
+      const trackRequest = deferred();
+      const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+        loadTrack: () => trackRequest.promise
+      }));
+      controller.destroy();
+
+      const snapshot = {
+        status: fixture.root.dataset.subtitleStatus,
+        statusText: fixture.statusText.textContent,
+        statusTextAssignments: fixture.statusText.textContentAssignments,
+        statusHint: fixture.statusHint.textContent,
+        statusHintAssignments: fixture.statusHint.textContentAssignments,
+        transcriptText: fixture.transcript.textContent,
+        transcriptAssignments: fixture.transcript.textContentAssignments,
+        transcriptChildren: fixture.transcript.children.length,
+        toggleDisabled: fixture.toggle.disabled,
+        togglePressed: fixture.toggle.getAttribute('aria-pressed')
+      };
+
+      assert.equal(fixture.cover.listenerCount('click'), 0);
+      assert.equal(fixture.toggle.listenerCount('click'), 0);
+      assert.equal(fixture.fullscreen.listenerCount('click'), 0);
+      if (outcome === 'resolve') trackRequest.resolve(track);
+      else trackRequest.reject(new Error('late subtitle failure'));
+      await flushPromises();
+
+      assert.deepEqual({
+        status: fixture.root.dataset.subtitleStatus,
+        statusText: fixture.statusText.textContent,
+        statusTextAssignments: fixture.statusText.textContentAssignments,
+        statusHint: fixture.statusHint.textContent,
+        statusHintAssignments: fixture.statusHint.textContentAssignments,
+        transcriptText: fixture.transcript.textContent,
+        transcriptAssignments: fixture.transcript.textContentAssignments,
+        transcriptChildren: fixture.transcript.children.length,
+        toggleDisabled: fixture.toggle.disabled,
+        togglePressed: fixture.toggle.getAttribute('aria-pressed')
+      }, snapshot);
+      assert.equal(fixture.cueButtons.length, 0);
+      assert.equal(runtime.document.listeners.has('fullscreenchange'), false);
+    });
+  }
+});
+
+test('cover activation and playback work before subtitle loading settles', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const trackRequest = deferred();
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    loadTrack: () => trackRequest.promise
+  }));
+
+  fixture.cover.dispatch('click');
+  await flushPromises();
+  const config = runtime.getPlayerConfig();
+  assert.ok(config);
+  config.events.onReady();
+  config.events.onStateChange({ data: 1 });
+  assert.equal(fixture.cover.hidden, true);
+  assert.equal(runtime.getIntervalDelay(), 200);
+  assert.equal(fixture.toggle.disabled, true);
+  assert.equal(fixture.cueButtons.length, 0);
+  controller.destroy();
+  trackRequest.resolve(track);
+  await flushPromises();
+});
+
 test('playing polls every 200 ms and synchronizes both caption surfaces and transcript', async () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
+  await flushPromises();
   fixture.cover.dispatch('click');
   await flushPromises();
   const config = runtime.getPlayerConfig();
@@ -425,15 +779,9 @@ test('playing polls every 200 ms and synchronizes both caption surfaces and tran
 test('caption surfaces mutate only when the displayed text changes', async () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
+  await flushPromises();
   fixture.cover.dispatch('click');
   await flushPromises();
   const config = runtime.getPlayerConfig();
@@ -492,15 +840,9 @@ test('caption surfaces mutate only when the displayed text changes', async () =>
 test('player readiness and caption-module changes suppress native captions', async () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
+  await flushPromises();
   fixture.cover.dispatch('click');
   await flushPromises();
   const config = runtime.getPlayerConfig();
@@ -519,43 +861,50 @@ test('player readiness and caption-module changes suppress native captions', asy
   controller.destroy();
 });
 
-test('subtitle toggle hides custom text without disabling playback', async () => {
+test('caption toggle stays disabled until hydration, then preserves hide and show behavior', async () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const trackRequest = deferred();
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    loadTrack: () => trackRequest.promise
+  }));
+
+  assert.equal(fixture.toggle.disabled, true);
+  fixture.toggle.dispatch('click');
+  assert.equal(fixture.toggle.getAttribute('aria-pressed'), 'false');
+  trackRequest.resolve(track);
+  await flushPromises();
+  assert.equal(fixture.toggle.disabled, false);
+  assert.equal(fixture.toggle.getAttribute('aria-pressed'), 'true');
 
   fixture.cover.dispatch('click');
   await flushPromises();
   runtime.getPlayerConfig().events.onReady();
   runtime.setCurrentTime(track.cues[0].start);
-  fixture.toggle.dispatch('click');
+  runtime.getPlayerConfig().events.onStateChange({ data: 1 });
+  assert.equal(fixture.caption.textContent, track.cues[0].text);
 
+  fixture.toggle.dispatch('click');
   assert.equal(fixture.toggle.getAttribute('aria-pressed'), 'false');
   assert.equal(fixture.caption.textContent, '');
   assert.equal(fixture.overlay.textContent, '');
-  assert.equal(runtime.calls.destroy, 0);
+  assert.equal(fixture.root.classList.contains('subtitles-hidden'), true);
+
+  fixture.toggle.dispatch('click');
+  assert.equal(fixture.toggle.getAttribute('aria-pressed'), 'true');
+  assert.equal(fixture.caption.textContent, track.cues[0].text);
+  assert.equal(fixture.overlay.textContent, track.cues[0].text);
+  assert.equal(fixture.root.classList.contains('subtitles-hidden'), false);
   controller.destroy();
 });
 
-test('transcript controls start the player and seek to their cue', async () => {
+test('hydrated transcript controls start the player and seek to their cue', async () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
+  await flushPromises();
+  assert.equal(fixture.cueButtons.length, track.cues.length);
   fixture.cueButtons[2].dispatch('click');
   await flushPromises();
   runtime.getPlayerConfig().events.onReady();
@@ -566,17 +915,10 @@ test('transcript controls start the player and seek to their cue', async () => {
   controller.destroy();
 });
 
-test('fullscreen control targets the complete player wrapper', async () => {
+test('fullscreen control targets the complete player wrapper', () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
   fixture.fullscreen.dispatch('click');
   assert.equal(fixture.root.requestFullscreenCalls, 1);
@@ -593,14 +935,7 @@ test('mount disables fullscreen when the browser does not support it', () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
   delete fixture.root.requestFullscreen;
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
   assert.equal(fixture.fullscreen.disabled, true);
   assert.equal(fixture.fullscreen.getAttribute('aria-disabled'), 'true');
@@ -611,14 +946,7 @@ test('mount disables fullscreen when permissions policy reports it unavailable',
   const fixture = buildFixture();
   const runtime = buildRuntime();
   runtime.document.fullscreenEnabled = false;
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
   assert.equal(fixture.fullscreen.disabled, true);
   assert.equal(fixture.fullscreen.getAttribute('aria-disabled'), 'true');
@@ -629,14 +957,7 @@ test('cover activation moves keyboard focus into the ready YouTube iframe', asyn
   const fixture = buildFixture();
   const runtime = buildRuntime();
   runtime.document.activeElement = fixture.cover;
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
   fixture.cover.dispatch('click');
   await flushPromises();
@@ -647,18 +968,14 @@ test('cover activation moves keyboard focus into the ready YouTube iframe', asyn
   controller.destroy();
 });
 
-test('destroy clears polling, listeners, and the active YouTube instance', async () => {
+test('destroy clears polling, static and cue listeners, and the active YouTube instance', async () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
-  const controller = playerApi.mount(fixture.root, {
-    track,
-    subtitles,
-    document: runtime.document,
-    loadApi: () => Promise.resolve(runtime.YT),
-    setInterval: runtime.setInterval,
-    clearInterval: runtime.clearInterval
-  });
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
 
+  await flushPromises();
+  const hydratedButtons = fixture.cueButtons.slice();
+  assert.equal(hydratedButtons[0].listenerCount('click'), 1);
   fixture.cover.dispatch('click');
   await flushPromises();
   const config = runtime.getPlayerConfig();
@@ -668,6 +985,12 @@ test('destroy clears polling, listeners, and the active YouTube instance', async
   assert.equal(runtime.calls.destroy, 1);
   assert.equal(runtime.getClearCalls(), 1);
   assert.equal(runtime.document.listeners.has('fullscreenchange'), false);
+  assert.equal(fixture.cover.listenerCount('click'), 0);
+  assert.equal(fixture.toggle.listenerCount('click'), 0);
+  assert.equal(fixture.fullscreen.listenerCount('click'), 0);
+  hydratedButtons.forEach((button) => assert.equal(button.listenerCount('click'), 0));
   fixture.cover.dispatch('click');
+  hydratedButtons[0].dispatch('click');
   assert.equal(runtime.calls.destroy, 1);
+  assert.deepEqual(runtime.calls.seek, []);
 });

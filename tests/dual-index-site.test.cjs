@@ -2223,10 +2223,16 @@ test('renders a dry-goods archive with an embedded player, effect links, and sou
   assert.doesNotMatch(detailSource, /practiceChecklist|练习复盘|<span>学习/);
   assert.match(detailSource, /const chainHtml = detailData\.chainFacts/);
   assert.match(detailSource, /const decisionHtml = detailData\.decisionFacts/);
-  assert.match(detailSource, /SfxVideoSubtitles\.trackFor\(record\.videoId\)/);
-  assert.match(detailSource, /SfxYouTubeCaptionPlayer\.render\(record, subtitleTrack, thumbnail\(record, "hqdefault"\)\)/);
+  assert.match(detailSource, /const subtitleEntry = SfxVideoSubtitles\.entryFor\(record\.videoId\)/);
+  assert.match(detailSource, /SfxYouTubeCaptionPlayer\.render\(record, subtitleEntry, thumbnail\(record, "hqdefault"\)\)/);
   assert.match(detailSource, /SfxYouTubeCaptionPlayer\.mount\(playerRoot, \{/);
+  assert.match(detailSource, /entry: subtitleEntry/);
+  assert.match(detailSource, /loadTrack: \(videoId\) => SfxVideoSubtitles\.loadTrack\(videoId\)/);
   assert.match(detailSource, /subtitles: SfxVideoSubtitles/);
+  assert.doesNotMatch(indexHtml, /SfxVideoSubtitles\.trackFor\(/);
+  const playerCss = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+  assert.match(playerCss, /\.video-transcript-loading\s*\{/);
+  assert.match(playerCss, /\.video-player:fullscreen \.video-transcript-container/);
   assert.doesNotMatch(detailSource, /decisionFacts.*updateNote/);
   const effectSummarySource = indexHtml.match(/function renderEffectUseSummary\(record, use\) \{([\s\S]*?)\n    \}\n\n    function renderDetail/)?.[1] || '';
   assert.match(effectSummarySource, /EffectIndexData\.profileForUse/);

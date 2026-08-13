@@ -842,7 +842,8 @@
       font-size: 13px;
       line-height: 1.55;
     }
-    .video-transcript-empty {
+    .video-transcript-empty,
+    .video-transcript-loading {
       margin: 0;
       padding: 14px 0;
       color: var(--muted);
@@ -881,6 +882,7 @@
       background: #161819;
     }
     .video-player:fullscreen .video-transcript-disclosure,
+    .video-player:fullscreen .video-transcript-container,
     .video-player:fullscreen .video-transcript-empty { display: none; }
     .detail-body {
       padding: 16px;
@@ -33326,8 +33328,8 @@
       const effectHtml = VideoDetailData.array(effectUses).filter((use) => use && use.sourceRecordId === record.id).map((use) => renderEffectUseSummary(record, use)).join("");
       const decisionHtml = detailData.decisionFacts.map((fact) => '<div class="tip">' + escapeHtml(fact) + '</div>').join("");
       const keywordHtml = detailData.keywords.slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
-      const subtitleTrack = SfxVideoSubtitles.trackFor(record.videoId);
-      const playerHtml = SfxYouTubeCaptionPlayer.render(record, subtitleTrack, thumbnail(record, "hqdefault"));
+      const subtitleEntry = SfxVideoSubtitles.entryFor(record.videoId);
+      const playerHtml = SfxYouTubeCaptionPlayer.render(record, subtitleEntry, thumbnail(record, "hqdefault"));
 
       detailEl.innerHTML =
         '<div class="detail-body">' +
@@ -33347,7 +33349,8 @@
       const playerRoot = detailEl.querySelector('[data-youtube-caption-player]');
       if (playerRoot) {
         activeVideoPlayer = SfxYouTubeCaptionPlayer.mount(playerRoot, {
-          track: subtitleTrack,
+          entry: subtitleEntry,
+          loadTrack: (videoId) => SfxVideoSubtitles.loadTrack(videoId),
           subtitles: SfxVideoSubtitles
         });
       }
