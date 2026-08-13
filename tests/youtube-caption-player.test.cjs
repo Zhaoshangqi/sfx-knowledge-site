@@ -210,12 +210,45 @@ test('render returns a cover-first shell with escaped content and no iframe', ()
   assert.doesNotMatch(html, /<script>alert/i);
 });
 
+test('render keeps one caption overlay in the stage and one live region outside it', () => {
+  const html = playerApi.render({ videoId: 'Xl5u91oQv-k', title: 'Tracked video' }, track);
+  const stageStart = html.indexOf('<div class="video-player-stage">');
+  const stageEnd = html.indexOf('<div class="video-caption-header">', stageStart);
+  const stageHtml = html.slice(stageStart, stageEnd);
+
+  assert.ok(stageStart >= 0);
+  assert.ok(stageEnd > stageStart);
+  assert.equal((html.match(/data-caption-overlay\b/g) || []).length, 1);
+  assert.match(stageHtml, /data-caption-overlay/);
+  assert.doesNotMatch(stageHtml, /data-caption-line/);
+  assert.equal((html.match(/data-caption-line\b/g) || []).length, 1);
+  assert.ok(html.indexOf('data-caption-line') > stageEnd);
+  assert.match(html, /data-caption-line[^>]*aria-live="polite"/);
+});
+
+test('render collapses the full transcript behind a native disclosure', () => {
+  const html = playerApi.render({ videoId: 'Xl5u91oQv-k', title: 'Tracked video' }, track);
+  const disclosureStart = html.indexOf('<details class="video-transcript-disclosure">');
+  const disclosureEnd = html.indexOf('</details>', disclosureStart);
+  const disclosureHtml = html.slice(disclosureStart, disclosureEnd + '</details>'.length);
+
+  assert.ok(disclosureStart >= 0, 'tracked videos must render a transcript disclosure');
+  assert.ok(disclosureEnd > disclosureStart, 'the transcript disclosure must close');
+  assert.equal((html.match(/<details class="video-transcript-disclosure"(?:\s|>)/g) || []).length, 1);
+  assert.doesNotMatch(disclosureHtml.match(/^<details[^>]*>/)[0], /\sopen(?:\s|=|>)/);
+  assert.match(disclosureHtml, /<summary>字幕全文<\/summary>/);
+  assert.equal((disclosureHtml.match(/<ol class="video-transcript"(?:\s|>)/g) || []).length, 1);
+  assert.match(disclosureHtml, /data-cue-index="0"/);
+});
+
 test('render keeps videos playable while showing an explicit missing subtitle state', () => {
   const html = playerApi.render({ videoId: 'gPgKeCVN8Ek', title: 'No track' }, null, 'https://i.ytimg.com/vi/gPgKeCVN8Ek/hqdefault.jpg');
 
   assert.match(html, /中文字幕整理中/);
   assert.match(html, /data-subtitle-toggle[^>]*disabled/);
   assert.match(html, /data-player-cover/);
+  assert.doesNotMatch(html, /video-transcript-disclosure/);
+  assert.doesNotMatch(html, /video-transcript-cue/);
   assert.doesNotMatch(html, /data-cue-index=/);
 });
 

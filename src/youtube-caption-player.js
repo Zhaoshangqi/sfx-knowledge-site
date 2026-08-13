@@ -66,6 +66,12 @@
         '<span class="video-transcript-text">' + escapeHtml(cue.text) + '</span>' +
         '</button></li>';
     }).join('') : '';
+    var transcriptPanel = hasTrack
+      ? '<details class="video-transcript-disclosure">' +
+          '<summary>字幕全文</summary>' +
+          '<ol class="video-transcript" aria-label="中文字幕全文">' + transcript + '</ol>' +
+        '</details>'
+      : '<p class="video-transcript-empty">这条视频尚未整理本站字幕。</p>';
     var image = imageUrl
       ? '<img src="' + escapeHtml(imageUrl) + '" alt="" loading="lazy" decoding="async">'
       : '<span class="video-player-cover-fallback" aria-hidden="true">YouTube</span>';
@@ -91,9 +97,7 @@
         '</span>' +
       '</div>' +
       '<p class="video-caption-line" data-caption-line aria-live="polite" aria-atomic="true"></p>' +
-      (hasTrack
-        ? '<ol class="video-transcript" aria-label="中文字幕全文">' + transcript + '</ol>'
-        : '<p class="video-transcript-empty">这条视频尚未整理本站字幕。</p>') +
+      transcriptPanel +
     '</section>';
   }
 
