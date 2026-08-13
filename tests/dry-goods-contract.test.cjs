@@ -196,16 +196,17 @@ const OVERLAY_PROTECTED_PROPERTIES = new Set([
   ...OVERLAY_CLIPPING_PROPERTIES
 ]);
 const ALTERNATE_OVERLAY_ALLOWED_PROPERTIES = new Set(["box-sizing"]);
-const REPRESENTATIVE_OVERLAY_TREE = [
-  { tag: "html", pseudos: ["root"] },
-  { tag: "body" },
-  { tag: "main", id: "appMain" },
-  { tag: "section", id: "readerView", classes: ["reader-view"] },
-  { tag: "article", id: "detail", classes: ["detail", "reader-detail"] },
-  { tag: "div", classes: ["detail-body"] },
-  { tag: "div", classes: ["section", "video-player-section"] },
+const REPRESENTATIVE_OVERLAY_NODES = [
+  { tag: "html", parent: null, pseudos: ["root"] },
+  { tag: "body", parent: 0 },
+  { tag: "main", parent: 1, id: "appMain" },
+  { tag: "section", parent: 2, id: "readerView", classes: ["reader-view"] },
+  { tag: "article", parent: 3, id: "detail", classes: ["detail", "reader-detail"] },
+  { tag: "div", parent: 4, classes: ["detail-body"] },
+  { tag: "div", parent: 5, classes: ["section", "video-player-section"] },
   {
     tag: "section",
+    parent: 6,
     classes: ["video-player", "subtitles-hidden"],
     attributes: {
       "data-youtube-caption-player": "",
@@ -214,12 +215,32 @@ const REPRESENTATIVE_OVERLAY_TREE = [
     },
     pseudos: ["fullscreen"]
   },
-  { tag: "div", classes: ["video-player-stage"] },
+  { tag: "div", parent: 7, classes: ["video-player-stage"] },
+  {
+    tag: "button",
+    parent: 8,
+    classes: ["video-player-cover"],
+    attributes: { "data-player-cover": "", type: "button" }
+  },
+  {
+    tag: "div",
+    parent: 8,
+    id: "youtube-caption-player-fixture",
+    classes: ["video-player-target"],
+    attributes: { "data-player-target": "" }
+  },
   {
     tag: "p",
+    parent: 8,
     classes: ["video-caption-overlay"],
     attributes: { "data-caption-overlay": "", "aria-hidden": "true" },
     pseudos: ["empty"]
+  },
+  {
+    tag: "p",
+    parent: 8,
+    classes: ["video-player-error"],
+    attributes: { "data-player-error": "", role: "status", hidden: "" }
   }
 ].map((node) => ({
   ...node,
@@ -227,6 +248,7 @@ const REPRESENTATIVE_OVERLAY_TREE = [
   attributes: node.attributes || {},
   pseudos: new Set(node.pseudos || [])
 }));
+const REPRESENTATIVE_OVERLAY_INDEX = 11;
 
 function selectorContainsVisualOverlay(selector) {
   return /\.video-caption-overlay(?![-\w])/.test(selector);
@@ -317,15 +339,18 @@ function compoundMatchesNode(compound, node) {
   });
   if (!attributes.every((attribute) => attributeMatchesNode(attribute, node))) return false;
 
+  const functionalPseudo = remainder.match(/:([-\w]+)\s*\(/);
+  if (functionalPseudo) {
+    throw new Error(`unsupported functional pseudo :${functionalPseudo[1]}()`);
+  }
   const pseudos = [];
-  remainder = remainder.replace(/:([-\w]+)(?:\(([^()]*)\))?/g, (_, name, argument) => {
-    pseudos.push({ name: name.toLowerCase(), argument });
+  remainder = remainder.replace(/:([-\w]+)/g, (_, name) => {
+    pseudos.push(name.toLowerCase());
     return "";
   });
   for (const pseudo of pseudos) {
-    if (pseudo.name === "not" && pseudo.argument && compoundMatchesNode(pseudo.argument, node)) return false;
-    if (["empty", "fullscreen", "root"].includes(pseudo.name) && !node.pseudos.has(pseudo.name)) return false;
-    if (["first-child", "last-child", "only-child"].includes(pseudo.name)) return false;
+    if (["empty", "fullscreen", "root"].includes(pseudo) && !node.pseudos.has(pseudo)) return false;
+    if (["first-child", "last-child", "only-child"].includes(pseudo)) return false;
   }
 
   const ids = [...remainder.matchAll(/#([-\w]+)/g)].map((match) => match[1]);
@@ -337,29 +362,55 @@ function compoundMatchesNode(compound, node) {
   return remainder === "" || remainder === "*" || remainder.toLowerCase() === node.tag;
 }
 
+function previousSiblingIndices(nodeIndex) {
+  const parent = REPRESENTATIVE_OVERLAY_NODES[nodeIndex].parent;
+  return REPRESENTATIVE_OVERLAY_NODES
+    .map((node, index) => ({ node, index }))
+    .filter((candidate) => candidate.index < nodeIndex && candidate.node.parent === parent)
+    .map((candidate) => candidate.index)
+    .reverse();
+}
+
+function relatedNodeIndex(nodeIndex, combinator, compound) {
+  if (combinator === ">") {
+    const parent = REPRESENTATIVE_OVERLAY_NODES[nodeIndex].parent;
+    return parent !== null && compoundMatchesNode(compound, REPRESENTATIVE_OVERLAY_NODES[parent])
+      ? parent
+      : -1;
+  }
+
+  if (combinator === "+") {
+    const previousSibling = previousSiblingIndices(nodeIndex)[0];
+    return previousSibling !== undefined &&
+      compoundMatchesNode(compound, REPRESENTATIVE_OVERLAY_NODES[previousSibling])
+      ? previousSibling
+      : -1;
+  }
+
+  if (combinator === "~") {
+    return previousSiblingIndices(nodeIndex).find((siblingIndex) =>
+      compoundMatchesNode(compound, REPRESENTATIVE_OVERLAY_NODES[siblingIndex])
+    ) ?? -1;
+  }
+
+  let ancestor = REPRESENTATIVE_OVERLAY_NODES[nodeIndex].parent;
+  while (ancestor !== null) {
+    if (compoundMatchesNode(compound, REPRESENTATIVE_OVERLAY_NODES[ancestor])) return ancestor;
+    ancestor = REPRESENTATIVE_OVERLAY_NODES[ancestor].parent;
+  }
+  return -1;
+}
+
 function selectorMatchesRepresentativeOverlay(selector) {
   const { compounds, combinators } = splitSelectorChain(selector);
   if (compounds.length === 0) return false;
-  let nodeIndex = REPRESENTATIVE_OVERLAY_TREE.length - 1;
-  if (!compoundMatchesNode(compounds[compounds.length - 1], REPRESENTATIVE_OVERLAY_TREE[nodeIndex])) {
+  let nodeIndex = REPRESENTATIVE_OVERLAY_INDEX;
+  if (!compoundMatchesNode(compounds[compounds.length - 1], REPRESENTATIVE_OVERLAY_NODES[nodeIndex])) {
     return false;
   }
 
   for (let compoundIndex = compounds.length - 2; compoundIndex >= 0; compoundIndex -= 1) {
-    const combinator = combinators[compoundIndex];
-    if (combinator === "+" || combinator === "~") return false;
-    if (combinator === ">") {
-      nodeIndex -= 1;
-      if (nodeIndex < 0 || !compoundMatchesNode(compounds[compoundIndex], REPRESENTATIVE_OVERLAY_TREE[nodeIndex])) {
-        return false;
-      }
-      continue;
-    }
-
-    nodeIndex -= 1;
-    while (nodeIndex >= 0 && !compoundMatchesNode(compounds[compoundIndex], REPRESENTATIVE_OVERLAY_TREE[nodeIndex])) {
-      nodeIndex -= 1;
-    }
+    nodeIndex = relatedNodeIndex(nodeIndex, combinators[compoundIndex], compounds[compoundIndex]);
     if (nodeIndex < 0) return false;
   }
   return true;
@@ -559,6 +610,8 @@ test("representative overlay matcher covers alternate selectors without unrelate
     "*",
     "p.video-caption-overlay",
     ".video-player-stage > [data-caption-overlay]",
+    ".video-player-target + .video-caption-overlay",
+    ".video-player-cover ~ [data-caption-overlay]",
     ".video-player [aria-hidden=\"true\"]",
     ".reader-detail .video-player-stage p"
   ].forEach((selector) => assert.equal(selectorMatchesRepresentativeOverlay(selector), true, selector));
@@ -567,8 +620,18 @@ test("representative overlay matcher covers alternate selectors without unrelate
     ".hero p",
     ".reader-detail .step p",
     ".section-head > p:last-child",
+    ".video-player-cover + .video-caption-overlay",
     "button"
   ].forEach((selector) => assert.equal(selectorMatchesRepresentativeOverlay(selector), false, selector));
+});
+
+test("representative overlay matcher fails closed for unsupported functional pseudos", () => {
+  [":is(.hero p)", ":where([data-caption-overlay])", ":not(.hero p)"].forEach((selector) => {
+    assert.throws(
+      () => selectorMatchesRepresentativeOverlay(selector),
+      /unsupported functional pseudo/
+    );
+  });
 });
 
 test("visual caption overlay guard rejects alternate matching selector mutations", () => {
@@ -584,6 +647,14 @@ test("visual caption overlay guard rejects alternate matching selector mutations
     ["p.video-caption-overlay { left: 0; }", /unapproved visual caption overlay selector/],
     [".video-player-stage > p { left: 0; }", /must not set protected property left/],
     [".video-player [data-caption-overlay] { left: 0; }", /must not set protected property left/],
+    [
+      ".video-player-target + .video-caption-overlay { left: 0; }",
+      /unapproved visual caption overlay selector/
+    ],
+    [
+      ".video-player-cover ~ [data-caption-overlay] { left: 0; }",
+      /must not set protected property left/
+    ],
     [".hero p, [data-caption-overlay] { left: 0; }", /must not set protected property left/]
   ];
 
