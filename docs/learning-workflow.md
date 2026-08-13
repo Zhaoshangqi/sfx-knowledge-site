@@ -21,17 +21,17 @@
 
 ## 站内中文字幕模型
 
-YouTube 只提供播放源；站内字幕不依赖 YouTube 官方翻译。`src/video-subtitles.js` 是 catalog，按视频懒加载 `assets/subtitles/VIDEO_ID.json`，播放器提供时间同步覆盖层、全文稿、seek、CC 和全屏。
+YouTube 只提供播放源；站内字幕不依赖 YouTube 官方翻译。`src/video-subtitles.js` 是 catalog，按视频懒加载 `assets/subtitles/<11 位视频 ID>.json`，播放器提供时间同步覆盖层、全文稿、seek、CC 和全屏。
 
 发布的每条 JSON 轨道必须为：
 
 ```json
 {
-  "videoId": "VIDEO_ID",
+  "videoId": "Xl5u91oQv-k",
   "language": "zh-CN",
   "source": "site-owned-from-public-captions",
   "reviewStatus": "draft",
-  "updatedAt": "YYYY-MM-DD",
+  "updatedAt": "2026-08-12",
   "cues": [{ "start": 0.0, "end": 2.4, "text": "中文字幕" }]
 }
 ```
@@ -50,14 +50,29 @@ node .\tools\batch-site-subtitles.cjs import --input .\.work\subtitles --output 
 node .\tools\batch-site-subtitles.cjs catalog --index .\index.html --tracks .\assets\subtitles --overrides .\tools\data\subtitle-status-overrides.json --module .\src\video-subtitles.js --report .\.work\subtitle-coverage-report.json
 ```
 
-`catalog` 从 `index.html`、站内 JSON 和状态 overrides 生成有序 catalog，并把 total、tracks、publicCaptions、localTranscriptions、noSpeech、missing 和 cues 写入 coverage report。审阅 VTT 和 JSON 的时间轴、中文、插件名、产品名和术语；未完成时保留 `draft`，完成后才改 `reviewed` 并重新生成 catalog。不要手动维护 catalog。
+`import` 默认跳过已存在的 `assets/subtitles/<11 位视频 ID>.json`，保护已有人工修改。审阅 VTT 和 JSON 的时间轴、中文、插件名、产品名和术语后，保留 JSON 为 `draft` 或改为 `reviewed`，然后只重跑 `catalog`。仅当已另行备份且确认要以输入 VTT 覆盖人工修改时，才显式向 `import` 命令加入 `--force`。`catalog` 从 `index.html`、站内 JSON 和状态 overrides 生成有序 catalog，并把 total、tracks、publicCaptions、localTranscriptions、noSpeech、missing 和 cues 写入 coverage report；不要手动维护 catalog。
 
 ## 本地转写审查门禁
 
 公开字幕缺失时，可以用 large-v3 生成本地审查证据：
 
+先按本机 CPU/CUDA 环境安装匹配版本的 `torch` 与 `torchaudio`，再安装转写依赖：
+
+```powershell
+# 从 PyTorch 安装选择器取得与本机 CPU/CUDA 匹配的 torch + torchaudio 命令并先执行。
+.\.venv\Scripts\python.exe -m pip install -r .\requirements-transcription.txt
+```
+
+CUDA 命令要求 `torch.cuda.is_available()` 为真，并且 `large-v3` 已在 Whisper 缓存中；工具会拒绝隐式下载模型：
+
 ```powershell
 python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cuda --work-dir .\.work\subtitles VIDEO_ID
+```
+
+没有可用 CUDA 时，使用 CPU fallback；同样要求 `large-v3` 已缓存：
+
+```powershell
+python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cpu --work-dir .\.work\subtitles VIDEO_ID
 ```
 
 工具在 `.work` 中保存英文 Whisper candidate 和审查证据，candidate 的来源为 `site-owned-from-local-transcription`，且为待翻译审校状态。它不是可发布轨道：必须经过人工中文翻译、时间轴和术语审校后，才可将 `zh-CN` JSON 加入 `assets/subtitles/`，再生成 catalog。
@@ -66,7 +81,7 @@ python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cuda --
 
 ## 安全与全量验证
 
-绝不提交 `.work`、媒体、VTT、review/candidate、Cookie、登录态、token、API key、模型 checkpoint 或绝对本地路径。仓库只保存站内 JSON 字幕、catalog、已审校的网站/Skill 内容、工具、测试和文档。
+绝不提交 `.work`、媒体、VTT、review/candidate、Cookie、登录态、token、API key、模型 checkpoint 或绝对本地路径。仓库只保存经过结构和来源校验、`reviewStatus` 可为 `draft` 或 `reviewed` 的站内 JSON 字幕、catalog、已审校的网站/Skill 内容、工具、测试和文档。
 
 ```powershell
 node --check src\video-subtitles.js

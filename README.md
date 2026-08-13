@@ -30,15 +30,15 @@ node .\tools\verify-portable-kit.cjs
 
 ## 每条轨道的 JSON
 
-`assets/subtitles/VIDEO_ID.json` 是唯一可发布的字幕正文，固定结构如下：
+`assets/subtitles/<11 位视频 ID>.json` 是唯一可发布的字幕正文，固定结构如下（示例对应仓库中的真实轨道）：
 
 ```json
 {
-  "videoId": "VIDEO_ID",
+  "videoId": "Xl5u91oQv-k",
   "language": "zh-CN",
   "source": "site-owned-from-public-captions",
   "reviewStatus": "draft",
-  "updatedAt": "YYYY-MM-DD",
+  "updatedAt": "2026-08-12",
   "cues": [
     { "start": 0.0, "end": 2.4, "text": "中文字幕" }
   ]
@@ -59,14 +59,29 @@ node .\tools\batch-site-subtitles.cjs import --input .\.work\subtitles --output 
 node .\tools\batch-site-subtitles.cjs catalog --index .\index.html --tracks .\assets\subtitles --overrides .\tools\data\subtitle-status-overrides.json --module .\src\video-subtitles.js --report .\.work\subtitle-coverage-report.json
 ```
 
-人工检查时间轴、中文、插件名和术语后，保留 `draft` 或把对应 JSON 改为 `reviewed`；随后再次运行 `catalog`，审阅 JSON、catalog 和 `.work\subtitle-coverage-report.json` 的差异。
+默认情况下，`import` 会跳过已存在的 `assets/subtitles/<11 位视频 ID>.json`，不会覆盖人工修改。人工检查时间轴、中文、插件名和术语后，直接保留 JSON 为 `draft` 或改为 `reviewed`，随后只重跑 `catalog`。仅当已另行备份且确认要以输入 VTT 替换人工修改时，才在 `import` 命令末尾显式加入 `--force`。
 
 ## 本地转写审查
 
 公开字幕缺失时，可生成仅供审查的本地证据：
 
+先按本机 CPU/CUDA 环境安装匹配版本的 `torch` 与 `torchaudio`，再安装转写依赖：
+
+```powershell
+# 从 PyTorch 安装选择器取得与本机 CPU/CUDA 匹配的 torch + torchaudio 命令并先执行。
+.\.venv\Scripts\python.exe -m pip install -r .\requirements-transcription.txt
+```
+
+CUDA 路径要求 `torch.cuda.is_available()` 为真，并且 `large-v3` 已在 Whisper 缓存中；工具会拒绝隐式下载模型：
+
 ```powershell
 python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cuda --work-dir .\.work\subtitles VIDEO_ID
+```
+
+没有可用 CUDA 时，使用 CPU fallback；同样要求 `large-v3` 已缓存：
+
+```powershell
+python .\tools\transcribe-missing-subtitles.py --model large-v3 --device cpu --work-dir .\.work\subtitles VIDEO_ID
 ```
 
 该工具只在 `.work` 写入 candidate/review 证据。Whisper candidate 是英文，状态为待翻译审校，不能直接进入 `assets/subtitles/`；完成中文翻译、时间轴和术语人工审校后，才可创建 `zh-CN` 轨道，并将来源标为 `site-owned-from-local-transcription`。
