@@ -45,6 +45,33 @@ function assertBothReject(html, expected) {
   assert.throws(() => siteData.replaceRecords(html, []), expected);
 }
 
+function assertInvalidReplacement(records, expected = /records/i) {
+  const html = fixture();
+  assert.throws(() => siteData.replaceRecords(html, records), expected);
+  assert.deepEqual(siteData.parse(html).records, defaultRecords);
+}
+
+function withScriptPreamble(html, preamble, newline = '\n') {
+  return html.replace(`<script>${newline}`, `<script>${newline}${preamble}${newline}`);
+}
+
+function markerDeclarations(newline = '\n') {
+  return [
+    `${RECORDS_MARKER}[];`,
+    `${IMAGE_MANIFEST_MARKER}{};`,
+    `${PLUGIN_CATALOG_MARKER}[];`
+  ].join(newline);
+}
+
+function continuedStringDecoy(quote) {
+  return [
+    `const decoy = ${quote}\\`,
+    `${RECORDS_MARKER}[];\\`,
+    `${IMAGE_MANIFEST_MARKER}{};\\`,
+    `${PLUGIN_CATALOG_MARKER}[];${quote};`
+  ].join('\n');
+}
+
 test('exports only a frozen parse and replaceRecords API', () => {
   assert.deepEqual(Object.keys(siteData), ['parse', 'replaceRecords']);
   assert.equal(typeof siteData.parse, 'function');
@@ -102,6 +129,74 @@ test('replaceRecords preserves CRLF throughout the replacement block', () => {
   assert.deepEqual(siteData.parse(replaced).records, records);
 });
 
+test('replaceRecords infers CRLF from the records block after an LF preamble', () => {
+  const records = [{ id: 'record-2', values: [1, 2, 3] }];
+  const crlfHtml = fixture({ newline: '\r\n' });
+  const html = crlfHtml.replace('<!doctype html>\r\n<script>\r\n', '<!doctype html>\n<script>\n');
+
+  const replaced = siteData.replaceRecords(html, records);
+  const literalStart = replaced.indexOf(RECORDS_MARKER) + RECORDS_MARKER.length;
+  const recordsBlock = replaced.slice(literalStart, replaced.indexOf(IMAGE_MANIFEST_MARKER));
+
+  assert.equal(recordsBlock.replace(/\r\n/g, '').includes('\n'), false);
+  assert.deepEqual(siteData.parse(replaced).records, records);
+});
+
+test('replaceRecords rejects mixed EOL inside the records block', () => {
+  const html = fixture({ newline: '\r\n' });
+  const literalStart = html.indexOf(RECORDS_MARKER) + RECORDS_MARKER.length;
+  const firstBlockEol = html.indexOf('\r\n', literalStart);
+  const mixed = html.slice(0, firstBlockEol) + '\n' + html.slice(firstBlockEol + 2);
+
+  assert.throws(() => siteData.replaceRecords(mixed, [{ id: 'changed' }]), /records.*mixed.*EOL/i);
+});
+
+test('replaceRecords escapes script-closing text and restores it through parse', () => {
+  const records = [{ text: '</script><script>alert(1)</script>' }];
+
+  for (const html of [fixture(), fixture({ records })]) {
+    const replaced = siteData.replaceRecords(html, records);
+    const literalStart = replaced.indexOf(RECORDS_MARKER) + RECORDS_MARKER.length;
+    const recordsBlock = replaced.slice(literalStart, replaced.indexOf(IMAGE_MANIFEST_MARKER));
+
+    assert.doesNotMatch(recordsBlock, /<\/script>/i);
+    assert.match(recordsBlock, /\\u003c\/script>/i);
+    assert.deepEqual(siteData.parse(replaced).records, records);
+  }
+});
+
+test('replaceRecords round-trips Unicode data and an empty array', () => {
+  const unicodeRecords = [{
+    id: 'unicode',
+    text: '\u4e2d\u6587 \ud83c\udfb5 caf\u00e9'
+  }];
+
+  assert.deepEqual(siteData.parse(siteData.replaceRecords(fixture(), unicodeRecords)).records, unicodeRecords);
+  assert.deepEqual(siteData.parse(siteData.replaceRecords(fixture(), [])).records, []);
+});
+
+test('parse returns independent results on every call', () => {
+  const html = fixture();
+  const first = siteData.parse(html);
+  const second = siteData.parse(html);
+
+  first.records[0].id = 'changed';
+  first.imageManifest.hero.preview = 'changed.webp';
+
+  assert.deepEqual(second, {
+    records: defaultRecords,
+    imageManifest: defaultImageManifest
+  });
+  assert.deepEqual(siteData.parse(html), second);
+});
+
+test('parse and replaceRecords reject non-string HTML', () => {
+  for (const html of [null, undefined, {}, Buffer.from('html')]) {
+    assert.throws(() => siteData.parse(html), /html.*string/i);
+    assert.throws(() => siteData.replaceRecords(html, []), /html.*string/i);
+  }
+});
+
 for (const [name, marker] of [
   ['records', RECORDS_MARKER],
   ['imageManifest', IMAGE_MANIFEST_MARKER],
@@ -123,9 +218,33 @@ test('parse and replaceRecords reject out-of-order markers', () => {
   );
 });
 
-test('parse and replaceRecords reject overlapping duplicate markers', () => {
-  const html = fixture().replace(RECORDS_MARKER, RECORDS_MARKER + RECORDS_MARKER.slice(1));
-  assertBothReject(html, /duplicate.*records/i);
+for (const [name, decoy] of [
+  ['block comments', `/*\n${markerDeclarations()}\n*/`],
+  ['line comments', markerDeclarations().split('\n').map((line) => `// ${line}`).join('\n')],
+  ['double-quoted strings', continuedStringDecoy('"')],
+  ['single-quoted strings', continuedStringDecoy("'")],
+  ['template strings', `const decoy = \`\n${markerDeclarations()}\n\`;`],
+  ['extra indentation', markerDeclarations().split('\n').map((line) => ` ${line}`).join('\n')]
+]) {
+  test(`parse ignores marker decoys in ${name}`, () => {
+    assert.deepEqual(siteData.parse(withScriptPreamble(fixture(), decoy)), {
+      records: defaultRecords,
+      imageManifest: defaultImageManifest
+    });
+  });
+}
+
+test('parse requires declarations to have exactly four leading spaces', () => {
+  assertBothReject(fixture().replace(RECORDS_MARKER, ` ${RECORDS_MARKER}`), /missing.*records/i);
+});
+
+test('parse allows marker-like text inside valid records JSON strings', () => {
+  const records = [{
+    id: 'marker-text',
+    values: [RECORDS_MARKER, IMAGE_MANIFEST_MARKER, PLUGIN_CATALOG_MARKER]
+  }];
+
+  assert.deepEqual(siteData.parse(fixture({ records })).records, records);
 });
 
 test('parse and replaceRecords reject malformed records JSON', () => {
@@ -151,6 +270,85 @@ test('replaceRecords rejects a non-array replacement', () => {
   }
 });
 
+for (const [name, buildRecords] of [
+  ['undefined', () => [undefined]],
+  ['NaN', () => [NaN]],
+  ['positive Infinity', () => [Infinity]],
+  ['negative Infinity', () => [-Infinity]],
+  ['functions', () => [function invalid() {}]],
+  ['bigints', () => [1n]],
+  ['symbol values', () => [Symbol('value')]],
+  ['array holes', () => new Array(1)],
+  ['array extra keys', () => Object.assign([], { extra: true })],
+  ['array custom prototypes', () => {
+    const value = [];
+    Object.setPrototypeOf(value, {});
+    return [value];
+  }],
+  ['object custom prototypes', () => [Object.assign(Object.create({ inherited: true }), { value: 1 })]],
+  ['non-enumerable properties', () => {
+    const value = {};
+    Object.defineProperty(value, 'hidden', { value: true });
+    return [value];
+  }],
+  ['symbol keys', () => {
+    const value = { visible: true };
+    value[Symbol('hidden')] = true;
+    return [value];
+  }],
+  ['cycles', () => {
+    const records = [];
+    records.push(records);
+    return records;
+  }]
+]) {
+  test(`replaceRecords rejects ${name} without changing the source HTML`, () => {
+    assertInvalidReplacement(buildRecords());
+  });
+}
+
+test('replaceRecords rejects accessors without invoking getters', () => {
+  let getterCalls = 0;
+  const value = {};
+  Object.defineProperty(value, 'computed', {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      return 'unsafe';
+    }
+  });
+
+  assertInvalidReplacement([value], /records.*accessor/i);
+  assert.equal(getterCalls, 0);
+});
+
+test('replaceRecords rejects toJSON without invoking it', () => {
+  let toJsonCalls = 0;
+  const value = {
+    visible: true,
+    toJSON() {
+      toJsonCalls += 1;
+      return { replaced: true };
+    }
+  };
+
+  assertInvalidReplacement([value], /records.*toJSON/i);
+  assert.equal(toJsonCalls, 0);
+});
+
+test('replaceRecords accepts nested dense arrays and null-prototype data objects', () => {
+  const value = Object.create(null);
+  value.id = 'null-prototype';
+  value.values = [null, 'text', true, 1.5];
+
+  const parsed = siteData.parse(siteData.replaceRecords(fixture(), [value]));
+
+  assert.deepEqual(parsed.records, [{
+    id: 'null-prototype',
+    values: [null, 'text', true, 1.5]
+  }]);
+});
+
 for (const [name, imageManifestLiteral] of [
   ['null', 'null'],
   ['array', '[]'],
@@ -163,13 +361,24 @@ for (const [name, imageManifestLiteral] of [
   });
 }
 
-test('parse reads the real repository index without mutating it', () => {
+test('parse and replaceRecords preserve the real repository index boundaries', () => {
   const indexPath = path.join(__dirname, '..', 'index.html');
   const before = fs.readFileSync(indexPath, 'utf8');
 
   const parsed = siteData.parse(before);
+  const same = siteData.replaceRecords(before, parsed.records);
+  const changedRecords = JSON.parse(JSON.stringify(parsed.records));
+  changedRecords[0].title += ' changed';
+  const changed = siteData.replaceRecords(before, changedRecords);
+  const literalStart = before.indexOf(RECORDS_MARKER) + RECORDS_MARKER.length;
+  const originalManifestStart = before.indexOf(IMAGE_MANIFEST_MARKER);
+  const changedManifestStart = changed.indexOf(IMAGE_MANIFEST_MARKER);
 
   assert.equal(parsed.records.length, 82);
   assert.ok(Object.keys(parsed.imageManifest).length > 0);
+  assert.equal(same, before);
+  assert.equal(changed.slice(0, literalStart), before.slice(0, literalStart));
+  assert.equal(changed.slice(changedManifestStart), before.slice(originalManifestStart));
+  assert.deepEqual(siteData.parse(changed).records, changedRecords);
   assert.equal(fs.readFileSync(indexPath, 'utf8'), before);
 });
