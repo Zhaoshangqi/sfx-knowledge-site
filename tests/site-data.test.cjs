@@ -272,6 +272,27 @@ test('regex literals do not hide a later duplicate declaration', () => {
   assertBothReject(withScriptPreamble(fixture(), preamble), /duplicate.*records/i);
 });
 
+test('regex literals after statement blocks do not hide a later duplicate declaration', () => {
+  const suffix = [
+    'if (true) {}',
+    String.raw`/['\"]/.test("x");`,
+    `${RECORDS_MARKER}[];`
+  ].join('\n');
+  const html = fixture().replace('</script>', `${suffix}\n</script>`);
+
+  assertBothReject(html, /duplicate.*records/i);
+});
+
+test('object expressions followed by division do not hide a later duplicate declaration', () => {
+  const suffix = [
+    'const quotient = {} / "x";',
+    `${RECORDS_MARKER}[];`
+  ].join('\n');
+  const html = fixture().replace('</script>', `${suffix}\n</script>`);
+
+  assertBothReject(html, /duplicate.*records/i);
+});
+
 test('parse ignores marker text inside regex literals', () => {
   const preamble = String.raw`const markerPattern = /['"\\/]|    const records = |    const imageManifest = |    const pluginReferenceCatalog = /;`;
 

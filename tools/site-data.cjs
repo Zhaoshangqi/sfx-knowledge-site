@@ -95,7 +95,9 @@ function scanScriptContent(html, start, matches) {
   let canStartRegex = true;
   let regexCharacterClass = false;
   let pendingControlParen = false;
+  let pendingStatementBlock = false;
   const parenContexts = [];
+  const braceContexts = [];
 
   for (let index = start; index < html.length;) {
     const character = html[index];
@@ -119,18 +121,23 @@ function scanScriptContent(html, start, matches) {
       } else if (character === '/' && canStartRegex) {
         state = 'regex';
         regexCharacterClass = false;
+        pendingStatementBlock = false;
         index += 1;
       } else if (character === '/') {
         canStartRegex = true;
+        pendingStatementBlock = false;
         index += 1;
       } else if (character === "'") {
         state = 'single-string';
+        pendingStatementBlock = false;
         index += 1;
       } else if (character === '"') {
         state = 'double-string';
+        pendingStatementBlock = false;
         index += 1;
       } else if (character === '`') {
         state = 'template-string';
+        pendingStatementBlock = false;
         index += 1;
       } else if (isIdentifierStart(character)) {
         let end = index + 1;
@@ -139,6 +146,7 @@ function scanScriptContent(html, start, matches) {
         }
         const word = html.slice(index, end);
         pendingControlParen = CONTROL_PAREN_KEYWORDS.has(word);
+        pendingStatementBlock = false;
         canStartRegex = pendingControlParen || REGEX_PREFIX_KEYWORDS.has(word);
         index = end;
       } else if (character >= '0' && character <= '9') {
@@ -147,26 +155,43 @@ function scanScriptContent(html, start, matches) {
           end += 1;
         }
         canStartRegex = false;
+        pendingStatementBlock = false;
         index = end;
       } else if (character === '(') {
         parenContexts.push(pendingControlParen ? 'control' : 'group');
         pendingControlParen = false;
+        pendingStatementBlock = false;
         canStartRegex = true;
         index += 1;
       } else if (character === ')') {
-        canStartRegex = parenContexts.pop() === 'control';
+        const closesControl = parenContexts.pop() === 'control';
+        canStartRegex = closesControl;
+        pendingStatementBlock = closesControl;
         index += 1;
-      } else if (character === ']' || character === '}') {
+      } else if (character === '{') {
+        braceContexts.push(pendingStatementBlock ? 'statement' : 'expression');
+        pendingStatementBlock = false;
+        canStartRegex = true;
+        index += 1;
+      } else if (character === '}') {
+        canStartRegex = braceContexts.pop() === 'statement';
+        pendingStatementBlock = false;
+        index += 1;
+      } else if (character === ']') {
         canStartRegex = false;
+        pendingStatementBlock = false;
         index += 1;
       } else if (character === '.') {
         canStartRegex = false;
+        pendingStatementBlock = false;
         index += 1;
       } else if ((character === '+' || character === '-') && next === character) {
         canStartRegex = false;
+        pendingStatementBlock = false;
         index += 2;
       } else {
         canStartRegex = true;
+        pendingStatementBlock = false;
         index += 1;
       }
       continue;
