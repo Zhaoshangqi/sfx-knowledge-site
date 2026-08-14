@@ -17,7 +17,8 @@
     var year = Number(match[1]);
     var month = Number(match[2]);
     var day = Number(match[3]);
-    var date = new Date(Date.UTC(year, month - 1, day));
+    var date = new Date(0);
+    date.setUTCFullYear(year, month - 1, day);
     return date.getUTCFullYear() === year &&
       date.getUTCMonth() === month - 1 &&
       date.getUTCDate() === day;

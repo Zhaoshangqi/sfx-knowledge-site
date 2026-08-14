@@ -76,6 +76,8 @@ test('accepts real leap days and rejects impossible reviewedAt dates', () => {
   const api = timelineApi();
   const record = reviewedRecord();
 
+  assert.equal(api.validRecord(withTimeline(record, { reviewedAt: '0001-01-01' })), true);
+  assert.equal(api.validRecord(withTimeline(record, { reviewedAt: '0099-12-31' })), true);
   assert.equal(api.validRecord(withTimeline(record, { reviewedAt: '2024-02-29' })), true);
   ['2026-02-29', '2026-02-31', '2026-13-01', '2026-01-00'].forEach((reviewedAt) => {
     assert.equal(api.validRecord(withTimeline(record, { reviewedAt })), false);
