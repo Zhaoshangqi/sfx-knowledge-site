@@ -38,7 +38,15 @@ YouTube 只提供播放源；站内字幕不依赖 YouTube 官方翻译。`src/v
 
 `source` 取值为 `site-owned-from-public-captions` 或 `site-owned-from-local-transcription`；`reviewStatus` 为 `draft` 或 `reviewed`。cues 按时间升序、互不重叠，并且正文非空。catalog 中每个网站视频恰有一个条目：`track` 条目镜像轨道元数据并指向 JSON，`missing` 或 `no-speech` 条目则不带 asset。
 
+JSON 中的短 cue 永远是播放器覆盖字幕和精确同步的唯一来源。全文阅读区由 `SfxVideoSubtitles.paragraphsFor(track)` 在运行时把相邻 cue 投影成可点击段落；段落只改善阅读，不改写原文，也不生成新的时间轴。编辑者不得为了让全文稿更整齐而合并、拆分或挪动 JSON cue 时间。段落边界需要调整时，只修改投影规则，并继续验证每个 cue 恰好归属一个段落、文字流无丢失。
+
 截至 `2026-08-13`，已验证覆盖为 **75 track + 0 noSpeech + 7 missing = 82**，总计 **21,252 cues**。因此不得声称所有视频均有字幕。
+
+## 中英术语表维护
+
+`src/sfx-glossary.js` 是人工维护的声音设计概念表。术语只解释“是什么”和“什么时候关注”，不写固定参数配方；产品名、插件名和厂商名保持原文，不翻译成概念词。新增 alias 时，中文可以按完整词组匹配，英文缩写和单词必须保留词边界，避免 `bus` 命中 `business`、`IR` 命中 `mirror` 这类误报。
+
+站内只展示当前记录和已加载字幕实际命中的术语。匹配是只读索引，不改写记录、字幕或产品名；无相关术语时整段省略。维护后至少运行 `node --test tests\sfx-glossary.test.cjs tests\video-subtitles.test.cjs tests\youtube-caption-player.test.cjs tests\dual-index-site.test.cjs`，确认术语唯一、排序稳定、字段转义安全，并且全文段落与视频内短字幕仍各司其职。
 
 ## 公共字幕导入与 catalog
 
