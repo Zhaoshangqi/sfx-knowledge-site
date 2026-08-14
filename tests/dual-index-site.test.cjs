@@ -2213,7 +2213,7 @@ test('uses conservative shared cleaners for factual detail arrays', () => {
 });
 
 test('renders a dry-goods archive with an embedded player, effect links, and sources at the end', () => {
-  const detailSource = indexHtml.match(/function renderDetail\(\) \{([\s\S]*?)\n    \}\n\n    function renderEffectDetail/)?.[1] || '';
+  const detailSource = indexHtml.match(/function renderDetail\(\) \{([\s\S]*?)\r?\n    \}\r?\n\r?\n    function renderEffectDetail/)?.[1] || '';
   const requiredHeadings = ['设计目标', '设计思路', '原视频与中文字幕', '素材与分层', '完整制作流程', '完整效果链', '效果器用法', '关键决策与证据边界', '来源与关键词'];
   const positions = requiredHeadings.map((heading) => detailSource.indexOf('<h3>' + heading + '</h3>'));
 
@@ -2234,7 +2234,7 @@ test('renders a dry-goods archive with an embedded player, effect links, and sou
   assert.match(playerCss, /\.video-transcript-loading\s*\{/);
   assert.match(playerCss, /\.video-player:fullscreen \.video-transcript-container/);
   assert.doesNotMatch(detailSource, /decisionFacts.*updateNote/);
-  const effectSummarySource = indexHtml.match(/function renderEffectUseSummary\(record, use\) \{([\s\S]*?)\n    \}\n\n    function renderDetail/)?.[1] || '';
+  const effectSummarySource = indexHtml.match(/function renderEffectUseSummary\(record, use\) \{([\s\S]*?)\r?\n    \}\r?\n\r?\n    function renderDetail/)?.[1] || '';
   assert.match(effectSummarySource, /EffectIndexData\.profileForUse/);
   ['profile.input', 'profile.action', 'profile.result'].forEach((field) => {
     assert.ok(effectSummarySource.includes(field), `missing ${field}`);
@@ -2269,7 +2269,7 @@ test('destroys the active YouTube player across reader and library route changes
 });
 
 test('effect detail is an image-led application guide without parameter information', () => {
-  const effectDetailSource = indexHtml.match(/function renderEffectDetail\(effectId\) \{([\s\S]*?)\n    \}\n\n    function openLightbox/)?.[1] || '';
+  const effectDetailSource = indexHtml.match(/function renderEffectDetail\(effectId\) \{([\s\S]*?)\r?\n    \}\r?\n\r?\n    function openLightbox/)?.[1] || '';
 
   ['能得到什么', '适合什么输入', '怎么处理', '证据截图', '看图重点', '更多视频案例'].forEach((heading) => {
     assert.ok(effectDetailSource.includes(heading), `missing ${heading}`);
