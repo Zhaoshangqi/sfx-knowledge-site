@@ -109,10 +109,10 @@ test('candidateCues caps deterministic ties at three and deduplicates normalized
   const reviewData = api();
   const track = {
     cues: [
-      { start: 2, end: 3, text: 'Beta Pro-Q' },
-      { start: 4, end: 5, text: 'Delta Pro-Q' },
       { start: 1, end: 2, text: 'Gamma Pro-Q' },
-      { start: 2, end: 3, text: 'Alpha Pro-Q' }
+      { start: 2, end: 3, text: 'Alpha Pro-Q' },
+      { start: 3, end: 4, text: 'Beta Pro-Q' },
+      { start: 4, end: 5, text: 'Delta Pro-Q' }
     ]
   };
 
@@ -178,6 +178,297 @@ test('candidateCues fails closed for malformed tracks, cues, and empty terms', (
     assert.deepEqual(result, []);
     assert.ok(Object.isFrozen(result));
   });
+});
+
+test('candidateCues trims valid cue text and rejects noncanonical cue timelines', () => {
+  const reviewData = api();
+  const result = reviewData.candidateCues({
+    cues: [{ start: 1, end: 2, text: '  Pro-Q  ' }]
+  }, ['pro-q']);
+
+  assert.deepEqual(result, [{
+    start: 1,
+    end: 2,
+    text: 'Pro-Q',
+    score: 1,
+    matchedTerms: ['pro-q']
+  }]);
+  assertDeepFrozen(result);
+});
+
+test('buildReviewQueue marks strict malformed cue timelines invalid with no candidates', () => {
+  const reviewData = api();
+  const sparseCues = new Array(2);
+  sparseCues[0] = { start: 0, end: 1, text: 'Pro-Q' };
+  const duplicate = { start: 0, end: 1, text: 'Pro-Q' };
+  const tracksByVideoId = {
+    empty: { cues: [] },
+    sparse: { cues: sparseCues },
+    overlap: { cues: [
+      { start: 0, end: 2, text: 'Pro-Q' },
+      { start: 1, end: 3, text: 'Pro-Q' }
+    ] },
+    'out-of-order': { cues: [
+      { start: 4, end: 5, text: 'Pro-Q' },
+      { start: 1, end: 2, text: 'Pro-Q' }
+    ] },
+    duplicate: { cues: [duplicate, { ...duplicate }] },
+    blank: { cues: [{ start: 0, end: 1, text: ' \t ' }] }
+  };
+  const records = Object.keys(tracksByVideoId).map((videoId, index) => ({
+    id: `record-${index}`,
+    videoId,
+    title: videoId,
+    steps: [{ order: 1, name: 'Pro-Q', detail: '', params: [], imageKey: '' }]
+  }));
+
+  const queue = reviewData.buildReviewQueue(records, tracksByVideoId);
+
+  assert.deepEqual(queue.map((entry) => entry.subtitleStatus), [
+    'invalid',
+    'invalid',
+    'invalid',
+    'invalid',
+    'invalid',
+    'invalid'
+  ]);
+  queue.forEach((entry) => assert.deepEqual(entry.steps[0].candidates, []));
+});
+
+test('candidateCues rejects inherited, custom-prototype, and accessor cue evidence', () => {
+  const reviewData = api();
+  const plainCue = { start: 0, end: 1, text: 'Pro-Q' };
+  const inheritedTrack = Object.create({ cues: [plainCue] });
+  const customTrack = Object.assign(Object.create({ marker: true }), { cues: [plainCue] });
+  const inheritedCue = Object.create(plainCue);
+  const customCue = Object.assign(Object.create({ marker: true }), plainCue);
+  let getterCalls = 0;
+  const accessorTrack = {};
+  Object.defineProperty(accessorTrack, 'cues', {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      throw new Error('track cues getter must not run');
+    }
+  });
+  const accessorCue = { end: 1, text: 'Pro-Q' };
+  Object.defineProperty(accessorCue, 'start', {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      throw new Error('cue start getter must not run');
+    }
+  });
+
+  [
+    inheritedTrack,
+    customTrack,
+    { cues: [inheritedCue] },
+    { cues: [customCue] }
+  ].forEach((track) => assert.deepEqual(reviewData.candidateCues(track, ['pro-q']), []));
+
+  let accessorTrackResult;
+  let accessorCueResult;
+  assert.doesNotThrow(() => {
+    accessorTrackResult = reviewData.candidateCues(accessorTrack, ['pro-q']);
+    accessorCueResult = reviewData.candidateCues({ cues: [accessorCue] }, ['pro-q']);
+  });
+  assert.deepEqual(accessorTrackResult, []);
+  assert.deepEqual(accessorCueResult, []);
+  assert.equal(getterCalls, 0);
+});
+
+test('candidateCues catches reflective failures and preserves null-prototype data', () => {
+  const reviewData = api();
+  const hostileTrack = new Proxy({}, {
+    get() {
+      throw new Error('proxy get must not run');
+    },
+    getOwnPropertyDescriptor() {
+      throw new Error('reflective failure');
+    }
+  });
+  let hostileResult;
+
+  assert.doesNotThrow(() => {
+    hostileResult = reviewData.candidateCues(hostileTrack, ['pro-q']);
+  });
+  assert.deepEqual(hostileResult, []);
+
+  const cue = Object.assign(Object.create(null), {
+    start: 0,
+    end: 1,
+    text: ' Pro-Q '
+  });
+  const track = Object.assign(Object.create(null), { cues: [cue] });
+  assert.deepEqual(reviewData.candidateCues(track, ['pro-q']), [{
+    start: 0,
+    end: 1,
+    text: 'Pro-Q',
+    score: 1,
+    matchedTerms: ['pro-q']
+  }]);
+});
+
+test('buildReviewQueue skips unsafe records without invoking getters', () => {
+  const reviewData = api();
+  const customRecord = Object.assign(Object.create({ inherited: true }), {
+    id: 'custom-record',
+    videoId: 'video-safe',
+    title: 'Custom',
+    steps: []
+  });
+  let getterCalls = 0;
+  const accessorRecord = {
+    id: 'accessor-record',
+    videoId: 'video-safe',
+    title: 'Accessor'
+  };
+  Object.defineProperty(accessorRecord, 'steps', {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      throw new Error('record steps getter must not run');
+    }
+  });
+  const hostileRecord = new Proxy({}, {
+    get() {
+      throw new Error('record proxy get must not run');
+    },
+    getOwnPropertyDescriptor() {
+      throw new Error('record reflective failure');
+    }
+  });
+  let queue;
+
+  assert.doesNotThrow(() => {
+    queue = reviewData.buildReviewQueue([customRecord, accessorRecord, hostileRecord], {});
+  });
+  assert.deepEqual(queue, []);
+  assert.equal(getterCalls, 0);
+});
+
+test('buildReviewQueue treats accessor map values as invalid without invoking them', () => {
+  const reviewData = api();
+  let getterCalls = 0;
+  const tracksByVideoId = {};
+  Object.defineProperty(tracksByVideoId, 'video-accessor', {
+    enumerable: true,
+    get() {
+      getterCalls += 1;
+      throw new Error('track map getter must not run');
+    }
+  });
+  let queue;
+
+  assert.doesNotThrow(() => {
+    queue = reviewData.buildReviewQueue([{
+      id: 'record-accessor',
+      videoId: 'video-accessor',
+      title: 'Accessor track',
+      steps: [{ order: 1, name: 'Pro-Q', detail: '', params: [], imageKey: '' }]
+    }], tracksByVideoId);
+  });
+  assert.equal(getterCalls, 0);
+  assert.equal(queue[0].subtitleStatus, 'invalid');
+  assert.deepEqual(queue[0].steps[0].candidates, []);
+});
+
+test('buildReviewQueue preserves unsafe step positions as empty projections', () => {
+  const reviewData = api();
+  const customStep = Object.assign(Object.create({ inherited: true }), {
+    order: 90,
+    name: 'Pro-Q',
+    detail: 'Resonance',
+    params: ['soothe2'],
+    imageKey: 'custom-shot'
+  });
+  let getterCalls = 0;
+  const accessorStep = {};
+  ['order', 'name', 'detail', 'params', 'imageKey'].forEach((field) => {
+    Object.defineProperty(accessorStep, field, {
+      enumerable: true,
+      get() {
+        getterCalls += 1;
+        throw new Error(`step ${field} getter must not run`);
+      }
+    });
+  });
+  const nullPrototypeStep = Object.assign(Object.create(null), {
+    order: 3,
+    name: 'Pro-Q',
+    detail: '',
+    params: [],
+    imageKey: 'plain-shot'
+  });
+  const record = {
+    id: 'record-steps',
+    videoId: 'video-steps',
+    title: 'Step safety',
+    steps: [customStep, accessorStep, nullPrototypeStep]
+  };
+  let queue;
+
+  assert.doesNotThrow(() => {
+    queue = reviewData.buildReviewQueue([record], {
+      'video-steps': { cues: [{ start: 0, end: 1, text: 'Pro-Q' }] }
+    });
+  });
+  assert.equal(getterCalls, 0);
+  assert.deepEqual(queue[0].steps.slice(0, 2), [
+    {
+      order: '',
+      name: '',
+      detail: '',
+      imageKey: '',
+      status: 'unreviewed',
+      startSeconds: null,
+      candidates: []
+    },
+    {
+      order: '',
+      name: '',
+      detail: '',
+      imageKey: '',
+      status: 'unreviewed',
+      startSeconds: null,
+      candidates: []
+    }
+  ]);
+  assert.equal(queue[0].steps[2].order, 3);
+  assert.deepEqual(queue[0].steps[2].candidates.map((candidate) => candidate.start), [0]);
+  assertDeepFrozen(queue);
+});
+
+test('buildReviewQueue preserves plain null-prototype records and track maps', () => {
+  const reviewData = api();
+  const step = Object.assign(Object.create(null), {
+    order: 1,
+    name: 'Pro-Q',
+    detail: '',
+    params: [],
+    imageKey: 'null-shot'
+  });
+  const record = Object.assign(Object.create(null), {
+    id: 'null-record',
+    videoId: 'null-video',
+    title: 'Null prototype',
+    steps: [step]
+  });
+  const cue = Object.assign(Object.create(null), {
+    start: 0,
+    end: 1,
+    text: 'Pro-Q'
+  });
+  const track = Object.assign(Object.create(null), { cues: [cue] });
+  const tracksByVideoId = Object.assign(Object.create(null), { 'null-video': track });
+
+  const queue = reviewData.buildReviewQueue([record], tracksByVideoId);
+
+  assert.equal(queue[0].subtitleStatus, 'track');
+  assert.equal(queue[0].recordId, 'null-record');
+  assert.deepEqual(queue[0].steps[0].candidates.map((candidate) => candidate.start), [0]);
+  assertDeepFrozen(queue);
 });
 
 test('buildReviewQueue projects ranked candidates but keeps every step unreviewed and untimed', () => {
@@ -266,7 +557,7 @@ test('buildReviewQueue distinguishes track, missing, and malformed subtitle sour
     { id: 'sparse', videoId: 'video-sparse', title: 'Sparse', steps: [] }
   ];
   const tracksByVideoId = {
-    'video-valid': { cues: [] },
+    'video-valid': { cues: [{ start: 0, end: 1, text: 'Valid cue' }] },
     'video-invalid': { cues: [{ start: '0', end: 1, text: 'Bad' }] },
     'video-sparse': { cues: new Array(1) }
   };
@@ -344,7 +635,7 @@ test('buildReviewQueue preserves source order, skips nonobjects, and sanitizes m
   assert.equal(queue[0].title, '');
   assert.deepEqual(queue[0].steps, [
     {
-      order: 1,
+      order: '',
       name: '',
       detail: '',
       imageKey: '',
