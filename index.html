@@ -863,6 +863,51 @@
       color: var(--muted);
       font-size: 13px;
     }
+    .video-glossary {
+      max-width: 980px;
+    }
+    .glossary-list {
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--line);
+    }
+    .glossary-term {
+      display: grid;
+      grid-template-columns: minmax(190px, 0.42fr) minmax(0, 1fr);
+      gap: 24px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .glossary-term dt,
+    .glossary-term dd {
+      min-width: 0;
+      margin: 0;
+    }
+    .glossary-term dt span,
+    .glossary-term dt strong,
+    .glossary-term dd span {
+      display: block;
+      overflow-wrap: anywhere;
+    }
+    .glossary-term dt span {
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .glossary-term dt strong {
+      margin-top: 3px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+    .glossary-term dd {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .glossary-term dd span + span {
+      margin-top: 4px;
+      color: var(--ink);
+    }
     .video-player:fullscreen {
       display: grid;
       max-width: none;
@@ -1422,6 +1467,10 @@
         grid-template-columns: 50px minmax(0, 1fr);
         padding: 10px 4px;
       }
+      .glossary-term {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
       .video-player:fullscreen .video-caption-overlay {
         bottom: clamp(56px, 10%, 80px);
         max-width: 92%;
@@ -1602,6 +1651,7 @@
   <script src="src/effect-guides.js?v=20260811-evidence-led-1"></script>
   <script src="src/effect-learning-paths.js?v=20260812-learning-paths-1"></script>
   <script src="src/video-subtitles.js?v=20260812-site-subtitles-1"></script>
+  <script src="src/sfx-glossary.js?v=20260814-glossary-1"></script>
   <script src="src/youtube-caption-player.js?v=20260812-caption-player-1"></script>
   <script>
     const categories = [
@@ -33318,6 +33368,18 @@
       '</div>';
     }
 
+    function renderVideoGlossary(record, track) {
+      const paragraphs = track ? SfxVideoSubtitles.paragraphsFor(track) : [];
+      const terms = SfxGlossary.termsFor([record, paragraphs.map((item) => item.text)]);
+      if (!terms.length) return "";
+      return '<section class="section video-glossary" data-video-glossary>' +
+        '<h3>本视频术语</h3><dl class="glossary-list">' + terms.map((term) =>
+          '<div class="glossary-term"><dt><span lang="en">' + escapeHtml(term.english) + '</span>' +
+          '<strong>' + escapeHtml(term.chinese) + '</strong></dt>' +
+          '<dd><span>' + escapeHtml(term.meaning) + '</span><span>' + escapeHtml(term.use) + '</span></dd></div>'
+        ).join("") + '</dl></section>';
+    }
+
     function renderDetail() {
       const record = records.find((item) => item.id === state.activeId);
       if (!record) return;
@@ -33351,6 +33413,7 @@
       const keywordHtml = detailData.keywords.slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
       const subtitleEntry = SfxVideoSubtitles.entryFor(record.videoId);
       const playerHtml = SfxYouTubeCaptionPlayer.render(record, subtitleEntry, thumbnail(record, "hqdefault"));
+      const glossaryHtml = renderVideoGlossary(record, null);
 
       detailEl.innerHTML =
         '<div class="detail-body">' +
@@ -33359,6 +33422,7 @@
           '<div class="section"><h3>设计目标</h3><p class="detail-summary">' + escapeHtml(cleanedText(record.summary)) + '</p></div>' +
           '<div class="section"><h3>设计思路</h3>' + ideasHtml + '</div>' +
           '<div class="section video-player-section"><h3>原视频与中文字幕</h3>' + playerHtml + '</div>' +
+          '<div data-video-glossary-anchor>' + glossaryHtml + '</div>' +
           '<div class="section"><h3>素材与分层</h3><div class="chips">' + materialHtml + '</div></div>' +
           '<div class="section"><h3>完整制作流程</h3>' + stepHtml + '</div>' +
           '<div class="section"><h3>完整效果链</h3>' + chainHtml + '</div>' +
@@ -33368,11 +33432,16 @@
         '</div>';
       loadDetailPreviews();
       const playerRoot = detailEl.querySelector('[data-youtube-caption-player]');
+      const glossaryAnchor = detailEl.querySelector('[data-video-glossary-anchor]');
       if (playerRoot) {
         activeVideoPlayer = SfxYouTubeCaptionPlayer.mount(playerRoot, {
           entry: subtitleEntry,
           loadTrack: (videoId) => SfxVideoSubtitles.loadTrack(videoId),
-          subtitles: SfxVideoSubtitles
+          subtitles: SfxVideoSubtitles,
+          onTrackLoaded: (track) => {
+            if (state.activeId !== record.id || !glossaryAnchor?.isConnected) return;
+            glossaryAnchor.innerHTML = renderVideoGlossary(record, track);
+          }
         });
       }
     }

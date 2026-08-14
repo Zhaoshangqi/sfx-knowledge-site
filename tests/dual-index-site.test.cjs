@@ -8,6 +8,8 @@ const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf
 const SfxKnowledgeModel = require('../src/knowledge-model.js');
 const SfxEffectGuides = require('../src/effect-guides.js');
 const SfxEffectLearningPaths = require('../src/effect-learning-paths.js');
+const SfxVideoSubtitles = require('../src/video-subtitles.js');
+const SfxGlossary = require('../src/sfx-glossary.js');
 
 function extractTagById(id) {
   const match = indexHtml.match(new RegExp(`<[^>]+\\bid="${id}"(?=\\s|>)[^>]*>`, 'i'));
@@ -145,16 +147,18 @@ function listenerBody(elementName, eventName) {
   return match[1];
 }
 
-test('loads shared knowledge, subtitle, and player modules before the inline application data', () => {
+test('loads shared knowledge, subtitle, glossary, and player modules before the inline application data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const learningPathsTag = indexHtml.match(/<script src="src\/effect-learning-paths\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const subtitlesTag = indexHtml.match(/<script src="src\/video-subtitles\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const glossaryTag = indexHtml.match(/<script src="src\/sfx-glossary\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const playerTag = indexHtml.match(/<script src="src\/youtube-caption-player\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const modelScript = indexHtml.indexOf(modelTag);
   const guideScript = indexHtml.indexOf(guideTag);
   const learningPathsScript = indexHtml.indexOf(learningPathsTag);
   const subtitlesScript = indexHtml.indexOf(subtitlesTag);
+  const glossaryScript = indexHtml.indexOf(glossaryTag);
   const playerScript = indexHtml.indexOf(playerTag);
   const inlineCategories = indexHtml.indexOf('const categories = [');
 
@@ -162,12 +166,69 @@ test('loads shared knowledge, subtitle, and player modules before the inline app
   assert.ok(guideTag, 'effect guide script must be cache-versioned');
   assert.ok(learningPathsTag, 'effect learning paths script must be cache-versioned');
   assert.ok(subtitlesTag, 'video subtitle script must be cache-versioned');
+  assert.ok(glossaryTag, 'sound-design glossary script must be cache-versioned');
   assert.ok(playerTag, 'YouTube caption player script must be cache-versioned');
   assert.ok(modelScript < guideScript, 'effect guides must load after the knowledge model');
   assert.ok(guideScript < learningPathsScript, 'effect learning paths must load after effect guides');
   assert.ok(learningPathsScript < subtitlesScript, 'subtitle data must load after the effect modules');
-  assert.ok(subtitlesScript < playerScript, 'player must load after subtitle data');
+  assert.ok(subtitlesScript < glossaryScript, 'glossary must load after subtitle data');
+  assert.ok(glossaryScript < playerScript, 'player must load after the glossary');
   assert.ok(playerScript < inlineCategories, 'player must load before inline application data');
+});
+
+test('renders only relevant glossary terms and escapes every glossary field', () => {
+  const source = sourceSlice('function renderVideoGlossary(record, track) {', 'function renderDetail() {');
+  const escapeHtml = (value) => String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+  const renderVideoGlossary = loadNamedFunction(source, 'renderVideoGlossary', {
+    SfxGlossary,
+    SfxVideoSubtitles,
+    escapeHtml
+  });
+
+  assert.equal(renderVideoGlossary({ title: 'no matching vocabulary' }, null), '');
+  const markup = renderVideoGlossary(
+    { title: 'Use EQ' },
+    { cues: [{ start: 0, end: 1, text: 'Then add a short tail.' }] }
+  );
+  assert.match(markup, /data-video-glossary/);
+  assert.match(markup, /EQ \/ Equalization/);
+  assert.match(markup, /尾音/);
+
+  const hostileGlossary = {
+    termsFor() {
+      return [{
+        english: '<script>alert(1)</script>',
+        chinese: '<b>术语</b>',
+        meaning: 'A & B',
+        use: '"quoted"'
+      }];
+    }
+  };
+  const hostileRenderer = loadNamedFunction(source, 'renderVideoGlossary', {
+    SfxGlossary: hostileGlossary,
+    SfxVideoSubtitles,
+    escapeHtml
+  });
+  const hostileMarkup = hostileRenderer({ title: 'anything' }, null);
+  assert.doesNotMatch(hostileMarkup, /<script>|<b>/i);
+  assert.match(hostileMarkup, /&lt;script&gt;/);
+  assert.match(hostileMarkup, /A &amp; B/);
+  assert.match(hostileMarkup, /&quot;quoted&quot;/);
+});
+
+test('keeps a stable glossary anchor and refreshes it only for the active hydrated video', () => {
+  const detailSource = sourceSlice('function renderDetail() {', 'function renderEffectDetail(effectId) {');
+
+  assert.match(detailSource, /data-video-glossary-anchor/);
+  assert.match(detailSource, /renderVideoGlossary\(record, null\)/);
+  assert.match(detailSource, /onTrackLoaded: \(track\) => \{/);
+  assert.match(detailSource, /state\.activeId !== record\.id/);
+  assert.match(detailSource, /glossaryAnchor\.innerHTML = renderVideoGlossary\(record, track\)/);
 });
 
 test('exposes accessible video and effect index modes', () => {
