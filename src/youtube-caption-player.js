@@ -283,8 +283,16 @@
     var subtitlesVisible = false;
     var activeParagraphIndex = -1;
     var moveFocusIntoPlayer = false;
+    var pendingStartSeconds = typeof settings.startSeconds === 'number' &&
+      Number.isFinite(settings.startSeconds) && settings.startSeconds >= 0
+      ? Math.floor(settings.startSeconds)
+      : null;
+    var activationNotified = false;
     var onTrackLoaded = typeof settings.onTrackLoaded === 'function'
       ? settings.onTrackLoaded
+      : null;
+    var onActivationChange = typeof settings.onActivationChange === 'function'
+      ? settings.onActivationChange
       : null;
 
     if (!validVideoId(videoId) || !coverButton || !playerTarget) {
@@ -340,6 +348,48 @@
         try { return subtitleApi.formatTime(seconds); } catch (error) {}
       }
       return formatTime(seconds);
+    }
+
+    function updateCoverStartLabel() {
+      if (pendingStartSeconds == null) return;
+      coverButton.setAttribute('aria-label', '从 ' + cueTime(pendingStartSeconds) + ' 播放');
+    }
+
+    function applyPendingSeek(activePlayer) {
+      if (pendingStartSeconds == null || !activePlayer || typeof activePlayer.seekTo !== 'function') {
+        return false;
+      }
+      var seconds = pendingStartSeconds;
+      pendingStartSeconds = null;
+      activePlayer.seekTo(seconds, true);
+      return true;
+    }
+
+    function seekTo(seconds) {
+      if (destroyed || typeof seconds !== 'number' || !Number.isFinite(seconds) || seconds < 0) {
+        return false;
+      }
+      pendingStartSeconds = Math.floor(seconds);
+      updateCoverStartLabel();
+      if (playerReady && player) {
+        applyPendingSeek(player);
+        synchronize();
+      }
+      return true;
+    }
+
+    function playAt(seconds) {
+      if (destroyed) return Promise.reject(new Error('player has been destroyed'));
+      if (!seekTo(seconds)) {
+        return Promise.reject(new TypeError('seconds must be finite and non-negative'));
+      }
+      return activate().then(function (activePlayer) {
+        if (destroyed) throw new Error('player has been destroyed');
+        applyPendingSeek(activePlayer);
+        if (typeof activePlayer.playVideo === 'function') activePlayer.playVideo();
+        synchronize();
+        return activePlayer;
+      });
     }
 
     function handleParagraphClick(button) {
@@ -597,12 +647,17 @@
               if (destroyed) return;
               if (event && event.target) player = event.target;
               playerReady = true;
+              applyPendingSeek(player);
               suppressNativeCaptions();
               clearError();
               coverButton.removeAttribute('aria-busy');
               coverButton.hidden = true;
               focusPlayerFrame();
               synchronize();
+              if (!activationNotified && onActivationChange) {
+                activationNotified = true;
+                try { onActivationChange(true); } catch (error) {}
+              }
               if (resolveReady) resolveReady(player);
             },
             onApiChange: suppressNativeCaptions,
@@ -681,27 +736,34 @@
       fullscreenToggle.setAttribute('aria-disabled', String(!fullscreenSupported));
     }
     updateFullscreenState();
+    updateCoverStartLabel();
     beginTrackLoad();
 
+    function destroy() {
+      if (destroyed) return;
+      destroyed = true;
+      stopPolling();
+      clearTranscript();
+      removeListeners(listeners);
+      if (player && typeof player.destroy === 'function') player.destroy();
+      player = null;
+      playerReady = false;
+      track = null;
+      paragraphButtons = [];
+      cueToParagraph = [];
+      pendingStartSeconds = null;
+      onTrackLoaded = null;
+      onActivationChange = null;
+      resolveReady = null;
+      readyPromise = null;
+      activationPromise = null;
+      trackLoadPromise = null;
+    }
+
     return Object.freeze({
-      destroy: function () {
-        if (destroyed) return;
-        destroyed = true;
-        stopPolling();
-        clearTranscript();
-        removeListeners(listeners);
-        if (player && typeof player.destroy === 'function') player.destroy();
-        player = null;
-        playerReady = false;
-        track = null;
-        paragraphButtons = [];
-        cueToParagraph = [];
-        onTrackLoaded = null;
-        resolveReady = null;
-        readyPromise = null;
-        activationPromise = null;
-        trackLoadPromise = null;
-      }
+      destroy: destroy,
+      playAt: playAt,
+      seekTo: seekTo
     });
   }
 

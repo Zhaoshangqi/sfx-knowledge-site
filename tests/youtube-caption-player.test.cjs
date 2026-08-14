@@ -647,6 +647,82 @@ test('successful async hydration builds transcript controls and synchronizes a r
   controller.destroy();
 });
 
+test('seekTo queues a valid time before activation and applies it once on ready', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
+
+  assert.equal(controller.seekTo(42.9), true);
+  assert.equal(runtime.getPlayerConfig(), null);
+  assert.equal(fixture.cover.getAttribute('aria-label'), '从 00:42 播放');
+
+  fixture.cover.dispatch('click');
+  await flushPromises();
+  runtime.getPlayerConfig().events.onReady();
+
+  assert.deepEqual(runtime.calls.seek, [[42, true]]);
+  controller.destroy();
+});
+
+test('playAt activates, seeks, and plays from a user action', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
+
+  const request = controller.playAt(31);
+  await flushPromises();
+  runtime.getPlayerConfig().events.onReady();
+  await request;
+
+  assert.deepEqual(runtime.calls.seek, [[31, true]]);
+  assert.equal(runtime.calls.play, 1);
+  controller.destroy();
+});
+
+test('initial start time waits for user activation and activation notification fires once', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const activations = [];
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    startSeconds: 75.8,
+    onActivationChange(value) {
+      activations.push(value);
+      throw new Error('observer failures are isolated');
+    }
+  }));
+
+  assert.equal(fixture.cover.getAttribute('aria-label'), '从 01:15 播放');
+  assert.equal(runtime.getPlayerConfig(), null);
+  fixture.cover.dispatch('click');
+  await flushPromises();
+  const config = runtime.getPlayerConfig();
+  config.events.onReady();
+  config.events.onReady();
+
+  assert.deepEqual(runtime.calls.seek, [[75, true]]);
+  assert.deepEqual(activations, [true]);
+  assert.equal(fixture.cover.hidden, true);
+  controller.destroy();
+});
+
+test('public seeking fails closed for invalid values and after destroy', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime));
+
+  assert.equal(controller.seekTo(-1), false);
+  assert.equal(controller.seekTo(Infinity), false);
+  assert.equal(controller.seekTo('12'), false);
+  await assert.rejects(controller.playAt('12'), /finite and non-negative/);
+  assert.equal(runtime.getPlayerConfig(), null);
+
+  controller.destroy();
+  assert.equal(controller.seekTo(12), false);
+  await assert.rejects(controller.playAt(12), /destroyed/);
+  assert.equal(runtime.getPlayerConfig(), null);
+  assert.deepEqual(runtime.calls.seek, []);
+});
+
 test('hydrates readable paragraphs into an external transcript root', async () => {
   const fixture = buildFixture();
   const runtime = buildRuntime();
