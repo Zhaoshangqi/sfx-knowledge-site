@@ -147,19 +147,21 @@ function listenerBody(elementName, eventName) {
   return match[1];
 }
 
-test('loads shared knowledge, subtitle, glossary, and player modules before the inline application data', () => {
+test('loads shared knowledge, subtitle, glossary, player, and detail navigation before inline data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const learningPathsTag = indexHtml.match(/<script src="src\/effect-learning-paths\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const subtitlesTag = indexHtml.match(/<script src="src\/video-subtitles\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const glossaryTag = indexHtml.match(/<script src="src\/sfx-glossary\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const playerTag = indexHtml.match(/<script src="src\/youtube-caption-player\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const detailNavigationTag = indexHtml.match(/<script src="src\/detail-navigation\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const modelScript = indexHtml.indexOf(modelTag);
   const guideScript = indexHtml.indexOf(guideTag);
   const learningPathsScript = indexHtml.indexOf(learningPathsTag);
   const subtitlesScript = indexHtml.indexOf(subtitlesTag);
   const glossaryScript = indexHtml.indexOf(glossaryTag);
   const playerScript = indexHtml.indexOf(playerTag);
+  const detailNavigationScript = indexHtml.indexOf(detailNavigationTag);
   const inlineCategories = indexHtml.indexOf('const categories = [');
 
   assert.ok(modelTag, 'knowledge model script must be cache-versioned');
@@ -168,12 +170,14 @@ test('loads shared knowledge, subtitle, glossary, and player modules before the 
   assert.ok(subtitlesTag, 'video subtitle script must be cache-versioned');
   assert.ok(glossaryTag, 'sound-design glossary script must be cache-versioned');
   assert.ok(playerTag, 'YouTube caption player script must be cache-versioned');
+  assert.ok(detailNavigationTag, 'detail navigation script must be cache-versioned');
   assert.ok(modelScript < guideScript, 'effect guides must load after the knowledge model');
   assert.ok(guideScript < learningPathsScript, 'effect learning paths must load after effect guides');
   assert.ok(learningPathsScript < subtitlesScript, 'subtitle data must load after the effect modules');
   assert.ok(subtitlesScript < glossaryScript, 'glossary must load after subtitle data');
   assert.ok(glossaryScript < playerScript, 'player must load after the glossary');
-  assert.ok(playerScript < inlineCategories, 'player must load before inline application data');
+  assert.ok(playerScript < detailNavigationScript, 'detail navigation must load after the player');
+  assert.ok(detailNavigationScript < inlineCategories, 'detail navigation must load before inline application data');
 });
 
 test('renders only relevant glossary terms and escapes every glossary field', () => {
