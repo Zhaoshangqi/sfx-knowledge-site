@@ -207,7 +207,8 @@ for (const [name, marker] of [
   });
 
   test(`parse and replaceRecords reject a duplicate ${name} marker`, () => {
-    assertBothReject(fixture() + marker, new RegExp(`duplicate.*${name}`, 'i'));
+    const html = fixture().replace('</script>', `${marker}null;\n</script>`);
+    assertBothReject(html, new RegExp(`duplicate.*${name}`, 'i'));
   });
 }
 
@@ -245,6 +246,61 @@ test('parse allows marker-like text inside valid records JSON strings', () => {
   }];
 
   assert.deepEqual(siteData.parse(fixture({ records })).records, records);
+});
+
+test('parse ignores apostrophes and marker-like declarations in ordinary HTML', () => {
+  const outsideScript = [
+    "<p>don't treat this as JavaScript</p>",
+    markerDeclarations()
+  ].join('\n');
+  const html = fixture()
+    .replace('<script>', `${outsideScript}\n<script>`)
+    .replace('</script>', `</script>\n${outsideScript}`);
+
+  assert.deepEqual(siteData.parse(html), {
+    records: defaultRecords,
+    imageManifest: defaultImageManifest
+  });
+});
+
+test('regex literals do not hide a later duplicate declaration', () => {
+  const preamble = [
+    String.raw`const quoteAndComments = /['"]|\/\/|\/\*|    const records = /;`,
+    `${RECORDS_MARKER}[];`
+  ].join('\n');
+
+  assertBothReject(withScriptPreamble(fixture(), preamble), /duplicate.*records/i);
+});
+
+test('parse ignores marker text inside regex literals', () => {
+  const preamble = String.raw`const markerPattern = /['"\\/]|    const records = |    const imageManifest = |    const pluginReferenceCatalog = /;`;
+
+  assert.deepEqual(siteData.parse(withScriptPreamble(fixture(), preamble)), {
+    records: defaultRecords,
+    imageManifest: defaultImageManifest
+  });
+});
+
+test('parse counts real declarations globally across multiple script blocks', () => {
+  const decoyScript = [
+    '<script>',
+    `/*\n${markerDeclarations()}\n*/`,
+    String.raw`const markerPattern = /['"]|    const records = /;`,
+    '</script>'
+  ].join('\n');
+  const html = fixture().replace('<script>', `${decoyScript}\n<script>`);
+
+  assert.deepEqual(siteData.parse(html), {
+    records: defaultRecords,
+    imageManifest: defaultImageManifest
+  });
+});
+
+test('parse rejects duplicate real declarations across script blocks', () => {
+  const firstScript = `<script>\n${RECORDS_MARKER}[];\n</script>`;
+  const html = fixture().replace('<script>', `${firstScript}\n<script>`);
+
+  assertBothReject(html, /duplicate.*records/i);
 });
 
 test('parse and replaceRecords reject malformed records JSON', () => {
@@ -334,6 +390,16 @@ test('replaceRecords rejects toJSON without invoking it', () => {
 
   assertInvalidReplacement([value], /records.*toJSON/i);
   assert.equal(toJsonCalls, 0);
+});
+
+test('replaceRecords rejects negative zero without changing the source HTML', () => {
+  const html = fixture();
+
+  assert.throws(
+    () => siteData.replaceRecords(html, [-0]),
+    (error) => error instanceof TypeError && /records.*negative zero/i.test(error.message)
+  );
+  assert.deepEqual(siteData.parse(html).records, defaultRecords);
 });
 
 test('replaceRecords accepts nested dense arrays and null-prototype data objects', () => {

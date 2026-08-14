@@ -6,36 +6,168 @@ const MARKERS = Object.freeze({
   pluginReferenceCatalog: '    const pluginReferenceCatalog = '
 });
 const MARKER_NAMES = Object.freeze(Object.keys(MARKERS));
+const REGEX_PREFIX_KEYWORDS = new Set([
+  'await', 'case', 'delete', 'do', 'else', 'in', 'instanceof', 'new',
+  'of', 'return', 'throw', 'typeof', 'void', 'yield'
+]);
+const CONTROL_PAREN_KEYWORDS = new Set(['catch', 'for', 'if', 'switch', 'while', 'with']);
 
-function locateMarkers(html) {
-  const matches = Object.fromEntries(MARKER_NAMES.map((name) => [name, []]));
+function isTagBoundary(character) {
+  return character === undefined
+    || character === '>'
+    || character === '/'
+    || character === ' '
+    || character === '\t'
+    || character === '\r'
+    || character === '\n'
+    || character === '\f';
+}
+
+function hasTagName(html, index, name) {
+  return html.slice(index, index + name.length).toLowerCase() === name
+    && isTagBoundary(html[index + name.length]);
+}
+
+function isScriptStartTag(html, index) {
+  return html[index] === '<' && hasTagName(html, index + 1, 'script');
+}
+
+function isScriptEndTag(html, index) {
+  return html[index] === '<' && html[index + 1] === '/'
+    && hasTagName(html, index + 2, 'script');
+}
+
+function findTagEnd(html, start) {
+  let quote = '';
+  for (let index = start + 1; index < html.length; index += 1) {
+    const character = html[index];
+    if (quote) {
+      if (character === quote) {
+        quote = '';
+      }
+    } else if (character === "'" || character === '"') {
+      quote = character;
+    } else if (character === '>') {
+      return index;
+    }
+  }
+  return -1;
+}
+
+function isSelfClosingTag(html, start, end) {
+  let index = end - 1;
+  while (index > start && /\s/.test(html[index])) {
+    index -= 1;
+  }
+  return html[index] === '/';
+}
+
+function isIdentifierStart(character) {
+  if (!character) {
+    return false;
+  }
+  const code = character.charCodeAt(0);
+  return character === '$' || character === '_' || code > 127
+    || (code >= 65 && code <= 90) || (code >= 97 && code <= 122);
+}
+
+function isIdentifierPart(character) {
+  if (!character) {
+    return false;
+  }
+  const code = character.charCodeAt(0);
+  return isIdentifierStart(character) || (code >= 48 && code <= 57);
+}
+
+function recordLineMarker(html, index, matches) {
+  if (index !== 0 && html[index - 1] !== '\n') {
+    return;
+  }
+  for (const name of MARKER_NAMES) {
+    if (html.startsWith(MARKERS[name], index)) {
+      matches[name].push(index);
+    }
+  }
+}
+
+function scanScriptContent(html, start, matches) {
   let state = 'code';
+  let canStartRegex = true;
+  let regexCharacterClass = false;
+  let pendingControlParen = false;
+  const parenContexts = [];
 
-  for (let index = 0; index < html.length; index += 1) {
+  for (let index = start; index < html.length;) {
     const character = html[index];
     const next = html[index + 1];
 
     if (state === 'code') {
-      if (index === 0 || html[index - 1] === '\n') {
-        for (const name of MARKER_NAMES) {
-          if (html.startsWith(MARKERS[name], index)) {
-            matches[name].push(index);
-          }
-        }
+      if (isScriptEndTag(html, index)) {
+        const end = findTagEnd(html, index);
+        return end === -1 ? html.length : end + 1;
       }
+      recordLineMarker(html, index, matches);
 
-      if (character === '/' && next === '/') {
-        state = 'line-comment';
+      if (/\s/.test(character)) {
         index += 1;
+      } else if (character === '/' && next === '/') {
+        state = 'line-comment';
+        index += 2;
       } else if (character === '/' && next === '*') {
         state = 'block-comment';
+        index += 2;
+      } else if (character === '/' && canStartRegex) {
+        state = 'regex';
+        regexCharacterClass = false;
+        index += 1;
+      } else if (character === '/') {
+        canStartRegex = true;
         index += 1;
       } else if (character === "'") {
         state = 'single-string';
+        index += 1;
       } else if (character === '"') {
         state = 'double-string';
+        index += 1;
       } else if (character === '`') {
         state = 'template-string';
+        index += 1;
+      } else if (isIdentifierStart(character)) {
+        let end = index + 1;
+        while (isIdentifierPart(html[end])) {
+          end += 1;
+        }
+        const word = html.slice(index, end);
+        pendingControlParen = CONTROL_PAREN_KEYWORDS.has(word);
+        canStartRegex = pendingControlParen || REGEX_PREFIX_KEYWORDS.has(word);
+        index = end;
+      } else if (character >= '0' && character <= '9') {
+        let end = index + 1;
+        while (html[end] && /[A-Za-z0-9_.]/.test(html[end])) {
+          end += 1;
+        }
+        canStartRegex = false;
+        index = end;
+      } else if (character === '(') {
+        parenContexts.push(pendingControlParen ? 'control' : 'group');
+        pendingControlParen = false;
+        canStartRegex = true;
+        index += 1;
+      } else if (character === ')') {
+        canStartRegex = parenContexts.pop() === 'control';
+        index += 1;
+      } else if (character === ']' || character === '}') {
+        canStartRegex = false;
+        index += 1;
+      } else if (character === '.') {
+        canStartRegex = false;
+        index += 1;
+      } else if ((character === '+' || character === '-') && next === character) {
+        canStartRegex = false;
+        index += 2;
+      } else {
+        canStartRegex = true;
+        index += 1;
       }
       continue;
     }
@@ -44,18 +176,31 @@ function locateMarkers(html) {
       if (character === '\n') {
         state = 'code';
       }
+      index += 1;
       continue;
     }
 
     if (state === 'block-comment') {
       if (character === '*' && next === '/') {
         state = 'code';
+        index += 2;
+      } else {
         index += 1;
       }
       continue;
     }
 
     if (character === '\\') {
+      index += 2;
+    } else if (state === 'regex') {
+      if (character === '[' && !regexCharacterClass) {
+        regexCharacterClass = true;
+      } else if (character === ']' && regexCharacterClass) {
+        regexCharacterClass = false;
+      } else if (character === '/' && !regexCharacterClass) {
+        state = 'code';
+        canStartRegex = false;
+      }
       index += 1;
     } else if (
       (state === 'single-string' && character === "'")
@@ -63,7 +208,49 @@ function locateMarkers(html) {
       || (state === 'template-string' && character === '`')
     ) {
       state = 'code';
+      canStartRegex = false;
+      index += 1;
+    } else {
+      index += 1;
     }
+  }
+
+  return html.length;
+}
+
+function looksLikeHtmlTag(html, index) {
+  const next = html[index + 1];
+  return next === '!' || next === '?' || /[A-Za-z]/.test(next)
+    || (next === '/' && /[A-Za-z]/.test(html[index + 2]));
+}
+
+function locateMarkers(html) {
+  const matches = Object.fromEntries(MARKER_NAMES.map((name) => [name, []]));
+
+  for (let index = 0; index < html.length;) {
+    if (html.startsWith('<!--', index)) {
+      const end = html.indexOf('-->', index + 4);
+      index = end === -1 ? html.length : end + 3;
+      continue;
+    }
+    if (isScriptStartTag(html, index)) {
+      const tagEnd = findTagEnd(html, index);
+      if (tagEnd === -1) {
+        break;
+      }
+      if (isSelfClosingTag(html, index, tagEnd)) {
+        index = tagEnd + 1;
+      } else {
+        index = scanScriptContent(html, tagEnd + 1, matches);
+      }
+      continue;
+    }
+    if (html[index] === '<' && looksLikeHtmlTag(html, index)) {
+      const tagEnd = findTagEnd(html, index);
+      index = tagEnd === -1 ? html.length : tagEnd + 1;
+      continue;
+    }
+    index += 1;
   }
 
   for (const name of MARKER_NAMES) {
@@ -228,6 +415,9 @@ function validateJsonValue(value, path, ancestors) {
     return;
   }
   if (typeof value === 'number') {
+    if (Object.is(value, -0)) {
+      rejectJsonValue(path, 'must not contain negative zero');
+    }
     if (!Number.isFinite(value)) {
       rejectJsonValue(path, 'must be a finite number');
     }
