@@ -11,6 +11,18 @@
     return typeof value === 'number' && Number.isFinite(value) && value >= 0;
   }
 
+  function isRealDate(value) {
+    var match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (!match) return false;
+    var year = Number(match[1]);
+    var month = Number(match[2]);
+    var day = Number(match[3]);
+    var date = new Date(Date.UTC(year, month - 1, day));
+    return date.getUTCFullYear() === year &&
+      date.getUTCMonth() === month - 1 &&
+      date.getUTCDate() === day;
+  }
+
   function validRecord(record) {
     var timeline = record && typeof record === 'object' && !Array.isArray(record)
       ? record.timeline
@@ -22,7 +34,7 @@
       finiteNonNegative(timeline.durationSeconds) &&
       timeline.durationSeconds > 0 &&
       typeof timeline.reviewedAt === 'string' &&
-      /^\d{4}-\d{2}-\d{2}$/.test(timeline.reviewedAt) &&
+      isRealDate(timeline.reviewedAt) &&
       timeline.source === 'youtube-player'
     );
   }
@@ -49,14 +61,16 @@
     if (typeof imageKey !== 'string' || !imageKey.trim() || !validRecord(record) || !Array.isArray(record.steps)) {
       return null;
     }
+    var matchIndex = -1;
     for (var index = 0; index < record.steps.length; index += 1) {
       var step = record.steps[index];
       if (step && typeof step === 'object' && !Array.isArray(step) &&
           typeof step.imageKey === 'string' && step.imageKey.trim() && step.imageKey === imageKey) {
-        return stepStart(record, index);
+        if (matchIndex !== -1) return null;
+        matchIndex = index;
       }
     }
-    return null;
+    return matchIndex === -1 ? null : stepStart(record, matchIndex);
   }
 
   function effectStart(record, use) {

@@ -72,6 +72,16 @@ test('accepts only records with the reviewed YouTube timeline contract', () => {
   ].forEach((candidate) => assert.equal(api.validRecord(candidate), false));
 });
 
+test('accepts real leap days and rejects impossible reviewedAt dates', () => {
+  const api = timelineApi();
+  const record = reviewedRecord();
+
+  assert.equal(api.validRecord(withTimeline(record, { reviewedAt: '2024-02-29' })), true);
+  ['2026-02-29', '2026-02-31', '2026-13-01', '2026-01-00'].forEach((reviewedAt) => {
+    assert.equal(api.validRecord(withTimeline(record, { reviewedAt })), false);
+  });
+});
+
 test('inherits reviewed step times for steps, screenshots, and effects', () => {
   const api = timelineApi();
   const record = reviewedRecord();
@@ -121,6 +131,7 @@ test('requires an exact nonblank screenshot image key and a timed matching step'
   const api = timelineApi();
   const record = reviewedRecord();
 
+  assert.equal(api.screenshotStart(record, 'shot-a'), 4);
   ['', '   ', 'SHOT-A', ' shot-a ', 'missing'].forEach((imageKey) => {
     assert.equal(api.screenshotStart(record, imageKey), null);
   });
@@ -134,6 +145,30 @@ test('requires an exact nonblank screenshot image key and a timed matching step'
     api.screenshotStart(reviewedRecord({ steps: [{ imageKey: '   ', startSeconds: 4 }] }), '   '),
     null
   );
+});
+
+test('fails closed when duplicate screenshot keys have different valid times', () => {
+  const api = timelineApi();
+  const record = reviewedRecord({
+    steps: [
+      { imageKey: 'shared-shot', startSeconds: 4 },
+      { imageKey: 'shared-shot', startSeconds: 25 }
+    ]
+  });
+
+  assert.equal(api.screenshotStart(record, 'shared-shot'), null);
+});
+
+test('fails closed before choosing a valid time from duplicate screenshot keys', () => {
+  const api = timelineApi();
+  const record = reviewedRecord({
+    steps: [
+      { imageKey: 'shared-shot', startSeconds: '4' },
+      { imageKey: 'shared-shot', startSeconds: 25 }
+    ]
+  });
+
+  assert.equal(api.screenshotStart(record, 'shared-shot'), null);
 });
 
 test('formats floored nonnegative numeric seconds with compact hour handling', () => {
