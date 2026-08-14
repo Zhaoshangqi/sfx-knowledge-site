@@ -239,6 +239,45 @@ test('parse requires declarations to have exactly four leading spaces', () => {
   assertBothReject(fixture().replace(RECORDS_MARKER, ` ${RECORDS_MARKER}`), /missing.*records/i);
 });
 
+for (const [name, preamble] of [
+  ['function declarations', [
+    'function localData() {',
+    markerDeclarations(),
+    '}'
+  ].join('\n')],
+  ['arrow and function expressions', [
+    'const arrowData = () => {',
+    markerDeclarations(),
+    '};',
+    'const functionData = function () {',
+    markerDeclarations(),
+    '};'
+  ].join('\n')],
+  ['class methods', [
+    'class LocalData {',
+    '  read() {',
+    markerDeclarations(),
+    '  }',
+    '}'
+  ].join('\n')],
+  ['parenthesized expressions', [
+    'const parenthesizedData = (function () {',
+    markerDeclarations(),
+    '});'
+  ].join('\n')]
+]) {
+  test(`parse ignores four-space local bindings inside ${name}`, () => {
+    const html = withScriptPreamble(fixture(), preamble);
+    const replacement = [{ id: 'replacement' }];
+
+    assert.deepEqual(siteData.parse(html), {
+      records: defaultRecords,
+      imageManifest: defaultImageManifest
+    });
+    assert.deepEqual(siteData.parse(siteData.replaceRecords(html, replacement)).records, replacement);
+  });
+}
+
 test('parse allows marker-like text inside valid records JSON strings', () => {
   const records = [{
     id: 'marker-text',
@@ -291,6 +330,41 @@ test('object expressions followed by division do not hide a later duplicate decl
   const html = fixture().replace('</script>', `${suffix}\n</script>`);
 
   assertBothReject(html, /duplicate.*records/i);
+});
+
+for (const [name, block] of [
+  ['if/else statements', 'if (true) {} else {}'],
+  ['bare blocks', '{}'],
+  ['function declarations', 'function afterBlock() {}'],
+  ['class declarations', 'class AfterBlock {}'],
+  ['try/finally statements', 'try {} finally {}'],
+  ['arrow expression assignments', 'const afterBlock = () => {};'],
+  ['function expression assignments', 'const afterBlock = function () {};']
+]) {
+  test(`regex literals after ${name} do not hide a top-level duplicate declaration`, () => {
+    const suffix = [
+      block,
+      String.raw`/['"]/.test("x");`,
+      `${RECORDS_MARKER}[];`
+    ].join('\n');
+    const html = fixture().replace('</script>', `${suffix}\n</script>`);
+
+    assertBothReject(html, /duplicate.*records/i);
+  });
+}
+
+test('parse finds canonical markers after valid division-heavy code', () => {
+  const preamble = [
+    'const factors = { left: 144, right: 12 };',
+    'const ratio = factors.left / factors.right / 2;',
+    'const nestedRatio = (ratio + 4) / (factors.right / 3);',
+    'const objectRatio = { valueOf() { return 24; } } / 3 / 2;'
+  ].join('\n');
+
+  assert.deepEqual(siteData.parse(withScriptPreamble(fixture(), preamble)), {
+    records: defaultRecords,
+    imageManifest: defaultImageManifest
+  });
 });
 
 test('parse ignores marker text inside regex literals', () => {

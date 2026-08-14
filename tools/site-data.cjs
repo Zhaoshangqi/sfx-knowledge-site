@@ -79,8 +79,8 @@ function isIdentifierPart(character) {
   return isIdentifierStart(character) || (code >= 48 && code <= 57);
 }
 
-function recordLineMarker(html, index, matches) {
-  if (index !== 0 && html[index - 1] !== '\n') {
+function recordLineMarker(html, index, matches, isTopLevel) {
+  if (!isTopLevel || (index !== 0 && html[index - 1] !== '\n')) {
     return;
   }
   for (const name of MARKER_NAMES) {
@@ -90,14 +90,44 @@ function recordLineMarker(html, index, matches) {
   }
 }
 
+function findRegexLiteralEnd(html, start) {
+  let inCharacterClass = false;
+
+  for (let index = start + 1; index < html.length; index += 1) {
+    const character = html[index];
+    if (character === '\r' || character === '\n' || isScriptEndTag(html, index)) {
+      return -1;
+    }
+    if (character === '\\') {
+      const escaped = html[index + 1];
+      if (escaped === undefined || escaped === '\r' || escaped === '\n') {
+        return -1;
+      }
+      index += 1;
+    } else if (character === '[' && !inCharacterClass) {
+      inCharacterClass = true;
+    } else if (character === ']' && inCharacterClass) {
+      inCharacterClass = false;
+    } else if (character === '/' && !inCharacterClass) {
+      let end = index + 1;
+      while (html[end] && /[A-Za-z]/.test(html[end])) {
+        end += 1;
+      }
+      return end;
+    }
+  }
+
+  return -1;
+}
+
 function scanScriptContent(html, start, matches) {
   let state = 'code';
   let canStartRegex = true;
-  let regexCharacterClass = false;
   let pendingControlParen = false;
-  let pendingStatementBlock = false;
+  let bracketDepth = 0;
+  let braceDepth = 0;
+  let previousToken = 'start';
   const parenContexts = [];
-  const braceContexts = [];
 
   for (let index = start; index < html.length;) {
     const character = html[index];
@@ -108,7 +138,12 @@ function scanScriptContent(html, start, matches) {
         const end = findTagEnd(html, index);
         return end === -1 ? html.length : end + 1;
       }
-      recordLineMarker(html, index, matches);
+      recordLineMarker(
+        html,
+        index,
+        matches,
+        parenContexts.length === 0 && bracketDepth === 0 && braceDepth === 0
+      );
 
       if (/\s/.test(character)) {
         index += 1;
@@ -118,26 +153,34 @@ function scanScriptContent(html, start, matches) {
       } else if (character === '/' && next === '*') {
         state = 'block-comment';
         index += 2;
-      } else if (character === '/' && canStartRegex) {
-        state = 'regex';
-        regexCharacterClass = false;
-        pendingStatementBlock = false;
-        index += 1;
       } else if (character === '/') {
-        canStartRegex = true;
-        pendingStatementBlock = false;
-        index += 1;
+        const regexEnd = canStartRegex || previousToken === 'close-brace'
+          ? findRegexLiteralEnd(html, index)
+          : -1;
+        if (regexEnd === -1) {
+          canStartRegex = true;
+          previousToken = 'operator';
+          index += 1;
+        } else {
+          canStartRegex = false;
+          previousToken = 'value';
+          index = regexEnd;
+        }
+        pendingControlParen = false;
       } else if (character === "'") {
         state = 'single-string';
-        pendingStatementBlock = false;
+        pendingControlParen = false;
+        previousToken = 'value';
         index += 1;
       } else if (character === '"') {
         state = 'double-string';
-        pendingStatementBlock = false;
+        pendingControlParen = false;
+        previousToken = 'value';
         index += 1;
       } else if (character === '`') {
         state = 'template-string';
-        pendingStatementBlock = false;
+        pendingControlParen = false;
+        previousToken = 'value';
         index += 1;
       } else if (isIdentifierStart(character)) {
         let end = index + 1;
@@ -146,8 +189,8 @@ function scanScriptContent(html, start, matches) {
         }
         const word = html.slice(index, end);
         pendingControlParen = CONTROL_PAREN_KEYWORDS.has(word);
-        pendingStatementBlock = false;
         canStartRegex = pendingControlParen || REGEX_PREFIX_KEYWORDS.has(word);
+        previousToken = 'value';
         index = end;
       } else if (character >= '0' && character <= '9') {
         let end = index + 1;
@@ -155,43 +198,59 @@ function scanScriptContent(html, start, matches) {
           end += 1;
         }
         canStartRegex = false;
-        pendingStatementBlock = false;
+        pendingControlParen = false;
+        previousToken = 'value';
         index = end;
       } else if (character === '(') {
         parenContexts.push(pendingControlParen ? 'control' : 'group');
         pendingControlParen = false;
-        pendingStatementBlock = false;
         canStartRegex = true;
+        previousToken = 'open-paren';
         index += 1;
       } else if (character === ')') {
         const closesControl = parenContexts.pop() === 'control';
         canStartRegex = closesControl;
-        pendingStatementBlock = closesControl;
+        pendingControlParen = false;
+        previousToken = 'close-paren';
         index += 1;
       } else if (character === '{') {
-        braceContexts.push(pendingStatementBlock ? 'statement' : 'expression');
-        pendingStatementBlock = false;
+        braceDepth += 1;
+        pendingControlParen = false;
         canStartRegex = true;
+        previousToken = 'open-brace';
         index += 1;
       } else if (character === '}') {
-        canStartRegex = braceContexts.pop() === 'statement';
-        pendingStatementBlock = false;
+        braceDepth = Math.max(0, braceDepth - 1);
+        pendingControlParen = false;
+        canStartRegex = false;
+        previousToken = 'close-brace';
+        index += 1;
+      } else if (character === '[') {
+        bracketDepth += 1;
+        pendingControlParen = false;
+        canStartRegex = true;
+        previousToken = 'open-bracket';
         index += 1;
       } else if (character === ']') {
+        bracketDepth = Math.max(0, bracketDepth - 1);
         canStartRegex = false;
-        pendingStatementBlock = false;
+        pendingControlParen = false;
+        previousToken = 'close-bracket';
         index += 1;
       } else if (character === '.') {
         canStartRegex = false;
-        pendingStatementBlock = false;
+        pendingControlParen = false;
+        previousToken = 'dot';
         index += 1;
       } else if ((character === '+' || character === '-') && next === character) {
         canStartRegex = false;
-        pendingStatementBlock = false;
+        pendingControlParen = false;
+        previousToken = 'value';
         index += 2;
       } else {
         canStartRegex = true;
-        pendingStatementBlock = false;
+        pendingControlParen = false;
+        previousToken = 'operator';
         index += 1;
       }
       continue;
@@ -217,16 +276,6 @@ function scanScriptContent(html, start, matches) {
 
     if (character === '\\') {
       index += 2;
-    } else if (state === 'regex') {
-      if (character === '[' && !regexCharacterClass) {
-        regexCharacterClass = true;
-      } else if (character === ']' && regexCharacterClass) {
-        regexCharacterClass = false;
-      } else if (character === '/' && !regexCharacterClass) {
-        state = 'code';
-        canStartRegex = false;
-      }
-      index += 1;
     } else if (
       (state === 'single-string' && character === "'")
       || (state === 'double-string' && character === '"')
@@ -234,6 +283,7 @@ function scanScriptContent(html, start, matches) {
     ) {
       state = 'code';
       canStartRegex = false;
+      previousToken = 'value';
       index += 1;
     } else {
       index += 1;
