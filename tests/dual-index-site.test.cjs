@@ -536,7 +536,9 @@ test('builds and renders screenshot-backed effect profiles', () => {
   const navigation = loadDualIndexNavigation();
   const hash = navigation.serializeHashRoute({ video: 'video-1', origin: 'effects' });
   assert.equal(hash, '#video=video-1&origin=effects');
-  assert.deepEqual(plainValue(navigation.parseHashRouteHash(hash)), { video: 'video-1', effect: '', view: '', origin: 'effects' });
+  assert.deepEqual(plainValue(navigation.parseHashRouteHash(hash)), {
+    video: 'video-1', effect: '', view: '', origin: 'effects', time: null, section: ''
+  });
 });
 
 test('effect search filters strict profiles without changing screenshot ownership', () => {
@@ -1887,13 +1889,13 @@ test('supports stable video and effect hash routes', () => {
   assert.match(indexHtml, /route\.target === "video" \|\| route\.target === "invalidVideo"[\s\S]*?renderModeSwitch\(\);\s+openVideoDetail\(route\.id, false\)/);
   const navigation = loadDualIndexNavigation();
   assert.deepEqual(plainValue(navigation.routeDecision('#video=video-1&origin=effects', { video: () => true })), {
-    target: 'video', id: 'video-1', mode: 'videos', returnMode: 'effects'
+    target: 'video', id: 'video-1', mode: 'videos', returnMode: 'effects', time: null, section: ''
   });
   assert.deepEqual(plainValue(navigation.routeDecision('#video=video-1', { video: () => true })), {
-    target: 'video', id: 'video-1', mode: 'videos', returnMode: 'videos'
+    target: 'video', id: 'video-1', mode: 'videos', returnMode: 'videos', time: null, section: ''
   });
   assert.deepEqual(plainValue(navigation.routeDecision('#effect=missing', { effect: () => false })), {
-    target: 'invalidEffect', id: 'missing', mode: 'effects', returnMode: 'effects'
+    target: 'invalidEffect', id: 'missing', mode: 'effects', returnMode: 'effects', time: null, section: ''
   });
   assert.deepEqual(plainValue(navigation.routeWriteIntent('#video=video-1', { view: 'videos' }, true)), {
     method: 'replace', hash: '#view=videos'
@@ -1901,6 +1903,35 @@ test('supports stable video and effect hash routes', () => {
   assert.deepEqual(plainValue(navigation.routeWriteIntent('#view=videos', { view: 'videos' })), {
     method: 'none', hash: '#view=videos'
   });
+});
+
+test('supports validated video time and section deep links', () => {
+  const navigation = loadDualIndexNavigation();
+  assert.deepEqual(
+    plainValue(navigation.parseHashRouteHash('#video=video-a&t=42&section=steps&origin=effects')),
+    { video: 'video-a', effect: '', view: '', origin: 'effects', time: 42, section: 'steps' }
+  );
+  assert.equal(
+    navigation.serializeHashRoute({ video: 'video-a', time: 42.8, section: 'steps', origin: 'effects' }),
+    '#video=video-a&origin=effects&t=42&section=steps'
+  );
+  assert.deepEqual(
+    plainValue(navigation.routeDecision('#video=video-a&t=42&section=steps', { video: () => true })),
+    { target: 'video', id: 'video-a', mode: 'videos', returnMode: 'videos', time: 42, section: 'steps' }
+  );
+});
+
+test('drops invalid time and section values without breaking legacy routes', () => {
+  const navigation = loadDualIndexNavigation();
+  assert.equal(navigation.parseHashRouteHash('#video=video-a&t=-1&section=unknown').time, null);
+  assert.equal(navigation.parseHashRouteHash('#video=video-a&t=Infinity').section, '');
+  assert.equal(navigation.serializeHashRoute({ video: 'video-a', time: '12', section: 'quick' }), '#video=video-a&t=12&section=quick');
+  assert.equal(navigation.serializeHashRoute({ effect: 'use-a', time: 20, section: 'steps' }), '#effect=use-a');
+  assert.equal(navigation.serializeHashRoute({ view: 'effects', time: 20 }), '#view=effects');
+  assert.deepEqual(
+    plainValue(navigation.routeDecision('#view=effects&t=10&section=steps')),
+    { target: 'library', id: '', mode: 'effects', returnMode: 'effects', time: null, section: '' }
+  );
 });
 
 test('effect profile cards open aggregated uses and can return to a video', () => {

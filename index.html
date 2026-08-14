@@ -32216,9 +32216,20 @@
     const canonicalEffectName = SfxKnowledgeModel.canonicalEffectName;
     const DualIndexNavigation = (() => {
       const modes = ["videos", "effects"];
+      const sectionIds = new Set(["quick", "steps", "effects", "glossary", "transcript", "evidence"]);
 
       function normalizeMode(value) {
         return modes.includes(value) ? value : "videos";
+      }
+
+      function normalizeTime(value) {
+        if (value == null || value === "") return null;
+        const number = Number(value);
+        return Number.isFinite(number) && number >= 0 ? Math.floor(number) : null;
+      }
+
+      function normalizeSection(value) {
+        return sectionIds.has(value) ? value : "";
       }
 
       function parseHashRouteHash(hash) {
@@ -32227,18 +32238,29 @@
           video: params.get("video") || "",
           effect: params.get("effect") || "",
           view: params.get("view") || "",
-          origin: params.get("origin") || ""
+          origin: params.get("origin") || "",
+          time: normalizeTime(params.get("t")),
+          section: normalizeSection(params.get("section"))
         };
       }
 
       function serializeHashRoute(values) {
         const params = new URLSearchParams();
-        ["video", "effect", "view", "origin"].forEach((key) => {
-          const value = values && values[key];
-          if (!value) return;
-          if ((key === "view" || key === "origin") && !modes.includes(value)) return;
-          params.set(key, value);
-        });
+        const video = values && values.video;
+        const effect = values && values.effect;
+        const view = values && values.view;
+        if (video) {
+          params.set("video", video);
+          if (modes.includes(values.origin)) params.set("origin", values.origin);
+          const time = normalizeTime(values.time);
+          const section = normalizeSection(values.section);
+          if (time !== null) params.set("t", time);
+          if (section) params.set("section", section);
+        } else if (effect) {
+          params.set("effect", effect);
+        } else if (modes.includes(view)) {
+          params.set("view", view);
+        }
         const query = params.toString();
         return query ? "#" + query : "";
       }
@@ -32247,7 +32269,7 @@
         const route = parseHashRouteHash(hash);
         if (route.effect) {
           const valid = typeof validators.effect !== "function" || validators.effect(route.effect);
-          return { target: valid ? "effect" : "invalidEffect", id: route.effect, mode: "effects", returnMode: "effects" };
+          return { target: valid ? "effect" : "invalidEffect", id: route.effect, mode: "effects", returnMode: "effects", time: null, section: "" };
         }
         if (route.video) {
           const valid = typeof validators.video !== "function" || validators.video(route.video);
@@ -32255,11 +32277,13 @@
             target: valid ? "video" : "invalidVideo",
             id: route.video,
             mode: "videos",
-            returnMode: route.origin === "effects" ? "effects" : "videos"
+            returnMode: route.origin === "effects" ? "effects" : "videos",
+            time: route.time,
+            section: route.section
           };
         }
         const mode = normalizeMode(route.view);
-        return { target: "library", id: "", mode, returnMode: mode };
+        return { target: "library", id: "", mode, returnMode: mode, time: null, section: "" };
       }
 
       function routeWriteIntent(currentHash, values, replace = false) {
