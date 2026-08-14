@@ -577,6 +577,265 @@
     .reader-detail .detail-body {
       padding: clamp(18px, 4vw, 48px);
     }
+    body.reader-open .reader-bar {
+      position: static;
+    }
+    .detail-learning-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(420px, 520px);
+      gap: 32px;
+      align-items: start;
+      margin-top: 24px;
+    }
+    .video-study-rail {
+      grid-column: 2;
+      grid-row: 1;
+      position: sticky;
+      top: 16px;
+      min-width: 0;
+      align-self: start;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .video-study-rail-toolbar {
+      display: flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 8px 6px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .video-study-rail-toolbar strong {
+      min-width: 0;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .video-study-player {
+      min-width: 0;
+      transition: block-size 160ms ease;
+    }
+    .video-study-rail.sticky-collapsed .video-study-player {
+      block-size: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .video-study-rail.player-fullscreen {
+      position: static;
+      max-height: none;
+    }
+    .detail-learning-content {
+      grid-column: 1;
+      grid-row: 1;
+      min-width: 0;
+      max-width: 700px;
+    }
+    .detail-content-section {
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      scroll-margin-top: 18px;
+    }
+    .detail-content-section:first-child {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+    .detail-content-section > h3 {
+      margin: 0 0 12px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.35;
+    }
+    [data-section-heading]:focus {
+      outline: 3px solid rgba(15, 139, 141, 0.34);
+      outline-offset: 4px;
+    }
+    .detail-quick .detail-summary {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+    .quick-decisions {
+      display: grid;
+      gap: 8px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .quick-decisions li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .quick-decisions li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+    .detail-section-nav {
+      display: flex;
+      min-height: 44px;
+      gap: 4px;
+      margin-top: 22px;
+      padding: 4px 0;
+      overflow-x: auto;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      scrollbar-width: thin;
+    }
+    .detail-section-nav a {
+      display: inline-flex;
+      min-height: 36px;
+      flex: 0 0 auto;
+      align-items: center;
+      padding: 6px 9px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .detail-section-nav a:hover,
+    .detail-section-nav a[aria-current="location"] {
+      color: var(--teal);
+      box-shadow: inset 0 -2px var(--teal);
+    }
+    .step-timeline {
+      display: grid;
+      gap: 2px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .step-timeline .time-jump {
+      width: 100%;
+      justify-content: flex-start;
+      border-color: transparent;
+      background: transparent;
+    }
+    .step-timeline .time-jump:hover {
+      border-color: var(--line);
+      background: rgba(15, 139, 141, 0.06);
+    }
+    .step-timeline .time-jump-label {
+      min-width: 0;
+      flex: 1 1 auto;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+    .step-timeline time {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .time-jump {
+      display: inline-flex;
+      min-width: 82px;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--ink);
+      background: var(--panel);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .time-jump:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+    .time-jump:focus-visible,
+    .detail-section-nav a:focus-visible,
+    .sticky-player-toggle:focus-visible {
+      outline: 3px solid rgba(15, 139, 141, 0.42);
+      outline-offset: 2px;
+    }
+    .time-jump-icon {
+      color: var(--red);
+      font-size: 10px;
+    }
+    .step-time-unavailable {
+      display: flex;
+      min-height: 40px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 6px 9px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .step-visual {
+      min-width: 0;
+    }
+    .step-visual > .time-jump {
+      margin-top: 7px;
+    }
+    .step-visual > .time-jump .time-jump-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .step-copy {
+      min-width: 0;
+    }
+    .step-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .step-heading > strong {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .step-heading .time-jump {
+      flex: 0 0 auto;
+    }
+    .evidence-disclosure {
+      border-top: 1px solid var(--line);
+    }
+    .evidence-disclosure:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+    .evidence-disclosure > summary {
+      padding: 14px 0;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .evidence-disclosure-body {
+      padding: 0 0 20px;
+    }
+    .evidence-materials {
+      margin-bottom: 18px;
+    }
+    .evidence-materials h4 {
+      margin: 0 0 8px;
+      font-size: 13px;
+    }
+    .transcript-section .video-transcript-disclosure {
+      border-top: 0;
+    }
+    .transcript-section .video-transcript {
+      max-height: 520px;
+    }
     .reader-detail .detail-title {
       max-width: 1040px;
       color: var(--ink);
@@ -1174,6 +1433,20 @@
       justify-content: space-between;
       gap: 12px;
     }
+    .effect-use-summary-actions {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 10px;
+    }
+    .effect-use-summary-actions .time-jump .time-jump-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
     .effect-use-summary-title {
       color: var(--green);
       font-size: 17px;
@@ -1232,6 +1505,12 @@
       font-size: 42px;
       line-height: 1.12;
     }
+    .effect-detail-coverage {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
     .effect-detail-grid {
       display: grid;
       grid-template-columns: minmax(260px, 0.78fr) minmax(420px, 1.22fr);
@@ -1276,10 +1555,31 @@
       line-height: 1.7;
     }
     .effect-evidence-panel,
-    .effect-more-cases {
+    .effect-more-cases,
+    .effect-interface-reference,
+    .effect-all-cases {
       min-width: 0;
     }
+    .effect-interface-reference > h3,
+    .effect-all-cases > h3 {
+      margin: 0 0 10px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .effect-interface-reference > a {
+      display: inline-flex;
+      margin-top: 8px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+    }
     .effect-more-cases {
+      margin-top: 34px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .effect-all-cases {
       margin-top: 34px;
       padding-top: 24px;
       border-top: 1px solid var(--line);
@@ -1287,6 +1587,10 @@
     .effect-case-list {
       display: grid;
       gap: 22px;
+    }
+    .effect-all-cases .effect-case-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 28px;
     }
     .effect-more-cases .effect-case-list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1330,6 +1634,27 @@
       font-size: 11px;
       font-weight: 800;
     }
+    .effect-case-missing {
+      display: grid;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      place-content: center;
+      gap: 5px;
+      padding: 18px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      background: rgba(255, 253, 248, 0.52);
+      text-align: center;
+    }
+    .effect-case-missing strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+    .effect-case-missing span {
+      font-size: 11px;
+      line-height: 1.5;
+    }
     .effect-case-copy {
       display: flex;
       align-items: flex-start;
@@ -1347,6 +1672,43 @@
       display: block;
       color: var(--muted);
       font-size: 11px;
+    }
+    .effect-case-facts {
+      display: grid;
+      gap: 9px;
+      margin: 14px 0 0;
+    }
+    .effect-case-facts > div {
+      display: grid;
+      grid-template-columns: 66px minmax(0, 1fr);
+      gap: 8px;
+    }
+    .effect-case-facts dt,
+    .effect-case-facts dd {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .effect-case-facts dt {
+      color: var(--teal);
+      font-weight: 900;
+    }
+    .effect-case-facts dd {
+      color: var(--ink);
+    }
+    .effect-case-evidence {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 12px;
+    }
+    .effect-case-evidence span {
+      padding: 3px 6px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
     }
     .effect-case-focus {
       display: grid;
@@ -1402,6 +1764,23 @@
       background: var(--panel);
     }
 
+    @media (max-width: 1039px) {
+      .detail-learning-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+      }
+      .video-study-rail,
+      .detail-learning-content {
+        grid-column: 1;
+        max-width: none;
+      }
+      .video-study-rail {
+        grid-row: 1;
+        position: static;
+        top: auto;
+      }
+      .detail-learning-content { grid-row: 2; }
+    }
     @media (max-width: 980px) {
       .control-inner { grid-template-columns: 1fr; }
       .view-switch { width: fit-content; }
@@ -1412,6 +1791,7 @@
       .video-player-section { max-width: none; }
       .effect-detail-grid { grid-template-columns: 1fr; gap: 28px; }
       .effect-more-cases .effect-case-list { grid-template-columns: 1fr; }
+      .effect-all-cases .effect-case-list { grid-template-columns: 1fr; }
     }
     @media (max-width: 820px) {
       .view-switch { width: 100%; }
@@ -1422,6 +1802,7 @@
       }
       .effect-summary-shot { max-width: 420px; }
       .effect-use-summary-header { align-items: flex-start; flex-direction: column; }
+      .effect-use-summary-actions { width: 100%; justify-content: space-between; }
     }
     @media (max-width: 640px) {
       .site-header { flex-wrap: wrap; gap: 7px 10px; padding: 8px 14px; }
@@ -1478,6 +1859,32 @@
       }
       .effect-detail .detail-title { font-size: 32px; }
       .effect-case-copy { flex-direction: column; }
+      .detail-learning-layout { margin-top: 18px; }
+      .detail-content-section { margin-top: 24px; padding-top: 18px; }
+      .video-study-rail.player-activated {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        max-height: 36vh;
+        overflow: auto;
+        box-shadow: 0 10px 24px rgba(22, 24, 25, 0.16);
+      }
+      .video-study-rail.sticky-collapsed {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        max-height: 48px;
+        overflow: hidden;
+        box-shadow: none;
+      }
+      .step-heading { flex-direction: column; }
+      .step-heading .time-jump { align-self: flex-start; }
+    }
+    @media (orientation: landscape) and (max-height: 520px) and (min-width: 641px) and (max-width: 900px) {
+      .video-study-rail {
+        width: min(100%, 470px);
+        justify-self: center;
+      }
     }
     @media (orientation: landscape) and (max-height: 520px) {
       .video-caption-overlay,
@@ -1485,6 +1892,35 @@
         bottom: clamp(48px, 12%, 72px);
         max-width: 92%;
         font-size: 16px;
+      }
+    }
+    @media print {
+      .reader-bar,
+      .video-study-rail,
+      .detail-section-nav,
+      .time-jump,
+      .open-video,
+      .effect-use-detail-link,
+      .plugin-reference-source {
+        display: none !important;
+      }
+      .detail-learning-layout,
+      .detail-learning-content,
+      .detail-body,
+      .complete-evidence,
+      .evidence-disclosure {
+        position: static !important;
+        display: block !important;
+        max-width: none !important;
+      }
+      .evidence-disclosure > .evidence-disclosure-body {
+        display: block !important;
+      }
+      .evidence-disclosure > summary {
+        display: none !important;
+      }
+      .reader-detail .detail-body {
+        padding: 0;
       }
     }
     .lightbox {
@@ -1651,6 +2087,7 @@
   <script src="src/effect-guides.js?v=20260811-evidence-led-1"></script>
   <script src="src/effect-learning-paths.js?v=20260812-learning-paths-1"></script>
   <script src="src/video-subtitles.js?v=20260812-site-subtitles-1"></script>
+  <script src="src/video-timeline.js?v=20260814-verified-timelines-1"></script>
   <script src="src/sfx-glossary.js?v=20260814-glossary-1"></script>
   <script src="src/youtube-caption-player.js?v=20260812-caption-player-1"></script>
   <script src="src/detail-navigation.js?v=20260814-detail-nav-1"></script>
@@ -35748,7 +36185,7 @@
         const visuals = [];
         const seenVisuals = new Set();
         function addVisual(visual) {
-          if (!visual || visuals.length >= 3) return;
+          if (!visual) return;
           const key = visual.full || visual.preview;
           if (!key || seenVisuals.has(key)) return;
           seenVisuals.add(key);
@@ -35879,6 +36316,8 @@
     const lightboxCloseEl = document.getElementById("lightboxClose");
     let searchRenderTimer = 0;
     let activeVideoPlayer = null;
+    let activeDetailNavigation = null;
+    let activeStickyCleanup = null;
 
     sourceEl.innerHTML += sources.map((source) => "<option value=\"" + escapeAttr(source) + "\">" + escapeHtml(source) + "</option>").join("");
 
@@ -36145,8 +36584,59 @@
       activeVideoPlayer = null;
     }
 
+    function destroyActiveDetailNavigation() {
+      if (!activeDetailNavigation) return;
+      activeDetailNavigation.destroy();
+      activeDetailNavigation = null;
+    }
+
+    function destroyActiveStickyRail() {
+      if (!activeStickyCleanup) return;
+      activeStickyCleanup();
+      activeStickyCleanup = null;
+    }
+
+    function toggleStickyPlayer(button) {
+      const rail = button?.closest ? button.closest("[data-player-rail]") : null;
+      if (!rail) return false;
+      const collapsed = rail.classList.toggle("sticky-collapsed");
+      button.setAttribute("aria-expanded", String(!collapsed));
+      button.setAttribute("aria-label", collapsed ? "展开播放器" : "收起播放器");
+      button.setAttribute("title", collapsed ? "展开播放器" : "收起播放器");
+      const icon = button.querySelector("[data-sticky-icon]");
+      if (icon) icon.textContent = collapsed ? "+" : "−";
+      return collapsed;
+    }
+
+    function setupStickyPlayerRail(rail, playerRoot) {
+      if (!rail || !playerRoot) return () => {};
+      let restoreCollapsed = false;
+      const onFullscreenChange = () => {
+        const fullscreenElement = document.fullscreenElement;
+        const playerFullscreen = fullscreenElement === playerRoot || Boolean(fullscreenElement && playerRoot.contains(fullscreenElement));
+        if (playerFullscreen) {
+          rail.classList.add("player-fullscreen");
+          restoreCollapsed = rail.classList.contains("sticky-collapsed");
+          if (restoreCollapsed) rail.classList.remove("sticky-collapsed");
+          return;
+        }
+        rail.classList.remove("player-fullscreen");
+        if (restoreCollapsed && !fullscreenElement) {
+          rail.classList.add("sticky-collapsed");
+          restoreCollapsed = false;
+        }
+      };
+      document.addEventListener("fullscreenchange", onFullscreenChange);
+      return () => {
+        rail.classList.remove("player-fullscreen");
+        document.removeEventListener("fullscreenchange", onFullscreenChange);
+      };
+    }
+
     function showLibrary() {
       destroyActiveVideoPlayer();
+      destroyActiveDetailNavigation();
+      destroyActiveStickyRail();
       state.view = "library";
       document.body.classList.remove("reader-open");
       libraryViewEl.hidden = false;
@@ -36191,8 +36681,10 @@
       return DualIndexNavigation.parseHashRouteHash(window.location.hash);
     }
 
-    function openVideoDetail(recordId, syncHash = false) {
+    function openVideoDetail(recordId, syncHash = false, options = {}) {
       destroyActiveVideoPlayer();
+      destroyActiveDetailNavigation();
+      destroyActiveStickyRail();
       const record = records.find((item) => item.id === recordId);
       readerHintEl.textContent = "完整案例阅读";
       state.activeEffectId = "";
@@ -36204,16 +36696,25 @@
       }
       state.activeId = record.id;
       state.activeEffectId = "";
-      renderDetail();
+      renderDetail(options);
       showReader();
+      if (options.section && activeDetailNavigation) {
+        requestAnimationFrame(() => {
+          if (state.activeId === record.id && activeDetailNavigation) activeDetailNavigation.reveal(options.section);
+        });
+      }
       if (syncHash) writeHashRoute({
         video: record.id,
+        time: options.time,
+        section: options.section,
         origin: state.returnMode === "effects" ? "effects" : ""
       });
     }
 
     function openEffectDetail(effectId, syncHash = false) {
       destroyActiveVideoPlayer();
+      destroyActiveDetailNavigation();
+      destroyActiveStickyRail();
       const use = effectUses.find((item) => item.id === effectId);
       readerHintEl.textContent = "效果器实际用法";
       state.activeId = "";
@@ -36245,7 +36746,7 @@
       }
       if (route.target === "video" || route.target === "invalidVideo") {
         renderModeSwitch();
-        openVideoDetail(route.id, false);
+        openVideoDetail(route.id, false, { time: route.time, section: route.section });
         return;
       }
       showLibrary();
@@ -36423,13 +36924,15 @@
       const profile = EffectIndexData.profileForUse(use, effectUses, records, pluginReferenceCatalog, imageManifest);
       if (!profile) return "";
       const visual = profile.visuals.find((candidate) => candidate.useId === use.id) || profile.visuals[0];
+      const startSeconds = SfxVideoTimeline.effectStart(record, use);
       return '<div class="effect-use-summary">' +
         '<button class="effect-summary-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大效果器截图：' + escapeAttr(profile.name) + '">' +
           '<img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(profile.name + " 效果器截图") + '" loading="lazy" decoding="async">' +
         '</button>' +
         '<div class="effect-summary-copy">' +
           '<div class="effect-use-summary-header"><strong class="effect-use-summary-title">' + escapeHtml(profile.name) + '</strong>' +
-            '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '">查看适用方式</button></div>' +
+            '<div class="effect-use-summary-actions">' + renderTimeJump(startSeconds, "播放此效果器用法", { "data-effect-time": "", "data-section": "effects" }) +
+            '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '">查看适用方式</button></div></div>' +
           '<p class="effect-use-summary-purpose"><strong>输入素材</strong><br>' + escapeHtml(profile.input) + '</p>' +
           '<p class="effect-use-summary-meta"><strong>处理动作</strong><br>' + escapeHtml(profile.action) + '<br><strong>听感变化</strong><br>' + escapeHtml(profile.result) + '</p>' +
         '</div>' +
@@ -36440,78 +36943,313 @@
       const paragraphs = track ? SfxVideoSubtitles.paragraphsFor(track) : [];
       const terms = SfxGlossary.termsFor([record, paragraphs.map((item) => item.text)]);
       if (!terms.length) return "";
-      return '<section class="section video-glossary" data-video-glossary>' +
-        '<h3>本视频术语</h3><dl class="glossary-list">' + terms.map((term) =>
+      return '<section id="glossary" class="video-glossary detail-content-section" data-video-glossary data-detail-section="glossary">' +
+        '<h3 tabindex="-1" data-section-heading>本视频术语</h3><dl class="glossary-list">' + terms.map((term) =>
           '<div class="glossary-term"><dt><span lang="en">' + escapeHtml(term.english) + '</span>' +
           '<strong>' + escapeHtml(term.chinese) + '</strong></dt>' +
           '<dd><span>' + escapeHtml(term.meaning) + '</span><span>' + escapeHtml(term.use) + '</span></dd></div>'
         ).join("") + '</dl></section>';
     }
 
-    function renderDetail() {
-      const record = records.find((item) => item.id === state.activeId);
-      if (!record) return;
-      const detailData = VideoDetailData.project(record);
-      const category = categoryById[record.category];
-      const stepHtml = detailData.steps.map((rawStep, index) => {
+    function renderTimeJump(seconds, label, attributes = {}) {
+      if (!Number.isFinite(seconds) || seconds < 0) return "";
+      const start = Math.floor(seconds);
+      const time = SfxVideoTimeline.formatTime(start);
+      const labelText = typeof label === "string" && label.trim() ? label.trim() : "播放视频";
+      const attributeHtml = Object.entries(attributes && typeof attributes === "object" ? attributes : {})
+        .filter(([name]) => /^(?:data|aria)-[a-z0-9-]+$/.test(name))
+        .map(([name, value]) => ' ' + name + '="' + escapeAttr(value === undefined ? "" : value) + '"')
+        .join("");
+      return '<button type="button" class="time-jump" data-seek-seconds="' + start + '" aria-label="' +
+        escapeAttr(labelText + "，从 " + time + " 播放") + '"' + attributeHtml + '>' +
+        '<span class="time-jump-icon" aria-hidden="true">▶</span>' +
+        '<span class="time-jump-label">' + escapeHtml(labelText) + '</span>' +
+        '<time datetime="PT' + start + 'S">' + escapeHtml(time) + '</time></button>';
+    }
+
+    function renderQuickConclusion(record, detailData) {
+      const summary = typeof record?.summary === "string" ? record.summary : "";
+      const ideas = Array.isArray(detailData?.coreIdeas) ? detailData.coreIdeas.slice(0, 3) : [];
+      return '<section id="quick" class="detail-quick detail-content-section" data-detail-section="quick">' +
+        '<h3 tabindex="-1" data-section-heading>快速结论</h3>' +
+        (summary ? '<p class="detail-summary">' + escapeHtml(summary) + '</p>' : '') +
+        (ideas.length ? '<ul class="quick-decisions">' + ideas.map((idea) => '<li>' + escapeHtml(idea) + '</li>').join("") + '</ul>' : '') +
+      '</section>';
+    }
+
+    function renderSectionNavigation(sections) {
+      const items = Array.isArray(sections) ? sections : [];
+      if (!items.length) return "";
+      return '<nav class="detail-section-nav" data-detail-navigation aria-label="本案例章节">' + items.map((section) =>
+        '<a href="#' + escapeAttr(section.id) + '" data-section-target="' + escapeAttr(section.id) + '">' +
+          escapeHtml(section.label) + '</a>'
+      ).join("") + '</nav>';
+    }
+
+    function videoDetailSections(record, glossaryTerms, subtitleEntry, recordEffectUses, recordId = record?.id || "") {
+      const sections = [
+        { id: "quick", label: "快速结论", present: true },
+        { id: "steps", label: "处理步骤", present: Array.isArray(record?.steps) && record.steps.length > 0 },
+        { id: "effects", label: "效果器用法", present: Array.isArray(recordEffectUses) && recordEffectUses.some((use) => use?.sourceRecordId === recordId) },
+        { id: "glossary", label: "术语", present: Array.isArray(glossaryTerms) && glossaryTerms.length > 0 },
+        { id: "transcript", label: "字幕", present: subtitleEntry?.contentStatus === "track" },
+        { id: "evidence", label: "完整证据", present: true }
+      ];
+      return sections.filter((section) => section.present);
+    }
+
+    function renderStepTimeline(record, detailData) {
+      const steps = Array.isArray(detailData?.steps) ? detailData.steps : [];
+      if (!steps.length) return "";
+      return '<section id="steps" class="step-timeline-section detail-content-section" data-detail-section="steps">' +
+        '<h3 tabindex="-1" data-section-heading>处理步骤</h3><ol class="step-timeline">' + steps.map((step, index) => {
+          const name = step?.name || "未命名步骤";
+          const seconds = SfxVideoTimeline.stepStart(record, index);
+          const control = renderTimeJump(seconds, name, { "data-step-time": "", "data-section": "steps" });
+          return '<li>' + (control || '<span class="step-time-unavailable" data-step-time=""><span>' + escapeHtml(name) + '</span><span>时间待复核</span></span>') + '</li>';
+        }).join("") + '</ol></section>';
+    }
+
+    function renderDetailedSteps(record, detailData) {
+      const steps = Array.isArray(detailData?.steps) ? detailData.steps : [];
+      return steps.map((rawStep, index) => {
         const step = rawStep && typeof rawStep === "object" ? rawStep : {};
-        const name = cleanedText(step.name);
-        const detail = cleanedText(step.detail);
-        const params = cleanedFacts(step.params);
+        const name = step.name || "未命名步骤";
+        const detail = step.detail || "";
+        const params = Array.isArray(step.params) ? step.params : [];
         const motion = step.motion && step.motion.src ? step.motion : null;
+        const seconds = SfxVideoTimeline.stepStart(record, index);
+        const screenshotTime = renderTimeJump(seconds, "从截图位置播放", {
+          "data-screenshot-time": "",
+          "data-section": "steps"
+        });
         const shotHtml = step.imageKey
-          ? '<button class="step-shot' + (motion ? ' has-motion' : '') + '" type="button" data-step-index="' + index + '" data-image-key="' + escapeAttr(step.imageKey) + '"' +
+          ? '<div class="step-visual"><button class="step-shot' + (motion ? ' has-motion' : '') + '" type="button" data-step-index="' + index + '" data-image-key="' + escapeAttr(step.imageKey) + '"' +
               (motion ? ' data-motion-src="' + escapeAttr(motion.src) + '" data-motion-poster="' + escapeAttr(motion.poster || imageAsset("preview", step.imageKey)) + '"' : '') +
               ' aria-label="' + escapeAttr((motion ? "播放流程动图：" : "放大步骤截图：") + name) + '">' +
               '<img data-shot-preview="' + escapeAttr(step.imageKey) + '" alt="' + escapeAttr(record.title + " - " + name) + '" loading="lazy" decoding="async">' +
               '<span>' + (motion ? '动图准备中，稍后可播放' : '截图准备中，稍后可放大查看') + '</span>' +
               (motion ? '<span class="step-motion-badge">1080p 动图</span>' : '') +
-            '</button>'
+            '</button>' + screenshotTime + '</div>'
           : '';
-        return '<div class="step">' + shotHtml + '<strong>' + step.order + '. ' + escapeHtml(name) + '</strong>' +
+        return '<article class="step" data-step-index="' + index + '">' + shotHtml +
+          '<div class="step-copy"><div class="step-heading"><strong>' + escapeHtml((step.order ?? index + 1) + ". " + name) + '</strong>' +
+            renderTimeJump(seconds, "播放此步骤", { "data-step-heading-time": "", "data-section": "steps" }) + '</div>' +
           (detail ? '<p>' + escapeHtml(detail) + '</p>' : '') +
-          (params.length ? '<div class="chips">' + params.slice(0, 8).map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
-          '</div>';
+          (params.length ? '<div class="chips">' + params.map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
+          '</div></article>';
       }).join("");
+    }
+
+    function renderCompleteEvidence(blocks) {
+      const source = blocks && typeof blocks === "object" ? blocks : {};
+      const groups = [
+        ["完整设计思路", source.ideas],
+        ["逐步制作过程与截图", source.process],
+        ["完整效果链与参数线索", source.chain],
+        ["限制、证据边界与来源", source.boundaries]
+      ].filter((group) => typeof group[1] === "string" && group[1]);
+      return '<section id="evidence" class="complete-evidence detail-content-section" data-detail-section="evidence">' +
+        '<h3 tabindex="-1" data-section-heading>完整证据</h3>' + groups.map((group) =>
+          '<details class="evidence-disclosure"><summary>' + escapeHtml(group[0]) + '</summary>' +
+            '<div class="evidence-disclosure-body">' + group[1] + '</div></details>'
+        ).join("") + '</section>';
+    }
+
+    function renderDetail(options = {}) {
+      const record = records.find((item) => item.id === state.activeId);
+      if (!record) return;
+      const detailData = VideoDetailData.project(record);
+      const category = categoryById[record.category];
       const ideasHtml = detailData.coreIdeas.map((idea) => '<div class="idea">' + escapeHtml(idea) + '</div>').join("");
-      const materialHtml = detailData.materials.slice(0, 18).map((material) => '<span class="chip">' + escapeHtml(material) + '</span>').join("");
+      const materialHtml = detailData.materials.map((material) => '<span class="chip">' + escapeHtml(material) + '</span>').join("");
       const chainHtml = detailData.chainFacts.map((fact) => '<div class="learning-point">' + escapeHtml(fact) + '</div>').join("");
-      const effectHtml = VideoDetailData.array(effectUses).filter((use) => use && use.sourceRecordId === record.id).map((use) => renderEffectUseSummary(record, use)).join("");
       const decisionHtml = detailData.decisionFacts.map((fact) => '<div class="tip">' + escapeHtml(fact) + '</div>').join("");
-      const keywordHtml = detailData.keywords.slice(0, 18).map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
+      const keywordHtml = detailData.keywords.map((keyword) => '<span class="chip">' + escapeHtml(keyword) + '</span>').join("");
+      const pluginHtml = detailData.plugins.map((rawPlugin, pluginIndex) => {
+        const plugin = rawPlugin && typeof rawPlugin === "object" ? rawPlugin : {};
+        const name = cleanedText(plugin.name);
+        const purpose = cleanedText(plugin.purpose);
+        const settings = cleanedFacts(plugin.settings);
+        if (!name && !purpose && !settings.length) return "";
+        return '<div class="plugin"><strong>' + escapeHtml(name || "未命名处理器") + '</strong>' +
+          (purpose ? '<p>' + escapeHtml(purpose) + '</p>' : '') +
+          (settings.length ? '<div class="chips plugin-settings">' + settings.map((setting) => '<span class="chip">' + escapeHtml(setting) + '</span>').join("") + '</div>' : '') +
+          renderPluginReferences(record, plugin, pluginIndex) + '</div>';
+      }).join("");
+      const detailedStepsHtml = renderDetailedSteps(record, detailData);
+      const recordEffectUses = VideoDetailData.array(effectUses).filter((use) => use && use.sourceRecordId === record.id);
+      const publishedEffectSummaries = recordEffectUses.map((use) => ({ use, html: renderEffectUseSummary(record, use) })).filter((item) => item.html);
+      const effectSectionContent = publishedEffectSummaries.map((item) => item.html).join("");
       const subtitleEntry = SfxVideoSubtitles.entryFor(record.videoId);
       const playerHtml = SfxYouTubeCaptionPlayer.render(record, subtitleEntry, thumbnail(record, "hqdefault"));
+      const learningShellOpen = '<div class="detail-learning-layout"><aside class="video-study-rail" data-player-rail>' +
+        '<div class="video-study-rail-toolbar"><strong>原视频与中文字幕</strong>' +
+          '<button class="video-icon-button sticky-player-toggle" type="button" data-sticky-toggle aria-expanded="true" aria-controls="video-study-player-' + escapeAttr(record.id) + '" aria-label="收起播放器" title="收起播放器"><span data-sticky-icon aria-hidden="true">−</span></button>' +
+        '</div><div class="video-study-player" id="video-study-player-' + escapeAttr(record.id) + '">' + playerHtml + '</div></aside>';
+      const contentShellOpen = '<div class="detail-learning-content" data-detail-content>';
+      const initialGlossaryTerms = SfxGlossary.termsFor([record]);
       const glossaryHtml = renderVideoGlossary(record, null);
+      const sections = videoDetailSections(record, initialGlossaryTerms, subtitleEntry, publishedEffectSummaries.map((item) => item.use), record.id);
+      const quickHtml = renderQuickConclusion(record, detailData);
+      const navigationHtml = renderSectionNavigation(sections);
+      const timelineHtml = renderStepTimeline(record, detailData);
+      const effectHtml = effectSectionContent
+        ? '<section id="effects" class="video-effect-uses detail-content-section" data-detail-section="effects"><h3 tabindex="-1" data-section-heading>效果器用法</h3>' + effectSectionContent + '</section>'
+        : '';
+      const glossaryAnchorHtml = '<div data-video-glossary-anchor>' + glossaryHtml + '</div>';
+      const transcriptHtml = subtitleEntry?.contentStatus === "track"
+        ? '<section id="transcript" class="transcript-section detail-content-section" data-detail-section="transcript"><h3 tabindex="-1" data-section-heading>中文字幕全文</h3><div data-video-transcript-root></div></section>'
+        : '';
+      const sourceHtml = '<div class="learning-point"><strong>' + escapeHtml(record.source) + '</strong><div>' + escapeHtml(record.url) + '</div></div>' +
+        '<div class="chips">' + keywordHtml + '</div><a class="open-video" href="' + escapeAttr(record.url) + '" target="_blank" rel="noopener">打开原视频</a>';
+      const evidenceHtml = renderCompleteEvidence({
+        ideas: ideasHtml,
+        process: (materialHtml ? '<div class="evidence-materials"><h4>素材与分层</h4><div class="chips">' + materialHtml + '</div></div>' : '') + detailedStepsHtml,
+        chain: chainHtml + pluginHtml,
+        boundaries: decisionHtml + sourceHtml
+      });
 
       detailEl.innerHTML =
         '<div class="detail-body">' +
           '<h2 class="detail-title" tabindex="-1">' + escapeHtml(record.title) + '</h2>' +
           '<div class="card-meta"><span>' + escapeHtml(category?.label || "未分类") + '</span><span>' + escapeHtml(record.source) + '</span><span>收录 ' + escapeHtml(record.addedAt || "") + '</span><span>更新 ' + escapeHtml(record.updatedAt || record.addedAt || "") + '</span></div>' +
-          '<div class="section"><h3>设计目标</h3><p class="detail-summary">' + escapeHtml(cleanedText(record.summary)) + '</p></div>' +
-          '<div class="section"><h3>设计思路</h3>' + ideasHtml + '</div>' +
-          '<div class="section video-player-section"><h3>原视频与中文字幕</h3>' + playerHtml + '</div>' +
-          '<div data-video-glossary-anchor>' + glossaryHtml + '</div>' +
-          '<div class="section"><h3>素材与分层</h3><div class="chips">' + materialHtml + '</div></div>' +
-          '<div class="section"><h3>完整制作流程</h3>' + stepHtml + '</div>' +
-          '<div class="section"><h3>完整效果链</h3>' + chainHtml + '</div>' +
-          '<div class="section"><h3>效果器用法</h3>' + effectHtml + '</div>' +
-          '<div class="section"><h3>关键决策与证据边界</h3>' + decisionHtml + '</div>' +
-          '<div class="section"><h3>来源与关键词</h3><div class="learning-point"><strong>' + escapeHtml(record.source) + '</strong><div>' + escapeHtml(record.url) + '</div></div><div class="chips">' + keywordHtml + '</div><a class="open-video" href="' + escapeAttr(record.url) + '" target="_blank" rel="noopener">打开原视频</a></div>' +
-        '</div>';
+          learningShellOpen + contentShellOpen + quickHtml + navigationHtml + timelineHtml + effectHtml +
+            glossaryAnchorHtml + transcriptHtml + evidenceHtml +
+          '</div></div></div>';
       loadDetailPreviews();
       const playerRoot = detailEl.querySelector('[data-youtube-caption-player]');
       const glossaryAnchor = detailEl.querySelector('[data-video-glossary-anchor]');
+      const transcriptRoot = detailEl.querySelector('[data-video-transcript-root]');
+      const playerRail = detailEl.querySelector('[data-player-rail]');
+      const navigationRoot = detailEl.querySelector('[data-detail-navigation]');
+      const contentRoot = detailEl.querySelector('[data-detail-content]');
+      const mountNavigation = () => {
+        destroyActiveDetailNavigation();
+        if (!navigationRoot || !contentRoot) return;
+        activeDetailNavigation = SfxDetailNavigation.mount(navigationRoot, contentRoot);
+      };
+      mountNavigation();
       if (playerRoot) {
+        activeStickyCleanup = setupStickyPlayerRail(playerRail, playerRoot);
         activeVideoPlayer = SfxYouTubeCaptionPlayer.mount(playerRoot, {
           entry: subtitleEntry,
           loadTrack: (videoId) => SfxVideoSubtitles.loadTrack(videoId),
           subtitles: SfxVideoSubtitles,
+          transcriptRoot: transcriptRoot,
+          startSeconds: Number.isFinite(options.time) && options.time >= 0 ? options.time : null,
+          onActivationChange: () => {
+            if (state.activeId === record.id && playerRail?.isConnected) playerRail.classList.add("player-activated");
+          },
           onTrackLoaded: (track) => {
             if (state.activeId !== record.id || !glossaryAnchor?.isConnected) return;
             glossaryAnchor.innerHTML = renderVideoGlossary(record, track);
+            if (navigationRoot?.isConnected) {
+              const paragraphs = SfxVideoSubtitles.paragraphsFor(track);
+              const terms = SfxGlossary.termsFor([record, paragraphs.map((paragraph) => paragraph.text)]);
+              const nextSections = videoDetailSections(record, terms, subtitleEntry, publishedEffectSummaries.map((item) => item.use), record.id);
+              const nextNavigation = renderSectionNavigation(nextSections);
+              const match = nextNavigation.match(/^<nav[^>]*>([\s\S]*)<\/nav>$/);
+              if (match) navigationRoot.innerHTML = match[1];
+              mountNavigation();
+            }
           }
         });
       }
+    }
+
+    function sourceStepForEffectUse(use) {
+      const sourceRecord = records.find((record) => record?.id === use?.sourceRecordId) || null;
+      if (!sourceRecord) return { sourceRecord: null, sourceStep: null };
+      const steps = Array.isArray(sourceRecord.steps) ? sourceRecord.steps : [];
+      let sourceStep = Number.isInteger(use?.stepIndex) ? steps[use.stepIndex] || null : null;
+      if (!sourceStep && use?.screenshotKey) {
+        sourceStep = steps.find((step) => step?.imageKey === use.screenshotKey) || null;
+      }
+      return { sourceRecord, sourceStep };
+    }
+
+    function effectCaseForUse(profile, use) {
+      const source = sourceStepForEffectUse(use);
+      const visual = (Array.isArray(profile?.visuals) ? profile.visuals : []).find((item) => (
+        item?.kind === "video" &&
+        item.useId === use?.id &&
+        Boolean(String(item.preview || "").trim()) &&
+        Boolean(String(item.full || "").trim()) &&
+        Boolean(String(item.caption || "").trim())
+      )) || null;
+      return {
+        use,
+        sourceRecord: source.sourceRecord,
+        sourceStep: source.sourceStep,
+        visual,
+        startSeconds: source.sourceRecord ? SfxVideoTimeline.effectStart(source.sourceRecord, use) : null
+      };
+    }
+
+    function effectCasesForProfile(profile) {
+      const evidenceUseId = profile?.evidenceUseId || "";
+      return (Array.isArray(profile?.uses) ? profile.uses : []).map((use) => effectCaseForUse(profile, use)).sort((left, right) => {
+        const evidenceOrder = Number(right.use?.id === evidenceUseId) - Number(left.use?.id === evidenceUseId);
+        if (evidenceOrder) return evidenceOrder;
+        const dateOrder = String(right.sourceRecord?.updatedAt || right.sourceRecord?.addedAt || "")
+          .localeCompare(String(left.sourceRecord?.updatedAt || left.sourceRecord?.addedAt || ""));
+        if (dateOrder) return dateOrder;
+        const leftTime = Number.isFinite(left.startSeconds) ? left.startSeconds : Number.MAX_SAFE_INTEGER;
+        const rightTime = Number.isFinite(right.startSeconds) ? right.startSeconds : Number.MAX_SAFE_INTEGER;
+        return leftTime - rightTime || String(left.use?.id || "").localeCompare(String(right.use?.id || ""));
+      });
+    }
+
+    function renderEffectCase(profile, item) {
+      const use = item?.use || {};
+      const sourceRecord = item?.sourceRecord;
+      const sourceStep = item?.sourceStep;
+      const visual = item?.visual;
+      const sourceTitle = cleanedText(sourceRecord?.title || use.sourceTitle) || "未命名视频案例";
+      const stepName = cleanedText(sourceStep?.name) || "对应处理步骤";
+      const target = cleanedText(use.target) || cleanedText(sourceStep?.detail) || stepName;
+      const purpose = cleanedText(use.purpose) || profile.action;
+      const result = cleanedText(use.result) || profile.result;
+      const limitations = cleanedText(use.limitations);
+      const evidence = Array.isArray(use.evidence) ? use.evidence.filter((label) => typeof label === "string" && label.trim()) : [];
+      const visualHtml = visual
+        ? '<button class="effect-case-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大案例截图：' + escapeAttr(profile.name) + '">' +
+            '<img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(visual.caption) + '" loading="lazy" decoding="async"><span>本案例视频截图</span></button>'
+        : '<div class="effect-case-missing" role="img" aria-label="本案例暂无对应截图"><strong>暂无对应截图</strong><span>保留已核验的文字用法与视频时间点</span></div>';
+      const timeControl = sourceRecord
+        ? renderTimeJump(item.startSeconds, "播放本案例", {
+            "data-open-video": sourceRecord.id,
+            "data-section": "effects"
+          })
+        : '';
+      return '<article class="effect-case" data-effect-case-id="' + escapeAttr(use.id || "") + '">' + visualHtml +
+        '<div class="effect-case-copy"><div class="effect-case-source"><strong>' + escapeHtml(sourceTitle) + '</strong>' +
+          '<span>' + escapeHtml(stepName) + '</span></div>' + timeControl + '</div>' +
+        '<dl class="effect-case-facts">' +
+          '<div><dt>处理对象</dt><dd>' + escapeHtml(target) + '</dd></div>' +
+          '<div><dt>实际用途</dt><dd>' + escapeHtml(purpose) + '</dd></div>' +
+          '<div><dt>听感方向</dt><dd>' + escapeHtml(result) + '</dd></div>' +
+          (limitations ? '<div><dt>证据边界</dt><dd>' + escapeHtml(limitations) + '</dd></div>' : '') +
+        '</dl>' +
+        (evidence.length ? '<div class="effect-case-evidence" aria-label="证据类型">' + evidence.map((label) => '<span>' + escapeHtml(label) + '</span>').join("") + '</div>' : '') +
+      '</article>';
+    }
+
+    function renderEffectInterfaceReference(profile) {
+      const visuals = Array.isArray(profile?.visuals) ? profile.visuals : [];
+      const reference = visuals.find((visual) => visual?.kind === "official" && visual.preview && visual.full)
+        || visuals.find((visual) => visual?.kind === "video" && visual.useId === profile?.evidenceUseId && visual.preview && visual.full)
+        || null;
+      if (!reference) return "";
+      const label = reference.kind === "official" ? "官方界面对照" : "视频操作截图";
+      const sourceLink = reference.sourceUrl
+        ? '<a href="' + escapeAttr(reference.sourceUrl) + '" target="_blank" rel="noopener">查看来源</a>'
+        : '';
+      return '<section class="effect-interface-reference"><h3>' + label + '</h3>' +
+        '<button class="effect-case-shot" type="button" data-effect-image="' + escapeAttr(reference.full) + '" data-effect-caption="' + escapeAttr(reference.caption) + '" aria-label="放大' + label + '：' + escapeAttr(profile.name) + '">' +
+          '<img src="' + escapeAttr(reference.preview) + '" alt="' + escapeAttr(reference.caption) + '" loading="lazy" decoding="async"><span>' + label + '</span></button>' +
+        sourceLink + '</section>';
     }
 
     function renderEffectDetail(effectId) {
@@ -36525,52 +37263,20 @@
         detailEl.innerHTML = '<div class="empty">这个条目还没有可核对的效果器截图，因此暂不生成独立档案。</div>';
         return;
       }
-      const visuals = Array.isArray(profile.visuals) ? profile.visuals : [];
-      const isTrustedVideoVisual = (visual) => (
-        visual?.kind === "video" &&
-        Boolean(String(visual.preview || "").trim()) &&
-        Boolean(String(visual.full || "").trim()) &&
-        Boolean(String(visual.caption || "").trim()) &&
-        Boolean(String(visual.sourceTitle || "").trim()) &&
-        Boolean(String(visual.stepName || "").trim())
-      );
-      const primaryVisual = visuals[0];
-      if (!isTrustedVideoVisual(primaryVisual)) {
-        detailEl.innerHTML = '<div class="empty">这个条目还没有可核对的视频操作截图，因此暂不生成独立档案。</div>';
+      const cases = effectCasesForProfile(profile);
+      if (!cases.length) {
+        detailEl.innerHTML = '<div class="empty">这个条目还没有可核对的视频用法，因此暂不生成独立档案。</div>';
         return;
       }
-      const additionalVisuals = visuals.slice(1).filter(isTrustedVideoVisual);
-      const renderEffectCase = (visual) => {
-        const sourceRecord = visual.sourceRecordId
-          ? records.find((record) => record.id === visual.sourceRecordId)
-          : null;
-        const hasStepOrder = visual.stepOrder !== "" && visual.stepOrder !== null && visual.stepOrder !== undefined;
-        const location = [
-          hasStepOrder ? "步骤 " + visual.stepOrder : "视频操作画面",
-          visual.timestamp
-        ].filter(Boolean).join(" · ");
-        const action = sourceRecord
-          ? '<button class="effect-case-link" type="button" data-open-video="' + escapeAttr(sourceRecord.id) + '">查看完整视频案例</button>'
-          : (visual.sourceUrl
-            ? '<a class="effect-case-link" href="' + escapeAttr(visual.sourceUrl) + '" target="_blank" rel="noopener">查看官方来源</a>'
-            : '');
-        return '<div class="effect-case">' +
-          '<button class="effect-case-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大效果器截图：' + escapeAttr(profile.name) + '">' +
-            '<img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(visual.caption) + '" loading="lazy" decoding="async">' +
-            '<span>视频中的实际操作截图</span>' +
-          '</button>' +
-          '<div class="effect-case-copy"><div class="effect-case-source"><strong>' + escapeHtml(visual.sourceTitle) + '</strong><span>' + escapeHtml(location) + '</span></div>' + action + '</div>' +
-          '<div class="effect-case-focus"><strong>看图重点</strong><span>' + escapeHtml(visual.stepName) + '</span></div>' +
-        '</div>';
-      };
-      const primaryCaseHtml = renderEffectCase(primaryVisual);
-      const additionalCasesHtml = additionalVisuals.map(renderEffectCase).join("");
-      const moreCasesHtml = additionalCasesHtml
-        ? '<section class="effect-more-cases"><h3>更多视频案例</h3><div class="effect-case-list">' + additionalCasesHtml + '</div></section>'
-        : '';
+      const timedCount = cases.filter((item) => Number.isFinite(item.startSeconds)).length;
+      const screenshotCount = cases.filter((item) => item.visual).length;
+      const sourceCount = new Set(cases.map((item) => item.sourceRecord?.id).filter(Boolean)).size;
+      const referenceHtml = renderEffectInterfaceReference(profile);
+      const casesHtml = cases.map((item) => renderEffectCase(profile, item)).join("");
       detailEl.innerHTML =
         '<div class="detail-body effect-detail">' +
           '<h2 class="detail-title" tabindex="-1">' + escapeHtml(profile.name) + '</h2>' +
+          '<p class="effect-detail-coverage">' + sourceCount + ' 个视频 · ' + cases.length + ' 条用法 · ' + timedCount + ' 个时间点 · ' + screenshotCount + ' 张对应截图</p>' +
           '<div class="effect-detail-grid">' +
             '<div class="effect-detail-copy">' +
               '<div class="effect-result-lead"><h3>能得到什么</h3><p>' + escapeHtml(profile.result) + '</p></div>' +
@@ -36579,9 +37285,9 @@
                 '<div class="effect-guide-row"><h3>怎么处理</h3><p>' + escapeHtml(profile.action) + '</p></div>' +
               '</div>' +
             '</div>' +
-            '<section class="effect-evidence-panel"><h3>证据截图</h3>' + primaryCaseHtml + '</section>' +
+            referenceHtml +
           '</div>' +
-          moreCasesHtml +
+          '<section class="effect-all-cases"><h3>全部视频案例</h3><div class="effect-case-list">' + casesHtml + '</div></section>' +
         '</div>';
     }
 
@@ -36725,7 +37431,54 @@
       const openVideo = target.closest ? target.closest("[data-open-video]") : null;
       if (openVideo) {
         state.returnMode = "effects";
-        openVideoDetail(openVideo.dataset.openVideo, true);
+        const seconds = Number(openVideo.dataset.seekSeconds);
+        openVideoDetail(openVideo.dataset.openVideo, true, {
+          time: Number.isFinite(seconds) && seconds >= 0 ? seconds : null,
+          section: "effects"
+        });
+        return;
+      }
+      const seekControl = target.closest ? target.closest("[data-seek-seconds]") : null;
+      if (seekControl) {
+        const seconds = Number(seekControl.dataset.seekSeconds);
+        if (Number.isFinite(seconds) && seconds >= 0 && activeVideoPlayer) {
+          activeVideoPlayer.playAt(seconds).catch(() => {});
+          writeHashRoute({
+            video: state.activeId,
+            time: seconds,
+            section: seekControl.dataset.section || "steps",
+            origin: state.returnMode === "effects" ? "effects" : ""
+          }, true);
+        }
+        return;
+      }
+      const transcriptControl = target.closest ? target.closest("[data-paragraph-start], [data-transcript-start]") : null;
+      if (transcriptControl) {
+        const seconds = Number(transcriptControl.dataset.paragraphStart || transcriptControl.dataset.transcriptStart);
+        if (Number.isFinite(seconds) && seconds >= 0) {
+          writeHashRoute({
+            video: state.activeId,
+            time: seconds,
+            section: "transcript",
+            origin: state.returnMode === "effects" ? "effects" : ""
+          }, true);
+        }
+        return;
+      }
+      const stickyToggle = target.closest ? target.closest("[data-sticky-toggle]") : null;
+      if (stickyToggle) {
+        toggleStickyPlayer(stickyToggle);
+        return;
+      }
+      const chapterLink = target.closest ? target.closest("[data-section-target]") : null;
+      if (chapterLink) {
+        const route = parseHashRoute();
+        writeHashRoute({
+          video: state.activeId,
+          time: route.time,
+          section: chapterLink.dataset.sectionTarget,
+          origin: state.returnMode === "effects" ? "effects" : ""
+        }, true);
         return;
       }
       const effectButton = target.closest ? target.closest("[data-effect-id]") : null;

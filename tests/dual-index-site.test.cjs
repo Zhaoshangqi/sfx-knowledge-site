@@ -9,6 +9,7 @@ const SfxKnowledgeModel = require('../src/knowledge-model.js');
 const SfxEffectGuides = require('../src/effect-guides.js');
 const SfxEffectLearningPaths = require('../src/effect-learning-paths.js');
 const SfxVideoSubtitles = require('../src/video-subtitles.js');
+const SfxVideoTimeline = require('../src/video-timeline.js');
 const SfxGlossary = require('../src/sfx-glossary.js');
 
 function extractTagById(id) {
@@ -147,11 +148,55 @@ function listenerBody(elementName, eventName) {
   return match[1];
 }
 
+function escapeHtmlForTest(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escapeRegexForTest(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function loadDetailRenderingHelpers(context = {}) {
+  const source = sourceSlice(
+    'function renderTimeJump(seconds, label, attributes = {}) {',
+    'function renderDetail(options = {}) {'
+  );
+  vm.runInNewContext(`${source}
+this.renderTimeJump = renderTimeJump;
+this.renderQuickConclusion = renderQuickConclusion;
+this.renderSectionNavigation = renderSectionNavigation;
+this.videoDetailSections = videoDetailSections;
+this.renderStepTimeline = renderStepTimeline;
+this.renderDetailedSteps = renderDetailedSteps;
+this.renderCompleteEvidence = renderCompleteEvidence;`, context);
+  return context;
+}
+
+function loadEffectCaseHelpers(context = {}) {
+  const source = sourceSlice(
+    'function sourceStepForEffectUse(use) {',
+    'function renderEffectDetail(effectId) {'
+  );
+  vm.runInNewContext(`${source}
+this.sourceStepForEffectUse = sourceStepForEffectUse;
+this.effectCaseForUse = effectCaseForUse;
+this.effectCasesForProfile = effectCasesForProfile;
+this.renderEffectCase = renderEffectCase;
+this.renderEffectInterfaceReference = renderEffectInterfaceReference;`, context);
+  return context;
+}
+
 test('loads shared knowledge, subtitle, glossary, player, and detail navigation before inline data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const learningPathsTag = indexHtml.match(/<script src="src\/effect-learning-paths\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const subtitlesTag = indexHtml.match(/<script src="src\/video-subtitles\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const timelineTag = indexHtml.match(/<script src="src\/video-timeline\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const glossaryTag = indexHtml.match(/<script src="src\/sfx-glossary\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const playerTag = indexHtml.match(/<script src="src\/youtube-caption-player\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const detailNavigationTag = indexHtml.match(/<script src="src\/detail-navigation\.js\?v=[^"]+"><\/script>/)?.[0] || '';
@@ -159,6 +204,7 @@ test('loads shared knowledge, subtitle, glossary, player, and detail navigation 
   const guideScript = indexHtml.indexOf(guideTag);
   const learningPathsScript = indexHtml.indexOf(learningPathsTag);
   const subtitlesScript = indexHtml.indexOf(subtitlesTag);
+  const timelineScript = indexHtml.indexOf(timelineTag);
   const glossaryScript = indexHtml.indexOf(glossaryTag);
   const playerScript = indexHtml.indexOf(playerTag);
   const detailNavigationScript = indexHtml.indexOf(detailNavigationTag);
@@ -168,20 +214,22 @@ test('loads shared knowledge, subtitle, glossary, player, and detail navigation 
   assert.ok(guideTag, 'effect guide script must be cache-versioned');
   assert.ok(learningPathsTag, 'effect learning paths script must be cache-versioned');
   assert.ok(subtitlesTag, 'video subtitle script must be cache-versioned');
+  assert.ok(timelineTag, 'verified video timeline script must be cache-versioned');
   assert.ok(glossaryTag, 'sound-design glossary script must be cache-versioned');
   assert.ok(playerTag, 'YouTube caption player script must be cache-versioned');
   assert.ok(detailNavigationTag, 'detail navigation script must be cache-versioned');
   assert.ok(modelScript < guideScript, 'effect guides must load after the knowledge model');
   assert.ok(guideScript < learningPathsScript, 'effect learning paths must load after effect guides');
   assert.ok(learningPathsScript < subtitlesScript, 'subtitle data must load after the effect modules');
-  assert.ok(subtitlesScript < glossaryScript, 'glossary must load after subtitle data');
+  assert.ok(subtitlesScript < timelineScript, 'timeline helpers must load after subtitle data');
+  assert.ok(timelineScript < glossaryScript, 'glossary must load after timeline helpers');
   assert.ok(glossaryScript < playerScript, 'player must load after the glossary');
   assert.ok(playerScript < detailNavigationScript, 'detail navigation must load after the player');
   assert.ok(detailNavigationScript < inlineCategories, 'detail navigation must load before inline application data');
 });
 
 test('renders only relevant glossary terms and escapes every glossary field', () => {
-  const source = sourceSlice('function renderVideoGlossary(record, track) {', 'function renderDetail() {');
+  const source = sourceSlice('function renderVideoGlossary(record, track) {', 'function renderTimeJump(seconds, label, attributes = {}) {');
   const escapeHtml = (value) => String(value ?? '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -226,13 +274,107 @@ test('renders only relevant glossary terms and escapes every glossary field', ()
 });
 
 test('keeps a stable glossary anchor and refreshes it only for the active hydrated video', () => {
-  const detailSource = sourceSlice('function renderDetail() {', 'function renderEffectDetail(effectId) {');
+  const detailSource = sourceSlice('function renderDetail(options = {}) {', 'function sourceStepForEffectUse(use) {');
 
   assert.match(detailSource, /data-video-glossary-anchor/);
   assert.match(detailSource, /renderVideoGlossary\(record, null\)/);
   assert.match(detailSource, /onTrackLoaded: \(track\) => \{/);
   assert.match(detailSource, /state\.activeId !== record\.id/);
   assert.match(detailSource, /glossaryAnchor\.innerHTML = renderVideoGlossary\(record, track\)/);
+});
+
+test('video detail puts the player before quick conclusions and folded complete evidence', () => {
+  const detailSource = sourceSlice('function renderDetail(options = {}) {', 'function sourceStepForEffectUse(use) {');
+  const shellOrder = [
+    'detail-learning-layout',
+    'video-study-rail',
+    'detail-learning-content',
+    'quickHtml',
+    'navigationHtml',
+    'timelineHtml',
+    'effectHtml',
+    'data-video-glossary-anchor',
+    'transcriptHtml',
+    'evidenceHtml'
+  ].map((token) => detailSource.indexOf(token));
+
+  assert.ok(shellOrder.every((position) => position >= 0), 'player-first shell is incomplete');
+  assert.deepEqual([...shellOrder].sort((left, right) => left - right), shellOrder);
+  assert.match(detailSource, /transcriptRoot:/);
+  assert.match(detailSource, /startSeconds:/);
+
+  const helperSource = sourceSlice(
+    'function renderTimeJump(seconds, label, attributes = {}) {',
+    'function renderDetail(options = {}) {'
+  );
+  assert.match(helperSource, /class="detail-quick\b/);
+  assert.match(helperSource, /class="detail-section-nav"/);
+  assert.match(helperSource, /class="complete-evidence\b/);
+  assert.match(helperSource, /<details class="evidence-disclosure"/);
+});
+
+test('quick conclusions stay concise while folded evidence preserves every supplied block once', () => {
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    SfxVideoTimeline
+  });
+  const record = {
+    summary: 'summary-token',
+    coreIdeas: ['idea-one', 'idea-two', 'idea-three', 'idea-four'],
+    steps: []
+  };
+  const quick = helpers.renderQuickConclusion(record, { coreIdeas: record.coreIdeas });
+  assert.match(quick, /summary-token/);
+  ['idea-one', 'idea-two', 'idea-three'].forEach((token) => assert.match(quick, new RegExp(token)));
+  assert.doesNotMatch(quick, /idea-four/);
+
+  const blocks = {
+    ideas: '<p>ideas-token</p>',
+    process: '<p>process-token</p>',
+    chain: '<p>chain-token</p>',
+    boundaries: '<p>boundaries-token</p>'
+  };
+  const evidence = helpers.renderCompleteEvidence(blocks);
+  Object.keys(blocks).forEach((key) => {
+    const token = `${key}-token`;
+    assert.equal((evidence.match(new RegExp(token, 'g')) || []).length, 1, token);
+  });
+  assert.equal((evidence.match(/<details class="evidence-disclosure"/g) || []).length, 4);
+});
+
+test('all 82 records render verified step and screenshot time controls', () => {
+  const detailData = loadVideoDetailData();
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  });
+
+  records().forEach((record) => {
+    const projected = detailData.project(record);
+    const timeline = helpers.renderStepTimeline(record, projected);
+    const detailed = helpers.renderDetailedSteps(record, projected);
+    assert.equal((timeline.match(/data-step-time=/g) || []).length, record.steps.length, record.id);
+    assert.ok((timeline.match(/data-seek-seconds=/g) || []).length >= record.steps.length, record.id);
+    projected.steps.filter((step) => step.imageKey).forEach((step) => {
+      assert.match(
+        detailed,
+        new RegExp(`data-image-key="${escapeRegexForTest(step.imageKey)}"[\\s\\S]*?data-screenshot-time`),
+        `${record.id}:${step.imageKey}`
+      );
+    });
+  });
+});
+
+test('detail time controls seek the active player and preserve verified deep links', () => {
+  const detailClick = listenerBody('detailEl', 'click');
+  assert.ok(detailClick.indexOf('[data-open-video]') < detailClick.indexOf('[data-seek-seconds]'));
+  assert.match(detailClick, /activeVideoPlayer\.playAt\(seconds\)/);
+  assert.match(detailClick, /writeHashRoute\(\{[\s\S]*?video: state\.activeId[\s\S]*?time: seconds[\s\S]*?section:[\s\S]*?\}, true\)/);
+  assert.match(detailClick, /openVideoDetail\(openVideo\.dataset\.openVideo, true, \{[\s\S]*?time:[\s\S]*?section: "effects"/);
+  assert.match(detailClick, /data-transcript-start/);
 });
 
 test('exposes accessible video and effect index modes', () => {
@@ -1185,9 +1327,10 @@ test('complete guides publish only evidence-led copy with the evidence video fir
   });
   assert.equal(profile.visuals[0].kind, 'video');
   assert.equal(profile.visuals[0].useId, profile.evidenceUseId);
-  assert.equal(profile.visuals.length, 3);
-  assert.deepEqual(profile.visuals.map((visual) => visual.useId), ['use-3', 'use-1', 'use-2']);
-  assert.ok(profile.visuals.every((visual) => visual.kind === 'video'));
+  assert.equal(profile.visuals.length, 4);
+  assert.deepEqual(profile.visuals.slice(0, 3).map((visual) => visual.useId), ['use-3', 'use-1', 'use-2']);
+  assert.ok(profile.visuals.slice(0, 3).every((visual) => visual.kind === 'video'));
+  assert.equal(profile.visuals[3].kind, 'official');
   assert.doesNotMatch(JSON.stringify(profile), /parameterValues|parameters/);
 });
 
@@ -1277,6 +1420,100 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   const videoAssetKeys = videoVisuals.map((visual) => visual.full || visual.preview);
   videoAssetKeys.forEach((key, index) => assert.ok(key, `missing video asset key ${index}`));
   assert.equal(new Set(videoAssetKeys).size, videoVisuals.length);
+});
+
+test('effect case projection renders all 97 public uses exactly once', () => {
+  const siteRecords = records();
+  const uses = SfxKnowledgeModel.buildEffectUses(siteRecords);
+  const profiles = loadEffectIndexData(SfxEffectGuides).profiles(
+    uses,
+    siteRecords,
+    pluginReferenceCatalog(),
+    imageManifest()
+  );
+  const detailHelpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    SfxVideoTimeline
+  });
+  const helpers = loadEffectCaseHelpers({
+    records: siteRecords,
+    SfxVideoTimeline,
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    cleanedText: (value) => typeof value === 'string' ? value : '',
+    renderTimeJump: detailHelpers.renderTimeJump
+  });
+
+  const publicIds = require('../tools/data/public-effect-use-ids.json').useIds;
+  const renderedIds = [];
+  let missingVisualCount = 0;
+  profiles.forEach((profile) => {
+    const cases = helpers.effectCasesForProfile(profile);
+    const markup = cases.map((item) => helpers.renderEffectCase(profile, item)).join('');
+    assert.equal((markup.match(/class="effect-case"/g) || []).length, profile.uses.length, profile.name);
+    cases.forEach((item) => {
+      renderedIds.push(item.use.id);
+      assert.equal(
+        (markup.match(new RegExp(`data-effect-case-id="${escapeRegexForTest(item.use.id)}"`, 'g')) || []).length,
+        1,
+        item.use.id
+      );
+      if (!item.visual) {
+        missingVisualCount += 1;
+        assert.match(helpers.renderEffectCase(profile, item), /effect-case-missing/);
+      } else {
+        assert.equal(item.visual.kind, 'video');
+        assert.equal(item.visual.useId, item.use.id);
+      }
+    });
+    assert.doesNotMatch(markup, /data-effect-parameter|class="effect-parameter|parameters/);
+  });
+
+  assert.equal(renderedIds.length, 97);
+  assert.deepEqual(new Set(renderedIds), new Set(publicIds));
+  assert.ok(missingVisualCount > 0, 'truthful no-image cases must be represented');
+});
+
+test('effect interface reference stays profile-level and never borrows another use screenshot', () => {
+  const detailHelpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    SfxVideoTimeline
+  });
+  const recordsFixture = [{
+    id: 'video-a',
+    title: 'Video A',
+    updatedAt: '2026-08-14',
+    steps: [{ order: 1, name: 'Target Effect', detail: 'Step detail', startSeconds: 12 }]
+  }];
+  const helpers = loadEffectCaseHelpers({
+    records: recordsFixture,
+    SfxVideoTimeline,
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    cleanedText: (value) => typeof value === 'string' ? value : '',
+    renderTimeJump: detailHelpers.renderTimeJump
+  });
+  const use = { id: 'use-a', sourceRecordId: 'video-a', stepIndex: 0, purpose: 'Case action' };
+  const profile = {
+    evidenceUseId: 'use-a',
+    name: 'Target Effect',
+    input: 'Input',
+    action: 'Action',
+    result: 'Result',
+    uses: [use],
+    visuals: [
+      { kind: 'video', useId: 'other-use', preview: 'other.webp', full: 'other-full.webp', caption: 'Other use' },
+      { kind: 'official', useId: 'use-a', preview: 'official.webp', full: 'official-full.webp', caption: 'Official' }
+    ]
+  };
+  const item = helpers.effectCaseForUse(profile, use);
+  assert.equal(item.visual, null);
+  assert.match(helpers.renderEffectCase(profile, item), /effect-case-missing/);
+  const reference = helpers.renderEffectInterfaceReference(profile);
+  assert.match(reference, /official\.webp/);
+  assert.match(reference, /effect-interface-reference/);
 });
 
 test('effect profiles ignore screenshots matched only by generated chain scaffolding', () => {
@@ -1890,7 +2127,7 @@ test('supports stable video and effect hash routes', () => {
   assert.match(indexHtml, /window\.addEventListener\("hashchange"/);
   assert.match(indexHtml, /state\.mode = route\.mode;\s+state\.returnMode = route\.returnMode;/);
   assert.match(indexHtml, /route\.target === "effect" \|\| route\.target === "invalidEffect"[\s\S]*?renderModeSwitch\(\);\s+openEffectDetail\(route\.id, false\)/);
-  assert.match(indexHtml, /route\.target === "video" \|\| route\.target === "invalidVideo"[\s\S]*?renderModeSwitch\(\);\s+openVideoDetail\(route\.id, false\)/);
+  assert.match(indexHtml, /route\.target === "video" \|\| route\.target === "invalidVideo"[\s\S]*?renderModeSwitch\(\);\s+openVideoDetail\(route\.id, false, \{ time: route\.time, section: route\.section \}\)/);
   const navigation = loadDualIndexNavigation();
   assert.deepEqual(plainValue(navigation.routeDecision('#video=video-1&origin=effects', { video: () => true })), {
     target: 'video', id: 'video-1', mode: 'videos', returnMode: 'effects', time: null, section: ''
@@ -1938,8 +2175,8 @@ test('drops invalid time and section values without breaking legacy routes', () 
   );
 });
 
-test('effect profile cards open aggregated uses and can return to a video', () => {
-  ['effect-profile-card', 'data-effect-id', 'data-open-video', '查看完整视频案例'].forEach((source) => {
+test('effect profile cards open aggregated uses and can return to a timed video case', () => {
+  ['effect-profile-card', 'data-effect-id', 'data-open-video', '播放本案例'].forEach((source) => {
     assert.ok(indexHtml.includes(source), `missing ${source}`);
   });
   assert.match(indexHtml, /function openEffectDetail\(effectId, syncHash = false\) \{[\s\S]*?const use = effectUses\.find\(\(item\) => item\.id === effectId\);[\s\S]*?if \(!use\) \{\s+state\.activeEffectId = "";/);
@@ -1958,8 +2195,8 @@ test('effect profile cards open aggregated uses and can return to a video', () =
 test('all public effect render surfaces use only the three evidence fields', () => {
   const renderSources = {
     card: sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {'),
-    videoSummary: sourceSlice('function renderEffectUseSummary(record, use) {', 'function renderDetail() {'),
-    detail: sourceSlice('function renderEffectDetail(effectId) {', 'function openLightbox(src, caption) {')
+    videoSummary: sourceSlice('function renderEffectUseSummary(record, use) {', 'function renderVideoGlossary(record, track) {'),
+    detail: sourceSlice('function sourceStepForEffectUse(use) {', 'function openLightbox(src, caption) {')
   };
   const approvedFields = ['input', 'action', 'result'];
   const legacyProfileFields = /profile\.(?:suitable|purpose|outcome|limitation)/;
@@ -1977,7 +2214,7 @@ test('all public effect render surfaces use only the three evidence fields', () 
   ['输入素材', '处理动作', '听感变化'].forEach((label) => {
     assert.ok(renderSources.videoSummary.includes(label), `videoSummary missing ${label}`);
   });
-  ['能得到什么', '适合什么输入', '怎么处理', '证据截图', '看图重点'].forEach((label) => {
+  ['能得到什么', '适合什么输入', '怎么处理', '全部视频案例', '处理对象', '实际用途', '听感方向', '暂无对应截图'].forEach((label) => {
     assert.ok(renderSources.detail.includes(label), `detail missing ${label}`);
   });
   assert.doesNotMatch(renderSources.card, /一句话结论|适合用在|主要作用|能带来什么|输入素材|听感变化/);
@@ -1990,16 +2227,15 @@ test('all public effect render surfaces use only the three evidence fields', () 
   assert.match(renderSources.videoSummary, /data-effect-id/);
 
   assert.doesNotMatch(renderSources.detail, /cautionHtml|effect-caution/);
-  assert.match(renderSources.detail, /const visuals = Array\.isArray\(profile\.visuals\) \? profile\.visuals : \[\]/);
-  assert.match(renderSources.detail, /const primaryVisual = visuals\[0\]/);
-  assert.match(renderSources.detail, /visuals\.slice\(1\)\.filter\(isTrustedVideoVisual\)/);
-  assert.match(renderSources.detail, /visual\?\.kind === "video"[\s\S]*?visual\.preview[\s\S]*?visual\.full[\s\S]*?visual\.caption[\s\S]*?visual\.sourceTitle[\s\S]*?visual\.stepName/);
-  assert.match(renderSources.detail, /escapeHtml\(visual\.stepName\)/);
+  assert.match(renderSources.detail, /item\?\.kind === "video"[\s\S]*?item\.useId === use\?\.id[\s\S]*?item\.preview[\s\S]*?item\.full[\s\S]*?item\.caption/);
+  assert.match(renderSources.detail, /effectCasesForProfile\(profile\)/);
+  assert.match(renderSources.detail, /cases\.map\(\(item\) => renderEffectCase\(profile, item\)\)/);
   assert.match(renderSources.detail, /effect-result-lead/);
-  assert.match(renderSources.detail, /effect-evidence-panel/);
+  assert.match(renderSources.detail, /effect-interface-reference/);
+  assert.match(renderSources.detail, /effect-all-cases/);
   assert.match(renderSources.detail, /effect-case-shot/);
   assert.match(renderSources.detail, /data-open-video/);
-  assert.ok(renderSources.detail.includes('更多视频案例'));
+  assert.doesNotMatch(renderSources.detail, /visuals\.length >= 3|slice\(0, 3\)|profile\.parameters/);
 });
 
 test('video-detail effect summaries omit unpublished profiles and render approved guidance', () => {
@@ -2010,10 +2246,12 @@ test('video-detail effect summaries omit unpublished profiles and render approve
     imageManifest: {},
     escapeAttr: (value) => String(value),
     escapeHtml: (value) => String(value),
+    SfxVideoTimeline,
+    renderTimeJump: () => '',
     EffectIndexData: { profileForUse: () => null }
   };
   const renderEffectUseSummary = loadNamedFunction(
-    sourceSlice('function renderEffectUseSummary(record, use) {', 'function renderDetail() {'),
+    sourceSlice('function renderEffectUseSummary(record, use) {', 'function renderVideoGlossary(record, track) {'),
     'renderEffectUseSummary',
     context
   );
@@ -2042,150 +2280,135 @@ test('video-detail effect summaries omit unpublished profiles and render approve
   assert.doesNotMatch(markup, /适合：|听感：|一句话结论|适合用在|主要作用|能带来什么|听感结果/);
 });
 
-test('effect detail renders result-led copy and trusted video evidence only', () => {
+test('effect detail renders result-led copy, one interface reference, and every timed case', () => {
   const detailEl = { innerHTML: '' };
+  const uses = [
+    { id: 'use-1', sourceRecordId: 'video-1', stepIndex: 0, purpose: '主案例实际用途' },
+    { id: 'use-2', sourceRecordId: 'video-2', stepIndex: 0, purpose: '支撑案例实际用途' }
+  ];
   const profile = {
     id: 'use-1',
+    evidenceUseId: 'use-1',
     name: '测试效果器',
     input: '单薄的测试输入素材',
     action: '重塑起音并收紧持续段',
     result: '起音更集中，尾部更短',
     suitable: '旧适用字段不得出现',
-    purpose: '旧作用字段不得出现',
     parameters: ['Threshold -12 dB 不得出现'],
+    uses,
     visuals: [
-      {
-        kind: 'video',
-        useId: 'use-1',
-        preview: 'primary-preview.webp',
-        full: 'primary-full.webp',
-        caption: '主证据截图',
-        sourceRecordId: 'video-1',
-        sourceTitle: '主证据视频',
-        stepOrder: 2,
-        timestamp: '00:12',
-        stepName: '主证据步骤原文'
-      },
-      {
-        kind: 'video',
-        useId: 'use-2',
-        preview: 'additional-preview.webp',
-        full: 'additional-full.webp',
-        caption: '额外视频截图',
-        sourceRecordId: 'video-2',
-        sourceTitle: '额外支撑视频',
-        stepOrder: 5,
-        timestamp: '01:08',
-        stepName: '额外案例步骤原文'
-      },
-      {
-        kind: 'official',
-        preview: 'official-preview.webp',
-        full: 'official-full.webp',
-        caption: '官方参考图不得混入',
-        sourceTitle: '官方来源不得混入',
-        stepName: '官方参考步骤不得混入'
-      },
-      {
-        kind: 'video',
-        preview: 'blank-step-preview.webp',
-        full: 'blank-step-full.webp',
-        caption: '空步骤视频不得混入',
-        sourceRecordId: 'video-3',
-        sourceTitle: '空步骤视频',
-        stepOrder: 7,
-        timestamp: '02:00',
-        stepName: '   '
-      }
+      { kind: 'video', useId: 'use-1', preview: 'primary-preview.webp', full: 'primary-full.webp', caption: '主证据截图' },
+      { kind: 'video', useId: 'use-2', preview: 'additional-preview.webp', full: 'additional-full.webp', caption: '支撑案例截图' },
+      { kind: 'official', useId: 'use-1', preview: 'official-preview.webp', full: 'official-full.webp', caption: '官方参考图' }
     ]
   };
+  const recordsFixture = [
+    {
+      id: 'video-1', title: '主证据视频', updatedAt: '2026-08-14',
+      timeline: { status: 'reviewed', source: 'youtube-player', reviewedAt: '2026-08-14', durationSeconds: 120 },
+      steps: [{ order: 2, name: '主证据步骤原文', detail: '主处理对象', startSeconds: 12 }]
+    },
+    {
+      id: 'video-2', title: '额外支撑视频', updatedAt: '2026-08-13',
+      timeline: { status: 'reviewed', source: 'youtube-player', reviewedAt: '2026-08-14', durationSeconds: 120 },
+      steps: [{ order: 5, name: '额外案例步骤原文', detail: '支撑处理对象', startSeconds: 68 }]
+    }
+  ];
+  const detailHelpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    SfxVideoTimeline
+  });
   const context = {
-    effectUses: [{ id: 'use-1' }],
-    records: [{ id: 'video-1' }, { id: 'video-2' }, { id: 'video-3' }],
+    effectUses: uses,
+    records: recordsFixture,
     pluginReferenceCatalog: [],
     imageManifest: {},
     detailEl,
-    escapeAttr: (value) => String(value),
-    escapeHtml: (value) => String(value),
+    escapeAttr: escapeHtmlForTest,
+    escapeHtml: escapeHtmlForTest,
+    cleanedText: (value) => typeof value === 'string' ? value : '',
+    SfxVideoTimeline,
+    renderTimeJump: detailHelpers.renderTimeJump,
     EffectIndexData: { profileForUse: () => profile }
   };
   const renderEffectDetail = loadNamedFunction(
-    sourceSlice('function renderEffectDetail(effectId) {', 'function openLightbox(src, caption) {'),
+    sourceSlice('function sourceStepForEffectUse(use) {', 'function openLightbox(src, caption) {'),
     'renderEffectDetail',
     context
   );
   renderEffectDetail('use-1');
 
-  ['能得到什么', profile.result, '适合什么输入', profile.input, '怎么处理', profile.action, '证据截图'].forEach((text) => {
+  ['能得到什么', profile.result, '适合什么输入', profile.input, '怎么处理', profile.action, '全部视频案例'].forEach((text) => {
     assert.ok(detailEl.innerHTML.includes(text), `detail missing ${text}`);
   });
-  assert.ok(detailEl.innerHTML.indexOf('能得到什么') < detailEl.innerHTML.indexOf('适合什么输入'));
-  assert.ok(detailEl.innerHTML.indexOf('适合什么输入') < detailEl.innerHTML.indexOf('怎么处理'));
-  assert.match(detailEl.innerHTML, /<h3>证据截图<\/h3>[\s\S]*?primary-preview\.webp/);
-  assert.match(detailEl.innerHTML, /看图重点<\/strong><span>主证据步骤原文<\/span>/);
-  assert.match(detailEl.innerHTML, /<h3>更多视频案例<\/h3>[\s\S]*?additional-preview\.webp/);
-  assert.match(detailEl.innerHTML, /看图重点<\/strong><span>额外案例步骤原文<\/span>/);
-  assert.match(detailEl.innerHTML, /主证据视频[\s\S]*?步骤 2 · 00:12/);
-  assert.match(detailEl.innerHTML, /额外支撑视频[\s\S]*?步骤 5 · 01:08/);
-  assert.match(detailEl.innerHTML, /class="effect-case-shot"/);
-  assert.match(detailEl.innerHTML, /data-open-video="video-1"/);
-  assert.match(detailEl.innerHTML, /data-open-video="video-2"/);
-  assert.doesNotMatch(detailEl.innerHTML, /official-preview|官方参考图不得混入|官方来源不得混入|官方参考步骤不得混入/);
-  assert.doesNotMatch(detailEl.innerHTML, /blank-step-preview|空步骤视频不得混入|空步骤视频/);
-  assert.doesNotMatch(detailEl.innerHTML, /旧适用字段不得出现|旧作用字段不得出现|Threshold -12 dB|参数/);
-  assert.doesNotMatch(detailEl.innerHTML, /<h3>(?:一句话结论|适合用在|主要作用|输入素材|听感变化|听感结果)<\/h3>|注意：/);
+  assert.equal((detailEl.innerHTML.match(/class="effect-case"/g) || []).length, 2);
+  assert.equal((detailEl.innerHTML.match(/official-preview\.webp/g) || []).length, 1);
+  assert.match(detailEl.innerHTML, /data-effect-case-id="use-1"/);
+  assert.match(detailEl.innerHTML, /data-effect-case-id="use-2"/);
+  assert.match(detailEl.innerHTML, /data-open-video="video-1"[\s\S]*?data-seek-seconds="12"|data-seek-seconds="12"[\s\S]*?data-open-video="video-1"/);
+  assert.match(detailEl.innerHTML, /data-open-video="video-2"[\s\S]*?data-seek-seconds="68"|data-seek-seconds="68"[\s\S]*?data-open-video="video-2"/);
+  assert.doesNotMatch(detailEl.innerHTML, /旧适用字段不得出现|Threshold -12 dB|profile\.parameters/);
 });
 
-test('effect detail fails closed when visual metadata is missing or malformed', () => {
+test('effect detail fails closed on missing uses and renders malformed visuals as missing', () => {
   const detailEl = { innerHTML: '' };
+  const use = { id: 'use-1', sourceRecordId: 'video-1', stepIndex: 0, purpose: 'Test purpose' };
   let profile = {
     id: 'use-1',
+    evidenceUseId: 'use-1',
     name: 'Malformed Effect',
     input: 'Test input',
     action: 'Test action',
-    result: 'Test result'
+    result: 'Test result',
+    uses: [],
+    visuals: []
   };
+  const detailHelpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    SfxVideoTimeline
+  });
   const context = {
-    effectUses: [{ id: 'use-1' }],
-    records: [{ id: 'video-1' }],
+    effectUses: [use],
+    records: [{
+      id: 'video-1', title: 'Video 1',
+      timeline: { status: 'reviewed', reviewedAt: '2026-08-14', durationSeconds: 60 },
+      steps: [{ order: 1, name: 'Step 1', detail: 'Target', startSeconds: 10 }]
+    }],
     pluginReferenceCatalog: [],
     imageManifest: {},
     detailEl,
     EffectIndexData: { profileForUse() { return profile; } },
     escapeHtml(value) { return String(value); },
-    escapeAttr(value) { return String(value); }
+    escapeAttr(value) { return String(value); },
+    cleanedText(value) { return typeof value === 'string' ? value : ''; },
+    SfxVideoTimeline,
+    renderTimeJump: detailHelpers.renderTimeJump
   };
   const renderEffectDetail = loadNamedFunction(
-    sourceSlice('function renderEffectDetail(effectId) {', 'function openLightbox(src, caption) {'),
+    sourceSlice('function sourceStepForEffectUse(use) {', 'function openLightbox(src, caption) {'),
     'renderEffectDetail',
     context
   );
 
   assert.doesNotThrow(() => renderEffectDetail('use-1'));
-  assert.match(detailEl.innerHTML, /还没有可核对的视频操作截图/);
+  assert.match(detailEl.innerHTML, /还没有可核对的视频用法/);
 
   profile = {
     ...profile,
+    uses: [use],
     visuals: [{
       kind: 'video',
       preview: 'primary-preview.webp',
       full: 'primary-full.webp',
-      caption: 'Primary evidence',
-      sourceRecordId: 'video-1',
-      sourceTitle: 'Primary source',
-      stepName: 'Primary step'
-    }, {
-      kind: 'video',
-      preview: 'missing-full.webp',
-      caption: 'Incomplete supporting evidence',
-      sourceRecordId: 'video-1',
-      sourceTitle: 'Incomplete source',
-      stepName: 'Incomplete step'
+      caption: 'Wrong owner evidence',
+      useId: 'different-use'
     }]
   };
   renderEffectDetail('use-1');
-  assert.match(detailEl.innerHTML, /primary-preview\.webp/);
-  assert.doesNotMatch(detailEl.innerHTML, /missing-full|Incomplete supporting evidence|Incomplete source|Incomplete step|undefined/);
+  assert.match(detailEl.innerHTML, /effect-case-missing/);
+  assert.doesNotMatch(detailEl.innerHTML, /primary-preview|Wrong owner evidence|undefined/);
 });
 
 test('effect cards use stable responsive grids and the reader return control handles keyboard activation', () => {
@@ -2230,6 +2453,72 @@ test('effect detail uses a fixed two-column evidence layout with a one-column ta
   assert.match(shotImageRule, /object-fit: contain;/);
   assert.match(tabletRules, /\.effect-detail-grid \{ grid-template-columns: 1fr; gap: 28px; \}/);
   assert.match(tabletRules, /\.effect-more-cases \.effect-case-list \{ grid-template-columns: 1fr; \}/);
+});
+
+test('learning layout keeps a stable desktop rail and activation-only mobile sticky player', () => {
+  const css = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+  assert.match(css, /\.detail-learning-layout \{[\s\S]*?display: grid;[\s\S]*?grid-template-columns: minmax\(0, 1fr\) minmax\(420px, 520px\);/);
+  assert.match(css, /\.video-study-rail \{[\s\S]*?position: sticky;[\s\S]*?top: 16px;/);
+  assert.match(css, /@media \(max-width: 1039px\) \{[\s\S]*?\.detail-learning-layout \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\);/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.video-study-rail\.player-activated \{[\s\S]*?position: sticky;[\s\S]*?max-height: 36vh;/);
+  assert.match(css, /\.video-study-rail\.sticky-collapsed \.video-study-player \{[\s\S]*?block-size: 0;[\s\S]*?overflow: hidden;/);
+  assert.match(css, /\.video-study-rail-toolbar \{[\s\S]*?min-height: 48px;/);
+
+  const toggleSource = sourceSlice('function toggleStickyPlayer(button) {', 'function setupStickyPlayerRail(rail, playerRoot) {');
+  assert.match(toggleSource, /classList\.toggle\("sticky-collapsed"\)/);
+  assert.match(toggleSource, /setAttribute\("aria-expanded"/);
+  assert.doesNotMatch(toggleSource, /SfxYouTubeCaptionPlayer\.mount|\.destroy\(|detailEl\.innerHTML/);
+});
+
+test('short phone landscape keeps the complete player rail inside the viewport', () => {
+  const css = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+  assert.match(
+    css,
+    /@media \(orientation: landscape\) and \(max-height: 520px\) and \(min-width: 641px\) and \(max-width: 900px\) \{[\s\S]*?\.video-study-rail \{[\s\S]*?width: min\(100%, 470px\);[\s\S]*?justify-self: center;/
+  );
+});
+
+test('chapter links reflect available content and every rendered target is unique', () => {
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    SfxVideoTimeline
+  });
+  const record = { steps: [{ name: 'Step' }] };
+  const fullSections = helpers.videoDetailSections(
+    record,
+    [{ id: 'eq' }],
+    { contentStatus: 'track' },
+    [{ sourceRecordId: 'video-a' }],
+    'video-a'
+  );
+  assert.deepEqual(plainValue(fullSections.map((section) => section.id)), [
+    'quick', 'steps', 'effects', 'glossary', 'transcript', 'evidence'
+  ]);
+  const navigation = helpers.renderSectionNavigation(fullSections);
+  fullSections.forEach((section) => {
+    assert.equal((navigation.match(new RegExp(`data-section-target="${section.id}"`, 'g')) || []).length, 1);
+  });
+
+  const sparseSections = helpers.videoDetailSections(
+    { steps: [] },
+    [],
+    { contentStatus: 'missing' },
+    [],
+    'video-a'
+  );
+  assert.deepEqual(plainValue(sparseSections.map((section) => section.id)), ['quick', 'evidence']);
+});
+
+test('print mode expands evidence and removes sticky or interactive reader chrome', () => {
+  const css = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+  const print = css.match(/@media print \{([\s\S]*?)\n    \}/)?.[1] || '';
+  assert.match(print, /\.detail-section-nav/);
+  assert.match(print, /\.video-study-rail/);
+  assert.match(print, /display: none/);
+  assert.match(print, /\.evidence-disclosure > \.evidence-disclosure-body/);
+  assert.match(print, /display: block/);
+  assert.match(print, /position: static/);
 });
 
 test('video cards are keyboard links and move focus into the reader', () => {
@@ -2315,29 +2604,30 @@ test('uses conservative shared cleaners for factual detail arrays', () => {
   );
 });
 
-test('renders a dry-goods archive with an embedded player, effect links, and sources at the end', () => {
-  const detailSource = indexHtml.match(/function renderDetail\(\) \{([\s\S]*?)\r?\n    \}\r?\n\r?\n    function renderEffectDetail/)?.[1] || '';
-  const requiredHeadings = ['设计目标', '设计思路', '原视频与中文字幕', '素材与分层', '完整制作流程', '完整效果链', '效果器用法', '关键决策与证据边界', '来源与关键词'];
-  const positions = requiredHeadings.map((heading) => detailSource.indexOf('<h3>' + heading + '</h3>'));
+test('renders a player-first dry-goods archive with folded sources at the end', () => {
+  const detailSource = sourceSlice('function renderDetail(options = {}) {', 'function sourceStepForEffectUse(use) {');
+  const helperSource = sourceSlice('function renderTimeJump(seconds, label, attributes = {}) {', 'function renderDetail(options = {}) {');
 
-  assert.ok(positions.every((position) => position !== -1));
-  assert.deepEqual([...positions].sort((a, b) => a - b), positions);
-  assert.ok(detailSource.indexOf('<h3>来源与关键词</h3>') < detailSource.indexOf('打开原视频'));
   assert.doesNotMatch(detailSource, /practiceChecklist|练习复盘|<span>学习/);
   assert.match(detailSource, /const chainHtml = detailData\.chainFacts/);
   assert.match(detailSource, /const decisionHtml = detailData\.decisionFacts/);
+  assert.match(detailSource, /const pluginHtml = detailData\.plugins\.map/);
+  assert.match(detailSource, /renderCompleteEvidence\(\{[\s\S]*?ideas:[\s\S]*?process:[\s\S]*?chain:[\s\S]*?boundaries:/);
+  assert.match(helperSource, /<details class="evidence-disclosure">/);
   assert.match(detailSource, /const subtitleEntry = SfxVideoSubtitles\.entryFor\(record\.videoId\)/);
   assert.match(detailSource, /SfxYouTubeCaptionPlayer\.render\(record, subtitleEntry, thumbnail\(record, "hqdefault"\)\)/);
   assert.match(detailSource, /SfxYouTubeCaptionPlayer\.mount\(playerRoot, \{/);
   assert.match(detailSource, /entry: subtitleEntry/);
   assert.match(detailSource, /loadTrack: \(videoId\) => SfxVideoSubtitles\.loadTrack\(videoId\)/);
   assert.match(detailSource, /subtitles: SfxVideoSubtitles/);
+  assert.match(detailSource, /transcriptRoot: transcriptRoot/);
+  assert.match(detailSource, /startSeconds: Number\.isFinite\(options\.time\)/);
   assert.doesNotMatch(indexHtml, /SfxVideoSubtitles\.trackFor\(/);
   const playerCss = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
   assert.match(playerCss, /\.video-transcript-loading\s*\{/);
   assert.match(playerCss, /\.video-player:fullscreen \.video-transcript-container/);
   assert.doesNotMatch(detailSource, /decisionFacts.*updateNote/);
-  const effectSummarySource = indexHtml.match(/function renderEffectUseSummary\(record, use\) \{([\s\S]*?)\r?\n    \}\r?\n\r?\n    function renderDetail/)?.[1] || '';
+  const effectSummarySource = sourceSlice('function renderEffectUseSummary(record, use) {', 'function renderVideoGlossary(record, track) {');
   assert.match(effectSummarySource, /EffectIndexData\.profileForUse/);
   ['profile.input', 'profile.action', 'profile.result'].forEach((field) => {
     assert.ok(effectSummarySource.includes(field), `missing ${field}`);
@@ -2345,47 +2635,46 @@ test('renders a dry-goods archive with an embedded player, effect links, and sou
   assert.doesNotMatch(effectSummarySource, /profile\.(?:suitable|purpose|outcome|limitation)|const purpose/);
   assert.match(effectSummarySource, /data-effect-id/);
   assert.match(effectSummarySource, /effect-summary-shot/);
+  assert.match(effectSummarySource, /SfxVideoTimeline\.effectStart/);
   assert.doesNotMatch(effectSummarySource, /parameters|parameterHtml|renderEvidenceLabels|链路位置|参数/);
   const detailClick = indexHtml.match(/detailEl\.addEventListener\("click", \(event\) => \{([\s\S]*?)\n    \}\);/)?.[1] || '';
   assert.ok(detailClick.indexOf('[data-effect-id]') < detailClick.indexOf('[data-effect-image]'));
   assert.match(detailClick, /openEffectDetail\(effectButton\.dataset\.effectId, true\)/);
-
-  const titlePosition = detailSource.indexOf('<h2 class="detail-title"');
-  const goalPosition = detailSource.indexOf('<h3>设计目标</h3>');
-  const ideasPosition = detailSource.indexOf('<h3>设计思路</h3>');
-  const playerPosition = detailSource.indexOf('<h3>原视频与中文字幕</h3>');
-  const materialsPosition = detailSource.indexOf('<h3>素材与分层</h3>');
-  assert.ok(titlePosition < goalPosition && goalPosition < ideasPosition && ideasPosition < playerPosition && playerPosition < materialsPosition);
+  assert.ok(detailSource.indexOf('learningShellOpen') < detailSource.indexOf('quickHtml'));
+  assert.ok(detailSource.indexOf('quickHtml') < detailSource.indexOf('evidenceHtml'));
 });
 
-test('destroys the active YouTube player across reader and library route changes', () => {
+test('destroys active player, chapter navigation, and sticky listeners across route changes', () => {
   const lifecycleSource = sourceSlice('let searchRenderTimer = 0;', 'function focusReaderHeading() {');
-  const videoOpenSource = sourceSlice('function openVideoDetail(recordId, syncHash = false) {', 'function openEffectDetail(effectId, syncHash = false) {');
+  const videoOpenSource = sourceSlice('function openVideoDetail(recordId, syncHash = false, options = {}) {', 'function openEffectDetail(effectId, syncHash = false) {');
   const effectOpenSource = sourceSlice('function openEffectDetail(effectId, syncHash = false) {', 'function applyHashRoute() {');
   const showLibrarySource = sourceSlice('function showLibrary() {', 'function focusReaderHeading() {');
 
   assert.match(lifecycleSource, /let activeVideoPlayer = null;/);
+  assert.match(lifecycleSource, /let activeDetailNavigation = null;/);
+  assert.match(lifecycleSource, /let activeStickyCleanup = null;/);
   assert.match(lifecycleSource, /function destroyActiveVideoPlayer\(\) \{[\s\S]*?activeVideoPlayer\.destroy\(\);[\s\S]*?activeVideoPlayer = null;/);
-  assert.match(videoOpenSource, /destroyActiveVideoPlayer\(\);/);
-  assert.match(effectOpenSource, /destroyActiveVideoPlayer\(\);/);
-  assert.match(showLibrarySource, /destroyActiveVideoPlayer\(\);/);
+  [videoOpenSource, effectOpenSource, showLibrarySource].forEach((source) => {
+    assert.match(source, /destroyActiveVideoPlayer\(\);/);
+    assert.match(source, /destroyActiveDetailNavigation\(\);/);
+    assert.match(source, /destroyActiveStickyRail\(\);/);
+  });
 });
 
-test('effect detail is an image-led application guide without parameter information', () => {
-  const effectDetailSource = indexHtml.match(/function renderEffectDetail\(effectId\) \{([\s\S]*?)\r?\n    \}\r?\n\r?\n    function openLightbox/)?.[1] || '';
+test('effect detail is a complete case guide without parameter information', () => {
+  const effectDetailSource = sourceSlice('function sourceStepForEffectUse(use) {', 'function openLightbox(src, caption) {');
 
-  ['能得到什么', '适合什么输入', '怎么处理', '证据截图', '看图重点', '更多视频案例'].forEach((heading) => {
+  ['能得到什么', '适合什么输入', '怎么处理', '全部视频案例', '处理对象', '实际用途', '听感方向', '暂无对应截图'].forEach((heading) => {
     assert.ok(effectDetailSource.includes(heading), `missing ${heading}`);
   });
   assert.match(effectDetailSource, /EffectIndexData\.profileForUse/);
-  assert.match(effectDetailSource, /const visuals = Array\.isArray\(profile\.visuals\) \? profile\.visuals : \[\]/);
-  assert.match(effectDetailSource, /const primaryVisual = visuals\[0\]/);
-  assert.match(effectDetailSource, /visuals\.slice\(1\)/);
-  assert.match(effectDetailSource, /visual\?\.kind === "video"/);
-  assert.match(effectDetailSource, /String\(visual\.stepName \|\| ""\)\.trim\(\)/);
-  assert.match(effectDetailSource, /escapeHtml\(visual\.stepName\)/);
+  assert.match(effectDetailSource, /effectCasesForProfile\(profile\)/);
+  assert.match(effectDetailSource, /item\?\.kind === "video"/);
+  assert.match(effectDetailSource, /item\.useId === use\?\.id/);
+  assert.match(effectDetailSource, /effect-interface-reference/);
+  assert.match(effectDetailSource, /effect-case-missing/);
   assert.match(effectDetailSource, /effect-case-shot/);
   assert.match(effectDetailSource, /data-open-video/);
   assert.doesNotMatch(effectDetailSource, /profile\.(?:suitable|purpose|outcome|limitation)|一句话结论|适合用在|主要作用|输入素材|听感变化|听感结果/);
-  assert.doesNotMatch(effectDetailSource, /parameterHtml|parameters|参数与调节方向|链路位置|厂商未记录|renderEvidenceLabels/);
+  assert.doesNotMatch(effectDetailSource, /profile\.parameters|parameterHtml|参数与调节方向|链路位置|厂商未记录|renderEvidenceLabels/);
 });

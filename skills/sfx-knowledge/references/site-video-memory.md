@@ -436,6 +436,12 @@ Records: 82
   - 音色参数
   - 采样速度
 
+### Structured Effect Uses
+- **Decapitator**: 失真和过载处理，增加音效的侵略性和力度
+  - Effect use ID: `b6df5249:effect:decapitator:3`
+- **FilterFreak**: 频率滤波和共鸣塑形，强化或削弱特定频段
+  - Effect use ID: `b6df5249:effect:filterfreak:1`
+
 ### Materials / Layer Sources
 
 ### Effect-Chain Reasoning
@@ -573,6 +579,12 @@ Records: 82
 - **Snapheap**: 调制和特殊效果预设，M-S Chorus用于飞行/挥舞类音效立体声拓宽
   - M-S Chorus preset
   - Flanging Chorus modulation
+
+### Structured Effect Uses
+- **Snapheap**: 调制和特殊效果预设，M-S Chorus用于飞行/挥舞类音效立体声拓宽
+  - Effect use ID: `f8579d69:effect:snapheap:13`
+- **Soundtoys Crystallizer**: 颗粒合成回声，创建刀剑/弓箭的金属回响层或空灵拖尾
+  - Effect use ID: `f8579d69:effect:soundtoys-crystallizer:4`
 
 ### Materials / Layer Sources
 
@@ -775,6 +787,12 @@ Records: 82
   - Limits: 关联截图只确认两路均为 40 Bands、7.9 dB；既有视频整理中的 8 / 40 与 7.9 dB / 14 dB 未由该帧支持，复核前不得作为画面确认值或通用预设。
   - Evidence image key: `img_d43e4e82e77fb756`
   - Evidence: 画面确认; 视频未展示; 分析推断
+- **iZotope RX De-click**: 前期音频修复，自动检测并修复点击/杂音，允许后期更激进处理
+  - Effect use ID: `d8ed0db4:effect:izotope-rx-de-click:7`
+  - Evidence image key: `img_c7498f04509eff33`
+- **NI Transient Master**: 整体瞬态控制，应用于Master轨获得更全局的动态控制效果
+  - Effect use ID: `d8ed0db4:effect:ni-transient-master:6`
+  - Evidence image key: `img_e1400338622ee078`
 
 ### Materials / Layer Sources
 
@@ -889,6 +907,10 @@ Records: 82
 - **Reverb混响**: 为Doppler点击能量层添加微量混响，增加空间感补充
   - 少量湿量
   - 用于空间补充而非主要效果
+
+### Structured Effect Uses
+- **Phase Mistress（Soundtoys）**: 为自录瓷砖音添加水感/液体质感和轻微颤动，让碰撞音变成有弹性的落球感
+  - Effect use ID: `ce67ebbe:effect:phase-mistress-soundtoys:2`
 
 ### Materials / Layer Sources
 
@@ -1008,6 +1030,15 @@ Records: 82
 - **Wwise**: 让装备持有 loop 在游戏中循环，并通过 crossfade 处理循环点
   - fade-in handled in Wwise
   - crossfade loop point
+
+### Structured Effect Uses
+- **Soundtoys Crystallizer**: 给 loop 增加颗粒、延迟和科幻质感，通过 dry/wet mix 保留部分原始信号
+  - Effect use ID: `o4g1vdhg:effect:soundtoys-crystallizer:6`
+  - Evidence image key: `img_4604ebaeaf8e0205`
+- **Soundtoys PhaseMistress**: 给 loop 加相位运动和科技调制感
+  - Effect use ID: `o4g1vdhg:effect:soundtoys-phasemistress:7`
+- **Waves Z-Noise**: 去掉 Tasty Treat 中 scratchy/white-noise 类噪声，保留更纯净的能量层
+  - Effect use ID: `o4g1vdhg:effect:waves-z-noise:2`
 
 ### Materials / Layer Sources
 - Valorant Tejo rockets equip gameplay capture
@@ -1307,6 +1338,36 @@ Records: 82
   - Limits: 作者口述：100% wet 会锁到刺耳高频共振；画面确认当前值为 63%。该数值只适用于当前 boom，不应机械照抄。
   - Evidence image key: `noah-boom-manipulator-pitch-formant`
   - Evidence: 画面确认; 作者口述
+- **FabFilter Pro-MB**: 动态处理 370 Hz 盒感、低频扩展和 bass 随时间的释放行为。
+  - Effect use ID: `upy3d1em:effect:fabfilter-pro-mb:9`
+  - Evidence image key: `noah-boom-promb-cleaner-370hz`
+- **Oeksound Soothe2**: 动态驯服 main transient layer 的 ouchy/crunchy 频率。
+  - Effect use ID: `upy3d1em:effect:oeksound-soothe2:16`
+  - Evidence image key: `noah-boom-soothe-transient-harshness`
+- **Soundtheory Gullfoss**: 最终母线控制过亮频段，做智能频谱重平衡。
+  - Effect use ID: `upy3d1em:effect:soundtheory-gullfoss:15`
+  - Evidence image key: `noah-boom-gullfoss-brightness`
+- **Soundtoys Decapitator**: 提供 grit/crunch，不覆盖原始 boom 瞬态和重量。
+  - Effect use ID: `upy3d1em:effect:soundtoys-decapitator:5`
+  - Evidence image key: `noah-boom-decapitator-32mix`
+- **Soundtoys FilterFreak**: Fat mode 与 resonant sweep 负责高频咬合、squelch 和机械扫动表情。
+  - Effect use ID: `upy3d1em:effect:soundtoys-filterfreak:3`
+  - Evidence image key: `noah-boom-filterfreak-fat-sweep`
+- **Soundtoys PhaseMistress**: 少量 dirt/bubble 相位，让素材不再像原始爆炸 one-shot。
+  - Effect use ID: `upy3d1em:effect:soundtoys-phasemistress:7`
+  - Evidence image key: `noah-boom-phasemistress-bubble`
+- **Unfiltered Audio Indent 2**: 输入 Tube 和输出 Soft Clip 双级削波，削峰并换取后级处理 headroom。
+  - Effect use ID: `upy3d1em:effect:unfiltered-audio-indent-2:8`
+  - Evidence image key: `noah-boom-indent2-tube-softclip`
+- **UVI Shade**: MSEG tremolo 加 envelope follower，作为渲染变体的运动引擎。
+  - Effect use ID: `upy3d1em:effect:uvi-shade:13`
+  - Evidence image key: `noah-boom-shade-follower-tremolo`
+- **Waves Enigma**: 制造 delay-based spectral movement，让爆炸尾巴出现类似 flanger 的移动凹凸。
+  - Effect use ID: `upy3d1em:effect:waves-enigma:6`
+  - Evidence image key: `noah-boom-enigma-delay-motion`
+- **Waves Z-Noise**: 放在链路最前面做清理，避免后续调制和限制把噪声一起放大，同时保留一点 warbly 质感作为运动原料。
+  - Effect use ID: `upy3d1em:effect:waves-z-noise:1`
+  - Evidence image key: `noah-boom-znoise-first-cleanup`
 
 ### Materials / Layer Sources
 - CTDS2 HIT EXPLOSION Hard Rock.wav
@@ -1595,6 +1656,14 @@ Records: 82
   - Use inverse/opposite output
   - Record both directions
 
+### Structured Effect Uses
+- **Manipulator**: 放大气泡的谐波、低频和怪异身份。
+  - Effect use ID: `bsaed417f:effect:manipulator:1`
+  - Evidence image key: `deep-ZjRnoIezCnA-02-5b8b667ed6`
+- **Crystallizer**: 给液体破裂增加结晶化、闪烁尾巴。
+  - Effect use ID: `bsaed417f:effect:crystallizer:2`
+  - Evidence image key: `deep-ZjRnoIezCnA-03-9ff6865784`
+
 ### Materials / Layer Sources
 - bubble recording
 - processed cauldron bubble layer
@@ -1686,6 +1755,11 @@ Records: 82
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
 
+### Structured Effect Uses
+- **Manipulator**: 把狗的 formant 和 harmonics 推向更大、更怪的生物身份。
+  - Effect use ID: `bsa392d93:effect:manipulator:1`
+  - Evidence image key: `deep-ruFsZPu3qO0-02-792f8a1aef`
+
 ### Materials / Layer Sources
 - dog growls
 - dog breathing
@@ -1771,6 +1845,11 @@ Records: 82
   - Live triggering
   - Record results
   - 补充调参检查：确认该插件是在清理、塑形、制造运动、增加空间、控制动态还是统一响度。
+
+### Structured Effect Uses
+- **iZotope Stutter Edit 2**: 通过预设表演生成 glitch/sweep 变体。
+  - Effect use ID: `bsa5b20e8:effect:izotope-stutter-edit-2:1`
+  - Evidence image key: `deep-vU0EZlUoW7g-02-da7fd53e6d`
 
 ### Materials / Layer Sources
 - drone inputs
@@ -1871,6 +1950,10 @@ Records: 82
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
+
+### Structured Effect Uses
+- **Phase Plant**: 合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
+  - Effect use ID: `bsad889a2:effect:phase-plant:3`
 
 ### Materials / Layer Sources
 - airy breaths
@@ -1974,6 +2057,13 @@ Records: 82
   - Reduce crackle
 - **EchoBoy / short delay**: 极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
+
+### Structured Effect Uses
+- **Love**: 提供 ping-pong delay 和颗粒化空间运动。
+  - Effect use ID: `bsa8465bc:effect:love:1`
+- **Snap Heap**: 通过 bounce/dual delay 叠加更复杂的低调科幻 drone。
+  - Effect use ID: `bsa8465bc:effect:snap-heap:2`
+  - Evidence image key: `deep-HsFlJ_UJyxs-02-5bcb60c43c`
 
 ### Materials / Layer Sources
 - generic source textures
@@ -2365,6 +2455,10 @@ Records: 82
   - Rhythmic LFO for designed speech pattern
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
+
+### Structured Effect Uses
+- **Faceplant**: 承载 noise、filter、resonator、formant、flanger 和 pitch shifter 的小声音 patch。
+  - Effect use ID: `bsa62470b:effect:faceplant:1`
 
 ### Materials / Layer Sources
 - noise source
@@ -2766,6 +2860,14 @@ Records: 82
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
+### Structured Effect Uses
+- **Love**: swarm granular 让刮擦变成群体颗粒。
+  - Effect use ID: `bsadb7479:effect:love:2`
+  - Evidence image key: `deep-Vlhaimjv1Jw-03-207e173f97`
+- **Morph EQ**: 用 Twin Peaks 和 morph modulation 制造移动共振。
+  - Effect use ID: `bsadb7479:effect:morph-eq:1`
+  - Evidence image key: `deep-Vlhaimjv1Jw-02-1d1b995df5`
+
 ### Materials / Layer Sources
 - cardboard scrapes
 - rendered resonant textures
@@ -2962,6 +3064,10 @@ Records: 82
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
+
+### Structured Effect Uses
+- **Manipulator**: 三组并行预设把小刀声拉成巨剑纹理。
+  - Effect use ID: `bsa31cb6e:effect:manipulator:1`
 
 ### Materials / Layer Sources
 - small knife sounds
@@ -3185,6 +3291,12 @@ Records: 82
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
+### Structured Effect Uses
+- **Snap Heap**: 用 audio follower 调制多个效果深度。
+  - Effect use ID: `bsaecf074:effect:snap-heap:4`
+- **FilterFreak**: 用 envelope/threshold 做滤波运动。
+  - Effect use ID: `bsaecf074:effect:filterfreak:2`
+
 ### Materials / Layer Sources
 - raincoat/nylon cloth
 - Boom/Soundly sources
@@ -3304,6 +3416,10 @@ Records: 82
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
+### Structured Effect Uses
+- **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
+  - Effect use ID: `bsa0a8ec6:effect:filterfreak:5`
+
 ### Materials / Layer Sources
 - Soundsnap drone
 - glass ringing
@@ -3422,6 +3538,12 @@ Records: 82
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
+
+### Structured Effect Uses
+- **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
+  - Effect use ID: `bsac16e92:effect:snap-heap:4`
+- **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
+  - Effect use ID: `bsac16e92:effect:decapitator:6`
 
 ### Materials / Layer Sources
 - grass
@@ -4106,6 +4228,10 @@ Records: 82
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
 
+### Structured Effect Uses
+- **Snap Heap**: 对 creature 层做电感、颤动和运动调制。
+  - Effect use ID: `pgbf3221:effect:snap-heap:1`
+
 ### Materials / Layer Sources
 - birds
 - rusty paper cutter
@@ -4354,6 +4480,10 @@ Records: 82
 - **Unfilter / restoration**: 修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
   - 参数逻辑：修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
 
+### Structured Effect Uses
+- **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
+  - Effect use ID: `pgbf0348:effect:filterfreak:4`
+
 ### Materials / Layer Sources
 - plastic pipe
 - doorknob
@@ -4500,6 +4630,14 @@ Records: 82
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
+### Structured Effect Uses
+- **Phase Plant**: 合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
+  - Effect use ID: `pga5486e:effect:phase-plant:5`
+- **Snap Heap**: 用 pitch shifter、low-pass、envelope、distortion、gain 制作 whoosh 与 impact 运动。
+  - Effect use ID: `pga5486e:effect:snap-heap:2`
+- **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
+  - Effect use ID: `pga5486e:effect:filterfreak:7`
+
 ### Materials / Layer Sources
 - Raw Magic
 - feathery arrows
@@ -4638,6 +4776,12 @@ Records: 82
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
+
+### Structured Effect Uses
+- **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
+  - Effect use ID: `pg55cdd5:effect:snap-heap:5`
+- **Decapitator**: 给火焰和纸/沙素材增加热感、粗糙度和密度。
+  - Effect use ID: `pg55cdd5:effect:decapitator:1`
 
 ### Materials / Layer Sources
 - hot pan steam burst reversed
@@ -5337,6 +5481,16 @@ Records: 82
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
 
+### Structured Effect Uses
+- **Saturn 2**: 多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
+  - Effect use ID: `pg223c3c:effect:saturn-2:10`
+- **Phase Plant**: 合成/粒化重采样工具，用 granular、random LFO、playhead 和 pitch 调制把长素材变成可演奏纹理。
+  - Effect use ID: `pg223c3c:effect:phase-plant:6`
+- **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
+  - Effect use ID: `pg223c3c:effect:snap-heap:4`
+- **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
+  - Effect use ID: `pg223c3c:effect:filterfreak:8`
+
 ### Materials / Layer Sources
 - energy pulses
 - processed magic textures
@@ -5713,6 +5867,10 @@ Records: 82
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
 
+### Structured Effect Uses
+- **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
+  - Effect use ID: `pgd5df8c:effect:decapitator:6`
+
 ### Materials / Layer Sources
 - Raw Magic library
 - wind-up layers
@@ -5974,6 +6132,10 @@ Records: 82
 - **Tremolator**: 音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
   - 参数逻辑：音量/节奏调制工具，用 propeller、depth、rate 或 envelope follower 增加脉冲、旋转和机械感。
 
+### Structured Effect Uses
+- **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
+  - Effect use ID: `pgadda48:effect:snap-heap:5`
+
 ### Materials / Layer Sources
 - paper
 - rubber
@@ -6219,6 +6381,10 @@ Records: 82
 - **Transient Shaper**: 瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
   - 参数逻辑：瞬态塑形工具，控制 punch、click、sustain 和速度，是 impact 与 UI 触感的关键。
 
+### Structured Effect Uses
+- **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
+  - Effect use ID: `pgd16724:effect:filterfreak:4`
+
 ### Materials / Layer Sources
 - dog sounds
 - hamster scream
@@ -6357,6 +6523,18 @@ Records: 82
   - 参数逻辑：相位/色散处理，给瞬态和高频细节加黏性、旋转感和 tonal smear。
 - **Compressor / clipper**: 动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
+
+### Structured Effect Uses
+- **FabFilter Pro-Q 3**: 用于低频/低中频裁剪、Decapitator 后 tone down、保留飞行层高频运动信息。截图里能看到约 500 Hz 附近削减和较陡的滤波曲线。
+  - Effect use ID: `yt-M1KBLV0Zz6I:effect:fabfilter-pro-q-3:3`
+- **Soundtoys Decapitator**: 敌方版本的主要危险感来源。画面中可见 Punish ON、Drive 较高、Style E 一类设置；处理后再用 EQ 和动态控制收拾过度尖锐的部分。
+  - Effect use ID: `yt-M1KBLV0Zz6I:effect:soundtoys-decapitator:6`
+- **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
+  - Effect use ID: `yt-M1KBLV0Zz6I:effect:decapitator:11`
+- **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
+  - Effect use ID: `yt-M1KBLV0Zz6I:effect:filterfreak:10`
+- **Soundtoys PhaseMistress**: 给晶体/脉冲层加入 laser zappiness、周期感和可定位运动。作者再用后级 EQ 去掉不想要的低频脉动。
+  - Effect use ID: `yt-M1KBLV0Zz6I:effect:soundtoys-phasemistress:4`
 
 ### Materials / Layer Sources
 - NEON_ZIPS / CA 类飞行素材
@@ -6497,6 +6675,12 @@ Records: 82
   - 参数逻辑：极短延迟或 slap/数字延迟，常用于制造机器人、声码器、金属腔体或空间厚度。
 - **Little AlterBoy / pitch-formant**: 音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
   - 参数逻辑：音高和共振峰处理，用于把人声、动物、机械摩擦改造成机器人、生物或魔法角色。
+
+### Structured Effect Uses
+- **FabFilter Pro-Q 3**: 用于清理和塑造 Dead 处理后的频谱，也用于 Alive Incoming 中以 EQ 和 layering 为主的整理；暗色版本仍保留必要高频可读性。
+  - Effect use ID: `yt-iyAwO9g_rAQ:effect:fabfilter-pro-q-3:4`
+- **Soundtoys Crystallizer**: Dead 版本的核心颗粒/暗色处理。画面中可见 Granular Echo Synthesizer，预设名类似 Metallicah，Pitch 约 -50 cents、Splice 约 127.3 ms、Delay 约 7.4 ms，用来制造 flutter、不协和和幽灵感。
+  - Effect use ID: `yt-iyAwO9g_rAQ:effect:soundtoys-crystallizer:1`
 
 ### Materials / Layer Sources
 - Bamboo flute 式 whoosh / 角色身份层
@@ -6721,6 +6905,19 @@ Records: 82
   - MVocoder：broad low-end whoosh
   - Substance：beef up Iron Fist / metal hit layers
 
+### Structured Effect Uses
+- **Kilohearts Phase Plant**: 做电击 granular whoosh、ring mod、shaper table 和 envelope-driven decay。
+  - Effect use ID: `yt-aKkZZ-XeSqs:effect:kilohearts-phase-plant:12`
+  - Evidence image key: `ak-machina-phaseplant-shapertable`
+- **Kilohearts Snap Heap**: Basic Tremolo 由输入音量驱动，让机器声带的 tremolo 跟发声动态一起变化。
+  - Effect use ID: `yt-aKkZZ-XeSqs:effect:kilohearts-snap-heap:11`
+  - Evidence image key: `ak-machina-snapheap-tremolo`
+- **Melda MAutoPitch**: 强制统一 Vox 音高，让声带出现不自然但稳定的机械量化感。
+  - Effect use ID: `yt-aKkZZ-XeSqs:effect:melda-mautopitch:3`
+  - Evidence image key: `ak-machina-autopitch`
+- **Soundtoys FilterFreak**: 用动态 BPF 把火焰 sustain 做成有相位感、有流动的喷射层。
+  - Effect use ID: `yt-aKkZZ-XeSqs:effect:soundtoys-filterfreak:7`
+
 ### Materials / Layer Sources
 - Machina robot library
 - Clawstrider footage
@@ -6876,6 +7073,17 @@ Records: 82
   - 参数逻辑：动态和削峰工具，用于让层更贴近、让峰值可控，或把瞬态推得更硬。
 - **Frequency shifter / ring mod**: 频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
   - 参数逻辑：频移、环调或声码器，给科幻电流、机器人、魔法粒子制造非自然谐波。
+
+### Structured Effect Uses
+- **Phase Plant**: 反向 sampler、resonator、bitcrusher、granular whoosh 和 tonal scream。
+  - Effect use ID: `yt-uh9yIziU8Pk:effect:phase-plant:2`
+  - Evidence image key: `deep-uh9yIziU8Pk-02-633b0e1b3d`
+- **Snap Heap**: 低频 tonal 链里的 ring mod、comb filter 和跟随输入的调制。
+  - Effect use ID: `yt-uh9yIziU8Pk:effect:snap-heap:4`
+- **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
+  - Effect use ID: `yt-uh9yIziU8Pk:effect:decapitator:10`
+- **FilterFreak**: 动态滤波和扫频工具，常用低通/带通、输入阈值或包络让频率随素材强弱移动。
+  - Effect use ID: `yt-uh9yIziU8Pk:effect:filterfreak:9`
 
 ### Materials / Layer Sources
 - Seismic Core
@@ -7149,6 +7357,10 @@ Records: 82
 - **Unfilter / restoration**: 修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
   - 参数逻辑：修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
 
+### Structured Effect Uses
+- **Decapitator**: 饱和/失真工具，给主体增加谐波密度和攻击性，通常要控制 Mix，避免压平瞬态。
+  - Effect use ID: `yt-cHWeJHlXb54:effect:decapitator:6`
+
 ### Materials / Layer Sources
 - Boom Urban Explosions
 - Boom destruction/debris
@@ -7316,6 +7528,14 @@ Records: 82
 - **Unfilter / restoration**: 修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
   - 参数逻辑：修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
 
+### Structured Effect Uses
+- **Phase Plant**: 通过多振荡器互调、随机 pitch 和 harmonic motion 生成 trills、telemetry、bleepies。
+  - Effect use ID: `yt-6oJUotZGz0k:effect:phase-plant:2`
+  - Evidence image key: `deep-6oJUotZGz0k-02-a398a091f5`
+- **Kick 3**: 生成 UI impulse / click 的基础瞬态。
+  - Effect use ID: `yt-6oJUotZGz0k:effect:kick-3:1`
+  - Evidence image key: `deep-6oJUotZGz0k-01-601c3fa147`
+
 ### Materials / Layer Sources
 - Kick-like impulse
 - Phase Plant Galactic Assistant-style trill
@@ -7477,6 +7697,17 @@ Records: 82
   - 参数逻辑：修复和去噪工具，先去掉录音问题，避免后续失真/压缩放大瑕疵。
 - **Playback rate / item rate**: 素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
   - 参数逻辑：素材尺度工具，改变速度、音高、方向和包络，是把普通素材变成生物、环境或魔法源的第一步。
+
+### Structured Effect Uses
+- **FabFilter Saturn 2**: Mega Smudge 多段处理，制造粘稠失真、滤波和短延迟式运动。
+  - Effect use ID: `yt-h1uYic59pf0:effect:fabfilter-saturn-2:4`
+  - Evidence image key: `deep-h1uYic59pf0-03-aafec69b81`
+- **Saturn 2**: 多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
+  - Effect use ID: `yt-h1uYic59pf0:effect:saturn-2:11`
+- **Polyverse Manipulator**: 继续改变 pitch/formant/resonance，增加异常生物或机械感。
+  - Effect use ID: `yt-h1uYic59pf0:effect:polyverse-manipulator:9`
+- **UVI Shade**: 自动化低通扫动，控制最终 sweep。
+  - Effect use ID: `yt-h1uYic59pf0:effect:uvi-shade:10`
 
 ### Materials / Layer Sources
 - SkannerXT laser/glider SFX presets
@@ -7641,6 +7872,16 @@ Records: 82
   - 参数逻辑：减法和塑形 EQ；先切泥、刺、噪声、现实录音痕迹，再按角色补 body、presence 或 air。
 - **Pro-R / reverb**: 空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
   - 参数逻辑：空间和尾音工具，给魔法、火焰、电、环境层建立距离；攻击段湿度要谨慎。
+
+### Structured Effect Uses
+- **Saturn 2**: 多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
+  - Effect use ID: `yt-EQw3BCxIRPk:effect:saturn-2:16`
+- **Phase Plant**: 用于 Arc Machine 甜味层和 metal taps sample-length power-up。
+  - Effect use ID: `yt-EQw3BCxIRPk:effect:phase-plant:1`
+- **Snap Heap**: 模块化调制宿主，用 LFO、随机、包络跟随和宏控制把静态素材做成会动的 whoosh、tremolo、pitch 或滤波形状。
+  - Effect use ID: `yt-EQw3BCxIRPk:effect:snap-heap:13`
+- **Polyverse Manipulator**: 改变 tonal lead 的 pitch/formant/resonance，让能量线更异质。
+  - Effect use ID: `yt-EQw3BCxIRPk:effect:polyverse-manipulator:5`
 
 ### Materials / Layer Sources
 - Taser
@@ -7902,6 +8143,13 @@ Records: 82
 - **FabFilter Pro-L 2**: 限制最终峰值并稳定输出，避免共振链造成过载。
   - 只做必要的峰值控制；响度匹配检查是否损失短促冲击。
 
+### Structured Effect Uses
+- **oeksound soothe2**: 画面只确认它位于 Gain 与 Pro-L 2 之间。分析推断：它可能用于整理堆叠共振带来的刺耳峰值，同时尽量保留金属谐波轮廓；作者未说明其用途。
+  - Effect use ID: `yt-Xl5u91oQv-k:effect:oeksound-soothe2:6`
+- **Stepwise Morph**: 在 Sound #2 中用多点频谱曲线对共振结果做二次形态变换，增加科幻纹理。
+  - Effect use ID: `yt-Xl5u91oQv-k:effect:stepwise-morph:4`
+  - Evidence image key: `Xl5u91oQv-k-stepwise-morph-curve`
+
 ### Materials / Layer Sources
 - Serum OSC A wavetable 4088 单振荡器声源
 - PWM 调制形成的谐波运动
@@ -8005,6 +8253,14 @@ Records: 82
   - 先在关闭状态确认音色与运动成立，再决定是否为交付响度启用。
 - **Waves S1 Imager Stereo / L1 Limiter Stereo**: 轨道末端分别控制立体声宽度和最终峰值，不参与核心声源生成。
   - 画面只确认链路位置；具体宽度与限制参数不可可靠读取。
+
+### Structured Effect Uses
+- **FabFilter Pro-Q 3**: 在 item 级强化有用中频、削减刺耳高频峰，使每个 one-shot 获得独立音色焦点。
+  - Effect use ID: `yt-kv0yNg1CPAk:effect:fabfilter-pro-q-3:4`
+  - Evidence image key: `kv0yNg1CPAk-proq-bubbly-focus`
+- **ValhallaFreqEcho**: 在 item 级结合短延迟、轻微频移和反馈，构造气泡式、带运动的尾音。
+  - Effect use ID: `yt-kv0yNg1CPAk:effect:valhallafreqecho:6`
+  - Evidence image key: `kv0yNg1CPAk-valhalla-freqecho-tail`
 
 ### Materials / Layer Sources
 - 在 Microsoft 录制的门声与门轴摩擦片段
@@ -8175,6 +8431,10 @@ Records: 82
 - **Wwise distance, occlusion and EQ**: 同时触发 close/distant 后按距离交叉增益，并在墙体遮挡时叠加额外频谱处理。
   - frame_000650 的约 4000、4500、5200 只记录本游戏当前曲线；3250 只作为脚步上下文。
   - occlusion/EQ 的具体频率、增益、曲线和项目配置没有展示，不补写隐藏参数。
+
+### Structured Effect Uses
+- **FabFilter Pro-Q 3**: 对 close 层做积极频谱雕刻，并在 distant 处理中继续削减不利于距离感和可读性的频段。
+  - Effect use ID: `yt-eKCYZz98-N4:effect:fabfilter-pro-q-3:2`
 
 ### Materials / Layer Sources
 - close Transient、Energy 与 Tail 分层资产
@@ -8606,6 +8866,10 @@ Records: 82
   - 画面确认末端链位，但没有可靠 threshold、lookahead、style 或 output 参数。
   - 发布视频关键窗口未做严格响度匹配，不能把更响误写成音质提升。
 
+### Structured Effect Uses
+- **Minimal Audio Wave Shifter**: 作者口述与画面确认：以 Freq Shift / Stereo 为核心，控制 Frequency、Feedback、Feedback Time、modulation 与 FM，生成科幻、UI 和 anime 风格源素材。
+  - Effect use ID: `yt-fYqe17OJRNM:effect:minimal-audio-wave-shifter:1`
+
 ### Materials / Layer Sources
 - 较长 Cardboard Rips 录音：用于扫描 Frequency、Feedback、Feedback Time 与更明显 modulation
 - 较短 Cardboard Falls hit：用于对照小幅正、负频移和后处理变体
@@ -8716,6 +8980,13 @@ Records: 82
 - **TONSTURM TRAVELER**: 作者把已打印的 bubble / spectral 素材进一步变形成 whoosh、impact 和 Doppler 方向变体。
   - 八张发布帧没有展开 TRAVELER 参数或 preset。
   - 分析建议：把源打印和 TRAVELER 变体分开保存，按运动方向与事件角色验收。
+
+### Structured Effect Uses
+- **Kilohearts Phase Plant**: 作者用它建立核心调性源，并派生 laser、spectral、metallic 与 rapid-fire 分支；不同分支通过发生器类型、包络、Random / LFO、滤波和内部效果改变职责。
+  - Effect use ID: `yt-j4POSc1YeAo:effect:kilohearts-phase-plant:1`
+- **Minimal Audio Wave Shifter**: 作者事实：作者调节 Frequency 与 Feedback，并描述其产生 bubbly effects。分析归纳：这一处理为已有 bubbly / spectral 身份增加旁带、金属感与液态运动。
+  - Effect use ID: `yt-j4POSc1YeAo:effect:minimal-audio-wave-shifter:2`
+  - Evidence image key: `j4POSc1YeAo-wave-shifter-bubble-state`
 
 ### Materials / Layer Sources
 - Phase Plant Analog 正弦短包络：核心 bubbly 身份与随机 pitch 基准
@@ -8959,6 +9230,11 @@ Records: 82
   - Kaiju master 的 OTT 当前 Depth 6%；Pro-MB 画面可见 Harshness Control，但详细阈值、range 和时间参数不可可靠读取。
   - 作者明确说计划过的 master width 与 clipper 没有使用，不能按 FX list 补成实际声音链。
 
+### Structured Effect Uses
+- **MeldaProduction MTremolo**: WindSpinner 中形成低频脉冲，在 post-roar flavor 中通过 rate automation 把调制速度与动作回落同步。
+  - Effect use ID: `yt-ir8d3PUj5JU:effect:meldaproduction-mtremolo:5`
+  - Evidence image key: `ir8d3PUj5JU-post-roar-tremolo-acceleration`
+
 ### Materials / Layer Sources
 - 自录 household objects：洗衣机、门、碗、旋转物件与其它可撞击/刮擦来源
 - Human Air、human breathing 与受控 mouth/zombie 动作：breath、lead 与回落句法
@@ -9189,6 +9465,10 @@ Records: 82
   - Custom LFO -> Noise Level 100% 由 frame_000836 明确证明。
   - Random 的具体目标不可读；终局 8.45 Hz 与 LFO 1.63 Hz 都是画面状态，不能换算成真实每秒滴数。
 
+### Structured Effect Uses
+- **Kilohearts Phase Plant**: 承载两个 Noise Group、三条 Lane 与全部调制/路由。核心价值是把连续雨床、开窗透入和离散水滴按角色拆开，而不是依赖单一雨声采样。
+  - Effect use ID: `yt-wWms0-ad6fw:effect:kilohearts-phase-plant:1`
+
 ### Materials / Layer Sources
 - Group 1 continuous Noise：共享给墙后暗雨与开窗透入两条持续角色
 - Lane 1 filtered indoor rain：暗色、连续、方向细节较少的室内基准
@@ -9406,6 +9686,10 @@ Records: 82
   - 作者没有展示 threshold、ceiling、衰减量、LUFS 或 true-peak 目标。
   - 末端 limiter 只作峰值保护；不能由链位反推出母带响度或交付规格。
 
+### Structured Effect Uses
+- **FabFilter Pro-Q 3**: 为偏 stereo 的瞬态支撑层削低频，并在 rock/explosion 处理链前端清理超低与低中频。
+  - Effect use ID: `yt-v1IGAnVJylY:effect:fabfilter-pro-q-3:2`
+
 ### Materials / Layer Sources
 - Rocks：rock crack、crumble、hollow、small impact 等主体材料，负责材质、body 与中低频块感
 - Debris high：trickle、gravel、brick、shale 与 rocks/dirt slide 等颗粒，负责脆裂、细节和较长掉落
@@ -9523,6 +9807,14 @@ Records: 82
 - **Audiokinetic Wwise**: 在运行时分别控制 Active flat loops 的生命周期与实际 volume automation。
   - 作者明确说明 actual volume envelopes/automation 在 Wwise 中完成；REAPER 手工 fade 只用于视频演示。
   - Wwise 界面、RTPC 名称、取值范围、曲线、event graph、bus、priority、attenuation 与 spatialization 均未展示。
+
+### Structured Effect Uses
+- **FabFilter Pro-Q 3**: 在低颤动、Tibetan Bowl、voice/chime 和 digital flutter 等单层中做减法频谱清理。
+  - Effect use ID: `yt-LyNsYzCN5_A:effect:fabfilter-pro-q-3:1`
+- **Soundtoys Crystallizer**: 给低颤动层加入颗粒/回声变形，使其服务死亡 alert 的角色身份。
+  - Effect use ID: `yt-LyNsYzCN5_A:effect:soundtoys-crystallizer:3`
+- **Soundtoys PhaseMistress**: 接在 Crystallizer 后为低颤动层增加作者所说的 spooky 调制变化。
+  - Effect use ID: `yt-LyNsYzCN5_A:effect:soundtoys-phasemistress:4`
 
 ### Materials / Layer Sources
 - Res Available Enter：大 bell 与 woosh/swish lead-in，负责高优先级入口和 Clove 身份
@@ -9647,6 +9939,12 @@ Records: 82
 - **Kilohearts Clipper**: 在单层和末端限制过响峰值，让冲击保持密度而不把 Master transient 变成常开压扁。
   - 纸板链、Udu 口述流程与 Master 收口均涉及 clipper/limiter 角色。
   - 阈值、ceiling、oversampling、最终 LUFS 与 true peak 未展示；完整节目测量不能替代独立爆炸资产指标。
+
+### Structured Effect Uses
+- **FabFilter Pro-Q 3**: 在瞬态、Body、Tail 与组级清理中分配频段，让低频重量、亮命中、空间和碎屑各自让位。
+  - Effect use ID: `yt-FuFfkk7dxcY:effect:fabfilter-pro-q-3:7`
+- **FabFilter Saturn 2**: 放大浴帘、纸板和其它单层已有的频谱性格与密度，同时保持卷积空间可辨。
+  - Effect use ID: `yt-FuFfkk7dxcY:effect:fabfilter-saturn-2:3`
 
 ### Materials / Layer Sources
 - Shower curtain：承担 boomy impact、额外低频重量与 Body 初始反射，但不是完整爆炸的唯一来源
@@ -9776,6 +10074,10 @@ Records: 82
 - **iZotope RX 7 De-crackle**: 在链尾降低密集爆点与作者所说的 clippy 感，使喉体更连续。
   - 06:20.000 当前实例为 Quality Low、Strength 8.3、Amplitude skew 5.9，Output crackle only 未勾选。
   - 它既是修整也是音色取舍；过量会洗掉湿润细节，不能照抄到不同素材。
+
+### Structured Effect Uses
+- **Soundtoys Decapitator**: 在 Radiator 与 OTT 之后继续增加 Hydro 喉体的粗粝与攻击性。
+  - Effect use ID: `yt-NdGNqhV8cpM:effect:soundtoys-decapitator:5`
 
 ### Materials / Layer Sources
 - 绿色史莱姆与吹入空气：提供黏稠鼓起、气泡生成和破裂的真实物理动作
@@ -9984,6 +10286,15 @@ Records: 82
 - **Audiokinetic Wwise**: 只按作者口述记录 post-revive countdown loop 与 heartbeat 的游戏内 RTPC volume 生命周期。
   - 没有 Wwise 界面证据，不能填写 event、RTPC、curve、range、switch/state、bus、scope、priority 或 voice limit。
   - REAPER 演示包络未 bounce；实际游戏自动化的位置属于作者陈述，未由本地工程复核。
+
+### Structured Effect Uses
+- **FabFilter Pro-Q 3**: 用于分层减法整理，并通过可见 Band 1 Frequency 包络让 bird riser 的高频随阶段开放。
+  - Effect use ID: `yt-cJ75ykkqV64:effect:fabfilter-pro-q-3:3`
+- **Soundtoys Crystallizer**: 按作者说明为 Initial Cast 的 bell 增加 flutter/pitch 变化，并在 Failure 分支给负面结局增加更强的角色化处理。
+  - Effect use ID: `yt-cJ75ykkqV64:effect:soundtoys-crystallizer:1`
+  - Evidence image key: `cJ75ykkqV64-initial-cast-crystallizer-flutter`
+- **Soundtoys PhaseMistress**: 作者将其与 Crystallizer 配合，为 bell、reposition 与 timer 相关层增加适量 phase movement；角色标尺是 spooky 而非 full horror。
+  - Effect use ID: `yt-cJ75ykkqV64:effect:soundtoys-phasemistress:2`
 
 ### Materials / Layer Sources
 - Initial Cast：作者口述的 bell/chime 身份、短 transient、低频 body、tail 与轻质 flap 方向；具体源名和最终层间比例不完整

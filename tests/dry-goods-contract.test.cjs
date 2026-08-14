@@ -872,11 +872,11 @@ test("caption and disclosure surfaces do not truncate subtitle text", () => {
   });
 });
 
-test("video cards scan compactly while full detail keeps its dry-goods order", () => {
+test("video cards scan compactly while full detail keeps player-first dry goods", () => {
   const html = read("index.html");
   const css = html.match(/<style>([\s\S]*?)<\/style>/)?.[1] || "";
   const gridRenderer = sourceSlice(html, "    function renderGrid() {", "    function showLibrary() {");
-  const detailRenderer = sourceSlice(html, "    function renderDetail() {", "    function renderEffectDetail(effectId) {");
+  const detailRenderer = sourceSlice(html, "    function renderDetail(options = {}) {", "    function sourceStepForEffectUse(use) {");
   const readerTitleRule = css.match(/\.reader-detail \.detail-title \{([\s\S]*?)\n    \}/)?.[1] || "";
   const mobileRules = css.match(/@media \(max-width: 640px\) \{([\s\S]*?)\n    \}/)?.[1] || "";
 
@@ -887,19 +887,30 @@ test("video cards scan compactly while full detail keeps its dry-goods order", (
   assert.doesNotMatch(gridRenderer, /更新 |updatedAt|addedAt|record\.steps\.length \+ ' 步骤'/);
   assert.match(css, /\.card-summary \{[\s\S]*?-webkit-line-clamp: 2;/);
 
-  const headings = ["设计目标", "设计思路", "素材与分层", "完整制作流程", "完整效果链", "效果器用法", "关键决策与证据边界", "来源与关键词"];
-  let previousIndex = -1;
-  headings.forEach((heading) => {
-    const index = detailRenderer.indexOf(`<h3>${heading}</h3>`);
-    assert.ok(index > previousIndex, `${heading} must preserve detail order`);
-    previousIndex = index;
-  });
+  [
+    "learningShellOpen",
+    "contentShellOpen",
+    "quickHtml",
+    "navigationHtml",
+    "timelineHtml",
+    "effectHtml",
+    "glossaryAnchorHtml",
+    "transcriptHtml",
+    "evidenceHtml"
+  ].reduce((previousIndex, token) => {
+    const index = detailRenderer.indexOf(token);
+    assert.ok(index > previousIndex, `${token} must preserve player-first detail order`);
+    return index;
+  }, -1);
+  assert.match(detailRenderer, /renderCompleteEvidence\(\{[\s\S]*?ideas:[\s\S]*?process:[\s\S]*?chain:[\s\S]*?boundaries:/);
+  assert.match(detailRenderer, /detailData\.plugins\.map/);
+  assert.match(detailRenderer, /settings\.map/);
   assert.match(detailRenderer, /<span>更新 ' \+ escapeHtml\(record\.updatedAt \|\| record\.addedAt \|\| ""\)/);
 
   assert.match(readerTitleRule, /font-size: 48px;/);
   assert.doesNotMatch(readerTitleRule, /clamp\(|vw/);
-  assert.match(css, /\.reader-detail \.section \{[\s\S]*?margin-top: 26px;/);
-  assert.match(css, /\.video-player-section \{[\s\S]*?max-width: 980px;/);
+  assert.match(css, /\.detail-learning-layout \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\) minmax\(420px, 520px\);/);
+  assert.match(css, /\.video-study-rail \{[\s\S]*?position: sticky;/);
   assert.match(css, /\.video-player-stage \{[\s\S]*?aspect-ratio: 16 \/ 9;/);
   assert.match(mobileRules, /\.reader-detail \.detail-title \{ font-size: 32px; \}/);
 });
