@@ -124,6 +124,23 @@ test('buildEffectUses accepts arrays and normalizes explicit and legacy sources'
   assert.equal(collisionUses[1].id, 'collision:effect:delay:1');
 });
 
+test('explicit null screenshot suppresses step fallback while an absent key inherits it', () => {
+  const base = {
+    id: 'record-a',
+    steps: [{ imageKey: 'record-a-step-1' }]
+  };
+  const uses = model.buildEffectUses([{
+    ...base,
+    effectUses: [
+      { id: 'missing-shot', name: 'EQ', stepIndex: 0, screenshotKey: null },
+      { id: 'inherited-shot', name: 'Reverb', stepIndex: 0 }
+    ]
+  }]);
+
+  assert.equal(uses[0].screenshotKey, '');
+  assert.equal(uses[1].screenshotKey, 'record-a-step-1');
+});
+
 test('buildEffectUses preserves numeric timeline fields without coercing strings', () => {
   const uses = model.buildEffectUses([{
     id: 'timed-record',

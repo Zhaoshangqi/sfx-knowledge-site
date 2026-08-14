@@ -10,6 +10,7 @@ const { renderReviewPage } = require('./timeline-review-page.cjs');
 const siteData = require('./site-data.cjs');
 const reviewData = require('./timeline-review-data.cjs');
 const knowledgeModel = require('../src/knowledge-model.js');
+const videoTimeline = require('../src/video-timeline.js');
 const publicEffectUseManifest = require('./data/public-effect-use-ids.json');
 
 const MAX_BODY_BYTES = 2 * 1024 * 1024;
@@ -705,9 +706,10 @@ function initialReview(records, uses) {
       };
     });
     const cases = (usesByRecord.get(record.id) || []).map((use) => {
-      const startSeconds = durationSeconds !== null && Number.isInteger(use.startSeconds)
-        && use.startSeconds >= 0 && use.startSeconds < durationSeconds
-        ? use.startSeconds
+      const resolvedStart = videoTimeline.effectStart(record, use);
+      const startSeconds = durationSeconds !== null && Number.isInteger(resolvedStart)
+        && resolvedStart >= 0 && resolvedStart < durationSeconds
+        ? resolvedStart
         : null;
       const screenshotReviewed = use.screenshotReviewed === true;
       return {

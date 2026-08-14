@@ -20,6 +20,9 @@ const {
 const verifierPath = path.join(__dirname, '..', 'tools', 'verify-portable-kit.cjs');
 const batchToolPath = path.join(__dirname, '..', 'tools', 'batch-site-subtitles.cjs');
 const buildToolPath = path.join(__dirname, '..', 'tools', 'build-site-subtitles.cjs');
+const siteDataPath = path.join(__dirname, '..', 'tools', 'site-data.cjs');
+const videoTimelinePath = path.join(__dirname, '..', 'src', 'video-timeline.js');
+const knowledgeModelPath = path.join(__dirname, '..', 'src', 'knowledge-model.js');
 
 function temporaryDirectory(t) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'sfx-batch-subtitles-'));
@@ -43,9 +46,11 @@ function indexHtml(siteRecords) {
   return [
     '<!doctype html>',
     '<script>',
-    '  const records = ' + JSON.stringify(siteRecords, null, 2) + ';',
+    '    const records = ' + JSON.stringify(siteRecords, null, 2) + ';',
     '',
-    '  const imageManifest = {};',
+    '    const imageManifest = {};',
+    '',
+    '    const pluginReferenceCatalog = {};',
     '</script>'
   ].join('\n');
 }
@@ -197,6 +202,13 @@ function portableVerifierFixture(t, siteRecords, catalog, options = {}) {
   fs.copyFileSync(verifierPath, fixtureVerifier);
   fs.copyFileSync(batchToolPath, path.join(root, 'tools', 'batch-site-subtitles.cjs'));
   fs.copyFileSync(buildToolPath, path.join(root, 'tools', 'build-site-subtitles.cjs'));
+  fs.copyFileSync(siteDataPath, path.join(root, 'tools', 'site-data.cjs'));
+  fs.copyFileSync(videoTimelinePath, path.join(root, 'src', 'video-timeline.js'));
+  fs.copyFileSync(knowledgeModelPath, path.join(root, 'src', 'knowledge-model.js'));
+  writeFixtureFile(root, 'tools/data/public-effect-use-ids.json', `${JSON.stringify({
+    version: 1,
+    useIds: options.publicUseIds || []
+  }, null, 2)}\n`);
 
   const git = spawnSync('git', ['init', '--quiet'], {
     cwd: root,
@@ -219,8 +231,8 @@ function portableVerifierFixture(t, siteRecords, catalog, options = {}) {
   return { root, subtitleRoot, verifierPath: fixtureVerifier };
 }
 
-function runPortableVerifier(fixture) {
-  return spawnSync(process.execPath, [fixture.verifierPath], {
+function runPortableVerifier(fixture, args = ['--allow-incomplete-timeline']) {
+  return spawnSync(process.execPath, [fixture.verifierPath, ...args], {
     cwd: fixture.root,
     encoding: 'utf8',
     windowsHide: true
@@ -260,6 +272,45 @@ test('extractRecords rejects duplicate record video IDs', () => {
   duplicated[1].videoId = duplicated[0].videoId;
 
   assert.throws(() => extractRecords(indexHtml(duplicated)), /duplicate.*videoId/i);
+});
+
+test('portable verifier enforces complete timelines by default and allows only the explicit batch flag', (t) => {
+  const siteRecords = records(82);
+  const fixture = portableVerifierFixture(t, siteRecords, catalogForRecords(siteRecords));
+
+  const strictResult = runPortableVerifier(fixture, []);
+  assert.equal(strictResult.status, 1, strictResult.stdout + strictResult.stderr);
+  const strictReport = JSON.parse(strictResult.stdout);
+  assert.equal(strictReport.timelineCoverage.reviewedRecords, 0);
+  assert.ok(strictReport.failures.some((failure) => /timeline coverage/i.test(failure)));
+
+  const batchResult = runPortableVerifier(fixture, ['--allow-incomplete-timeline']);
+  assert.equal(batchResult.status, 0, batchResult.stdout + batchResult.stderr);
+  const batchReport = JSON.parse(batchResult.stdout);
+  assert.equal(batchReport.timelineGate, 'allowed-incomplete');
+});
+
+test('incomplete-timeline mode still rejects unresolved curated public case IDs', (t) => {
+  const siteRecords = records(82);
+  const fixture = portableVerifierFixture(t, siteRecords, catalogForRecords(siteRecords), {
+    publicUseIds: ['missing-record:effect:eq:1']
+  });
+
+  const result = runPortableVerifier(fixture);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  const report = JSON.parse(result.stdout);
+  assert.ok(report.failures.some((failure) => /unresolved public effect use ID/i.test(failure)));
+});
+
+test('incomplete-timeline mode still rejects broken declared screenshot evidence', (t) => {
+  const siteRecords = records(82);
+  siteRecords[0].steps = [{ order: 1, name: 'Missing frame', imageKey: 'missing-shot' }];
+  const fixture = portableVerifierFixture(t, siteRecords, catalogForRecords(siteRecords));
+
+  const result = runPortableVerifier(fixture);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  const report = JSON.parse(result.stdout);
+  assert.ok(report.failures.some((failure) => /missing imageManifest entry: missing-shot/i.test(failure)));
 });
 
 test('portable verifier rejects 82 records when only 81 have valid video IDs', (t) => {

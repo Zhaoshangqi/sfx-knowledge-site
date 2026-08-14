@@ -242,6 +242,7 @@
     normalizedParameters.forEach(function (parameter) {
       evidenceParts.push(parameter.evidence, parameter.value);
     });
+    var hasScreenshotKey = Boolean(input) && Object.prototype.hasOwnProperty.call(input, 'screenshotKey');
     var use = {
       id: legacy ? generatedId : (input && typeof input.id === 'string' && input.id.trim() ? input.id : explicitFallbackId),
       name: name,
@@ -257,7 +258,7 @@
       timestamp: cleanText(input && input.timestamp),
       startSeconds: typeof (input && input.startSeconds) === 'number' ? input.startSeconds : null,
       stepIndex: stepIndex,
-      screenshotKey: cleanText(input && input.screenshotKey) || cleanText(step && step.imageKey),
+      screenshotKey: hasScreenshotKey ? cleanText(input.screenshotKey) : cleanText(step && step.imageKey),
       screenshotReviewed: Boolean(input && input.screenshotReviewed),
       evidence: inferEvidence(evidenceParts.join(' ')),
       sourceRecordId: record.id === undefined ? '' : record.id,

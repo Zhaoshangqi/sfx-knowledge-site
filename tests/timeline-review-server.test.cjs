@@ -846,6 +846,55 @@ test('runCli accepts only repo index and fixed work paths, loads existing subtit
   );
 });
 
+test('runCli restores an applied public case from its verified owning step time', async (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'timeline-review-inherited-case-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const indexPath = path.join(root, 'index.html');
+  const workPath = path.join(root, '.work', 'timeline-review');
+  const useId = 'record-a:effect:eq:explicit-1';
+  const records = [{
+    id: 'record-a',
+    videoId: 'abcdefghijk',
+    title: 'A',
+    timeline: { durationSeconds: 90, reviewedAt: '2026-08-14', source: 'youtube-player' },
+    steps: [{ order: 1, name: 'EQ', startSeconds: 12, imageKey: 'record-a-step-1' }],
+    effectUses: [{
+      id: useId,
+      name: 'EQ',
+      stepIndex: 0,
+      screenshotReviewed: true,
+      screenshotKey: 'record-a-step-1'
+    }]
+  }];
+  fs.writeFileSync(indexPath, [
+    '<script>',
+    `    const records = ${JSON.stringify(records)};`,
+    '    const imageManifest = {};',
+    '    const pluginReferenceCatalog = [];',
+    '</script>',
+    ''
+  ].join('\n'), 'utf8');
+
+  let startedOptions;
+  await serverApi().runCli([
+    '--index', indexPath,
+    '--work', workPath,
+    '--port', '0'
+  ], {
+    publicUseIds: [useId],
+    startServer: async (options) => {
+      startedOptions = options;
+      return Object.freeze({ close: async () => {} });
+    },
+    stdout: { write() {} }
+  });
+
+  const restored = startedOptions.review.records[0];
+  assert.equal(restored.status, 'reviewed');
+  assert.equal(restored.cases[0].status, 'reviewed');
+  assert.equal(restored.cases[0].startSeconds, 12);
+});
+
 test('runCli projects exactly the 97 curated public effect cases from the real site', async () => {
   const root = path.resolve(__dirname, '..');
   const manifest = require('../tools/data/public-effect-use-ids.json');

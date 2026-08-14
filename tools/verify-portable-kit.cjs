@@ -3,9 +3,16 @@ const path = require("path");
 const vm = require("vm");
 const { spawnSync } = require("child_process");
 const { validateTrack } = require("./batch-site-subtitles.cjs");
+const siteData = require("./site-data.cjs");
+const videoTimeline = require("../src/video-timeline.js");
+const knowledgeModel = require("../src/knowledge-model.js");
+const publicEffectUseManifest = require("./data/public-effect-use-ids.json");
 
 const root = path.resolve(__dirname, "..");
 const expectedSiteRecords = 82;
+const expectedSteps = 924;
+const expectedPublicCases = 97;
+const expectedScreenshotSteps = 847;
 const youtubeVideoIdPattern = /^[A-Za-z0-9_-]{11}$/;
 const required = [
   "index.html",
@@ -27,15 +34,26 @@ const required = [
   "tools/install-sfx-skill.ps1",
 ];
 
+const args = process.argv.slice(2);
+const allowIncompleteTimeline = args.length === 1 && args[0] === "--allow-incomplete-timeline";
 const failures = [];
+if (args.length !== 0 && !allowIncompleteTimeline) {
+  failures.push(`invalid verifier arguments: ${args.join(" ")}`);
+}
 for (const relative of required) {
   if (!fs.existsSync(path.join(root, relative))) failures.push(`missing ${relative}`);
 }
 
 const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
-const match = html.match(/const records = ([\s\S]*?);\r?\n\r?\n\s*const imageManifest/);
-if (!match) failures.push("index.html records block not found");
-const records = match ? JSON.parse(match[1]) : [];
+let records = [];
+let imageManifest = {};
+try {
+  const parsedSiteData = siteData.parse(html);
+  records = parsedSiteData.records;
+  imageManifest = parsedSiteData.imageManifest;
+} catch (error) {
+  failures.push(`invalid structured site data: ${error.message}`);
+}
 if (records.length !== expectedSiteRecords) {
   failures.push(`expected ${expectedSiteRecords} site records, found ${records.length}`);
 }
@@ -55,6 +73,82 @@ if (ids.length !== expectedSiteRecords || siteIdSet.size !== expectedSiteRecords
     `expected ${expectedSiteRecords} valid unique video IDs, ` +
     `found ${ids.length} valid and ${siteIdSet.size} unique`
   );
+}
+
+let publicUses = [];
+const projectedUsesById = new Map();
+try {
+  for (const use of knowledgeModel.buildEffectUses(records)) {
+    const id = use && typeof use.id === "string" ? use.id.trim() : "";
+    if (!id) continue;
+    if (projectedUsesById.has(id)) {
+      throw new Error(`duplicate projected effect use ID: ${id}`);
+    }
+    projectedUsesById.set(id, use);
+  }
+  const seenPublicIds = new Set();
+  for (const id of publicEffectUseManifest.useIds || []) {
+    if (typeof id !== "string" || !id.trim()) {
+      throw new Error("public effect use manifest contains a blank ID");
+    }
+    if (seenPublicIds.has(id)) {
+      throw new Error(`duplicate public effect use ID: ${id}`);
+    }
+    seenPublicIds.add(id);
+    if (projectedUsesById.has(id)) publicUses.push(projectedUsesById.get(id));
+    else failures.push(`unresolved public effect use ID: ${id}`);
+  }
+  if (!allowIncompleteTimeline && seenPublicIds.size !== expectedPublicCases) {
+    failures.push(`expected ${expectedPublicCases} public effect use IDs, found ${seenPublicIds.size}`);
+  }
+} catch (error) {
+  failures.push(`invalid public effect use projection: ${error.message}`);
+}
+
+const timelineCoverage = videoTimeline.coverage(records, publicUses);
+const timelineExpectations = {
+  records: expectedSiteRecords,
+  reviewedRecords: expectedSiteRecords,
+  steps: expectedSteps,
+  timedSteps: expectedSteps,
+  publicCases: expectedPublicCases,
+  timedPublicCases: expectedPublicCases,
+  screenshotCasesReviewed: expectedPublicCases
+};
+if (!allowIncompleteTimeline) {
+  for (const [field, expected] of Object.entries(timelineExpectations)) {
+    if (timelineCoverage[field] !== expected) {
+      failures.push(`timeline coverage ${field}: expected ${expected}, found ${timelineCoverage[field]}`);
+    }
+  }
+}
+
+const screenshotSteps = records.flatMap((record) => (
+  Array.isArray(record && record.steps)
+    ? record.steps.filter((step) => step && typeof step.imageKey === "string" && step.imageKey)
+    : []
+));
+let resolvedScreenshotAssets = 0;
+for (const step of screenshotSteps) {
+  const asset = imageManifest[step.imageKey];
+  let complete = Boolean(asset && typeof asset === "object" && !Array.isArray(asset));
+  if (!complete) {
+    failures.push(`missing imageManifest entry: ${step.imageKey}`);
+  }
+  for (const size of ["preview", "full"]) {
+    const relative = complete && typeof asset[size] === "string" && asset[size] ? asset[size] : "";
+    if (!relative || !fs.existsSync(path.join(root, relative))) {
+      complete = false;
+      failures.push(`missing ${size} asset: ${step.imageKey}`);
+    }
+  }
+  if (complete) resolvedScreenshotAssets += 1;
+}
+if (!allowIncompleteTimeline && screenshotSteps.length !== expectedScreenshotSteps) {
+  failures.push(`step screenshot coverage: expected ${expectedScreenshotSteps}, found ${screenshotSteps.length}`);
+}
+if (!allowIncompleteTimeline && resolvedScreenshotAssets !== expectedScreenshotSteps) {
+  failures.push(`resolved step screenshot assets: expected ${expectedScreenshotSteps}, found ${resolvedScreenshotAssets}`);
 }
 
 const subtitleModulePath = path.join(root, "src", "video-subtitles.js");
@@ -266,6 +360,9 @@ const report = {
   ok: failures.length === 0,
   records: records.length,
   uniqueVideoIds: siteIdSet.size,
+  timelineGate: allowIncompleteTimeline ? "allowed-incomplete" : "complete-required",
+  timelineCoverage,
+  screenshotStepAssets: `${resolvedScreenshotAssets}/${screenshotSteps.length}`,
   subtitleCatalogCoverage: `${catalogIdSet.size}/${expectedSiteRecords}`,
   subtitleAssets: referencedSubtitleJson.size,
   siteMemoryCoverage: `${siteIdSet.size - missingMemory.length}/${expectedSiteRecords}`,
