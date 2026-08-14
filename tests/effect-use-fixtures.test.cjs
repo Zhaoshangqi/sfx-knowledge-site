@@ -199,6 +199,7 @@ test('upy3d1em exposes the Polyverse Manipulator use and replaces its legacy row
     timestamp: '',
     stepIndex: 13,
     screenshotKey: 'noah-boom-manipulator-pitch-formant',
+    screenshotReviewed: true,
     replacesPluginIndexes: [11],
     evidence: ['画面确认', '作者口述']
   };
