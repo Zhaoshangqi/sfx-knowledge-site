@@ -265,10 +265,13 @@
     var errorLine = rootElement.querySelector('[data-player-error]');
     var subtitleStatusText = rootElement.querySelector('[data-subtitle-status-text]');
     var subtitleStatusHint = rootElement.querySelector('[data-subtitle-status-hint]');
-    var transcriptContainer = rootElement.querySelector('[data-transcript-container]');
-    var cueButtons = [];
+    var internalTranscriptContainer = rootElement.querySelector('[data-transcript-container]');
+    var transcriptContainer = settings.transcriptRoot || internalTranscriptContainer;
+    var paragraphButtons = [];
+    var cueToParagraph = [];
+    var transcriptMount = null;
     var listeners = [];
-    var cueListeners = [];
+    var paragraphListeners = [];
     var player = null;
     var playerReady = false;
     var activationPromise = null;
@@ -278,8 +281,11 @@
     var intervalId = null;
     var destroyed = false;
     var subtitlesVisible = false;
-    var activeCueIndex = -1;
+    var activeParagraphIndex = -1;
     var moveFocusIntoPlayer = false;
+    var onTrackLoaded = typeof settings.onTrackLoaded === 'function'
+      ? settings.onTrackLoaded
+      : null;
 
     if (!validVideoId(videoId) || !coverButton || !playerTarget) {
       throw new Error('player root is missing required YouTube data');
@@ -336,28 +342,47 @@
       return formatTime(seconds);
     }
 
-    function handleCueClick(button) {
-      var start = Number(button.dataset ? button.dataset.cueStart : null);
+    function handleParagraphClick(button) {
+      var start = Number(button.dataset ? button.dataset.paragraphStart : null);
+      var paragraphIndex = Number(button.dataset ? button.dataset.paragraphIndex : null);
       if (!Number.isFinite(start) || start < 0) return;
       activate().then(function (activePlayer) {
         if (destroyed || !activePlayer) return;
         if (typeof activePlayer.seekTo === 'function') activePlayer.seekTo(start, true);
         if (typeof activePlayer.playVideo === 'function') activePlayer.playVideo();
         synchronize();
+        if (Number.isInteger(paragraphIndex) && paragraphIndex >= 0) {
+          setActiveParagraph(paragraphIndex, true);
+        }
       }).catch(function () {});
     }
 
     function clearTranscript() {
-      setActiveCue(-1);
-      removeListeners(cueListeners);
-      cueButtons = [];
-      if (transcriptContainer) transcriptContainer.textContent = '';
+      setActiveParagraph(-1, false);
+      removeListeners(paragraphListeners);
+      paragraphButtons = [];
+      cueToParagraph = [];
+      if (transcriptMount && transcriptMount.parentNode &&
+          typeof transcriptMount.parentNode.removeChild === 'function') {
+        transcriptMount.parentNode.removeChild(transcriptMount);
+      }
+      transcriptMount = null;
+      if (internalTranscriptContainer) internalTranscriptContainer.textContent = '';
     }
 
     function createTranscript(loadedTrack) {
       if (!documentObject || typeof documentObject.createElement !== 'function' || !transcriptContainer) {
         throw new Error('player root is missing the subtitle transcript container');
       }
+      if (!subtitleApi || typeof subtitleApi.paragraphsFor !== 'function') {
+        throw new Error('subtitle paragraph projection is unavailable');
+      }
+
+      var paragraphs = subtitleApi.paragraphsFor(loadedTrack);
+      if (!Array.isArray(paragraphs) || paragraphs.length === 0) {
+        throw new Error('subtitle paragraph projection is empty');
+      }
+      clearTranscript();
 
       var disclosure = documentObject.createElement('details');
       disclosure.className = 'video-transcript-disclosure';
@@ -369,40 +394,45 @@
       transcript.className = 'video-transcript';
       transcript.setAttribute('aria-label', '中文字幕全文');
       var nextButtons = [];
+      var nextCueToParagraph = [];
 
-      loadedTrack.cues.forEach(function (cue, index) {
+      paragraphs.forEach(function (paragraph, index) {
         var item = documentObject.createElement('li');
         item.className = 'video-transcript-item';
         var button = documentObject.createElement('button');
         button.setAttribute('type', 'button');
-        button.className = 'video-transcript-cue';
+        button.className = 'video-transcript-cue video-transcript-paragraph';
         if (button.dataset) {
-          button.dataset.cueIndex = String(index);
-          button.dataset.cueStart = String(cue.start);
+          button.dataset.paragraphIndex = String(index);
+          button.dataset.paragraphStart = String(paragraph.start);
         } else {
-          button.setAttribute('data-cue-index', String(index));
-          button.setAttribute('data-cue-start', String(cue.start));
+          button.setAttribute('data-paragraph-index', String(index));
+          button.setAttribute('data-paragraph-start', String(paragraph.start));
         }
 
         var time = documentObject.createElement('span');
         time.className = 'video-transcript-time';
-        time.textContent = cueTime(cue.start);
+        time.textContent = cueTime(paragraph.start);
         var text = documentObject.createElement('span');
         text.className = 'video-transcript-text';
-        text.textContent = cue.text;
+        text.textContent = paragraph.text;
         button.appendChild(time);
         button.appendChild(text);
         item.appendChild(button);
         transcript.appendChild(item);
         nextButtons.push(button);
+        paragraph.cueIndexes.forEach(function (cueIndex) {
+          nextCueToParagraph[cueIndex] = index;
+        });
       });
 
       disclosure.appendChild(transcript);
-      clearTranscript();
       transcriptContainer.appendChild(disclosure);
-      cueButtons = nextButtons;
-      cueButtons.forEach(function (button) {
-        listen(button, 'click', function () { handleCueClick(button); }, cueListeners);
+      transcriptMount = disclosure;
+      paragraphButtons = nextButtons;
+      cueToParagraph = nextCueToParagraph;
+      paragraphButtons.forEach(function (button) {
+        listen(button, 'click', function () { handleParagraphClick(button); }, paragraphListeners);
       });
     }
 
@@ -420,7 +450,7 @@
       createTranscript(loadedTrack);
       track = loadedTrack;
       subtitlesVisible = true;
-      activeCueIndex = -1;
+      activeParagraphIndex = -1;
       updateSubtitleToggle(true, true);
       rootElement.classList.toggle('subtitles-hidden', false);
       if (track.reviewStatus === 'reviewed') {
@@ -429,6 +459,9 @@
         setSubtitleStatus('draft', '本站中文字幕 · 字幕草稿', '已同步时间轴，术语仍在校对');
       }
       if (playerReady) synchronize();
+      if (onTrackLoaded) {
+        try { onTrackLoaded(loadedTrack); } catch (error) {}
+      }
     }
 
     function beginTrackLoad() {
@@ -461,16 +494,22 @@
       if (captionOverlay && captionOverlay.textContent !== value) captionOverlay.textContent = value;
     }
 
-    function setActiveCue(index) {
-      if (activeCueIndex === index) return;
-      if (activeCueIndex >= 0 && cueButtons[activeCueIndex]) {
-        cueButtons[activeCueIndex].removeAttribute('aria-current');
+    function setActiveParagraph(index, shouldScroll) {
+      if (activeParagraphIndex === index) {
+        if (shouldScroll && index >= 0 && paragraphButtons[index] &&
+            typeof paragraphButtons[index].scrollIntoView === 'function') {
+          paragraphButtons[index].scrollIntoView({ block: 'nearest' });
+        }
+        return;
       }
-      activeCueIndex = index;
-      if (index >= 0 && cueButtons[index]) {
-        cueButtons[index].setAttribute('aria-current', 'true');
-        if (typeof cueButtons[index].scrollIntoView === 'function') {
-          cueButtons[index].scrollIntoView({ block: 'nearest' });
+      if (activeParagraphIndex >= 0 && paragraphButtons[activeParagraphIndex]) {
+        paragraphButtons[activeParagraphIndex].removeAttribute('aria-current');
+      }
+      activeParagraphIndex = index;
+      if (index >= 0 && paragraphButtons[index]) {
+        paragraphButtons[index].setAttribute('aria-current', 'true');
+        if (shouldScroll && typeof paragraphButtons[index].scrollIntoView === 'function') {
+          paragraphButtons[index].scrollIntoView({ block: 'nearest' });
         }
       }
     }
@@ -479,7 +518,7 @@
       if (destroyed || !player || typeof player.getCurrentTime !== 'function' ||
           !track || !subtitleApi || typeof subtitleApi.cueAt !== 'function') {
         setCaption('');
-        setActiveCue(-1);
+        setActiveParagraph(-1, false);
         return;
       }
 
@@ -489,7 +528,7 @@
           (candidate.start === cue.start && candidate.end === cue.end && candidate.text === cue.text);
       }) : -1;
       setCaption(cue ? cue.text : '');
-      setActiveCue(index);
+      setActiveParagraph(index >= 0 ? cueToParagraph[index] : -1, false);
     }
 
     function stopPolling() {
@@ -649,13 +688,15 @@
         if (destroyed) return;
         destroyed = true;
         stopPolling();
-        removeListeners(cueListeners);
+        clearTranscript();
         removeListeners(listeners);
         if (player && typeof player.destroy === 'function') player.destroy();
         player = null;
         playerReady = false;
         track = null;
-        cueButtons = [];
+        paragraphButtons = [];
+        cueToParagraph = [];
+        onTrackLoaded = null;
         resolveReady = null;
         readyPromise = null;
         activationPromise = null;

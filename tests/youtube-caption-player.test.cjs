@@ -16,6 +16,18 @@ const track = JSON.parse(fs.readFileSync(
 ));
 const entry = subtitles.entryFor('Xl5u91oQv-k');
 
+function groupedTrack() {
+  return {
+    ...track,
+    cues: [
+      { start: 0, end: 2, text: '先听原始素材，' },
+      { start: 2, end: 4, text: '再削掉刺耳共振。' },
+      { start: 4.4, end: 6, text: 'Then add' },
+      { start: 6, end: 8, text: 'a short tail.' }
+    ]
+  };
+}
+
 class FakeClassList {
   constructor() {
     this.values = new Set();
@@ -123,6 +135,9 @@ class FakeElement {
     if (selector === '[data-cue-index]') {
       return Object.prototype.hasOwnProperty.call(this.dataset, 'cueIndex');
     }
+    if (selector === '[data-paragraph-index]') {
+      return Object.prototype.hasOwnProperty.call(this.dataset, 'paragraphIndex');
+    }
     if (selector.startsWith('.')) {
       return this.className.split(/\s+/).includes(selector.slice(1));
     }
@@ -168,6 +183,7 @@ function buildFixture(options = {}) {
   const statusText = new FakeElement();
   const statusHint = new FakeElement();
   const transcript = options.includeTranscript === false ? null : new FakeElement();
+  const externalTranscript = new FakeElement({}, 'section');
   if (transcript) {
     const loadingLine = new FakeElement({}, 'p');
     loadingLine.textContent = '本站中文字幕加载中…';
@@ -211,8 +227,15 @@ function buildFixture(options = {}) {
     statusText,
     statusHint,
     transcript,
+    externalTranscript,
+    get paragraphButtons() {
+      return [
+        ...(transcript ? transcript.querySelectorAll('[data-paragraph-index]') : []),
+        ...externalTranscript.querySelectorAll('[data-paragraph-index]')
+      ];
+    },
     get cueButtons() {
-      return transcript ? transcript.querySelectorAll('[data-cue-index]') : [];
+      return this.paragraphButtons;
     }
   };
 }
@@ -614,7 +637,7 @@ test('successful async hydration builds transcript controls and synchronizes a r
   assert.equal(fixture.toggle.disabled, false);
   assert.equal(fixture.toggle.getAttribute('aria-pressed'), 'true');
   assert.equal(fixture.cueButtons.length, track.cues.length);
-  assert.equal(fixture.cueButtons[0].dataset.cueStart, String(track.cues[0].start));
+  assert.equal(fixture.cueButtons[0].dataset.paragraphStart, String(track.cues[0].start));
   assert.equal(fixture.cueButtons[0].querySelector('.video-transcript-time').textContent, '00:40');
   assert.equal(fixture.cueButtons[0].querySelector('.video-transcript-text').textContent, track.cues[0].text);
   assert.equal(fixture.transcript.innerHTMLAssignments, 0);
@@ -622,6 +645,93 @@ test('successful async hydration builds transcript controls and synchronizes a r
   assert.equal(fixture.overlay.textContent, track.cues[1].text);
   assert.equal(fixture.cueButtons[1].getAttribute('aria-current'), 'true');
   controller.destroy();
+});
+
+test('hydrates readable paragraphs into an external transcript root', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const loadedTrack = groupedTrack();
+  const paragraphs = subtitles.paragraphsFor(loadedTrack);
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    transcriptRoot: fixture.externalTranscript,
+    loadTrack: () => Promise.resolve(loadedTrack)
+  }));
+
+  await flushPromises();
+
+  assert.equal(fixture.externalTranscript.querySelectorAll('[data-paragraph-index]').length, paragraphs.length);
+  assert.equal(fixture.transcript.textContent, '');
+  assert.equal(fixture.transcript.children.length, 0);
+  assert.equal(fixture.externalTranscript.querySelector('.video-transcript-time').textContent, '00:00');
+  assert.equal(
+    fixture.externalTranscript.querySelector('.video-transcript-text').textContent,
+    paragraphs[0].text
+  );
+  controller.destroy();
+  assert.equal(fixture.externalTranscript.children.length, 0);
+});
+
+test('paragraph controls seek while the overlay remains cue-accurate and polling does not scroll', async () => {
+  const fixture = buildFixture();
+  const runtime = buildRuntime();
+  const loadedTrack = groupedTrack();
+  const paragraphs = subtitles.paragraphsFor(loadedTrack);
+  const controller = playerApi.mount(fixture.root, mountOptions(runtime, {
+    transcriptRoot: fixture.externalTranscript,
+    loadTrack: () => Promise.resolve(loadedTrack)
+  }));
+
+  await flushPromises();
+  const buttons = fixture.paragraphButtons.slice();
+  buttons[0].dispatch('click');
+  await flushPromises();
+  const config = runtime.getPlayerConfig();
+  config.events.onReady();
+  await flushPromises();
+
+  assert.deepEqual(runtime.calls.seek[0], [paragraphs[0].start, true]);
+  assert.equal(buttons[0].scrollCalls, 1);
+  runtime.setCurrentTime(loadedTrack.cues[1].start);
+  config.events.onStateChange({ data: 1 });
+  assert.equal(fixture.overlay.textContent, loadedTrack.cues[1].text);
+  assert.equal(buttons[0].getAttribute('aria-current'), 'true');
+  runtime.runInterval();
+  assert.equal(buttons[0].scrollCalls, 1);
+  controller.destroy();
+});
+
+test('notifies once after valid hydration, ignores callback failures, and stays silent after destroy', async () => {
+  const loaded = [];
+  const firstFixture = buildFixture();
+  const firstRuntime = buildRuntime();
+  const firstController = playerApi.mount(firstFixture.root, mountOptions(firstRuntime, {
+    onTrackLoaded(value) { loaded.push(value); }
+  }));
+  await flushPromises();
+  assert.deepEqual(loaded, [track]);
+  firstController.destroy();
+
+  const throwingFixture = buildFixture();
+  const throwingRuntime = buildRuntime();
+  const throwingController = playerApi.mount(throwingFixture.root, mountOptions(throwingRuntime, {
+    onTrackLoaded() { throw new Error('observer failure'); }
+  }));
+  await flushPromises();
+  assert.equal(throwingFixture.paragraphButtons.length, subtitles.paragraphsFor(track).length);
+  throwingController.destroy();
+
+  const lateFixture = buildFixture();
+  const lateRuntime = buildRuntime();
+  const request = deferred();
+  let lateCalls = 0;
+  const lateController = playerApi.mount(lateFixture.root, mountOptions(lateRuntime, {
+    loadTrack: () => request.promise,
+    onTrackLoaded() { lateCalls += 1; }
+  }));
+  lateController.destroy();
+  request.resolve(track);
+  await flushPromises();
+  assert.equal(lateCalls, 0);
 });
 
 test('no-speech state never loads a track and keeps normal playback available', async () => {
@@ -809,7 +919,7 @@ test('playing polls every 200 ms and synchronizes both caption surfaces and tran
   assert.equal(fixture.caption.textContent, track.cues[1].text);
   assert.equal(fixture.overlay.textContent, track.cues[1].text);
   assert.equal(fixture.cueButtons[1].getAttribute('aria-current'), 'true');
-  assert.equal(fixture.cueButtons[1].scrollCalls, 1);
+  assert.equal(fixture.cueButtons[1].scrollCalls, 0);
 
   runtime.setCurrentTime(track.cues[1].end);
   runtime.runInterval();
