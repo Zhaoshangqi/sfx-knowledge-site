@@ -15,6 +15,7 @@ const apiKeys = [
   'loadTrack',
   'clearTrackCache',
   'cueAt',
+  'paragraphsFor',
   'formatTime',
   'statusFor',
   'coverageFor'
@@ -22,6 +23,13 @@ const apiKeys = [
 
 function plain(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function joinTranscriptText(left, right) {
+  if (!left) return String(right || '');
+  if (!right) return String(left || '');
+  const needsSpace = /[A-Za-z0-9]$/.test(left) && /^[A-Za-z0-9]/.test(right);
+  return left + (needsSpace ? ' ' : '') + right;
 }
 
 function sampleTrack(videoId = 'video-a', overrides = {}) {
@@ -539,6 +547,65 @@ test('reuses validated cues and fails closed for malformed tracks and times', ()
   });
 });
 
+test('groups cue fragments into readable immutable paragraphs without changing cues', () => {
+  const cues = Object.freeze([
+    Object.freeze({ start: 0, end: 2, text: '先听原始素材，' }),
+    Object.freeze({ start: 2, end: 4, text: '再削掉刺耳共振。' }),
+    Object.freeze({ start: 4.4, end: 6, text: 'Then add' }),
+    Object.freeze({ start: 6, end: 8, text: 'a short tail.' })
+  ]);
+  const track = Object.freeze({ cues });
+  const paragraphs = SfxVideoSubtitles.paragraphsFor(track);
+
+  assert.deepEqual(plain(paragraphs), [
+    { start: 0, end: 4, text: '先听原始素材，再削掉刺耳共振。', cueIndexes: [0, 1] },
+    { start: 4.4, end: 8, text: 'Then add a short tail.', cueIndexes: [2, 3] }
+  ]);
+  assert.equal(track.cues[0].text, '先听原始素材，');
+  assert.ok(Object.isFrozen(paragraphs));
+  paragraphs.forEach((paragraph) => {
+    assert.ok(Object.isFrozen(paragraph));
+    assert.ok(Object.isFrozen(paragraph.cueIndexes));
+  });
+});
+
+test('starts a new paragraph before gap, duration, and code-point caps are exceeded', () => {
+  const gapTrack = { cues: [
+    { start: 0, end: 1, text: 'first fragment' },
+    { start: 2.21, end: 3, text: 'second fragment' }
+  ] };
+  const durationTrack = { cues: [
+    { start: 0, end: 12, text: 'first fragment' },
+    { start: 12, end: 25, text: 'second fragment' }
+  ] };
+  const lengthTrack = { cues: [
+    { start: 0, end: 1, text: 'a'.repeat(80) },
+    { start: 1, end: 2, text: 'b'.repeat(41) }
+  ] };
+
+  assert.equal(SfxVideoSubtitles.paragraphsFor(gapTrack).length, 2);
+  assert.equal(SfxVideoSubtitles.paragraphsFor(durationTrack).length, 2);
+  assert.equal(SfxVideoSubtitles.paragraphsFor(lengthTrack).length, 2);
+});
+
+test('paragraph projection fails closed for malformed tracks', () => {
+  [
+    null,
+    {},
+    { cues: [] },
+    { cues: [{ start: 2, end: 1, text: 'bad' }] },
+    { cues: [{ start: 0, end: 1, text: '' }] },
+    { cues: [
+      { start: 0, end: 2, text: 'overlap-a' },
+      { start: 1, end: 3, text: 'overlap-b' }
+    ] }
+  ].forEach((track) => {
+    const paragraphs = SfxVideoSubtitles.paragraphsFor(track);
+    assert.deepEqual(paragraphs, []);
+    assert.ok(Object.isFrozen(paragraphs));
+  });
+});
+
 test('formats compact timestamps and clamps invalid values to zero', () => {
   assert.equal(SfxVideoSubtitles.formatTime(0), '00:00');
   assert.equal(SfxVideoSubtitles.formatTime(5), '00:05');
@@ -581,6 +648,25 @@ test('loads the exact extracted Xl5u91oQv-k draft asset', async () => {
   assert.equal(loaded.cues.length, 23);
   assert.equal(loaded.cues[0].start, 40.559);
   assert.equal(loaded.cues.at(-1).end, 382.199);
+
+  const paragraphs = SfxVideoSubtitles.paragraphsFor(loaded);
+  const originalText = loaded.cues.reduce(
+    (text, cue) => joinTranscriptText(text, cue.text),
+    ''
+  );
+  const paragraphText = paragraphs.reduce(
+    (text, paragraph) => joinTranscriptText(text, paragraph.text),
+    ''
+  );
+  assert.equal(paragraphText, originalText);
+  assert.deepEqual(
+    paragraphs.flatMap((paragraph) => paragraph.cueIndexes),
+    loaded.cues.map((cue, index) => index)
+  );
+  paragraphs.forEach((paragraph, index) => {
+    assert.ok(paragraph.start < paragraph.end);
+    if (index > 0) assert.ok(paragraphs[index - 1].end <= paragraph.start);
+  });
 
   const text = loaded.cues.map((cue) => cue.text).join(' ');
   [

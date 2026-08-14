@@ -900,6 +900,71 @@
     return track;
   }
 
+  function codePointLength(value) {
+    return Array.from(String(value || '')).length;
+  }
+
+  function joinTranscriptText(left, right) {
+    var first = String(left || '');
+    var second = String(right || '');
+    if (!first) return second;
+    if (!second) return first;
+    var needsSpace = /[A-Za-z0-9]$/.test(first) && /^[A-Za-z0-9]/.test(second);
+    return first + (needsSpace ? ' ' : '') + second;
+  }
+
+  function sentenceEnded(value) {
+    var text = String(value || '').trim();
+    return /[。！？…][”’"']?$/.test(text) || /[.!?][”’"']?$/.test(text);
+  }
+
+  function paragraphsFor(track) {
+    var cues = normalizeCues(track && track.cues);
+    if (!cues || cues.length === 0) return Object.freeze([]);
+
+    var paragraphs = [];
+    var current = null;
+
+    function flush() {
+      if (!current) return;
+      paragraphs.push(Object.freeze({
+        start: current.start,
+        end: current.end,
+        text: current.text,
+        cueIndexes: Object.freeze(current.cueIndexes.slice())
+      }));
+      current = null;
+    }
+
+    cues.forEach(function (cue, index) {
+      var joined = current ? joinTranscriptText(current.text, cue.text) : cue.text;
+      var gap = current ? cue.start - current.end : 0;
+      var exceedsLimit = current && (
+        gap > 1.2 ||
+        cue.end - current.start > 24 ||
+        codePointLength(joined) > 120
+      );
+
+      if (exceedsLimit) flush();
+      if (!current) {
+        current = {
+          start: cue.start,
+          end: cue.end,
+          text: cue.text,
+          cueIndexes: [index]
+        };
+      } else {
+        current.end = cue.end;
+        current.text = joinTranscriptText(current.text, cue.text);
+        current.cueIndexes.push(index);
+      }
+
+      if (sentenceEnded(current.text)) flush();
+    });
+    flush();
+    return Object.freeze(paragraphs);
+  }
+
   var catalogByVideoId = Object.create(null);
   rawCatalog.forEach(function (rawEntry, index) {
     var entry = normalizeCatalogEntry(rawEntry);
@@ -1094,6 +1159,7 @@
     loadTrack: loadTrack,
     clearTrackCache: clearTrackCache,
     cueAt: cueAt,
+    paragraphsFor: paragraphsFor,
     formatTime: formatTime,
     statusFor: statusFor,
     coverageFor: coverageFor
