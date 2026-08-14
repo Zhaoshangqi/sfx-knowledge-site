@@ -2,11 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
-
-const modulePath = path.join(__dirname, '..', 'tools', 'timeline-review-data.cjs');
-const timelineReviewData = fs.existsSync(modulePath) ? require(modulePath) : null;
+const timelineReviewData = require('../tools/timeline-review-data.cjs');
 
 function api() {
   assert.ok(timelineReviewData, 'timeline review data module must exist');
