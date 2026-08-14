@@ -124,6 +124,27 @@ test('buildEffectUses accepts arrays and normalizes explicit and legacy sources'
   assert.equal(collisionUses[1].id, 'collision:effect:delay:1');
 });
 
+test('buildEffectUses preserves numeric timeline fields without coercing strings', () => {
+  const uses = model.buildEffectUses([{
+    id: 'timed-record',
+    effectUses: [
+      { name: 'Timed', startSeconds: 12.5, screenshotReviewed: 1 },
+      { name: 'String time', startSeconds: '12.5', screenshotReviewed: '' },
+      { name: 'Untimed', screenshotReviewed: 'reviewed' }
+    ],
+    plugins: [{ name: 'Legacy' }]
+  }]);
+
+  assert.equal(uses[0].startSeconds, 12.5);
+  assert.equal(uses[0].screenshotReviewed, true);
+  assert.equal(uses[1].startSeconds, null);
+  assert.equal(uses[1].screenshotReviewed, false);
+  assert.equal(uses[2].startSeconds, null);
+  assert.equal(uses[2].screenshotReviewed, true);
+  assert.equal(uses[3].startSeconds, null);
+  assert.equal(uses[3].screenshotReviewed, false);
+});
+
 test('legacy effect projection omits generated transcript and pseudo-parameter scaffolding', () => {
   const [use] = model.buildEffectUses([{
     id: 'legacy-cleanup',
