@@ -167,4 +167,3 @@ Confirm the diff contains no original YouTube media, complete audio, Cookie, log
 - [ ] **Step 5: Commit and push after the implementation/specification/quality gates pass**
 
 Commit only the verified site, subtitle text, tests, converter, and documentation to `feature/video-knowledge-dual-index`, then push the existing Pull Request branch.
-
