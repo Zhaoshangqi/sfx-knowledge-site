@@ -1136,6 +1136,7 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
     siteManifest
   ));
   const guides = SfxEffectGuides.all();
+  const publicEffectUseManifest = require('../tools/data/public-effect-use-ids.json');
   const names = profiles.map((profile) => profile.name);
   const guideEvidenceUseIds = guides.map((guide) => guide.evidenceUseId);
 
@@ -1148,6 +1149,12 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   assert.equal(new Set(names).size, profiles.length);
   assert.equal(guideEvidenceUseIds.length, 27);
   assert.equal(new Set(guideEvidenceUseIds).size, 27);
+  assert.equal(publicEffectUseManifest.version, 1);
+  assert.equal(publicEffectUseManifest.useIds.length, 97);
+  assert.deepEqual(
+    new Set(publicEffectUseManifest.useIds),
+    new Set(profiles.flatMap((profile) => profile.uses.map((use) => use.id)))
+  );
   assert.deepEqual(
     SfxEffectLearningPaths.goals().map((goal) => ({
       id: goal.id,
