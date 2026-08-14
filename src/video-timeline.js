@@ -61,9 +61,8 @@
 
   function effectStart(record, use) {
     if (!validRecord(record) || !use || typeof use !== 'object' || Array.isArray(use)) return null;
-    if (use.startSeconds !== null && use.startSeconds !== undefined) {
-      return bounded(record, use.startSeconds);
-    }
+    var explicit = bounded(record, use.startSeconds);
+    if (explicit !== null) return explicit;
     return stepStart(record, use.stepIndex);
   }
 

@@ -83,15 +83,16 @@ test('inherits reviewed step times for steps, screenshots, and effects', () => {
   assert.equal(api.effectStart(record, { stepIndex: 1, startSeconds: null }), 25);
 });
 
-test('uses valid explicit effect times and rejects supplied invalid overrides', () => {
+test('uses valid explicit effect times and inherits from invalid overrides', () => {
   const api = timelineApi();
   const record = reviewedRecord();
 
   assert.equal(api.effectStart(record, { stepIndex: 1, startSeconds: 31 }), 31);
   assert.equal(api.effectStart(record, { stepIndex: 1, startSeconds: 0 }), 0);
   [-1, NaN, Infinity, '31', 90, 91].forEach((startSeconds) => {
-    assert.equal(api.effectStart(record, { stepIndex: 1, startSeconds }), null);
+    assert.equal(api.effectStart(record, { stepIndex: 1, startSeconds }), 25);
   });
+  assert.equal(api.effectStart(record, { stepIndex: 99, startSeconds: '31' }), null);
 });
 
 test('rejects unreviewed records, invalid indexes, and invalid step times', () => {
