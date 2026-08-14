@@ -79,6 +79,20 @@ CUDA 命令要求 `torch.cuda.is_available()` 为真，并且 `large-v3` 已在 
 
 `no-speech` 不是模型推断。即使全长 VAD/Whisper 得到零 accepted speech，模型/接口不能真正审听音频；只有人工全长听审后才能批准 `no-speech` override。否则使用带具体证据的 `missing`，这是可信且可维护的状态。
 
+## 视频时间线人工核对
+
+时间点必须在可见的 YouTube 播放器中逐项确认。站内字幕匹配只提供 seek 候选，不能自动写成 `reviewed`，也不能替代对画面、声音和当前视频 ID 的人工核对。评审服务只绑定 `127.0.0.1`，状态固定写入未跟踪的 `.work/timeline-review/review.json`：
+
+```powershell
+node .\tools\timeline-review-server.cjs --index .\index.html --work .\.work\timeline-review
+node .\tools\apply-timeline-review.cjs --index .\index.html --review .\.work\timeline-review\review.json --dry-run --report .\.work\timeline-review\apply-report.json
+node .\tools\apply-timeline-review.cjs --index .\index.html --review .\.work\timeline-review\review.json --write
+```
+
+在评审台中先确认播放器已就绪且视频 ID 正确，再记录每个步骤的开始时间；每个公开效果器案例还必须选择所属步骤，并确认对应截图或明确标记“已检查但无截图”。单条视频只有在时长、全部步骤和全部公开案例都完成后才会整体写回；候选时间、部分完成视频、旧步骤顺序、案例 ID 错位和越界时间都会拒绝应用。先运行 `--dry-run` 检查报告，确认 `failures` 为空和 `changedRecordIds` 符合本批范围后，才运行 `--write`。
+
+批量人工核对期间可运行 `node .\tools\verify-portable-kit.cjs --allow-incomplete-timeline`，该开关只暂时放宽时间线完整度，公开案例身份和截图资产仍必须有效。最终发布必须去掉此开关，使默认校验达到 82/82 条已核对视频、924/924 个步骤时间、97/97 个公开案例时间与截图审查，以及 847/847 个步骤截图资产。
+
 ## 安全与全量验证
 
 绝不提交 `.work`、媒体、VTT、review/candidate、Cookie、登录态、token、API key、模型 checkpoint 或绝对本地路径。仓库只保存经过结构和来源校验、`reviewStatus` 可为 `draft` 或 `reviewed` 的站内 JSON 字幕、catalog、已审校的网站/Skill 内容、工具、测试和文档。
