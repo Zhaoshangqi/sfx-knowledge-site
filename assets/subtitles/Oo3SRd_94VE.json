@@ -417,8 +417,8 @@
     },
     {
       "start": 303.12,
-      "end": 358.934,
-      "text": "再从那里继续。"
+      "end": 304.25,
+      "text": "后面就从中挑选。"
     },
     {
       "start": 358.944,
@@ -528,7 +528,7 @@
     {
       "start": 454.24,
       "end": 456.319,
-      "text": "ii-V-I 三和弦"
+      "text": "ii-V-I 进行"
     },
     {
       "start": 456.319,
@@ -538,7 +538,7 @@
     {
       "start": 461.039,
       "end": 462.56,
-      "text": "普通三和弦听起来很常规，"
+      "text": "那样听起来很普通，"
     },
     {
       "start": 462.56,
@@ -698,7 +698,7 @@
     {
       "start": 578.16,
       "end": 581.519,
-      "text": "EchoBoy 用的是 Empty Tank"
+      "text": "EchoBoy 用的是 Empty Tanker"
     },
     {
       "start": 581.519,
@@ -708,7 +708,7 @@
     {
       "start": 584.32,
       "end": 588.71,
-      "text": "Festival Reverb 预设。"
+      "text": "Festhalle 脉冲响应。"
     },
     {
       "start": 588.72,
@@ -1298,7 +1298,7 @@
     {
       "start": 952,
       "end": 954.88,
-      "text": "失真、饱和与调制。"
+      "text": "失真、饱和与振幅调制。"
     },
     {
       "start": 954.88,
@@ -1493,12 +1493,12 @@
     {
       "start": 1081.36,
       "end": 1084.08,
-      "text": "先清理，再用 Tremolator"
+      "text": "先清理，再用 Tremolator 做"
     },
     {
       "start": 1084.08,
       "end": 1087.039,
-      "text": "让 Depth 旋钮调制振幅。"
+      "text": "振幅调制，并调节 Depth。"
     },
     {
       "start": 1087.039,
@@ -1753,7 +1753,7 @@
     {
       "start": 1237.679,
       "end": 1243.35,
-      "text": "实体质感几乎各占一半。"
+      "text": "物理质感几乎各占一半。"
     },
     {
       "start": 1243.36,
@@ -2123,12 +2123,12 @@
     {
       "start": 1459.76,
       "end": 1462.799,
-      "text": "是打开 REAPER 的 Variation Generator"
+      "text": "是打开 REAPER 脚本 MC_Variation_Generator，"
     },
     {
       "start": 1462.799,
       "end": 1466.159,
-      "text": "脚本，点击 Randomize。"
+      "text": "点击随机化。"
     },
     {
       "start": 1466.159,
@@ -2143,7 +2143,7 @@
     {
       "start": 1469.36,
       "end": 1471.44,
-      "text": "每个 item 的大量参数，"
+      "text": "每个媒体项的多个参数，"
     },
     {
       "start": 1471.44,
