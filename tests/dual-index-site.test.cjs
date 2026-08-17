@@ -343,7 +343,7 @@ test('quick conclusions stay concise while folded evidence preserves every suppl
   assert.equal((evidence.match(/<details class="evidence-disclosure"/g) || []).length, 4);
 });
 
-test('all 82 records render verified step and screenshot time controls', () => {
+test('all 84 records render verified step and screenshot time controls', () => {
   const detailData = loadVideoDetailData();
   const helpers = loadDetailRenderingHelpers({
     escapeHtml: escapeHtmlForTest,
@@ -449,7 +449,7 @@ test('compact shell exposes useful runtime-derived header statistics', () => {
     indexHtml,
     /categoryCountStatEl\.textContent = categories\.filter\(\(category\) => category\.id !== "all"\)\.length \+ " 个分类";/
   );
-  assert.doesNotMatch(indexHtml, /(?:82 个视频|27 个效果器|6 个分类)/);
+  assert.doesNotMatch(indexHtml, /(?:84 个视频|27 个效果器|6 个分类)/);
 });
 
 test('updates the exact effect statistic from strict published profiles', () => {
@@ -1350,7 +1350,7 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   const names = profiles.map((profile) => profile.name);
   const guideEvidenceUseIds = guides.map((guide) => guide.evidenceUseId);
 
-  assert.equal(siteRecords.length, 82);
+  assert.equal(siteRecords.length, 84);
   assert.equal(profiles.length, 27);
   assert.deepEqual(
     new Set(names),

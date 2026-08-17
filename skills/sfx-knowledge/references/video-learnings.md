@@ -1305,3 +1305,80 @@ These entries were generated from the standalone HTML knowledge base so every an
   - 插件是否保留只看独立贡献。复制链、preset 和可见 FX 条目都不等于有可听因果；必须旁路、匹配响度并检查角色职责。
   - 完整交付还需 loop seam、variation、fade、mono、true peak、约 250 Hz 累积、导出、Wwise/FMOD 生命周期和游戏内遮蔽测试；本片证据没有完成这些验收。
 - Use when: interactive ultimate ability; post-activation state machine; temporary revive; ghost reposition; perspective voice cut; reverse suck bridge; independent enter loop spawn; post-revive kill timer; runtime RTPC volume; flat loop not baked; success failure branches; system banner priority; Clove identity motif; bell chime; butterfly bird flap; Crystallizer frame-bound values; Pro-Q 3 automation; PhaseMistress movement; SP2016 failure branch; remove ineffective copied plugins; REAPER Wwise evidence boundary; magic; scifi; workflow; 插件技巧; 需要严格区分按 X 前 Res Available/End 与按 X 后复活执行链; 需要把 REAPER 演示 envelope 与游戏运行时自动化分开; 需要避免从字幕听感或未显示 Wwise 字段补写工程事实
+
+## 2026-08-17 - 《守望先锋》风格水系法术：从水录音派生调性、湿纹理与空间运动
+- Source: `https://www.youtube.com/watch?v=lLTbxhK_QLU`
+- Domain: magic, water spell, workflow, scifi, Overwatch, Wuyang, Dietrich Dice Sound, REAPER, Sonic Water FX, kitbash, tonal water, wet texture, glitter layer, whoosh, granular, Doppler, XY Pad, MVocoder, RX 9 De-crackle, SpinTracer
+- Reusable pattern: 先从自带调性、滴水和湿润特征的水录音建立素材池，把源素材分别派生为水体主体、Tonal 魔法身份、glitter 高频焦点、湿裂纹、whoosh、球体 ambience 与空间运动；再按画面依次装配起始、掠过、持续和尾部。素材加工与画面对位分成两阶段，装配时只做职责明确的轻处理，避免一条素材同时承担物理水感、音高身份、高频焦点和运动。
+- Evidence boundary: 本条依据完整视频画面、公开字幕和固定帧整理；本次未本地试听视频音轨。声音结果只归因于创作者旁白，截图只证明当帧可见的素材、路由、界面与工程上下文；不从波形、插件列表或相邻章节补写听感、隐藏参数和内部算法。
+- Materials / source roles:
+  - Sonic Water FX 的池水录音提供原始水感、滴水、调性和湿润纹理；`Water-Stir-Pool_SONICWATER385.wav` 用于较长的运动水层。
+  - 干冰气泡录音提供噪声、群体起伏和可叠加的移动气泡层；重水搅动录音用于抽取湿裂纹残差。
+  - `Water-Flow-Pool_SONICWATER080_2.wav` 通过 XY 手势形成可控 whoosh；UZU 再采样派生 Tonal High 与 Tonal Low。
+  - 低沉水体承担物理主体，Tonal 层承担魔法音高身份，glitter 承担高频焦点，降调层承担球体 ambience，额外湿点与轻量 panning 跟随画面移动。
+- Step / event map:
+  - `00:00` 成片先行，截图键 `lLTbxhK_QLU-final-result`：用水球最终画面先定义目标；此处只确认视觉目标，实际层次由后续拆解建立。
+  - `00:45` 原始水声与处理后素材池，截图键 `lLTbxhK_QLU-source-examples`：输入池水、流动和气泡录音，先展示原声，再批量派生湿润、调性与运动变体，最后才进入画面对位。
+  - `02:00` 池水搅动的湿化与延长，截图键 `lLTbxhK_QLU-source-1`：输入池水搅动，先提取调性和高频，再增加湿润特征、随机滤波与音高运动，并延长颗粒尾部，输出可剪辑的长水层。
+  - `04:15` 干冰气泡的噪声与群体运动，截图键 `lLTbxhK_QLU-source-2`：输入干冰气泡，先筛选可用噪声，再加入起伏、群体移动和低频支撑，输出可叠在水体上的移动层；截图只确认素材与处理轨。
+  - `05:32` 重水搅动抽出湿裂纹，截图键 `lLTbxhK_QLU-source-3`：输入经增强与拉伸的重水录音，仅输出裂纹残差，再接延迟、晶化、饱和与 whoosh 运动，输出闪烁的湿尾材料。
+  - `07:41` 池水流动的 XY 手势掠过，截图键 `lLTbxhK_QLU-source-4`：输入完整水流波形，以横向手势控制滤波、纵向手势控制增益，再补调性与细微变化，输出可演奏的 whoosh 轮廓。
+  - `09:42` 为低沉水体补闪光魔法，截图键 `lLTbxhK_QLU-source-5`：保留已有水体主体，另做清掉低频、带晶化与颗粒运动的 glitter 层，并约束刺耳高频，输出清楚的高频魔法焦点。
+  - `11:26` UZU 再采样高低音纹理，截图键 `lLTbxhK_QLU-source-6`：输入前段水样，反复渲染不同调性纹理，并把过亮版本整体降调，输出 Tonal High 与 Tonal Low；UZU 内部算法未确认。
+  - `12:06` 按画面装配与旋转空间，截图键 `lLTbxhK_QLU-final-breakdown`：依次放置起始声、三组 water whoosh、Tonal、glitter、湿水层和球体 ambience；最后让旋转层匹配水球，并用额外湿点和轻量 panning 跟随横向运动。
+- Plugin and processing notes:
+  - **MeldaProduction MVocoder**: 输入是 Play1 上经前级提取调性与高频的池水搅动录音；`02:45` / `165` 秒、截图键 `lLTbxhK_QLU-source-1` 确认作者在路由窗口点击两个方格。动作目的是增加湿润纹理，作者称结果更湿；适用于水体已有主体但缺少湿润细节的层。作者本人也不确定内部机理，因此 carrier/modulator 机制保持未知，不把可见点击扩写成固定路由，也不以未做的本地试听确认结果。
+  - **iZotope RX 9 De-crackle**: 输入是经增强与拉伸的重水搅动录音；固定截图在 `06:10` / `370` 秒，截图键 `lLTbxhK_QLU-source-3`，确认 `Output crackle only`。动作是只输出裂纹残差，目的与作者所述结果是把密集水声派生为细碎湿纹理；适用于需要从复杂源中分离残差作为新材料的场景。残差随后进入延迟、晶化、饱和与运动处理；其它界面数值不作建议。
+  - **Tonsturm SpinTracer**: 输入是完成宽度与 EQ 整理后的 glitter 和湿水层；`15:20` / `920` 秒、截图键 `lLTbxhK_QLU-final-breakdown` 确认插件与分层时间线。动作是赋予旋转空间运动，目的与作者所述结果是匹配画面中的旋转水球；适用于物体旋转需要由空间轨迹而非单纯声像摆动表达的层。末端另用轻量 panning 跟随横移，preset、界面数值与本地听感均不外推。
+- Processing and assembly order:
+  - 素材阶段：选择自带水感的录音 -> 分别提取调性、高频、湿残差和运动 -> 生成 whoosh、impact、Tonal、Doppler 与长尾变体 -> 清理爆点、浑浊或刺耳部分。
+  - 装配阶段：起始声 -> 三组 water whoosh -> Tonal 身份 -> glitter 焦点 -> 湿水与球体 ambience -> 旋转空间 -> 横向 panning 与额外湿点。
+  - 职责检查：水体、音高、闪光、持续和运动各自可辨；若某层不能说明输入、动作和结果，就不把它升级为独立效果器结论。
+- Design principles learned:
+  - 先放大源素材已有的物理特征，再用派生层补缺失职责；水体缺少魔法辨识度时补 Tonal 与 glitter，不继续堆低频水声。
+  - 随机变化、XY 手势、颗粒延尾、空间旋转和横向 panning 负责不同尺度的运动，不能互相替代。
+  - 处理残差可以成为独立素材；先将它渲染和命名，再作为新层进入装配，而不是永远留在探索链中。
+  - 装配阶段以画面事件和层职责为准，只在出现浑浊、爆点、刺耳或宽度冲突时做减法与轻调整。
+  - 完整交付仍需做匹配响度旁路、mono、fade、loop、variation、峰值、导出和游戏内遮蔽检查；本片证据没有完成这些验收。
+- Use when: water spell; water orb; Overwatch-style magic; Wuyang; tonal water; wet crackle texture; glitter magic layer; water whoosh; XY Pad gesture; residual extraction; UZU resampling; rotating spatial motion; SpinTracer; MVocoder uncertainty; RX 9 De-crackle Output crackle only; source-pool first workflow; magic; workflow; scifi; 插件技巧; 需要把水体主体、音高身份、高频焦点与空间运动拆成独立职责; 需要从水录音批量派生素材后再贴画面; 需要严格区分作者旁白、固定帧和未做本地试听的边界
+
+## 2026-08-17 - 零现成音效素材库制作圣光魔法：家庭录音、Kontakt 音高层与四遍画面对位
+- Source: `https://www.youtube.com/watch?v=Oo3SRd_94VE`
+- Domain: magic, holy magic, workflow, sound redesign, Michael Cheung, Jong Woo Jeong, source recording, building blocks, Kontakt, tonal layer, physical texture, singing bowl, jingle bells, bubble wrap, balloon deflating, saran wrap, plastic wrap, picture pass, kHs Dynamics, Soundtoys Crystallizer, Variation Generator
+- Reusable pattern: 这里的“零素材库”指不调用现成 SFX library，不是全程零采样或零音源；Kontakt 仍提供合成、合唱与持续音的音高层。流程先采录家庭材料，再把物理录音和 Kontakt 音高素材清理、变形、渲染成独立构件，最后分四遍完成旋转与收缩、光球上射、主爆发、落点与治疗收尾。合唱与持续音负责神圣感，家庭材料负责触感、运动、命中和尾音，脚本只生成变体起点。
+- Evidence boundary: VFX 由 Jong Woo Jeong 制作，来源为 `https://www.youtube.com/watch?v=yE5rjDocIAE`；本片是 Michael Cheung 的独立声音重设计与教程，不是 Blizzard、游戏官方音频或已上线资产。本条依据完整视频画面、创作者旁白与固定帧整理，本次未本地试听视频音轨；声音结果只按作者表述记录，不从波形、插件列表或画面动作推断实际音色、响度和混音权重。
+- Materials / source roles:
+  - 气泡膜提供持续摩擦、动作床、爆发前导和 whoosh；放气气球提供连接音高层与爆发的空气感前导。
+  - 保鲜膜提供较薄的颗粒纹理和短打击；蛋白粉摇杯外的塑料包装提供更实体的命中与呼啸。
+  - 颂钵提供稳定共鸣、持续音、转场呼啸和反向长尾；铃铛提供闪光、星点、上扬和消散时的明亮纹理。
+  - Kontakt 的 Ashlight、Hypha、Ethereal Earth、Choir Omnia 与 Voxos 提供合成、合唱、持续共鸣和尾音运动；这些是音高素材来源，不改变“没有现成 SFX library”的准确含义。
+- Step / event map:
+  - `00:00` 采录家庭材料，截图键 `Oo3SRd_94VE-source-recordings`：输入气泡膜、放气气球、保鲜膜和塑料包装，保留真实动作与摩擦，作为后续动作床、前导、命中和尾音的物理来源。
+  - `00:46` 先看完整声音重设计，截图键 `Oo3SRd_94VE-final-design`：观察魔杖旋转、光球生成、上射、主爆发、星点落下和收尾，先建立整段事件与节奏参照；不据预览画面判断听感。
+  - `02:47` 建立合成与合唱音高层，截图键 `Oo3SRd_94VE-synths`：从 Kontakt 多个音源取得音高材料，整理动态、延展尾音并加入振幅运动，出现点击或削波时单独修复，输出合唱、持续音和过渡构件。
+  - `05:04` 渲染处理后构件库，截图键 `Oo3SRd_94VE-building-blocks`：将合成、合唱、家庭录音派生层按前导、命中、运动和尾音逐条渲染、命名并存入浏览器，供画面对位直接调用。
+  - `09:22` 从颂钵派生共鸣与尾音，截图键 `Oo3SRd_94VE-singing-bowl`：保留稳定共鸣，再派生持续音、呼啸和反向颗粒长尾，分别支撑音高、转场和动作后的延展。
+  - `10:56` 把铃铛扩成明亮纹理，截图键 `Oo3SRd_94VE-jingle-bells`：清理低频残留后进行变调、空间、饱和与轻微失谐，输出闪光、星点、上扬和尾部层。
+  - `12:59` 清理气泡膜动作床，截图键 `Oo3SRd_94VE-bubble-wrap`：输入带低电平残留的气泡膜录音，通过动态处理让残留退后、主要动作突出，再剪成动作床、爆发前导与 whoosh。
+  - `15:30` 把放气气球做成爆发前导，截图键 `Oo3SRd_94VE-balloon-deflating`：整理动态与频段，加入饱和和振幅调制制造不规则运动，再补少量和声与空间，输出空气感前导。
+  - `16:22` 把保鲜膜做成颗粒纹理，截图键 `Oo3SRd_94VE-plastic-wrap-textures`：输入保鲜膜，降调并加入延迟颗粒切片，输出更低、更碎且带拖尾的纹理；该截图不代表其它塑料小章节。
+  - `18:54` 第一遍画面对位，截图键 `Oo3SRd_94VE-picture-pass-1`：气泡膜跟随魔杖旋转，铃铛与反向层建立光球前导，塑料与颂钵落在命中，反向铃铛与气泡膜描绘收缩和星点。
+  - `20:42` 第二遍光球上射，截图键 `Oo3SRd_94VE-picture-pass-2`：气球前导放在启动前，上升 whoosh 跟随轨迹，气泡膜补离场尾部，形成启动、上升和收尾。
+  - `21:13` 第三遍主爆发与冲击波，截图键 `Oo3SRd_94VE-picture-pass-3`：只展开部分前导层，保鲜膜、颂钵和塑料打击落在主命中，合唱与铃铛展开和声，运动尾音跟随冲击波。
+  - `23:05` 第四遍落点与治疗收尾，截图键 `Oo3SRd_94VE-picture-pass-4`：短打击跟住星点落点，反向素材连接转场，铃铛衰减并由合唱音高收束尾部。
+  - `24:22` 生成变体并人工复核，截图键 `Oo3SRd_94VE-variation-generator`：MC_Variation_Generator 随机改变已完成的时间线 item，仅提供变体起点；人工检查时长、音高和画面对位后才保留结果。
+- Plugin and processing notes:
+  - **kHs Dynamics**: 输入是初步清理并渲染后、仍带低电平原录音残留的气泡膜动作素材；`13:47` / `827` 秒、截图键 `Oo3SRd_94VE-bubble-wrap` 确认界面、波形与工程上下文。动作是向上扩展，让阈值下残留退后并突出主要运动；作者称结果更干净，随后用于动作床与 whoosh。适用于低电平残留遮住主要动作的录音；未本地试听，不提供固定阈值、比例或时间参数。
+  - **Soundtoys Crystallizer**: 输入是完成基础清理的保鲜膜录音；`16:30` / `990` 秒、截图键 `Oo3SRd_94VE-plastic-wrap-textures` 确认插件与 saran wrap 上下文。动作是降低音高并加入延迟颗粒切片，目的与作者所述结果是得到更低、更碎、带拖尾的纹理。适用于需要降调、碎片化和延迟尾部的薄塑料层；不把界面数值写成配方，也不借该截图证明塑料包装、气泡膜或其它处理。
+- Processing and assembly order:
+  - 素材制作：家庭录音与 Kontakt 音高素材 -> 清理低频残留、点击和削波 -> 整理动态与频段 -> 加入需要的振幅、空间或颗粒运动 -> 派生共鸣、whoosh、命中和长尾。
+  - 构件整理：按前导、命中、运动、持续与尾音逐条渲染和命名；画面对位阶段从已审核构件中裁切，不反复破坏原始录音。
+  - 四遍装配：旋转与收缩 -> 光球上射 -> 主爆发与冲击波 -> 星点落点与治疗收尾；前导和尾部可按画面展开，主命中保持集中。
+  - Silo 画面显示 `Activation Required`，只能作为作者提到的既有工作流背景，不是当前可运行效果或 effect use。MC_Variation_Generator 只是工作流脚本，不登记为效果器，输出必须人工复核。
+- Design principles learned:
+  - 神圣感不等于只堆明亮音色；合唱与持续音给出音高身份，家庭材料让旋转、上射、命中和治疗落点具有物理可读性。
+  - 原始录音、处理后构件和画面对位应分层管理；先稳定素材角色，再按视觉事件裁切和组合。
+  - 宽度由事件职责决定，铺垫与空间尾部可以展开，主命中不应因所有层同时变宽而失去中心。
+  - 单颗处理器必须能说明输入问题、动作和结果；复合链中可见的名称、未激活界面和脚本都不自动构成效果用法。
+  - 生成式变化只是候选，仍需检查时长、音高、画面对位、fade、mono、峰值、导出和游戏内遮蔽；本片没有完成这些交付验收。
+- Use when: holy magic; healing spell; independent sound redesign; no ready-made SFX library; household source recording; Kontakt tonal layers; choir identity; bubble-wrap movement bed; balloon riser; saran-wrap granular texture; singing-bowl resonance; jingle-bell sparkle; four picture passes; kHs Dynamics upward expansion; Soundtoys Crystallizer; Variation Generator boundary; Silo Activation Required boundary; magic; workflow; 需要把“零素材库”准确解释为不用现成音效库而非不用 Kontakt; 需要用家庭材料补足魔法的物理运动与命中; 需要明确 VFX 原作者、独立重设计和非官方游戏音频边界

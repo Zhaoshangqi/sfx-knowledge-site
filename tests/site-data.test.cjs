@@ -535,7 +535,7 @@ test('parse and replaceRecords preserve the real repository index boundaries', (
   const originalManifestStart = before.indexOf(IMAGE_MANIFEST_MARKER);
   const changedManifestStart = changed.indexOf(IMAGE_MANIFEST_MARKER);
 
-  assert.equal(parsed.records.length, 82);
+  assert.equal(parsed.records.length, 84);
   assert.ok(Object.keys(parsed.imageManifest).length > 0);
   assert.equal(same, before);
   assert.equal(changed.slice(0, literalStart), before.slice(0, literalStart));
