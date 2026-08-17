@@ -725,6 +725,24 @@
       "updatedAt": "2026-08-13",
       "contentStatus": "track",
       "asset": "assets/subtitles/cJ75ykkqV64.json"
+    },
+    {
+      "videoId": "lLTbxhK_QLU",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-17",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/lLTbxhK_QLU.json"
+    },
+    {
+      "videoId": "Oo3SRd_94VE",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-08-17",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/Oo3SRd_94VE.json"
     }
   ];
   /* SUBTITLE_CATALOG_END */
