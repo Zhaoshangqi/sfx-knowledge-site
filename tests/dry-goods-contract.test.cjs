@@ -1253,3 +1253,67 @@ test("the enrichment tool no longer generates practice fields or course suffixes
   assert.doesNotMatch(writtenSite, /Little AlterBoy|EQ \/ modulation|A\/B/);
   assert.equal(writtenReport.report[0].status, "insufficient-evidence");
 });
+
+test("the repository skill requires embedded video and site-owned subtitle behavior", () => {
+  const skill = read("skills/sfx-knowledge/SKILL.md");
+  const videoRuleHeading = "## Video Learning Rule";
+  const websiteRuleHeading = "## Website Video and Subtitle Embedding Rule";
+  const corePrinciplesHeading = "## Core Principles";
+  const videoRuleIndex = skill.indexOf(videoRuleHeading);
+  const websiteRuleIndex = skill.indexOf(websiteRuleHeading);
+  const corePrinciplesIndex = skill.indexOf(corePrinciplesHeading);
+  const sectionMatch = skill.match(
+    /## Website Video and Subtitle Embedding Rule\r?\n[\s\S]*?(?=\r?\n## Core Principles\r?\n)/
+  );
+
+  assert.equal(
+    (skill.match(new RegExp(websiteRuleHeading, "g")) ?? []).length,
+    1,
+    "the website video rule heading must appear exactly once"
+  );
+  assert.equal(
+    (skill.match(new RegExp(corePrinciplesHeading, "g")) ?? []).length,
+    1,
+    "the core principles heading must appear exactly once"
+  );
+  assert.ok(videoRuleIndex >= 0);
+  assert.ok(websiteRuleIndex > videoRuleIndex);
+  assert.ok(corePrinciplesIndex > websiteRuleIndex);
+  assert.ok(sectionMatch, "the website video rule section must be isolated");
+
+  const section = sectionMatch[0];
+  const requirements = [
+    [/Embed each video in the page/, "videos must be embedded in the page"],
+    [/YouTube IFrame API/, "video embedding must use the YouTube IFrame API"],
+    [/canonical source URL.*fallback/i, "the canonical source URL must remain a fallback"],
+    [/external jump.*not be the primary viewing path/i, "an external jump must not be the primary viewing path"],
+    [/YouTube.*published website playback source/is, "YouTube must be the published website playback source"],
+    [/Never host or commit source videos or full audio tracks/i, "source videos and full audio tracks must not be hosted or committed"],
+    [/Temporary analysis media may be downloaded only into ignored `\.work`/i, "temporary analysis media must be limited to ignored .work"],
+    [/temporary analysis media.*docs\/learning-workflow\.md/is, "temporary analysis media must follow the documented workflow"],
+    [/temporary analysis media.*never be published or committed/is, "temporary analysis media must never be published or committed"],
+    [/Chinese subtitles site-owned and independent of YouTube translation/i, "Chinese subtitles must be site-owned and independent of YouTube translation"],
+    [/validated tracks at `assets\/subtitles\/<videoId>\.json`/i, "validated subtitle tracks must use the video ID path"],
+    [/(register every site video|every site video.*registered).*src\/video-subtitles\.js/i, "every site video must be registered in the subtitle catalog"],
+    [/load tracks lazily by video ID/i, "subtitle tracks must load lazily by video ID"],
+    [/validated short cues.*single timing and text source/is, "validated short cues must be the single timing and text source"],
+    [/in-player overlay.*CC visibility.*seeking.*derived full transcript/is, "short cues must drive overlay, CC, seeking, and the derived transcript"],
+    [/transcript formatting.*not rewrite cue text/is, "transcript formatting must preserve cue text"],
+    [/transcript formatting.*not rewrite cue text or timing/is, "transcript formatting must preserve cue timing"],
+    [/subtitle overlay inside the site's fullscreen player wrapper/i, "the subtitle overlay must stay inside the fullscreen player wrapper"],
+    [/video and captions remain visible together/i, "fullscreen playback must keep video and captions visible together"],
+    [/do not rely on the YouTube iframe's translated captions/i, "the site must not rely on YouTube translated captions"],
+    [/subtitle state truthfully as `track`, `missing`, or an approved `no-speech`/i, "subtitle states must be truthful and explicit"],
+    [/Never claim complete coverage/i, "the Skill must not claim complete subtitle coverage"],
+    [/fabricate (?:a )?track/i, "the Skill must not fabricate subtitle tracks"],
+    [/hide a missing state/i, "the Skill must not hide missing subtitle states"],
+    [/missing or fail to load.*usable video playback.*canonical source link/is, "missing or failed subtitles must preserve playback and the canonical link"],
+    [/Never commit source videos, full audio tracks, cookies, login state, raw VTT, local transcription evidence, tokens, or machine-specific paths/is, "the prohibited commit boundary must include media, credentials, evidence, tokens, and machine paths"],
+    [/Commit only validated Chinese JSON tracks, the generated catalog, code, tests, and documentation/is, "the allowed commit boundary must include only validated tracks, catalog, code, tests, and docs"],
+    [/docs\/learning-workflow\.md.*README\.md/is, "the Skill must point to the workflow docs and README"]
+  ];
+
+  for (const [pattern, message] of requirements) {
+    assert.match(section, pattern, message);
+  }
+});

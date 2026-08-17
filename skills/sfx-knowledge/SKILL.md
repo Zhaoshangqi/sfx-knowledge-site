@@ -24,6 +24,22 @@ After every analyzed tutorial/reference video:
 6. When working in the website repository, update the video's independent module and regenerate `references/site-video-memory.md` with `node tools/export-site-memory.cjs`.
 7. When later designing SFX, actively retrieve relevant entries and combine them with the general principles below.
 
+## Website Video and Subtitle Embedding Rule
+
+When creating or maintaining the video-learning website:
+
+1. Embed each video in the page with the YouTube IFrame API. Keep the canonical source URL as a fallback; an external jump must not be the primary viewing path.
+2. Use YouTube as the published website playback source. Never host or commit source videos or full audio tracks.
+3. Temporary analysis media may be downloaded only into ignored `.work` according to `docs/learning-workflow.md` and must never be published or committed.
+4. Keep Chinese subtitles site-owned and independent of YouTube translation. Store validated tracks at `assets/subtitles/<videoId>.json`, register every site video in `src/video-subtitles.js`, and load tracks lazily by video ID.
+5. Use the validated short cues as the single timing and text source for the in-player overlay, CC visibility, seeking, and the derived full transcript. Transcript formatting must not rewrite cue text or timing.
+6. Keep the subtitle overlay inside the site's fullscreen player wrapper so video and captions remain visible together; do not rely on the YouTube iframe's translated captions.
+7. Represent every video's subtitle state truthfully as `track`, `missing`, or an approved `no-speech`. Never claim complete coverage, fabricate a track, or hide a missing state.
+8. If subtitles are missing or fail to load, preserve usable video playback and the canonical source link.
+9. Never commit source videos, full audio tracks, cookies, login state, raw VTT, local transcription evidence, tokens, or machine-specific paths. Commit only validated Chinese JSON tracks, the generated catalog, code, tests, and documentation.
+
+Use `docs/learning-workflow.md` and `README.md` for the subtitle schema, import commands, coverage reporting, and verification workflow.
+
 ## Core Principles
 
 - Impact comes from transient shape, not low-frequency stacking. If a sound lacks force, first adjust attack/punch/click/transient speed before boosting bass.

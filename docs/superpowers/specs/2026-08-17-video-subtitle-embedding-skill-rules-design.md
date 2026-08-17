@@ -11,7 +11,7 @@ Add a concise, mandatory section to `skills/sfx-knowledge/SKILL.md` and keep the
 ## Required Rules
 
 1. Embed each YouTube video inside the site through the YouTube IFrame API. Keep the canonical source URL as a fallback, but do not make an external jump the primary viewing path.
-2. Do not download, host, or commit source videos or full audio tracks. YouTube remains the playback source.
+2. YouTube is the published website playback source. Never host or commit source videos or full audio tracks. Temporary analysis media may be downloaded only into ignored `.work` according to `docs/learning-workflow.md` and must never be published or committed.
 3. Keep Chinese subtitles site-owned and independent of YouTube translation. Store validated tracks as `assets/subtitles/<videoId>.json`, register every site video in `src/video-subtitles.js`, and load tracks lazily by video ID.
 4. Synchronize short subtitle cues to the embedded player. The same cues drive the in-player overlay, CC visibility, seeking, and the derived full transcript; transcript formatting must not rewrite cue timing or text.
 5. Preserve subtitles in the site's fullscreen player wrapper so the video and overlay remain visible together. Do not depend on the YouTube iframe's native subtitle translation.
@@ -24,10 +24,12 @@ Add a concise, mandatory section to `skills/sfx-knowledge/SKILL.md` and keep the
 Add a repository contract test that reads `skills/sfx-knowledge/SKILL.md` and requires the section to cover:
 
 - YouTube IFrame API embedding and source-link fallback.
+- Published playback-source semantics and temporary ignored `.work` analysis media boundaries.
 - Site-owned Chinese JSON subtitles and lazy loading by video ID.
 - Cue synchronization, CC, seeking, transcript derivation, and fullscreen overlay behavior.
 - Truthful `track`, `missing`, and `no-speech` states.
 - Prohibited media and credential commits.
+- Allowed validated JSON, catalog, code, test, and documentation commits.
 
 Run the focused contract test first and confirm it fails before editing the Skill. After the edit, rerun the focused test, the full Node test suite, and `node tools/verify-portable-kit.cjs`.
 
