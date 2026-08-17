@@ -895,7 +895,7 @@ test('runCli restores an applied public case from its verified owning step time'
   assert.equal(restored.cases[0].startSeconds, 12);
 });
 
-test('runCli projects exactly the 97 curated public effect cases from the real site', async () => {
+test('runCli projects exactly the 98 curated public effect cases from the real site', async () => {
   const root = path.resolve(__dirname, '..');
   const manifest = require('../tools/data/public-effect-use-ids.json');
   const reviewPath = path.join(root, '.work', 'timeline-review', 'review.json');
@@ -924,7 +924,7 @@ test('runCli projects exactly the 97 curated public effect cases from the real s
   const caseIds = startedOptions.review.records.flatMap((record) => (
     record.cases.map((reviewCase) => reviewCase.useId)
   ));
-  assert.equal(caseIds.length, 97);
-  assert.equal(new Set(caseIds).size, 97);
+  assert.equal(caseIds.length, 98);
+  assert.equal(new Set(caseIds).size, 98);
   assert.deepEqual(new Set(caseIds), new Set(manifest.useIds));
 });

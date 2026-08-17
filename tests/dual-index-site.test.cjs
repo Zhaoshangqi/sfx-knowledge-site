@@ -1360,7 +1360,7 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   assert.equal(guideEvidenceUseIds.length, 27);
   assert.equal(new Set(guideEvidenceUseIds).size, 27);
   assert.equal(publicEffectUseManifest.version, 1);
-  assert.equal(publicEffectUseManifest.useIds.length, 97);
+  assert.equal(publicEffectUseManifest.useIds.length, 98);
   assert.deepEqual(
     new Set(publicEffectUseManifest.useIds),
     new Set(profiles.flatMap((profile) => profile.uses.map((use) => use.id)))
@@ -1422,7 +1422,7 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   assert.equal(new Set(videoAssetKeys).size, videoVisuals.length);
 });
 
-test('effect case projection renders all 97 public uses exactly once', () => {
+test('effect case projection renders all 98 public uses exactly once', () => {
   const siteRecords = records();
   const uses = SfxKnowledgeModel.buildEffectUses(siteRecords);
   const profiles = loadEffectIndexData(SfxEffectGuides).profiles(
@@ -1470,7 +1470,7 @@ test('effect case projection renders all 97 public uses exactly once', () => {
     assert.doesNotMatch(markup, /data-effect-parameter|class="effect-parameter|parameters/);
   });
 
-  assert.equal(renderedIds.length, 97);
+  assert.equal(renderedIds.length, 98);
   assert.deepEqual(new Set(renderedIds), new Set(publicIds));
   assert.ok(missingVisualCount > 0, 'truthful no-image cases must be represented');
 });

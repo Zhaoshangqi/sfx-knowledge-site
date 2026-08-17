@@ -31459,626 +31459,626 @@
       }
     ]
   },
-{
-  "id": "yt-lLTbxhK_QLU",
-  "title": "《守望先锋》风格水系法术音效拆解",
-  "videoId": "lLTbxhK_QLU",
-  "url": "https://www.youtube.com/watch?v=lLTbxhK_QLU",
-  "source": "Dietrich Dice Sound",
-  "category": "magic",
-  "secondaryCategories": [
-    "workflow",
-    "scifi"
-  ],
-  "addedAt": "2026-08-17",
-  "updatedAt": "2026-08-17",
-  "updateNote": "2026-08-17 导入英文原题 Overwatch Style Water Spells: Sound Design Breakdown（16:26）。依据本地完整视频、公开字幕和九个固定帧整理；声音结果仅归因于创作者旁白，未进行本地音频试听。",
-  "summary": "Dietrich Dice 从池水搅动、干冰气泡和水流录音中批量做出掠过、湿裂纹、调性和闪光变体，再按画面分成水体主体、魔法调性、高频焦点和空间运动。可复用的思路是先选自带水感与调性的源素材，先做变体，最后再轻量贴合画面。",
-  "coreIdeas": [
-    "先选本身带调性、滴水和湿润特征的水录音，再用处理链提取和重组这些特征。",
-    "把源素材加工与画面装配分成两阶段：先批量生成 whoosh、impact、Doppler、调性和尾部变体，进入成片后只做职责明确的轻处理。",
-    "把水体主体、Tonal 魔法层、glitter 高频焦点、球体 ambience 和空间运动拆开，避免一条素材同时承担全部信息。",
-    "随机 LFO 做细微变化，XY 手势画 whoosh 轮廓，颗粒处理延长尾部，SpinTracer 匹配球体旋转。",
-    "把处理残差当作新材料：RX 9 De-crackle 的 Output crackle only 从重水搅动中抽出湿裂纹纹理。"
-  ],
-  "steps": [
-    {
-      "order": 1,
-      "name": "成片先行：水球法术目标",
-      "detail": "材料是后文完成的水体、调性、glitter、whoosh 与空间层；先把这些层与 Wuyang 水球画面对齐并展示成片，为后续源素材加工建立明确的视觉目标。",
-      "params": [
-        "[帧证据] 00:06 的 REAPER 视频窗口同时保留 Wuyang、水球、Final Result 字样和周围工程界面。",
-        "[证据边界] 本帧只确认成片目标；层次组成来自后文逐层拆解，未据片头画面推断听感。"
-      ],
-      "imageKey": "lLTbxhK_QLU-final-result",
-      "startSeconds": 0
+  {
+    "id": "yt-lLTbxhK_QLU",
+    "title": "《守望先锋》风格水系法术音效拆解",
+    "videoId": "lLTbxhK_QLU",
+    "url": "https://www.youtube.com/watch?v=lLTbxhK_QLU",
+    "source": "Dietrich Dice Sound",
+    "category": "magic",
+    "secondaryCategories": [
+      "workflow",
+      "scifi"
+    ],
+    "addedAt": "2026-08-17",
+    "updatedAt": "2026-08-17",
+    "updateNote": "2026-08-17 导入英文原题 Overwatch Style Water Spells: Sound Design Breakdown（16:26）。依据本地完整视频、公开字幕和九个固定帧整理；声音结果仅归因于创作者旁白，未进行本地音频试听。",
+    "summary": "Dietrich Dice 从池水搅动、干冰气泡和水流录音中批量做出掠过、湿裂纹、调性和闪光变体，再按画面分成水体主体、魔法调性、高频焦点和空间运动。可复用的思路是先选自带水感与调性的源素材，先做变体，最后再轻量贴合画面。",
+    "coreIdeas": [
+      "先选本身带调性、滴水和湿润特征的水录音，再用处理链提取和重组这些特征。",
+      "把源素材加工与画面装配分成两阶段：先批量生成 whoosh、impact、Doppler、调性和尾部变体，进入成片后只做职责明确的轻处理。",
+      "把水体主体、Tonal 魔法层、glitter 高频焦点、球体 ambience 和空间运动拆开，避免一条素材同时承担全部信息。",
+      "随机 LFO 做细微变化，XY 手势画 whoosh 轮廓，颗粒处理延长尾部，SpinTracer 匹配球体旋转。",
+      "把处理残差当作新材料：RX 9 De-crackle 的 Output crackle only 从重水搅动中抽出湿裂纹纹理。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "成片先行：水球法术目标",
+        "detail": "材料是后文完成的水体、调性、glitter、whoosh 与空间层；先把这些层与 Wuyang 水球画面对齐并展示成片，为后续源素材加工建立明确的视觉目标。",
+        "params": [
+          "[帧证据] 00:06 的 REAPER 视频窗口同时保留 Wuyang、水球、Final Result 字样和周围工程界面。",
+          "[证据边界] 本帧只确认成片目标；层次组成来自后文逐层拆解，未据片头画面推断听感。"
+        ],
+        "imageKey": "lLTbxhK_QLU-final-result",
+        "startSeconds": 0
+      },
+      {
+        "order": 2,
+        "name": "原始水声与处理后素材池",
+        "detail": "材料是 Sonic Water FX 的池水、流动与气泡录音；先展示未处理源声，再用多条链和 kitbash 生成湿润、调性与运动变体，为后续 whoosh、impact 和 Doppler 剪辑供料。",
+        "params": [
+          "[创作者旁白] 00:45-01:37 先播放未处理素材，再展示多链加工后的结果。",
+          "[帧证据] 00:50 可见 Play1、Play2、Play3、Play4 crackle 等独立轨及源 item。",
+          "[创作者旁白] 01:37-02:00 说明先批量生成变体，最后才进入画面对齐。"
+        ],
+        "imageKey": "lLTbxhK_QLU-source-examples",
+        "startSeconds": 45
+      },
+      {
+        "order": 3,
+        "name": "池水搅动：湿化并延长",
+        "detail": "输入是 Water-Stir-Pool_SONICWATER385.wav 池水搅动录音。先带出调性和高频；作者随后在 MVocoder 路由窗口点击两个方格，并称声音更湿。再用随机滤波、音高和颗粒尾部做成长而有运动的水层。",
+        "params": [
+          "[帧证据] 02:45 的 MVocoder 与 REAPER plug-in pin connector 同屏，两个被演示点击的路由框可见。",
+          "[创作者旁白] Bloom、MHarmonizer 与 OTT 提取调性和高频，后续 Snap Heap、Hybrid Filter、Crystallizer 与 MGranularMB 负责运动和尾部。",
+          "[证据边界] 创作者只确认点击动作让声音更湿，并表示不完全确定内部机理；carrier/modulator 路由保持不确定。"
+        ],
+        "imageKey": "lLTbxhK_QLU-source-1",
+        "startSeconds": 120
+      },
+      {
+        "order": 4,
+        "name": "干冰气泡：噪声与群体运动",
+        "detail": "输入是干冰气泡录音。先用滤波和频谱门控筛出可用噪声，再加入起伏和群体移动，最后补低频，得到可叠在水体上的移动气泡层。",
+        "params": [
+          "[帧证据] 04:20 可见干冰气泡文件、独立处理轨和周围 REAPER 时间线。",
+          "[创作者旁白] Hybrid Filter、Spectral Gate、Bloom、SpinTracer、MRatio 与 PhaseMistress 分别承担运动、筛选、噪声提取和层次扩展。",
+          "截图只确认干冰气泡素材与处理轨；插件作用来自作者旁白。"
+        ],
+        "imageKey": "lLTbxhK_QLU-source-2",
+        "startSeconds": 255
+      },
+      {
+        "order": 5,
+        "name": "重水搅动：抽出湿裂纹",
+        "detail": "材料是经前段增强与拉伸的 Water-Stir-Pool-Heavy_SONICWATER386.wav；将 RX 9 De-crackle 切到 Output crackle only 抽出裂纹残差，再用延迟、晶化、饱和与 whoosh 运动扩成湿润闪烁尾部。",
+        "params": [
+          "[固定帧证据] 06:10 显示 iZotope RX 9 De-crackle 主界面，Output crackle only 已勾选，重水搅动波形和同一链上下文同时可见。",
+          "[创作者旁白] 仅输出裂纹会得到湿纹理，并贡献这条素材的大部分湿感。",
+          "界面数值不作为建议。"
+        ],
+        "imageKey": "lLTbxhK_QLU-source-3",
+        "startSeconds": 332
+      },
+      {
+        "order": 6,
+        "name": "池水流动：XY 手势掠过",
+        "detail": "材料是 Water-Flow-Pool_SONICWATER080_2.wav；用 XY Pad 将横向手势交给低通、纵向手势交给增益来手工画出 whoosh，再补充调性、频谱细节和颗粒变化。",
+        "params": [
+          "[帧证据] 07:46 可见 Play6 XY 轨、完整水流波形和周围链路上下文。",
+          "[创作者旁白] 左右移动低通、上下移动增益，以手势塑造 whoosh 轮廓。",
+          "[创作者旁白] 后续调性提取、随机 spread/cutoff 调制和颗粒变化用于扩展可控变体。"
+        ],
+        "imageKey": "lLTbxhK_QLU-source-4",
+        "startSeconds": 461
+      },
+      {
+        "order": 7,
+        "name": "低沉水体：补闪光魔法",
+        "detail": "输入是低沉的水体主体。它已有水感但缺少魔法亮点，因此另做高频 glitter 层：清理低频，加入晶化、颗粒和频移运动，并压住刺耳高频，让耳朵有明确的闪光焦点。",
+        "params": [
+          "[创作者旁白] 09:42-09:58 明确指出低沉水声已有主体，但缺少 glitter/magic。",
+          "[帧证据] 09:47 可见 Play7、Samples、uzu play、Tonal High/Low 与多份变体 item。",
+          "[创作者旁白] 该层经过低频清理、频谱强化和运动处理，最终用于补足高频识别。"
+        ],
+        "imageKey": "lLTbxhK_QLU-source-5",
+        "startSeconds": 582
+      },
+      {
+        "order": 8,
+        "name": "UZU 再采样：高低音纹理",
+        "detail": "输入是前一步得到的水样。用 UZU 反复渲染不同调性纹理，再把过亮的版本整体降调，得到 Tonal High 和 Tonal Low 两组层；不推断 UZU 的内部算法。",
+        "params": [
+          "[帧证据] 11:31 可见 Samples、uzu play、Tonal High、Tonal Low 与对应渲染 item。",
+          "[创作者旁白] 11:26-12:06 说明反复取得不同纹理，并因高频过多而降调。",
+          "插件名按旁白与轨道名统一为 UZU；内部算法未确认。"
+        ],
+        "imageKey": "lLTbxhK_QLU-source-6",
+        "startSeconds": 686
+      },
+      {
+        "order": 9,
+        "name": "按画面装配与旋转空间",
+        "detail": "材料是三组水 whoosh、Tonal、glitter、湿水层和球体 ambience；按画面依次放置起始声与掠过层，再让最终 glitter/湿水层经 SpinTracer 旋转，并以额外湿点和轻量 panning 跟随水球运动。",
+        "params": [
+          "[创作者旁白] 12:06-14:57 先装配起始声、三组 water whoosh、Tonal、glitter 和降调球体 ambience。",
+          "[帧证据] 15:20 的 SpinTracer 主界面与背后分层时间线同屏，保留完整插件与编辑上下文。",
+          "[创作者旁白] 宽度与 EQ 之后加入空间旋转，使运动对应画面中旋转的水球；末端 panning 跟随横向画面。"
+        ],
+        "imageKey": "lLTbxhK_QLU-final-breakdown",
+        "startSeconds": 726
+      }
+    ],
+    "plugins": [
+      {
+        "name": "MeldaProduction MVocoder",
+        "purpose": "用于池水搅动层。作者在 REAPER 路由窗口点击两个方格后称声音更湿；内部路由机理不确定。",
+        "settings": [
+          "画面确认两处点击；内部路由机理未确认。"
+        ]
+      },
+      {
+        "name": "iZotope RX 9 De-crackle",
+        "purpose": "从经增强与拉伸的重水搅动录音中只输出裂纹残差，派生湿润细碎纹理。",
+        "settings": [
+          "Output crackle only 只保留裂纹残差；其它界面数值不作建议。"
+        ]
+      },
+      {
+        "name": "Tonsturm SpinTracer",
+        "purpose": "让最终 glitter 与湿水层产生与旋转水球相对应的空间运动。",
+        "settings": [
+          "用于匹配水球旋转；preset 与界面数值不作建议。"
+        ]
+      }
+    ],
+    "materials": [
+      "Sound Ideas Sonic Water FX 中带调性、滴水与湿润特征的池水录音",
+      "Water-Stir-Pool_SONICWATER385.wav 池水搅动素材",
+      "Water-Bubbles-Dry-Ice_SONICWATER006_2.wav 干冰气泡素材",
+      "Water-Stir-Pool-Heavy_SONICWATER386.wav 重水搅动素材",
+      "Water-Flow-Pool_SONICWATER080_2.wav 池水流动素材",
+      "RX 9 De-crackle 仅输出裂纹得到的湿纹理",
+      "UZU 派生的 Tonal High 与 Tonal Low 调性变体",
+      "为低沉水体补做的 glitter/magic 高频焦点层",
+      "降调调性文件形成的球体 ambience、额外湿点和轻量 panning whoosh"
+    ],
+    "keywords": [
+      "water spell",
+      "Overwatch",
+      "Wuyang",
+      "Dietrich Dice Sound",
+      "Sonic Water FX",
+      "REAPER",
+      "kitbash",
+      "wet texture",
+      "tonal water",
+      "glitter layer",
+      "whoosh",
+      "granular",
+      "Doppler",
+      "XY Pad",
+      "MVocoder",
+      "RX 9 De-crackle",
+      "SpinTracer",
+      "magic",
+      "workflow",
+      "scifi"
+    ],
+    "tips": [
+      "先检查水素材是否已有调性、滴水和湿润纹理；处理只负责放大和重组这些特征。",
+      "先批量渲染运动、调性和尾部变体，再进入画面装配阶段。",
+      "水体主体缺少魔法辨识度时单独补 Tonal 与 glitter，不继续堆厚低频水声。",
+      "装配阶段只做收窄宽度、去浑浊或补高频等职责明确的轻处理。",
+      "把球体旋转、画面横移和 whoosh 轮廓分别交给空间旋转、panning 与 XY 手势层。",
+      "每个处理器都应能说清处理对象、动作和结果；作用不明确时不要单列案例。"
+    ],
+    "chainFocus": [
+      "素材阶段：从水录音中分别派生调性、高频、湿纹理和运动变体，再按需延长尾部并清理问题频段。",
+      "装配阶段：先建立起始与掠过，再补调性、闪光和球体持续层，最后匹配旋转与横向移动。",
+      "职责关系：水体提供物理主体，Tonal 提供魔法音高身份，glitter 提供高频焦点，ambience 维持球体存在，SpinTracer 与 panning 对应画面运动。",
+      "听感结果来自作者旁白；本次未本地试听。"
+    ],
+    "parameterLogic": [
+      "不使用固定数值；先判断每条素材缺少水体、调性、闪光还是运动，再让单个阶段只承担一个可辨职责。",
+      "频谱上先保住水体主体，再单独补调性和高频闪光；只有出现浑浊、爆点或刺耳时才做减法。",
+      "运动上用随机 LFO 制造细微变化，用 XY Pad 手工塑造 whoosh，用 SpinTracer 对应旋转物体，用轻量 panning 跟随横向画面。",
+      "动态上按需补增益，但在链尾防止削波；成片装配中的部分层会收窄宽度，不把加宽当成统一目标。",
+      "纹理上把 Output crackle only、颗粒延尾和多次再采样视为派生新材料的方法，再将结果作为独立层进入时间线。"
+    ],
+    "timeline": {
+      "durationSeconds": 986,
+      "reviewedAt": "2026-08-17",
+      "source": "youtube-player"
     },
-    {
-      "order": 2,
-      "name": "原始水声与处理后素材池",
-      "detail": "材料是 Sonic Water FX 的池水、流动与气泡录音；先展示未处理源声，再用多条链和 kitbash 生成湿润、调性与运动变体，为后续 whoosh、impact 和 Doppler 剪辑供料。",
-      "params": [
-        "[创作者旁白] 00:45-01:37 先播放未处理素材，再展示多链加工后的结果。",
-        "[帧证据] 00:50 可见 Play1、Play2、Play3、Play4 crackle 等独立轨及源 item。",
-        "[创作者旁白] 01:37-02:00 说明先批量生成变体，最后才进入画面对齐。"
-      ],
-      "imageKey": "lLTbxhK_QLU-source-examples",
-      "startSeconds": 45
-    },
-    {
-      "order": 3,
-      "name": "池水搅动：湿化并延长",
-      "detail": "输入是 Water-Stir-Pool_SONICWATER385.wav 池水搅动录音。先带出调性和高频；作者随后在 MVocoder 路由窗口点击两个方格，并称声音更湿。再用随机滤波、音高和颗粒尾部做成长而有运动的水层。",
-      "params": [
-        "[帧证据] 02:45 的 MVocoder 与 REAPER plug-in pin connector 同屏，两个被演示点击的路由框可见。",
-        "[创作者旁白] Bloom、MHarmonizer 与 OTT 提取调性和高频，后续 Snap Heap、Hybrid Filter、Crystallizer 与 MGranularMB 负责运动和尾部。",
-        "[证据边界] 创作者只确认点击动作让声音更湿，并表示不完全确定内部机理；carrier/modulator 路由保持不确定。"
-      ],
-      "imageKey": "lLTbxhK_QLU-source-1",
-      "startSeconds": 120
-    },
-    {
-      "order": 4,
-      "name": "干冰气泡：噪声与群体运动",
-      "detail": "输入是干冰气泡录音。先用滤波和频谱门控筛出可用噪声，再加入起伏和群体移动，最后补低频，得到可叠在水体上的移动气泡层。",
-      "params": [
-        "[帧证据] 04:20 可见干冰气泡文件、独立处理轨和周围 REAPER 时间线。",
-        "[创作者旁白] Hybrid Filter、Spectral Gate、Bloom、SpinTracer、MRatio 与 PhaseMistress 分别承担运动、筛选、噪声提取和层次扩展。",
-        "截图只确认干冰气泡素材与处理轨；插件作用来自作者旁白。"
-      ],
-      "imageKey": "lLTbxhK_QLU-source-2",
-      "startSeconds": 255
-    },
-    {
-      "order": 5,
-      "name": "重水搅动：抽出湿裂纹",
-      "detail": "材料是经前段增强与拉伸的 Water-Stir-Pool-Heavy_SONICWATER386.wav；将 RX 9 De-crackle 切到 Output crackle only 抽出裂纹残差，再用延迟、晶化、饱和与 whoosh 运动扩成湿润闪烁尾部。",
-      "params": [
-        "[固定帧证据] 06:10 显示 iZotope RX 9 De-crackle 主界面，Output crackle only 已勾选，重水搅动波形和同一链上下文同时可见。",
-        "[创作者旁白] 仅输出裂纹会得到湿纹理，并贡献这条素材的大部分湿感。",
-        "界面数值不作为建议。"
-      ],
-      "imageKey": "lLTbxhK_QLU-source-3",
-      "startSeconds": 332
-    },
-    {
-      "order": 6,
-      "name": "池水流动：XY 手势掠过",
-      "detail": "材料是 Water-Flow-Pool_SONICWATER080_2.wav；用 XY Pad 将横向手势交给低通、纵向手势交给增益来手工画出 whoosh，再补充调性、频谱细节和颗粒变化。",
-      "params": [
-        "[帧证据] 07:46 可见 Play6 XY 轨、完整水流波形和周围链路上下文。",
-        "[创作者旁白] 左右移动低通、上下移动增益，以手势塑造 whoosh 轮廓。",
-        "[创作者旁白] 后续调性提取、随机 spread/cutoff 调制和颗粒变化用于扩展可控变体。"
-      ],
-      "imageKey": "lLTbxhK_QLU-source-4",
-      "startSeconds": 461
-    },
-    {
-      "order": 7,
-      "name": "低沉水体：补闪光魔法",
-      "detail": "输入是低沉的水体主体。它已有水感但缺少魔法亮点，因此另做高频 glitter 层：清理低频，加入晶化、颗粒和频移运动，并压住刺耳高频，让耳朵有明确的闪光焦点。",
-      "params": [
-        "[创作者旁白] 09:42-09:58 明确指出低沉水声已有主体，但缺少 glitter/magic。",
-        "[帧证据] 09:47 可见 Play7、Samples、uzu play、Tonal High/Low 与多份变体 item。",
-        "[创作者旁白] 该层经过低频清理、频谱强化和运动处理，最终用于补足高频识别。"
-      ],
-      "imageKey": "lLTbxhK_QLU-source-5",
-      "startSeconds": 582
-    },
-    {
-      "order": 8,
-      "name": "UZU 再采样：高低音纹理",
-      "detail": "输入是前一步得到的水样。用 UZU 反复渲染不同调性纹理，再把过亮的版本整体降调，得到 Tonal High 和 Tonal Low 两组层；不推断 UZU 的内部算法。",
-      "params": [
-        "[帧证据] 11:31 可见 Samples、uzu play、Tonal High、Tonal Low 与对应渲染 item。",
-        "[创作者旁白] 11:26-12:06 说明反复取得不同纹理，并因高频过多而降调。",
-        "插件名按旁白与轨道名统一为 UZU；内部算法未确认。"
-      ],
-      "imageKey": "lLTbxhK_QLU-source-6",
-      "startSeconds": 686
-    },
-    {
-      "order": 9,
-      "name": "按画面装配与旋转空间",
-      "detail": "材料是三组水 whoosh、Tonal、glitter、湿水层和球体 ambience；按画面依次放置起始声与掠过层，再让最终 glitter/湿水层经 SpinTracer 旋转，并以额外湿点和轻量 panning 跟随水球运动。",
-      "params": [
-        "[创作者旁白] 12:06-14:57 先装配起始声、三组 water whoosh、Tonal、glitter 和降调球体 ambience。",
-        "[帧证据] 15:20 的 SpinTracer 主界面与背后分层时间线同屏，保留完整插件与编辑上下文。",
-        "[创作者旁白] 宽度与 EQ 之后加入空间旋转，使运动对应画面中旋转的水球；末端 panning 跟随横向画面。"
-      ],
-      "imageKey": "lLTbxhK_QLU-final-breakdown",
-      "startSeconds": 726
-    }
-  ],
-  "plugins": [
-    {
-      "name": "MeldaProduction MVocoder",
-      "purpose": "用于池水搅动层。作者在 REAPER 路由窗口点击两个方格后称声音更湿；内部路由机理不确定。",
-      "settings": [
-        "画面确认两处点击；内部路由机理未确认。"
-      ]
-    },
-    {
-      "name": "iZotope RX 9 De-crackle",
-      "purpose": "从经增强与拉伸的重水搅动录音中只输出裂纹残差，派生湿润细碎纹理。",
-      "settings": [
-        "Output crackle only 只保留裂纹残差；其它界面数值不作建议。"
-      ]
-    },
-    {
-      "name": "Tonsturm SpinTracer",
-      "purpose": "让最终 glitter 与湿水层产生与旋转水球相对应的空间运动。",
-      "settings": [
-        "用于匹配水球旋转；preset 与界面数值不作建议。"
-      ]
-    }
-  ],
-  "materials": [
-    "Sound Ideas Sonic Water FX 中带调性、滴水与湿润特征的池水录音",
-    "Water-Stir-Pool_SONICWATER385.wav 池水搅动素材",
-    "Water-Bubbles-Dry-Ice_SONICWATER006_2.wav 干冰气泡素材",
-    "Water-Stir-Pool-Heavy_SONICWATER386.wav 重水搅动素材",
-    "Water-Flow-Pool_SONICWATER080_2.wav 池水流动素材",
-    "RX 9 De-crackle 仅输出裂纹得到的湿纹理",
-    "UZU 派生的 Tonal High 与 Tonal Low 调性变体",
-    "为低沉水体补做的 glitter/magic 高频焦点层",
-    "降调调性文件形成的球体 ambience、额外湿点和轻量 panning whoosh"
-  ],
-  "keywords": [
-    "water spell",
-    "Overwatch",
-    "Wuyang",
-    "Dietrich Dice Sound",
-    "Sonic Water FX",
-    "REAPER",
-    "kitbash",
-    "wet texture",
-    "tonal water",
-    "glitter layer",
-    "whoosh",
-    "granular",
-    "Doppler",
-    "XY Pad",
-    "MVocoder",
-    "RX 9 De-crackle",
-    "SpinTracer",
-    "magic",
-    "workflow",
-    "scifi"
-  ],
-  "tips": [
-    "先检查水素材是否已有调性、滴水和湿润纹理；处理只负责放大和重组这些特征。",
-    "先批量渲染运动、调性和尾部变体，再进入画面装配阶段。",
-    "水体主体缺少魔法辨识度时单独补 Tonal 与 glitter，不继续堆厚低频水声。",
-    "装配阶段只做收窄宽度、去浑浊或补高频等职责明确的轻处理。",
-    "把球体旋转、画面横移和 whoosh 轮廓分别交给空间旋转、panning 与 XY 手势层。",
-    "每个处理器都应能说清处理对象、动作和结果；作用不明确时不要单列案例。"
-  ],
-  "chainFocus": [
-    "素材阶段：从水录音中分别派生调性、高频、湿纹理和运动变体，再按需延长尾部并清理问题频段。",
-    "装配阶段：先建立起始与掠过，再补调性、闪光和球体持续层，最后匹配旋转与横向移动。",
-    "职责关系：水体提供物理主体，Tonal 提供魔法音高身份，glitter 提供高频焦点，ambience 维持球体存在，SpinTracer 与 panning 对应画面运动。",
-    "听感结果来自作者旁白；本次未本地试听。"
-  ],
-  "parameterLogic": [
-    "不使用固定数值；先判断每条素材缺少水体、调性、闪光还是运动，再让单个阶段只承担一个可辨职责。",
-    "频谱上先保住水体主体，再单独补调性和高频闪光；只有出现浑浊、爆点或刺耳时才做减法。",
-    "运动上用随机 LFO 制造细微变化，用 XY Pad 手工塑造 whoosh，用 SpinTracer 对应旋转物体，用轻量 panning 跟随横向画面。",
-    "动态上按需补增益，但在链尾防止削波；成片装配中的部分层会收窄宽度，不把加宽当成统一目标。",
-    "纹理上把 Output crackle only、颗粒延尾和多次再采样视为派生新材料的方法，再将结果作为独立层进入时间线。"
-  ],
-  "timeline": {
-    "durationSeconds": 986,
-    "reviewedAt": "2026-08-17",
-    "source": "youtube-player"
+    "effectUses": [
+      {
+        "id": "yt-lLTbxhK_QLU:effect:meldaproduction-mvocoder:1",
+        "name": "MeldaProduction MVocoder",
+        "vendor": "MeldaProduction",
+        "category": "音高与频率",
+        "target": "Play1 上的 Water-Stir-Pool_SONICWATER385.wav 池水搅动录音",
+        "chainPosition": "Bloom、MHarmonizer 与 OTT 之后，后续调性、随机运动和颗粒延尾之前",
+        "purpose": "在池水层上按作者演示点击路由窗口中的两个方格，目标是增加湿润纹理。",
+        "parameters": [
+          {
+            "name": "可见路由动作",
+            "value": "点击两个路由框",
+            "direction": "只复述画面动作，不定义内部 carrier/modulator 机制",
+            "evidence": "画面确认与作者口述"
+          }
+        ],
+        "result": "作者称处理后更湿；未本地试听。",
+        "interactions": "后续处理继续提取调性、增加随机滤波与音高运动，并用晶化和颗粒延长尾部。",
+        "limitations": "截图只确认 MVocoder、Play1 轨和点击位置。作者也不确定内部机理，因此不定义 carrier/modulator 路由。",
+        "timestamp": "02:45",
+        "startSeconds": 165,
+        "stepIndex": 2,
+        "screenshotKey": "lLTbxhK_QLU-source-1",
+        "screenshotReviewed": true,
+        "replacesPluginIndexes": [
+          0
+        ],
+        "evidence": [
+          "画面确认",
+          "作者口述"
+        ]
+      },
+      {
+        "id": "yt-lLTbxhK_QLU:effect:izotope-rx-9-de-crackle:2",
+        "name": "iZotope RX 9 De-crackle",
+        "vendor": "iZotope",
+        "category": "修复与非常规处理",
+        "target": "经增强和拉伸的重水搅动录音 Water-Stir-Pool-Heavy_SONICWATER386.wav",
+        "chainPosition": "Bloom 与 Warp 拉伸之后，Cluster Delay、晶化、饱和和 whoosh 运动之前",
+        "purpose": "只输出 crackle 残差，把重水搅动转成可单独使用的湿纹理。",
+        "parameters": [
+          {
+            "name": "Output mode",
+            "value": "Output crackle only",
+            "direction": "仅输出裂纹残差",
+            "evidence": "固定 06:10 截图确认"
+          }
+        ],
+        "result": "作者称得到细碎湿纹理，并贡献这条素材的大部分湿感；未本地试听。",
+        "interactions": "残差随后进入延迟、多实例晶化、饱和与 whoosh 运动，扩展为闪烁湿尾。",
+        "limitations": "截图确认 Output crackle only；其它界面数值不作建议。",
+        "timestamp": "06:10",
+        "startSeconds": 370,
+        "stepIndex": 4,
+        "screenshotKey": "lLTbxhK_QLU-source-3",
+        "screenshotReviewed": true,
+        "replacesPluginIndexes": [
+          1
+        ],
+        "evidence": [
+          "画面确认",
+          "作者口述"
+        ]
+      },
+      {
+        "id": "yt-lLTbxhK_QLU:effect:tonsturm-spintracer:3",
+        "name": "Tonsturm SpinTracer",
+        "vendor": "Tonsturm",
+        "category": "调制与运动",
+        "target": "最终水球段的 glitter 层和湿水层",
+        "chainPosition": "宽度与 EQ 之后，额外湿点和横向 panning 之前",
+        "purpose": "让这两层产生旋转空间运动，匹配画面中的水球旋转。",
+        "parameters": [],
+        "result": "作者称运动会跟随旋转水球；未本地试听空间结果。",
+        "interactions": "glitter 提供高频焦点，湿水层提供水体纹理，SpinTracer 统一两者的旋转运动；末端另用轻量 panning 跟随横向画面。",
+        "limitations": "截图确认 SpinTracer 与分层工程；preset 和界面数值不作建议。",
+        "timestamp": "15:20",
+        "startSeconds": 920,
+        "stepIndex": 8,
+        "screenshotKey": "lLTbxhK_QLU-final-breakdown",
+        "screenshotReviewed": true,
+        "replacesPluginIndexes": [
+          2
+        ],
+        "evidence": [
+          "画面确认",
+          "作者口述"
+        ]
+      }
+    ]
   },
-  "effectUses": [
-    {
-      "id": "yt-lLTbxhK_QLU:effect:meldaproduction-mvocoder:1",
-      "name": "MeldaProduction MVocoder",
-      "vendor": "MeldaProduction",
-      "category": "音高与频率",
-      "target": "Play1 上的 Water-Stir-Pool_SONICWATER385.wav 池水搅动录音",
-      "chainPosition": "Bloom、MHarmonizer 与 OTT 之后，后续调性、随机运动和颗粒延尾之前",
-      "purpose": "在池水层上按作者演示点击路由窗口中的两个方格，目标是增加湿润纹理。",
-      "parameters": [
-        {
-          "name": "可见路由动作",
-          "value": "点击两个路由框",
-          "direction": "只复述画面动作，不定义内部 carrier/modulator 机制",
-          "evidence": "画面确认与作者口述"
-        }
-      ],
-      "result": "作者称处理后更湿；未本地试听。",
-      "interactions": "后续处理继续提取调性、增加随机滤波与音高运动，并用晶化和颗粒延长尾部。",
-      "limitations": "截图只确认 MVocoder、Play1 轨和点击位置。作者也不确定内部机理，因此不定义 carrier/modulator 路由。",
-      "timestamp": "02:45",
-      "startSeconds": 165,
-      "stepIndex": 2,
-      "screenshotKey": "lLTbxhK_QLU-source-1",
-      "screenshotReviewed": true,
-      "replacesPluginIndexes": [
-        0
-      ],
-      "evidence": [
-        "画面确认",
-        "作者口述"
-      ]
+  {
+    "id": "yt-Oo3SRd_94VE",
+    "title": "零素材库制作圣光魔法音效：录音、合成与画面对位",
+    "videoId": "Oo3SRd_94VE",
+    "url": "https://www.youtube.com/watch?v=Oo3SRd_94VE",
+    "source": "Michael Cheung",
+    "category": "magic",
+    "secondaryCategories": [
+      "workflow"
+    ],
+    "addedAt": "2026-08-17",
+    "updatedAt": "2026-08-17",
+    "updateNote": "2026-08-17 导入英文原题 I Made Holy Magic Without a Single Sample Library: Sound Design Breakdown & Tutorial（25:17）。依据本地完整视频、创作者旁白与固定帧整理；本次未试听本地视频音轨。",
+    "summary": "这里的“零素材库”指不调用现成音效素材库。Michael Cheung 用自录的气泡膜、气球、保鲜膜、塑料包装、颂钵和铃铛，配合 Kontakt 音高层，先制作构件，再分四遍完成圣光魔法的画面对位。VFX 由 Jong Woo Jeong 制作（https://www.youtube.com/watch?v=yE5rjDocIAE）；这是 Michael Cheung 的独立声音重设计教程，不是暴雪或任何游戏的官方音频。",
+    "coreIdeas": [
+      "合唱与持续音负责神圣感和音高身份，家庭录音负责物理触感、噪声与动作可读性。",
+      "先分清原始录音、处理后构件和画面对位三个阶段，避免在成片阶段反复重做素材。",
+      "先把素材清理、变形并渲染成独立构件，再按前导、命中、运动与尾音贴合视觉事件。",
+      "立体声只用于需要展开的铺垫和空间层，不让所有层同时变宽。",
+      "变化生成器只提供变体起点，生成结果仍需人工审核和编辑。"
+    ],
+    "steps": [
+      {
+        "order": 1,
+        "name": "采录家庭材料",
+        "detail": "材料是气泡膜、放气气球、保鲜膜和塑料包装；先保留原始动作与摩擦，再把它们分别加工成魔法的物理噪声、运动和冲击来源。",
+        "params": [
+          "输入：气泡膜、放气气球、保鲜膜和塑料包装的近距离录音。",
+          "用途：保留真实摩擦和动作，后续分别制作动作床、前导、命中和尾音。"
+        ],
+        "imageKey": "Oo3SRd_94VE-source-recordings",
+        "startSeconds": 0
+      },
+      {
+        "order": 2,
+        "name": "先看完整声音重设计",
+        "detail": "先播放完整重设计，确认每个视觉事件需要的前导、命中、运动和尾音，再回到素材制作与分层。",
+        "params": [
+          "观察：魔杖旋转、光球生成、上射、主爆发、星点落下和法术收尾。",
+          "用途：先建立整段节奏参照，再逐层拆解素材职责。"
+        ],
+        "imageKey": "Oo3SRd_94VE-final-design",
+        "startSeconds": 46
+      },
+      {
+        "order": 3,
+        "name": "建立合成与合唱音高层",
+        "detail": "从 Kontakt 的 Ashlight、Hypha、Ethereal Earth、Choir Omnia 和 Voxos 选取合成与合唱声，补足法术的音高、持续共鸣和尾音运动；出现点击或削波时再单独修复。",
+        "params": [
+          "输入：Ashlight、Hypha、Ethereal Earth、Choir Omnia 和 Voxos。",
+          "动作：整理动态，延展尾音并加入振幅运动；出现点击或削波时单独修复。",
+          "输出：合唱、持续音和过渡类音高构件。"
+        ],
+        "imageKey": "Oo3SRd_94VE-synths",
+        "startSeconds": 167
+      },
+      {
+        "order": 4,
+        "name": "渲染处理后构件库",
+        "detail": "将合成、合唱、持续音、过渡和尾音逐条渲染、命名并存入素材浏览器，后续直接按画面裁切和组合。",
+        "params": [
+          "输入：已完成基础处理的合成、合唱和家庭录音派生层。",
+          "动作：按前导、命中、运动和尾音分条渲染并命名。",
+          "输出：可在画面对位阶段直接调用的构件库。"
+        ],
+        "imageKey": "Oo3SRd_94VE-building-blocks",
+        "startSeconds": 304
+      },
+      {
+        "order": 5,
+        "name": "从颂钵派生共鸣与尾音",
+        "detail": "从颂钵录音保留稳定共鸣，再派生持续音、呼啸和反向颗粒长尾，分别支撑音高、转场和动作后的延展。",
+        "params": [
+          "输入：颂钵录音。",
+          "动作：保留共鸣，派生持续音和呼啸；将部分颗粒反向后加延迟。",
+          "输出：音高支撑、转场呼啸和动作后的长尾。",
+          "限制：Silo 只作为作者提到但画面中未激活的工作流背景，不作为效果器用法。"
+        ],
+        "imageKey": "Oo3SRd_94VE-singing-bowl",
+        "startSeconds": 562
+      },
+      {
+        "order": 6,
+        "name": "把铃铛扩成明亮纹理",
+        "detail": "材料是铃铛录音；清理低频残留后进行变调、空间、饱和与轻微失谐，得到可用于闪光、星点、上扬和尾部的多组明亮纹理。",
+        "params": [
+          "输入：铃铛录音。",
+          "动作：清理低频，再做变调、混响、饱和和轻微失谐。",
+          "输出：用于闪光、星点、上扬和尾音的明亮层。"
+        ],
+        "imageKey": "Oo3SRd_94VE-jingle-bells",
+        "startSeconds": 656
+      },
+      {
+        "order": 7,
+        "name": "清理气泡膜动作床",
+        "detail": "材料是带低电平原始残留的气泡膜动作录音；向上扩展压低阈值下残留并突出主要运动，得到创作者所称更干净的动作床，再剪成爆发前导与 whoosh。",
+        "params": [
+          "输入：低电平残留较多的气泡膜动作录音。",
+          "动作：用 kHs Dynamics 做向上扩展。",
+          "输出：低电平残留退后，主要动作更清楚，便于剪成动作床、爆发前导和呼啸。"
+        ],
+        "imageKey": "Oo3SRd_94VE-bubble-wrap",
+        "startSeconds": 779
+      },
+      {
+        "order": 8,
+        "name": "把放气气球做成爆发前导",
+        "detail": "先整理放气气球的动态与频段，再用饱和和振幅调制增加不规则运动，最后补少量和声与混响，作为爆发前导。",
+        "params": [
+          "输入：放气气球录音。",
+          "动作：整理动态与频段，再用饱和和振幅调制增加不规则运动。",
+          "输出：连接音高层与主爆发的空气感前导。"
+        ],
+        "imageKey": "Oo3SRd_94VE-balloon-deflating",
+        "startSeconds": 930
+      },
+      {
+        "order": 9,
+        "name": "把保鲜膜做成颗粒纹理",
+        "detail": "用 Crystallizer 降低保鲜膜录音的音高，并加入延迟颗粒切片，得到更低、更碎、带拖尾的纹理。",
+        "params": [
+          "输入：保鲜膜录音。",
+          "动作：用 Crystallizer 降调，并加入延迟颗粒切片。",
+          "输出：更低、更碎、带延迟拖尾的纹理。"
+        ],
+        "imageKey": "Oo3SRd_94VE-plastic-wrap-textures",
+        "startSeconds": 982
+      },
+      {
+        "order": 10,
+        "name": "第一遍：旋转、爆发与收缩",
+        "detail": "材料是气泡膜、铃铛、塑料包装和反向颂钵；气泡膜跟随魔杖旋转，铃铛与反向材料建立光球前导，塑料和颂钵落在命中，再用反向铃铛与气泡膜描绘收缩和星点。",
+        "params": [
+          "输入：气泡膜、铃铛、塑料包装和反向颂钵。",
+          "画面对位：气泡膜跟魔杖旋转；铃铛和反向层做光球前导；塑料与颂钵落在命中。",
+          "结果：旋转、爆发、收缩和星点各有清楚的时间轮廓。"
+        ],
+        "imageKey": "Oo3SRd_94VE-picture-pass-1",
+        "startSeconds": 1134
+      },
+      {
+        "order": 11,
+        "name": "第二遍：光球上射",
+        "detail": "材料是气球前导、气泡膜命中、杂项 whoosh 与少量音高支撑；依次贴合光球启动、上升轨迹和尾部，让物理运动跟住向上的画面。",
+        "params": [
+          "输入：气球前导、气泡膜命中、上升呼啸和少量音高层。",
+          "画面对位：前导放在启动前，呼啸跟随上升轨迹，气泡膜补足离场尾部。",
+          "结果：上射动作有明确的启动、上升和收尾。"
+        ],
+        "imageKey": "Oo3SRd_94VE-picture-pass-2",
+        "startSeconds": 1242
+      },
+      {
+        "order": 12,
+        "name": "第三遍：主爆发与冲击波",
+        "detail": "只把部分前导层做宽；保鲜膜、颂钵和塑料打击落在主命中，合唱与铃铛展开和声，运动尾音跟随冲击波。",
+        "params": [
+          "输入：保鲜膜、颂钵、塑料打击、合唱和铃铛。",
+          "画面对位：只让部分前导层展开；主命中保持集中，运动尾音跟随冲击波。",
+          "结果：主爆发兼有物理冲击和神圣的和声延展。"
+        ],
+        "imageKey": "Oo3SRd_94VE-picture-pass-3",
+        "startSeconds": 1273
+      },
+      {
+        "order": 13,
+        "name": "第四遍：落点与治疗收尾",
+        "detail": "用短打击跟住星点落到角色的瞬间，再用反向素材连接转场，让铃铛衰减并以合唱音高收尾。",
+        "params": [
+          "输入：多组打击、颂钵尾音、反向素材、铃铛和合唱。",
+          "画面对位：打击跟随星点落下，反向素材连接转场，铃铛和合唱负责消散。",
+          "结果：治疗落点清楚，法术尾部逐步收束。"
+        ],
+        "imageKey": "Oo3SRd_94VE-picture-pass-4",
+        "startSeconds": 1385
+      },
+      {
+        "order": 14,
+        "name": "生成变体并人工复核",
+        "detail": "材料是已完成的时间线 items；MC_Variation_Generator 随机改变所选 item 以快速产生另一版，再由人工审核、编辑并保留可用结果。",
+        "params": [
+          "输入：已完成的时间线片段。",
+          "动作：用 MC_Variation_Generator 生成变体起点。",
+          "结果：人工检查时长、音高和画面对位，只保留可用版本。"
+        ],
+        "imageKey": "Oo3SRd_94VE-variation-generator",
+        "startSeconds": 1462
+      }
+    ],
+    "plugins": [
+      {
+        "name": "kHs Dynamics",
+        "purpose": "对气泡膜动作素材做向上扩展，压低低电平原始残留并突出主要运动。",
+        "settings": [
+          "适合：低电平残留盖住主要动作的录音。",
+          "判断：主要动作更清楚、安静部分退后即可。"
+        ]
+      },
+      {
+        "name": "Soundtoys Crystallizer",
+        "purpose": "把保鲜膜录音降调并加入延迟颗粒切片，派生较低、延迟的颗粒纹理。",
+        "settings": [
+          "适合：需要降调、碎片化和延迟拖尾的薄塑料纹理。",
+          "判断：保留材料颗粒感，同时让拖尾跟住画面运动。"
+        ]
+      }
+    ],
+    "materials": [
+      "气泡膜原始动作与摩擦录音",
+      "放气气球录音",
+      "保鲜膜与蛋白粉摇杯外塑料包装录音",
+      "颂钵录音及其持续音、呼啸和尾音派生",
+      "铃铛录音及其明亮层、噪声层和尾音变体",
+      "Kontakt 的 Ashlight、Hypha、Ethereal Earth、Choir Omnia 与 Voxos 音高素材",
+      "渲染后的合成、合唱、过渡、命中、呼啸和尾音构件"
+    ],
+    "keywords": [
+      "holy magic",
+      "sound redesign",
+      "Michael Cheung",
+      "Jong Woo Jeong",
+      "source recording",
+      "building blocks",
+      "tonal layer",
+      "physical texture",
+      "singing bowl",
+      "jingle bells",
+      "bubble wrap",
+      "balloon deflating",
+      "saran wrap",
+      "plastic wrap",
+      "picture pass",
+      "kHs Dynamics",
+      "Soundtoys Crystallizer",
+      "workflow",
+      "magic"
+    ],
+    "tips": [
+      "工程先分为原始录音、处理后构件和画面对位三层，回改素材时更容易定位问题。",
+      "合唱和持续音负责神圣、明亮的音高线索；家庭材料负责前导、命中、运动和尾音。",
+      "先离线渲染构件，再分四遍对位：旋转与收缩、光球上射、主爆发、治疗收尾。",
+      "每颗插件只解决一个明确问题；说不清输入、动作和结果时，先旁路。"
+    ],
+    "chainFocus": [
+      "素材制作：家庭录音和 Kontakt 音高层 -> 去除低频残留、点击与削波 -> 调整动态、频段和振幅运动 -> 派生共鸣、呼啸与颗粒尾音。",
+      "构件整理：把合成、合唱、命中、呼啸和尾音逐条渲染、命名并存入素材浏览器。",
+      "画面对位：旋转与收缩 -> 光球上射 -> 主爆发 -> 星点落下与治疗收尾。",
+      "塑料章节：保鲜膜颗粒纹理 -> 塑料包装命中与呼啸 -> 气泡膜持续运动 -> 短促保鲜膜打击。Silo 只作为作者提到但画面中未激活的工作流背景。"
+    ],
+    "parameterLogic": [
+      "先判断素材问题：低电平残留、运动不足、音高不明确或尾部太短；只选能解决当前问题的处理。",
+      "气泡膜先听低电平残留是否退后，再听主要摩擦动作是否仍自然、清楚。",
+      "保鲜膜先确定需要多低的音高和多长的拖尾；颗粒切片只需跟住画面运动，不追求固定数值。",
+      "空间宽度由画面决定：前导与尾部可以展开，主命中保持集中。",
+      "脚本生成变体后检查时长、音高和画面对位，只保留能直接服务画面的变化。"
+    ],
+    "timeline": {
+      "durationSeconds": 1517,
+      "reviewedAt": "2026-08-17",
+      "source": "youtube-player"
     },
-    {
-      "id": "yt-lLTbxhK_QLU:effect:izotope-rx-9-de-crackle:2",
-      "name": "iZotope RX 9 De-crackle",
-      "vendor": "iZotope",
-      "category": "修复与非常规处理",
-      "target": "经增强和拉伸的重水搅动录音 Water-Stir-Pool-Heavy_SONICWATER386.wav",
-      "chainPosition": "Bloom 与 Warp 拉伸之后，Cluster Delay、晶化、饱和和 whoosh 运动之前",
-      "purpose": "只输出 crackle 残差，把重水搅动转成可单独使用的湿纹理。",
-      "parameters": [
-        {
-          "name": "Output mode",
-          "value": "Output crackle only",
-          "direction": "仅输出裂纹残差",
-          "evidence": "固定 06:10 截图确认"
-        }
-      ],
-      "result": "作者称得到细碎湿纹理，并贡献这条素材的大部分湿感；未本地试听。",
-      "interactions": "残差随后进入延迟、多实例晶化、饱和与 whoosh 运动，扩展为闪烁湿尾。",
-      "limitations": "截图确认 Output crackle only；其它界面数值不作建议。",
-      "timestamp": "06:10",
-      "startSeconds": 370,
-      "stepIndex": 4,
-      "screenshotKey": "lLTbxhK_QLU-source-3",
-      "screenshotReviewed": true,
-      "replacesPluginIndexes": [
-        1
-      ],
-      "evidence": [
-        "画面确认",
-        "作者口述"
-      ]
-    },
-    {
-      "id": "yt-lLTbxhK_QLU:effect:tonsturm-spintracer:3",
-      "name": "Tonsturm SpinTracer",
-      "vendor": "Tonsturm",
-      "category": "调制与运动",
-      "target": "最终水球段的 glitter 层和湿水层",
-      "chainPosition": "宽度与 EQ 之后，额外湿点和横向 panning 之前",
-      "purpose": "让这两层产生旋转空间运动，匹配画面中的水球旋转。",
-      "parameters": [],
-      "result": "作者称运动会跟随旋转水球；未本地试听空间结果。",
-      "interactions": "glitter 提供高频焦点，湿水层提供水体纹理，SpinTracer 统一两者的旋转运动；末端另用轻量 panning 跟随横向画面。",
-      "limitations": "截图确认 SpinTracer 与分层工程；preset 和界面数值不作建议。",
-      "timestamp": "15:20",
-      "startSeconds": 920,
-      "stepIndex": 8,
-      "screenshotKey": "lLTbxhK_QLU-final-breakdown",
-      "screenshotReviewed": true,
-      "replacesPluginIndexes": [
-        2
-      ],
-      "evidence": [
-        "画面确认",
-        "作者口述"
-      ]
-    }
-  ]
-},
-{
-  "id": "yt-Oo3SRd_94VE",
-  "title": "零素材库制作圣光魔法音效：录音、合成与画面对位",
-  "videoId": "Oo3SRd_94VE",
-  "url": "https://www.youtube.com/watch?v=Oo3SRd_94VE",
-  "source": "Michael Cheung",
-  "category": "magic",
-  "secondaryCategories": [
-    "workflow"
-  ],
-  "addedAt": "2026-08-17",
-  "updatedAt": "2026-08-17",
-  "updateNote": "2026-08-17 导入英文原题 I Made Holy Magic Without a Single Sample Library: Sound Design Breakdown & Tutorial（25:17）。依据本地完整视频、创作者旁白与固定帧整理；本次未试听本地视频音轨。",
-  "summary": "这里的“零素材库”指不调用现成音效素材库。Michael Cheung 用自录的气泡膜、气球、保鲜膜、塑料包装、颂钵和铃铛，配合 Kontakt 音高层，先制作构件，再分四遍完成圣光魔法的画面对位。VFX 由 Jong Woo Jeong 制作（https://www.youtube.com/watch?v=yE5rjDocIAE）；这是 Michael Cheung 的独立声音重设计教程，不是暴雪或任何游戏的官方音频。",
-  "coreIdeas": [
-    "合唱与持续音负责神圣感和音高身份，家庭录音负责物理触感、噪声与动作可读性。",
-    "先分清原始录音、处理后构件和画面对位三个阶段，避免在成片阶段反复重做素材。",
-    "先把素材清理、变形并渲染成独立构件，再按前导、命中、运动与尾音贴合视觉事件。",
-    "立体声只用于需要展开的铺垫和空间层，不让所有层同时变宽。",
-    "变化生成器只提供变体起点，生成结果仍需人工审核和编辑。"
-  ],
-  "steps": [
-    {
-      "order": 1,
-      "name": "采录家庭材料",
-      "detail": "材料是气泡膜、放气气球、保鲜膜和塑料包装；先保留原始动作与摩擦，再把它们分别加工成魔法的物理噪声、运动和冲击来源。",
-      "params": [
-        "输入：气泡膜、放气气球、保鲜膜和塑料包装的近距离录音。",
-        "用途：保留真实摩擦和动作，后续分别制作动作床、前导、命中和尾音。"
-      ],
-      "imageKey": "Oo3SRd_94VE-source-recordings",
-      "startSeconds": 0
-    },
-    {
-      "order": 2,
-      "name": "先看完整声音重设计",
-      "detail": "先播放完整重设计，确认每个视觉事件需要的前导、命中、运动和尾音，再回到素材制作与分层。",
-      "params": [
-        "观察：魔杖旋转、光球生成、上射、主爆发、星点落下和法术收尾。",
-        "用途：先建立整段节奏参照，再逐层拆解素材职责。"
-      ],
-      "imageKey": "Oo3SRd_94VE-final-design",
-      "startSeconds": 46
-    },
-    {
-      "order": 3,
-      "name": "建立合成与合唱音高层",
-      "detail": "从 Kontakt 的 Ashlight、Hypha、Ethereal Earth、Choir Omnia 和 Voxos 选取合成与合唱声，补足法术的音高、持续共鸣和尾音运动；出现点击或削波时再单独修复。",
-      "params": [
-        "输入：Ashlight、Hypha、Ethereal Earth、Choir Omnia 和 Voxos。",
-        "动作：整理动态，延展尾音并加入振幅运动；出现点击或削波时单独修复。",
-        "输出：合唱、持续音和过渡类音高构件。"
-      ],
-      "imageKey": "Oo3SRd_94VE-synths",
-      "startSeconds": 167
-    },
-    {
-      "order": 4,
-      "name": "渲染处理后构件库",
-      "detail": "将合成、合唱、持续音、过渡和尾音逐条渲染、命名并存入素材浏览器，后续直接按画面裁切和组合。",
-      "params": [
-        "输入：已完成基础处理的合成、合唱和家庭录音派生层。",
-        "动作：按前导、命中、运动和尾音分条渲染并命名。",
-        "输出：可在画面对位阶段直接调用的构件库。"
-      ],
-      "imageKey": "Oo3SRd_94VE-building-blocks",
-      "startSeconds": 304
-    },
-    {
-      "order": 5,
-      "name": "从颂钵派生共鸣与尾音",
-      "detail": "从颂钵录音保留稳定共鸣，再派生持续音、呼啸和反向颗粒长尾，分别支撑音高、转场和动作后的延展。",
-      "params": [
-        "输入：颂钵录音。",
-        "动作：保留共鸣，派生持续音和呼啸；将部分颗粒反向后加延迟。",
-        "输出：音高支撑、转场呼啸和动作后的长尾。",
-        "限制：Silo 只作为作者提到但画面中未激活的工作流背景，不作为效果器用法。"
-      ],
-      "imageKey": "Oo3SRd_94VE-singing-bowl",
-      "startSeconds": 562
-    },
-    {
-      "order": 6,
-      "name": "把铃铛扩成明亮纹理",
-      "detail": "材料是铃铛录音；清理低频残留后进行变调、空间、饱和与轻微失谐，得到可用于闪光、星点、上扬和尾部的多组明亮纹理。",
-      "params": [
-        "输入：铃铛录音。",
-        "动作：清理低频，再做变调、混响、饱和和轻微失谐。",
-        "输出：用于闪光、星点、上扬和尾音的明亮层。"
-      ],
-      "imageKey": "Oo3SRd_94VE-jingle-bells",
-      "startSeconds": 656
-    },
-    {
-      "order": 7,
-      "name": "清理气泡膜动作床",
-      "detail": "材料是带低电平原始残留的气泡膜动作录音；向上扩展压低阈值下残留并突出主要运动，得到创作者所称更干净的动作床，再剪成爆发前导与 whoosh。",
-      "params": [
-        "输入：低电平残留较多的气泡膜动作录音。",
-        "动作：用 kHs Dynamics 做向上扩展。",
-        "输出：低电平残留退后，主要动作更清楚，便于剪成动作床、爆发前导和呼啸。"
-      ],
-      "imageKey": "Oo3SRd_94VE-bubble-wrap",
-      "startSeconds": 779
-    },
-    {
-      "order": 8,
-      "name": "把放气气球做成爆发前导",
-      "detail": "先整理放气气球的动态与频段，再用饱和和振幅调制增加不规则运动，最后补少量和声与混响，作为爆发前导。",
-      "params": [
-        "输入：放气气球录音。",
-        "动作：整理动态与频段，再用饱和和振幅调制增加不规则运动。",
-        "输出：连接音高层与主爆发的空气感前导。"
-      ],
-      "imageKey": "Oo3SRd_94VE-balloon-deflating",
-      "startSeconds": 930
-    },
-    {
-      "order": 9,
-      "name": "把保鲜膜做成颗粒纹理",
-      "detail": "用 Crystallizer 降低保鲜膜录音的音高，并加入延迟颗粒切片，得到更低、更碎、带拖尾的纹理。",
-      "params": [
-        "输入：保鲜膜录音。",
-        "动作：用 Crystallizer 降调，并加入延迟颗粒切片。",
-        "输出：更低、更碎、带延迟拖尾的纹理。"
-      ],
-      "imageKey": "Oo3SRd_94VE-plastic-wrap-textures",
-      "startSeconds": 982
-    },
-    {
-      "order": 10,
-      "name": "第一遍：旋转、爆发与收缩",
-      "detail": "材料是气泡膜、铃铛、塑料包装和反向颂钵；气泡膜跟随魔杖旋转，铃铛与反向材料建立光球前导，塑料和颂钵落在命中，再用反向铃铛与气泡膜描绘收缩和星点。",
-      "params": [
-        "输入：气泡膜、铃铛、塑料包装和反向颂钵。",
-        "画面对位：气泡膜跟魔杖旋转；铃铛和反向层做光球前导；塑料与颂钵落在命中。",
-        "结果：旋转、爆发、收缩和星点各有清楚的时间轮廓。"
-      ],
-      "imageKey": "Oo3SRd_94VE-picture-pass-1",
-      "startSeconds": 1134
-    },
-    {
-      "order": 11,
-      "name": "第二遍：光球上射",
-      "detail": "材料是气球前导、气泡膜命中、杂项 whoosh 与少量音高支撑；依次贴合光球启动、上升轨迹和尾部，让物理运动跟住向上的画面。",
-      "params": [
-        "输入：气球前导、气泡膜命中、上升呼啸和少量音高层。",
-        "画面对位：前导放在启动前，呼啸跟随上升轨迹，气泡膜补足离场尾部。",
-        "结果：上射动作有明确的启动、上升和收尾。"
-      ],
-      "imageKey": "Oo3SRd_94VE-picture-pass-2",
-      "startSeconds": 1242
-    },
-    {
-      "order": 12,
-      "name": "第三遍：主爆发与冲击波",
-      "detail": "只把部分前导层做宽；保鲜膜、颂钵和塑料打击落在主命中，合唱与铃铛展开和声，运动尾音跟随冲击波。",
-      "params": [
-        "输入：保鲜膜、颂钵、塑料打击、合唱和铃铛。",
-        "画面对位：只让部分前导层展开；主命中保持集中，运动尾音跟随冲击波。",
-        "结果：主爆发兼有物理冲击和神圣的和声延展。"
-      ],
-      "imageKey": "Oo3SRd_94VE-picture-pass-3",
-      "startSeconds": 1273
-    },
-    {
-      "order": 13,
-      "name": "第四遍：落点与治疗收尾",
-      "detail": "用短打击跟住星点落到角色的瞬间，再用反向素材连接转场，让铃铛衰减并以合唱音高收尾。",
-      "params": [
-        "输入：多组打击、颂钵尾音、反向素材、铃铛和合唱。",
-        "画面对位：打击跟随星点落下，反向素材连接转场，铃铛和合唱负责消散。",
-        "结果：治疗落点清楚，法术尾部逐步收束。"
-      ],
-      "imageKey": "Oo3SRd_94VE-picture-pass-4",
-      "startSeconds": 1385
-    },
-    {
-      "order": 14,
-      "name": "生成变体并人工复核",
-      "detail": "材料是已完成的时间线 items；MC_Variation_Generator 随机改变所选 item 以快速产生另一版，再由人工审核、编辑并保留可用结果。",
-      "params": [
-        "输入：已完成的时间线片段。",
-        "动作：用 MC_Variation_Generator 生成变体起点。",
-        "结果：人工检查时长、音高和画面对位，只保留可用版本。"
-      ],
-      "imageKey": "Oo3SRd_94VE-variation-generator",
-      "startSeconds": 1462
-    }
-  ],
-  "plugins": [
-    {
-      "name": "kHs Dynamics",
-      "purpose": "对气泡膜动作素材做向上扩展，压低低电平原始残留并突出主要运动。",
-      "settings": [
-        "适合：低电平残留盖住主要动作的录音。",
-        "判断：主要动作更清楚、安静部分退后即可。"
-      ]
-    },
-    {
-      "name": "Soundtoys Crystallizer",
-      "purpose": "把保鲜膜录音降调并加入延迟颗粒切片，派生较低、延迟的颗粒纹理。",
-      "settings": [
-        "适合：需要降调、碎片化和延迟拖尾的薄塑料纹理。",
-        "判断：保留材料颗粒感，同时让拖尾跟住画面运动。"
-      ]
-    }
-  ],
-  "materials": [
-    "气泡膜原始动作与摩擦录音",
-    "放气气球录音",
-    "保鲜膜与蛋白粉摇杯外塑料包装录音",
-    "颂钵录音及其持续音、呼啸和尾音派生",
-    "铃铛录音及其明亮层、噪声层和尾音变体",
-    "Kontakt 的 Ashlight、Hypha、Ethereal Earth、Choir Omnia 与 Voxos 音高素材",
-    "渲染后的合成、合唱、过渡、命中、呼啸和尾音构件"
-  ],
-  "keywords": [
-    "holy magic",
-    "sound redesign",
-    "Michael Cheung",
-    "Jong Woo Jeong",
-    "source recording",
-    "building blocks",
-    "tonal layer",
-    "physical texture",
-    "singing bowl",
-    "jingle bells",
-    "bubble wrap",
-    "balloon deflating",
-    "saran wrap",
-    "plastic wrap",
-    "picture pass",
-    "kHs Dynamics",
-    "Soundtoys Crystallizer",
-    "workflow",
-    "magic"
-  ],
-  "tips": [
-    "工程先分为原始录音、处理后构件和画面对位三层，回改素材时更容易定位问题。",
-    "合唱和持续音负责神圣、明亮的音高线索；家庭材料负责前导、命中、运动和尾音。",
-    "先离线渲染构件，再分四遍对位：旋转与收缩、光球上射、主爆发、治疗收尾。",
-    "每颗插件只解决一个明确问题；说不清输入、动作和结果时，先旁路。"
-  ],
-  "chainFocus": [
-    "素材制作：家庭录音和 Kontakt 音高层 -> 去除低频残留、点击与削波 -> 调整动态、频段和振幅运动 -> 派生共鸣、呼啸与颗粒尾音。",
-    "构件整理：把合成、合唱、命中、呼啸和尾音逐条渲染、命名并存入素材浏览器。",
-    "画面对位：旋转与收缩 -> 光球上射 -> 主爆发 -> 星点落下与治疗收尾。",
-    "塑料章节：保鲜膜颗粒纹理 -> 塑料包装命中与呼啸 -> 气泡膜持续运动 -> 短促保鲜膜打击。Silo 只作为作者提到但画面中未激活的工作流背景。"
-  ],
-  "parameterLogic": [
-    "先判断素材问题：低电平残留、运动不足、音高不明确或尾部太短；只选能解决当前问题的处理。",
-    "气泡膜先听低电平残留是否退后，再听主要摩擦动作是否仍自然、清楚。",
-    "保鲜膜先确定需要多低的音高和多长的拖尾；颗粒切片只需跟住画面运动，不追求固定数值。",
-    "空间宽度由画面决定：前导与尾部可以展开，主命中保持集中。",
-    "脚本生成变体后检查时长、音高和画面对位，只保留能直接服务画面的变化。"
-  ],
-  "timeline": {
-    "durationSeconds": 1517,
-    "reviewedAt": "2026-08-17",
-    "source": "youtube-player"
-  },
-  "effectUses": [
-    {
-      "id": "yt-Oo3SRd_94VE:effect:khs-dynamics:1",
-      "name": "kHs Dynamics",
-      "vendor": "Kilohearts",
-      "category": "动态",
-      "target": "带有低电平残留的气泡膜动作录音",
-      "chainPosition": "气泡膜完成初步清理并渲染后、剪成动作床和呼啸之前",
-      "purpose": "用向上扩展压低阈值下的残留，并突出阈值上的主要运动。",
-      "parameters": [],
-      "result": "作者描述为：低电平残留退后，主要动作更清楚。",
-      "interactions": "处理后的气泡膜再剪成动作床、爆发前导和呼啸。",
-      "limitations": "适用于低电平残留明显、主要动作需要保留的录音；视频没有给出可通用数值。",
-      "timestamp": "13:47",
-      "startSeconds": 827,
-      "stepIndex": 6,
-      "screenshotKey": "Oo3SRd_94VE-bubble-wrap",
-      "screenshotReviewed": true,
-      "replacesPluginIndexes": [
-        0
-      ],
-      "evidence": [
-        "画面确认",
-        "作者口述"
-      ]
-    },
-    {
-      "id": "yt-Oo3SRd_94VE:effect:soundtoys-crystallizer:2",
-      "name": "Soundtoys Crystallizer",
-      "vendor": "Soundtoys",
-      "category": "音高与颗粒",
-      "target": "保鲜膜（saran wrap）录音",
-      "chainPosition": "保鲜膜完成基础清理后、渲染颗粒纹理之前",
-      "purpose": "降低音高并加入延迟颗粒切片。",
-      "parameters": [],
-      "result": "作者描述为：音高更低，并带有延迟的颗粒碎片与拖尾。",
-      "interactions": "Crystallizer 只处理保鲜膜；塑料包装的命中、呼啸和气泡膜运动层另行制作，最后一起进入画面对位。",
-      "limitations": "适用于需要降调、碎片化和延迟拖尾的保鲜膜纹理；视频没有给出可通用数值。",
-      "timestamp": "16:30",
-      "startSeconds": 990,
-      "stepIndex": 8,
-      "screenshotKey": "Oo3SRd_94VE-plastic-wrap-textures",
-      "screenshotReviewed": true,
-      "replacesPluginIndexes": [
-        1
-      ],
-      "evidence": [
-        "画面确认",
-        "作者口述"
-      ]
-    }
-  ]
-}
+    "effectUses": [
+      {
+        "id": "yt-Oo3SRd_94VE:effect:khs-dynamics:1",
+        "name": "kHs Dynamics",
+        "vendor": "Kilohearts",
+        "category": "动态",
+        "target": "带有低电平残留的气泡膜动作录音",
+        "chainPosition": "气泡膜完成初步清理并渲染后、剪成动作床和呼啸之前",
+        "purpose": "用向上扩展压低阈值下的残留，并突出阈值上的主要运动。",
+        "parameters": [],
+        "result": "作者描述为：低电平残留退后，主要动作更清楚。",
+        "interactions": "处理后的气泡膜再剪成动作床、爆发前导和呼啸。",
+        "limitations": "适用于低电平残留明显、主要动作需要保留的录音；视频没有给出可通用数值。",
+        "timestamp": "13:47",
+        "startSeconds": 827,
+        "stepIndex": 6,
+        "screenshotKey": "Oo3SRd_94VE-bubble-wrap",
+        "screenshotReviewed": true,
+        "replacesPluginIndexes": [
+          0
+        ],
+        "evidence": [
+          "画面确认",
+          "作者口述"
+        ]
+      },
+      {
+        "id": "yt-Oo3SRd_94VE:effect:soundtoys-crystallizer:2",
+        "name": "Soundtoys Crystallizer",
+        "vendor": "Soundtoys",
+        "category": "音高与颗粒",
+        "target": "保鲜膜（saran wrap）录音",
+        "chainPosition": "保鲜膜完成基础清理后、渲染颗粒纹理之前",
+        "purpose": "降低音高并加入延迟颗粒切片。",
+        "parameters": [],
+        "result": "作者描述为：音高更低，并带有延迟的颗粒碎片与拖尾。",
+        "interactions": "Crystallizer 只处理保鲜膜；塑料包装的命中、呼啸和气泡膜运动层另行制作，最后一起进入画面对位。",
+        "limitations": "适用于需要降调、碎片化和延迟拖尾的保鲜膜纹理；视频没有给出可通用数值。",
+        "timestamp": "16:30",
+        "startSeconds": 990,
+        "stepIndex": 8,
+        "screenshotKey": "Oo3SRd_94VE-plastic-wrap-textures",
+        "screenshotReviewed": true,
+        "replacesPluginIndexes": [
+          1
+        ],
+        "evidence": [
+          "画面确认",
+          "作者口述"
+        ]
+      }
+    ]
+  }
 ];
 
     const imageManifest = {
