@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const siteData = require('../tools/site-data.cjs');
+const SfxLearningMap = require('../src/learning-map.js');
 const subtitles = require('../src/video-subtitles.js');
 
 const root = path.join(__dirname, '..');
@@ -22,6 +23,7 @@ const expectedEffects = [
   'Waves Z-Noise'
 ];
 const expectedLearningMap = {
+  version: 1,
   goal: '让可见动作、角色材质和力量幻想同时清楚，并用调性与尾音区分己方和敌方版本。',
   roles: [
     { name: '动作提示', description: '布料、手镯和拉臂动作对齐画面节拍。' },
@@ -218,10 +220,12 @@ test('publishes the Veto ult breakdown as the unique 85th complete record', () =
   }
 
   assert.deepEqual(record.learningMap, expectedLearningMap);
+  assert.equal(record.learningMap.version, SfxLearningMap.limits().version);
+  assert.ok(SfxLearningMap.project(record, { steps: record.steps }));
   assert.deepEqual(record.steps.map((step) => step.learning), expectedStepLearning);
   const chapterStepOrders = record.learningMap.chapters.flatMap((chapter) => chapter.stepOrders);
-  assert.deepEqual(chapterStepOrders, Array.from({ length: 17 }, (_, index) => index + 1));
-  assert.equal(new Set(chapterStepOrders).size, 17);
+  assert.deepEqual(chapterStepOrders, record.steps.map((step) => step.order));
+  assert.equal(new Set(chapterStepOrders).size, record.steps.length);
 
   for (const step of record.steps) {
     assert.deepEqual(Object.keys(step.learning), ['input', 'problem', 'action', 'result'], step.name);

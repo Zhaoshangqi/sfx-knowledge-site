@@ -2249,6 +2249,7 @@
   <script src="src/sfx-glossary.js?v=20260814-glossary-1"></script>
   <script src="src/youtube-caption-player.js?v=20260812-caption-player-1"></script>
   <script src="src/detail-navigation.js?v=20260814-detail-nav-1"></script>
+  <script src="src/learning-map.js?v=20260901-sitewide-1"></script>
   <script>
     const categories = [
   {
@@ -32253,6 +32254,7 @@
     "updateNote": "2026-09-01 导入 How I made the sounds for Veto's Ult | Valorant（34:30）。依据本地 1080p 完整视频、创作者旁白与逐段固定帧整理；处理结果按作者讲解记录，未将本地音轨试听当作独立结论。",
     "summary": "Nathan_SFX 将 Veto 大招拆成可见动作、角色材质、力量来源、转场和高频 Ear Candy。核心不是堆满轨道，而是先让布料、手镯、黏液和甲壳准确对应画面，再用调性合成器、非写实重击与高频运动强化危险感、力量感和敌我辨识。",
     "learningMap": {
+      "version": 1,
       "goal": "让可见动作、角色材质和力量幻想同时清楚，并用调性与尾音区分己方和敌方版本。",
       "roles": [
         {
@@ -38634,84 +38636,13 @@
     }
 
     function projectLearningTemplate(record, detailData) {
-      if (record?.videoId !== "3JjAK2uhxM4") return null;
-      const learningMap = record?.learningMap && typeof record.learningMap === "object" && !Array.isArray(record.learningMap)
-        ? record.learningMap
-        : null;
-      if (!learningMap) return null;
-
-      const normalizedText = (value) => typeof value === "string" ? value.trim() : "";
-      const goal = normalizedText(learningMap.goal);
-      const sequence = normalizedText(learningMap.sequence);
-      if (!goal || !sequence) return null;
-
-      const roleSources = Array.isArray(learningMap.roles) ? Array.from(learningMap.roles) : [];
-      if (roleSources.length !== 6) return null;
-      const roles = roleSources.map((role) => {
-        if (!role || typeof role !== "object" || Array.isArray(role)) return null;
-        const name = normalizedText(role.name);
-        const description = normalizedText(role.description);
-        return name && description ? { name, description } : null;
-      });
-      if (roles.some((role) => !role)) return null;
-
-      const decisionSources = Array.isArray(learningMap.decisions) ? Array.from(learningMap.decisions) : [];
-      if (decisionSources.length !== 3) return null;
-      const normalizedDecisions = decisionSources.map(normalizedText);
-      if (normalizedDecisions.some((decision) => !decision)) return null;
-      const decisions = normalizedDecisions;
-
-      const steps = Array.isArray(detailData?.steps) ? detailData.steps : [];
-      if (steps.length !== 17) return null;
-      const learningKeys = ["input", "problem", "action", "result"];
-      const stepsByOrder = new Map();
-      const normalizedSteps = [];
-      for (let index = 0; index < steps.length; index += 1) {
-        const step = steps[index];
-        if (!step || typeof step !== "object" || Array.isArray(step)) return null;
-        const order = step.order;
-        if (!Number.isInteger(order) || order < 1 || order > 17 || stepsByOrder.has(order)) return null;
-        const sourceLearning = step.learning && typeof step.learning === "object" && !Array.isArray(step.learning)
-          ? step.learning
-          : null;
-        if (!sourceLearning) return null;
-        const learning = {};
-        for (const key of learningKeys) {
-          const value = normalizedText(sourceLearning[key]);
-          if (!value) return null;
-          learning[key] = value;
-        }
-        const entry = { step, index, order, learning };
-        normalizedSteps.push(entry);
-        stepsByOrder.set(order, entry);
+      if (typeof SfxLearningMap !== "object" || SfxLearningMap === null) return null;
+      try {
+        if (typeof SfxLearningMap.project !== "function") return null;
+        return SfxLearningMap.project(record, detailData);
+      } catch (error) {
+        return null;
       }
-
-      const chapterSources = Array.isArray(learningMap.chapters) ? Array.from(learningMap.chapters) : [];
-      if (chapterSources.length !== 5) return null;
-      const chapters = [];
-      const partitionOrders = [];
-      const seenOrders = new Set();
-      for (const chapter of chapterSources) {
-        if (!chapter || typeof chapter !== "object" || Array.isArray(chapter)) return null;
-        const id = normalizedText(chapter.id);
-        const title = normalizedText(chapter.title);
-        const question = normalizedText(chapter.question);
-        const summary = normalizedText(chapter.summary);
-        const stepOrders = Array.isArray(chapter.stepOrders) ? Array.from(chapter.stepOrders) : [];
-        if (!id || !title || !question || !summary || !stepOrders.length) return null;
-        const chapterSteps = [];
-        for (const order of stepOrders) {
-          if (!Number.isInteger(order) || order <= 0 || seenOrders.has(order) || !stepsByOrder.has(order)) return null;
-          seenOrders.add(order);
-          partitionOrders.push(order);
-          chapterSteps.push(stepsByOrder.get(order));
-        }
-        chapters.push({ id, title, question, summary, stepOrders, steps: chapterSteps });
-      }
-      if (partitionOrders.length !== normalizedSteps.length) return null;
-      if (normalizedSteps.some((entry) => !seenOrders.has(entry.order))) return null;
-
-      return { goal, sequence, roles, decisions, steps: normalizedSteps, chapters };
     }
 
     function renderQuickConclusion(record, detailData) {

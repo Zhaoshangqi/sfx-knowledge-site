@@ -8,6 +8,7 @@ const indexHtml = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf
 const SfxKnowledgeModel = require('../src/knowledge-model.js');
 const SfxEffectGuides = require('../src/effect-guides.js');
 const SfxEffectLearningPaths = require('../src/effect-learning-paths.js');
+const SfxLearningMap = require('../src/learning-map.js');
 const SfxVideoSubtitles = require('../src/video-subtitles.js');
 const SfxVideoTimeline = require('../src/video-timeline.js');
 const SfxGlossary = require('../src/sfx-glossary.js');
@@ -165,11 +166,17 @@ function escapeRegexForTest(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function loadDetailRenderingHelpers(context = {}) {
+function loadDetailRenderingHelpers(context = {}, options = {}) {
   const source = sourceSlice(
     'function renderTimeJump(seconds, label, attributes = {}) {',
     'function renderDetail(options = {}) {'
   );
+  const vmContext = { ...context };
+  if (options.injectLearningMap !== false) {
+    vmContext.SfxLearningMap = Object.prototype.hasOwnProperty.call(options, 'learningMap')
+      ? options.learningMap
+      : SfxLearningMap;
+  }
   vm.runInNewContext(`${source}
 this.renderTimeJump = renderTimeJump;
 this.renderQuickConclusion = renderQuickConclusion;
@@ -177,8 +184,8 @@ this.renderSectionNavigation = renderSectionNavigation;
 this.videoDetailSections = videoDetailSections;
 this.renderStepTimeline = renderStepTimeline;
 this.renderDetailedSteps = renderDetailedSteps;
-this.renderCompleteEvidence = renderCompleteEvidence;`, context);
-  return context;
+this.renderCompleteEvidence = renderCompleteEvidence;`, vmContext);
+  return vmContext;
 }
 
 function loadEffectCaseHelpers(context = {}) {
@@ -195,7 +202,7 @@ this.renderEffectInterfaceReference = renderEffectInterfaceReference;`, context)
   return context;
 }
 
-test('loads shared knowledge, subtitle, glossary, player, and detail navigation before inline data', () => {
+test('loads shared knowledge, learning map, subtitle, glossary, player, and detail navigation before inline data', () => {
   const modelTag = indexHtml.match(/<script src="src\/knowledge-model\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const guideTag = indexHtml.match(/<script src="src\/effect-guides\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const learningPathsTag = indexHtml.match(/<script src="src\/effect-learning-paths\.js\?v=[^"]+"><\/script>/)?.[0] || '';
@@ -204,6 +211,7 @@ test('loads shared knowledge, subtitle, glossary, player, and detail navigation 
   const glossaryTag = indexHtml.match(/<script src="src\/sfx-glossary\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const playerTag = indexHtml.match(/<script src="src\/youtube-caption-player\.js\?v=[^"]+"><\/script>/)?.[0] || '';
   const detailNavigationTag = indexHtml.match(/<script src="src\/detail-navigation\.js\?v=[^"]+"><\/script>/)?.[0] || '';
+  const learningMapTag = '<script src="src/learning-map.js?v=20260901-sitewide-1"></script>';
   const modelScript = indexHtml.indexOf(modelTag);
   const guideScript = indexHtml.indexOf(guideTag);
   const learningPathsScript = indexHtml.indexOf(learningPathsTag);
@@ -212,7 +220,9 @@ test('loads shared knowledge, subtitle, glossary, player, and detail navigation 
   const glossaryScript = indexHtml.indexOf(glossaryTag);
   const playerScript = indexHtml.indexOf(playerTag);
   const detailNavigationScript = indexHtml.indexOf(detailNavigationTag);
+  const learningMapScript = indexHtml.indexOf(learningMapTag);
   const inlineCategories = indexHtml.indexOf('const categories = [');
+  const inlineRecords = indexHtml.indexOf('const records = [');
 
   assert.ok(modelTag, 'knowledge model script must be cache-versioned');
   assert.ok(guideTag, 'effect guide script must be cache-versioned');
@@ -222,6 +232,7 @@ test('loads shared knowledge, subtitle, glossary, player, and detail navigation 
   assert.ok(glossaryTag, 'sound-design glossary script must be cache-versioned');
   assert.ok(playerTag, 'YouTube caption player script must be cache-versioned');
   assert.ok(detailNavigationTag, 'detail navigation script must be cache-versioned');
+  assert.notEqual(learningMapScript, -1, 'shared learning map script must use the site-wide cache version');
   assert.ok(modelScript < guideScript, 'effect guides must load after the knowledge model');
   assert.ok(guideScript < learningPathsScript, 'effect learning paths must load after effect guides');
   assert.ok(learningPathsScript < subtitlesScript, 'subtitle data must load after the effect modules');
@@ -230,6 +241,7 @@ test('loads shared knowledge, subtitle, glossary, player, and detail navigation 
   assert.ok(glossaryScript < playerScript, 'player must load after the glossary');
   assert.ok(playerScript < detailNavigationScript, 'detail navigation must load after the player');
   assert.ok(detailNavigationScript < inlineCategories, 'detail navigation must load before inline application data');
+  assert.ok(learningMapScript < inlineRecords, 'shared learning map must load before inline records data');
 });
 
 test('renders only relevant glossary terms and escapes every glossary field', () => {
@@ -348,11 +360,13 @@ test('quick conclusions stay concise while folded evidence preserves every suppl
 });
 
 test('renders the Veto learning template while preserving exact legacy detail fallbacks', () => {
-  const veto = records().find((record) => record.videoId === '3JjAK2uhxM4');
+  const veto = plainValue(records().find((record) => record.videoId === '3JjAK2uhxM4'));
   assert.ok(veto, 'missing production Veto record');
 
   const detailData = loadVideoDetailData();
-  const projected = detailData.project(veto);
+  const projected = plainValue(detailData.project(veto));
+  const learningTemplate = SfxLearningMap.project(veto, projected);
+  assert.ok(learningTemplate, 'production Veto record must satisfy the shared learning contract');
   const helpers = loadDetailRenderingHelpers({
     escapeHtml: escapeHtmlForTest,
     escapeAttr: escapeAttrForTest,
@@ -365,16 +379,15 @@ test('renders the Veto learning template while preserving exact legacy detail fa
 
   assert.match(quick, /30 秒读懂/);
   assert.match(quick, /设计目标/);
-  assert.equal((quick.match(/class=\"learning-role\"/g) || []).length, 6);
-  ['动作提示', '主体材质', '重量冲击', '能量身份', '高频细节', '空间与尾音']
-    .forEach((role) => assert.match(quick, new RegExp(role)));
+  assert.equal((quick.match(/class=\"learning-role\"/g) || []).length, learningTemplate.roles.length);
+  learningTemplate.roles.forEach((role) => assert.match(quick, new RegExp(escapeRegexForTest(role.name))));
   assert.match(quick, /关键决定/);
   assert.match(quick, /最终结构/);
   assert.match(quick, /初始命中 → 吸入式转场 → 手臂拉回 → 材质与尾音收束 → 敌我变体/);
 
   assert.match(timeline, /设计章节/);
-  assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, 5);
-  const chapterTitles = ['先定动作骨架', '建立动作与力量', '塑造液态高频', '建立角色身份与转场', '完成材质、尾音与敌我版本'];
+  assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, learningTemplate.chapters.length);
+  const chapterTitles = learningTemplate.chapters.map((chapter) => chapter.title);
   chapterTitles.forEach((title) => {
     assert.match(timeline, new RegExp(title));
     assert.match(
@@ -382,16 +395,16 @@ test('renders the Veto learning template while preserving exact legacy detail fa
       new RegExp(`aria-label=\"播放本章：${escapeRegexForTest(escapeAttrForTest(title))}，从 [^\"]+ 播放\"`)
     );
   });
-  assert.equal((timeline.match(/data-step-time=/g) || []).length, 17);
-  assert.equal((timeline.match(/data-chapter-time=/g) || []).length, 5);
+  assert.equal((timeline.match(/data-step-time=/g) || []).length, learningTemplate.steps.length);
+  assert.equal((timeline.match(/data-chapter-time=/g) || []).length, learningTemplate.chapters.length);
 
-  assert.equal((detailed.match(/class=\"step-learning-grid\"/g) || []).length, 17);
+  assert.equal((detailed.match(/class=\"step-learning-grid\"/g) || []).length, learningTemplate.steps.length);
   ['输入', '问题', '动作', '结果'].forEach((label) => {
-    assert.equal((detailed.match(new RegExp(`<dt>${label}</dt>`, 'g')) || []).length, 17, label);
+    assert.equal((detailed.match(new RegExp(`<dt>${label}</dt>`, 'g')) || []).length, learningTemplate.steps.length, label);
   });
   assert.match(detailed, /完整大招画面与已有声音草稿。/);
   assert.match(detailed, /查看完整说明/);
-  assert.equal((detailed.match(/class=\"step-source-detail\"/g) || []).length, 17);
+  assert.equal((detailed.match(/class=\"step-source-detail\"/g) || []).length, learningTemplate.steps.length);
   const firstSourceStart = detailed.indexOf('<details class=\"step-source-detail\">');
   const firstSourceEnd = detailed.indexOf('</details>', firstSourceStart);
   assert.ok(firstSourceStart >= 0 && firstSourceEnd > firstSourceStart, 'missing folded source detail');
@@ -422,7 +435,7 @@ test('renders the Veto learning template while preserving exact legacy detail fa
       startSeconds: 12
     }]
   };
-  const legacyProjected = detailData.project(legacy);
+  const legacyProjected = plainValue(detailData.project(legacy));
   const legacyQuick = helpers.renderQuickConclusion(legacy, legacyProjected);
   const legacyTimeline = helpers.renderStepTimeline(legacy, legacyProjected);
   const legacyDetailed = helpers.renderDetailedSteps(legacy, legacyProjected);
@@ -453,19 +466,158 @@ test('places one shared fail-closed learning projection before all three rendere
     'function renderTimeJump(seconds, label, attributes = {}) {',
     'function renderDetail(options = {}) {'
   );
+  const projectionSource = sourceSlice(
+    'function projectLearningTemplate(record, detailData) {',
+    'function renderQuickConclusion(record, detailData) {'
+  ).trim().replace(/\r\n/g, '\n');
   const quickIndex = helperSource.indexOf('function renderQuickConclusion(record, detailData) {');
   const preQuickSource = helperSource.slice(0, quickIndex);
   const preQuickFunctions = [...preQuickSource.matchAll(/function ([A-Za-z0-9_]+)\(/g)].map((match) => match[1]);
 
   assert.deepEqual(preQuickFunctions, ['renderTimeJump', 'projectLearningTemplate']);
+  assert.equal(projectionSource, [
+    'function projectLearningTemplate(record, detailData) {',
+    '      if (typeof SfxLearningMap !== "object" || SfxLearningMap === null) return null;',
+    '      try {',
+    '        if (typeof SfxLearningMap.project !== "function") return null;',
+    '        return SfxLearningMap.project(record, detailData);',
+    '      } catch (error) {',
+    '        return null;',
+    '      }',
+    '    }'
+  ].join('\n'));
+  assert.equal(
+    (indexHtml.match(/SfxLearningMap\.project\(record, detailData\)/g) || []).length,
+    1,
+    'the page must delegate learning projection only through the shared contract'
+  );
   assert.equal(
     (helperSource.match(/const learningTemplate = projectLearningTemplate\(record, detailData\);/g) || []).length,
-    3
+    3,
+    'all three detail renderers must use the same projection entry point'
   );
 });
 
-test('learning template activation fails closed as one unit', async (t) => {
-  const veto = records().find((record) => record.videoId === '3JjAK2uhxM4');
+test('all detail renderers fail closed when the shared browser learning API is unavailable', async (t) => {
+  const record = {
+    title: 'Legacy Record',
+    summary: 'legacy-summary',
+    coreIdeas: ['legacy-idea'],
+    steps: [{
+      order: 1,
+      name: 'legacy-step',
+      detail: 'legacy-detail',
+      params: ['legacy-param'],
+      startSeconds: 12
+    }]
+  };
+  const detailData = plainValue(loadVideoDetailData().project(record));
+  const context = {
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeAttrForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  };
+  const cases = [
+    {
+      name: 'missing global',
+      options: { injectLearningMap: false }
+    },
+    {
+      name: 'non-object global',
+      options: { learningMap: 'unavailable' }
+    },
+    {
+      name: 'missing project capability',
+      options: { learningMap: {} }
+    },
+    {
+      name: 'project throws',
+      options: {
+        learningMap: {
+          project() { throw new Error('shared projection failed'); }
+        }
+      }
+    }
+  ];
+
+  for (const fixture of cases) {
+    await t.test(fixture.name, () => {
+      const helpers = loadDetailRenderingHelpers(context, fixture.options);
+      const outputs = {};
+      const renderers = {
+        quick: () => helpers.renderQuickConclusion(record, detailData),
+        timeline: () => helpers.renderStepTimeline(record, detailData),
+        detailed: () => helpers.renderDetailedSteps(record, detailData)
+      };
+
+      for (const [name, render] of Object.entries(renderers)) {
+        assert.doesNotThrow(() => { outputs[name] = render(); }, `${fixture.name}: ${name}`);
+      }
+
+      assert.match(outputs.quick, /快速结论/);
+      assert.match(outputs.timeline, /class=\"step-timeline\"/);
+      assert.match(outputs.timeline, /legacy-step/);
+      assert.match(outputs.detailed, /legacy-detail/);
+      assert.match(outputs.detailed, /legacy-param/);
+      assert.doesNotMatch(outputs.quick, /30 秒读懂|learning-map/);
+      assert.doesNotMatch(outputs.timeline, /learning-chapter|data-chapter-time/);
+      assert.doesNotMatch(outputs.detailed, /step-learning-grid|step-source-detail/);
+    });
+  }
+});
+
+test('renders any record accepted by the shared adaptive learning contract', () => {
+  const record = plainValue(records().find((item) => item.videoId === '3JjAK2uhxM4'));
+  assert.ok(record, 'missing production learning-map fixture');
+  const limits = SfxLearningMap.limits();
+
+  record.id = 'adaptive-learning-record';
+  record.videoId = 'adaptive-learning-video';
+  record.learningMap.roles = record.learningMap.roles.slice(0, limits.roles.min);
+  record.learningMap.decisions = record.learningMap.decisions.slice(0, limits.decisions.min);
+  record.learningMap.chapters = record.learningMap.chapters.slice(0, limits.chapters.min);
+  const retainedOrders = new Set(record.learningMap.chapters.flatMap((chapter) => chapter.stepOrders));
+  record.steps = record.steps.filter((step) => retainedOrders.has(step.order));
+
+  const orderOffset = Math.max(...record.steps.map((step) => step.order)) + record.steps.length;
+  const shiftedOrders = new Map(record.steps.map((step) => [step.order, step.order + orderOffset]));
+  record.steps.forEach((step) => { step.order = shiftedOrders.get(step.order); });
+  record.learningMap.chapters.forEach((chapter) => {
+    chapter.stepOrders = chapter.stepOrders.map((order) => shiftedOrders.get(order));
+  });
+
+  const detailData = loadVideoDetailData();
+  const projected = plainValue(detailData.project(record));
+  const learningTemplate = SfxLearningMap.project(record, projected);
+  assert.ok(learningTemplate);
+  assert.equal(learningTemplate.roles.length, limits.roles.min);
+  assert.equal(learningTemplate.decisions.length, limits.decisions.min);
+  assert.equal(learningTemplate.chapters.length, limits.chapters.min);
+  assert.deepEqual(
+    learningTemplate.steps.map((entry) => entry.order),
+    record.steps.map((step) => step.order)
+  );
+
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeAttrForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  });
+  const quick = helpers.renderQuickConclusion(record, projected);
+  const timeline = helpers.renderStepTimeline(record, projected);
+  const detailed = helpers.renderDetailedSteps(record, projected);
+
+  assert.match(quick, /30 秒读懂|learning-map/);
+  assert.equal((quick.match(/class=\"learning-role\"/g) || []).length, learningTemplate.roles.length);
+  assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, learningTemplate.chapters.length);
+  assert.equal((timeline.match(/data-step-time=/g) || []).length, learningTemplate.steps.length);
+  assert.equal((detailed.match(/class=\"step-learning-grid\"/g) || []).length, learningTemplate.steps.length);
+});
+
+test('shared learning contract failures fall back to all legacy renderers as one unit', async (t) => {
+  const veto = plainValue(records().find((record) => record.videoId === '3JjAK2uhxM4'));
   assert.ok(veto, 'missing production Veto record');
   const detailData = loadVideoDetailData();
   const helpers = loadDetailRenderingHelpers({
@@ -480,39 +632,12 @@ test('learning template activation fails closed as one unit', async (t) => {
       mutate(record) { record.learningMap = {}; }
     },
     {
-      name: 'learning map on a non-pilot video',
-      mutate(record) { record.videoId = 'not-the-veto-pilot'; }
+      name: 'missing contract version',
+      mutate(record) { delete record.learningMap.version; }
     },
     {
-      name: 'five roles instead of six',
-      mutate(record) { record.learningMap.roles.pop(); }
-    },
-    {
-      name: 'two decisions instead of three',
-      mutate(record) { record.learningMap.decisions.pop(); }
-    },
-    {
-      name: 'four coherent chapters instead of five',
-      mutate(record) {
-        const finalChapter = record.learningMap.chapters.pop();
-        record.learningMap.chapters[record.learningMap.chapters.length - 1].stepOrders.push(...finalChapter.stepOrders);
-      }
-    },
-    {
-      name: 'sixteen coherently partitioned steps instead of seventeen',
-      mutate(record) {
-        record.steps.pop();
-        record.learningMap.chapters[record.learningMap.chapters.length - 1].stepOrders.pop();
-      }
-    },
-    {
-      name: 'seventeen steps with shifted orders',
-      mutate(record) {
-        record.steps.forEach((step) => { step.order += 1; });
-        record.learningMap.chapters.forEach((chapter) => {
-          chapter.stepOrders = chapter.stepOrders.map((order) => order + 1);
-        });
-      }
+      name: 'unsupported contract version',
+      mutate(record) { record.learningMap.version = SfxLearningMap.limits().version + 1; }
     },
     {
       name: 'complete step learning without a map',
@@ -528,7 +653,7 @@ test('learning template activation fails closed as one unit', async (t) => {
     await t.test(fixture.name, () => {
       const record = plainValue(veto);
       fixture.mutate(record);
-      const projected = detailData.project(record);
+      const projected = plainValue(detailData.project(record));
       const quick = helpers.renderQuickConclusion(record, projected);
       const timeline = helpers.renderStepTimeline(record, projected);
       const detailed = helpers.renderDetailedSteps(record, projected);
@@ -550,7 +675,7 @@ test('learning template activation fails closed as one unit', async (t) => {
 });
 
 test('malformed chapter partitions fall back to all flat steps', async (t) => {
-  const veto = records().find((record) => record.videoId === '3JjAK2uhxM4');
+  const veto = plainValue(records().find((record) => record.videoId === '3JjAK2uhxM4'));
   assert.ok(veto, 'missing production Veto record');
   const detailData = loadVideoDetailData();
   const helpers = loadDetailRenderingHelpers({
@@ -590,7 +715,7 @@ test('malformed chapter partitions fall back to all flat steps', async (t) => {
     await t.test(fixture.name, () => {
       const record = plainValue(veto);
       fixture.mutate(record);
-      const projected = detailData.project(record);
+      const projected = plainValue(detailData.project(record));
       const quick = helpers.renderQuickConclusion(record, projected);
       const timeline = helpers.renderStepTimeline(record, projected);
       const detailed = helpers.renderDetailedSteps(record, projected);
@@ -611,7 +736,7 @@ test('valid chapters resolve reordered steps by explicit order and actual timeli
   assert.ok(veto, 'missing production Veto record');
   veto.steps.reverse();
   const detailData = loadVideoDetailData();
-  const projected = detailData.project(veto);
+  const projected = plainValue(detailData.project(veto));
   const helpers = loadDetailRenderingHelpers({
     escapeHtml: escapeHtmlForTest,
     escapeAttr: escapeAttrForTest,
@@ -625,8 +750,8 @@ test('valid chapters resolve reordered steps by explicit order and actual timeli
   });
   let cursor = -1;
 
-  assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, 5);
-  assert.equal((timeline.match(/data-step-time=/g) || []).length, 17);
+  assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, veto.learningMap.chapters.length);
+  assert.equal((timeline.match(/data-step-time=/g) || []).length, veto.steps.length);
   orderedSteps.forEach(({ index, step }) => {
     assert.ok(index >= 0, step.order);
     const seconds = SfxVideoTimeline.stepStart(veto, index);
