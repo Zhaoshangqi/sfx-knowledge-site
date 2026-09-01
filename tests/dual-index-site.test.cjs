@@ -438,6 +438,7 @@ test('renders the Veto learning template while preserving exact legacy detail fa
   assert.match(indexHtml, /\.learning-map\s*\{[^}]*display:\s*grid;/);
   assert.match(indexHtml, /\.learning-roles\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);/);
   assert.match(indexHtml, /\.learning-chapter\s*\{[^}]*border-top:\s*1px solid var\(--line\);/);
+  assert.match(indexHtml, /\.learning-chapter-head\s*\{[^}]*align-items:\s*start;/);
   assert.match(indexHtml, /\.step-learning-grid\s*>\s*div\s*\{[^}]*grid-template-columns:\s*44px minmax\(0, 1fr\);/);
   const mobileStart = indexHtml.indexOf('@media (max-width: 640px)');
   const mobileEnd = indexHtml.indexOf('@media (orientation: landscape)', mobileStart);
