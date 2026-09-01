@@ -743,6 +743,15 @@
       "updatedAt": "2026-08-17",
       "contentStatus": "track",
       "asset": "assets/subtitles/Oo3SRd_94VE.json"
+    },
+    {
+      "videoId": "3JjAK2uhxM4",
+      "language": "zh-CN",
+      "source": "site-owned-from-public-captions",
+      "reviewStatus": "draft",
+      "updatedAt": "2026-09-01",
+      "contentStatus": "track",
+      "asset": "assets/subtitles/3JjAK2uhxM4.json"
     }
   ];
   /* SUBTITLE_CATALOG_END */

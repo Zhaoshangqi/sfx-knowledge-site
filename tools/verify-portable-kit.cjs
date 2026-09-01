@@ -9,10 +9,10 @@ const knowledgeModel = require("../src/knowledge-model.js");
 const publicEffectUseManifest = require("./data/public-effect-use-ids.json");
 
 const root = path.resolve(__dirname, "..");
-const expectedSiteRecords = 84;
-const expectedSteps = 947;
-const expectedPublicCases = 98;
-const expectedScreenshotSteps = 870;
+const expectedSiteRecords = 85;
+const expectedSteps = 964;
+const expectedPublicCases = 101;
+const expectedScreenshotSteps = 887;
 const youtubeVideoIdPattern = /^[A-Za-z0-9_-]{11}$/;
 const required = [
   "index.html",

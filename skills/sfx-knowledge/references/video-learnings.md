@@ -1382,3 +1382,34 @@ These entries were generated from the standalone HTML knowledge base so every an
   - 单颗处理器必须能说明输入问题、动作和结果；复合链中可见的名称、未激活界面和脚本都不自动构成效果用法。
   - 生成式变化只是候选，仍需检查时长、音高、画面对位、fade、mono、峰值、导出和游戏内遮蔽；本片没有完成这些交付验收。
 - Use when: holy magic; healing spell; independent sound redesign; no ready-made SFX library; household source recording; Kontakt tonal layers; choir identity; bubble-wrap movement bed; balloon riser; saran-wrap granular texture; singing-bowl resonance; jingle-bell sparkle; four picture passes; kHs Dynamics upward expansion; Soundtoys Crystallizer; Variation Generator boundary; Silo Activation Required boundary; magic; workflow; 需要把“零素材库”准确解释为不用现成音效库而非不用 Kontakt; 需要用家庭材料补足魔法的物理运动与命中; 需要明确 VFX 原作者、独立重设计和非官方游戏音频边界
+
+## 2026-09-01 - Valorant Veto 终极技能：材质主体、力量来源与高频 Ear Candy
+- Source: `https://www.youtube.com/watch?v=3JjAK2uhxM4`
+- Domain: scifi, magic, workflow, 插件技巧, Nathan_SFX, Valorant, Veto, ultimate, material identity, goop, carapace, tonal power source, nonliteral thump, suction transition, ear candy, self enemy variant, PhaseMistress, S1 Imager Stereo, EchoBoy Jr, kHs Pitch Shifter, kHs Reverb, PanMan, Pro-Q 3, Z-Noise
+- Reusable pattern: 先用布料、手镯、黏液和甲壳还原画面中可见的动作与材质，再用非写实重击补力量反馈，以固定调性合成器定义 Veto 的力量来源。高频 Ear Candy 不承担主体，只负责穿透、节拍和爽感；它按“提取有用频段 -> 液态运动 -> 前向定位 -> 回声或融合尾部 -> 方向变化 -> 刺耳残留清理”分工。初始命中与拉臂之间用吸入式转场分拍，己方与敌方版本复用大部分材料，只改变调性、点击细节和尾音语义。
+- Evidence boundary: 本条依据本地 1080p 完整视频、公开字幕和逐段固定帧整理。插件名称、画面上下文与链路位置由可见画面确认；听感结果和设计意图按 Nathan_SFX 旁白归因，没有把本地音轨试听写成独立结论。站点中文字幕来自公开字幕并做术语校正，当前标记为 draft。
+- Step / event map:
+  - `00:55` 先把整段拆成初始命中、手镯与低频、高频亮点、吸入式转场、手臂拉回、材质层和尾音职责；截图键 `3JjAK2uhxM4-section-map`。
+  - `04:08` 布料与手镯负责真实动作，额外重击负责画面没有直接来源的力量和满足感；截图键 `3JjAK2uhxM4-foley-power-thump`。
+  - `07:28-11:58` 单独整理八颗效果器：PhaseMistress 赋予液态运动，S1 收回前方，EchoBoy Jr 补短回声，Pitch Shifter 将降调层与原音结合，kHs Reverb 衔接尾部，PanMan 移动辅助纹理，Pro-Q 3 只保留职责频段，Z-Noise 清理刺耳残留。每颗插件使用独立截图，不借相邻插件列表补写作用。
+  - `12:44` 固定调性合成器作为 Veto 的力量来源，可跨技能复用；截图键 `3JjAK2uhxM4-tonal-power-building-block`。
+  - `14:30` 吸入式转场把初始命中与拉臂分成两拍；逐层移走无职责频率，避免无效能量占用余量；截图键 `3JjAK2uhxM4-transition-eq-headroom`。
+  - `19:35-24:48` 拉臂段重新组合黏液运动、前向定位、非写实重击、脆壳、橡胶黏液、水下纹理和 Growl 尾音，复用身份但重写动作节奏。
+  - `31:28` 合并画面主体层与 Ear Candy：前者保证来源可读，后者强化穿透、节拍与力量幻想；截图键 `3JjAK2uhxM4-meat-and-potatoes-ear-candy`。
+  - `32:50` 己方与敌方版本共用主体材料；敌方版使用更负面的调性、额外点击和不同尾音建立危险语义；截图键 `3JjAK2uhxM4-self-enemy-variant`。
+- Plugin and processing notes:
+  - **Soundtoys PhaseMistress**: 适用于频率职责正确、但运动质感偏干和偏数码的高频层。它只把运动改成液态起伏；后续定位、空间和清洁度另行处理。
+  - **Waves S1 Imager Stereo**: 适用于辅助高频过宽、像从玩家四周出现的情况。目标是把焦点收回正前方的手臂动作，不是把所有层统一变窄。
+  - **Soundtoys EchoBoy Jr**: 适用于亮点太短、进入整组后容易突然消失的情况。短回声只补连续支撑，不能盖住主体攻击。
+  - **Kilohearts kHs Pitch Shifter / kHs Reverb**: 前者把较低音高与原始亮点结合，后者让处理后的短层自然并入动作组。这里记录职责，不把视频实例中的音程或界面数值当作通用设置。
+  - **Soundtoys PanMan**: 适用于需要持续方向变化、但不负责主体定位的水感高频；运动以不带走画面焦点为界。
+  - **FabFilter Pro-Q 3**: 原始素材只要局部频段有用就可以保留；大胆移走不承担职责的低中频，使该层只提供黏液高频纹理。
+  - **Waves Z-Noise**: 在职责频段已经明确后清理刺耳残留；目标是保留亮度与细节，而不是整体磨掉高频。
+- Design principles learned:
+  - 先分“画面里真实存在的层”和“为了力量反馈额外加入的层”。非写实声音可以使用，但必须说清强化了什么。
+  - 材质身份与力量身份分开：黏液、甲壳和手镯解释物理来源，调性合成器解释能力的能源与角色归属。
+  - 一条素材整体不合适不代表它没有价值；按频段和瞬态职责提取后，可以成为只做一件事的构件。
+  - 高频亮点要让主体更清楚，而不是更拥挤。宽度、运动、回声和尾部应分别判断，避免一颗插件承担全部空间职责。
+  - 相同技能的己方和敌方版本先共用身份材料，再用最少的调性和细节差异表达正负语义。
+  - 完整交付仍需做匹配响度旁路、mono、峰值、导出、中间件优先级和游戏内遮蔽检查；本片没有提供这些验收结果。
+- Use when: Valorant Veto ultimate; character ability breakdown; material identity vs power identity; goop and carapace sound; nonliteral power thump; tonal character building block; suction transition; ear candy role; front-focused high layer; self enemy variant; PhaseMistress liquid movement; S1 Imager front focus; EchoBoy Jr support echo; pitch blend; reverb integration; PanMan auxiliary motion; Pro-Q role isolation; Z-Noise harshness cleanup; scifi; magic; workflow; 插件技巧; 需要把效果器整理为清晰适用方式而不是参数表; 需要让每颗插件截图与名称一一对应; 需要从角色材质层、力量层和高频强化层分别学习设计逻辑

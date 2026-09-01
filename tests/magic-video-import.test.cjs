@@ -43,8 +43,8 @@ test('publishes both magic videos as unique complete records', () => {
     );
   }
 
-  assert.equal(records.length, 84);
-  assert.equal(new Set(records.map((record) => record.videoId)).size, 84);
+  assert.equal(records.length, 85);
+  assert.equal(new Set(records.map((record) => record.videoId)).size, 85);
 
   for (const spec of specs) {
     const record = matchesByVideoId.get(spec.videoId)[0];

@@ -343,7 +343,7 @@ test('quick conclusions stay concise while folded evidence preserves every suppl
   assert.equal((evidence.match(/<details class="evidence-disclosure"/g) || []).length, 4);
 });
 
-test('all 84 records render verified step and screenshot time controls', () => {
+test('all 85 records render verified step and screenshot time controls', () => {
   const detailData = loadVideoDetailData();
   const helpers = loadDetailRenderingHelpers({
     escapeHtml: escapeHtmlForTest,
@@ -449,7 +449,7 @@ test('compact shell exposes useful runtime-derived header statistics', () => {
     indexHtml,
     /categoryCountStatEl\.textContent = categories\.filter\(\(category\) => category\.id !== "all"\)\.length \+ " 个分类";/
   );
-  assert.doesNotMatch(indexHtml, /(?:84 个视频|27 个效果器|6 个分类)/);
+  assert.doesNotMatch(indexHtml, /(?:84 个视频|85 个视频|27 个效果器|6 个分类)/);
 });
 
 test('updates the exact effect statistic from strict published profiles', () => {
@@ -1350,7 +1350,7 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   const names = profiles.map((profile) => profile.name);
   const guideEvidenceUseIds = guides.map((guide) => guide.evidenceUseId);
 
-  assert.equal(siteRecords.length, 84);
+  assert.equal(siteRecords.length, 85);
   assert.equal(profiles.length, 27);
   assert.deepEqual(
     new Set(names),
@@ -1360,7 +1360,7 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   assert.equal(guideEvidenceUseIds.length, 27);
   assert.equal(new Set(guideEvidenceUseIds).size, 27);
   assert.equal(publicEffectUseManifest.version, 1);
-  assert.equal(publicEffectUseManifest.useIds.length, 98);
+  assert.equal(publicEffectUseManifest.useIds.length, 101);
   assert.deepEqual(
     new Set(publicEffectUseManifest.useIds),
     new Set(profiles.flatMap((profile) => profile.uses.map((use) => use.id)))
@@ -1422,7 +1422,7 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
   assert.equal(new Set(videoAssetKeys).size, videoVisuals.length);
 });
 
-test('effect case projection renders all 98 public uses exactly once', () => {
+test('effect case projection renders all 101 public uses exactly once', () => {
   const siteRecords = records();
   const uses = SfxKnowledgeModel.buildEffectUses(siteRecords);
   const profiles = loadEffectIndexData(SfxEffectGuides).profiles(
@@ -1470,7 +1470,7 @@ test('effect case projection renders all 98 public uses exactly once', () => {
     assert.doesNotMatch(markup, /data-effect-parameter|class="effect-parameter|parameters/);
   });
 
-  assert.equal(renderedIds.length, 98);
+  assert.equal(renderedIds.length, 101);
   assert.deepEqual(new Set(renderedIds), new Set(publicIds));
   assert.ok(missingVisualCount > 0, 'truthful no-image cases must be represented');
 });

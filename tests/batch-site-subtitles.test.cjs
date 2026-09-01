@@ -275,7 +275,7 @@ test('extractRecords rejects duplicate record video IDs', () => {
 });
 
 test('portable verifier enforces complete timelines by default and allows only the explicit batch flag', (t) => {
-  const siteRecords = records(84);
+  const siteRecords = records(85);
   const fixture = portableVerifierFixture(t, siteRecords, catalogForRecords(siteRecords));
 
   const strictResult = runPortableVerifier(fixture, []);
@@ -291,7 +291,7 @@ test('portable verifier enforces complete timelines by default and allows only t
 });
 
 test('incomplete-timeline mode still rejects unresolved curated public case IDs', (t) => {
-  const siteRecords = records(84);
+  const siteRecords = records(85);
   const fixture = portableVerifierFixture(t, siteRecords, catalogForRecords(siteRecords), {
     publicUseIds: ['missing-record:effect:eq:1']
   });
@@ -303,7 +303,7 @@ test('incomplete-timeline mode still rejects unresolved curated public case IDs'
 });
 
 test('incomplete-timeline mode still rejects broken declared screenshot evidence', (t) => {
-  const siteRecords = records(84);
+  const siteRecords = records(85);
   siteRecords[0].steps = [{ order: 1, name: 'Missing frame', imageKey: 'missing-shot' }];
   const fixture = portableVerifierFixture(t, siteRecords, catalogForRecords(siteRecords));
 
@@ -313,10 +313,10 @@ test('incomplete-timeline mode still rejects broken declared screenshot evidence
   assert.ok(report.failures.some((failure) => /missing imageManifest entry: missing-shot/i.test(failure)));
 });
 
-test('portable verifier rejects 84 records when only 83 have valid video IDs', (t) => {
-  const siteRecords = records(84);
-  delete siteRecords[83].videoId;
-  const catalog = siteRecords.slice(0, 83).map((record) => ({
+test('portable verifier rejects 85 records when only 84 have valid video IDs', (t) => {
+  const siteRecords = records(85);
+  delete siteRecords[84].videoId;
+  const catalog = siteRecords.slice(0, 84).map((record) => ({
     videoId: record.videoId,
     contentStatus: 'missing'
   }));
@@ -326,11 +326,11 @@ test('portable verifier rejects 84 records when only 83 have valid video IDs', (
 
   assert.equal(result.status, 1, result.stdout + result.stderr);
   const report = JSON.parse(result.stdout);
-  assert.equal(report.records, 84);
-  assert.equal(report.uniqueVideoIds, 83);
-  assert.equal(report.subtitleCatalogCoverage, '83/84');
-  assert.ok(report.failures.some((failure) => /invalid.*videoId.*index 83/i.test(failure)));
-  assert.ok(report.failures.some((failure) => /expected 84 valid unique video IDs/i.test(failure)));
+  assert.equal(report.records, 85);
+  assert.equal(report.uniqueVideoIds, 84);
+  assert.equal(report.subtitleCatalogCoverage, '84/85');
+  assert.ok(report.failures.some((failure) => /invalid.*videoId.*index 84/i.test(failure)));
+  assert.ok(report.failures.some((failure) => /expected 85 valid unique video IDs/i.test(failure)));
 });
 
 test('validateTrack and buildCatalog reject non-Chinese or lookalike track metadata', () => {
@@ -354,7 +354,7 @@ test('validateTrack and buildCatalog reject non-Chinese or lookalike track metad
 });
 
 test('portable verifier rejects track metadata that differs from the catalog', (t) => {
-  const siteRecords = records(84);
+  const siteRecords = records(85);
   const subtitleTrack = track(siteRecords[0].videoId);
   const catalog = catalogForRecords(siteRecords);
   catalog[0] = trackCatalogEntry(subtitleTrack, { updatedAt: '2026-08-12' });
@@ -374,7 +374,7 @@ test('portable verifier rejects track metadata that differs from the catalog', (
 });
 
 test('portable verifier rejects a referenced subtitle JSON missing from git ls-files', (t) => {
-  const siteRecords = records(84);
+  const siteRecords = records(85);
   const subtitleTrack = track(siteRecords[0].videoId);
   const catalog = catalogForRecords(siteRecords);
   catalog[0] = trackCatalogEntry(subtitleTrack);
@@ -391,7 +391,7 @@ test('portable verifier rejects a referenced subtitle JSON missing from git ls-f
 });
 
 test('portable verifier rejects assets/subtitles when the root is a symlink or junction', (t) => {
-  const siteRecords = records(84);
+  const siteRecords = records(85);
   const fixture = portableVerifierFixture(t, siteRecords, catalogForRecords(siteRecords));
   const linkedTarget = path.join(fixture.root, 'linked-subtitles');
   fs.rmdirSync(fixture.subtitleRoot);
