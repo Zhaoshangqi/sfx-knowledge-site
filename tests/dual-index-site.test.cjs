@@ -374,8 +374,14 @@ test('renders the Veto learning template while preserving exact legacy detail fa
 
   assert.match(timeline, /设计章节/);
   assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, 5);
-  ['先定动作骨架', '建立动作与力量', '塑造液态高频', '建立角色身份与转场', '完成材质、尾音与敌我版本']
-    .forEach((title) => assert.match(timeline, new RegExp(title)));
+  const chapterTitles = ['先定动作骨架', '建立动作与力量', '塑造液态高频', '建立角色身份与转场', '完成材质、尾音与敌我版本'];
+  chapterTitles.forEach((title) => {
+    assert.match(timeline, new RegExp(title));
+    assert.match(
+      timeline,
+      new RegExp(`aria-label=\"播放本章：${escapeRegexForTest(escapeAttrForTest(title))}，从 [^\"]+ 播放\"`)
+    );
+  });
   assert.equal((timeline.match(/data-step-time=/g) || []).length, 17);
   assert.equal((timeline.match(/data-chapter-time=/g) || []).length, 5);
 
@@ -393,6 +399,12 @@ test('renders the Veto learning template while preserving exact legacy detail fa
     detailed.slice(firstSourceStart, firstSourceEnd),
     new RegExp(escapeRegexForTest(escapeHtmlForTest(veto.steps[0].detail)))
   );
+  [veto.steps[0], veto.steps[veto.steps.length - 1]].forEach((step) => {
+    assert.ok(
+      detailed.includes('<summary aria-label="' + escapeAttrForTest('查看完整说明：' + step.name) + '">查看完整说明</summary>'),
+      step.name
+    );
+  });
 
   const searchable = SfxKnowledgeModel.searchableRecordText(veto, '');
   assert.match(searchable, /已有声音草稿/);
@@ -433,6 +445,185 @@ test('renders the Veto learning template while preserving exact legacy detail fa
   assert.ok(mobileStart >= 0 && mobileEnd > mobileStart, 'missing mobile CSS boundary');
   assert.match(mobileCss, /\.learning-roles\s*\{[^}]*grid-template-columns:\s*1fr;/);
   assert.match(mobileCss, /\.learning-chapter-head\s*\{[^}]*grid-template-columns:\s*1fr;/);
+});
+
+test('places one shared fail-closed learning projection before all three renderers', () => {
+  const helperSource = sourceSlice(
+    'function renderTimeJump(seconds, label, attributes = {}) {',
+    'function renderDetail(options = {}) {'
+  );
+  const quickIndex = helperSource.indexOf('function renderQuickConclusion(record, detailData) {');
+  const preQuickSource = helperSource.slice(0, quickIndex);
+  const preQuickFunctions = [...preQuickSource.matchAll(/function ([A-Za-z0-9_]+)\(/g)].map((match) => match[1]);
+
+  assert.deepEqual(preQuickFunctions, ['renderTimeJump', 'projectLearningTemplate']);
+  assert.equal(
+    (helperSource.match(/const learningTemplate = projectLearningTemplate\(record, detailData\);/g) || []).length,
+    3
+  );
+});
+
+test('learning template activation fails closed as one unit', async (t) => {
+  const veto = records().find((record) => record.videoId === '3JjAK2uhxM4');
+  assert.ok(veto, 'missing production Veto record');
+  const detailData = loadVideoDetailData();
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeAttrForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  });
+  const cases = [
+    {
+      name: 'empty learning map',
+      mutate(record) { record.learningMap = {}; }
+    },
+    {
+      name: 'complete step learning without a map',
+      mutate(record) { delete record.learningMap; }
+    },
+    {
+      name: 'one incomplete step learning field',
+      mutate(record) { record.steps[0].learning.problem = ' '; }
+    }
+  ];
+
+  for (const fixture of cases) {
+    await t.test(fixture.name, () => {
+      const record = plainValue(veto);
+      fixture.mutate(record);
+      const projected = detailData.project(record);
+      const quick = helpers.renderQuickConclusion(record, projected);
+      const timeline = helpers.renderStepTimeline(record, projected);
+      const detailed = helpers.renderDetailedSteps(record, projected);
+
+      assert.match(quick, /快速结论/);
+      assert.doesNotMatch(quick, /30 秒读懂|learning-map/);
+      assert.match(timeline, /class=\"step-timeline\"/);
+      assert.equal((timeline.match(/data-step-time=/g) || []).length, record.steps.length);
+      assert.doesNotMatch(timeline, /learning-chapter|data-chapter-time/);
+      assert.doesNotMatch(detailed, /step-learning-grid|step-source-detail/);
+      [record.steps[0], record.steps[record.steps.length - 1]].forEach((step) => {
+        assert.match(detailed, new RegExp(escapeRegexForTest(escapeHtmlForTest(step.detail))), step.name);
+        step.params.forEach((param) => {
+          assert.match(detailed, new RegExp(escapeRegexForTest(escapeHtmlForTest(param))), step.name);
+        });
+      });
+    });
+  }
+});
+
+test('malformed chapter partitions fall back to all flat steps', async (t) => {
+  const veto = records().find((record) => record.videoId === '3JjAK2uhxM4');
+  assert.ok(veto, 'missing production Veto record');
+  const detailData = loadVideoDetailData();
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeAttrForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  });
+  const cases = [
+    {
+      name: 'duplicate chapter order',
+      mutate(record) { record.learningMap.chapters[1].stepOrders = [1]; }
+    },
+    {
+      name: 'missing explicit step order',
+      mutate(record) { delete record.steps[0].order; }
+    },
+    {
+      name: 'duplicate explicit step order',
+      mutate(record) { record.steps[1].order = record.steps[0].order; }
+    },
+    {
+      name: 'unknown chapter order',
+      mutate(record) { record.learningMap.chapters[0].stepOrders = [999]; }
+    },
+    {
+      name: 'empty chapter',
+      mutate(record) { record.learningMap.chapters[0].stepOrders = []; }
+    },
+    {
+      name: 'incomplete chapter coverage',
+      mutate(record) { record.learningMap.chapters[record.learningMap.chapters.length - 1].stepOrders.pop(); }
+    }
+  ];
+
+  for (const fixture of cases) {
+    await t.test(fixture.name, () => {
+      const record = plainValue(veto);
+      fixture.mutate(record);
+      const projected = detailData.project(record);
+      const quick = helpers.renderQuickConclusion(record, projected);
+      const timeline = helpers.renderStepTimeline(record, projected);
+      const detailed = helpers.renderDetailedSteps(record, projected);
+
+      assert.match(quick, /快速结论/, fixture.name);
+      assert.doesNotMatch(quick, /30 秒读懂|learning-map/, fixture.name);
+      assert.match(timeline, /class=\"step-timeline\"/, fixture.name);
+      assert.equal((timeline.match(/data-step-time=/g) || []).length, record.steps.length, fixture.name);
+      assert.doesNotMatch(timeline, /learning-chapter|data-chapter-time/, fixture.name);
+      record.steps.forEach((step) => assert.match(timeline, new RegExp(escapeRegexForTest(step.name)), fixture.name));
+      assert.doesNotMatch(detailed, /step-learning-grid|step-source-detail/, fixture.name);
+    });
+  }
+});
+
+test('valid chapters resolve reordered steps by explicit order and actual timeline index', () => {
+  const veto = plainValue(records().find((record) => record.videoId === '3JjAK2uhxM4'));
+  assert.ok(veto, 'missing production Veto record');
+  veto.steps.reverse();
+  const detailData = loadVideoDetailData();
+  const projected = detailData.project(veto);
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeAttrForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  });
+  const timeline = helpers.renderStepTimeline(veto, projected);
+  const orderedSteps = veto.learningMap.chapters.flatMap((chapter) => chapter.stepOrders).map((order) => {
+    const index = veto.steps.findIndex((step) => step.order === order);
+    return { index, step: veto.steps[index] };
+  });
+  let cursor = -1;
+
+  assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, 5);
+  assert.equal((timeline.match(/data-step-time=/g) || []).length, 17);
+  orderedSteps.forEach(({ index, step }) => {
+    assert.ok(index >= 0, step.order);
+    const seconds = SfxVideoTimeline.stepStart(veto, index);
+    const time = SfxVideoTimeline.formatTime(seconds);
+    const controlContent = '<span class="time-jump-label">' + escapeHtmlForTest(step.name) +
+      '</span><time datetime="PT' + Math.floor(seconds) + 'S">' + escapeHtmlForTest(time) + '</time></button>';
+    const position = timeline.indexOf(controlContent, cursor + 1);
+    assert.ok(position > cursor, step.name);
+    const buttonStart = timeline.lastIndexOf('<button', position);
+    const buttonMarkup = timeline.slice(buttonStart, position + controlContent.length);
+    assert.match(buttonMarkup, /data-step-time=/, step.name);
+    assert.match(buttonMarkup, new RegExp(`data-seek-seconds=\"${Math.floor(seconds)}\"`), step.name);
+    cursor = position;
+  });
+});
+
+test('learning authored-text surfaces harden narrow-layout overflow', () => {
+  const rules = [
+    ['goal and sequence', /\.learning-goal,\s*\.learning-sequence\s*\{([^}]*)\}/],
+    ['role', /\.learning-role\s*\{([^}]*)\}/],
+    ['role description', /\.learning-role span\s*\{([^}]*)\}/],
+    ['chapter', /\.learning-chapter\s*\{([^}]*)\}/],
+    ['chapter copy', /\.learning-chapter-copy\s*\{([^}]*)\}/],
+    ['chapter question', /\.learning-chapter-question\s*\{([^}]*)\}/],
+    ['chapter summary', /\.learning-chapter-summary\s*\{([^}]*)\}/],
+    ['step learning value', /\.step-learning-grid dd\s*\{([^}]*)\}/]
+  ];
+
+  rules.forEach(([name, pattern]) => {
+    const declarations = indexHtml.match(pattern)?.[1] || '';
+    assert.match(declarations, /min-width:\s*0;/, name);
+    assert.match(declarations, /overflow-wrap:\s*anywhere;/, name);
+  });
 });
 
 test('all 85 records render verified step and screenshot time controls', () => {
@@ -2611,6 +2802,9 @@ test('print mode expands evidence and removes sticky or interactive reader chrom
   assert.match(print, /\.evidence-disclosure > \.evidence-disclosure-body/);
   assert.match(print, /display: block/);
   assert.match(print, /position: static/);
+  assert.match(print, /\.step-source-detail\s*\{[^}]*display:\s*block;/);
+  assert.match(print, /\.step-source-detail > summary\s*\{[^}]*display:\s*none;/);
+  assert.match(print, /\.step-source-detail > :not\(summary\)\s*\{[^}]*display:\s*block !important;/);
 });
 
 test('video cards are keyboard links and move focus into the reader', () => {
