@@ -1,0 +1,209 @@
+{
+  "videoId": "Ub5ozlVecII",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "用分层采样器把 kicks、percussion、effects 等基础素材组合成魔法音效：先换成自己的源素材，再利用采样变化、预设、回中与重新触发生成变体，最后在时间线上试听、补层并保留再次录制的选择。",
+    "roles": [
+      {
+        "name": "基础素材",
+        "description": "用自己的 kicks、percussion 和 effects 替换现有 samples，建立变化来源。"
+      },
+      {
+        "name": "采样变化",
+        "description": "Sample、Start、Pitch、Pan 与 Volume 分栏用于组织每层素材的变化入口。"
+      },
+      {
+        "name": "Preset、Recenter 与 Retrigger",
+        "description": "预设、噪声音调、回中、retrigger 与 randomize 继续扩展生成结果。"
+      },
+      {
+        "name": "时间线与 Recording",
+        "description": "把生成内容录到时间线试听，追加素材增加动态，并在需要时重新录制。"
+      }
+    ],
+    "decisions": [
+      "先清空现有 samples 并载入自己的 kicks、percussion 与 effects，让素材选择成为变化源头。",
+      "用 sample、start、pitch、pan、volume 组织素材，再通过 preset、noise tonal、recenter、retrigger 与 randomize 生成变化。",
+      "把生成内容录到时间线试听，评价满意片段、追加素材增加动态，并在需要时再录一遍。"
+    ],
+    "sequence": "确定魔法音效主题 → 替换基础素材 → 设置采样变化 → 调整音色并重新触发 → 录到时间线试听 → 补层或再次录制",
+    "chapters": [
+      {
+        "id": "opening-and-sampler",
+        "title": "选择与替换素材",
+        "question": "魔法音效从哪些基础素材开始，又怎样换成自己的声音？",
+        "summary": "开场后进入带文件列表的采样界面，作者依次介绍当前素材、清除与加载自己的声音。",
+        "stepOrders": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "preset-and-timing",
+        "title": "Preset、Recenter 与 Retrigger",
+        "question": "预设、噪声音调、回中与重新触发怎样扩展素材变化？",
+        "summary": "本章按 sounds、preset、recenter、retrigger、recording 的当前页面与口述顺序记录。",
+        "stepOrders": [
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "id": "timeline-review",
+        "title": "素材复听与 recording",
+        "question": "作者怎样试听生成内容、增加动态并决定是否再次录制？",
+        "summary": "重复片段、额外剪辑和后续时间线依次出现，评价与再录制提案均保留作者归因。",
+        "stepOrders": [
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "id": "subtitle-only-review",
+        "title": "素材口述复核",
+        "question": "为什么最后四步不是第二轮制作流程？",
+        "summary": "order 11–14 回到 order 1–4 的同一批口述，只重复主题、素材类型和换素材动作，没有新增设计步骤。",
+        "stepOrders": [
+          11,
+          12,
+          13,
+          14
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "空白 DAW 区域与素材浏览栏。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述将制作一段魔法声音，截图只显示尚未铺开片段的工作区。",
+        "result": "本步只确认作者提出的 magic sounds 开场主题和空白工作区。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "分层采样界面中的 Sample、Start、Pitch、Pan、Volume 与文件列表。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者介绍当前素材，截图显示 sample、start、pitch、panning、volume 等 slots。",
+        "result": "本步确认素材类别和界面控件，没有证明各层已经承担固定职责。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "可移除并重新 load individual files 的采样界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述移除现有 files 并 load 自己的素材，截图显示 dragging 区域和文件列表。",
+        "result": "本步确认 individual files 的移除与 load 入口，没有展示加载后的 dynamic 或声音结果。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "sample、start、pitch、panning、volume 与 basic audio files 界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者继续介绍当前素材类别，截图显示 Sample、Start、Pitch、Pan、Volume 控件和文件列表。",
+        "result": "本步只复核 basic audio files 与采样控件，不新增处理链或声音结果。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "用于 sounds 设计的预设页与 noise tonal material 页面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者围绕 sounds 口述 preset 与 noise tone 页面，当前截图不展示 recording。",
+        "result": "本步只确认 sounds 的预设与噪声音调，不把 recording 之后的内容写回当前步骤。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "当前变体操作中的 Recenter 控件界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述 recenter，截图只把该控件记录为当前变体的界面判断点。",
+        "result": "本步确认回中入口，没有展示执行前后的位置或声音变化。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "时间变化相关界面、一段时间线片段与另一处理界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述 magic sounds 的 retrigger、randomize 后转向 music，截图只确认控件和单个片段。",
+        "result": "本步确认 magic sounds 的时间变化口述，没有证明总线、峰值或另一界面的声音结果。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "时间线上重复排列的 sample 片段。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者邀请试听 sample 片段，并评价最后一段特别好；截图显示 sample 片段重复排列。",
+        "result": "特别好属于作者对 sample 的评价，画面只确认 sample 片段排列。"
+      }
+    },
+    {
+      "order": 9,
+      "learning": {
+        "input": "时间线上新增的 individual files 片段与局部细节。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述增加 dynamics，截图显示 additional individual files 片段。",
+        "result": "本步确认 individual files 的额外片段和作者提案，没有证明素材的重量或其他听感变化。"
+      }
+    },
+    {
+      "order": 10,
+      "learning": {
+        "input": "basic audio files 在时间线继续排列的画面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述 preset、timing 与再次 recording basic audio files；截图只显示 basic audio files 时间线。",
+        "result": "新声音是作者口述，当前画面没有展示再录制过程或最终链路。"
+      }
+    },
+    {
+      "order": 11,
+      "learning": {
+        "input": "无 recording 截图，只有再次出现的作者开场字幕。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者再次作开场口述，没有说明新增的 recording、re-triggered 或 randomly generated 过程。",
+        "result": "本步只保留作者开场介绍，不扩写素材随机化或完整制作流程。"
+      }
+    },
+    {
+      "order": 12,
+      "learning": {
+        "input": "无 source 素材截图，只有再次出现的 sample 控件介绍字幕。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者再次介绍 source 素材以及 sample、start、pitch、pan、volume，未提供新增素材分组画面。",
+        "result": "本步只回顾作者列出的控件和素材，没有展示新增动作或声音结果。"
+      }
+    },
+    {
+      "order": 13,
+      "learning": {
+        "input": "无 magic sounds 截图，只有再次出现的清除现有声音和加载自己素材字幕。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者再次口述为 magic sounds 移除当前声音并加载自己的素材，没有展示新增阶段。",
+        "result": "本步只保留换素材提案，不扩写最小版本或处理链。"
+      }
+    },
+    {
+      "order": 14,
+      "learning": {
+        "input": "无 sample tab 截图，只有当前 sample、start、pitch、panning、volume 与素材类别的重复介绍。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者再次介绍 sample、start、pitch、panning、volume 以及当前素材，没有展示新增控制动作。",
+        "result": "本步只复核作者口述，不据此建立职责表或完整链路。"
+      }
+    }
+  ]
+}

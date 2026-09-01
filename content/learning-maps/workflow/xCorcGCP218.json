@@ -1,0 +1,137 @@
+{
+  "videoId": "xCorcGCP218",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "理解单个 impact 怎样先以默认直通建立基线，再把 Attack 与 Sustain 分开处理，并在 Tone Mode、EQ Mode 两种结构中选择塑形方式。",
+    "roles": [
+      {
+        "name": "测试素材与基线",
+        "description": "单条 Impact 轨提供测试对象，factory default 的原样直通提供比较起点。"
+      },
+      {
+        "name": "检测与后级控件",
+        "description": "Sensitivity、Hold、filter 与后级控件围绕双路塑形区域排列。"
+      },
+      {
+        "name": "双路塑形",
+        "description": "Attack 与 Sustain 分成两个独立区域，并随 Tone Mode、EQ Mode 提供不同控件。"
+      }
+    ],
+    "decisions": [
+      "先监听并校准 detector，让处理器正确识别瞬态，再处理 Attack 与 Sustain。",
+      "把 Attack 与 Sustain 视为两个关键部分，分别选择要处理的声音阶段。",
+      "Tone Mode 用 Spectral 处理两路，EQ Mode 给两路各自的 EQ；两种塑形路径分开选择。"
+    ],
+    "sequence": "选择单轨 impact → 建立默认直通基线 → 分开 Attack 与 Sustain → 选择 Tone Mode 或 EQ Mode → 查看辅助控制与预设界面",
+    "chapters": [
+      {
+        "id": "source-and-default",
+        "title": "建立直通基线",
+        "question": "演示使用什么素材，factory default 怎样提供比较起点？",
+        "summary": "先选择单条 Impact 轨，再用作者所说的原样直通建立处理前基线。",
+        "stepOrders": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": "attack-sustain",
+        "title": "认识双路塑形",
+        "question": "Attack 与 Sustain 在当前界面中怎样被分开组织？",
+        "summary": "界面显示两个独立区域，作者介绍它们可以分别处理，并继续说明 Tone 与 EQ 模式。",
+        "stepOrders": [
+          4,
+          5
+        ]
+      },
+      {
+        "id": "evidence-boundaries",
+        "title": "辅助控制与模式界面",
+        "question": "后级控件、素材状态与 EQ Mode 预设页怎样补充双路塑形界面？",
+        "summary": "Stylize、Clipper 与 Limiter 位于 Attack、Sustain 汇总后，EQ Mode 页面则展示两路各自的控制。",
+        "stepOrders": [
+          6,
+          7,
+          8
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "DAW 中单条 Impact 轨与一段长波形素材。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者介绍当前素材来源，截图显示单轨及其长波形。",
+        "result": "本步只确认单轨 impact 素材边界，没有展示处理前后对比。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "Sensitivity、Hold 标签可见的默认界面状态与同一条 impact 素材轨。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者在 Sensitivity、Hold 标签出现时口述默认设置让声音直接通过；截图只记录 Sensitivity、Hold。",
+        "result": "本步在 Sensitivity、Hold 画面中只确认作者所说的默认直通，不证明这些可见参数正在改变素材。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "filter 标签可见的另一张界面状态与仍在延续的默认直通口述。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者在 filter 状态画面中继续说明默认直通和 Attack、Sustain 入门，截图只作为 filter 界面记录。",
+        "result": "本步仍以直通为结论，不把画面中的其他状态写成比较结果。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "界面中分开的 Attack 与 Sustain 两个控制区域。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述 Attack 与 Sustain 可以独立处理，截图显示两组并列面板。",
+        "result": "本步确认两路可分别塑形，没有证明具体设置或可听变化。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "EQ 模式下独立排列的 Attack 与 Sustain 区域及菜单。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者介绍可选的滤波形状，截图显示两路各自拥有控制区域。",
+        "result": "本步只确认 Attack 与 Sustain 可独立塑形，不固定曲线、参数或声音结果。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "Stylize、Clipper、Limiter 标签可见的界面截图与默认直通口述。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者在 Stylize、Clipper、Limiter 标签可见时仍只口述默认直通。",
+        "result": "本步未展示 Stylize、Clipper、Limiter 的处理动作或声音结果。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "带素材轨和参数面板的界面截图与默认直通口述。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者在 Attack、Sustain、Sensitivity 面板可见时仍只口述默认直通。",
+        "result": "本步未说明 Creature 素材的处理目标或声音结果。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "带预设标签的 EQ 界面截图。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者介绍 Tone、EQ Mode 与 Attack、Sustain 控制；截图只确认 EQ Mode 界面状态。",
+        "result": "本步只确认 EQ Mode、Attack 与 Sustain 的控件介绍，preset 标签不构成距离感或枪声结果。"
+      }
+    }
+  ]
+}

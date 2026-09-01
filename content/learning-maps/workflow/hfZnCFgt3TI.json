@@ -1,0 +1,213 @@
+{
+  "videoId": "hfZnCFgt3TI",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "从 Raw Magic 的已清理单一素材中筛选可继续设计的来源，围绕 pitch、transient、modulation 与 tail 快速试听。",
+    "roles": [
+      {
+        "name": "可试听素材池",
+        "description": "Raw Magic 提供 cleaned source，不是已经设计好的成品层。"
+      },
+      {
+        "name": "运动与空间试验",
+        "description": "滤波、modulation 与 space 提案用于探索硬质滚动、shell 和 rustling 素材的变化方向。"
+      },
+      {
+        "name": "冲击与摩擦素材",
+        "description": "firework、mortar、shower-door 与 chair-drag 分别提供短瞬态、衰减和连续摩擦形状。"
+      },
+      {
+        "name": "蒸汽与口腔素材",
+        "description": "hot-pan steam、beatbox roll 和 mylar-balloon rub 以各自选中文件与波形作为当前试听对象。"
+      },
+      {
+        "name": "Transient 与清理",
+        "description": "后段用去点击界面查看 beatbox 与 mylar 素材中的检测状态。"
+      }
+    ],
+    "decisions": [
+      "先从已清理但未重度分层的单一素材开始，让原始质感保留继续设计的空间。",
+      "切换试听素材时先关闭可能干扰判断的既有 processing，再为硬质滚动、shell、firework 与 rustling 素材提出运动、瞬态或空间方向。",
+      "后段用去点击界面检查 beatbox 与 mylar 素材的点击检测状态。"
+    ],
+    "sequence": "浏览素材库 → 测试 pitch、transient、modulation 与 tail → 试听冲击与摩擦素材 → 切换蒸汽、beatbox 与 mylar balloon 素材",
+    "chapters": [
+      {
+        "id": "browse-experiments",
+        "title": "素材库试听",
+        "question": "怎样从未重度分层的素材池进入快速试听和运动试验？",
+        "summary": "先浏览可搜索的单一素材并查看 processing rack；ceramic rolling 用于 modulation 试验，随后切换到 firework 素材继续试听。",
+        "stepOrders": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "impact-friction",
+        "title": "Transient 素材",
+        "question": "短促 mortar 与连续 shower-door friction 分别提供什么素材形态？",
+        "summary": "mortar 提供重复衰减的冲击形状，shower-door friction 提供不规则连续摩擦；切换素材时先关闭既有 processing。",
+        "stepOrders": [
+          5,
+          6
+        ]
+      },
+      {
+        "id": "late-source-switches",
+        "title": "后段素材筛选",
+        "question": "chair drag、hot-pan steam、beatbox roll 与 mylar balloon 怎样扩展素材质感？",
+        "summary": "sound sources 依次切换 chair drag、hot-pan steam、beatbox roll 与 mylar balloon，后两步只确认通用去点击界面及当前计数。",
+        "stepOrders": [
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      {
+        "id": "subtitle-only-boundary",
+        "title": "运动与空间方向回顾",
+        "question": "作者对素材库、shell 与 rustling 素材提出了哪些后续方向？",
+        "summary": "回顾素材库定位，以及针对高频 shell、rustling 瞬态所提出的 modulation、movement 与 space 试验。",
+        "stepOrders": [
+          11,
+          12,
+          13,
+          14
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "当前素材库的搜索结果、文件描述与列表。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在素材库中浏览从 raw 到 processed 的单一素材并按描述逐条 audition。",
+        "result": "素材库画面确认大批可搜索文件，字幕称它们未重度 layering、已清理且可直接试听。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "当前素材波形、素材管理界面中的 processing rack 和打开的动态滤波界面。",
+        "problem": "字幕提出为当前素材增加 modulation 的试验方向。",
+        "action": "作者查看当前素材与 filter processing rack，提出 modulation 试验。",
+        "result": "画面只确认处理链界面处于打开状态，没有确认参数、提交动作或处理后声音。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "当前硬质 rolling source、上下波形与 filter 试验界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者提出为 ceramic rolling source 尝试 filter movement。",
+        "result": "filter 界面确认硬质滚动物料可见，没有证明处理已应用或产生 movement。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "选中的 black-powder firework 素材、重复瞬态波形与 processing rack。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "切换到 black-powder firework 素材，查看其重复 transient 波形和当前处理链。",
+        "result": "画面确认 firework 是当前素材，未展示对应处理动作或处理后结果。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "选中的 mortar urban punchy 素材和多次重复的衰减波形。",
+        "problem": "字幕认为 firework 类素材难以获得合适的 transient。",
+        "action": "按作者的 transient 提案试听当前 mortar 波形，观察其衰减形状。",
+        "result": "transient 波形与当前 rack 可见，画面没有给出 before/after。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "选中的 shower-door friction 素材、不规则连续波形与 processing rack。",
+        "problem": "字幕先关注 crackly low-mids，并提醒应关闭已有 processing。",
+        "action": "切换到 shower-door friction 文件，试听其不规则连续摩擦波形。",
+        "result": "processing 画面确认门体摩擦素材，且 rack 打开状态不能证明 effect 正在生效。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "当前 sound source 是 wood chair-drag tonal 素材及其长波形。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "切换到 chair-drag sound source，查看其连续摩擦波形和当前 rack。",
+        "result": "sound source 只确认 chair drag 是当前素材，没有字幕支持处理动作或结果。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "选中的 hot-pan steam burst 素材、重复衰减波形与 processing rack。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "切换到 hot-pan steam 素材，查看其重复衰减波形。",
+        "result": "画面确认蒸汽素材与当前波形，没有共同证据说明处理链动作。"
+      }
+    },
+    {
+      "order": 9,
+      "learning": {
+        "input": "当前 beatbox click-roll layer、口腔节奏波形和可见去点击界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "切换到 beatbox click-roll layer，查看去点击界面的 clicks-only 计数。",
+        "result": "layer 界面显示检测到点击和 clicks-only 状态但没有证据证明修复已提交。"
+      }
+    },
+    {
+      "order": 10,
+      "learning": {
+        "input": "选中的 mylar-balloon rub 素材、密集波形和可见去点击处理界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "切换到 mylar balloon 素材，查看去点击界面的检测状态。",
+        "result": "画面显示当前检测为零，不能据此声称已经完成有效清理。"
+      }
+    },
+    {
+      "order": 11,
+      "learning": {
+        "input": "仅有字幕中的素材库定位且没有对应截图。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者介绍这批素材从 raw 到 processed、未重度分层，已经清理并可直接试听。",
+        "result": "本步只有素材来源说明，没有对应截图或处理输出。"
+      }
+    },
+    {
+      "order": 12,
+      "learning": {
+        "input": "仅有字幕提出的 sound modulation processing 试验。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者提出把 modulation 作为后续 sound processing 的试验方向。",
+        "result": "证据止于处理提案，没有截图或处理后波形可确认。"
+      }
+    },
+    {
+      "order": 13,
+      "learning": {
+        "input": "仅有字幕提到的 shell sound、high-end tone 与 movement。",
+        "problem": "字幕提出为 shell 素材增加 movement。",
+        "action": "作者试听 shell sound 的高频 tone，并提出增加 movement 的方向。",
+        "result": "本步只有试听判断与提案，没有可见处理结果。"
+      }
+    },
+    {
+      "order": 14,
+      "learning": {
+        "input": "仅有字幕中的 rustling transient 与另一项 processing、space 提案。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者围绕 rustling transient 评价继续试验另一项 processing 与 space 的方向。",
+        "result": "处理链没有截图可确认界面、动作或结果。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "videoId": "T-Txp62Xp7E",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "建立游戏混音的决策顺序：先对齐项目目标并组织对白、SFX、音乐的共享空间，再用 Sidechain EQ、Threat System 与 HDR 管理冲突和优先关系，最后考虑空间呈现与目标受众。",
+    "roles": [
+      {
+        "name": "目标与分类",
+        "description": "项目目标、协作对象和可查询的声音分类结构构成混音规划起点。"
+      },
+      {
+        "name": "Sidechain EQ",
+        "description": "按频段观察对白与 SFX 的冲突，并只在需要时安排让路。"
+      },
+      {
+        "name": "Threat System",
+        "description": "以敌人重要性而不只看距离来组织战斗信息，并持续检查设计目标。"
+      },
+      {
+        "name": "HDR",
+        "description": "用包络、类别表和 voice volume 组织声音的动态关系。"
+      },
+      {
+        "name": "空间与受众",
+        "description": "方向、距离、空间分配和玩家设备共同决定最终呈现。"
+      }
+    ],
+    "decisions": [
+      "先与 stakeholders 对齐游戏方向，再建立可查询、可分类的声音结构。",
+      "让 SFX、Music 与 Dialogue 共享有限空间；先按频段测量，只在需要时使用 ducking。",
+      "Threat System 结合敌人重要性与跨团队检查，HDR 用包络、分类表和 voice volume 组织动态关系；收尾还要考虑方向、距离、空间分配与玩家受众。"
+    ],
+    "sequence": "对齐目标 → 建立分类与共享空间 → Sidechain EQ 按频段让路 → Threat System 组织威胁信息 → HDR 管理动态关系 → 检查空间呈现与受众",
+    "chapters": [
+      {
+        "id": "context-and-road",
+        "title": "目标、分类与共享空间",
+        "question": "项目目标、声音分类与 SFX、Music、Dialogue 的共享关系怎样连成混音起点？",
+        "summary": "本章记录混音目标、分类结构与共享 headroom 页面。",
+        "stepOrders": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "id": "sidechain-eq",
+        "title": "观察频段让路",
+        "question": "当前页面和口述怎样介绍 Sidechain EQ 的路由、曲线与场景检查？",
+        "summary": "路由面板、频段曲线和游戏调试画面依次出现，作者说明按频段观察与让路的思路。",
+        "stepOrders": [
+          6,
+          7,
+          8
+        ]
+      },
+      {
+        "id": "threat-system",
+        "title": "进入威胁系统",
+        "question": "威胁系统怎样从概念页进入游戏与调试画面？",
+        "summary": "先出现 Threat System 要点页，再进入带敌人标记和调试表的游戏案例。",
+        "stepOrders": [
+          9,
+          10
+        ]
+      },
+      {
+        "id": "hdr-evidence",
+        "title": "组织 HDR 动态关系",
+        "question": "HDR 怎样通过包络、类别表和 Player SFX 案例组织动态关系？",
+        "summary": "包络用于描述参与 HDR 的声音，类别表组织声音关系，Player SFX 案例强调这套结构需要提前规划。",
+        "stepOrders": [
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      {
+        "id": "space-and-audience",
+        "title": "空间主题与受众",
+        "question": "讲座结尾列出哪些空间主题，又怎样提醒创作者理解受众？",
+        "summary": "空间主题页列出方向、距离和空间分配内容，随后受众页与作者口述强调理解听众。",
+        "stepOrders": [
+          16,
+          17
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "Defining Goals 页面上的项目目标与 stakeholder 要点。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述先明确项目目标并与相关团队成员对齐，截图显示目标与 stakeholder 列项。",
+        "result": "本步确认讲座以目标和协作对象开场，没有展示具体混音结果。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "当前游戏混音素材中的 A SOUND EFFECT 赞助片头画面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者在游戏混音讲座片头感谢赞助方，当前素材画面只显示赞助标识与标题。",
+        "result": "本步只确认赞助上下文，不承担混音功能、监听标准或中间件结构规划。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "Build the Road Ahead 页面上的分类面板。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者开始介绍对白设置，截图显示多个分类面板及其组织方式。",
+        "result": "本步确认分类结构和讨论入口，没有证明任何自动化或声音结果。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "Share the Road 页面上的 SFX、Music 与 Dialogue 三个区域。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者用道路比喻说明声音、音乐与对白之间需要彼此留出空间，截图显示三类区域。",
+        "result": "本步确认 SFX、Music、Dialogue 的共享 headroom 概念，未确认这些元素的具体动态处理结果。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "旧记录中的 gameplay 响度参考与当前 Share the Road 页面形成证据错位。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者继续口述游戏声音共享道路的比喻；当前截图不支持响度与峰值边界。",
+        "result": "本步延续类别共享空间的概念，不新增响度标准、峰值结论或技术实现。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "Sidechain EQ 页面上的 LO、MID、HI、SUM meter 标签与分组路由面板。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述减法混音思路，截图显示 VO、SFX 的 meter 分组和路由面板。",
+        "result": "本步确认频段标签与分组结构，没有证明控制值、触发条件或声音变化。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "Sidechain 页面上的多条频段曲线。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述测量对白低频与高频，随后说明只有冲突频段才考虑退让。",
+        "result": "本步确认按频段判断的提案，没有显示固定曲线、参数值或听感对比。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "游戏画面旁的 meter 与 ducking 调试界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "截图并列游戏场景、meter 和 ducking 状态，作者口述转入 quiet area 示例。",
+        "result": "本步只确认场景与调试界面的并列关系，没有证明触发逻辑或可听结果。"
+      }
+    },
+    {
+      "order": 9,
+      "learning": {
+        "input": "Threat System 页面上的资源与检查要点。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述资源和定期检查，截图显示 Threat System 的要点列表。",
+        "result": "本步确认 Threat System 与协作信息的讨论框架，没有展示威胁状态怎样映射。"
+      }
+    },
+    {
+      "order": 10,
+      "learning": {
+        "input": "带敌人标记、表格和调试信息的游戏画面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者开始介绍案例，截图显示敌人标签、游戏状态与调试表。",
+        "result": "本步确认威胁案例的可视化入口，没有证明标签如何映射成可听层级。"
+      }
+    },
+    {
+      "order": 11,
+      "learning": {
+        "input": "HDR envelope 界面上的包络曲线、Sensitivity 与 Active Range 标签。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述 envelope 与 RMS，截图显示包络曲线和相关标签。",
+        "result": "本步确认 HDR 包络界面及作者介绍，没有展示参数之间的因果或处理结果。"
+      }
+    },
+    {
+      "order": 12,
+      "learning": {
+        "input": "HDR 类别表中的分类、voice volume 与关系列。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述信号混合和 voice volume，截图显示多类声音及其表格关系。",
+        "result": "本步确认 HDR 分类记录方式，没有证明表格数值已经产生具体听感。"
+      }
+    },
+    {
+      "order": 13,
+      "learning": {
+        "input": "用于介绍 HDR 早期规划的 Player SFX 游戏案例和调试入口。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者评价早期 HDR 规划有帮助并以当前游戏画面作例。",
+        "result": "当前画面只确认案例与调试入口，没有显示具体参数关系或声音结果。"
+      }
+    },
+    {
+      "order": 14,
+      "learning": {
+        "input": "再次出现的 HDR envelope 界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "截图再次显示包络曲线、Sensitivity 与 Active Range 标签，作者继续围绕 HDR 说明。",
+        "result": "本步只复核 HDR 界面，不从当前截图推断距离衰减或空间尾音。"
+      }
+    },
+    {
+      "order": 15,
+      "learning": {
+        "input": "HDR 角色动作案例与 Player SFX 调试画面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者继续用角色动作举例，截图显示 HDR 游戏案例与 Player SFX 调试入口。",
+        "result": "本步只确认案例上下文，没有展示持续素材测试、动态变化或可听结果。"
+      }
+    },
+    {
+      "order": 16,
+      "learning": {
+        "input": "Mix Techniques - Other 页面上的 listener cone、distance attenuation、air absorption 与 spatial assignment。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "截图列出方向、距离、空气吸收和三类空间分配标签；同时间字幕没有提供空间混音结果。",
+        "result": "本步确认页面列项，不把转场字幕扩写为空间处理结果。"
+      }
+    },
+    {
+      "order": 17,
+      "learning": {
+        "input": "用于玩家设备讨论的 Know Your Audience 页面及受众提示。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述需要理解玩家受众，截图显示目标设备讨论的收尾标题。",
+        "result": "本步确认受众视角的提醒，没有给出设备测试清单或跨设备验证结果。"
+      }
+    }
+  ]
+}

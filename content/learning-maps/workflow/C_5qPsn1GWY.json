@@ -1,0 +1,149 @@
+{
+  "videoId": "C_5qPsn1GWY",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "把重度失真后的削波信号转成可用的电子科幻质感：先去削波得到 glitch 音色，再按需要清理点击与噪声，最后用速率、音高包络贴合打击弧线并参与分层。",
+    "roles": [
+      {
+        "name": "多轨源素材",
+        "description": "多条源片段提供失真、去削波和后续分层所需的起点。"
+      },
+      {
+        "name": "失真与去削波",
+        "description": "先主动制造削波，再把去削波后的异常质感当作新的设计素材。"
+      },
+      {
+        "name": "可选清理",
+        "description": "去点击用于减少干扰音调判断的 clicks，降噪用于处理低频与低中频内容。"
+      },
+      {
+        "name": "运动与分层",
+        "description": "速率和音高包络塑造变化，再把处理源混入普通打击层。"
+      }
+    ],
+    "decisions": [
+      "把重度失真与去削波连成核心处理：先主动产生削波，再利用去削波后的 glitch 质感。",
+      "去点击和降噪都保留为可选步骤，只在需要聚焦音调或处理低频、低中频内容时加入。",
+      "通过速率与音高调制让处理源跟随打击弧线，再把它作为电子科幻质感层混入时间线。"
+    ],
+    "sequence": "多轨源 → 重度失真与削波 → 去削波 → 可选去点击与降噪 → rate、pitch 包络 → 分层时间线与作者评价",
+    "chapters": [
+      {
+        "id": "source-and-clipping",
+        "title": "源与削波",
+        "question": "作者怎样从多轨源进入重度失真和削波？",
+        "summary": "先看多轨时间线和作者开场评价，再进入显示削波状态的处理界面。",
+        "stepOrders": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "declip-and-cleanup",
+        "title": "去削波与可选清理",
+        "question": "去削波、去点击和降噪在设计链中分别承担什么作用？",
+        "summary": "去削波界面之后出现去点击和降噪页面，后两者均按作者口述保留为可选提案。",
+        "stepOrders": [
+          3,
+          4,
+          5
+        ]
+      },
+      {
+        "id": "rate-and-pitch",
+        "title": "绘制速率与音高",
+        "question": "时间线怎样展示 rate 与 pitch 的变化入口？",
+        "summary": "画面显示片段上的 rate 与 pitch 包络，作者口述进入音高和音高调制。",
+        "stepOrders": [
+          6
+        ]
+      },
+      {
+        "id": "layered-evaluation",
+        "title": "分层与作者评价",
+        "question": "分层时间线出现后，作者怎样描述当前声音和画面关系？",
+        "summary": "分层时间线配合作者对 strange、electronic、dark 与 evil 等主观描述，展示处理源怎样参与最终叠层。",
+        "stepOrders": [
+          7,
+          8
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "包含多条素材轨的时间线。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者把这项技巧评价为简单而 cool，截图显示多轨素材和时间线。",
+        "result": "简单与 cool 属于作者评价，本步只确认源素材的多轨组织。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "显示削波状态的处理界面与可见警告。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述加入 heavy distortion 以产生 clipping，截图确认削波界面和警告可见。",
+        "result": "本步确认作者执行的削波演示，没有从静帧推断失真强度或声音结果。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "去削波界面与当前波形显示。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述扩大 clipping 识别范围后再执行 de-clip，并把当前异常结果评价为 cool glitch。",
+        "result": "cool glitch 是作者评价，静帧不能确认客观听感或修复程度。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "Multi-band De-click 界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述可以选择 de-click，并表示这样能把注意力放在 tonality；截图确认 Multi-band De-click 界面可见。",
+        "result": "聚焦 tonality 是作者提案与评价，本步不把去点击写成必需步骤或客观改善。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "降噪与 EQ 曲线界面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述可选 noise 清理，并介绍 lows、low-mids 曲线；截图只确认 lows、low-mids 曲线与 EQ 页面。",
+        "result": "本步保留作者的曲线介绍，不宣称低频重量、清晰度或其他听感已经改变。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "时间线片段上的 rate 与 pitch 包络。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述 pitch 和 pitch modulation，截图显示片段上的速率与音高变化线。",
+        "result": "本步确认包络入口和作者介绍，没有给出变化后的客观声音结果。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "画面中的多层片段时间线与 generic hit 相关轨组。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者把当前声音评价为 strange、unique、electronic 和 sci-fi，截图显示分层时间线。",
+        "result": "这些风格词均为作者评价，画面不证明低频重量或其他客观听感。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "继续叠放片段的时间线与画面弧线。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述让声音贴合弧线和 mix，并把部分质感评价为 dark、evil。",
+        "result": "dark 与 evil 属于作者评价，本步只确认分层时间线和画面关系提案。"
+      }
+    }
+  ]
+}

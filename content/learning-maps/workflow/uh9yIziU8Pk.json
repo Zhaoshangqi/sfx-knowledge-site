@@ -1,0 +1,180 @@
+{
+  "videoId": "uh9yIziU8Pk",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "按视频时间重建 Seismic Core 设计过程：先交代素材来源并比较原始与处理后波形，再进入音调、低频、中频和氛围层，最后评价音色库及其局限。",
+    "roles": [
+      { "name": "素材来源", "description": "链接提示、Original 波形和处理后波形负责标明素材关系与比较状态，不替代处理证据。" },
+      { "name": "Tonal 与 highs", "description": "反向采样、共振、碎化和颗粒素材承担尖锐音调与高频数字层。" },
+      { "name": "Lows 与 mids", "description": "长 impact 切出的 kick、punch、柔和低频纹理以及 rock、bush 中频层构成重量和破裂素材。" },
+      { "name": "Atmospheres", "description": "复用的颗粒与音调素材形成氛围层，并通过对低频 kick 的 sidechain 安排前后关系。" },
+      { "name": "Library 评估", "description": "结尾分别记录库素材在设计中的表现、适用范围和缺少的干净冲击及数字魔法元素。" }
+    ],
+    "decisions": [
+      "把素材 Original、处理后候选和实际界面分开记录以免由比较叠字倒推动作。",
+      "低频组同时保留由长 impact 切出的 kick、punch 与较柔和的低频纹理，不把来源披露误写成声音步骤。",
+      "氛围层 sidechain 到低频 kick，重合成候选只保留字幕明确进入最终设计的一条；评价与局限分别记录表现和素材覆盖不足。"
+    ],
+    "sequence": "素材来源与五组划分 → 原始及处理后波形 → 模块化 patch → 低频与中频分层 → 点击层与氛围 sidechain → 重合成候选 → 音色库评价",
+    "chapters": [
+      {
+        "id": "source-comparisons",
+        "title": "素材对照",
+        "question": "素材开场怎样区分来源说明、Original 波形、处理后候选与实际界面？",
+        "summary": "素材库链接和五组 design 建立来源，Original、处理后候选、patch 界面与三条波形形成对照。",
+        "stepOrders": [1, 2, 3, 4, 5]
+      },
+      {
+        "id": "low-mid-build",
+        "title": "低频到中频",
+        "question": "低频重量、柔和纹理和中频破裂素材如何在时间线上接续？",
+        "summary": "素材以长 impact 切出的 kick、punch、柔和低频纹理及后续 cadence、rock、bush 进入 mids。",
+        "stepOrders": [6, 7, 8, 9, 10]
+      },
+      {
+        "id": "atmosphere-routing",
+        "title": "Atmosphere 素材",
+        "question": "氛围层怎样避开低频冲击，并从重合成结果中收束选择？",
+        "summary": "素材库中的氛围层复用前段颗粒与音调来源并 sidechain 到低频 kick，三条重合成候选只保留一条。",
+        "stepOrders": [11, 12]
+      },
+      {
+        "id": "library-assessment",
+        "title": "Library 评价",
+        "question": "这套素材在设计语境中表现如何，又缺少哪些覆盖？",
+        "summary": "先评价原始库素材为设计增加动态和角色，再指出其偏重岩石运动、缺少数字魔法元素与干净冲击，适合继续分层。",
+        "stepOrders": [13, 14]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "素材库 impact 介绍画面上的 Link in description 提示。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "字幕以 impact 素材介绍同时披露 review、affiliate link 与五组划分。",
+        "result": "本步只建立素材来源和五组讲解入口，没有展示声音处理。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "标注为 Original 的两条红色源波形。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "把两条原始素材保留为后续比较基准；当前画面不作为插件界面证据。",
+        "result": "画面只确认两条 Original tonal 素材波形，没有显示 tonal 处理界面的操作。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "画面中标注为处理后状态的五条绿色 sound 波形片段。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "按画面查看五条 highs sound 候选并记录高频层会汇总播放。",
+        "result": "画面集中展示五条处理后 sound 波形但没有确认单个 effect 的贡献。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "可见采样器波形、包络，以及 Resonator、Bitcrush、Reverb、Ensemble、Filter 与 Limiter 模块。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述 tonal 素材先过共振、bitcrush、reverb、ensemble 与 high-pass，并由截图确认可 bypass 的 EQ、调制、空间和限制阶段。",
+        "result": "当前只确认可 bypass 的 EQ、调制、空间、动态与限制阶段，旧动态滤波记录与截图错位所以不点名具体工具。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "最终版对照中的三条蓝色处理后波形片段。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者口述组合最终 design 时反复调整素材；截图只并列展示最终版候选的三条处理后波形。",
+        "result": "本步确认处理后波形对照，没有显示 render、print、具体工具或声音结果。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "低频变体来自 Seismic Core 的较长 impacts 与较柔和纹理。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "制作低频变体时从较长 impacts 切出 kick、punch 后补入 softer textures。",
+        "result": "低频变体明确包含冲击切片与柔和纹理两类来源。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "一条降速低频波形，以及字幕描述的环形调制、梳状滤波、输入跟随与动态整理链。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "整理低频素材为起伏 cadence，使调制、平滑、滤波与失真产生输入跟随运动。",
+        "result": "整理画面确认一条降速片段，且字幕把多文件 cadence 说明为处理链的素材组织方式。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "包含大量错落片段的橙色时间线，以及 lows 中的 tonal atmosphere。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在 design 时间线上安排同源 atmosphere、tonal automation 与数字失真运动。",
+        "result": "素材时间线确认多片段排列，且字幕在此汇总 low layers 后转入 mids。"
+      }
+    },
+    {
+      "order": 9,
+      "learning": {
+        "input": "Before FX 的 rock、bush 中频 sound layer 波形。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "保留 Before FX sound layer 作为源态记录，作者口述一条 texture 经 presets、codecs 后进入 compression，另一条 impacts、bush 进入 resynthesis。",
+        "result": "Before FX sound layer 源态与两条口述路线分开记录，不据此声称处理后听感。"
+      }
+    },
+    {
+      "order": 10,
+      "learning": {
+        "input": "绿色素材时间线、重合成 bounce 与 transient click 细节。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "从素材 bounce 只取 transient clicks 作为细层，汇总 mids 后转向 atmosphere。",
+        "result": "素材时间线显示中频片段已经分层排列，且字幕把下一阶段转向 atmospheres。"
+      }
+    },
+    {
+      "order": 11,
+      "learning": {
+        "input": "两条紫色 atmosphere 素材，以及低频 kick 轨。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "当前素材目标是把 atmosphere sidechain 到 lows kick 后复用颗粒与 tonal bitcrush 形成 buildup。",
+        "result": "本步确认的是 sidechain 路由和两条氛围来源，没有给出具体压缩参数。"
+      }
+    },
+    {
+      "order": 12,
+      "learning": {
+        "input": "素材池中的三条绿色重合成候选波形。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "从素材候选中试听持续数字纹理并只保留字幕明确进入 final design 的一条。",
+        "result": "素材池画面展示三条候选，且字幕确认一条进入 final design。"
+      }
+    },
+    {
+      "order": 13,
+      "learning": {
+        "input": "当前画面不是单项界面（插件）而是游戏爆炸画面与作者的 library 评价。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "不作单项测试（插件）而在完整 design 语境评价 library 素材。",
+        "result": "library 评价不归因于单项处理（插件），作者认为其偏低频但有角色和变化。"
+      }
+    },
+    {
+      "order": 14,
+      "learning": {
+        "input": "处理链之外的游戏爆炸画面与作者对 design 覆盖范围的总结。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在 design 局限中指出缺少 digital、magic 元素与更干净 impacts，现有 subtle impacts 更接近 whoosh。",
+        "result": "本步把处理链之外的音色库定位为 layering 来源而不是独立覆盖全部冲击需求。"
+      }
+    }
+  ]
+}

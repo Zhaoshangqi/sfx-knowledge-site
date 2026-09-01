@@ -1,0 +1,144 @@
+{
+  "videoId": "g0lt1bjOMWw",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "从 Unity 控制器进入 Wwise，依次记录 footstep random 容器、材质 switch、event、bank、picker、地表 trigger 和运行画面。",
+    "roles": [
+      { "name": "Unity 控制器", "description": "FPSController 的脚步槽位和第一人称控制器脚本承担游戏侧调用入口。" },
+      { "name": "随机素材容器", "description": "Generic、Dirt、Bag、Keys 等容器保存脚步主体、地表 sweetener 与随身物件层。" },
+      { "name": "Footsteps Switch", "description": "Switch Container 按 Dirt、Grass、Water、Wood 等地表组合 Generic 与对应附加层。" },
+      { "name": "Wwise Event", "description": "Wwise Event 播放 Footsteps 容器并进入对应 bank，Unity Picker 显示同步入口。" },
+      { "name": "Unity 地表", "description": "Unity 中的 trigger collider 与 Ak Switch 把场景区域标记为 Dirt 等具体地表。" }
+    ],
+    "decisions": [
+      "先区分不带地表属性的 Generic 脚步、地表 sweetener 和 Bag、Keys 附加层，再组合到材质 Switch。",
+      "按容器文件数量启用 avoid-repeat，并只对 Bag 与 Keys 的 Initial Delay 做小范围随机，目标是减少连续重复。",
+      "Wwise Event 指向 Footsteps 容器和 bank，Unity Picker 只记录 Switches 与生成入口，地表对象使用 trigger collider 配合 Ak Switch。"
+    ],
+    "sequence": "Unity 控制器连接 Wwise 后先整理 Footsteps random containers 和 Switch，再建立 event、bank、Picker 与地表 trigger，最后进入第一人称运行画面。",
+    "chapters": [
+      {
+        "id": "integration-sources",
+        "title": "连接与素材容器",
+        "question": "游戏侧调用入口和 Wwise 脚步素材怎样先建立可检查的基础结构？",
+        "summary": "Unity 的 FPSController 显示脚步槽位，Wwise 工程建立 Footsteps bank 与分类层级，并以 Dirt 随机容器保存多条地表素材。",
+        "stepOrders": [1, 2, 3]
+      },
+      {
+        "id": "switch-variation",
+        "title": "材质组合与防重复",
+        "question": "Wwise random containers 怎样组合地表与随身物件层并降低连续重复？",
+        "summary": "Footsteps Switch 为 Dirt 等材质分配 Generic、sweetener、Bag 与 Keys；Bag 和 Keys 容器采用 avoid-repeat，并让 Initial Delay 轻微变化。",
+        "stepOrders": [4, 5, 6]
+      },
+      {
+        "id": "event-sync",
+        "title": "事件与 Picker 同步",
+        "question": "Wwise 事件怎样进入 bank，又怎样在 Unity 侧确认 Switch 和生成入口？",
+        "summary": "Wwise event 的 Play target 指向 footstep switch 容器和 bank，Unity picker 只确认 switches 树与 soundbank 生成控件。",
+        "stepOrders": [7, 8]
+      },
+      {
+        "id": "surface-runtime",
+        "title": "地表触发与运行",
+        "question": "场景区域怎样携带地表身份，并进入最终第一人称检查？",
+        "summary": "Dirt1 用 trigger Box Collider 和 Footsteps/Dirt Ak Switch 标记地表，随后在 Viking Village 第一人称画面中播放最终演示。",
+        "stepOrders": [9, 10]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "Unity 控制器 Inspector 与 Wwise Picker 的脚步入口。",
+        "problem": "游戏侧控制器需要与 Wwise 工程建立脚步调用关系。",
+        "action": "在 Unity 与 Wwise 已连接的工程中检查控制器脚步槽位和脚本入口。",
+        "result": "Inspector 可见 Footstep Sounds 槽位，Wwise Picker 同时出现在 Unity 界面。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "Wwise 工程里的 Footsteps bank、event 与分类素材树。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在 Wwise 中导入脚步素材并分入 Generic、地表 sweetener 与随身物件容器。",
+        "result": "工程界面形成可见的 Footsteps bank、事件与分类素材树。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "Dirt Random/Sequence Container 与其五条子素材。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在 Wwise Dirt random container 中保留五条素材和最近两条不重复状态。",
+        "result": "Wwise Dirt 界面确认五条候选与 avoid repeating last two，字幕未说明其听感结果。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "绑定 Footsteps Switch Group、默认 Dirt 的 Footsteps Switch Container。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "创建地表 switches，把 Generic 与 Dirt、Bag、Keys 等对象分配到可见的材质条目。",
+        "result": "Wwise Footsteps Switch 显示 Dirt 默认值及各地表的 Assigned Objects 组合。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "Bag Random/Sequence Container、五条 Bag 素材和当前 repeat-avoidance 状态。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在 Wwise Bag random container 中记录子素材与 avoid-repeat 界面状态。",
+        "result": "画面确认 Bag 已作为独立随机容器整理；同时间字幕没有解释这些字段的选择。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "Keys Random/Sequence Container、Initial Delay Randomizer，以及字幕同时提到的 Bag。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "根据容器文件数量避开最近播放项，并对 Bag、Keys 的 Initial Delay 做轻微随机。",
+        "result": "Wwise Keys random 界面显示 Initial Delay variation，字幕将该变化用于降低重复感，且没有涉及 bank 挂载。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "Wwise 当前 event 编辑界面与 bank 区域。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在 Wwise 当前 event 界面设置 Play target 为 footsteps，event 同时归入同名 bank。",
+        "result": "Wwise 界面确认 Play target 为 Footsteps，字幕补充 event、container 与 bank 的顺序。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "Unity 的 Wwise Picker、footsteps switches 树与 soundbank 生成控件。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在 Unity Wwise Picker 中检查 footsteps switches 与 soundbank 生成入口。",
+        "result": "当前画面只证明 Switches 与生成按钮出现在 Picker，不证明 Footstep Event 已在 Unity 接线。"
+      }
+    },
+    {
+      "order": 9,
+      "learning": {
+        "input": "Unity 的 Dirt1 场景对象、trigger Box Collider 与 Footsteps/Dirt Ak Switch。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "在 Unity 游戏场景中建立地表 collider 后从 Wwise Picker 放入 Dirt switch。",
+        "result": "Unity 游戏对象 Dirt1 可见 trigger collider 与 Footsteps/Dirt 赋值。"
+      }
+    },
+    {
+      "order": 10,
+      "learning": {
+        "input": "Unity 第一人称脚步运行画面。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "进入场景播放最终 footstep 演示。",
+        "result": "视频在此切到运行结果画面；单帧不能判断正在播放哪一种地表声音。"
+      }
+    }
+  ]
+}

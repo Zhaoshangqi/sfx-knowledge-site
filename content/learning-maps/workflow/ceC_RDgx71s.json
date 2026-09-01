@@ -1,0 +1,131 @@
+{
+  "videoId": "ceC_RDgx71s",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "让四条立体声源轨通过四对独立输入进入同一多通道处理轨，再以单一立体声返回实时播放，并把完整层级保存为可召回模板。",
+    "roles": [
+      {
+        "name": "四源输入",
+        "description": "四条任意立体声音频轨分别承担 Source 1-4 的独立素材输入。"
+      },
+      {
+        "name": "内部端口桥",
+        "description": "Source+Mix 与顶层父结构各自暴露八个单声道端口，组成四个立体声对。"
+      },
+      {
+        "name": "处理返回",
+        "description": "多通道路由轨接收四对输入，只从主要左右输出返回处理后的立体声。"
+      },
+      {
+        "name": "外层 Parent",
+        "description": "Parent 包住处理轨与四条源轨，承载后续 FX 并保存完整 Track Template。"
+      }
+    ],
+    "decisions": [
+      "选择能接收 DAW 外部音频的多通道 VST effect 入口，不使用 instrument 入口。",
+      "在内部 Source+Mix 和顶层父结构都暴露八个端口，并按四组左右声道成对连接。",
+      "让输入矩阵保持四对单向发送、单一立体声返回，四源实时测试通过后再保存 Parent 模板。"
+    ],
+    "sequence": "载入多通道效果入口 → Source+Mix 建四对输入 → 顶层暴露同样端口 → pin matrix 建八入双出 → 四轨分对发送 → 四源验证 → Parent 模板保存",
+    "chapters": [
+      {
+        "id": "host-ports",
+        "title": "打通宿主与内部端口",
+        "question": "四条立体声怎样进入原本封闭的多源处理结构？",
+        "summary": "先用多通道 VST effect 接收 DAW 音频，再在 Source+Mix 和顶层父结构各建立八个端口，保持四组 L/R 一一对应。",
+        "stepOrders": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": "daw-routing",
+        "title": "建立单向 DAW 路由",
+        "question": "怎样让八个输入进入正确 Source，同时只返回一组立体声？",
+        "summary": "在 pin matrix 将八个 Track Channels 对角映射到四对插件输入，只保留主要左右返回，再把四条源轨依次发送到对应通道对。",
+        "stepOrders": [
+          4,
+          5
+        ]
+      },
+      {
+        "id": "test-template",
+        "title": "验证并保存层级",
+        "question": "完整拓扑怎样确认可用，并避免下次重复搭建？",
+        "summary": "让四条源轨同时播放，确认四个 Source 区域与处理返回都有信号，再用外层 Parent 包住全套层级并保存 Track Template。",
+        "stepOrders": [
+          6,
+          7
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "REAPER 新轨道、多通道 VST effect 入口与修改后的处理 ensemble。",
+        "problem": "instrument 入口不能把当前结构当作接收 DAW 音频的效果器使用。",
+        "action": "选择多通道 VST effect 版本并载入 ensemble，不进入 VSTi 条目。",
+        "result": "处理轨能够接收来自 REAPER 源轨的外部音频。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "Source+Mix 结构、八个 Terminal Input 与 Source 1-4 的 L/R。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "创建 Port 1-8，并把 1/2、3/4、5/6、7/8 分别连接到四个 Source 的 L/R。",
+        "result": "八个单声道端口组成四个独立立体声输入对。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "顶层父结构与 Source+Mix 已完成的八个内部 In。",
+        "problem": "内部配对尚未暴露到宿主，DAW pin matrix 仍无法访问四个 Source。",
+        "action": "在顶层再建立 Port 1-8，逐一连接 Source+Mix 输入并保存修改后的 ensemble。",
+        "result": "四对内部输入从父结构暴露给 DAW，修改也可被重新载入。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "处理轨的 plugin pin matrix、Track Channels 1-8 与插件 1L-4R。",
+        "problem": "输入和返回没有分开时，四对源通道与最终立体声输出会混淆。",
+        "action": "把 Track Channels 1-8 对角映射到四对输入，只让插件主要 1L/1R 返回 Track Channels 1/2。",
+        "result": "拓扑形成八路单向输入和一组处理后立体声返回。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "四条立体声源轨与处理轨的四个目标通道对。",
+        "problem": "所有源轨发送到同一对时，Source 1-4 无法分别接收独立素材。",
+        "action": "让 Track 1-4 的自身 1/2 依次发送到目标 1/2、3/4、5/6、7/8。",
+        "result": "每条源轨只进入与内部 Source L/R 配对一致的通道对。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "四条装入不同立体声素材的源轨与完整路由。",
+        "problem": "视频未单独说明处理前问题：需要在保存模板前确认四源与立体声返回能实时工作。",
+        "action": "同时播放四条源轨，观察四个 Source 区域、源轨电平与处理轨返回。",
+        "result": "四源均有信号，处理后的立体声从主要左右通道实时返回。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "处理轨、四条源轨、后续 FX 位置与外层 Parent。",
+        "problem": "直接改动路由轨来增加后续效果，容易破坏已经验证的端口结构。",
+        "action": "用外层 Parent 包住完整层级，把后续 FX 留在外层，并保存 REAPER Track Template。",
+        "result": "四源路由可整体召回，后续加工也不必改动内部拓扑。"
+      }
+    }
+  ]
+}
