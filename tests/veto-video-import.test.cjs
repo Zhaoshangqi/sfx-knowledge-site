@@ -55,6 +55,40 @@ test('publishes the Veto ult breakdown as the unique 85th complete record', () =
     assert.ok(fs.existsSync(path.join(root, asset.full)), asset.full);
   }
 
+  assert.equal(typeof record.learningMap, 'object', 'Veto record must define learningMap');
+  assert.equal(
+    record.learningMap.goal,
+    '让可见动作、角色材质和力量幻想同时清楚，并用调性与尾音区分己方和敌方版本。'
+  );
+  assert.deepEqual(
+    record.learningMap.roles.map((role) => role.name),
+    ['动作提示', '主体材质', '重量冲击', '能量身份', '高频细节', '空间与尾音']
+  );
+  assert.equal(record.learningMap.decisions.length, 3);
+  assert.equal(
+    record.learningMap.sequence,
+    '初始命中 → 吸入式转场 → 手臂拉回 → 材质与尾音收束 → 敌我变体'
+  );
+  assert.deepEqual(
+    record.learningMap.chapters.map((chapter) => chapter.id),
+    ['action-map', 'action-power', 'liquid-highs', 'identity-transition', 'material-variants']
+  );
+  assert.deepEqual(
+    record.learningMap.chapters.map((chapter) => chapter.stepOrders),
+    [[1], [2], [3, 4, 5, 6, 7, 8, 9, 10], [11, 12, 13], [14, 15, 16, 17]]
+  );
+  const chapterStepOrders = record.learningMap.chapters.flatMap((chapter) => chapter.stepOrders);
+  assert.deepEqual(chapterStepOrders, Array.from({ length: 17 }, (_, index) => index + 1));
+  assert.equal(new Set(chapterStepOrders).size, 17);
+
+  for (const step of record.steps) {
+    assert.deepEqual(Object.keys(step.learning), ['input', 'problem', 'action', 'result'], step.name);
+    for (const value of Object.values(step.learning)) {
+      assert.equal(typeof value, 'string', step.name);
+      assert.ok(value.trim().length >= 8, step.name);
+    }
+  }
+
   assert.deepEqual(record.effectUses.map((use) => use.name), expectedEffects);
   for (const use of record.effectUses) {
     assert.equal(use.screenshotReviewed, true, use.id);
