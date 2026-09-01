@@ -157,6 +157,10 @@ function escapeHtmlForTest(value) {
     .replace(/'/g, '&#39;');
 }
 
+function escapeAttrForTest(value) {
+  return escapeHtmlForTest(value);
+}
+
 function escapeRegexForTest(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -341,6 +345,94 @@ test('quick conclusions stay concise while folded evidence preserves every suppl
     assert.equal((evidence.match(new RegExp(token, 'g')) || []).length, 1, token);
   });
   assert.equal((evidence.match(/<details class="evidence-disclosure"/g) || []).length, 4);
+});
+
+test('renders the Veto learning template while preserving exact legacy detail fallbacks', () => {
+  const veto = records().find((record) => record.videoId === '3JjAK2uhxM4');
+  assert.ok(veto, 'missing production Veto record');
+
+  const detailData = loadVideoDetailData();
+  const projected = detailData.project(veto);
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeAttrForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  });
+  const quick = helpers.renderQuickConclusion(veto, projected);
+  const timeline = helpers.renderStepTimeline(veto, projected);
+  const detailed = helpers.renderDetailedSteps(veto, projected);
+
+  assert.match(quick, /30 秒读懂/);
+  assert.match(quick, /设计目标/);
+  assert.equal((quick.match(/class=\"learning-role\"/g) || []).length, 6);
+  ['动作提示', '主体材质', '重量冲击', '能量身份', '高频细节', '空间与尾音']
+    .forEach((role) => assert.match(quick, new RegExp(role)));
+  assert.match(quick, /关键决定/);
+  assert.match(quick, /最终结构/);
+  assert.match(quick, /初始命中 → 吸入式转场 → 手臂拉回 → 材质与尾音收束 → 敌我变体/);
+
+  assert.match(timeline, /设计章节/);
+  assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, 5);
+  ['先定动作骨架', '建立动作与力量', '塑造液态高频', '建立角色身份与转场', '完成材质、尾音与敌我版本']
+    .forEach((title) => assert.match(timeline, new RegExp(title)));
+  assert.equal((timeline.match(/data-step-time=/g) || []).length, 17);
+  assert.equal((timeline.match(/data-chapter-time=/g) || []).length, 5);
+
+  assert.equal((detailed.match(/class=\"step-learning-grid\"/g) || []).length, 17);
+  ['输入', '问题', '动作', '结果'].forEach((label) => {
+    assert.equal((detailed.match(new RegExp(`<dt>${label}</dt>`, 'g')) || []).length, 17, label);
+  });
+  assert.match(detailed, /完整大招画面与已有声音草稿。/);
+  assert.match(detailed, /查看完整说明/);
+  assert.equal((detailed.match(/class=\"step-source-detail\"/g) || []).length, 17);
+  const firstSourceStart = detailed.indexOf('<details class=\"step-source-detail\">');
+  const firstSourceEnd = detailed.indexOf('</details>', firstSourceStart);
+  assert.ok(firstSourceStart >= 0 && firstSourceEnd > firstSourceStart, 'missing folded source detail');
+  assert.match(
+    detailed.slice(firstSourceStart, firstSourceEnd),
+    new RegExp(escapeRegexForTest(escapeHtmlForTest(veto.steps[0].detail)))
+  );
+
+  const searchable = SfxKnowledgeModel.searchableRecordText(veto, '');
+  assert.match(searchable, /已有声音草稿/);
+  assert.match(detailed, /已有声音草稿/);
+
+  const legacy = {
+    title: 'Legacy Record',
+    summary: 'legacy-summary',
+    coreIdeas: ['legacy-idea'],
+    steps: [{
+      order: 1,
+      name: 'legacy-step',
+      detail: 'legacy-detail',
+      params: ['legacy-param'],
+      startSeconds: 12
+    }]
+  };
+  const legacyProjected = detailData.project(legacy);
+  const legacyQuick = helpers.renderQuickConclusion(legacy, legacyProjected);
+  const legacyTimeline = helpers.renderStepTimeline(legacy, legacyProjected);
+  const legacyDetailed = helpers.renderDetailedSteps(legacy, legacyProjected);
+
+  assert.match(legacyQuick, /快速结论/);
+  assert.doesNotMatch(legacyQuick, /30 秒读懂/);
+  assert.match(legacyTimeline, /class=\"step-timeline\"/);
+  assert.doesNotMatch(legacyTimeline, /learning-chapter/);
+  assert.match(legacyDetailed, /legacy-detail/);
+  assert.match(legacyDetailed, /legacy-param/);
+  assert.doesNotMatch(legacyDetailed, /step-learning-grid|step-source-detail/);
+
+  assert.match(indexHtml, /\.learning-map\s*\{[^}]*display:\s*grid;/);
+  assert.match(indexHtml, /\.learning-roles\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\);/);
+  assert.match(indexHtml, /\.learning-chapter\s*\{[^}]*border-top:\s*1px solid var\(--line\);/);
+  assert.match(indexHtml, /\.step-learning-grid\s*>\s*div\s*\{[^}]*grid-template-columns:\s*44px minmax\(0, 1fr\);/);
+  const mobileStart = indexHtml.indexOf('@media (max-width: 640px)');
+  const mobileEnd = indexHtml.indexOf('@media (orientation: landscape)', mobileStart);
+  const mobileCss = indexHtml.slice(mobileStart, mobileEnd);
+  assert.ok(mobileStart >= 0 && mobileEnd > mobileStart, 'missing mobile CSS boundary');
+  assert.match(mobileCss, /\.learning-roles\s*\{[^}]*grid-template-columns:\s*1fr;/);
+  assert.match(mobileCss, /\.learning-chapter-head\s*\{[^}]*grid-template-columns:\s*1fr;/);
 });
 
 test('all 85 records render verified step and screenshot time controls', () => {

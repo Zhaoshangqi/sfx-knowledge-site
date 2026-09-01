@@ -681,6 +681,45 @@
       border-radius: 50%;
       background: var(--teal);
     }
+    .learning-map {
+      display: grid;
+      gap: 16px;
+    }
+    .learning-goal,
+    .learning-sequence {
+      margin: 0;
+    }
+    .learning-goal strong,
+    .learning-sequence strong {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .learning-label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .learning-roles {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 18px;
+    }
+    .learning-role {
+      min-width: 0;
+      padding-left: 10px;
+      border-left: 3px solid var(--teal);
+    }
+    .learning-role strong {
+      display: block;
+      font-size: 13px;
+    }
+    .learning-role span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
     .detail-section-nav {
       display: flex;
       min-height: 44px;
@@ -732,6 +771,56 @@
       overflow-wrap: anywhere;
     }
     .step-timeline time {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .learning-chapters {
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .learning-chapter {
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+    .learning-chapter-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px 16px;
+    }
+    .learning-chapter h4 {
+      margin: 0;
+      font-size: 16px;
+    }
+    .learning-chapter-question {
+      margin: 4px 0 0;
+      font-weight: 800;
+    }
+    .learning-chapter-summary {
+      margin: 6px 0 10px;
+      color: var(--muted);
+    }
+    .learning-chapter-steps {
+      display: grid;
+      gap: 2px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .learning-chapter-step .time-jump {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .learning-chapter-step .time-jump-label {
+      min-width: 0;
+      flex: 1 1 auto;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+    .learning-chapter-step time {
       flex: 0 0 auto;
       color: var(--muted);
       font-variant-numeric: tabular-nums;
@@ -814,6 +903,37 @@
       overflow: hidden;
       clip-path: inset(50%);
       white-space: nowrap;
+    }
+    .step-learning-grid {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0 0;
+    }
+    .step-learning-grid > div {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 10px;
+    }
+    .step-learning-grid dt {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .step-learning-grid dd {
+      min-width: 0;
+      margin: 0;
+      overflow-wrap: anywhere;
+    }
+    .step-source-detail {
+      margin-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .step-source-detail > summary {
+      padding-top: 10px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
     }
     .evidence-disclosure {
       border-top: 1px solid var(--line);
@@ -1887,6 +2007,8 @@
       }
       .step-heading { flex-direction: column; }
       .step-heading .time-jump { align-self: flex-start; }
+      .learning-roles { grid-template-columns: 1fr; }
+      .learning-chapter-head { grid-template-columns: 1fr; }
     }
     @media (orientation: landscape) and (max-height: 520px) and (min-width: 641px) and (max-width: 900px) {
       .video-study-rail {
@@ -38484,6 +38606,32 @@
     }
 
     function renderQuickConclusion(record, detailData) {
+      const learningMap = record?.learningMap && typeof record.learningMap === "object" && !Array.isArray(record.learningMap)
+        ? record.learningMap
+        : null;
+      if (learningMap) {
+        const goal = typeof learningMap.goal === "string" ? learningMap.goal.trim() : "";
+        const roles = Array.isArray(learningMap.roles) ? learningMap.roles.map((role) => {
+          const source = role && typeof role === "object" && !Array.isArray(role) ? role : {};
+          const name = typeof source.name === "string" ? source.name.trim() : "";
+          const description = typeof source.description === "string" ? source.description.trim() : "";
+          return name && description ? { name, description } : null;
+        }).filter(Boolean) : [];
+        const decisions = Array.isArray(learningMap.decisions)
+          ? learningMap.decisions.filter((decision) => typeof decision === "string" && decision.trim()).slice(0, 3).map((decision) => decision.trim())
+          : [];
+        const sequence = typeof learningMap.sequence === "string" ? learningMap.sequence.trim() : "";
+        return '<section id="quick" class="detail-quick learning-map detail-content-section" data-detail-section="quick">' +
+          '<h3 tabindex="-1" data-section-heading>30 秒读懂</h3>' +
+          (goal ? '<p class="learning-goal"><strong>设计目标</strong>' + escapeHtml(goal) + '</p>' : '') +
+          (roles.length ? '<div class="learning-roles">' + roles.map((role) =>
+            '<div class="learning-role"><strong>' + escapeHtml(role.name) + '</strong><span>' + escapeHtml(role.description) + '</span></div>'
+          ).join("") + '</div>' : '') +
+          (decisions.length ? '<div class="learning-decisions"><span class="learning-label">关键决定</span><ul class="quick-decisions">' +
+            decisions.map((decision) => '<li>' + escapeHtml(decision) + '</li>').join("") + '</ul></div>' : '') +
+          (sequence ? '<p class="learning-sequence"><strong>最终结构</strong>' + escapeHtml(sequence) + '</p>' : '') +
+        '</section>';
+      }
       const summary = typeof record?.summary === "string" ? record.summary : "";
       const ideas = Array.isArray(detailData?.coreIdeas) ? detailData.coreIdeas.slice(0, 3) : [];
       return '<section id="quick" class="detail-quick detail-content-section" data-detail-section="quick">' +
@@ -38517,6 +38665,44 @@
     function renderStepTimeline(record, detailData) {
       const steps = Array.isArray(detailData?.steps) ? detailData.steps : [];
       if (!steps.length) return "";
+      const learningMap = record?.learningMap && typeof record.learningMap === "object" && !Array.isArray(record.learningMap)
+        ? record.learningMap
+        : null;
+      const chapters = Array.isArray(learningMap?.chapters) ? learningMap.chapters.map((rawChapter) => {
+        const chapter = rawChapter && typeof rawChapter === "object" && !Array.isArray(rawChapter) ? rawChapter : {};
+        const chapterSteps = Array.isArray(chapter.stepOrders) ? chapter.stepOrders
+          .filter((order) => Number.isInteger(order) && order > 0 && order <= steps.length)
+          .map((order) => ({ step: steps[order - 1], index: order - 1 }))
+          .filter((entry) => entry.step)
+          : [];
+        return chapterSteps.length ? { chapter, steps: chapterSteps } : null;
+      }).filter(Boolean) : [];
+      if (chapters.length) {
+        return '<section id="steps" class="step-timeline-section detail-content-section" data-detail-section="steps">' +
+          '<h3 tabindex="-1" data-section-heading>设计章节</h3><ol class="learning-chapters">' + chapters.map((entry) => {
+            const chapter = entry.chapter;
+            const title = typeof chapter.title === "string" && chapter.title.trim() ? chapter.title.trim() : "未命名章节";
+            const question = typeof chapter.question === "string" ? chapter.question.trim() : "";
+            const summary = typeof chapter.summary === "string" ? chapter.summary.trim() : "";
+            const chapterId = typeof chapter.id === "string" || typeof chapter.id === "number" ? chapter.id : "";
+            const firstSeconds = SfxVideoTimeline.stepStart(record, entry.steps[0].index);
+            const chapterControl = renderTimeJump(firstSeconds, "播放本章", { "data-chapter-time": "", "data-section": "steps" });
+            const stepControls = entry.steps.map((item) => {
+              const name = item.step?.name || "未命名步骤";
+              const seconds = SfxVideoTimeline.stepStart(record, item.index);
+              const control = renderTimeJump(seconds, name, { "data-step-time": "", "data-section": "steps" });
+              return '<li class="learning-chapter-step">' +
+                (control || '<span class="step-time-unavailable" data-step-time=""><span>' + escapeHtml(name) + '</span><span>时间待复核</span></span>') +
+              '</li>';
+            }).join("");
+            return '<li class="learning-chapter" data-chapter-id="' + escapeAttr(chapterId) + '">' +
+              '<div class="learning-chapter-head"><div class="learning-chapter-copy"><h4>' + escapeHtml(title) + '</h4>' +
+                (question ? '<p class="learning-chapter-question">' + escapeHtml(question) + '</p>' : '') +
+                (summary ? '<p class="learning-chapter-summary">' + escapeHtml(summary) + '</p>' : '') +
+              '</div>' + chapterControl + '</div>' +
+              '<ol class="learning-chapter-steps">' + stepControls + '</ol></li>';
+          }).join("") + '</ol></section>';
+      }
       return '<section id="steps" class="step-timeline-section detail-content-section" data-detail-section="steps">' +
         '<h3 tabindex="-1" data-section-heading>处理步骤</h3><ol class="step-timeline">' + steps.map((step, index) => {
           const name = step?.name || "未命名步骤";
@@ -38533,6 +38719,26 @@
         const name = step.name || "未命名步骤";
         const detail = step.detail || "";
         const params = Array.isArray(step.params) ? step.params : [];
+        const learning = step.learning && typeof step.learning === "object" && !Array.isArray(step.learning) ? step.learning : {};
+        const learningFields = [
+          { key: "input", label: "输入" },
+          { key: "problem", label: "问题" },
+          { key: "action", label: "动作" },
+          { key: "result", label: "结果" }
+        ].map((field) => ({
+          ...field,
+          value: typeof learning[field.key] === "string" ? learning[field.key].trim() : ""
+        }));
+        const hasLearning = learningFields.every((field) => field.value);
+        const learningHtml = hasLearning ? '<dl class="step-learning-grid">' + learningFields.map((field) =>
+          '<div data-learning-field="' + field.key + '"><dt>' + field.label + '</dt><dd>' + escapeHtml(field.value) + '</dd></div>'
+        ).join("") + '</dl>' : '';
+        const sourceDetailHtml = hasLearning && (detail || params.length)
+          ? '<details class="step-source-detail"><summary>查看完整说明</summary>' +
+              (detail ? '<p>' + escapeHtml(detail) + '</p>' : '') +
+              (params.length ? '<div class="chips">' + params.map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
+            '</details>'
+          : '';
         const motion = step.motion && step.motion.src ? step.motion : null;
         const seconds = SfxVideoTimeline.stepStart(record, index);
         const screenshotTime = renderTimeJump(seconds, "从截图位置播放", {
@@ -38551,8 +38757,9 @@
         return '<article class="step" data-step-index="' + index + '">' + shotHtml +
           '<div class="step-copy"><div class="step-heading"><strong>' + escapeHtml((step.order ?? index + 1) + ". " + name) + '</strong>' +
             renderTimeJump(seconds, "播放此步骤", { "data-step-heading-time": "", "data-section": "steps" }) + '</div>' +
-          (detail ? '<p>' + escapeHtml(detail) + '</p>' : '') +
-          (params.length ? '<div class="chips">' + params.map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
+          (hasLearning ? learningHtml + sourceDetailHtml :
+            (detail ? '<p>' + escapeHtml(detail) + '</p>' : '') +
+            (params.length ? '<div class="chips">' + params.map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '')) +
           '</div></article>';
       }).join("");
     }
