@@ -296,7 +296,7 @@
 
   function searchableRecordText(record, categoryLabel) {
     var values = [];
-    var fields = ['title', 'source', 'addedAt', 'updatedAt', 'updateNote', 'summary', 'keywords', 'materials', 'coreIdeas', 'chainFocus', 'parameterLogic', 'tips', 'plugins', 'steps', 'effectUses'];
+    var fields = ['title', 'source', 'addedAt', 'updatedAt', 'updateNote', 'summary', 'keywords', 'materials', 'coreIdeas', 'chainFocus', 'parameterLogic', 'tips', 'plugins', 'steps', 'learningMap', 'effectUses'];
     function collect(value) {
       if (value == null) return;
       if (typeof value === 'string' || typeof value === 'number') values.push(stripCourseScaffolding(value).toLowerCase());

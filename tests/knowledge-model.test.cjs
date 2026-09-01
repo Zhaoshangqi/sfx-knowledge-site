@@ -198,18 +198,27 @@ test('classifyEffectUse excludes vendor and inferEvidence returns all labels', (
   assert.deepEqual(model.inferEvidence('没有证据标签'), []);
 });
 
-test('searchableRecordText uses supplied category label and factual fields only', () => {
+test('searchableRecordText uses supplied category label, learning map, and factual fields only', () => {
   const text = model.searchableRecordText({
     title: '脚步设计', source: '视频课', date: '不要收录', addedAt: '2025-01-02', updatedAt: '2025-02-03',
     updateNote: '已复核', categoryLabel: '记录分类', summary: '用混响拉开距离', keywords: ['脚步'],
     materials: ['干声'], coreIdeas: ['先定素材'], chainFocus: '空间层次', parameterLogic: '预延迟控制清晰度',
     tips: ['少量使用'], plugins: [{ name: 'Reverb' }], steps: [{ narration: '听尾音' }],
+    learningMap: {
+      goal: '独有学习目标',
+      roles: [{ name: '空间与尾音', description: '独有角色说明' }],
+      decisions: ['独有关键决定'],
+      sequence: '独有最终结构',
+      chapters: [{ title: '独有章节标题', question: '独有章节问题', summary: '独有章节总结' }]
+    },
     effectUses: [{ name: 'Delay', purpose: '回声' }], practiceChecklist: ['不可检索']
   }, '传入分类');
   assert.match(text, /传入分类/);
   assert.match(text, /2025-01-02/);
   assert.match(text, /2025-02-03/);
   assert.match(text, /已复核/);
+  ['独有学习目标', '空间与尾音', '独有角色说明', '独有关键决定', '独有最终结构', '独有章节标题', '独有章节问题', '独有章节总结']
+    .forEach((value) => assert.match(text, new RegExp(value)));
   assert.doesNotMatch(text, /记录分类|不要收录|不可检索/);
 });
 

@@ -480,6 +480,41 @@ test('learning template activation fails closed as one unit', async (t) => {
       mutate(record) { record.learningMap = {}; }
     },
     {
+      name: 'learning map on a non-pilot video',
+      mutate(record) { record.videoId = 'not-the-veto-pilot'; }
+    },
+    {
+      name: 'five roles instead of six',
+      mutate(record) { record.learningMap.roles.pop(); }
+    },
+    {
+      name: 'two decisions instead of three',
+      mutate(record) { record.learningMap.decisions.pop(); }
+    },
+    {
+      name: 'four coherent chapters instead of five',
+      mutate(record) {
+        const finalChapter = record.learningMap.chapters.pop();
+        record.learningMap.chapters[record.learningMap.chapters.length - 1].stepOrders.push(...finalChapter.stepOrders);
+      }
+    },
+    {
+      name: 'sixteen coherently partitioned steps instead of seventeen',
+      mutate(record) {
+        record.steps.pop();
+        record.learningMap.chapters[record.learningMap.chapters.length - 1].stepOrders.pop();
+      }
+    },
+    {
+      name: 'seventeen steps with shifted orders',
+      mutate(record) {
+        record.steps.forEach((step) => { step.order += 1; });
+        record.learningMap.chapters.forEach((chapter) => {
+          chapter.stepOrders = chapter.stepOrders.map((order) => order + 1);
+        });
+      }
+    },
+    {
       name: 'complete step learning without a map',
       mutate(record) { delete record.learningMap; }
     },
