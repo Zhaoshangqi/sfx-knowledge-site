@@ -1,0 +1,42 @@
+{
+  "videoId": "Ipbfcr-DFTI",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "理解 Raw Magic 中的金属、滚珠轴承、水壶、羽毛掸子与沙子，怎样通过独奏状态、原声保留、次谐波补充和处理版对比组成积极的疗愈魔法。",
+    "roles": [
+      { "name": "金属冲击", "description": "带颤音的金属片以未加效果的原声承担第一层冲击。" },
+      { "name": "低频冲击", "description": "羽毛掸子击打沙子的层次借次谐波补充低频力度。" },
+      { "name": "滚珠旋转", "description": "水壶中的滚珠轴承为成品提供清楚的旋转动作层。" }
+    ],
+    "decisions": [
+      "素材自身已经有效时，金属片直接保留原声，不强行增加额外效果。",
+      "滚珠轴承层先播放原声，再播放 Multipass 版本，让强烈变化有清楚参照。",
+      "羽毛掸子与沙子的冲击通过次谐波增加低频，而不是替换原始打击纹理。"
+    ],
+    "sequence": "从 Raw Magic 选择魔法来源 → 以带颤音金属片原声承担第一冲击 → 为羽毛掸子沙地冲击加入次谐波 → 比较水壶滚珠轴承的原声与 Multipass 版本 → 比较另一层的原版与处理版 → 组合成积极疗愈魔法",
+    "chapters": [
+      { "id": "library-introduction", "title": "素材库介绍", "question": "作者怎样说明本次魔法声音的素材来源？", "summary": "魔法视频开场介绍作者背景与 Raw Magic，后段继续确认本次将体验这套素材库。", "stepOrders": [1, 13] },
+      { "id": "healing-layer-demo", "title": "疗愈魔法分层展示", "question": "Raw Magic 示例怎样从素材库评价过渡到轨道独奏？", "summary": "素材库评价后，金属轨独奏，随后同一玻璃轨在连续位置保持独奏状态；示例与音乐再引出积极疗愈魔法。", "stepOrders": [3, 4, 5, 9, 11, 2, 14] },
+      { "id": "bearing-multipass-compare", "title": "滚珠轴承版本比较", "question": "水壶中的滚珠轴承经过 Multipass 后发生什么变化？", "summary": "滚珠轴承素材原声先单独播放，再切到 Multipass 版本；完整动作后段继续呈现强烈变化。", "stepOrders": [10, 12] },
+      { "id": "impact-processed-layers", "title": "冲击与处理版层次", "question": "金属片、羽毛掸子和后段音色怎样形成不同部分？", "summary": "金属片原声先提供冲击，羽毛掸子沙地层再用次谐波补低频，最后比较当前层原版与另一处理版本。", "stepOrders": [6, 7, 8] }
+    ]
+  },
+  "steps": [
+    { "order": 1, "learning": { "input": "Raw Magic 音效库与多层魔法工程。", "problem": "视频未单独说明处理前问题", "action": "作者在魔法开场介绍音频工作背景和 Raw Magic 体验。", "result": "视频主题明确为这套魔法素材库的分层设计。" } },
+    { "order": 2, "learning": { "input": "完全取自 Raw Magic 的疗愈魔法示例与音乐。", "problem": "视频未单独说明处理前问题", "action": "作者播放魔法示例的音乐，说明接下来会逐一演示各层。", "result": "整体被作者描述为积极的疗愈魔法。" } },
+    { "order": 3, "learning": { "input": "施法素材库评价之后的一条金属轨。", "problem": "视频未单独说明处理前问题", "action": "画面显示顶部金属轨处于独奏状态。", "result": "作者肯定素材库内容，画面继续停在金属轨独奏状态。" } },
+    { "order": 4, "learning": { "input": "这一段分层时间线中的玻璃轨。", "problem": "视频未单独说明处理前问题", "action": "这一段截图中的独奏标记表明玻璃轨单独开启。", "result": "这一段只有同一条玻璃轨在分层波形中保持独奏。" } },
+    { "order": 5, "learning": { "input": "视频中的同一玻璃轨及未改变的独奏标记。", "problem": "视频未单独说明处理前问题", "action": "视频后续截图延续这条玻璃轨的独奏状态。", "result": "视频在这一位置仍单独呈现同一玻璃轨。" } },
+    { "order": 6, "learning": { "input": "这一段金属素材和第二冲击层。", "problem": "视频未单独说明处理前问题", "action": "作者保持金属素材原声、不加额外效果，开始播放下一层素材。", "result": "魔法第一冲击保留金属片原有质地，作者认为它很酷。" } },
+    { "order": 7, "learning": { "input": "羽毛掸子击打沙子的魔法第二冲击层。", "problem": "视频未单独说明处理前问题", "action": "作者为冲击加入次谐波处理 Infinity Bass，播放冲击处理关闭版本作比较。", "result": "次谐波为冲击增加了一点力度和低频。" } },
+    { "order": 8, "learning": { "input": "当前声音的未处理原版（original）与另一处理版本。", "problem": "视频未单独说明处理前问题", "action": "作者播放原版后处理当前声音的材质、控制混合量且保持时长不变。", "result": "作者认为处理后的声音材质很丰富。" } },
+    { "order": 9, "learning": { "input": "这一段用素材库制作的魔法示例。", "problem": "视频未单独说明处理前问题", "action": "作者从这一段开始播放示例。", "result": "这一段示例在此处起播。" } },
+    { "order": 10, "learning": { "input": "魔法层所用的水壶滚珠轴承素材。", "problem": "视频未单独说明处理前问题", "action": "作者先播放素材原声，随后播放 Multipass 版本。", "result": "作者认为 Multipass 版本的变化很强烈，并称 Multipass 很酷。" } },
+    { "order": 11, "learning": { "input": "这一段刚开始播放的魔法示例。", "problem": "视频未单独说明处理前问题", "action": "作者继续播放这一段示例的开头。", "result": "这一段起始片段在短窗后段延续。" } },
+    { "order": 12, "learning": { "input": "滚珠轴承素材原声与已经变化的处理版。", "problem": "视频未单独说明处理前问题", "action": "作者继续比较素材的原声与处理版。", "result": "滚珠轴承素材的强烈变化在后段继续呈现。" } },
+    { "order": 13, "learning": { "input": "CJ Ridings 与 Raw Magic 魔法素材库的开场介绍。", "problem": "视频未单独说明处理前问题", "action": "作者继续说明自己的音频工作背景和魔法素材体验主题。", "result": "魔法开场后段仍聚焦 Raw Magic。" } },
+    { "order": 14, "learning": { "input": "积极疗愈魔法示例及其音乐段。", "problem": "视频未单独说明处理前问题", "action": "作者继续播放魔法音乐，说明魔法分层展示将要开始。", "result": "魔法音乐过渡到即将开始的分层演示。" } }
+  ]
+}

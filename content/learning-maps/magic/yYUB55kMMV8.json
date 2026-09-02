@@ -1,0 +1,36 @@
+{
+  "videoId": "yYUB55kMMV8",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "梳理无字幕展示中八个来源标签、分层编号与双通道片段的对应关系。",
+    "roles": [
+      { "name": "前段职责未说明", "description": "Cloth 与 Coffe Machine 仅以 Layer 1 和 Layer 2 来源标签出现；无口述，截图不足以判断成品职责。" },
+      { "name": "中段职责未说明", "description": "Saw、Reversed Paper 与 Singing Bowl 只有分层标签和波形可见；无口述，无法确认成品职责。" },
+      { "name": "后段职责未说明", "description": "Crickets Soundscape、Squeaky Door 与 Reversed Glass 只在后续时间线片段中列出；无口述，截图不足以确定职责。" }
+    ],
+    "decisions": [
+      "每个来源都以独立的 Layer 编号、Source 标签和对应双通道片段呈现。",
+      "同一时间位置分别展示 Saw 与 Reversed Paper，两者使用不同的分层和轨道编号。",
+      "后段继续按独立分层列出环境、门声、颂钵与反向玻璃来源。"
+    ],
+    "sequence": "视频只展示多个时间线片段，未说明制作或信号流程。",
+    "chapters": [
+      { "id": "first-source-pair", "title": "前两项来源标记", "question": "最早出现的两个来源怎样与轨道片段对应？", "summary": "展示先列出 Cloth 的短片段，再切到原文拼作 Coffe Machine 的长片段。", "stepOrders": [1, 2] },
+      { "id": "overlap-and-bowl", "title": "重叠时点的独立分层", "question": "同一时点的两张展示怎样保持来源区分？", "summary": "Saw 与 Reversed Paper 在相同时间范围内各用一张独立展示，随后出现 Singing Bowl。", "stepOrders": [3, 4, 7] },
+      { "id": "long-source-clips", "title": "两段长来源片段", "question": "中后段的长波形分别标注了哪些来源？", "summary": "Crickets Soundscape 和 Squeaky Door 依次配有各自的长双通道片段。", "stepOrders": [5, 6] },
+      { "id": "last-glass-layer", "title": "最后的玻璃来源", "question": "末段怎样标记反向玻璃来源？", "summary": "最后一张展示把 Reversed Glass、Layer 10 与对应双通道片段放在一起。", "stepOrders": [8] }
+    ]
+  },
+  "steps": [
+    { "order": 1, "learning": { "input": "Cloth 来源对应 Layer 1，轨道面板标为 Audio 75。", "problem": "视频未单独说明处理前问题", "action": "界面并列显示 Cloth 来源标签、首尾淡变线、播放头与片段波形。", "result": "Cloth 来源与 Layer 1 的轨道片段形成明确对应。" } },
+    { "order": 2, "learning": { "input": "Layer 2 中原文拼作 Coffe Machine 的 Audio 76 片段。", "problem": "视频未单独说明处理前问题", "action": "界面展示该来源标签、咖啡机插图和一段长双通道波形。", "result": "Coffe Machine 来源被标在 Layer 2 的独立轨道上。" } },
+    { "order": 3, "learning": { "input": "Audio 78 上显示 Saw 来源及 Layer 3 标签。", "problem": "视频未单独说明处理前问题", "action": "界面显示 Saw 来源标签、片段波形、播放头和 Varispeed 控件。", "result": "Saw 来源在 Layer 3 中保持独立展示。" } },
+    { "order": 4, "learning": { "input": "Reversed Paper 与 Audio 79 波形在 Layer 5 中同屏。", "problem": "视频未单独说明处理前问题", "action": "界面把 Reversed Paper 标签与对应双通道波形放在同一轨道区域。", "result": "反向纸来源与 Layer 5 的片段单独对应。" } },
+    { "order": 5, "learning": { "input": "Crickets Soundscape 标注在 Layer 6，Audio 80 呈现较长波形。", "problem": "视频未单独说明处理前问题", "action": "界面展示该来源名称、长双通道波形、播放头和 Varispeed 控件。", "result": "Crickets Soundscape 来源被列在 Layer 6。" } },
+    { "order": 6, "learning": { "input": "Squeaky Door 位于 Layer 7，配套轨道编号为 Audio 81。", "problem": "视频未单独说明处理前问题", "action": "界面并列呈现门声来源标签、长双通道波形与播放头。", "result": "Squeaky Door 来源与 Layer 7 轨道相互对应。" } },
+    { "order": 7, "learning": { "input": "Singing Bowl 的来源页列出 Layer 8 和 Audio 83 长片段。", "problem": "视频未单独说明处理前问题", "action": "界面显示颂钵来源标签、双通道波形、播放头和电平活动。", "result": "Singing Bowl 来源被单列在 Layer 8。" } },
+    { "order": 8, "learning": { "input": "最后一项把 Reversed Glass 标为 Layer 10，旁边是 Audio 87 片段。", "problem": "视频未单独说明处理前问题", "action": "界面展示来源标签、双通道片段、播放头和覆盖其上的碎玻璃装饰图。", "result": "Reversed Glass 来源与 Layer 10 的片段形成对应。" } }
+  ]
+}

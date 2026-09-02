@@ -1,0 +1,39 @@
+{
+  "videoId": "j4POSc1YeAo",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "理解简单正弦、波表、白噪和快速调制，怎样分别生成气泡、激光、幽灵呼啸、金属与旋律层，并组合成轻松活泼的现代动漫魔法。",
+    "roles": [
+      { "name": "气泡核心", "description": "正弦与快速随机频率调制提供成串的动漫气泡声。" },
+      { "name": "激光（laser）点响", "description": "短促波表调制层为魔法动作提供经典科幻激光点响。" },
+      { "name": "幽灵呼啸（spectral whoosh）", "description": "Crystal 波表与快速调制构成幽灵般的呼啸和细小气泡色彩。" },
+      { "name": "金属底色", "description": "正弦与白噪组成的音色为组合提供金属质地。" },
+      { "name": "旋律气泡", "description": "合唱与和声处理后的气泡层补充律动和旋律。" },
+      { "name": "冲击重音（impact accents）", "description": "快速动作声与冲击重音支撑最终魔法的动作落点。" }
+    ],
+    "decisions": [
+      "气泡核心从简单正弦开始，以非常快的随机频率调制制造大量动漫式变化。",
+      "频移处理先旁路再启用，通过前后播放判断频率与反馈对气泡质地的贡献。",
+      "激光、幽灵、金属与气泡分别从波表、正弦和白噪出发，最终组合以现代动漫的轻松活泼为目标。"
+    ],
+    "sequence": "用正弦和快速随机调制建立气泡核心 → 旁路比较频移反馈 → 用波表和快速低频振荡器制作激光 → 由 Crystal 波表生成幽灵呼啸 → 组合正弦与白噪形成金属底色 → 以快速振荡和滤波制作连续气泡 → 加入合唱与和声 → 汇合动作声与冲击重音并重放",
+    "chapters": [
+      { "id": "bubble-core-shifting", "title": "气泡核心与频移", "question": "简单正弦怎样扩展成动漫气泡声？", "summary": "先用正弦与快速随机频率调制建立核心，再在 Phase Plant 中完成气泡素材；随后调节频移和反馈并做旁路比较，这一处理使用 Wave Shifter。", "stepOrders": [1, 2] },
+      { "id": "laser-spectral-branches", "title": "激光与幽灵分支", "question": "波表调制怎样分别形成激光和幽灵呼啸？", "summary": "经典激光采用随机波表、快速低频振荡器与滤波；幽灵分支改用 Crystal 波表，并叠加频移、瞬态和延迟处理。", "stepOrders": [3, 4] },
+      { "id": "metallic-sine-noise", "title": "正弦与白噪金属底色", "question": "金属音色的基础由哪些发生源组成？", "summary": "作者先播放正弦初始音色，再加入白噪、控制音量并送入后续滤波处理。", "stepOrders": [5] },
+      { "id": "bubble-melody-final", "title": "连续气泡与最终重放", "question": "气泡层怎样获得音高抖动、旋律并服务最终动作？", "summary": "快速音高往返与滤波形成悦耳气泡，合唱和和声再增加律动与旋律；最终以轻松活泼的现代动漫气质合并动作声并重放。", "stepOrders": [6, 7, 8] }
+    ]
+  },
+  "steps": [
+    { "order": 1, "learning": { "input": "简单正弦波与尚未形成气泡质地的合成音色。", "problem": "视频未单独说明处理前问题", "action": "作者先用正弦和快速随机频率调制建立气泡核心，再在 Phase Plant 中调整频移与滤波截止并制作素材。", "result": "正弦波产生一组很酷的动漫风格气泡声音。" } },
+    { "order": 2, "learning": { "input": "已有低频振荡器脉冲的动漫气泡音色。", "problem": "视频未单独说明处理前问题", "action": "作者先调节频移与反馈并比较旁路、启用状态，所用工具是 Wave Shifter。", "result": "启用状态呈现出更多气泡效果（bubbly effects）。" } },
+    { "order": 3, "learning": { "input": "原始文件与经典科幻激光（classic sci-fi laser）目标。", "problem": "视频未单独说明处理前问题", "action": "作者选择波表，用快速低频振荡器（LFO）调制，经过滤波并轻微移调，加入延迟和滤波表（filter table）。", "result": "这一分支形成短促的经典科幻激光。" } },
+    { "order": 4, "learning": { "input": "怪异音乐素材、Crystal 波表与幽灵般的呼啸目标。", "problem": "视频未单独说明处理前问题", "action": "作者随机设置参数，让快速 LFO 调制音高和频移，再加入压缩、瞬态塑形与延迟。", "result": "Crystal 音色形成幽灵呼啸和细小气泡色彩。" } },
+    { "order": 5, "learning": { "input": "含正弦波的初始音色与白噪来源。", "problem": "视频未单独说明处理前问题", "action": "作者加入白噪，控制音量，提高反馈音量，把声音送入滤波表。", "result": "正弦和白噪构成金属音色的基础。" } },
+    { "order": 6, "learning": { "input": "由快速振荡驱动的正弦合成声音。", "problem": "视频未单独说明处理前问题", "action": "作者用快速 LFO 驱动正弦波合成器（sine-wave synth）的音高往返，并控制滤波（filter）。", "result": "快速音高往返形成气泡式抖动，调整滤波后得到悦耳气泡声（bubble sound）。" } },
+    { "order": 7, "learning": { "input": "作者已完成的气泡层与另一层动作素材。", "problem": "作者说明组合还需要一层动态变化。", "action": "作者调大气泡层，以合唱处理增加运动、以和声处理增加旋律，后段补入呼啸与冲击。", "result": "气泡获得旋律感，动作组合也增加了动态层次。" } },
+    { "order": 8, "learning": { "input": "包含快速动作声和冲击重音的最终魔法组合。", "problem": "视频未单独说明处理前问题", "action": "作者按现代动漫的轻松活泼目标评估成品，并再次完整播放。", "result": "作者认为仍可改进，但对最终成果相当满意。" } }
+  ]
+}
