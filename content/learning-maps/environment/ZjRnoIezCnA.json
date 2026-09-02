@@ -1,0 +1,161 @@
+{
+  "videoId": "ZjRnoIezCnA",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "以真实气泡录音保留液体随机性，再补充谐波、低频和结晶尾部，最后录制正向与反向的溶解变体。",
+    "roles": [
+      {
+        "name": "气泡主体",
+        "description": "原始气泡录音提供液体破裂与随机起伏。"
+      },
+      {
+        "name": "谐波与低频",
+        "description": "Manipulator 扩展气泡的谐波和低端，使主体更厚。"
+      },
+      {
+        "name": "结晶尾部",
+        "description": "Crystallizer 为液体破裂增加结晶化尾音。"
+      },
+      {
+        "name": "溶解方向变体",
+        "description": "Transmutator 的正常与反向输出形成两种运动方向。"
+      }
+    ],
+    "decisions": [
+      "先保留真实气泡的物理随机性，再用处理扩展超现实尾部。",
+      "从 Crystallizer 输出中选取作者更喜欢的左声道，作为深坩埚气泡主体。",
+      "同时录制 Transmutator 的正常与反向结果，让同一素材获得两种溶解方向。"
+    ],
+    "sequence": "导入气泡录音 → Manipulator 补充谐波与低频 → Crystallizer 增加结晶尾部 → 选取左声道输出 → 筛选额外纹理 → Transmutator 形成倾泻运动 → 录制正常与反向变体",
+    "chapters": [
+      {
+        "id": "bubble-body",
+        "title": "气泡主体与结晶尾部",
+        "question": "真实气泡怎样获得更厚的主体和结晶化尾音？",
+        "summary": "作者先用 Manipulator 补充谐波和低频，再以 Crystallizer 添加尾音并选取左声道。",
+        "stepOrders": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "texture-search",
+        "title": "Crystallizer 左声道与额外效果试听",
+        "question": "Crystallizer 左声道确定后，作者怎样比较额外效果并进入方向变换？",
+        "summary": "作者从 Crystallizer 结果中选出像深邃坩埚气泡的左声道，试听未具名状态后再转入 Transmutator。",
+        "stepOrders": [
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "id": "dissolve-variants",
+        "title": "正反溶解变体",
+        "question": "一条处理链怎样产生相反方向的溶解动作？",
+        "summary": "Transmutator 提供倾泻式运动，开关对比后再用反向功能生成另一种输出。",
+        "stepOrders": [
+          8,
+          9,
+          10
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "作者此前录制的一段真实气泡声音。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者选用气泡录音作为溶解主题的起点。",
+        "result": "液体破裂与随机起伏成为后续变形的主体。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "气泡录音与打开的 Manipulator。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者打开 Manipulator 并开始使用。",
+        "result": "气泡录音进入 Manipulator 的第一层处理。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "Manipulator 中的气泡录音与随后打开的 Crystallizer。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者用 Manipulator 的谐波打散部分声音并补充低频细节，随后载入 Crystallizer 的 Crystal Builder 预设。",
+        "result": "处理从 Manipulator 接入 Crystal Builder 预设。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "Crystallizer 处理后的立体声输出。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者试听 Crystal Builder 并喜欢左声道，完成选择后从全局采样器拖出结果。",
+        "result": "Crystal Builder 的左声道成为下一步提取对象。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "一段选出的左声道坩埚气泡。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者选择这一段的左声道，称其像深邃的坩埚气泡，继而开始添加额外效果。",
+        "result": "这一段左声道气泡成为额外效果的输入。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "一段坩埚气泡与 Glitch Machines 的预设列表。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者对这一段依次试听几个未具名状态。",
+        "result": "这些状态只用于比较，作者没有说明单独保留哪一个。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "一段未具名状态的试听结果与下一项变换。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者结束这一段状态对比，接着对另一段试用变换工具。",
+        "result": "额外效果试听结束，下一段开始展示方向变换结果。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "气泡纹理与 Transmutator 中已经选定的输出。",
+        "problem": "坩埚内容需要形成向外倾泻并消散的运动。",
+        "action": "作者在 Transmutator 中试听已选输出。",
+        "result": "作者把 Transmutator 结果描述为坩埚内容倾泻后溶解。"
+      }
+    },
+    {
+      "order": 9,
+      "learning": {
+        "input": "Transmutator 处理前后的同一气泡片段。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者切换 Transmutator 开关进行前后对比。",
+        "result": "Transmutator 开启与关闭时的同一气泡依次播放。"
+      }
+    },
+    {
+      "order": 10,
+      "learning": {
+        "input": "Transmutator 的正常输出及反向开关。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者说明 Transmutator 开启后强度有所降低，随后切换 Transmutator 的反向功能并录制两种输出。",
+        "result": "作者把 Transmutator 的正反两个方向录制为素材库内容。"
+      }
+    }
+  ]
+}

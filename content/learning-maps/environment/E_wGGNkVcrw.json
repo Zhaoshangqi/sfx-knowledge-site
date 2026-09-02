@@ -1,0 +1,153 @@
+{
+  "videoId": "E_wGGNkVcrw",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "用噪声、双层移动共振和多频段延迟建立液体纹理，再以瞬态、频移、湿声弹簧发送和切片整理出鼓样、背景与冲击候选。",
+    "roles": [
+      {
+        "name": "可包络噪声源",
+        "description": "3x Osc 噪声提供连续而易塑形的合成输入。"
+      },
+      {
+        "name": "移动共振脉冲",
+        "description": "两级正向共振高通分别形成慢扫频带和更短的移动脉冲。"
+      },
+      {
+        "name": "频带时间地图",
+        "description": "Multiband Delay 让不同频带错开，再由形态（Morph）、缩放（Scale）与反馈（Feedback）持续变化。"
+      },
+      {
+        "name": "事件与变化",
+        "description": "瞬态阶段把混乱纹理收成可切片事件；延迟与频移作为附加变化层。"
+      },
+      {
+        "name": "湿声尾部与切片",
+        "description": "弹簧发送只保留湿声，长结果最终被筛选为多种用途片段。"
+      }
+    ],
+    "decisions": [
+      "先用双层共振把宽带噪声变成可辨认事件，再交给多频段延迟错开频带时间。",
+      "形态、缩放和反馈分开调制；出现不平滑伪影时增加平滑时间。",
+      "第二级延迟、频移和弹簧尾部只补充变化，最终价值由切片后的用途决定。"
+    ],
+    "sequence": "3x Osc 噪声 → 双共振高通 → Multiband Delay 频带错时 → 形态、缩放与反馈调制 → Transient Processor 约束边缘 → 第二个 Multiband Delay 与 Frequency Shifter 增加变化 → Fruity Convolver 湿声发送与 Pitch Shifter → 浏览长结果并切片",
+    "chapters": [
+      {
+        "id": "time-map-and-source",
+        "title": "频带时间地图与噪声源",
+        "question": "液体纹理的时间结构和输入从哪里开始？",
+        "summary": "作者先解释 Multiband Delay 的频带错时，再用 3x Osc 噪声和包络建立可控输入。",
+        "stepOrders": [
+          3,
+          1
+        ]
+      },
+      {
+        "id": "resonance-and-motion",
+        "title": "共振脉冲与动态时间图",
+        "question": "宽带噪声怎样变成持续变化的液体事件？",
+        "summary": "双层正向共振高通塑造慢扫与短脉冲，多频段延迟的形态、缩放和反馈再改变时间图。",
+        "stepOrders": [
+          2,
+          4
+        ]
+      },
+      {
+        "id": "edge-and-variation",
+        "title": "边缘控制与变化层",
+        "question": "混乱纹理怎样变得可切片又不失变化？",
+        "summary": "作者先重塑攻击和释放，再用第二个 Multiband Delay 与慢速负向频移扩展结果。",
+        "stepOrders": [
+          5,
+          6
+        ]
+      },
+      {
+        "id": "tail-and-harvest",
+        "title": "湿声尾部与用途切片",
+        "question": "长结果怎样补尾并整理成实际素材？",
+        "summary": "弹簧发送只保留湿声，最终长录音被浏览、标准化、淡出并切成鼓样、背景与冲击候选。",
+        "stepOrders": [
+          7,
+          8
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "3x Osc 的噪声波与可调包络。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者用 3x Osc 噪声作为声源，并建立攻击、保持、衰减、持续和释放包络。",
+        "result": "噪声成为可继续加入频谱运动的合成母材。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "噪声源与两个 Fruity Parametric EQ 2。",
+        "problem": "宽带噪声缺少可辨认的扫频和短促事件。",
+        "action": "作者让第一层正向共振高通慢扫，让第二层以更快运动产生短脉冲。",
+        "result": "双层共振把连续噪声塑造成移动频带与短促事件。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "输入信号与 Multiband Delay 的多个频带库。",
+        "problem": "液体运动需要让不同频带在时间上错开。",
+        "action": "作者把延迟库（delay bank）画成频带时间地图，选择线性相位（Linear Phase）。",
+        "result": "频带延迟形状成为后续流动变化的时间地图。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "Multiband Delay 的形态、缩放与反馈控制。",
+        "problem": "静态延迟地图缺少变化，过快切换还会产生伪影。",
+        "action": "作者分别调制三项控制，并通过增加平滑时间缓解伪影。",
+        "result": "频带时间地图可以连续变形、缩放并反馈。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "已经形成但较混乱的液体纹理与 Transient Processor。",
+        "problem": "连续纹理的事件边缘不够清楚，不利于后续切片。",
+        "action": "作者用瞬态处理重新约束攻击和释放形状。",
+        "result": "瞬态处理重塑可切片边缘后，液体纹理形成更清楚的短事件。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "核心液体链、第二个 Multiband Delay 与 Frequency Shifter。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者用第二级延迟改变高频坡道，并用慢速负向频移增加变化。",
+        "result": "第二级处理围绕核心脉冲增加变化。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "Fruity Convolver 弹簧发送与轻微 Pitch Shifter 尾部变化。",
+        "problem": "现有纹理还需要独立而可控的弹簧尾部。",
+        "action": "作者在发送轨关闭干声只留湿声，并轻微调制尾部音高。",
+        "result": "弹簧空间作为独立湿声尾部加入，不重复原始信号。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "效果链生成的长液体录音与时间线切片。",
+        "problem": "长结果需要整理成可直接使用的短素材。",
+        "action": "作者浏览录音，挑出片段后做标准化和淡出，并按鼓样、背景与冲击用途筛选。",
+        "result": "长纹理被整理成鼓样、背景与冲击候选素材。"
+      }
+    }
+  ]
+}

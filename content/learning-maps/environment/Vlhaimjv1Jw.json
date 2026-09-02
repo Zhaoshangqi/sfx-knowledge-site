@@ -1,0 +1,161 @@
+{
+  "videoId": "Vlhaimjv1Jw",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "把纸板（cardboard）刮擦通过移动共振、颗粒群和拉慢复制，整理成三种可收入素材库的外星纹理。",
+    "roles": [
+      {
+        "name": "纸板摩擦底料",
+        "description": "干燥刮擦提供连续而不规则的现实纹理。"
+      },
+      {
+        "name": "移动共振",
+        "description": "Morph EQ 的 Twin Peaks 与形态调制把摩擦转成移动共振。"
+      },
+      {
+        "name": "颗粒群变形",
+        "description": "颗粒群（Swarm granular）进一步模糊第一层的纸板身份。"
+      },
+      {
+        "name": "慢速外星层",
+        "description": "复制并拉慢第二层输出，获得更低沉的外星版本。"
+      }
+    ],
+    "decisions": [
+      "三段纸板都先经过移动共振，再按各自结果选择后续变形。",
+      "处理后的输出及时录回时间线，使第一层、第二层和第三层可以分别保留。",
+      "第二层复制拉慢，第三层扩大立体声，最后试听多个处理状态。"
+    ],
+    "sequence": "选择纸板刮擦 → Morph EQ 建立移动共振 → 第一层加入颗粒群并录回 → 第二层向低频调整并录回 → 复制拉慢第二层 → 第三层扩大立体声 → 试听 Transmutator 预设 → 汇总三种声音",
+    "chapters": [
+      {
+        "id": "first-layer",
+        "title": "第一层共振与颗粒群",
+        "question": "普通纸板刮擦怎样变成第一种外星纹理？",
+        "summary": "第一层纸板先加入 Morph EQ，再保留 Love 的颗粒群并录回素材库。",
+        "stepOrders": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "second-layer",
+        "title": "第二层低频与拉慢复制",
+        "question": "第二层怎样获得更低、更陌生的尺度？",
+        "summary": "第二层纸板的共振运动向低频调整，录制、复制并拉慢后整理成文件。",
+        "stepOrders": [
+          5,
+          6,
+          7
+        ]
+      },
+      {
+        "id": "third-layer",
+        "title": "第三层共振运动",
+        "question": "第三层共振运动怎样增加宽度并扩展处理版本？",
+        "summary": "第三层沿用共振运动并扩大立体声，作者随后试听 Transmutator 预设并汇总三种声音。",
+        "stepOrders": [
+          8,
+          9,
+          10
+        ]
+      }
+    ]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "learning": {
+        "input": "素材库中的纸板刮擦与零碎摩擦录音。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者选出纸板来源，准备制作三层共振纹理。",
+        "result": "干燥摩擦成为三种声音的共同底料。"
+      }
+    },
+    {
+      "order": 2,
+      "learning": {
+        "input": "三层纸板刮擦与 Morph EQ 的 Twin Peaks 预设。",
+        "problem": "纸板摩擦需要明显的共振运动。",
+        "action": "作者为每层加入 Morph EQ，并给形态参数添加调制。",
+        "result": "移动共振成为三层共享的第一次变形。"
+      }
+    },
+    {
+      "order": 3,
+      "learning": {
+        "input": "第一层 Morph EQ 输出与打开的 Love。",
+        "problem": "第一层还需要更密集的颗粒变化。",
+        "action": "作者录制第一层输出，只保留 Love 的颗粒群处理并做开关对比。",
+        "result": "第一层形成颗粒化的连续纹理。"
+      }
+    },
+    {
+      "order": 4,
+      "learning": {
+        "input": "完成颗粒群处理的第一层纸板运动纹理。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者播放并录制纸板运动的颗粒结果，把输出放入素材库。",
+        "result": "第一种纸板运动变形作为独立素材保存。"
+      }
+    },
+    {
+      "order": 5,
+      "learning": {
+        "input": "第二层纸板与向低频调整的 Morph EQ。",
+        "problem": "第二层需要与第一层形成更低的频谱角色。",
+        "action": "作者调整共振运动的位置，比较开关状态并录制输出。",
+        "result": "第二层获得更低的共振运动版本。"
+      }
+    },
+    {
+      "order": 6,
+      "learning": {
+        "input": "第二层运动输出及其复制片段。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者复制该层运动片段并降低播放速率。",
+        "result": "拉慢后的运动版本被作者评价为外星纹理。"
+      }
+    },
+    {
+      "order": 7,
+      "learning": {
+        "input": "拉慢后的第二层外星运动纹理。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者录制这段运动输出，整理成最终文件。",
+        "result": "第二种外星运动纹理完成保存。"
+      }
+    },
+    {
+      "order": 8,
+      "learning": {
+        "input": "第三层纸板与再次使用的共振运动。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者沿用共振运动，扩大立体声范围并录制结果。",
+        "result": "第三层获得更宽的纸板共振运动纹理。"
+      }
+    },
+    {
+      "order": 9,
+      "learning": {
+        "input": "第三层录制结果与打开的 Transmutator。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者在 Transmutator 中依次试听 Frozen 与其他未具名状态，没有连接侧链。",
+        "result": "这些 Transmutator 版本仅作比较，作者没有说明单独保留哪一个。"
+      }
+    },
+    {
+      "order": 10,
+      "learning": {
+        "input": "第三层与 Transmutator 的 Shift 预设。",
+        "problem": "视频未单独说明处理前问题",
+        "action": "作者在 Transmutator 中试听 Shift，汇总三种纸板共振声音。",
+        "result": "Transmutator 试听结束后，三种怪异纹理作为独立素材保留。"
+      }
+    }
+  ]
+}
