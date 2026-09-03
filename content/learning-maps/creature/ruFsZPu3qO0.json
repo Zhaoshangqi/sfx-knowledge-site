@@ -1,0 +1,37 @@
+{
+  "videoId": "ruFsZPu3qO0",
+  "reviewed": true,
+  "reviewedAt": "2026-09-01",
+  "learningMap": {
+    "version": 1,
+    "goal": "把狗叫、低吼与呼吸整理成怪物发声，先降低谐波获得更凶猛的低吼质地，再用后续整体降调改变生物体型。",
+    "roles": [
+      { "name": "低吼主体", "description": "狗的低吼构成怪物发声的主要喉咙质地。" },
+      { "name": "呼吸纹理", "description": "狗的呼吸声保留生物发声中的气流成分。" },
+      { "name": "发声变体", "description": "狗叫片段补充低吼之外的短促发声变化。" }
+    ],
+    "decisions": [
+      "整段只采用狗叫、低吼和呼吸，保持素材选择简单。",
+      "先在 Polyverse Manipulator 中降低谐波并做小幅调整，以更凶猛为处理方向。",
+      "最后降低整体音调，让声音从小狗尺度转向咆哮的大型怪物。"
+    ],
+    "sequence": "选择狗叫、低吼与呼吸 → 用 Polyverse Manipulator 降低谐波并微调 → 获得更凶猛、更低沉的低吼质地 → 后续整体降调形成大型怪物咆哮",
+    "chapters": [
+      { "id": "hairy-dog-sources", "title": "低吼与狗声来源", "question": "简单素材怎样覆盖这次毛茸茸主题？", "summary": "开场确定毛茸茸主题，随后把狗叫、低吼和呼吸列为全部声音来源。", "stepOrders": [1, 3, 2] },
+      { "id": "harmonic-growl-shaping", "title": "谐波降低与试听", "question": "降低谐波和微调怎样应用于相邻狗声片段？", "summary": "降低谐波并微调后，Polyverse Manipulator 在另一狗声片段保持同一状态，后续试听才出现更低沉的低吼质地。", "stepOrders": [4, 5, 6] },
+      { "id": "large-monster-pitch", "title": "大型怪物体型", "question": "小狗尺度怎样转成大型怪物咆哮？", "summary": "整体降调后，作者在连续位置比较并播放大型怪物版本，最后将其作为第 18 天成果展示。", "stepOrders": [7, 8, 10, 9] }
+    ]
+  },
+  "steps": [
+    { "order": 1, "learning": { "input": "Noise November Day 18 的毛茸茸（Hairy）主题。", "problem": "视频未单独说明处理前问题", "action": "作者介绍第 18 天（Day 18）的 Hairy 主题。", "result": "Day 18 开场确定了毛茸茸主题和简化方向。" } },
+    { "order": 2, "learning": { "input": "犬类动物的狗叫、低吼与呼吸录音。", "problem": "视频未单独说明处理前问题", "action": "作者依次播放并列出这三类动物录音。", "result": "当前动物素材由狗叫、低吼和呼吸构成。" } },
+    { "order": 3, "learning": { "input": "画面中的狗声轨与简单素材。", "problem": "视频未单独说明处理前问题", "action": "时间线画面在另一位置继续显示同一开场。", "result": "这一素材说明在另一时间线位置继续呈现。" } },
+    { "order": 4, "learning": { "input": "Polyverse Manipulator 中的狗低吼与呼吸素材。", "problem": "视频未单独说明处理前问题", "action": "作者以更凶猛为目标，先降低谐波并略作微调，使用 Polyverse Manipulator 完成处理。", "result": "这一处只完成谐波降低与小幅调整。" } },
+    { "order": 5, "learning": { "input": "另一段狗低吼与呼吸素材。", "problem": "视频未单独说明处理前问题", "action": "相邻显示位置保持 Polyverse Manipulator 的同一谐波处理状态。", "result": "同一处理在另一个发声片段位置呈现。" } },
+    { "order": 6, "learning": { "input": "已经过谐波调整的狗低吼材质。", "problem": "视频未单独说明处理前问题", "action": "作者播放这段材质的后半段。", "result": "作者称该材质更低沉，低吼质地也更明显。" } },
+    { "order": 7, "learning": { "input": "尚未形成大型怪物身体感的狗声。", "problem": "现有声音仍像较小的狗，未形成大型怪物体型。", "action": "作者通过降调扩大声音的身体感并试听。", "result": "声音获得大型怪物（monster）的咆哮身体感，不再像小狗。" } },
+    { "order": 8, "learning": { "input": "正在降低音高（pitch）的狗声版本。", "problem": "视频未单独说明处理前问题", "action": "作者在视频的相邻位置继续试听前述音高调整与体型对比。", "result": "视频在这一位置继续呈现大型怪物咆哮。" } },
+    { "order": 9, "learning": { "input": "已经完成体型调整的怪物声变体。", "problem": "视频未单独说明处理前问题", "action": "作者播放这个怪物变体并结束本次展示。", "result": "该变体被确认为第 18 天的完成版本。" } },
+    { "order": 10, "learning": { "input": "同一降调结果出现在后段画面。", "problem": "视频未单独说明处理前问题", "action": "后一个画面位置继续播放这段降调结果。", "result": "画面在此继续呈现大型怪物咆哮。" } }
+  ]
+}
