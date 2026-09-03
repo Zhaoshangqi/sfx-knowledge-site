@@ -406,8 +406,9 @@
     .effect-profile-result {
       display: grid;
       gap: 2px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--line);
+      margin-top: 1px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
     }
     .effect-profile-result strong {
       color: var(--teal);
@@ -50141,12 +50142,14 @@
         profile?.name,
         profile?.input,
         profile?.problem,
-        profile?.action,
-        profile?.result,
-        profile?.limitations
+        profile?.result
       ];
       if (visibleValues.some((value) => String(value ?? "").toLowerCase().includes(needle))) return "";
-      return effectProfileSupportingValues(profile).find((value) => value.toLowerCase().includes(needle)) || "";
+      const hiddenValues = [profile?.action, profile?.limitations]
+        .concat(effectProfileSupportingValues(profile))
+        .map((value) => String(value ?? "").trim())
+        .filter(Boolean);
+      return hiddenValues.find((value) => value.toLowerCase().includes(needle)) || "";
     }
 
     function clearEffectFilters() {
@@ -50291,9 +50294,9 @@
           '<span class="effect-profile-shot"><img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(profile.name + " 效果器截图") + '" loading="lazy" decoding="async"><span class="effect-profile-shot-kind">' + visualLabel + '</span></span>' +
           '<span class="effect-profile-body"><strong class="effect-profile-title">' + highlightSearchText(profile.name, query) + '</strong>' +
             '<span class="effect-profile-facts">' +
-              '<span class="effect-profile-result"><strong>听感结果</strong><span>' + highlightSearchText(profile.result, query) + '</span></span>' +
               '<span class="effect-profile-fact"><strong>适用输入</strong><span>' + highlightSearchText(profile.input, query) + '</span></span>' +
-              '<span class="effect-profile-fact"><strong>处理动作</strong><span>' + highlightSearchText(profile.action, query) + '</span></span>' +
+              '<span class="effect-profile-fact"><strong>解决问题</strong><span>' + highlightSearchText(profile.problem, query) + '</span></span>' +
+              '<span class="effect-profile-fact effect-profile-result"><strong>得到结果</strong><span>' + highlightSearchText(profile.result, query) + '</span></span>' +
             '</span>' +
             matchHintHtml +
             '<span class="effect-profile-meta">' + profile.sourceCount + ' 个视频案例 · ' + profile.useCount + ' 条用法</span>' +

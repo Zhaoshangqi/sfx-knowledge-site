@@ -1432,7 +1432,8 @@ test('explains supporting-only search matches without duplicating visible matche
   assert.equal(context.effectProfileMatchHint(profile, 'texture'), 'Granular texture walkthrough');
   assert.equal(context.effectProfileMatchHint(profile, 'focused'), '');
   assert.equal(context.effectProfileMatchHint(profile, 'needs'), '');
-  assert.equal(context.effectProfileMatchHint(profile, 'this layer'), '');
+  assert.equal(context.effectProfileMatchHint(profile, 'shape'), 'Shape the attack');
+  assert.equal(context.effectProfileMatchHint(profile, 'this layer'), 'Only for this layer');
   assert.equal(context.effectProfileMatchHint(profile, ''), '');
   assert.equal(context.effectProfileMatchHint({
     ...profile,
@@ -1569,13 +1570,15 @@ test('renders ordered goal counts and combines source, goal, and query filters',
   assert.equal(context.rawUseProjectionCalls, 0, 'published counters must not project hidden raw uses');
 });
 
-test('renders result-first cards and explains supporting-only matches', () => {
+test('renders compact learning-order cards and explains hidden searchable matches', () => {
   const profile = {
     id: 'pro-q',
     name: 'FabFilter Pro-Q 3',
     input: 'Harsh resonance',
+    problem: 'The source lacks a stable tonal focus',
     action: 'Cut narrow bands',
     result: 'Cleaner focused tone',
+    limitations: 'Only for the current one-shot',
     sourceCount: 1,
     useCount: 2,
     uses: [{ source: '来源 A', sourceTitle: 'Dragon spell design' }],
@@ -1603,15 +1606,24 @@ test('renders result-first cards and explains supporting-only matches', () => {
 
   renderEffectLibrary();
   const markup = context.effectListEl.innerHTML;
-  const resultIndex = markup.indexOf('听感结果');
   const inputIndex = markup.indexOf('适用输入');
-  const actionIndex = markup.indexOf('处理动作');
-  assert.ok(resultIndex > 0 && resultIndex < inputIndex && inputIndex < actionIndex);
-  [profile.name, profile.result, profile.input, profile.action].forEach((value) => {
+  const problemIndex = markup.indexOf('解决问题');
+  const resultIndex = markup.indexOf('得到结果');
+  const metaIndex = markup.indexOf('1 个视频案例 · 2 条用法');
+  assert.ok(inputIndex > 0 && inputIndex < problemIndex && problemIndex < resultIndex && resultIndex < metaIndex);
+  [profile.name, profile.input, profile.problem, profile.result].forEach((value) => {
     assert.ok(markup.includes(value), `missing visible guide value ${value}`);
   });
+  assert.doesNotMatch(markup, /处理动作|Cut narrow bands|适用边界|Only for the current one-shot/);
+  assert.equal((markup.match(/<button\b/g) || []).length, 1, 'effect card must not contain nested buttons');
+  assert.doesNotMatch(markup, /class="(?:[^"]*\s)?card(?:\s[^"]*)?"/, 'effect card must not contain a nested card');
   assert.match(markup, /class="effect-profile-match"[\s\S]*?<strong>搜索命中<\/strong>[\s\S]*?<mark class="search-hit">Dragon<\/mark> spell design/);
   assert.doesNotMatch(markup, /legacy suitable|legacy purpose|legacy outcome|Frequency 2 kHz|参数/);
+
+  context.state.effectQuery = 'narrow';
+  renderEffectLibrary();
+  assert.match(context.effectListEl.innerHTML, /class="effect-profile-match"[\s\S]*?Cut <mark class="search-hit">narrow<\/mark> bands/);
+  assert.doesNotMatch(context.effectListEl.innerHTML, /处理动作/);
 
   context.state.effectQuery = 'focused';
   renderEffectLibrary();
@@ -2122,6 +2134,9 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
     assert.ok(evidenceUse, `${profile.name} evidence use`);
     assert.equal(evidenceUse.screenshotReviewed, true, `${profile.name} reviewed evidence screenshot`);
     assert.ok(evidenceUse.screenshotKey, `${profile.name} evidence screenshot key`);
+    assert.equal(profile.visuals[0]?.kind, 'video', `${profile.name} primary visual kind`);
+    assert.equal(profile.visuals[0]?.useId, profile.evidenceUseId, `${profile.name} primary evidence use`);
+    assert.equal(profile.visuals[0]?.imageKey, evidenceUse.screenshotKey, `${profile.name} primary screenshot key`);
     const evidenceVisual = profile.visuals.find((visual) => (
       visual.kind === 'video' && visual.useId === profile.evidenceUseId
     ));
@@ -2935,25 +2950,30 @@ test('effect profile cards open aggregated uses and can return to a timed video 
   assert.deepEqual(plainValue(navigation.tabNavigation('effects', 'Home')), { mode: 'videos', focusMode: 'videos' });
 });
 
-test('all public effect render surfaces use only the three evidence fields', () => {
+test('public effect surfaces use only their approved evidence fields', () => {
   const renderSources = {
     card: sourceSlice('function renderEffectLibrary() {', 'function renderTabs() {'),
     videoSummary: sourceSlice('function renderEffectUseSummary(record, use) {', 'function renderVideoGlossary(record, track) {'),
     detail: sourceSlice('function sourceStepForEffectUse(use) {', 'function openLightbox(src, caption) {')
   };
-  const approvedFields = ['input', 'action', 'result'];
+  const approvedFields = {
+    card: ['input', 'problem', 'result'],
+    videoSummary: ['input', 'action', 'result'],
+    detail: ['input', 'action', 'result']
+  };
   const legacyProfileFields = /profile\.(?:suitable|purpose|outcome|limitation)/;
 
   Object.entries(renderSources).forEach(([surface, source]) => {
-    approvedFields.forEach((field) => {
+    approvedFields[surface].forEach((field) => {
       assert.match(source, new RegExp(`profile\\.${field}`), `${surface} missing profile.${field}`);
     });
     assert.doesNotMatch(source, legacyProfileFields, `${surface} uses a legacy profile field`);
   });
 
-  ['听感结果', '适用输入', '处理动作'].forEach((label) => {
+  ['适用输入', '解决问题', '得到结果'].forEach((label) => {
     assert.ok(renderSources.card.includes(label), `card missing ${label}`);
   });
+  assert.doesNotMatch(renderSources.card, /profile\.action|profile\.limitations|处理动作|适用边界/);
   ['输入素材', '处理动作', '听感变化'].forEach((label) => {
     assert.ok(renderSources.videoSummary.includes(label), `videoSummary missing ${label}`);
   });
