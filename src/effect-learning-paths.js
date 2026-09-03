@@ -24,9 +24,9 @@
   var goalsByName = Object.freeze({
     'dawesome love': Object.freeze(['granular-transform']),
     'fabfilter pro-mb': Object.freeze(['cleanup-control', 'impact-density']),
-    'fabfilter pro-q 3': Object.freeze(['cleanup-control', 'pitch-tone']),
+    'fabfilter pro-q 3': Object.freeze(['pitch-tone']),
     'fabfilter saturn 2': Object.freeze(['impact-density', 'granular-transform']),
-    'izotope rx de-click': Object.freeze(['cleanup-control']),
+    'izotope rx de-click': Object.freeze(['granular-transform']),
     'izotope stutter edit 2': Object.freeze(['motion-rhythm', 'granular-transform']),
     'kilohearts phase plant': Object.freeze(['pitch-tone', 'motion-rhythm']),
     'kilohearts snap heap': Object.freeze(['space-tail', 'motion-rhythm']),

@@ -64,8 +64,10 @@ const permissiveEffectGuides = {
       canonicalName: name,
       evidenceUseId: evidenceUse.id,
       input: '明确的输入素材',
+      problem: '明确的处理前问题',
       action: '明确的处理动作',
-      result: '明确的听感变化'
+      result: '明确的听感变化',
+      limitations: '明确的适用边界'
     } : null;
   }
 };
@@ -1343,8 +1345,10 @@ test('effect profile search uses evidence fields and supporting case text', () =
     name: '测试效果器',
     category: '动态',
     input: '单薄输入素材',
+    problem: '输入缺少运动层次',
     action: '切片并扩散',
     result: '形成漂移纹理',
+    limitations: '只用于当前颗粒层',
     suitable: '旧适用字段',
     purpose: '旧作用字段',
     outcome: '旧结果字段',
@@ -1363,8 +1367,10 @@ test('effect profile search uses evidence fields and supporting case text', () =
   [
     '测试效果器',
     '单薄输入素材',
+    '输入缺少运动层次',
     '切片并扩散',
     '形成漂移纹理',
+    '只用于当前颗粒层',
     '案例处理对象',
     '案例用途文本',
     '案例结果文本',
@@ -1409,8 +1415,10 @@ test('explains supporting-only search matches without duplicating visible matche
   const profile = {
     name: 'Visible Effect',
     input: 'Clean input',
+    problem: 'Needs more focus',
     action: 'Shape the attack',
     result: 'Focused result',
+    limitations: 'Only for this layer',
     uses: [{
       sourceTitle: 'Granular texture walkthrough',
       source: 'Creator Channel',
@@ -1423,6 +1431,8 @@ test('explains supporting-only search matches without duplicating visible matche
 
   assert.equal(context.effectProfileMatchHint(profile, 'texture'), 'Granular texture walkthrough');
   assert.equal(context.effectProfileMatchHint(profile, 'focused'), '');
+  assert.equal(context.effectProfileMatchHint(profile, 'needs'), '');
+  assert.equal(context.effectProfileMatchHint(profile, 'this layer'), '');
   assert.equal(context.effectProfileMatchHint(profile, ''), '');
   assert.equal(context.effectProfileMatchHint({
     ...profile,
@@ -1440,15 +1450,17 @@ test('filters parameter instructions and extended placeholders from every suppor
   const profile = {
     name: 'Visible Effect',
     input: 'Clean input',
+    problem: 'Needs more focus',
     action: 'Shape the sound',
     result: 'Focused result',
+    limitations: 'Only for this layer',
     uses: [{
       sourceTitle: 'Attack 设置为 12 ms',
       source: 'Sound Design Archive',
-      sourceKeywords: ['Threshold 6 dB', 'granular texture', '未记录输入'],
-      target: '',
-      purpose: '',
-      result: ''
+      sourceKeywords: ['Threshold 6 dB', 'granular texture', '未记录输入', '反馈开到最大'],
+      target: '湿度调高',
+      purpose: '全湿处理',
+      result: '设为一半'
     }]
   };
   const searchable = loadNamedFunction(
@@ -1461,7 +1473,7 @@ test('filters parameter instructions and extended placeholders from every suppor
     plainValue(context.effectProfileSupportingValues(profile)),
     ['Sound Design Archive', 'granular texture']
   );
-  ['12 ms', '6 dB', '未记录输入'].forEach((query) => {
+  ['12 ms', '6 dB', '未记录输入', '反馈开到最大', '湿度调高', '全湿处理', '设为一半'].forEach((query) => {
     assert.equal(context.effectProfileMatchHint(profile, query), '', query);
     assert.ok(!searchable(profile).includes(query.toLowerCase()), query);
   });
@@ -1504,7 +1516,7 @@ test('renders ordered goal counts and combines source, goal, and query filters',
   }));
   const context = {
     SfxEffectLearningPaths,
-    state: { effectSource: '来源 A', effectGoal: 'cleanup-control', effectQuery: 'resonance' },
+    state: { effectSource: '来源 A', effectGoal: 'pitch-tone', effectQuery: 'resonance' },
     effectUses: Array.from({ length: 99 }, (_, index) => ({ id: `raw-use-${index}` })),
     records: [],
     pluginReferenceCatalog: [],
@@ -1535,10 +1547,10 @@ test('renders ordered goal counts and combines source, goal, and query filters',
     Array.from(context.effectGoalsEl.innerHTML.matchAll(/<button[\s\S]*?<\/button>/g), (match) => match[0]),
     [
       '<button class="goal-tab" type="button" data-effect-goal="all" aria-pressed="false">全部<span>3</span></button>',
-      '<button class="goal-tab active" type="button" data-effect-goal="cleanup-control" aria-pressed="true">清理与控制<span>2</span></button>',
+      '<button class="goal-tab" type="button" data-effect-goal="cleanup-control" aria-pressed="false">清理与控制<span>1</span></button>',
       '<button class="goal-tab" type="button" data-effect-goal="impact-density" aria-pressed="false">冲击与密度<span>1</span></button>',
       '<button class="goal-tab" type="button" data-effect-goal="motion-rhythm" aria-pressed="false">运动与节奏<span>0</span></button>',
-      '<button class="goal-tab" type="button" data-effect-goal="pitch-tone" aria-pressed="false">音高与音色<span>1</span></button>',
+      '<button class="goal-tab active" type="button" data-effect-goal="pitch-tone" aria-pressed="true">音高与音色<span>1</span></button>',
       '<button class="goal-tab" type="button" data-effect-goal="space-tail" aria-pressed="false">空间与尾部<span>1</span></button>',
       '<button class="goal-tab" type="button" data-effect-goal="granular-transform" aria-pressed="false">颗粒与变形<span>1</span></button>'
     ]
@@ -1688,6 +1700,7 @@ test('missing guides hide profiles even when an exact official image is availabl
     id: 'use-1',
     name: 'Test Effect',
     category: 'dynamic',
+    screenshotReviewed: true,
     screenshotKey: 'test-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1'
@@ -1708,11 +1721,12 @@ test('missing guides hide profiles even when an exact official image is availabl
   assert.equal(effectIndexData.profileForUse(use, [use], testRecords, catalog, manifest), null);
 });
 
-test('effect profiles require guide input, action, and result', async (t) => {
+test('effect profiles require guide input, problem, action, result, and limitations', async (t) => {
   const use = {
     id: 'use-1',
     name: 'Test Effect',
     category: 'dynamic',
+    screenshotReviewed: true,
     screenshotKey: 'test-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1'
@@ -1727,11 +1741,13 @@ test('effect profiles require guide input, action, and result', async (t) => {
     canonicalName: 'Test Effect',
     evidenceUseId: 'use-1',
     input: '单薄的测试冲击素材',
+    problem: '起音松散且持续段过长',
     action: '重塑起音并收紧持续段',
-    result: '起音更集中，尾部更短'
+    result: '起音更集中，尾部更短',
+    limitations: '只说明当前测试冲击素材'
   };
 
-  for (const field of ['input', 'action', 'result']) {
+  for (const field of ['input', 'problem', 'action', 'result', 'limitations']) {
     await t.test(`missing ${field}`, () => {
       const guide = { ...completeGuide };
       delete guide[field];
@@ -1742,6 +1758,91 @@ test('effect profiles require guide input, action, and result', async (t) => {
   }
 });
 
+test('effect profiles reject a guide whose canonical name differs from the strict group', () => {
+  const effectIndexData = loadEffectIndexData({
+    guideFor() {
+      return {
+        canonicalName: 'Different Effect',
+        evidenceUseId: 'use-1',
+        input: '单薄的测试冲击素材',
+        problem: '起音松散且持续段过长',
+        action: '重塑起音并收紧持续段',
+        result: '起音更集中，尾部更短',
+        limitations: '只说明当前测试冲击素材'
+      };
+    }
+  });
+  const use = {
+    id: 'use-1',
+    name: 'Test Effect',
+    screenshotReviewed: true,
+    screenshotKey: 'test-shot',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1'
+  };
+  const testRecords = [{
+    id: 'record-1',
+    title: 'Video 1',
+    steps: [{ order: 1, name: 'Test Effect shaping', imageKey: 'test-shot' }]
+  }];
+  const manifest = { 'test-shot': { preview: 'test-preview.webp', full: 'test-full.webp' } };
+
+  assert.equal(effectIndexData.profileForUse(use, [use], testRecords, [], manifest), null);
+});
+
+test('effect profiles require the evidence use to own an exact reviewed screenshot', async (t) => {
+  const baseUse = {
+    id: 'use-1',
+    name: 'Test Effect',
+    screenshotReviewed: true,
+    screenshotKey: 'test-shot',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1'
+  };
+  const testRecords = [{
+    id: 'record-1',
+    title: 'Video 1',
+    steps: [{ order: 1, name: 'Test Effect shaping', imageKey: 'test-shot' }]
+  }];
+  const manifest = { 'test-shot': { preview: 'test-preview.webp', full: 'test-full.webp' } };
+  const effectIndexData = loadEffectIndexData();
+
+  assert.ok(effectIndexData.profileForUse(baseUse, [baseUse], testRecords, [], manifest));
+
+  for (const [label, patch] of [
+    ['missing review', { screenshotReviewed: undefined }],
+    ['rejected review', { screenshotReviewed: false }],
+    ['missing key', { screenshotKey: '' }]
+  ]) {
+    await t.test(label, () => {
+      const use = { ...baseUse, ...patch };
+      assert.equal(effectIndexData.profileForUse(use, [use], testRecords, [], manifest), null);
+    });
+  }
+});
+
+test('effect profiles never replace a missing declared screenshot with another matching step', () => {
+  const effectIndexData = loadEffectIndexData();
+  const use = {
+    id: 'use-1',
+    name: 'Test Effect',
+    screenshotReviewed: true,
+    screenshotKey: 'missing-declared-shot',
+    sourceRecordId: 'record-1',
+    sourceTitle: 'Video 1'
+  };
+  const testRecords = [{
+    id: 'record-1',
+    title: 'Video 1',
+    steps: [{ order: 1, name: 'Test Effect alternate view', imageKey: 'matching-fallback-shot' }]
+  }];
+  const manifest = {
+    'matching-fallback-shot': { preview: 'fallback-preview.webp', full: 'fallback-full.webp' }
+  };
+
+  assert.equal(effectIndexData.profileForUse(use, [use], testRecords, [], manifest), null);
+});
+
 test('effect profiles require the guide evidence use to exist in the grouped uses', () => {
   const effectIndexData = loadEffectIndexData({
     guideFor() {
@@ -1749,14 +1850,17 @@ test('effect profiles require the guide evidence use to exist in the grouped use
         canonicalName: 'Test Effect',
         evidenceUseId: 'missing-use',
         input: '单薄的测试冲击素材',
+        problem: '起音松散且持续段过长',
         action: '重塑起音并收紧持续段',
-        result: '起音更集中，尾部更短'
+        result: '起音更集中，尾部更短',
+        limitations: '只说明当前测试冲击素材'
       };
     }
   });
   const use = {
     id: 'use-1',
     name: 'Test Effect',
+    screenshotReviewed: true,
     screenshotKey: 'test-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1'
@@ -1778,14 +1882,17 @@ test('duplicate evidence use ids in one canonical group fail closed', () => {
         canonicalName: 'Test Effect',
         evidenceUseId: 'shared-use',
         input: '单薄的测试冲击素材',
+        problem: '起音松散且持续段过长',
         action: '重塑起音并收紧持续段',
-        result: '起音更集中，尾部更短'
+        result: '起音更集中，尾部更短',
+        limitations: '只说明当前测试冲击素材'
       };
     }
   });
   const uses = [1, 2].map((number) => ({
     id: 'shared-use',
     name: 'Test Effect',
+    screenshotReviewed: true,
     screenshotKey: `test-shot-${number}`,
     sourceRecordId: `record-${number}`,
     sourceTitle: `Video ${number}`
@@ -1810,8 +1917,10 @@ test('duplicate evidence use ids across canonical groups hide both profiles', ()
         canonicalName: name,
         evidenceUseId: 'shared-use',
         input: '单薄的测试冲击素材',
+        problem: '起音松散且持续段过长',
         action: '重塑起音并收紧持续段',
-        result: '起音更集中，尾部更短'
+        result: '起音更集中，尾部更短',
+        limitations: '只说明当前测试冲击素材'
       };
     }
   });
@@ -1819,6 +1928,7 @@ test('duplicate evidence use ids across canonical groups hide both profiles', ()
     {
       id: 'shared-use',
       name: 'Alpha FX',
+      screenshotReviewed: true,
       screenshotKey: 'alpha-shot',
       sourceRecordId: 'record-alpha',
       sourceTitle: 'Alpha Video'
@@ -1826,6 +1936,7 @@ test('duplicate evidence use ids across canonical groups hide both profiles', ()
     {
       id: 'shared-use',
       name: 'Beta FX',
+      screenshotReviewed: true,
       screenshotKey: 'beta-shot',
       sourceRecordId: 'record-beta',
       sourceTitle: 'Beta Video'
@@ -1858,8 +1969,10 @@ test('official-only profiles stay hidden without a strict evidence video screens
         canonicalName: 'Test Effect',
         evidenceUseId: 'use-1',
         input: '单薄的测试冲击素材',
+        problem: '起音松散且持续段过长',
         action: '重塑起音并收紧持续段',
-        result: '起音更集中，尾部更短'
+        result: '起音更集中，尾部更短',
+        limitations: '只说明当前测试冲击素材'
       };
     }
   });
@@ -1887,8 +2000,10 @@ test('complete guides publish only evidence-led copy with the evidence video fir
         canonicalName: 'Test Effect',
         evidenceUseId: 'use-3',
         input: '单薄的测试冲击素材',
+        problem: '起音松散且持续段过长',
         action: '重塑起音并收紧持续段',
-        result: '起音更集中，尾部更短'
+        result: '起音更集中，尾部更短',
+        limitations: '只说明当前测试冲击素材'
       };
     }
   };
@@ -1898,6 +2013,7 @@ test('complete guides publish only evidence-led copy with the evidence video fir
     name: 'Test Effect',
     category: 'dynamic',
     screenshotKey: `shot-${number}`,
+    screenshotReviewed: true,
     sourceRecordId: `record-${number}`,
     sourceTitle: `Video ${number}`,
     source: 'Test',
@@ -1926,8 +2042,10 @@ test('complete guides publish only evidence-led copy with the evidence video fir
   assert.equal(profile.id, guides.guideFor().evidenceUseId);
   assert.equal(profile.evidenceUseId, guides.guideFor().evidenceUseId);
   assert.equal(profile.input, guides.guideFor().input);
+  assert.equal(profile.problem, guides.guideFor().problem);
   assert.equal(profile.action, guides.guideFor().action);
   assert.equal(profile.result, guides.guideFor().result);
+  assert.equal(profile.limitations, guides.guideFor().limitations);
   ['suitable', 'purpose', 'outcome', 'limitation'].forEach((field) => {
     assert.equal(Object.prototype.hasOwnProperty.call(profile, field), false, field);
   });
@@ -1980,33 +2098,40 @@ test('publishes only the 27 curated profiles with their evidence screenshots', (
     })),
     [
       { id: 'all', count: 27 },
-      { id: 'cleanup-control', count: 8 },
+      { id: 'cleanup-control', count: 6 },
       { id: 'impact-density', count: 8 },
       { id: 'motion-rhythm', count: 10 },
       { id: 'pitch-tone', count: 9 },
       { id: 'space-tail', count: 7 },
-      { id: 'granular-transform', count: 5 }
+      { id: 'granular-transform', count: 6 }
     ]
   );
 
   profiles.forEach((profile) => {
     const guide = SfxEffectGuides.guideFor(profile.name);
     assert.ok(guide, profile.name);
+    assert.equal(profile.name, guide.canonicalName);
     assert.equal(profile.evidenceUseId, guide.evidenceUseId);
     assert.equal(profile.input, guide.input);
+    assert.equal(profile.problem, guide.problem);
     assert.equal(profile.action, guide.action);
     assert.equal(profile.result, guide.result);
+    assert.equal(profile.limitations, guide.limitations);
     assert.equal(profile.uses.filter((use) => use.id === profile.evidenceUseId).length, 1);
     const evidenceUse = profile.uses.find((use) => use.id === profile.evidenceUseId);
     assert.ok(evidenceUse, `${profile.name} evidence use`);
+    assert.equal(evidenceUse.screenshotReviewed, true, `${profile.name} reviewed evidence screenshot`);
+    assert.ok(evidenceUse.screenshotKey, `${profile.name} evidence screenshot key`);
     const evidenceVisual = profile.visuals.find((visual) => (
       visual.kind === 'video' && visual.useId === profile.evidenceUseId
     ));
     assert.ok(evidenceVisual, `${profile.name} evidence screenshot`);
+    assert.equal(evidenceVisual.imageKey, evidenceUse.screenshotKey, `${profile.name} exact evidence screenshot`);
     assert.equal(evidenceVisual.sourceRecordId, evidenceUse.sourceRecordId, `${profile.name} evidence source record`);
 
     const sourceRecord = siteRecordsById.get(evidenceUse.sourceRecordId);
     assert.ok(sourceRecord, `${profile.name} source record`);
+    assert.ok(sourceRecord.timeline?.reviewedAt, `${profile.name} reviewed source timeline`);
     assert.ok(evidenceVisual.imageKey, `${profile.name} evidence image key`);
     assert.ok(Array.isArray(sourceRecord.steps) && sourceRecord.steps.some((step) => (
       step.imageKey === evidenceVisual.imageKey
@@ -2313,6 +2438,8 @@ test('single-product titles may mention internal controls with separators', () =
     id: 'shade-use',
     name: 'UVI Shade',
     category: 'modulation',
+    screenshotReviewed: true,
+    screenshotKey: 'shade-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1',
     legacy: true
@@ -2475,6 +2602,7 @@ test('explicit screenshots still require the step title to identify the effect',
     id: 'h3000-use',
     name: 'H3000 Factory',
     category: 'pitch',
+    screenshotReviewed: true,
     screenshotKey: 'generic-daw-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1'
@@ -2483,6 +2611,7 @@ test('explicit screenshots still require the step title to identify the effect',
     id: 'vocoder-use',
     name: 'Ableton Vocoder',
     category: 'pitch',
+    screenshotReviewed: true,
     screenshotKey: 'vocoder-shot',
     sourceRecordId: 'record-2',
     sourceTitle: 'Video 2'
@@ -2515,6 +2644,7 @@ test('explicit screenshots reject generic titles that do not identify the produc
     id: 'vocoder-use',
     name: 'Ableton Vocoder',
     category: 'pitch',
+    screenshotReviewed: true,
     screenshotKey: 'vocoder-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1'
@@ -2540,6 +2670,7 @@ test('generic effect-type names stay hidden even when the screenshot title repea
       id: 'generic-use-' + index,
       name,
       category: 'processing',
+      screenshotReviewed: true,
       screenshotKey: key,
       sourceRecordId: recordId,
       sourceTitle: 'Video ' + index
@@ -2563,6 +2694,8 @@ test('audited generic shorthand can resolve to one concrete product identity', (
     id: 'wave-shifter-use',
     name: 'Minimal Audio Wave Shifter',
     category: 'modulation',
+    screenshotReviewed: true,
+    screenshotKey: 'wave-shifter-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1',
     legacy: true
@@ -2587,6 +2720,8 @@ test('successor reference aliases cannot rename an older plugin version', () => 
     id: 'proq3-use',
     name: 'FabFilter Pro-Q 3',
     category: 'eq',
+    screenshotReviewed: true,
+    screenshotKey: 'proq3-shot',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1',
     legacy: true
@@ -2708,6 +2843,8 @@ test('audited shorthand names resolve to one real product name', () => {
     id: 'love-use',
     name: 'Love',
     category: 'modulation',
+    screenshotReviewed: true,
+    screenshotKey: 'deep-Vlhaimjv1Jw-03-207e173f97',
     sourceRecordId: 'record-1',
     sourceTitle: 'Video 1',
     legacy: true

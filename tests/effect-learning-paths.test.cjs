@@ -24,9 +24,9 @@ const expectedGoals = [
 const expectedMapping = {
   'Dawesome Love': ['granular-transform'],
   'FabFilter Pro-MB': ['cleanup-control', 'impact-density'],
-  'FabFilter Pro-Q 3': ['cleanup-control', 'pitch-tone'],
+  'FabFilter Pro-Q 3': ['pitch-tone'],
   'FabFilter Saturn 2': ['impact-density', 'granular-transform'],
-  'iZotope RX De-click': ['cleanup-control'],
+  'iZotope RX De-click': ['granular-transform'],
   'iZotope Stutter Edit 2': ['motion-rhythm', 'granular-transform'],
   'Kilohearts Phase Plant': ['pitch-tone', 'motion-rhythm'],
   'Kilohearts Snap Heap': ['space-tail', 'motion-rhythm'],
@@ -148,7 +148,7 @@ test('normalizes names with NFKC, case folding, repeated internal whitespace, an
   const api = learningPaths();
   const normalizedVariant = '  ＦａｂＦｉｌｔｅｒ   Ｐｒｏ－Ｑ ３  ';
 
-  assert.deepEqual(api.goalsFor(normalizedVariant), ['cleanup-control', 'pitch-tone']);
+  assert.deepEqual(api.goalsFor(normalizedVariant), ['pitch-tone']);
   assert.equal(api.matches(normalizedVariant, 'pitch-tone'), true);
 });
 
