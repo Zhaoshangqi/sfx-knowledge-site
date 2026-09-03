@@ -882,10 +882,13 @@ test("video cards scan compactly while full detail keeps player-first dry goods"
 
   assert.match(gridRenderer, /<h2 class="card-title">/);
   assert.match(gridRenderer, /escapeHtml\(record\.source\)/);
-  assert.match(gridRenderer, /record\.steps\.length \+ ' 步 · ' \+ record\.plugins\.length \+ ' 处理点'/);
-  assert.match(gridRenderer, /<p class="card-summary">' \+ escapeHtml\(record\.summary\)/);
+  assert.match(gridRenderer, /learningMap\.chapters\.length \+ ' 章 · ' \+ record\.steps\.length \+ ' 步'/);
+  assert.match(gridRenderer, /<p class="card-summary">' \+ escapeHtml\(learningMap\.goal\)/);
+  assert.match(gridRenderer, /learningMap\.roles\.slice\(0, 3\)/);
+  assert.match(gridRenderer, /<span class="card-role">' \+ escapeHtml\(role\.name\)/);
+  assert.doesNotMatch(gridRenderer, /record\.summary|record\.plugins|processingSummary|处理点/);
   assert.doesNotMatch(gridRenderer, /更新 |updatedAt|addedAt|record\.steps\.length \+ ' 步骤'/);
-  assert.match(css, /\.card-summary \{[\s\S]*?-webkit-line-clamp: 2;/);
+  assert.match(css, /\.card-summary \{[\s\S]*?-webkit-line-clamp: 3;/);
 
   [
     "learningShellOpen",

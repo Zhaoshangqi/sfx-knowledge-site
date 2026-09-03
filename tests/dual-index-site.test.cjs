@@ -99,6 +99,10 @@ function records() {
   return inlineLiteral('records', 'imageManifest');
 }
 
+function categories() {
+  return inlineLiteral('categories', 'categoryCounts');
+}
+
 function imageManifest() {
   return inlineLiteral('imageManifest', 'pluginReferenceCatalog');
 }
@@ -139,6 +143,12 @@ function loadEffectLibraryRenderer(context) {
   ].join('\n');
   vm.runInNewContext(source, context);
   return context.renderEffectLibrary;
+}
+
+function loadVideoGridRenderer(context) {
+  const source = sourceSlice('function renderGrid() {', 'function destroyActiveVideoPlayer() {');
+  vm.runInNewContext(`${source}\nthis.renderGrid = renderGrid;`, context);
+  return context.renderGrid;
 }
 
 function listenerBody(elementName, eventName) {
@@ -770,6 +780,8 @@ test('valid chapters resolve reordered steps by explicit order and actual timeli
 
 test('learning authored-text surfaces harden narrow-layout overflow', () => {
   const rules = [
+    ['card goal', /\.card-summary\s*\{([^}]*)\}/],
+    ['card role', /\.card-role\s*\{([^}]*)\}/],
     ['goal and sequence', /\.learning-goal,\s*\.learning-sequence\s*\{([^}]*)\}/],
     ['role', /\.learning-role\s*\{([^}]*)\}/],
     ['role description', /\.learning-role span\s*\{([^}]*)\}/],
@@ -985,6 +997,55 @@ test('card renderers use concise accessible names', () => {
   assert.match(videoRenderer, /aria-label="查看视频案例：' \+ escapeAttr\(record\.title\) \+ '"/);
   assert.match(effectRenderer, /effect-profile-title/);
   assert.match(videoRenderer, /card-title/);
+});
+
+test('all 85 video cards lead with learning goals, roles, and chapter progress', () => {
+  const allRecords = records();
+  const categoryById = Object.fromEntries(categories().map((category) => [category.id, category]));
+
+  for (const record of allRecords) {
+    const gridEl = { innerHTML: '' };
+    const context = {
+      records: allRecords,
+      state: { activeId: '', category: 'all' },
+      categoryById,
+      filteredRecords: () => [record],
+      countEl: { textContent: '' },
+      noteEl: { textContent: '' },
+      gridEl,
+      detailEl: { innerHTML: '' },
+      escapeHtml: escapeHtmlForTest,
+      escapeAttr: escapeAttrForTest,
+      thumbnail: () => `thumb-${record.videoId}.jpg`,
+      encodeURIComponent
+    };
+    loadVideoGridRenderer(context)();
+
+    const card = gridEl.innerHTML;
+    const roles = record.learningMap.roles.slice(0, 3);
+    assert.equal((card.match(/<a\b/g) || []).length, 1, record.id);
+    assert.equal((card.match(/<button\b/g) || []).length, 0, record.id);
+    assert.match(
+      card,
+      new RegExp(`aria-label="查看视频案例：${escapeRegexForTest(escapeAttrForTest(record.title))}"`),
+      record.id
+    );
+    assert.match(card, new RegExp(escapeRegexForTest(escapeHtmlForTest(record.learningMap.goal))), record.id);
+    assert.equal((card.match(/class="card-role"/g) || []).length, roles.length, record.id);
+    roles.forEach((role) => {
+      assert.match(card, new RegExp(escapeRegexForTest(escapeHtmlForTest(role.name))), `${record.id}:${role.name}`);
+      assert.doesNotMatch(card, new RegExp(escapeRegexForTest(escapeHtmlForTest(role.description))), record.id);
+    });
+    assert.match(
+      card,
+      new RegExp(`${record.learningMap.chapters.length} 章 · ${record.steps.length} 步`),
+      record.id
+    );
+    assert.match(card, new RegExp(escapeRegexForTest(escapeHtmlForTest(record.source))), record.id);
+    assert.match(card, new RegExp(escapeRegexForTest(categoryById[record.category].label)), record.id);
+    assert.doesNotMatch(card, new RegExp(escapeRegexForTest(escapeHtmlForTest(record.summary))), record.id);
+    assert.doesNotMatch(card, /处理点|参数(?:数|量)/, record.id);
+  }
 });
 
 test('shell CSS is compact and responsive without viewport-scaled hero text', () => {

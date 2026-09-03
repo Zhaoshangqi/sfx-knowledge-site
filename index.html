@@ -535,12 +535,14 @@
     }
     .card-body {
       padding: 12px;
+      min-width: 0;
     }
     .card-title {
       margin: 0;
       font-size: 15px;
       line-height: 1.35;
       font-weight: 900;
+      overflow-wrap: anywhere;
     }
     .card-meta {
       display: flex;
@@ -552,13 +554,37 @@
     }
     .card-summary {
       margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.55;
+      min-width: 0;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.5;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+    .card-roles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      min-width: 0;
+      margin-top: 10px;
+    }
+    .card-role {
+      display: inline-flex;
+      align-items: center;
+      min-width: 0;
+      max-width: 100%;
+      padding: 3px 6px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--muted);
+      background: var(--paper);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
 
     .detail {
@@ -50292,7 +50318,9 @@
 
       gridEl.innerHTML = list.map((record) => {
         const category = categoryById[record.category];
-        const processingSummary = record.steps.length + ' 步 · ' + record.plugins.length + ' 处理点';
+        const learningMap = record.learningMap;
+        const learningProgress = learningMap.chapters.length + ' 章 · ' + record.steps.length + ' 步';
+        const roleNames = learningMap.roles.slice(0, 3);
         return '<a class="card ' + (record.id === state.activeId ? 'active' : '') + '" aria-label="查看视频案例：' + escapeAttr(record.title) + '" data-id="' + record.id + '" href="#video=' + encodeURIComponent(record.id) + '">' +
           '<div class="thumb-wrap">' +
             '<img src="' + thumbnail(record) + '" alt="' + escapeAttr(record.title) + '" loading="lazy" decoding="async" fetchpriority="low" onerror="this.style.display=\'none\'">' +
@@ -50300,8 +50328,11 @@
           '</div>' +
           '<div class="card-body">' +
             '<h2 class="card-title">' + escapeHtml(record.title) + '</h2>' +
-            '<div class="card-meta"><span>' + escapeHtml(record.source) + '</span><span>' + processingSummary + '</span></div>' +
-            '<p class="card-summary">' + escapeHtml(record.summary) + '</p>' +
+            '<p class="card-summary">' + escapeHtml(learningMap.goal) + '</p>' +
+            '<div class="card-roles" aria-label="声音职责">' + roleNames.map((role) =>
+              '<span class="card-role">' + escapeHtml(role.name) + '</span>'
+            ).join("") + '</div>' +
+            '<div class="card-meta"><span>' + escapeHtml(record.source) + '</span><span>' + learningProgress + '</span></div>' +
           '</div>' +
         '</a>';
       }).join("");
