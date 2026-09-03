@@ -701,7 +701,7 @@ Records: 85
    - Gain: 整体增益
    - Limit: 启用防止峰值
    - Evidence image key: `img_e1400338622ee078`
-10. **集成RX De-click修复音频**: 关联截图记录iZotope RX De-click的低延迟算法、灵敏度8.6、频率偏移6.9、点击拓宽5.0ms与已修复66次；这些设置只属于当前素材。
+10. **RX De-click 提取点击新音色**: 关联截图记录iZotope RX De-click的低延迟算法、灵敏度8.6、频率偏移6.9、点击拓宽5.0ms与已修复66次；这些设置只属于当前素材。
    - 算法: 低延迟
    - 灵敏度: 8.6
    - 频率偏移: 6.9
@@ -748,7 +748,7 @@ Records: 85
   - Attack: 瞬态突出
   - Sustain: 音符保持
   - Smooth/Limit: 开关控制
-- **iZotope RX De-click**: 前期音频修复，自动检测并修复点击/杂音，允许后期更激进处理
+- **iZotope RX De-click**: 启用仅输出点击，把检测到的点击成分转成可独立叠加的尖锐细节。
   - 灵敏度: 8.6
   - 频率偏移: 6.9
   - 点击拓宽: 5.0ms
@@ -787,7 +787,7 @@ Records: 85
   - Limits: 关联截图只确认两路均为 40 Bands、7.9 dB；既有视频整理中的 8 / 40 与 7.9 dB / 14 dB 未由该帧支持，复核前不得作为画面确认值或通用预设。
   - Evidence image key: `img_d43e4e82e77fb756`
   - Evidence: 画面确认; 视频未展示; 分析推断
-- **iZotope RX De-click**: 前期音频修复，自动检测并修复点击/杂音，允许后期更激进处理
+- **iZotope RX De-click**: 启用仅输出点击，把检测到的点击成分转成可独立叠加的尖锐细节。
   - Effect use ID: `d8ed0db4:effect:izotope-rx-de-click:7`
   - Evidence image key: `img_c7498f04509eff33`
 - **NI Transient Master**: 整体瞬态控制，应用于Master轨获得更全局的动态控制效果
@@ -1806,7 +1806,7 @@ Records: 85
    - 角色：Stutter Edit 2 现场触发预设
    - 链路参考：iZotope Stutter Edit 2
    - Evidence image key: `deep-vU0EZlUoW7g-02-da7fd53e6d`
-3. **录下输出作为 glitch 素材**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。
+3. **Stutter Edit 2 录下输出变体**: 去掉底噪、低频 rumble 和不属于科技世界的现实痕迹，再做调制、频移或失真。
    - 角色：录下输出作为 glitch 素材
    - 链路参考：iZotope Stutter Edit 2
    - Evidence image key: `deep-vU0EZlUoW7g-03-2fe9e15258`
@@ -1849,7 +1849,7 @@ Records: 85
 ### Structured Effect Uses
 - **iZotope Stutter Edit 2**: 通过预设表演生成 glitch/sweep 变体。
   - Effect use ID: `bsa5b20e8:effect:izotope-stutter-edit-2:1`
-  - Evidence image key: `deep-vU0EZlUoW7g-02-da7fd53e6d`
+  - Evidence image key: `deep-vU0EZlUoW7g-03-2fe9e15258`
 
 ### Materials / Layer Sources
 - drone inputs
@@ -2018,7 +2018,7 @@ Records: 85
    - 角色：清理现实瑕疵
    - 链路参考：EchoBoy / short delay
    - Evidence image key: `deep-HsFlJ_UJyxs-04-7cd08b45db`
-5. **分层建立景深**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。
+5. **Snap Heap 建立第二级回声**: 远景 bed、近景 detail、运动点、随机生物和 tail 分开摆放，让场景不是单条 loop。
    - 角色：分层建立景深
    - 链路参考：Love
    - Evidence image key: `deep-HsFlJ_UJyxs-05-5d894bfee1`
@@ -2063,7 +2063,7 @@ Records: 85
   - Effect use ID: `bsa8465bc:effect:love:1`
 - **Snap Heap**: 通过 bounce/dual delay 叠加更复杂的低调科幻 drone。
   - Effect use ID: `bsa8465bc:effect:snap-heap:2`
-  - Evidence image key: `deep-HsFlJ_UJyxs-02-5bcb60c43c`
+  - Evidence image key: `deep-HsFlJ_UJyxs-05-5d894bfee1`
 
 ### Materials / Layer Sources
 - generic source textures
@@ -7611,7 +7611,7 @@ Records: 85
    - 角色：建立瞬态和触感
    - 链路参考：FabFilter Saturn 2
    - Evidence image key: `deep-h1uYic59pf0-04-f722e69420`
-5. **做机械/材质主体**:
+5. **Saturn 2 做机械/材质主体**:
    - 角色：做机械/材质主体
    - 链路参考：Kilohearts Triad
    - Evidence image key: `deep-h1uYic59pf0-05-98ca3cbdcf`
@@ -7701,7 +7701,7 @@ Records: 85
 ### Structured Effect Uses
 - **FabFilter Saturn 2**: Mega Smudge 多段处理，制造粘稠失真、滤波和短延迟式运动。
   - Effect use ID: `yt-h1uYic59pf0:effect:fabfilter-saturn-2:4`
-  - Evidence image key: `deep-h1uYic59pf0-03-aafec69b81`
+  - Evidence image key: `deep-h1uYic59pf0-05-98ca3cbdcf`
 - **Saturn 2**: 多段饱和和 smudge 质感工具，用 drive、feedback、crossover 或 LFO 制造颗粒化、粘稠、脏亮的纹理。
   - Effect use ID: `yt-h1uYic59pf0:effect:saturn-2:11`
 - **Polyverse Manipulator**: 继续改变 pitch/formant/resonance，增加异常生物或机械感。
@@ -8241,7 +8241,7 @@ Records: 85
   - 作者把随时间移动的 Frequency Shifter 视为后处理核心。
 - **FabFilter Pro-R**: 位于轨道 Frequency Shifter 后，给整组变体增加统一空间尾部。
   - 画面确认其轨道链位置；视频未提供可可靠抄录的完整参数。
-- **FabFilter Pro-Q 3**: 在 item 级强化有用中频、削减刺耳高频峰，使每个 one-shot 获得独立音色焦点。
+- **FabFilter Pro-Q 3**: 在 item 级强化中频焦点，让 one-shot 获得作者所说的气泡式音色。
   - 画面确认中频峰形提升与高频窄带衰减。
   - 截图不显示可靠频率和增益，不记录伪精确数值。
 - **Kilohearts Delay**: 在 item 级为个别变体增加可被后续轨道频移一起推动的延迟尾音。
@@ -8255,7 +8255,7 @@ Records: 85
   - 画面只确认链路位置；具体宽度与限制参数不可可靠读取。
 
 ### Structured Effect Uses
-- **FabFilter Pro-Q 3**: 在 item 级强化有用中频、削减刺耳高频峰，使每个 one-shot 获得独立音色焦点。
+- **FabFilter Pro-Q 3**: 在 item 级强化中频焦点，让 one-shot 获得作者所说的气泡式音色。
   - Effect use ID: `yt-kv0yNg1CPAk:effect:fabfilter-pro-q-3:4`
   - Evidence image key: `kv0yNg1CPAk-proq-bubbly-focus`
 - **ValhallaFreqEcho**: 在 item 级结合短延迟、轻微频移和反馈，构造气泡式、带运动的尾音。
