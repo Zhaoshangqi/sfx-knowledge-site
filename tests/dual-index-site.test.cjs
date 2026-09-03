@@ -2200,17 +2200,38 @@ test('effect case projection renders all 101 public uses exactly once', () => {
     assert.equal((markup.match(/class="effect-case"/g) || []).length, profile.uses.length, profile.name);
     cases.forEach((item) => {
       renderedIds.push(item.use.id);
+      const caseMarkup = helpers.renderEffectCase(profile, item);
+      assert.ok(item.sourceRecord, `${item.use.id} source video`);
+      assert.ok(item.sourceStep, `${item.use.id} source step`);
+      assert.ok(Number.isFinite(item.startSeconds), `${item.use.id} reviewed time point`);
       assert.equal(
         (markup.match(new RegExp(`data-effect-case-id="${escapeRegexForTest(item.use.id)}"`, 'g')) || []).length,
         1,
         item.use.id
       );
+      assert.ok(caseMarkup.includes(item.sourceRecord.title), `${item.use.id} source title`);
+      assert.ok(caseMarkup.includes(item.sourceStep.name), `${item.use.id} step name`);
+      assert.match(caseMarkup, new RegExp(`data-open-video="${escapeRegexForTest(item.sourceRecord.id)}"`));
+      assert.match(caseMarkup, new RegExp(`data-seek-seconds="${item.startSeconds}"`));
+      assert.match(caseMarkup, /class="effect-case-evidence"/);
+      ['来源视频', '步骤定位', '时间点已复核'].forEach((label) => {
+        assert.ok(caseMarkup.includes(label), `${item.use.id} missing ${label}`);
+      });
       if (!item.visual) {
         missingVisualCount += 1;
-        assert.match(helpers.renderEffectCase(profile, item), /effect-case-missing/);
+        assert.match(caseMarkup, /effect-case-missing/);
+        assert.doesNotMatch(caseMarkup, /截图已复核/);
       } else {
         assert.equal(item.visual.kind, 'video');
         assert.equal(item.visual.useId, item.use.id);
+        assert.equal(item.use.screenshotReviewed, true, `${item.use.id} screenshot review`);
+        assert.ok(item.use.screenshotKey, `${item.use.id} screenshot key`);
+        assert.equal(item.visual.imageKey, item.use.screenshotKey, `${item.use.id} exact screenshot ownership`);
+        assert.equal(item.visual.sourceRecordId, item.use.sourceRecordId, `${item.use.id} exact source ownership`);
+        assert.equal(item.sourceStep.imageKey, item.use.screenshotKey, `${item.use.id} source step screenshot`);
+        assert.equal(item.visual.stepOrder, item.sourceStep.order, `${item.use.id} exact step ownership`);
+        assert.ok(caseMarkup.includes(item.visual.preview), `${item.use.id} screenshot preview`);
+        assert.match(caseMarkup, /截图已复核/);
       }
     });
     assert.doesNotMatch(markup, /data-effect-parameter|class="effect-parameter|parameters/);
@@ -2260,6 +2281,77 @@ test('effect interface reference stays profile-level and never borrows another u
   const reference = helpers.renderEffectInterfaceReference(profile);
   assert.match(reference, /official\.webp/);
   assert.match(reference, /effect-interface-reference/);
+});
+
+test('effect cases render only exact reviewed screenshots owned by the same use', () => {
+  const detailHelpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    SfxVideoTimeline
+  });
+  const helpers = loadEffectCaseHelpers({
+    records: [{
+      id: 'video-a',
+      title: 'Video A',
+      timeline: { status: 'reviewed', reviewedAt: '2026-08-14', durationSeconds: 60 },
+      steps: [{ order: 1, name: 'Target Effect', detail: 'Step detail', imageKey: 'owned-shot', startSeconds: 12 }]
+    }],
+    SfxVideoTimeline,
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeHtmlForTest,
+    cleanedText: (value) => typeof value === 'string' ? value : '',
+    renderTimeJump: detailHelpers.renderTimeJump
+  });
+  const baseUse = {
+    id: 'use-a',
+    sourceRecordId: 'video-a',
+    stepIndex: 0,
+    screenshotReviewed: true,
+    screenshotKey: 'owned-shot'
+  };
+  const baseVisual = {
+    kind: 'video',
+    useId: 'use-a',
+    imageKey: 'owned-shot',
+    sourceRecordId: 'video-a',
+    stepOrder: 1,
+    preview: 'owned-preview.webp',
+    full: 'owned-full.webp',
+    caption: 'Owned screenshot'
+  };
+  const project = (usePatch = {}, visualPatch = {}) => helpers.effectCaseForUse(
+    { visuals: [{ ...baseVisual, ...visualPatch }] },
+    { ...baseUse, ...usePatch }
+  );
+
+  [
+    project({ screenshotReviewed: undefined }),
+    project({ screenshotReviewed: false }),
+    project({ screenshotKey: '' }),
+    project({ screenshotKey: 'different-shot' }),
+    project({}, { imageKey: '' }),
+    project({}, { sourceRecordId: 'video-b' }),
+    project({}, { stepOrder: 2 }),
+    project({}, { preview: '' }),
+    project({}, { full: '' }),
+    project({}, { caption: '' })
+  ].forEach((item) => assert.equal(item.visual, null));
+
+  const accepted = project();
+  assert.equal(accepted.visual.preview, 'owned-preview.webp');
+  const acceptedMarkup = helpers.renderEffectCase({ name: 'Target Effect', action: 'Action', result: 'Result' }, accepted);
+  assert.match(acceptedMarkup, /截图已复核/);
+  assert.match(acceptedMarkup, /<article[^>]+aria-labelledby="effect-case-source-use-a effect-case-step-use-a"/);
+  assert.match(acceptedMarkup, /<h4 id="effect-case-source-use-a">Video A<\/h4>/);
+  assert.match(acceptedMarkup, /aria-label="放大案例截图：Target Effect，Video A，Target Effect"/);
+
+  const orphan = helpers.effectCaseForUse(
+    { visuals: [] },
+    { ...baseUse, sourceRecordId: 'missing-video' }
+  );
+  const orphanMarkup = helpers.renderEffectCase({ name: 'Target Effect', action: 'Action', result: 'Result' }, orphan);
+  assert.match(orphanMarkup, /视频时间点尚未核验/);
+  assert.doesNotMatch(orphanMarkup, /保留已核验的文字用法与视频时间点/);
 });
 
 test('effect profiles ignore screenshots matched only by generated chain scaffolding', () => {
@@ -2959,9 +3051,9 @@ test('public effect surfaces use only their approved evidence fields', () => {
   const approvedFields = {
     card: ['input', 'problem', 'result'],
     videoSummary: ['input', 'action', 'result'],
-    detail: ['input', 'action', 'result']
+    detail: ['input', 'problem', 'action', 'result', 'limitations']
   };
-  const legacyProfileFields = /profile\.(?:suitable|purpose|outcome|limitation)/;
+  const legacyProfileFields = /profile\.(?:suitable|purpose|outcome|limitation(?!s))/;
 
   Object.entries(renderSources).forEach(([surface, source]) => {
     approvedFields[surface].forEach((field) => {
@@ -2977,7 +3069,7 @@ test('public effect surfaces use only their approved evidence fields', () => {
   ['输入素材', '处理动作', '听感变化'].forEach((label) => {
     assert.ok(renderSources.videoSummary.includes(label), `videoSummary missing ${label}`);
   });
-  ['能得到什么', '适合什么输入', '怎么处理', '全部视频案例', '处理对象', '实际用途', '听感方向', '暂无对应截图'].forEach((label) => {
+  ['用法概览', '适用输入', '解决问题', '处理动作', '得到结果', '适用边界', '全部视频案例', '处理对象', '实际用途', '听感方向', '暂无对应截图'].forEach((label) => {
     assert.ok(renderSources.detail.includes(label), `detail missing ${label}`);
   });
   assert.doesNotMatch(renderSources.card, /一句话结论|适合用在|主要作用|能带来什么|输入素材|听感变化/);
@@ -2990,10 +3082,12 @@ test('public effect surfaces use only their approved evidence fields', () => {
   assert.match(renderSources.videoSummary, /data-effect-id/);
 
   assert.doesNotMatch(renderSources.detail, /cautionHtml|effect-caution/);
-  assert.match(renderSources.detail, /item\?\.kind === "video"[\s\S]*?item\.useId === use\?\.id[\s\S]*?item\.preview[\s\S]*?item\.full[\s\S]*?item\.caption/);
+  assert.match(renderSources.detail, /item\?\.kind === "video"[\s\S]*?item\.useId === use\?\.id[\s\S]*?use\?\.screenshotReviewed === true[\s\S]*?item\.imageKey === screenshotKey[\s\S]*?item\.sourceRecordId === source\.sourceRecord\?\.id[\s\S]*?item\.stepOrder === source\.sourceStep\?\.order[\s\S]*?item\.preview[\s\S]*?item\.full[\s\S]*?item\.caption/);
+  assert.match(renderSources.detail, /Boolean\(screenshotKey\)/);
   assert.match(renderSources.detail, /effectCasesForProfile\(profile\)/);
   assert.match(renderSources.detail, /cases\.map\(\(item\) => renderEffectCase\(profile, item\)\)/);
-  assert.match(renderSources.detail, /effect-result-lead/);
+  assert.match(renderSources.detail, /<dl class="effect-usage-fields">/);
+  assert.match(renderSources.detail, /effect-limitations-band/);
   assert.match(renderSources.detail, /effect-interface-reference/);
   assert.match(renderSources.detail, /effect-all-cases/);
   assert.match(renderSources.detail, /effect-case-shot/);
@@ -3043,25 +3137,33 @@ test('video-detail effect summaries omit unpublished profiles and render approve
   assert.doesNotMatch(markup, /适合：|听感：|一句话结论|适合用在|主要作用|能带来什么|听感结果/);
 });
 
-test('effect detail renders result-led copy, one interface reference, and every timed case', () => {
+test('effect detail renders a usage-first guide, one interface reference, and every timed case', () => {
   const detailEl = { innerHTML: '' };
   const uses = [
-    { id: 'use-1', sourceRecordId: 'video-1', stepIndex: 0, purpose: '主案例实际用途' },
-    { id: 'use-2', sourceRecordId: 'video-2', stepIndex: 0, purpose: '支撑案例实际用途' }
+    {
+      id: 'use-1', sourceRecordId: 'video-1', stepIndex: 0, purpose: '主案例实际用途',
+      screenshotReviewed: true, screenshotKey: 'primary-shot', evidence: ['画面确认', '作者口述']
+    },
+    {
+      id: 'use-2', sourceRecordId: 'video-2', stepIndex: 0, purpose: '支撑案例实际用途',
+      screenshotReviewed: true, screenshotKey: 'additional-shot', evidence: ['画面确认']
+    }
   ];
   const profile = {
     id: 'use-1',
     evidenceUseId: 'use-1',
     name: '测试效果器',
     input: '单薄的测试输入素材',
+    problem: '起音松散且持续段拖得过长',
     action: '重塑起音并收紧持续段',
     result: '起音更集中，尾部更短',
+    limitations: '只适用于需要强化轮廓的素材，平稳底噪不适合照搬。',
     suitable: '旧适用字段不得出现',
     parameters: ['Threshold -12 dB 不得出现'],
     uses,
     visuals: [
-      { kind: 'video', useId: 'use-1', preview: 'primary-preview.webp', full: 'primary-full.webp', caption: '主证据截图' },
-      { kind: 'video', useId: 'use-2', preview: 'additional-preview.webp', full: 'additional-full.webp', caption: '支撑案例截图' },
+      { kind: 'video', useId: 'use-1', imageKey: 'primary-shot', sourceRecordId: 'video-1', stepOrder: 2, preview: 'primary-preview.webp', full: 'primary-full.webp', caption: '主证据截图' },
+      { kind: 'video', useId: 'use-2', imageKey: 'additional-shot', sourceRecordId: 'video-2', stepOrder: 5, preview: 'additional-preview.webp', full: 'additional-full.webp', caption: '支撑案例截图' },
       { kind: 'official', useId: 'use-1', preview: 'official-preview.webp', full: 'official-full.webp', caption: '官方参考图' }
     ]
   };
@@ -3069,12 +3171,12 @@ test('effect detail renders result-led copy, one interface reference, and every 
     {
       id: 'video-1', title: '主证据视频', updatedAt: '2026-08-14',
       timeline: { status: 'reviewed', source: 'youtube-player', reviewedAt: '2026-08-14', durationSeconds: 120 },
-      steps: [{ order: 2, name: '主证据步骤原文', detail: '主处理对象', startSeconds: 12 }]
+      steps: [{ order: 2, name: '主证据步骤原文', detail: '主处理对象', imageKey: 'primary-shot', startSeconds: 12 }]
     },
     {
       id: 'video-2', title: '额外支撑视频', updatedAt: '2026-08-13',
       timeline: { status: 'reviewed', source: 'youtube-player', reviewedAt: '2026-08-14', durationSeconds: 120 },
-      steps: [{ order: 5, name: '额外案例步骤原文', detail: '支撑处理对象', startSeconds: 68 }]
+      steps: [{ order: 5, name: '额外案例步骤原文', detail: '支撑处理对象', imageKey: 'additional-shot', startSeconds: 68 }]
     }
   ];
   const detailHelpers = loadDetailRenderingHelpers({
@@ -3102,16 +3204,28 @@ test('effect detail renders result-led copy, one interface reference, and every 
   );
   renderEffectDetail('use-1');
 
-  ['能得到什么', profile.result, '适合什么输入', profile.input, '怎么处理', profile.action, '全部视频案例'].forEach((text) => {
+  ['用法概览', '适用输入', profile.input, '解决问题', profile.problem, '处理动作', profile.action, '得到结果', profile.result, '适用边界', profile.limitations, '全部视频案例'].forEach((text) => {
     assert.ok(detailEl.innerHTML.includes(text), `detail missing ${text}`);
+  });
+  assert.equal((detailEl.innerHTML.match(/class="effect-usage-overview"/g) || []).length, 1);
+  assert.equal((detailEl.innerHTML.match(/<dl class="effect-usage-fields">/g) || []).length, 1);
+  assert.match(detailEl.innerHTML, /class="effect-limitations-band"/);
+  const orderedLabels = ['用法概览', '适用输入', '解决问题', '处理动作', '得到结果', '适用边界', '全部视频案例'];
+  orderedLabels.slice(1).forEach((label, index) => {
+    assert.ok(detailEl.innerHTML.indexOf(orderedLabels[index]) < detailEl.innerHTML.indexOf(label), `${orderedLabels[index]} must precede ${label}`);
   });
   assert.equal((detailEl.innerHTML.match(/class="effect-case"/g) || []).length, 2);
   assert.equal((detailEl.innerHTML.match(/official-preview\.webp/g) || []).length, 1);
+  assert.match(detailEl.innerHTML, /primary-preview\.webp/);
+  assert.match(detailEl.innerHTML, /additional-preview\.webp/);
   assert.match(detailEl.innerHTML, /data-effect-case-id="use-1"/);
   assert.match(detailEl.innerHTML, /data-effect-case-id="use-2"/);
   assert.match(detailEl.innerHTML, /data-open-video="video-1"[\s\S]*?data-seek-seconds="12"|data-seek-seconds="12"[\s\S]*?data-open-video="video-1"/);
   assert.match(detailEl.innerHTML, /data-open-video="video-2"[\s\S]*?data-seek-seconds="68"|data-seek-seconds="68"[\s\S]*?data-open-video="video-2"/);
-  assert.doesNotMatch(detailEl.innerHTML, /旧适用字段不得出现|Threshold -12 dB|profile\.parameters/);
+  ['画面确认', '作者口述', '来源视频', '步骤定位', '时间点已复核', '截图已复核'].forEach((label) => {
+    assert.ok(detailEl.innerHTML.includes(label), `case evidence missing ${label}`);
+  });
+  assert.doesNotMatch(detailEl.innerHTML, /能得到什么|适合什么输入|怎么处理|旧适用字段不得出现|Threshold -12 dB|profile\.parameters/);
 });
 
 test('effect detail fails closed on missing uses and renders malformed visuals as missing', () => {
@@ -3122,8 +3236,10 @@ test('effect detail fails closed on missing uses and renders malformed visuals a
     evidenceUseId: 'use-1',
     name: 'Malformed Effect',
     input: 'Test input',
+    problem: 'Test problem',
     action: 'Test action',
     result: 'Test result',
+    limitations: 'Test limitations',
     uses: [],
     visuals: []
   };
@@ -3431,17 +3547,30 @@ test('destroys active player, chapter navigation, and sticky listeners across ro
 test('effect detail is a complete case guide without parameter information', () => {
   const effectDetailSource = sourceSlice('function sourceStepForEffectUse(use) {', 'function openLightbox(src, caption) {');
 
-  ['能得到什么', '适合什么输入', '怎么处理', '全部视频案例', '处理对象', '实际用途', '听感方向', '暂无对应截图'].forEach((heading) => {
+  ['用法概览', '适用输入', '解决问题', '处理动作', '得到结果', '适用边界', '全部视频案例', '处理对象', '实际用途', '听感方向', '暂无对应截图'].forEach((heading) => {
     assert.ok(effectDetailSource.includes(heading), `missing ${heading}`);
   });
   assert.match(effectDetailSource, /EffectIndexData\.profileForUse/);
   assert.match(effectDetailSource, /effectCasesForProfile\(profile\)/);
   assert.match(effectDetailSource, /item\?\.kind === "video"/);
   assert.match(effectDetailSource, /item\.useId === use\?\.id/);
+  assert.match(effectDetailSource, /use\?\.screenshotReviewed === true/);
+  assert.match(effectDetailSource, /Boolean\(screenshotKey\)/);
+  assert.match(effectDetailSource, /item\.imageKey === screenshotKey/);
+  assert.match(effectDetailSource, /item\.sourceRecordId === source\.sourceRecord\?\.id/);
+  assert.match(effectDetailSource, /item\.stepOrder === source\.sourceStep\?\.order/);
+  assert.match(effectDetailSource, /<dl class="effect-usage-fields">/);
+  assert.match(effectDetailSource, /effect-limitations-band/);
   assert.match(effectDetailSource, /effect-interface-reference/);
   assert.match(effectDetailSource, /effect-case-missing/);
   assert.match(effectDetailSource, /effect-case-shot/);
+  assert.match(effectDetailSource, /effect-case-evidence/);
+  assert.match(effectDetailSource, /aria-labelledby="' \+ escapeAttr\(sourceHeadingId\)/);
+  assert.match(effectDetailSource, /<h4 id="' \+ escapeAttr\(sourceHeadingId\)/);
+  ['来源视频', '步骤定位', '时间点已复核', '截图已复核'].forEach((label) => {
+    assert.ok(effectDetailSource.includes(label), `missing evidence label ${label}`);
+  });
   assert.match(effectDetailSource, /data-open-video/);
-  assert.doesNotMatch(effectDetailSource, /profile\.(?:suitable|purpose|outcome|limitation)|一句话结论|适合用在|主要作用|输入素材|听感变化|听感结果/);
+  assert.doesNotMatch(effectDetailSource, /profile\.(?:suitable|purpose|outcome|limitation(?!s))|一句话结论|适合用在|主要作用|输入素材|听感变化|听感结果|能得到什么|适合什么输入|怎么处理/);
   assert.doesNotMatch(effectDetailSource, /profile\.parameters|parameterHtml|参数与调节方向|链路位置|厂商未记录|renderEvidenceLabels/);
 });

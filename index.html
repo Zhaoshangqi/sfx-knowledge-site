@@ -1692,12 +1692,10 @@
     .effect-detail-copy {
       min-width: 0;
     }
-    .effect-result-lead {
-      padding: 0 0 20px;
-      border-bottom: 1px solid var(--line);
+    .effect-usage-overview {
+      min-width: 0;
     }
-    .effect-result-lead h3,
-    .effect-guide-row h3,
+    .effect-usage-overview > h3,
     .effect-evidence-panel > h3,
     .effect-more-cases > h3 {
       margin: 0 0 6px;
@@ -1705,26 +1703,50 @@
       font-size: 12px;
       font-weight: 900;
     }
-    .effect-result-lead p {
-      margin: 0;
-      color: var(--ink);
-      font-size: 20px;
-      font-weight: 800;
-      line-height: 1.55;
-    }
-    .effect-guide-rows {
+    .effect-usage-fields {
       display: grid;
       gap: 0;
-    }
-    .effect-guide-row {
-      padding: 16px 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .effect-guide-row p {
       margin: 0;
+    }
+    .effect-usage-fields > div {
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr);
+      gap: 12px;
+      padding: 14px 0;
+    }
+    .effect-usage-fields > div + div {
+      border-top: 1px solid var(--line);
+    }
+    .effect-usage-fields dt,
+    .effect-usage-fields dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .effect-usage-fields dt {
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.7;
+    }
+    .effect-usage-fields dd {
       color: var(--ink);
       font-size: 15px;
       line-height: 1.7;
+    }
+    .effect-usage-result dd {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.6;
+    }
+    .effect-usage-fields > .effect-limitations-band {
+      margin-top: 6px;
+      padding-top: 18px;
+      border-top: 2px solid var(--line);
+    }
+    .effect-limitations-band dd {
+      color: var(--muted);
+      font-size: 13px;
     }
     .effect-evidence-panel,
     .effect-more-cases,
@@ -1839,6 +1861,12 @@
       color: var(--ink);
       font-size: 13px;
       line-height: 1.55;
+    }
+    .effect-case-source h4 {
+      margin: 0;
+      color: inherit;
+      font: inherit;
+      font-weight: 800;
     }
     .effect-case-source span {
       display: block;
@@ -51015,9 +51043,17 @@
 
     function effectCaseForUse(profile, use) {
       const source = sourceStepForEffectUse(use);
+      const screenshotKey = typeof use?.screenshotKey === "string" ? use.screenshotKey.trim() : "";
       const visual = (Array.isArray(profile?.visuals) ? profile.visuals : []).find((item) => (
         item?.kind === "video" &&
         item.useId === use?.id &&
+        use?.screenshotReviewed === true &&
+        Boolean(screenshotKey) &&
+        item.imageKey === screenshotKey &&
+        item.sourceRecordId === source.sourceRecord?.id &&
+        item.sourceRecordId === use?.sourceRecordId &&
+        source.sourceStep?.imageKey === screenshotKey &&
+        item.stepOrder === source.sourceStep?.order &&
         Boolean(String(item.preview || "").trim()) &&
         Boolean(String(item.full || "").trim()) &&
         Boolean(String(item.caption || "").trim())
@@ -51056,27 +51092,40 @@
       const purpose = cleanedText(use.purpose) || profile.action;
       const result = cleanedText(use.result) || profile.result;
       const limitations = cleanedText(use.limitations);
+      const caseKey = cleanedText(use.id) || "unassigned";
+      const sourceHeadingId = "effect-case-source-" + caseKey;
+      const stepLabelId = "effect-case-step-" + caseKey;
+      const hasReviewedTime = Boolean(sourceRecord) && Number.isFinite(item?.startSeconds);
       const evidence = Array.isArray(use.evidence) ? use.evidence.filter((label) => typeof label === "string" && label.trim()) : [];
+      const provenance = [];
+      if (sourceRecord) provenance.push("来源视频");
+      if (sourceStep) provenance.push("步骤定位");
+      if (hasReviewedTime) provenance.push("时间点已复核");
+      if (visual) provenance.push("截图已复核");
+      const evidenceLabels = Array.from(new Set(evidence.concat(provenance)));
+      const missingVisualNote = hasReviewedTime
+        ? "保留已核验的文字用法与视频时间点"
+        : "保留当前可核对的文字用法，视频时间点尚未核验";
       const visualHtml = visual
-        ? '<button class="effect-case-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大案例截图：' + escapeAttr(profile.name) + '">' +
+        ? '<button class="effect-case-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大案例截图：' + escapeAttr(profile.name) + '，' + escapeAttr(sourceTitle) + '，' + escapeAttr(stepName) + '">' +
             '<img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(visual.caption) + '" loading="lazy" decoding="async"><span>本案例视频截图</span></button>'
-        : '<div class="effect-case-missing" role="img" aria-label="本案例暂无对应截图"><strong>暂无对应截图</strong><span>保留已核验的文字用法与视频时间点</span></div>';
+        : '<div class="effect-case-missing" role="img" aria-label="本案例暂无对应截图"><strong>暂无对应截图</strong><span>' + escapeHtml(missingVisualNote) + '</span></div>';
       const timeControl = sourceRecord
         ? renderTimeJump(item.startSeconds, "播放本案例", {
             "data-open-video": sourceRecord.id,
             "data-section": "effects"
           })
         : '';
-      return '<article class="effect-case" data-effect-case-id="' + escapeAttr(use.id || "") + '">' + visualHtml +
-        '<div class="effect-case-copy"><div class="effect-case-source"><strong>' + escapeHtml(sourceTitle) + '</strong>' +
-          '<span>' + escapeHtml(stepName) + '</span></div>' + timeControl + '</div>' +
+      return '<article class="effect-case" data-effect-case-id="' + escapeAttr(use.id || "") + '" aria-labelledby="' + escapeAttr(sourceHeadingId) + ' ' + escapeAttr(stepLabelId) + '">' + visualHtml +
+        '<div class="effect-case-copy"><div class="effect-case-source"><h4 id="' + escapeAttr(sourceHeadingId) + '">' + escapeHtml(sourceTitle) + '</h4>' +
+          '<span id="' + escapeAttr(stepLabelId) + '">' + escapeHtml(stepName) + '</span></div>' + timeControl + '</div>' +
         '<dl class="effect-case-facts">' +
           '<div><dt>处理对象</dt><dd>' + escapeHtml(target) + '</dd></div>' +
           '<div><dt>实际用途</dt><dd>' + escapeHtml(purpose) + '</dd></div>' +
           '<div><dt>听感方向</dt><dd>' + escapeHtml(result) + '</dd></div>' +
           (limitations ? '<div><dt>证据边界</dt><dd>' + escapeHtml(limitations) + '</dd></div>' : '') +
         '</dl>' +
-        (evidence.length ? '<div class="effect-case-evidence" aria-label="证据类型">' + evidence.map((label) => '<span>' + escapeHtml(label) + '</span>').join("") + '</div>' : '') +
+        (evidenceLabels.length ? '<div class="effect-case-evidence" aria-label="证据类型">' + evidenceLabels.map((label) => '<span>' + escapeHtml(label) + '</span>').join("") + '</div>' : '') +
       '</article>';
     }
 
@@ -51123,11 +51172,16 @@
           '<p class="effect-detail-coverage">' + sourceCount + ' 个视频 · ' + cases.length + ' 条用法 · ' + timedCount + ' 个时间点 · ' + screenshotCount + ' 张对应截图</p>' +
           '<div class="effect-detail-grid">' +
             '<div class="effect-detail-copy">' +
-              '<div class="effect-result-lead"><h3>能得到什么</h3><p>' + escapeHtml(profile.result) + '</p></div>' +
-              '<div class="effect-guide-rows">' +
-                '<div class="effect-guide-row"><h3>适合什么输入</h3><p>' + escapeHtml(profile.input) + '</p></div>' +
-                '<div class="effect-guide-row"><h3>怎么处理</h3><p>' + escapeHtml(profile.action) + '</p></div>' +
-              '</div>' +
+              '<section class="effect-usage-overview" aria-labelledby="effect-usage-heading">' +
+                '<h3 id="effect-usage-heading">用法概览</h3>' +
+                '<dl class="effect-usage-fields">' +
+                  '<div><dt>适用输入</dt><dd>' + escapeHtml(profile.input) + '</dd></div>' +
+                  '<div><dt>解决问题</dt><dd>' + escapeHtml(profile.problem) + '</dd></div>' +
+                  '<div><dt>处理动作</dt><dd>' + escapeHtml(profile.action) + '</dd></div>' +
+                  '<div class="effect-usage-result"><dt>得到结果</dt><dd>' + escapeHtml(profile.result) + '</dd></div>' +
+                  '<div class="effect-limitations-band"><dt>适用边界</dt><dd>' + escapeHtml(profile.limitations) + '</dd></div>' +
+                '</dl>' +
+              '</section>' +
             '</div>' +
             referenceHtml +
           '</div>' +
