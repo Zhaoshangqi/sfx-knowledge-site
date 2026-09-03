@@ -50737,8 +50737,8 @@
       }
     }
 
-    function renderQuickConclusion(record, detailData) {
-      const learningTemplate = projectLearningTemplate(record, detailData);
+    function renderQuickConclusion(record, detailData, learningTemplate) {
+      if (learningTemplate === undefined) learningTemplate = projectLearningTemplate(record, detailData);
       if (learningTemplate) {
         return '<section id="quick" class="detail-quick learning-map detail-content-section" data-detail-section="quick">' +
           '<h3 tabindex="-1" data-section-heading>30 秒读懂</h3>' +
@@ -50769,9 +50769,9 @@
       ).join("") + '</nav>';
     }
 
-    function videoDetailSections(record, glossaryTerms, subtitleEntry, recordEffectUses, recordId = record?.id || "") {
+    function videoDetailSections(record, glossaryTerms, subtitleEntry, recordEffectUses, recordId = record?.id || "", learningTemplate = null) {
       const sections = [
-        { id: "quick", label: "快速结论", present: true },
+        { id: "quick", label: learningTemplate ? "30 秒读懂" : "快速结论", present: true },
         { id: "steps", label: "处理步骤", present: Array.isArray(record?.steps) && record.steps.length > 0 },
         { id: "effects", label: "效果器用法", present: Array.isArray(recordEffectUses) && recordEffectUses.some((use) => use?.sourceRecordId === recordId) },
         { id: "glossary", label: "术语", present: Array.isArray(glossaryTerms) && glossaryTerms.length > 0 },
@@ -50781,9 +50781,9 @@
       return sections.filter((section) => section.present);
     }
 
-    function renderStepTimeline(record, detailData) {
+    function renderStepTimeline(record, detailData, learningTemplate) {
       const steps = Array.isArray(detailData?.steps) ? detailData.steps : [];
-      const learningTemplate = projectLearningTemplate(record, detailData);
+      if (learningTemplate === undefined) learningTemplate = projectLearningTemplate(record, detailData);
       if (!steps.length) return "";
       if (learningTemplate) {
         return '<section id="steps" class="step-timeline-section detail-content-section" data-detail-section="steps">' +
@@ -50815,15 +50815,18 @@
         }).join("") + '</ol></section>';
     }
 
-    function renderDetailedSteps(record, detailData) {
+    function renderDetailedSteps(record, detailData, learningTemplate) {
       const steps = Array.isArray(detailData?.steps) ? detailData.steps : [];
-      const learningTemplate = projectLearningTemplate(record, detailData);
+      if (learningTemplate === undefined) learningTemplate = projectLearningTemplate(record, detailData);
+      const learningByOrder = learningTemplate
+        ? new Map(learningTemplate.steps.map((item) => [item.order, item.learning]))
+        : null;
       return steps.map((rawStep, index) => {
         const step = rawStep && typeof rawStep === "object" ? rawStep : {};
         const name = step.name || "未命名步骤";
         const detail = step.detail || "";
         const params = Array.isArray(step.params) ? step.params : [];
-        const learning = learningTemplate ? learningTemplate.steps[index].learning : null;
+        const learning = learningByOrder ? learningByOrder.get(step.order) : null;
         const learningFields = learningTemplate ? [
           { key: "input", label: "输入" },
           { key: "problem", label: "问题" },
@@ -50886,6 +50889,7 @@
       const record = records.find((item) => item.id === state.activeId);
       if (!record) return;
       const detailData = VideoDetailData.project(record);
+      const learningTemplate = projectLearningTemplate(record, detailData);
       const category = categoryById[record.category];
       const ideasHtml = detailData.coreIdeas.map((idea) => '<div class="idea">' + escapeHtml(idea) + '</div>').join("");
       const materialHtml = detailData.materials.map((material) => '<span class="chip">' + escapeHtml(material) + '</span>').join("");
@@ -50903,7 +50907,7 @@
           (settings.length ? '<div class="chips plugin-settings">' + settings.map((setting) => '<span class="chip">' + escapeHtml(setting) + '</span>').join("") + '</div>' : '') +
           renderPluginReferences(record, plugin, pluginIndex) + '</div>';
       }).join("");
-      const detailedStepsHtml = renderDetailedSteps(record, detailData);
+      const detailedStepsHtml = renderDetailedSteps(record, detailData, learningTemplate);
       const recordEffectUses = VideoDetailData.array(effectUses).filter((use) => use && use.sourceRecordId === record.id);
       const publishedEffectSummaries = recordEffectUses.map((use) => ({ use, html: renderEffectUseSummary(record, use) })).filter((item) => item.html);
       const effectSectionContent = publishedEffectSummaries.map((item) => item.html).join("");
@@ -50916,10 +50920,10 @@
       const contentShellOpen = '<div class="detail-learning-content" data-detail-content>';
       const initialGlossaryTerms = SfxGlossary.termsFor([record]);
       const glossaryHtml = renderVideoGlossary(record, null);
-      const sections = videoDetailSections(record, initialGlossaryTerms, subtitleEntry, publishedEffectSummaries.map((item) => item.use), record.id);
-      const quickHtml = renderQuickConclusion(record, detailData);
+      const sections = videoDetailSections(record, initialGlossaryTerms, subtitleEntry, publishedEffectSummaries.map((item) => item.use), record.id, learningTemplate);
+      const quickHtml = renderQuickConclusion(record, detailData, learningTemplate);
       const navigationHtml = renderSectionNavigation(sections);
-      const timelineHtml = renderStepTimeline(record, detailData);
+      const timelineHtml = renderStepTimeline(record, detailData, learningTemplate);
       const effectHtml = effectSectionContent
         ? '<section id="effects" class="video-effect-uses detail-content-section" data-detail-section="effects"><h3 tabindex="-1" data-section-heading>效果器用法</h3>' + effectSectionContent + '</section>'
         : '';
@@ -50973,7 +50977,7 @@
             if (navigationRoot?.isConnected) {
               const paragraphs = SfxVideoSubtitles.paragraphsFor(track);
               const terms = SfxGlossary.termsFor([record, paragraphs.map((paragraph) => paragraph.text)]);
-              const nextSections = videoDetailSections(record, terms, subtitleEntry, publishedEffectSummaries.map((item) => item.use), record.id);
+              const nextSections = videoDetailSections(record, terms, subtitleEntry, publishedEffectSummaries.map((item) => item.use), record.id, learningTemplate);
               const nextNavigation = renderSectionNavigation(nextSections);
               const match = nextNavigation.match(/^<nav[^>]*>([\s\S]*)<\/nav>$/);
               if (match) navigationRoot.innerHTML = match[1];

@@ -478,9 +478,9 @@ test('places one shared fail-closed learning projection before all three rendere
   );
   const projectionSource = sourceSlice(
     'function projectLearningTemplate(record, detailData) {',
-    'function renderQuickConclusion(record, detailData) {'
+    'function renderQuickConclusion(record, detailData, learningTemplate) {'
   ).trim().replace(/\r\n/g, '\n');
-  const quickIndex = helperSource.indexOf('function renderQuickConclusion(record, detailData) {');
+  const quickIndex = helperSource.indexOf('function renderQuickConclusion(record, detailData, learningTemplate) {');
   const preQuickSource = helperSource.slice(0, quickIndex);
   const preQuickFunctions = [...preQuickSource.matchAll(/function ([A-Za-z0-9_]+)\(/g)].map((match) => match[1]);
 
@@ -502,7 +502,7 @@ test('places one shared fail-closed learning projection before all three rendere
     'the page must delegate learning projection only through the shared contract'
   );
   assert.equal(
-    (helperSource.match(/const learningTemplate = projectLearningTemplate\(record, detailData\);/g) || []).length,
+    (helperSource.match(/learningTemplate = projectLearningTemplate\(record, detailData\);/g) || []).length,
     3,
     'all three detail renderers must use the same projection entry point'
   );
@@ -624,6 +624,107 @@ test('renders any record accepted by the shared adaptive learning contract', () 
   assert.equal((timeline.match(/class=\"learning-chapter\"/g) || []).length, learningTemplate.chapters.length);
   assert.equal((timeline.match(/data-step-time=/g) || []).length, learningTemplate.steps.length);
   assert.equal((detailed.match(/class=\"step-learning-grid\"/g) || []).length, learningTemplate.steps.length);
+});
+
+test('all 85 production details render one complete adaptive learning view', () => {
+  const detailData = loadVideoDetailData();
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeAttrForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  });
+
+  records().map(plainValue).forEach((record) => {
+    const projected = plainValue(detailData.project(record));
+    const learningTemplate = SfxLearningMap.project(record, projected);
+    assert.ok(learningTemplate, record.id);
+    assert.ok(learningTemplate.chapters.length >= 2 && learningTemplate.chapters.length <= 5, record.id);
+
+    const quick = helpers.renderQuickConclusion(record, projected, learningTemplate);
+    const sections = helpers.videoDetailSections(
+      record,
+      [],
+      { contentStatus: 'missing' },
+      [],
+      record.id,
+      learningTemplate
+    );
+    const navigation = helpers.renderSectionNavigation(sections);
+    const timeline = helpers.renderStepTimeline(record, projected, learningTemplate);
+    const detailed = helpers.renderDetailedSteps(record, projected, learningTemplate);
+
+    assert.match(quick, /<h3[^>]*>30 秒读懂<\/h3>/, record.id);
+    assert.doesNotMatch(quick, /快速结论/, record.id);
+    assert.match(navigation, />30 秒读懂<\/a>/, record.id);
+    assert.doesNotMatch(navigation, />快速结论<\/a>/, record.id);
+    assert.equal((quick.match(/class="learning-role"/g) || []).length, learningTemplate.roles.length, record.id);
+    assert.equal((quick.match(/<li>/g) || []).length, learningTemplate.decisions.length, record.id);
+    assert.equal((timeline.match(/class="learning-chapter"/g) || []).length, learningTemplate.chapters.length, record.id);
+    assert.equal((timeline.match(/data-step-time=/g) || []).length, record.steps.length, record.id);
+    assert.equal((detailed.match(/<article class="step"/g) || []).length, record.steps.length, record.id);
+    assert.equal((detailed.match(/class="step-learning-grid"/g) || []).length, record.steps.length, record.id);
+    assert.equal((detailed.match(/class="step-source-detail"/g) || []).length, record.steps.length, record.id);
+    ['input', 'problem', 'action', 'result'].forEach((field) => {
+      assert.equal(
+        (detailed.match(new RegExp(`data-learning-field="${field}"`, 'g')) || []).length,
+        record.steps.length,
+        `${record.id}:${field}`
+      );
+    });
+  });
+});
+
+test('detailed learning binds by explicit step order instead of projection array position', () => {
+  const record = {
+    title: 'Explicit order fixture',
+    steps: [
+      { order: 10, name: 'First visible step', detail: 'First source detail.', params: [] },
+      { order: 20, name: 'Second visible step', detail: 'Second source detail.', params: [] }
+    ]
+  };
+  const learningFor = (token) => ({
+    input: `${token}-input`,
+    problem: `${token}-problem`,
+    action: `${token}-action`,
+    result: `${token}-result`
+  });
+  const learningTemplate = {
+    steps: [
+      { order: 20, learning: learningFor('order-20') },
+      { order: 10, learning: learningFor('order-10') }
+    ]
+  };
+  const helpers = loadDetailRenderingHelpers({
+    escapeHtml: escapeHtmlForTest,
+    escapeAttr: escapeAttrForTest,
+    imageAsset: (kind, key) => `assets/${kind}/${key}.webp`,
+    SfxVideoTimeline
+  }, {
+    learningMap: { project() { return learningTemplate; } }
+  });
+
+  const detailed = helpers.renderDetailedSteps(record, { steps: record.steps });
+  const articles = detailed.match(/<article class="step"[\s\S]*?<\/article>/g) || [];
+  assert.equal(articles.length, 2);
+  assert.match(articles[0], /order-10-input/);
+  assert.doesNotMatch(articles[0], /order-20-input/);
+  assert.match(articles[1], /order-20-input/);
+  assert.doesNotMatch(articles[1], /order-10-input/);
+});
+
+test('renderDetail shares one learning projection with every adaptive surface', () => {
+  const detailRenderer = sourceSlice(
+    'function renderDetail(options = {}) {',
+    'function sourceStepForEffectUse(use) {'
+  );
+
+  assert.match(detailRenderer, /const learningTemplate = projectLearningTemplate\(record, detailData\);/);
+  assert.match(detailRenderer, /videoDetailSections\([\s\S]*?learningTemplate\s*\);/);
+  assert.equal((detailRenderer.match(/record\.id, learningTemplate\);/g) || []).length, 2);
+  assert.match(detailRenderer, /renderQuickConclusion\(record, detailData, learningTemplate\)/);
+  assert.match(detailRenderer, /renderStepTimeline\(record, detailData, learningTemplate\)/);
+  assert.match(detailRenderer, /renderDetailedSteps\(record, detailData, learningTemplate\)/);
 });
 
 test('shared learning contract failures fall back to all legacy renderers as one unit', async (t) => {
@@ -3001,6 +3102,7 @@ test('chapter links reflect available content and every rendered target is uniqu
     'quick', 'steps', 'effects', 'glossary', 'transcript', 'evidence'
   ]);
   const navigation = helpers.renderSectionNavigation(fullSections);
+  assert.match(navigation, />快速结论<\/a>/);
   fullSections.forEach((section) => {
     assert.equal((navigation.match(new RegExp(`data-section-target="${section.id}"`, 'g')) || []).length, 1);
   });
