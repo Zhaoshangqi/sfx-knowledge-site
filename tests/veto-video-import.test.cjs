@@ -182,15 +182,15 @@ const expectedStepLearning = [
   }
 ];
 
-test('publishes the Veto ult breakdown as the unique 85th complete record', () => {
+test('publishes the Veto ult breakdown within the complete 85-record learning catalog', () => {
   const matches = records.filter((record) => record.videoId === videoId);
   assert.equal(matches.length, 1);
   assert.equal(records.length, 85);
   assert.equal(new Set(records.map((record) => record.videoId)).size, 85);
-  assert.deepEqual(
-    records.filter((record) => record.learningMap !== undefined).map((record) => record.id),
-    ['yt-3JjAK2uhxM4']
-  );
+  assert.equal(records.filter((record) => record.learningMap !== undefined).length, records.length);
+  assert.equal(records.every((record) => (
+    record.steps.every((step) => step.learning !== undefined)
+  )), true);
 
   const record = matches[0];
   assert.equal(record.id, 'yt-3JjAK2uhxM4');

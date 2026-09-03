@@ -22,6 +22,13 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function stripLearning(value) {
+  const result = clone(value);
+  delete result.learningMap;
+  for (const step of result.steps) delete step.learning;
+  return result;
+}
+
 function temporaryDirectory(t, prefix = 'learning-content-') {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
   t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
@@ -561,6 +568,35 @@ test('Veto catalog entry passes content lint with 17 supported steps', () => {
   };
   assert.deepEqual(verifyVeto(site.entry), expected);
   assert.deepEqual(verifyVeto(site.entry, { subtitleTrack: null }), expected);
+});
+
+test('production catalog covers every reviewed record and preserves all non-learning data', () => {
+  const site = realSite();
+  const descriptors = catalog.load({
+    root: path.join(repoRoot, 'content', 'learning-maps'),
+    records: site.records
+  });
+  const entries = descriptors.map((descriptor) => descriptor.entry);
+  const byVideoId = new Map(entries.map((entry) => [entry.videoId, entry]));
+
+  assert.equal(entries.length, site.records.length);
+  assert.equal(entries.length, 85);
+  assert.equal(entries.reduce((sum, entry) => sum + entry.steps.length, 0), 964);
+  assert.equal(entries.every((entry) => entry.reviewed === true), true);
+  assert.equal(entries.every((entry) => entry.reviewedAt === '2026-09-01'), true);
+
+  for (const record of site.records) {
+    const entry = byVideoId.get(record.videoId);
+    assert.ok(entry, record.videoId);
+    const merged = catalog.mergeEntry(record, entry);
+    assert.deepEqual(stripLearning(merged), stripLearning(record), record.videoId);
+    assert.deepEqual(record.learningMap, merged.learningMap, record.videoId);
+    assert.deepEqual(
+      record.steps.map((step) => step.learning),
+      merged.steps.map((step) => step.learning),
+      record.videoId
+    );
+  }
 });
 
 test('content lint rejects empty, course-like, parameter-table, placeholder, and boilerplate text', () => {
