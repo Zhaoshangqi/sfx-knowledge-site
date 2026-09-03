@@ -404,7 +404,7 @@ test('renders the Veto learning template while preserving exact legacy detail fa
     assert.match(timeline, new RegExp(title));
     assert.match(
       timeline,
-      new RegExp(`aria-label=\"播放本章：${escapeRegexForTest(escapeAttrForTest(title))}，从 [^\"]+ 播放\"`)
+      new RegExp(`aria-label=\"播放本章：${escapeRegexForTest(escapeAttrForTest(veto.title))}，${escapeRegexForTest(escapeAttrForTest(title))}，从 [^\"]+ 播放\"`)
     );
   });
   assert.equal((timeline.match(/data-step-time=/g) || []).length, learningTemplate.steps.length);
@@ -426,7 +426,12 @@ test('renders the Veto learning template while preserving exact legacy detail fa
   );
   [veto.steps[0], veto.steps[veto.steps.length - 1]].forEach((step) => {
     assert.ok(
-      detailed.includes('<summary aria-label="' + escapeAttrForTest('查看完整说明：' + step.name) + '">查看完整说明</summary>'),
+      detailed.includes('<summary aria-label="' + escapeAttrForTest('查看完整说明：' + veto.title + '，' + step.name) + '">查看完整说明</summary>'),
+      step.name
+    );
+    assert.match(
+      detailed,
+      new RegExp(`aria-label=\"播放步骤：${escapeRegexForTest(escapeAttrForTest(veto.title))}，${escapeRegexForTest(escapeAttrForTest(step.name))}，从 [^\"]+ 播放\"`),
       step.name
     );
   });
@@ -652,13 +657,14 @@ test('all 85 production details render one complete adaptive learning view', () 
       record.id,
       learningTemplate
     );
-    const navigation = helpers.renderSectionNavigation(sections);
+    const navigation = helpers.renderSectionNavigation(sections, record.title);
     const timeline = helpers.renderStepTimeline(record, projected, learningTemplate);
     const detailed = helpers.renderDetailedSteps(record, projected, learningTemplate);
 
     assert.match(quick, /<h3[^>]*>30 秒读懂<\/h3>/, record.id);
     assert.doesNotMatch(quick, /快速结论/, record.id);
     assert.match(navigation, />30 秒读懂<\/a>/, record.id);
+    assert.match(navigation, new RegExp(`aria-label="${escapeRegexForTest(escapeAttrForTest(record.title))}：学习章节"`), record.id);
     assert.doesNotMatch(navigation, />快速结论<\/a>/, record.id);
     assert.equal((quick.match(/class="learning-role"/g) || []).length, learningTemplate.roles.length, record.id);
     assert.equal((quick.match(/<li>/g) || []).length, learningTemplate.decisions.length, record.id);
@@ -892,7 +898,14 @@ test('learning authored-text surfaces harden narrow-layout overflow', () => {
     ['chapter copy', /\.learning-chapter-copy\s*\{([^}]*)\}/],
     ['chapter question', /\.learning-chapter-question\s*\{([^}]*)\}/],
     ['chapter summary', /\.learning-chapter-summary\s*\{([^}]*)\}/],
-    ['step learning value', /\.step-learning-grid dd\s*\{([^}]*)\}/]
+    ['step learning value', /\.step-learning-grid dd\s*\{([^}]*)\}/],
+    ['effect profile title', /\.effect-profile-title\s*\{([^}]*)\}/],
+    ['effect profile fact', /\.effect-profile-fact span\s*\{([^}]*)\}/],
+    ['effect profile search match', /\.effect-profile-match span\s*\{([^}]*)\}/],
+    ['effect summary title', /\.effect-use-summary-title\s*\{([^}]*)\}/],
+    ['effect usage value', /\.effect-usage-fields dd\s*\{([^}]*)\}/],
+    ['effect case source', /\.effect-case-source\s*\{([^}]*)\}/],
+    ['effect case fact', /\.effect-case-facts dd\s*\{([^}]*)\}/]
   ];
 
   rules.forEach(([name, pattern]) => {
@@ -900,6 +913,40 @@ test('learning authored-text surfaces harden narrow-layout overflow', () => {
     assert.match(declarations, /min-width:\s*0;/, name);
     assert.match(declarations, /overflow-wrap:\s*anywhere;/, name);
   });
+});
+
+test('learning grids collapse predictably on phones and cards keep restrained geometry', () => {
+  const css = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
+  const mobileStart = css.indexOf('@media (max-width: 640px)');
+  const mobileEnd = css.indexOf('@media (orientation: landscape)', mobileStart);
+  const mobileCss = css.slice(mobileStart, mobileEnd);
+  assert.ok(mobileStart >= 0 && mobileEnd > mobileStart, 'missing mobile CSS boundary');
+
+  [
+    '.learning-roles',
+    '.learning-chapter-head',
+    '.step-learning-grid > div',
+    '.effect-profile-fact',
+    '.effect-profile-match',
+    '.effect-usage-fields > div',
+    '.effect-case-facts > div'
+  ].forEach((selector) => {
+    const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s*');
+    assert.match(mobileCss, new RegExp(`${escaped}\\s*\\{[^}]*grid-template-columns:\\s*1fr;`), selector);
+  });
+
+  const compactChapterControl = css.match(/\.learning-chapter-step \.time-jump\s*\{([^}]*)\}/)?.[1] || '';
+  assert.match(compactChapterControl, /width:\s*100%;/);
+  assert.match(compactChapterControl, /min-height:\s*36px;/);
+  assert.match(compactChapterControl, /padding:\s*5px 8px;/);
+
+  ['.card', '.effect-profile-card', '.detail', '.plugin-reference'].forEach((selector) => {
+    const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const declarations = css.match(new RegExp(`${escaped}\\s*\\{([^}]*)\\}`))?.[1] || '';
+    const radius = Number(declarations.match(/border-radius:\s*(\d+)px;/)?.[1]);
+    assert.ok(Number.isFinite(radius) && radius <= 8, `${selector} radius must be <= 8px`);
+  });
+  assert.doesNotMatch(css, /\.card\s+\.card|\.effect-profile-card\s+\.effect-profile-card|\.effect-case\s+\.effect-case/);
 });
 
 test('all 85 records render verified step and screenshot time controls', () => {
@@ -3026,7 +3073,7 @@ test('drops invalid time and section values without breaking legacy routes', () 
 });
 
 test('effect profile cards open aggregated uses and can return to a timed video case', () => {
-  ['effect-profile-card', 'data-effect-id', 'data-open-video', '播放本案例'].forEach((source) => {
+  ['effect-profile-card', 'data-effect-id', 'data-open-video', '播放视频案例：'].forEach((source) => {
     assert.ok(indexHtml.includes(source), `missing ${source}`);
   });
   assert.match(indexHtml, /function openEffectDetail\(effectId, syncHash = false\) \{[\s\S]*?const use = effectUses\.find\(\(item\) => item\.id === effectId\);[\s\S]*?if \(!use\) \{\s+state\.activeEffectId = "";/);
@@ -3104,7 +3151,7 @@ test('video-detail effect summaries omit unpublished profiles and render approve
     escapeAttr: (value) => String(value),
     escapeHtml: (value) => String(value),
     SfxVideoTimeline,
-    renderTimeJump: () => '',
+    renderTimeJump: (seconds, label, attributes = {}) => '<button aria-label="' + (attributes['aria-label'] || label) + '">' + label + '</button>',
     EffectIndexData: { profileForUse: () => null }
   };
   const renderEffectUseSummary = loadNamedFunction(
@@ -3113,7 +3160,7 @@ test('video-detail effect summaries omit unpublished profiles and render approve
     context
   );
   const use = { id: 'use-1' };
-  assert.equal(renderEffectUseSummary({}, use), '');
+  assert.equal(renderEffectUseSummary({ title: '测试视频' }, use), '');
 
   context.EffectIndexData.profileForUse = () => ({
     id: 'use-1',
@@ -3128,13 +3175,37 @@ test('video-detail effect summaries omit unpublished profiles and render approve
       caption: '测试效果器视频截图'
     }]
   });
-  const markup = renderEffectUseSummary({}, use);
+  const markup = renderEffectUseSummary({ title: '测试视频' }, use);
   ['输入素材', '单薄的测试输入素材', '处理动作', '重塑起音并收紧持续段', '听感变化', '起音更集中，尾部更短'].forEach((text) => {
     assert.ok(markup.includes(text), `summary missing ${text}`);
   });
   assert.match(markup, /class="effect-summary-shot"/);
   assert.match(markup, /data-effect-id="use-1"/);
+  assert.match(markup, /aria-label="放大效果器截图：测试视频，测试效果器"/);
+  assert.match(markup, /aria-label="查看效果器适用方式：测试视频，测试效果器"/);
+  assert.match(markup, /播放效果器用法：测试视频，测试效果器/);
   assert.doesNotMatch(markup, /适合：|听感：|一句话结论|适合用在|主要作用|能带来什么|听感结果/);
+});
+
+test('plugin reference screenshots name the video, effect, and reference', () => {
+  const context = {
+    pluginReferences: () => [{
+      preview: 'preview.webp',
+      full: 'full.webp',
+      title: '频谱界面',
+      note: '核对频段位置',
+      source: 'https://example.com/reference'
+    }],
+    escapeAttr: escapeAttrForTest,
+    escapeHtml: escapeHtmlForTest
+  };
+  const renderPluginReferences = loadNamedFunction(
+    sourceSlice('function renderPluginReferences(record, plugin, pluginIndex) {', 'function renderEffectUseSummary(record, use) {'),
+    'renderPluginReferences',
+    context
+  );
+  const markup = renderPluginReferences({ title: '测试视频' }, { name: '测试效果器' }, 0);
+  assert.match(markup, /aria-label="放大插件参考截图：测试视频，测试效果器，频谱界面"/);
 });
 
 test('effect detail renders a usage-first guide, one interface reference, and every timed case', () => {
@@ -3222,6 +3293,8 @@ test('effect detail renders a usage-first guide, one interface reference, and ev
   assert.match(detailEl.innerHTML, /data-effect-case-id="use-2"/);
   assert.match(detailEl.innerHTML, /data-open-video="video-1"[\s\S]*?data-seek-seconds="12"|data-seek-seconds="12"[\s\S]*?data-open-video="video-1"/);
   assert.match(detailEl.innerHTML, /data-open-video="video-2"[\s\S]*?data-seek-seconds="68"|data-seek-seconds="68"[\s\S]*?data-open-video="video-2"/);
+  assert.match(detailEl.innerHTML, /aria-label="播放视频案例：主证据视频，主证据步骤原文，从 00:12 播放"/);
+  assert.match(detailEl.innerHTML, /aria-label="播放视频案例：额外支撑视频，额外案例步骤原文，从 01:08 播放"/);
   ['画面确认', '作者口述', '来源视频', '步骤定位', '时间点已复核', '截图已复核'].forEach((label) => {
     assert.ok(detailEl.innerHTML.includes(label), `case evidence missing ${label}`);
   });
@@ -3346,6 +3419,10 @@ test('learning layout keeps a stable desktop rail and activation-only mobile sti
   const toggleSource = sourceSlice('function toggleStickyPlayer(button) {', 'function setupStickyPlayerRail(rail, playerRoot) {');
   assert.match(toggleSource, /classList\.toggle\("sticky-collapsed"\)/);
   assert.match(toggleSource, /setAttribute\("aria-expanded"/);
+  assert.match(toggleSource, /button\.dataset\.playerTitle/);
+  assert.match(toggleSource, /展开视频播放器/);
+  assert.match(toggleSource, /收起视频播放器/);
+  assert.match(indexHtml, /data-player-title="' \+ escapeAttr\(record\.title\) \+ '"/);
   assert.doesNotMatch(toggleSource, /SfxYouTubeCaptionPlayer\.mount|\.destroy\(|detailEl\.innerHTML/);
 });
 
@@ -3374,11 +3451,20 @@ test('chapter links reflect available content and every rendered target is uniqu
   assert.deepEqual(plainValue(fullSections.map((section) => section.id)), [
     'quick', 'steps', 'effects', 'glossary', 'transcript', 'evidence'
   ]);
-  const navigation = helpers.renderSectionNavigation(fullSections);
+  const navigation = helpers.renderSectionNavigation(fullSections, 'Video A');
+  assert.match(navigation, /aria-label="Video A：学习章节"/);
   assert.match(navigation, />快速结论<\/a>/);
   fullSections.forEach((section) => {
     assert.equal((navigation.match(new RegExp(`data-section-target="${section.id}"`, 'g')) || []).length, 1);
   });
+
+  const duplicateNavigation = helpers.renderSectionNavigation([
+    { id: 'steps', label: '处理步骤' },
+    { id: 'steps', label: '重复步骤' },
+    { id: '', label: '无效章节' }
+  ], 'Video A');
+  assert.equal((duplicateNavigation.match(/data-section-target="steps"/g) || []).length, 1);
+  assert.doesNotMatch(duplicateNavigation, /重复步骤|无效章节/);
 
   const sparseSections = helpers.videoDetailSections(
     { steps: [] },
@@ -3393,15 +3479,58 @@ test('chapter links reflect available content and every rendered target is uniqu
 test('print mode expands evidence and removes sticky or interactive reader chrome', () => {
   const css = indexHtml.match(/<style>([\s\S]*?)<\/style>/)?.[1] || '';
   const print = css.match(/@media print \{([\s\S]*?)\n    \}/)?.[1] || '';
-  assert.match(print, /\.detail-section-nav/);
-  assert.match(print, /\.video-study-rail/);
+  ['.site-header', '.hero', '.control-band', '.reader-bar', '.video-study-rail', '.detail-section-nav', '.sticky-player-toggle', '.lightbox', '.time-jump', '.open-video', '.effect-use-detail-link', '.plugin-reference-source'].forEach((selector) => {
+    assert.ok(print.includes(selector), `print mode must hide ${selector}`);
+  });
   assert.match(print, /display: none/);
   assert.match(print, /\.evidence-disclosure > \.evidence-disclosure-body/);
   assert.match(print, /display: block/);
   assert.match(print, /position: static/);
   assert.match(print, /\.step-source-detail\s*\{[^}]*display:\s*block;/);
+  assert.match(print, /\.step-source-detail\s*\{[^}]*position:\s*static !important;/);
   assert.match(print, /\.step-source-detail > summary\s*\{[^}]*display:\s*none;/);
-  assert.match(print, /\.step-source-detail > :not\(summary\)\s*\{[^}]*display:\s*block !important;/);
+  assert.match(print, /\.step-source-detail > p,\s*\.step-source-detail > \.chips\s*\{[^}]*display:\s*block !important;/);
+  assert.match(print, /\.video-transcript-disclosure\s*\{[^}]*display:\s*block !important;/);
+  assert.match(print, /\.video-transcript-disclosure > summary\s*\{[^}]*display:\s*none !important;/);
+  assert.match(print, /\.video-transcript\s*\{[^}]*max-height:\s*none !important;[^}]*overflow:\s*visible !important;/);
+  assert.match(print, /\.video-transcript-cue\s*\{[^}]*cursor:\s*default;[^}]*break-inside:\s*avoid;/);
+  assert.match(print, /\.step-shot > span,\s*\.effect-case-shot > span\s*\{[^}]*display:\s*none !important;/);
+  assert.doesNotMatch(print, /@supports/);
+});
+
+test('print lifecycle expands closed learning disclosures and restores prior state', () => {
+  const closed = { open: false, isConnected: true };
+  const alreadyOpen = { open: true, isConnected: true };
+  const lazyImage = { loading: 'lazy' };
+  const context = {
+    document: {
+      querySelectorAll(selector) {
+        if (selector === '.evidence-disclosure, .step-source-detail, .video-transcript-disclosure') {
+          return [closed, alreadyOpen];
+        }
+        assert.equal(selector, ".complete-evidence img[loading='lazy']");
+        return [lazyImage];
+      }
+    }
+  };
+  const source = sourceSlice('let printDetailsSnapshot = null;', 'function destroyActiveVideoPlayer() {');
+  vm.runInNewContext(`${source}
+this.expandDetailsForPrint = expandDetailsForPrint;
+this.restoreDetailsAfterPrint = restoreDetailsAfterPrint;`, context);
+
+  context.expandDetailsForPrint();
+  context.expandDetailsForPrint();
+  assert.equal(closed.open, true);
+  assert.equal(alreadyOpen.open, true);
+  assert.equal(lazyImage.loading, 'eager');
+  context.restoreDetailsAfterPrint();
+  assert.equal(closed.open, false);
+  assert.equal(alreadyOpen.open, true);
+  context.restoreDetailsAfterPrint();
+  assert.equal(alreadyOpen.open, true);
+
+  assert.match(indexHtml, /window\.addEventListener\("beforeprint", expandDetailsForPrint\)/);
+  assert.match(indexHtml, /window\.addEventListener\("afterprint", restoreDetailsAfterPrint\)/);
 });
 
 test('video cards are keyboard links and move focus into the reader', () => {

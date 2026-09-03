@@ -393,11 +393,13 @@
       flex-direction: column;
     }
     .effect-profile-title {
+      min-width: 0;
       margin: 0 0 8px;
       color: var(--ink);
       font-size: 17px;
       line-height: 1.35;
       font-weight: 900;
+      overflow-wrap: anywhere;
     }
     .effect-profile-facts {
       display: grid;
@@ -438,6 +440,7 @@
       color: var(--muted);
       font-size: 12px;
       line-height: 1.55;
+      overflow-wrap: anywhere;
     }
     .effect-profile-match {
       display: grid;
@@ -451,6 +454,10 @@
     .effect-profile-match strong {
       color: var(--red);
       font-size: 11px;
+    }
+    .effect-profile-match span {
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
     mark.search-hit {
       background: #ffd166;
@@ -856,6 +863,8 @@
     }
     .learning-chapter-step .time-jump {
       width: 100%;
+      min-height: 36px;
+      padding: 5px 8px;
       justify-content: flex-start;
     }
     .learning-chapter-step .time-jump-label {
@@ -1620,9 +1629,11 @@
       white-space: nowrap;
     }
     .effect-use-summary-title {
+      min-width: 0;
       color: var(--green);
       font-size: 17px;
       line-height: 1.4;
+      overflow-wrap: anywhere;
     }
     .effect-summary-shot {
       width: 100%;
@@ -1719,6 +1730,7 @@
     }
     .effect-usage-fields dt,
     .effect-usage-fields dd {
+      min-width: 0;
       margin: 0;
       overflow-wrap: anywhere;
       word-break: break-word;
@@ -1861,6 +1873,7 @@
       color: var(--ink);
       font-size: 13px;
       line-height: 1.55;
+      overflow-wrap: anywhere;
     }
     .effect-case-source h4 {
       margin: 0;
@@ -1885,9 +1898,11 @@
     }
     .effect-case-facts dt,
     .effect-case-facts dd {
+      min-width: 0;
       margin: 0;
       font-size: 12px;
       line-height: 1.6;
+      overflow-wrap: anywhere;
     }
     .effect-case-facts dt {
       color: var(--teal);
@@ -2081,6 +2096,11 @@
       .step-heading .time-jump { align-self: flex-start; }
       .learning-roles { grid-template-columns: 1fr; }
       .learning-chapter-head { grid-template-columns: 1fr; }
+      .step-learning-grid > div { grid-template-columns: 1fr; }
+      .effect-profile-fact { grid-template-columns: 1fr; }
+      .effect-profile-match { grid-template-columns: 1fr; }
+      .effect-usage-fields > div { grid-template-columns: 1fr; }
+      .effect-case-facts > div { grid-template-columns: 1fr; }
     }
     @media (orientation: landscape) and (max-height: 520px) and (min-width: 641px) and (max-width: 900px) {
       .video-study-rail {
@@ -2097,9 +2117,14 @@
       }
     }
     @media print {
+      .site-header,
+      .hero,
+      .control-band,
       .reader-bar,
       .video-study-rail,
       .detail-section-nav,
+      .sticky-player-toggle,
+      .lightbox,
       .time-jump,
       .open-video,
       .effect-use-detail-link,
@@ -2121,16 +2146,43 @@
       .evidence-disclosure > summary {
         display: none !important;
       }
-      @supports (display: block) {
-        .step-source-detail {
-          display: block;
-        }
-        .step-source-detail > summary {
-          display: none;
-        }
-        .step-source-detail > :not(summary) {
-          display: block !important;
-        }
+      .step-source-detail {
+        position: static !important;
+        display: block;
+        max-width: none !important;
+      }
+      .step-source-detail > summary {
+        display: none;
+      }
+      .step-source-detail > p,
+      .step-source-detail > .chips {
+        display: block !important;
+      }
+      .video-transcript-disclosure {
+        display: block !important;
+      }
+      .video-transcript-disclosure > summary {
+        display: none !important;
+      }
+      .video-transcript {
+        display: block !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+      .video-transcript-cue {
+        cursor: default;
+        break-inside: avoid;
+        background: transparent !important;
+      }
+      .step-shot > span,
+      .effect-case-shot > span {
+        display: none !important;
+      }
+      .step-shot,
+      .effect-case-shot,
+      .effect-summary-shot {
+        cursor: default;
+        break-inside: avoid;
       }
       .reader-detail .detail-body {
         padding: 0;
@@ -50380,6 +50432,29 @@
       }).join("");
     }
 
+    let printDetailsSnapshot = null;
+
+    function expandDetailsForPrint() {
+      if (printDetailsSnapshot !== null) return;
+      const details = Array.from(document.querySelectorAll(".evidence-disclosure, .step-source-detail, .video-transcript-disclosure"));
+      printDetailsSnapshot = details.filter((detail) => !detail.open);
+      printDetailsSnapshot.forEach((detail) => {
+        detail.open = true;
+      });
+      document.querySelectorAll(".complete-evidence img[loading='lazy']").forEach((image) => {
+        image.loading = "eager";
+      });
+    }
+
+    function restoreDetailsAfterPrint() {
+      if (printDetailsSnapshot === null) return;
+      const details = printDetailsSnapshot;
+      printDetailsSnapshot = null;
+      details.forEach((detail) => {
+        if (detail && detail.isConnected !== false) detail.open = false;
+      });
+    }
+
     function destroyActiveVideoPlayer() {
       if (!activeVideoPlayer) return;
       activeVideoPlayer.destroy();
@@ -50402,9 +50477,11 @@
       const rail = button?.closest ? button.closest("[data-player-rail]") : null;
       if (!rail) return false;
       const collapsed = rail.classList.toggle("sticky-collapsed");
+      const playerTitle = typeof button.dataset.playerTitle === "string" ? button.dataset.playerTitle.trim() : "";
+      const label = (collapsed ? "展开视频播放器" : "收起视频播放器") + (playerTitle ? "：" + playerTitle : "");
       button.setAttribute("aria-expanded", String(!collapsed));
-      button.setAttribute("aria-label", collapsed ? "展开播放器" : "收起播放器");
-      button.setAttribute("title", collapsed ? "展开播放器" : "收起播放器");
+      button.setAttribute("aria-label", label);
+      button.setAttribute("title", label);
       const icon = button.querySelector("[data-sticky-icon]");
       if (icon) icon.textContent = collapsed ? "+" : "−";
       return collapsed;
@@ -50707,10 +50784,10 @@
         const full = ref.full || ref.preview;
         const preview = ref.preview || ref.full;
         const source = ref.source
-          ? '<a class="plugin-reference-source" href="' + escapeAttr(ref.source) + '" target="_blank" rel="noopener">官方来源</a>'
+          ? '<a class="plugin-reference-source" href="' + escapeAttr(ref.source) + '" target="_blank" rel="noopener" aria-label="查看插件参考来源：' + escapeAttr(record.title) + '，' + escapeAttr(plugin.name) + '，' + escapeAttr(ref.title) + '">官方来源</a>'
           : '';
         return '<div class="plugin-reference">' +
-          '<button class="plugin-reference-shot" type="button" data-plugin-full="' + escapeAttr(full) + '" data-plugin-caption="' + escapeAttr(plugin.name + " / " + ref.title) + '">' +
+          '<button class="plugin-reference-shot" type="button" data-plugin-full="' + escapeAttr(full) + '" data-plugin-caption="' + escapeAttr(plugin.name + " / " + ref.title) + '" aria-label="放大插件参考截图：' + escapeAttr(record.title) + '，' + escapeAttr(plugin.name) + '，' + escapeAttr(ref.title) + '">' +
             '<img src="' + escapeAttr(preview) + '" alt="' + escapeAttr(plugin.name + " - " + ref.title) + '" loading="lazy" decoding="async">' +
           '</button>' +
           '<div class="plugin-reference-body">' +
@@ -50725,16 +50802,17 @@
     function renderEffectUseSummary(record, use) {
       const profile = EffectIndexData.profileForUse(use, effectUses, records, pluginReferenceCatalog, imageManifest);
       if (!profile) return "";
+      const recordTitle = typeof record?.title === "string" && record.title.trim() ? record.title.trim() : "未命名视频";
       const visual = profile.visuals.find((candidate) => candidate.useId === use.id) || profile.visuals[0];
       const startSeconds = SfxVideoTimeline.effectStart(record, use);
       return '<div class="effect-use-summary">' +
-        '<button class="effect-summary-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大效果器截图：' + escapeAttr(profile.name) + '">' +
+        '<button class="effect-summary-shot" type="button" data-effect-image="' + escapeAttr(visual.full) + '" data-effect-caption="' + escapeAttr(visual.caption) + '" aria-label="放大效果器截图：' + escapeAttr(recordTitle) + '，' + escapeAttr(profile.name) + '">' +
           '<img src="' + escapeAttr(visual.preview) + '" alt="' + escapeAttr(profile.name + " 效果器截图") + '" loading="lazy" decoding="async">' +
         '</button>' +
         '<div class="effect-summary-copy">' +
           '<div class="effect-use-summary-header"><strong class="effect-use-summary-title">' + escapeHtml(profile.name) + '</strong>' +
-            '<div class="effect-use-summary-actions">' + renderTimeJump(startSeconds, "播放此效果器用法", { "data-effect-time": "", "data-section": "effects" }) +
-            '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '">查看适用方式</button></div></div>' +
+            '<div class="effect-use-summary-actions">' + renderTimeJump(startSeconds, "播放此效果器用法", { "data-effect-time": "", "data-section": "effects", "aria-label": "播放效果器用法：" + recordTitle + "，" + profile.name }) +
+            '<button class="effect-use-detail-link" type="button" data-effect-id="' + escapeAttr(use.id) + '" aria-label="查看效果器适用方式：' + escapeAttr(recordTitle) + '，' + escapeAttr(profile.name) + '">查看适用方式</button></div></div>' +
           '<p class="effect-use-summary-purpose"><strong>输入素材</strong><br>' + escapeHtml(profile.input) + '</p>' +
           '<p class="effect-use-summary-meta"><strong>处理动作</strong><br>' + escapeHtml(profile.action) + '<br><strong>听感变化</strong><br>' + escapeHtml(profile.result) + '</p>' +
         '</div>' +
@@ -50758,12 +50836,15 @@
       const start = Math.floor(seconds);
       const time = SfxVideoTimeline.formatTime(start);
       const labelText = typeof label === "string" && label.trim() ? label.trim() : "播放视频";
+      const contextualLabel = typeof attributes?.["aria-label"] === "string" && attributes["aria-label"].trim()
+        ? attributes["aria-label"].trim()
+        : labelText;
       const attributeHtml = Object.entries(attributes && typeof attributes === "object" ? attributes : {})
-        .filter(([name]) => /^(?:data|aria)-[a-z0-9-]+$/.test(name))
+        .filter(([name]) => name !== "aria-label" && /^(?:data|aria)-[a-z0-9-]+$/.test(name))
         .map(([name, value]) => ' ' + name + '="' + escapeAttr(value === undefined ? "" : value) + '"')
         .join("");
       return '<button type="button" class="time-jump" data-seek-seconds="' + start + '" aria-label="' +
-        escapeAttr(labelText + "，从 " + time + " 播放") + '"' + attributeHtml + '>' +
+        escapeAttr(contextualLabel + "，从 " + time + " 播放") + '"' + attributeHtml + '>' +
         '<span class="time-jump-icon" aria-hidden="true">▶</span>' +
         '<span class="time-jump-label">' + escapeHtml(labelText) + '</span>' +
         '<time datetime="PT' + start + 'S">' + escapeHtml(time) + '</time></button>';
@@ -50802,10 +50883,19 @@
       '</section>';
     }
 
-    function renderSectionNavigation(sections) {
-      const items = Array.isArray(sections) ? sections : [];
+    function renderSectionNavigation(sections, recordTitle = "") {
+      const seenIds = new Set();
+      const items = (Array.isArray(sections) ? sections : []).reduce((result, section) => {
+        const id = typeof section?.id === "string" ? section.id.trim() : "";
+        const label = typeof section?.label === "string" ? section.label.trim() : "";
+        if (!id || !label || seenIds.has(id)) return result;
+        seenIds.add(id);
+        result.push({ id, label });
+        return result;
+      }, []);
       if (!items.length) return "";
-      return '<nav class="detail-section-nav" data-detail-navigation aria-label="本案例章节">' + items.map((section) =>
+      const contextLabel = typeof recordTitle === "string" && recordTitle.trim() ? recordTitle.trim() : "本案例";
+      return '<nav class="detail-section-nav" data-detail-navigation aria-label="' + escapeAttr(contextLabel + "：学习章节") + '">' + items.map((section) =>
         '<a href="#' + escapeAttr(section.id) + '" data-section-target="' + escapeAttr(section.id) + '">' +
           escapeHtml(section.label) + '</a>'
       ).join("") + '</nav>';
@@ -50831,11 +50921,19 @@
         return '<section id="steps" class="step-timeline-section detail-content-section" data-detail-section="steps">' +
           '<h3 tabindex="-1" data-section-heading>设计章节</h3><ol class="learning-chapters">' + learningTemplate.chapters.map((chapter) => {
             const firstSeconds = SfxVideoTimeline.stepStart(record, chapter.steps[0].index);
-            const chapterControl = renderTimeJump(firstSeconds, "播放本章：" + chapter.title, { "data-chapter-time": "", "data-section": "steps" });
+            const chapterControl = renderTimeJump(firstSeconds, "播放本章：" + chapter.title, {
+              "data-chapter-time": "",
+              "data-section": "steps",
+              "aria-label": "播放本章：" + record.title + "，" + chapter.title
+            });
             const stepControls = chapter.steps.map((item) => {
               const name = item.step?.name || "未命名步骤";
               const seconds = SfxVideoTimeline.stepStart(record, item.index);
-              const control = renderTimeJump(seconds, name, { "data-step-time": "", "data-section": "steps" });
+              const control = renderTimeJump(seconds, name, {
+                "data-step-time": "",
+                "data-section": "steps",
+                "aria-label": "播放步骤：" + record.title + "，" + name
+              });
               return '<li class="learning-chapter-step">' +
                 (control || '<span class="step-time-unavailable" data-step-time=""><span>' + escapeHtml(name) + '</span><span>时间待复核</span></span>') +
               '</li>';
@@ -50852,7 +50950,11 @@
         '<h3 tabindex="-1" data-section-heading>处理步骤</h3><ol class="step-timeline">' + steps.map((step, index) => {
           const name = step?.name || "未命名步骤";
           const seconds = SfxVideoTimeline.stepStart(record, index);
-          const control = renderTimeJump(seconds, name, { "data-step-time": "", "data-section": "steps" });
+          const control = renderTimeJump(seconds, name, {
+            "data-step-time": "",
+            "data-section": "steps",
+            "aria-label": "播放步骤：" + record.title + "，" + name
+          });
           return '<li>' + (control || '<span class="step-time-unavailable" data-step-time=""><span>' + escapeHtml(name) + '</span><span>时间待复核</span></span>') + '</li>';
         }).join("") + '</ol></section>';
     }
@@ -50882,7 +50984,7 @@
           '<div data-learning-field="' + field.key + '"><dt>' + field.label + '</dt><dd>' + escapeHtml(field.value) + '</dd></div>'
         ).join("") + '</dl>' : '';
         const sourceDetailHtml = learningTemplate && (detail || params.length)
-          ? '<details class="step-source-detail"><summary aria-label="' + escapeAttr("查看完整说明：" + name) + '">查看完整说明</summary>' +
+          ? '<details class="step-source-detail"><summary aria-label="' + escapeAttr("查看完整说明：" + record.title + "，" + name) + '">查看完整说明</summary>' +
               (detail ? '<p>' + escapeHtml(detail) + '</p>' : '') +
               (params.length ? '<div class="chips">' + params.map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '') +
             '</details>'
@@ -50891,12 +50993,13 @@
         const seconds = SfxVideoTimeline.stepStart(record, index);
         const screenshotTime = renderTimeJump(seconds, "从截图位置播放", {
           "data-screenshot-time": "",
-          "data-section": "steps"
+          "data-section": "steps",
+          "aria-label": "从步骤截图位置播放：" + record.title + "，" + name
         });
         const shotHtml = step.imageKey
           ? '<div class="step-visual"><button class="step-shot' + (motion ? ' has-motion' : '') + '" type="button" data-step-index="' + index + '" data-image-key="' + escapeAttr(step.imageKey) + '"' +
               (motion ? ' data-motion-src="' + escapeAttr(motion.src) + '" data-motion-poster="' + escapeAttr(motion.poster || imageAsset("preview", step.imageKey)) + '"' : '') +
-              ' aria-label="' + escapeAttr((motion ? "播放流程动图：" : "放大步骤截图：") + name) + '">' +
+              ' aria-label="' + escapeAttr((motion ? "播放流程动图：" : "放大步骤截图：") + record.title + "，" + name) + '">' +
               '<img data-shot-preview="' + escapeAttr(step.imageKey) + '" alt="' + escapeAttr(record.title + " - " + name) + '" loading="lazy" decoding="async">' +
               '<span>' + (motion ? '动图准备中，稍后可播放' : '截图准备中，稍后可放大查看') + '</span>' +
               (motion ? '<span class="step-motion-badge">1080p 动图</span>' : '') +
@@ -50904,7 +51007,11 @@
           : '';
         return '<article class="step" data-step-index="' + index + '">' + shotHtml +
           '<div class="step-copy"><div class="step-heading"><strong>' + escapeHtml((step.order ?? index + 1) + ". " + name) + '</strong>' +
-            renderTimeJump(seconds, "播放此步骤", { "data-step-heading-time": "", "data-section": "steps" }) + '</div>' +
+            renderTimeJump(seconds, "播放此步骤", {
+              "data-step-heading-time": "",
+              "data-section": "steps",
+              "aria-label": "播放步骤：" + record.title + "，" + name
+            }) + '</div>' +
           (learningTemplate ? learningHtml + sourceDetailHtml :
             (detail ? '<p>' + escapeHtml(detail) + '</p>' : '') +
             (params.length ? '<div class="chips">' + params.map((param) => '<span class="chip">' + escapeHtml(param) + '</span>').join("") + '</div>' : '')) +
@@ -50912,8 +51019,9 @@
       }).join("");
     }
 
-    function renderCompleteEvidence(blocks) {
+    function renderCompleteEvidence(blocks, recordTitle = "") {
       const source = blocks && typeof blocks === "object" ? blocks : {};
+      const contextLabel = typeof recordTitle === "string" && recordTitle.trim() ? recordTitle.trim() : "本案例";
       const groups = [
         ["完整设计思路", source.ideas],
         ["逐步制作过程与截图", source.process],
@@ -50922,7 +51030,7 @@
       ].filter((group) => typeof group[1] === "string" && group[1]);
       return '<section id="evidence" class="complete-evidence detail-content-section" data-detail-section="evidence">' +
         '<h3 tabindex="-1" data-section-heading>完整证据</h3>' + groups.map((group) =>
-          '<details class="evidence-disclosure"><summary>' + escapeHtml(group[0]) + '</summary>' +
+          '<details class="evidence-disclosure"><summary aria-label="' + escapeAttr(group[0] + "：" + contextLabel) + '">' + escapeHtml(group[0]) + '</summary>' +
             '<div class="evidence-disclosure-body">' + group[1] + '</div></details>'
         ).join("") + '</section>';
     }
@@ -50957,14 +51065,14 @@
       const playerHtml = SfxYouTubeCaptionPlayer.render(record, subtitleEntry, thumbnail(record, "hqdefault"));
       const learningShellOpen = '<div class="detail-learning-layout"><aside class="video-study-rail" data-player-rail>' +
         '<div class="video-study-rail-toolbar"><strong>原视频与中文字幕</strong>' +
-          '<button class="video-icon-button sticky-player-toggle" type="button" data-sticky-toggle aria-expanded="true" aria-controls="video-study-player-' + escapeAttr(record.id) + '" aria-label="收起播放器" title="收起播放器"><span data-sticky-icon aria-hidden="true">−</span></button>' +
+          '<button class="video-icon-button sticky-player-toggle" type="button" data-sticky-toggle data-player-title="' + escapeAttr(record.title) + '" aria-expanded="true" aria-controls="video-study-player-' + escapeAttr(record.id) + '" aria-label="收起视频播放器：' + escapeAttr(record.title) + '" title="收起视频播放器：' + escapeAttr(record.title) + '"><span data-sticky-icon aria-hidden="true">−</span></button>' +
         '</div><div class="video-study-player" id="video-study-player-' + escapeAttr(record.id) + '">' + playerHtml + '</div></aside>';
       const contentShellOpen = '<div class="detail-learning-content" data-detail-content>';
       const initialGlossaryTerms = SfxGlossary.termsFor([record]);
       const glossaryHtml = renderVideoGlossary(record, null);
       const sections = videoDetailSections(record, initialGlossaryTerms, subtitleEntry, publishedEffectSummaries.map((item) => item.use), record.id, learningTemplate);
       const quickHtml = renderQuickConclusion(record, detailData, learningTemplate);
-      const navigationHtml = renderSectionNavigation(sections);
+      const navigationHtml = renderSectionNavigation(sections, record.title);
       const timelineHtml = renderStepTimeline(record, detailData, learningTemplate);
       const effectHtml = effectSectionContent
         ? '<section id="effects" class="video-effect-uses detail-content-section" data-detail-section="effects"><h3 tabindex="-1" data-section-heading>效果器用法</h3>' + effectSectionContent + '</section>'
@@ -50974,13 +51082,13 @@
         ? '<section id="transcript" class="transcript-section detail-content-section" data-detail-section="transcript"><h3 tabindex="-1" data-section-heading>中文字幕全文</h3><div data-video-transcript-root></div></section>'
         : '';
       const sourceHtml = '<div class="learning-point"><strong>' + escapeHtml(record.source) + '</strong><div>' + escapeHtml(record.url) + '</div></div>' +
-        '<div class="chips">' + keywordHtml + '</div><a class="open-video" href="' + escapeAttr(record.url) + '" target="_blank" rel="noopener">打开原视频</a>';
+        '<div class="chips">' + keywordHtml + '</div><a class="open-video" href="' + escapeAttr(record.url) + '" target="_blank" rel="noopener" aria-label="打开原视频：' + escapeAttr(record.title) + '">打开原视频</a>';
       const evidenceHtml = renderCompleteEvidence({
         ideas: ideasHtml,
         process: (materialHtml ? '<div class="evidence-materials"><h4>素材与分层</h4><div class="chips">' + materialHtml + '</div></div>' : '') + detailedStepsHtml,
         chain: chainHtml + pluginHtml,
         boundaries: decisionHtml + sourceHtml
-      });
+      }, record.title);
 
       detailEl.innerHTML =
         '<div class="detail-body">' +
@@ -51020,7 +51128,7 @@
               const paragraphs = SfxVideoSubtitles.paragraphsFor(track);
               const terms = SfxGlossary.termsFor([record, paragraphs.map((paragraph) => paragraph.text)]);
               const nextSections = videoDetailSections(record, terms, subtitleEntry, publishedEffectSummaries.map((item) => item.use), record.id, learningTemplate);
-              const nextNavigation = renderSectionNavigation(nextSections);
+              const nextNavigation = renderSectionNavigation(nextSections, record.title);
               const match = nextNavigation.match(/^<nav[^>]*>([\s\S]*)<\/nav>$/);
               if (match) navigationRoot.innerHTML = match[1];
               mountNavigation();
@@ -51113,7 +51221,8 @@
       const timeControl = sourceRecord
         ? renderTimeJump(item.startSeconds, "播放本案例", {
             "data-open-video": sourceRecord.id,
-            "data-section": "effects"
+            "data-section": "effects",
+            "aria-label": "播放视频案例：" + sourceTitle + "，" + stepName
           })
         : '';
       return '<article class="effect-case" data-effect-case-id="' + escapeAttr(use.id || "") + '" aria-labelledby="' + escapeAttr(sourceHeadingId) + ' ' + escapeAttr(stepLabelId) + '">' + visualHtml +
@@ -51137,7 +51246,7 @@
       if (!reference) return "";
       const label = reference.kind === "official" ? "官方界面对照" : "视频操作截图";
       const sourceLink = reference.sourceUrl
-        ? '<a href="' + escapeAttr(reference.sourceUrl) + '" target="_blank" rel="noopener">查看来源</a>'
+        ? '<a href="' + escapeAttr(reference.sourceUrl) + '" target="_blank" rel="noopener" aria-label="查看效果器界面来源：' + escapeAttr(profile.name) + '">查看来源</a>'
         : '';
       return '<section class="effect-interface-reference"><h3>' + label + '</h3>' +
         '<button class="effect-case-shot" type="button" data-effect-image="' + escapeAttr(reference.full) + '" data-effect-caption="' + escapeAttr(reference.caption) + '" aria-label="放大' + label + '：' + escapeAttr(profile.name) + '">' +
@@ -51462,6 +51571,8 @@
     });
 
     window.addEventListener("hashchange", applyHashRoute);
+    window.addEventListener("beforeprint", expandDetailsForPrint);
+    window.addEventListener("afterprint", restoreDetailsAfterPrint);
 
     function scheduleEffectCountStat() {
       if (typeof requestIdleCallback === "function") {
